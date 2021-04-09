@@ -9,10 +9,5 @@ namespace TramsDataApi.Data
         {
         }
         public DbSet<Group> Groups { get; set; }
-        
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     modelBuilder.Entity<Group>().ToTable("Group");
-        // }
     }
 }
