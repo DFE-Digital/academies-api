@@ -9,11 +9,11 @@ using Xunit;
 
 namespace TramsDataApi.Test
 {
-    public class HealthCheckControllerTests : IClassFixture<WebApplicationFactory<TramsDataApi.Startup>>
+    public class HealthCheckControllerTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
 
-        public HealthCheckControllerTests(WebApplicationFactory<TramsDataApi.Startup> fixture)
+        public HealthCheckControllerTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
@@ -42,7 +42,7 @@ namespace TramsDataApi.Test
                 Method = HttpMethod.Get,
                 RequestUri = new Uri("https://trams-api.com/HealthCheck"),
                 Headers = { 
-                    { "ApiKey", "e5de93fa-0889-4b55-87cd-f5ffb4d3098b" }
+                    { "ApiKey", "testing-api-key" }
                 }
             };
             

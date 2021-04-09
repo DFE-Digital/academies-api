@@ -1,4 +1,3 @@
-
 {
   "Logging": {
     "LogLevel": {
@@ -8,5 +7,5 @@
     }
   },
   "AllowedHosts": "*",
-  "ApiKey": "{App Key Here}"
+  "ApiKey": "testing-api-key"
 }

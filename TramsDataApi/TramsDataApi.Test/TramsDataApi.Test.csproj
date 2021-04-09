@@ -25,4 +25,10 @@
       <ProjectReference Include="..\TramsDataApi\TramsDataApi.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Include="./integration_settings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
 </Project>
