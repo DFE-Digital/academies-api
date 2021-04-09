@@ -8,6 +8,11 @@ namespace TramsDataApi.Data
         public TramsDbContext(DbContextOptions<TramsDbContext> options) : base(options)
         {
         }
-        public DbSet<Group> Trusts { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     modelBuilder.Entity<Group>().ToTable("Group");
+        // }
     }
 }
