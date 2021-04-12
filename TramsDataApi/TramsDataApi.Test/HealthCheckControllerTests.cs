@@ -50,5 +50,26 @@ namespace TramsDataApi.Test
             
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
+        
+        [Fact]
+        public async Task Should_Return_True_When_Running_DB_Check()
+        {
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/check_db"),
+                Headers = { 
+                    { "ApiKey", "testing-api-key" }
+                }
+            };
+                
+            var response = await _client.SendAsync(httpRequestMessage);
+                
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var content = await response.Content.ReadAsStringAsync();
+            content.Should().Be("true");
+        }
     }
+    
+
 }
