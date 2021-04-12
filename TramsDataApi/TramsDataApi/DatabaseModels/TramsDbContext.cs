@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TramsDataApi.DatabaseModels
 {
-    public partial class MyContext : DbContext
+    public partial class TramsDbContext : DbContext
     {
-        public MyContext()
+        public TramsDbContext()
         {
         }
 
-        public MyContext(DbContextOptions<MyContext> options)
+        public TramsDbContext(DbContextOptions<TramsDbContext> options)
             : base(options)
         {
         }
@@ -30,8 +30,7 @@ namespace TramsDataApi.DatabaseModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=127.0.0.1;Initial Catalog=local_trams_db;persist security info=True;User id=sa; Password=StrongPassword905");
+                optionsBuilder.UseSqlServer("Data Source=127.0.0.1;Initial Catalog=local_trams_test_db;persist security info=True;User id=sa; Password=StrongPassword905");
             }
         }
 
