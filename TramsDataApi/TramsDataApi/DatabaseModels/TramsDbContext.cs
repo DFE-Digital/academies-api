@@ -599,7 +599,7 @@ namespace TramsDataApi.DatabaseModels
 
             modelBuilder.Entity<Group>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.GroupUid);
 
                 entity.ToTable("Group", "gias");
 
