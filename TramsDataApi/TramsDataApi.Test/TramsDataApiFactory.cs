@@ -1,6 +1,9 @@
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Test
 {
@@ -13,7 +16,7 @@ namespace TramsDataApi.Test
                 var integrationConfig = new ConfigurationBuilder()
                     .AddJsonFile("integration_settings.json")
                     .Build();
- 
+
                 config.AddConfiguration(integrationConfig);
             });
         }

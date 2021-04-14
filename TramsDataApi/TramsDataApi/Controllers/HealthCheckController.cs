@@ -1,7 +1,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using TramsDataApi.Data;
+using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Controllers
 {
