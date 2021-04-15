@@ -2,33 +2,47 @@
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+resources:
+  containers:
+    - container: 'sqlserver_linux_container_for_integration_tests'
+      image: 'mcr.microsoft.com/mssql/server:2019-CU5-ubuntu-16.04'
+      ports:
+        - 1433:1433/tcp
+      env:
+        ACCEPT_EULA: 'Y'
+        SA_PASSWORD: 'P@ssW0rd!'
 
 trigger:
 - main
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-18.04'
 
 variables:
-  solution: '**/*.sln'
+  dotnetSdkVersion: '3.1.300'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-
+  
+services:
+  sqlserver_linux_container_for_integration_tests: sqlserver_linux_container_for_integration_tests
 steps:
-- task: NuGetToolInstaller@1
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore project dependencies'
+    inputs:
+      command: 'restore'
+      projects: '**/*.csproj'
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
+  displayName: 'Build the project - $(buildConfiguration)'
   inputs:
-    restoreSolution: '$(solution)'
+    command: 'build'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+    projects: '**/*.csproj'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: 'Run unit tests - $(buildConfiguration)'
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+    arguments: '--no-build --configuration $(buildConfiguration)'
+    publishTestResults: true
+    projects: '**/*.Tests.csproj'
