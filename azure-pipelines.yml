@@ -25,6 +25,7 @@ variables:
   
 services:
   sqlserver_linux_container_for_integration_tests: sqlserver_linux_container_for_integration_tests
+  
 steps:
   - task: DotNetCoreCLI@2
     displayName: 'Restore project dependencies'
@@ -32,17 +33,17 @@ steps:
       command: 'restore'
       projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build the project - $(buildConfiguration)'
-  inputs:
-    command: 'build'
-    arguments: '--no-restore --configuration $(buildConfiguration)'
-    projects: '**/*.csproj'
+  - task: DotNetCoreCLI@2
+    displayName: 'Build the project - $(buildConfiguration)'
+    inputs:
+      command: 'build'
+      arguments: '--no-restore --configuration $(buildConfiguration)'
+      projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run unit tests - $(buildConfiguration)'
-  inputs:
-    command: 'test'
-    arguments: '--no-build --configuration $(buildConfiguration)'
-    publishTestResults: true
-    projects: '**/*.Tests.csproj'
+  - task: DotNetCoreCLI@2
+    displayName: 'Run unit tests - $(buildConfiguration)'
+    inputs:
+      command: 'test'
+      arguments: '--no-build --configuration $(buildConfiguration)'
+      publishTestResults: true
+      projects: '**/*.Tests.csproj'
