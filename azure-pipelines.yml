@@ -10,7 +10,7 @@ resources:
         - 1433:1433/tcp
       env:
         ACCEPT_EULA: 'Y'
-        SA_PASSWORD: 'P@ssW0rd!'
+        SA_PASSWORD: 'StrongPassword905'
 
 trigger:
 - main
