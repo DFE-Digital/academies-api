@@ -12,6 +12,7 @@ using Xunit;
 
 namespace TramsDataApi.Test
 {
+    [Collection("Database")]
     public class TrustsControllerTest : IClassFixture<TramsDataApiFactory>, IDisposable
     {
         private readonly HttpClient _client;
