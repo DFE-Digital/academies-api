@@ -8,14 +8,14 @@ namespace TramsDataApi.Test
     public class DbFixture : IDisposable
     {
         private readonly TramsDbContext _dbContext;
-        public readonly string TramsDbName = $"Trams-{Guid.NewGuid()}";
+        private readonly string _tramsDbName = $"Trams-{Guid.NewGuid()}";
         public readonly string ConnString;
         
         private bool _disposed;
         
         public DbFixture()
         {
-            ConnString = $"Server=localhost,1433;Database={TramsDbName};User=sa;Password=StrongPassword905";
+            ConnString = $"Server=localhost,1433;Database={_tramsDbName};User=sa;Password=StrongPassword905";
 
             var builder = new DbContextOptionsBuilder<TramsDbContext>();
 
