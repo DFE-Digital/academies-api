@@ -64,6 +64,7 @@ steps:
       command: custom
       custom: 'ef'
       arguments: 'migrations add CreateForTests'
+      workingDirectory: TramsDataApi
 
   - task: DotNetCoreCLI@2
     displayName: 'Run unit tests - $(buildConfiguration)'
