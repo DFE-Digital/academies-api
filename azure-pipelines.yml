@@ -70,6 +70,5 @@ steps:
     displayName: 'Run unit tests - $(buildConfiguration)'
     inputs:
       command: 'test'
-      arguments: '--no-build'
       publishTestResults: true
       projects: '**/*.Test.csproj'
