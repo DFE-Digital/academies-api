@@ -21,7 +21,6 @@ pool:
 variables:
   dotnetSdkVersion: '3.1.300'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
   
 services:
   sqlserver_linux_container_for_integration_tests: sqlserver_linux_container_for_integration_tests
@@ -52,10 +51,10 @@ steps:
       projects: '**/*.csproj'
 
   - task: DotNetCoreCLI@2
-    displayName: 'Build the project - $(buildConfiguration)'
+    displayName: 'Build the project'
     inputs:
       command: 'build'
-      arguments: '--no-restore --configuration $(buildConfiguration)'
+      arguments: '--no-restore'
       projects: '**/*.csproj'
   
   - task: DotNetCoreCLI@2
@@ -67,7 +66,7 @@ steps:
       workingDirectory: TramsDataApi
 
   - task: DotNetCoreCLI@2
-    displayName: 'Run unit tests - $(buildConfiguration)'
+    displayName: 'Run unit tests'
     inputs:
       command: 'test'
       publishTestResults: true
