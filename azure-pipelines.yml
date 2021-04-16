@@ -51,11 +51,11 @@ steps:
       projects: '**/*.csproj'
 
   - task: DotNetCoreCLI@2
-    displayName: 'Build the project'
+    displayName: 'Build the test project'
     inputs:
       command: 'build'
       arguments: '--no-restore'
-      projects: '**/*.csproj'
+      projects: 'TramsDataApi.Test/*.csproj'
   
   - task: DotNetCoreCLI@2
     displayName: 'Create migrations for test db'
@@ -72,8 +72,14 @@ steps:
       publishTestResults: true
       projects: '**/*.Test.csproj'
 
+  
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: publish
+      arguments: '--output $(Build.ArtifactStagingDirectory)'
+
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'build'
+      ArtifactName: 'tramsApiBuild'
       publishLocation: 'Container'
