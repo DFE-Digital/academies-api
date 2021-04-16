@@ -43,6 +43,13 @@ steps:
       command: 'build'
       arguments: '--no-restore --configuration $(buildConfiguration)'
       projects: '**/*.csproj'
+  
+  - task: DotNetCoreCLI@2
+    displayName: 'Create migrations for test db'
+    inputs:
+      command: custom
+      custom: 'ef'
+      arguments: 'migrations add CreateForTests'
 
   - task: DotNetCoreCLI@2
     displayName: 'Run unit tests - $(buildConfiguration)'
