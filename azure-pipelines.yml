@@ -31,6 +31,20 @@ steps:
     displayName: 'Use .Net Core SDK $(dotnetSdkVersion)'
     inputs:
       version: '$(dotnetSdkVersion)'
+  
+  - task: DotNetCoreCLI@2
+    displayName: 'New manifest for tool'
+    inputs:
+      command: custom
+      custom: 'new'
+      arguments: tool-manifest
+  - task: DotNetCoreCLI@2
+    displayName: 'Install EF Tool'
+    inputs:
+      command: custom
+      custom: 'tool'
+      arguments: install dotnet-ef
+      
   - task: DotNetCoreCLI@2
     displayName: 'Restore project dependencies'
     inputs:
