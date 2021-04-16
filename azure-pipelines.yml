@@ -71,3 +71,9 @@ steps:
       command: 'test'
       publishTestResults: true
       projects: '**/*.Test.csproj'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'build'
+      publishLocation: 'Container'
