@@ -138,3 +138,6 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+
+# Add migrations (Will come back and look at how to handle migrations)
+*/Migrations

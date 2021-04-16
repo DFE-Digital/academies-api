@@ -9,6 +9,7 @@ using Xunit;
 
 namespace TramsDataApi.Test
 {
+    [Collection("Database")]
     public class HealthCheckControllerTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
