@@ -7,8 +7,5 @@
     }
   },
   "AllowedHosts": "*",
-  "ApiKey": "testing-api-key",
-  "ConnectionStrings": {
-    "DefaultConnection": "Data Source=127.0.0.1;Initial Catalog=local_trams_test_db;persist security info=True;User id=sa; Password=StrongPassword905"
-  }
+  "ApiKey": "testing-api-key"
 }
