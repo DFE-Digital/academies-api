@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - trams-external-api
+name: Build and deploy to Development Env
 
 on:
   push:
@@ -10,6 +10,32 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: 'mcr.microsoft.com/mssql/server:2019-CU5-ubuntu-16.04'
+        ports:
+          - 1433:1433/tcp
+        env:
+          ACCEPT_EULA: 'Y'
+          SA_PASSWORD: 'StrongPassword905'
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.301'
+      - name: Install EF for tests
+        run: dotnet tool install --global dotnet-ef
+      - name: Restore tools for tests
+        run: dotnet tool restore
+      - name: create migrations for test
+        working-directory: ./TramsDataApi
+        run: dotnet ef migrations add CreateForTests
+      - name: Test
+        run: dotnet test --verbosity normal
   build:
     runs-on: windows-latest
 
