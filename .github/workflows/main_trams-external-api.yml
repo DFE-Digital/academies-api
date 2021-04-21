@@ -4,11 +4,7 @@
 name: Build and deploy to Development Env
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -63,7 +59,7 @@ jobs:
         name: .net-app
         path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+  deploy-to-dev:
     runs-on: windows-latest
     needs: build
     environment:
@@ -84,3 +80,24 @@ jobs:
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_28b87edd019748f48c8b93fec502bc2c }}
         package: .
+  deploy-to-pp:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'trams-external-api-pp'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_191bdb4fda494f5ca84257af75b77cac }}
+          package: .

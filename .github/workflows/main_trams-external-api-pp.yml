@@ -33,7 +33,7 @@ jobs:
         name: .net-app
         path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+  deploy-to-pp:
     runs-on: windows-latest
     needs: build
     environment:
