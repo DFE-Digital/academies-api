@@ -24,6 +24,7 @@ namespace TramsDataApi.Test
             _client.BaseAddress = new Uri("https://trams-api.com/");
             var scope = fixture.Services.CreateScope();
             _dbContext = scope.ServiceProvider.GetRequiredService<TramsDbContext>();
+            // Look into using transactions for tests
             //_dbContext.Database.BeginTransaction();
         }
 
