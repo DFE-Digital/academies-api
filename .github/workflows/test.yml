@@ -30,11 +30,12 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Install EF for tests
+      run: dotnet tool install --global dotnet-ef
+    - name: Restore tools for tests
+      run: dotnet tool restore
     - name: create migrations for test
       working-directory: ./TramsDataApi
-      run: |
-      dotnet tool install --global dotnet-ef
-      dotnet tool restore
-      ef migrations add CreateForTests
+      run: ef migrations add CreateForTests
     - name: Test
       run: dotnet test --no-build --verbosity normal
