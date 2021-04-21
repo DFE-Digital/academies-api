@@ -34,11 +34,15 @@ jobs:
       - name: create migrations for test
         working-directory: ./TramsDataApi
         run: dotnet ef migrations add CreateForTests
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
       - name: Test
-        run: dotnet test --verbosity normal
+        run: dotnet test --no-build --verbosity normal
   build:
     runs-on: windows-latest
-
+    needs: test
     steps:
     - uses: actions/checkout@v2
 
