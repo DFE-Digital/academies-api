@@ -105,3 +105,24 @@ jobs:
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_191bdb4fda494f5ca84257af75b77cac }}
           package: .
+          
+  deploy-to-prod:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .net-app
+      
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'trams-external-api-pr'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_206f4752f56e44209c3f5ea6cd388935 }}
+          package: .
