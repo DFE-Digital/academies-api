@@ -1,4 +1,4 @@
-name: .NET
+name: Run all tests for PR
 
 on:
   push:
