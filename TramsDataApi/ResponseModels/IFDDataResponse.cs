@@ -15,8 +15,9 @@ namespace TramsDataApi.ResponseModels
         public string FollowupLetterSent { get; set; }
         public string DateActionPlannedFor { get; set; }
         public string WIPSummaryGoesToMinister { get; set; }
-        public string ExternalGovernancyReviewDate { get; set; }
+        public string ExternalGovernanceReviewDate { get; set; }
         public string EfficiencyICFPreviewCompleted { get; set; }
+        public string EfficiencyICFPreviewOther { get; set; }
         public string LinkToWorkplaceForEfficiencyICFReview { get; set; }
         public string NumberInTrust { get; set; }
     }
