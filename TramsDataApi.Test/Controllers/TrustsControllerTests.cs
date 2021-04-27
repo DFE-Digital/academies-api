@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TramsDataApi.Controllers;
 using TramsDataApi.Gateways;
@@ -19,7 +20,7 @@ namespace TramsDataApi.Test.Controllers
             var controller = new TrustsController(gateway.Object);
             var result = controller.Get(ukprn);
 
-            result.Should().BeNull();
+            result.Should().BeOfType(typeof(NotFoundResult));
         }
     }
 }
