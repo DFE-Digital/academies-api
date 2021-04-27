@@ -9,7 +9,7 @@ using TramsDataApi.ResponseModels;
 namespace TramsDataApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("trust")]
     public class TrustsController : ControllerBase
     {
         private readonly ITrustGateway _trustGateway;
@@ -20,9 +20,17 @@ namespace TramsDataApi.Controllers
         }
         
         [HttpGet]
-        public TrustResponse Get(string ukprn)
+        [Route("{ukprn}")]
+        public IActionResult Get(string ukprn)
         {
-            return _trustGateway.GetByUkprn(ukprn);
+            var trust = _trustGateway.GetByUkprn(ukprn);
+
+            if (trust == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(trust);
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
 
 namespace TramsDataApi
@@ -31,6 +32,9 @@ namespace TramsDataApi
             // EF setup
             services.AddDbContext<TramsDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.AddScoped<ITrustGateway, TrustGateway>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

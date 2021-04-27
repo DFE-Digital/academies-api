@@ -35,18 +35,15 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/Trusts/mockukprn"),
+                RequestUri = new Uri("https://trams-api.com/trust/mockukprn"),
                 Headers = { 
                     { "ApiKey", "testing-api-key" }
                 }
             };
             
             var response = await _client.SendAsync(httpRequestMessage);
-            var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<Group>>(jsonString);
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -59,7 +56,7 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/Trusts/testukprn"),
+                RequestUri = new Uri("https://trams-api.com/trust/testukprn"),
                 Headers = { 
                     { "ApiKey", "testing-api-key" }
                 }
