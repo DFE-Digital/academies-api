@@ -10,11 +10,11 @@ using Xunit;
 namespace TramsDataApi.Test
 {
     [Collection("Database")]
-    public class HealthCheckControllerTests : IClassFixture<TramsDataApiFactory>
+    public class HealthCheckIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
 
-        public HealthCheckControllerTests(TramsDataApiFactory fixture)
+        public HealthCheckIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
