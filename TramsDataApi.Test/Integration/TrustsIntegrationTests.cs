@@ -30,7 +30,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task ShouldReturnNull_WhenNoTrustsExist()
+        public async Task ShouldReturnNull_WhenSearchingByUkprn_AndTrustDoesNotExist()
         {
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -47,7 +47,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Should_Return_List_Of_Trusts()
+        public async Task ShouldReturnTrust_WhenSearchingByUkprn_AndTrustExists()
         {
             var testData = GenerateTestData();
             _dbContext.Group.AddRange(testData);
@@ -61,13 +61,35 @@ namespace TramsDataApi.Test.Integration
                     { "ApiKey", "testing-api-key" }
                 }
             };
+
+            var expected = new TrustResponse
+            {
+                IfdData = new IFDDataResponse(),
+                Academies = new List<AcademyResponse>(),
+                GiasData = new GIASDataResponse
+                {
+                    GroupId = testData.GroupId,
+                    GroupName = testData.GroupName,
+                    CompaniesHouseNumber = testData.CompaniesHouseNumber,
+                    GroupContactAddress = new AddressResponse
+                    {
+                        Street = testData.GroupContactStreet,
+                        AdditionalLine = testData.GroupContactAddress3,
+                        Locality = testData.GroupContactLocality,
+                        Town = testData.GroupContactTown,
+                        County = testData.GroupContactCounty,
+                        Postcode = testData.GroupContactPostcode
+                    },
+                    Ukprn = testData.Ukprn
+                }
+            };
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<TrustResponse>(jsonString);
             
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeEquivalentTo(testData);
+            result.Should().BeEquivalentTo(expected);
             
             _dbContext.Group.RemoveRange(testData);
             await _dbContext.SaveChangesAsync();
