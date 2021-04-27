@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace TramsDataApi.Test
+namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
     public class HealthCheckIntegrationTests : IClassFixture<TramsDataApiFactory>
