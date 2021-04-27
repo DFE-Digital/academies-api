@@ -8,6 +8,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using TramsDataApi.ResponseModels;
 using Xunit;
 
 namespace TramsDataApi.Test.Integration
@@ -29,12 +30,12 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Should_Return_Empty_List_When_No_Trusts_Exist()
+        public async Task ShouldReturnNull_WhenNoTrustsExist()
         {
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/Trusts"),
+                RequestUri = new Uri("https://trams-api.com/Trusts/mockukprn"),
                 Headers = { 
                     { "ApiKey", "testing-api-key" }
                 }
@@ -45,7 +46,7 @@ namespace TramsDataApi.Test.Integration
             var result = JsonConvert.DeserializeObject<List<Group>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().Equal(new List<Group>());
+            result.Should().BeNull();
         }
 
         [Fact]
@@ -58,7 +59,7 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/Trusts"),
+                RequestUri = new Uri("https://trams-api.com/Trusts/testukprn"),
                 Headers = { 
                     { "ApiKey", "testing-api-key" }
                 }
@@ -66,7 +67,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<Group>>(jsonString);
+            var result = JsonConvert.DeserializeObject<TrustResponse>(jsonString);
             
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(testData);
@@ -81,9 +82,9 @@ namespace TramsDataApi.Test.Integration
            //_dbContext.Database.CurrentTransaction.Dispose();
         }
 
-        private List<Group> GenerateTestData()
+        private Group GenerateTestData()
         {
-            var group = new Group
+            return new Group
             {
                 GroupUid = "1",
                 GroupId = "1",
@@ -103,11 +104,10 @@ namespace TramsDataApi.Test.Integration
                 HeadOfGroupTitle = "Mx",
                 HeadOfGroupFirstName = "First Name",
                 HeadOfGroupLastName = "Last Name",
-                Ukprn = "ukprn",
+                Ukprn = "testukprn",
                 IncorporatedOnOpenDate = "01/01/1970",
                 OpenDate = "01/01/1970"
             };
-            return new List<Group> { group };
         }
     }
 }
