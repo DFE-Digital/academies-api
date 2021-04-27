@@ -10,15 +10,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace TramsDataApi.Test
+namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class TrustsControllerTest : IClassFixture<TramsDataApiFactory>, IDisposable
+    public class TrustsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
         private readonly HttpClient _client;
         private readonly TramsDbContext _dbContext;
 
-        public TrustsControllerTest(TramsDataApiFactory fixture)
+        public TrustsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
