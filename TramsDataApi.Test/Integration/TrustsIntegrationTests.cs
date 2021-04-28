@@ -14,19 +14,16 @@ using Xunit;
 namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class TrustsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
+    public class TrustsIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
         private readonly TramsDbContext _dbContext;
-
+        
         public TrustsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
-            var scope = fixture.Services.CreateScope();
-            _dbContext = scope.ServiceProvider.GetRequiredService<TramsDbContext>();
-            // Look into using transactions for tests
-            //_dbContext.Database.BeginTransaction();
+            _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
         }
 
         [Fact]
@@ -47,18 +44,19 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task ShouldReturnTrust_WhenSearchingByUkprn_AndTrustExists()
+        public async Task  ShouldReturnTrust_WhenSearchingByUkprn_AndTrustExists()
         {
             var testData = GenerateTestData();
-            _dbContext.Group.AddRange(testData);
+            await _dbContext.Group.AddAsync(testData);
             await _dbContext.SaveChangesAsync();
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri("https://trams-api.com/trust/testukprn"),
-                Headers = { 
-                    { "ApiKey", "testing-api-key" }
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
                 }
             };
 
@@ -83,22 +81,13 @@ namespace TramsDataApi.Test.Integration
                     Ukprn = testData.Ukprn
                 }
             };
-            
+
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<TrustResponse>(jsonString);
-            
+
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _dbContext.Group.RemoveRange(testData);
-            await _dbContext.SaveChangesAsync();
-        }
-        
-        public void Dispose()
-        { 
-           // _dbContext.Database.RollbackTransaction();
-           //_dbContext.Database.CurrentTransaction.Dispose();
         }
 
         private Group GenerateTestData()
