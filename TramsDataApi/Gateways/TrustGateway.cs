@@ -16,9 +16,9 @@ namespace TramsDataApi.Gateways
         
         public TrustResponse GetByUkprn(string ukprn)
         {
-            var group = _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukprn);
+            var trust = _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukprn);
 
-            return group == null ? null : TrustResponseFactory.Create(group);
+            return trust == null ? null : TrustResponseFactory.Create(trust);
         }
     }
 }
