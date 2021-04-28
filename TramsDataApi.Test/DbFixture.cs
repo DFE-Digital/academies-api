@@ -1,5 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TramsDataApi.DatabaseModels;
 using Xunit;
 
@@ -9,6 +10,7 @@ namespace TramsDataApi.Test
     {
         private readonly TramsDbContext _dbContext;
         private readonly string _tramsDbName = $"Trams-{Guid.NewGuid()}";
+        private readonly IDbContextTransaction _transaction;
         public readonly string ConnString;
         
         private bool _disposed;
@@ -23,10 +25,13 @@ namespace TramsDataApi.Test
             _dbContext = new TramsDbContext(builder.Options);
 
             _dbContext.Database.Migrate();
+            _transaction = _dbContext.Database.BeginTransaction();
         }
 
         public void Dispose()
         {
+            _transaction.Rollback();
+            _transaction.Dispose();
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

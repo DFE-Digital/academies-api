@@ -3,23 +3,34 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Gateways;
+using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("trust")]
     public class TrustsController : ControllerBase
     {
-        private readonly TramsDbContext _dbContext;
+        private readonly ITrustGateway _trustGateway;
 
-        public TrustsController(TramsDbContext dbContext)
+        public TrustsController(ITrustGateway trustGateway)
         {
-            _dbContext = dbContext;
+            _trustGateway = trustGateway;
         }
+        
         [HttpGet]
-        public List<Group> Get()
+        [Route("{ukprn}")]
+        public IActionResult Get(string ukprn)
         {
-            return _dbContext.Group.ToList();
+            var trust = _trustGateway.GetByUkprn(ukprn);
+
+            if (trust == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(trust);
         }
     }
 }

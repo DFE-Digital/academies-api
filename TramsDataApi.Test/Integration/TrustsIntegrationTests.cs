@@ -8,82 +8,91 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using TramsDataApi.ResponseModels;
 using Xunit;
 
-namespace TramsDataApi.Test
+namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class TrustsControllerTest : IClassFixture<TramsDataApiFactory>, IDisposable
+    public class TrustsIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
         private readonly TramsDbContext _dbContext;
-
-        public TrustsControllerTest(TramsDataApiFactory fixture)
+        
+        public TrustsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
-            var scope = fixture.Services.CreateScope();
-            _dbContext = scope.ServiceProvider.GetRequiredService<TramsDbContext>();
-            // Look into using transactions for tests
-            //_dbContext.Database.BeginTransaction();
+            _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
         }
 
         [Fact]
-        public async Task Should_Return_Empty_List_When_No_Trusts_Exist()
+        public async Task ShouldReturnNull_WhenSearchingByUkprn_AndTrustDoesNotExist()
         {
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/Trusts"),
+                RequestUri = new Uri("https://trams-api.com/trust/mockukprn"),
                 Headers = { 
                     { "ApiKey", "testing-api-key" }
                 }
             };
             
             var response = await _client.SendAsync(httpRequestMessage);
-            var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<Group>>(jsonString);
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().Equal(new List<Group>());
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
-        public async Task Should_Return_List_Of_Trusts()
+        public async Task  ShouldReturnTrust_WhenSearchingByUkprn_AndTrustExists()
         {
             var testData = GenerateTestData();
-            _dbContext.Group.AddRange(testData);
+            await _dbContext.Group.AddAsync(testData);
             await _dbContext.SaveChangesAsync();
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/Trusts"),
-                Headers = { 
-                    { "ApiKey", "testing-api-key" }
+                RequestUri = new Uri("https://trams-api.com/trust/testukprn"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
                 }
             };
-            
+
+            var expected = new TrustResponse
+            {
+                IfdData = new IFDDataResponse(),
+                Academies = new List<AcademyResponse>(),
+                GiasData = new GIASDataResponse
+                {
+                    GroupId = testData.GroupId,
+                    GroupName = testData.GroupName,
+                    CompaniesHouseNumber = testData.CompaniesHouseNumber,
+                    GroupContactAddress = new AddressResponse
+                    {
+                        Street = testData.GroupContactStreet,
+                        AdditionalLine = testData.GroupContactAddress3,
+                        Locality = testData.GroupContactLocality,
+                        Town = testData.GroupContactTown,
+                        County = testData.GroupContactCounty,
+                        Postcode = testData.GroupContactPostcode
+                    },
+                    Ukprn = testData.Ukprn
+                }
+            };
+
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<Group>>(jsonString);
-            
+            var result = JsonConvert.DeserializeObject<TrustResponse>(jsonString);
+
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeEquivalentTo(testData);
-            
-            _dbContext.Group.RemoveRange(testData);
-            await _dbContext.SaveChangesAsync();
-        }
-        
-        public void Dispose()
-        { 
-           // _dbContext.Database.RollbackTransaction();
-           //_dbContext.Database.CurrentTransaction.Dispose();
+            result.Should().BeEquivalentTo(expected);
         }
 
-        private List<Group> GenerateTestData()
+        private Group GenerateTestData()
         {
-            var group = new Group
+            return new Group
             {
                 GroupUid = "1",
                 GroupId = "1",
@@ -103,11 +112,10 @@ namespace TramsDataApi.Test
                 HeadOfGroupTitle = "Mx",
                 HeadOfGroupFirstName = "First Name",
                 HeadOfGroupLastName = "Last Name",
-                Ukprn = "ukprn",
+                Ukprn = "testukprn",
                 IncorporatedOnOpenDate = "01/01/1970",
                 OpenDate = "01/01/1970"
             };
-            return new List<Group> { group };
         }
     }
 }
