@@ -125,7 +125,6 @@ namespace TramsDataApi.Factories
                      HeadteacherFirstName = establishment.HeadFirstName,
                      HeadteacherLastName = establishment.HeadLastName,
                      HeadteacherPreferredJobTitle = establishment.HeadPreferredJobTitle,
-                     Inspectorate = null,
                      InspectorateName = establishment.InspectorateNameName,
                      InspectorateReport = establishment.InspectorateReport,
                      DateOfLastInspectionVisit = establishment.DateOfLastInspectionVisit,

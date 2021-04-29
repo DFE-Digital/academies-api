@@ -47,7 +47,6 @@ namespace TramsDataApi.ResponseModels
         public string HeadteacherFirstName { get; set; }
         public string HeadteacherLastName { get; set; }
         public string HeadteacherPreferredJobTitle { get; set; }
-        public string Inspectorate { get; set; }
         public string InspectorateName { get; set; }
         public string InspectorateReport { get; set; }
         public string DateOfLastInspectionVisit { get; set; }
