@@ -7,8 +7,8 @@ namespace TramsDataApi.ResponseModels
         public string LocalAuthorityName { get; set; }
         public string EstablishmentNumber { get; set; }
         public string EstablishmentName { get; set; }
-        public string EstablishmentType { get; set; }
-        public string EstablishmentTypeGroupCode { get; set; }
+        public NameAndCodeResponse EstablishmentType { get; set; }
+        public NameAndCodeResponse EstablishmentTypeGroup { get; set; }
         public NameAndCodeResponse EstablishmentStatus { get; set; }
         public NameAndCodeResponse ReasonEstablishmentOpened { get; set; }
         public string OpenDate { get; set; }
@@ -66,6 +66,7 @@ namespace TramsDataApi.ResponseModels
         public string SEN3 { get; set; }
         public string SEN4 { get; set; }
         public string SEN5 { get; set; }
+        public string SEN6 { get; set; }
         public string SEN7 { get; set; }
         public string SEN8 { get; set; }
         public string SEN9 { get; set; }
