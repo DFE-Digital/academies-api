@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Bogus;
 using TramsDataApi.DatabaseModels;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.ResponseModels;

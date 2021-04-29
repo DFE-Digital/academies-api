@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Bogus;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
@@ -311,13 +310,6 @@ namespace TramsDataApi.Test.Factories
                 
             }; 
         }
-
-        private Establishment GenerateFakeEstablishment()
-        {
-            Console.Write(new Faker<Establishment>());
-            return new Faker<Establishment>();
-        }
-
         private Establishment GenerateEstablishment()
         {
             return new Establishment
