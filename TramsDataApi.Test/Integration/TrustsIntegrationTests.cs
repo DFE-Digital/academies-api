@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -449,19 +450,19 @@ namespace TramsDataApi.Test.Integration
             {   
                 Rid = "1",
                 TrustRef = "TR12345",
-                TrustsTrustOpenDate = DateTime.Parse("21/05/2001"),
+                TrustsTrustOpenDate = DateTime.ParseExact("21/05/2001", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 LeadRscRegion = "Lead RSC Region",
                 TrustContactDetailsTrustContactPhoneNumber = "6",
-                TrustPerformanceAndRiskDateOfMeeting = DateTime.Parse("18/04/2019"),
+                TrustPerformanceAndRiskDateOfMeeting = DateTime.ParseExact("18/04/2019", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TrustPerformanceAndRiskPrioritisedForAReview = "Trust Performance And Risk Prioritised For A Review",
                 TrustPerformanceAndRiskSingleListGrouping = "Single List Grouping",
-                TrustPerformanceAndRiskDateOfGroupingDecision = DateTime.Parse("13/09/2018"),
-                TrustPerformanceAndRiskDateEnteredOntoSingleList = DateTime.Parse("19/02/2017"),
+                TrustPerformanceAndRiskDateOfGroupingDecision = DateTime.ParseExact("13/09/2018", "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                TrustPerformanceAndRiskDateEnteredOntoSingleList = DateTime.ParseExact("19/02/2017", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TrustPerformanceAndRiskTrustReviewWriteUp = "Trust Review Write Up",
                 TrustPerformanceAndRiskFollowUpLetterSent = "Follow Up Letter SenT",
-                TrustPerformanceAndRiskDateActionPlannedFor = DateTime.Parse("19/05/2010"),
+                TrustPerformanceAndRiskDateActionPlannedFor = DateTime.ParseExact("19/05/2010", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TrustPerformanceAndRiskWipSummaryGoesToMinister = "WIP Summary goes to Minister",
-                TrustPerformanceAndRiskExternalGovernanceReviewDate = DateTime.Parse("16/08/2012"),
+                TrustPerformanceAndRiskExternalGovernanceReviewDate = DateTime.ParseExact("16/08/2012", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TrustPerformanceAndRiskEfficiencyIcfpReviewCompleted = "ICFP Review Completed",
                 TrustPerformanceAndRiskEfficiencyIcfpReviewOther = "ICFP Review other",
                 TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview = "Link to ICFP Review",
