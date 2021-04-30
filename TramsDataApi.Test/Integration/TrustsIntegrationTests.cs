@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using TramsDataApi.DatabaseModels;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -197,7 +198,7 @@ namespace TramsDataApi.Test.Integration
         }
 
           [Fact]
-        public async Task  ShouldReturnAcademyData_WhenTrustHasAcademies()
+        public async Task  ShouldReturnAcademyData_WhenTrustHasAnAcademy()
         {
             var testGroupData = new Group
             {
@@ -225,9 +226,13 @@ namespace TramsDataApi.Test.Integration
             };
 
             var testEstablishment = GenerateEstablishment();
+            var nonTrustAcademies = Builder<Establishment>.CreateListOfSize(5)
+                .All().With(e => e.TrustsCode = "000")
+                .Build();
             
             await _dbContext.Group.AddAsync(testGroupData);
             await _dbContext.Establishment.AddAsync(testEstablishment);
+            await _dbContext.Establishment.AddRangeAsync(nonTrustAcademies);
             await _dbContext.SaveChangesAsync();
             
              var academyResponses = new List<AcademyResponse>
