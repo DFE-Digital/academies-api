@@ -23,7 +23,6 @@ namespace TramsDataApi.Gateways
                 return null;
             }
             var ifdTrustData = _dbContext.Trust.FirstOrDefault(t => t.TrustRef == trust.GroupId);
-            Console.WriteLine(trust);
             var establishments = _dbContext.Establishment.Where(e => e.TrustsCode == trust.GroupUid).ToList();
             return TrustResponseFactory.Create(trust, ifdTrustData, establishments);
         }

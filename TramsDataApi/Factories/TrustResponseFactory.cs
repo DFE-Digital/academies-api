@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
@@ -18,21 +19,21 @@ namespace TramsDataApi.Factories
             {
                 ifdDataResponse = new IFDDataResponse
                 {
-                    TrustOpenDate = ifdTrustData.TrustsTrustOpenDate.ToString(),
+                    TrustOpenDate = ifdTrustData.TrustsTrustOpenDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     LeadRSCRegion = ifdTrustData.LeadRscRegion,
                     TrustContactPhoneNumber = ifdTrustData.TrustContactDetailsTrustContactPhoneNumber,
-                    PerformanceAndRiskDateOfMeeting = ifdTrustData.TrustPerformanceAndRiskDateOfMeeting.ToString(),
+                    PerformanceAndRiskDateOfMeeting = ifdTrustData.TrustPerformanceAndRiskDateOfMeeting?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     PrioritisedAreaOfReview = ifdTrustData.TrustPerformanceAndRiskPrioritisedForAReview,
                     CurrentSingleListGrouping = ifdTrustData.TrustPerformanceAndRiskSingleListGrouping,
-                    DateOfGroupingDecision = ifdTrustData.TrustPerformanceAndRiskDateOfGroupingDecision.ToString(),
-                    DateEnteredOntoSingleList = ifdTrustData.TrustPerformanceAndRiskDateEnteredOntoSingleList.ToString(),
+                    DateOfGroupingDecision = ifdTrustData.TrustPerformanceAndRiskDateOfGroupingDecision?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    DateEnteredOntoSingleList = ifdTrustData.TrustPerformanceAndRiskDateEnteredOntoSingleList?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     TrustReviewWriteup = ifdTrustData.TrustPerformanceAndRiskTrustReviewWriteUp,
-                    DateOfTrustReviewMeeting = ifdTrustData.TrustPerformanceAndRiskDateOfMeeting.ToString(),
+                    DateOfTrustReviewMeeting = ifdTrustData.TrustPerformanceAndRiskDateOfMeeting?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     FollowupLetterSent = ifdTrustData.TrustPerformanceAndRiskFollowUpLetterSent,
-                    DateActionPlannedFor = ifdTrustData.TrustPerformanceAndRiskDateActionPlannedFor.ToString(),
+                    DateActionPlannedFor = ifdTrustData.TrustPerformanceAndRiskDateActionPlannedFor?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     WIPSummaryGoesToMinister = ifdTrustData.TrustPerformanceAndRiskWipSummaryGoesToMinister,
                     ExternalGovernanceReviewDate =
-                        ifdTrustData.TrustPerformanceAndRiskExternalGovernanceReviewDate.ToString(),
+                        ifdTrustData.TrustPerformanceAndRiskExternalGovernanceReviewDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     EfficiencyICFPreviewCompleted = ifdTrustData.TrustPerformanceAndRiskEfficiencyIcfpReviewCompleted,
                     EfficiencyICFPreviewOther = ifdTrustData.TrustPerformanceAndRiskEfficiencyIcfpReviewOther,
                     LinkToWorkplaceForEfficiencyICFReview =
