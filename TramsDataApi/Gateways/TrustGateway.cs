@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
@@ -17,8 +18,13 @@ namespace TramsDataApi.Gateways
         public TrustResponse GetByUkprn(string ukprn)
         {
             var trust = _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukprn);
-
-            return trust == null ? null : TrustResponseFactory.Create(trust);
+            if (trust == null)
+            {
+                return null;
+            }
+            var ifdTrustData = _dbContext.Trust.FirstOrDefault(t => t.TrustRef == trust.GroupId);
+            var establishments = _dbContext.Establishment.Where(e => e.TrustsCode == trust.GroupUid).ToList();
+            return TrustResponseFactory.Create(trust, ifdTrustData, establishments);
         }
     }
 }
