@@ -5,9 +5,9 @@ namespace TramsDataApi.Factories
 {
     public class AcademyResponseFactory
     {
-        public static AcademyResponse Create(Establishment establishment)
+        public static EstablishmentResponse Create(Establishment establishment)
         {
-            var academyResponse = new AcademyResponse
+            var academyResponse = new EstablishmentResponse
             {
                 Urn = establishment.Urn.ToString(),
                 LocalAuthorityCode = establishment.LaCode,

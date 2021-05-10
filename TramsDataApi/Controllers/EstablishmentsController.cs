@@ -7,24 +7,24 @@ namespace TramsDataApi.Controllers
     [ApiController]
     public class AcademiesController : ControllerBase
     {
-        private readonly IAcademyGateway _academyGateway;
-        public AcademiesController(IAcademyGateway academyGateway)
+        private readonly IEstablishmentGateway _establishmentGateway;
+        public AcademiesController(IEstablishmentGateway establishmentGateway)
         {
-            _academyGateway = academyGateway;
+            _establishmentGateway = establishmentGateway;
         }
 
         [HttpGet]
-        [Route("academy/{ukprn}")]
+        [Route("establishment/{ukprn}")]
         public IActionResult GetByUkprn(string ukprn)
         {
-            var academy = _academyGateway.GetByUkprn(ukprn);
+            var establishment = _establishmentGateway.GetByUkprn(ukprn);
 
-            if (academy == null)
+            if (establishment == null)
             {
                 return NotFound();
             }
 
-            return Ok(academy);
+            return Ok(establishment);
         }
     }
 }

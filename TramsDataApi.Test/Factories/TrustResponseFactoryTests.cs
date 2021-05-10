@@ -65,7 +65,7 @@ namespace TramsDataApi.Test.Factories
                 },
                 Ukprn = group.Ukprn
             };
-            var academyResponses = new List<AcademyResponse>();
+            var academyResponses = new List<EstablishmentResponse>();
             var expected = new TrustResponse
                 {IfdData = ifdDataResponse, GiasData = giasDataResponse, Academies = academyResponses};
 
@@ -93,7 +93,7 @@ namespace TramsDataApi.Test.Factories
                 },
                 Ukprn = group.Ukprn
             };
-            var academyResponses = new List<AcademyResponse>();
+            var academyResponses = new List<EstablishmentResponse>();
             var expected = new TrustResponse
                 {IfdData = null, GiasData = giasDataResponse, Academies = academyResponses};
 
@@ -122,9 +122,9 @@ namespace TramsDataApi.Test.Factories
                  },
                  Ukprn = group.Ukprn
              };
-             var academyResponses = new List<AcademyResponse>
+             var academyResponses = new List<EstablishmentResponse>
              {
-                 new AcademyResponse
+                 new EstablishmentResponse
                  {
                      Urn = testEstablishment.Urn.ToString(),
                      LocalAuthorityCode = testEstablishment.LaCode,
@@ -285,7 +285,7 @@ namespace TramsDataApi.Test.Factories
                  },
                  Ukprn = group.Ukprn
              };
-             var academyResponses = testEstablishments.Select(testEstablishment => new AcademyResponse
+             var academyResponses = testEstablishments.Select(testEstablishment => new EstablishmentResponse
                  {
                      Urn = testEstablishment.Urn.ToString(),
                      LocalAuthorityCode = testEstablishment.LaCode,

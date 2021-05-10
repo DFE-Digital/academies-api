@@ -6,16 +6,16 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Gateways
 {
-    public class AcademyGateway : IAcademyGateway
+    public class EstablishmentGateway : IEstablishmentGateway
     {
         private readonly TramsDbContext _dbContext;
 
-        public AcademyGateway(TramsDbContext dbContext)
+        public EstablishmentGateway(TramsDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public AcademyResponse GetByUkprn(string ukprn)
+        public EstablishmentResponse GetByUkprn(string ukprn)
         {
             var establishment = _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
             return AcademyResponseFactory.Create(establishment);

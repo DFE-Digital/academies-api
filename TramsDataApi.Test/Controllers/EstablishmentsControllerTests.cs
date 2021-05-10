@@ -9,12 +9,12 @@ using Xunit;
 
 namespace TramsDataApi.Test.Controllers
 {
-    public class AcademiesControllerTests
+    public class EstablishmentsControllerTests
     {
         [Fact]
-        public void GetAcademyByUkprn_ReturnsNotFoundResult_WhenNoAcademyFound()
+        public void GetEstablishmentByUkprn_ReturnsNotFoundResult_WhenNoAcademyFound()
         {
-            var gateway = new Mock<IAcademyGateway>();
+            var gateway = new Mock<IEstablishmentGateway>();
             var ukprn = "mockukprn";
             gateway.Setup(g => g.GetByUkprn(ukprn)).Returns(() => null);
 
@@ -25,11 +25,11 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void GetAcademyByUkprn_ReturnsAcademyResponse_WhenAcademyFound()
+        public void GetEstablishmentByUkprn_ReturnsAcademyResponse_WhenAcademyFound()
         {
-            var gateway = new Mock<IAcademyGateway>();
+            var gateway = new Mock<IEstablishmentGateway>();
             var ukprn = "mockukprn";
-            var academyResponse = Builder<AcademyResponse>.CreateNew().With(a => a.Ukprn = ukprn).Build();
+            var academyResponse = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = ukprn).Build();
             gateway.Setup(g => g.GetByUkprn(ukprn)).Returns(() => academyResponse);
 
             var controller = new AcademiesController(gateway.Object);

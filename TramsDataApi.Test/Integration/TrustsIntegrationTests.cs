@@ -94,7 +94,7 @@ namespace TramsDataApi.Test.Integration
                         .TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview,
                     NumberInTrust = testTrustData.NumberInTrust.ToString()
                 },
-                Academies = new List<AcademyResponse>(),
+                Academies = new List<EstablishmentResponse>(),
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
@@ -168,7 +168,7 @@ namespace TramsDataApi.Test.Integration
             var expected = new TrustResponse
             {
                 IfdData = null,
-                Academies = new List<AcademyResponse>(),
+                Academies = new List<EstablishmentResponse>(),
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
@@ -236,9 +236,9 @@ namespace TramsDataApi.Test.Integration
             await _dbContext.Establishment.AddRangeAsync(nonTrustAcademies);
             await _dbContext.SaveChangesAsync();
             
-             var academyResponses = new List<AcademyResponse>
+             var academyResponses = new List<EstablishmentResponse>
              {
-                 new AcademyResponse
+                 new EstablishmentResponse
                  {
                      Urn = testEstablishment.Urn.ToString(),
                      LocalAuthorityCode = testEstablishment.LaCode,

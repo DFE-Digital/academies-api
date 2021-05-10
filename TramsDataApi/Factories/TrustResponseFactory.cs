@@ -60,7 +60,7 @@ namespace TramsDataApi.Factories
                 },
                 Ukprn = group.Ukprn
             };
-            var academyResponses = establishments.Select(AcademyResponseFactory.Create).ToList();
+            var academyResponses = establishments.Select(e => AcademyResponseFactory.Create(e)).ToList();
             return new TrustResponse
                 {IfdData = ifdDataResponse, GiasData = giasDataResponse, Academies = academyResponses};
         }

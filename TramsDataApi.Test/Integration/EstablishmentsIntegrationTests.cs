@@ -12,12 +12,12 @@ using Xunit;
 namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class AcademyIntegrationTests : IClassFixture<TramsDataApiFactory>
+    public class EstablishmentsIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
         private readonly TramsDbContext _dbContext;
 
-        public AcademyIntegrationTests(TramsDataApiFactory fixture)
+        public EstablishmentsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
@@ -25,13 +25,13 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task CanGetAcademyByUkprn()
+        public async Task CanGetEstablishmentByUkprn()
         {
             var establishment = GenerateEstablishment();
             await _dbContext.Establishment.AddAsync(establishment);
             await _dbContext.SaveChangesAsync();
 
-            var expected = new AcademyResponse
+            var expected = new EstablishmentResponse
             {
                 Urn = establishment.Urn.ToString(),
                 LocalAuthorityCode = establishment.LaCode,
@@ -196,7 +196,7 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/academy/mockukprn"),
+                RequestUri = new Uri("https://trams-api.com/establishment/mockukprn"),
                 Headers = { 
                     { "ApiKey", "testing-api-key" }
                 }
@@ -204,7 +204,7 @@ namespace TramsDataApi.Test.Integration
 
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<AcademyResponse>(jsonString);
+            var result = JsonConvert.DeserializeObject<EstablishmentResponse>(jsonString);
             
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
