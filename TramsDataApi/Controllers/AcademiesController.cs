@@ -5,7 +5,6 @@ using TramsDataApi.ResponseModels;
 namespace TramsDataApi.Controllers
 {
     [ApiController]
-    [Route("trust")]
     public class AcademiesController : ControllerBase
     {
         private readonly IAcademyGateway _academyGateway;
@@ -14,9 +13,18 @@ namespace TramsDataApi.Controllers
             _academyGateway = academyGateway;
         }
 
+        [HttpGet]
+        [Route("academy/{ukprn}")]
         public IActionResult GetByUkprn(string ukprn)
         {
-            return NotFound();
+            var academy = _academyGateway.GetByUkprn(ukprn);
+
+            if (academy == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(academy);
         }
     }
 }

@@ -1,8 +1,10 @@
+using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TramsDataApi.Controllers;
 using TramsDataApi.Gateways;
+using TramsDataApi.ResponseModels;
 using Xunit;
 
 namespace TramsDataApi.Test.Controllers
@@ -20,6 +22,20 @@ namespace TramsDataApi.Test.Controllers
             var result = controller.GetByUkprn(ukprn);
 
             result.Should().BeOfType(typeof(NotFoundResult));
+        }
+
+        [Fact]
+        public void GetAcademyByUkprn_ReturnsAcademyResponse_WhenAcademyFound()
+        {
+            var gateway = new Mock<IAcademyGateway>();
+            var ukprn = "mockukprn";
+            var academyResponse = Builder<AcademyResponse>.CreateNew().With(a => a.Ukprn = ukprn).Build();
+            gateway.Setup(g => g.GetByUkprn(ukprn)).Returns(() => academyResponse);
+
+            var controller = new AcademiesController(gateway.Object);
+            var result = controller.GetByUkprn(ukprn);
+            
+            result.Should().BeEquivalentTo(new OkObjectResult(academyResponse));
         }
     }
 }

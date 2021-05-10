@@ -34,6 +34,7 @@ namespace TramsDataApi
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<ITrustGateway, TrustGateway>();
+            services.AddScoped<IAcademyGateway, AcademyGateway>();
 
         }
 
