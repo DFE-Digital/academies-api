@@ -208,13 +208,16 @@ namespace TramsDataApi.Test.Integration
             
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
+            
+            _dbContext.Establishment.Remove(establishment);
+            await _dbContext.SaveChangesAsync();
         }
         
         private Establishment GenerateEstablishment()
         {
             return new Establishment
             {
-                Urn = 100000,
+                Urn = 100001,
                 LaCode = "203",
                 LaName = "Greenwich",
                 EstablishmentNumber = "4100",
@@ -259,7 +262,7 @@ namespace TramsDataApi.Test.Integration
                 PercentageFsm = "10.2",
                 TrustSchoolFlagCode = "0",
                 TrustSchoolFlagName = "Not applicable",
-                TrustsCode = "345",
+                TrustsCode = "500",
                 TrustsName = "Test Group",
                 SchoolSponsorFlagName = "Not applicable",
                 SchoolSponsorsName = null,

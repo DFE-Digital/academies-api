@@ -43,7 +43,7 @@ namespace TramsDataApi.Test
                 if (disposing)
                 {
                     // remove the temp db from the server once all tests are done
-                    //_dbContext.Database.EnsureDeleted();
+                    _dbContext.Database.EnsureDeleted();
                 }
 
                 _disposed = true;
