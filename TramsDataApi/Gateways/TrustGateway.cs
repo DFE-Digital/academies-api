@@ -28,5 +28,15 @@ namespace TramsDataApi.Gateways
             var establishments = _establishmentGateway.GetByTrustUid(trust.GroupUid);
             return TrustResponseFactory.Create(trust, ifdTrustData, establishments);
         }
+
+        public Group GetGroupByUkprn(string ukprn)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Trust GetIfdTrustByGroupId(string groupId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
