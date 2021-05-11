@@ -22,9 +22,9 @@ namespace TramsDataApi.Test.UseCases
         {
             var ukprn = "mockukprn";
             var mockTrustsGateway = new Mock<ITrustGateway>();
-            var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
+            var mockGetEstablishmentsByTrustUid = new Mock<IGetEstablishmentsByTrustUid>();
             mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkprn(ukprn)).Returns(() => null);
-            var useCase = new GetTrustsByUkprn(mockTrustsGateway.Object, mockEstablishmentsGateway.Object);
+            var useCase = new GetTrustsByUkprn(mockTrustsGateway.Object, mockGetEstablishmentsByTrustUid.Object);
 
             useCase.Execute(ukprn).Should().BeNull();
         }
@@ -37,16 +37,16 @@ namespace TramsDataApi.Test.UseCases
             var expectedTrust = Builder<Trust>.CreateNew().With(t => t.TrustRef = expectedGroup.GroupId).Build();
             
             var mockTrustsGateway = new Mock<ITrustGateway>();
-            var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
+            var mockGetEstablishmentsByTrustUid = new Mock<IGetEstablishmentsByTrustUid>();
             
             mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkprn(ukprn))
                 .Returns(expectedGroup);
             mockTrustsGateway.Setup(gateway => gateway.GetIfdTrustByGroupId(expectedGroup.GroupId))
                 .Returns(expectedTrust);
-            mockEstablishmentsGateway.Setup(gateway => gateway.GetByTrustUid(expectedGroup.GroupUid))
+            mockGetEstablishmentsByTrustUid.Setup(gateway => gateway.Execute(expectedGroup.GroupUid))
                 .Returns(() => null);
             
-            var useCase = new GetTrustsByUkprn(mockTrustsGateway.Object, mockEstablishmentsGateway.Object);
+            var useCase = new GetTrustsByUkprn(mockTrustsGateway.Object, mockGetEstablishmentsByTrustUid.Object);
             var expected = TrustResponseFactory.Create(expectedGroup, expectedTrust, null);
             var result = useCase.Execute(ukprn);
 

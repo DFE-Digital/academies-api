@@ -7,6 +7,6 @@ namespace TramsDataApi.Gateways
     public interface IEstablishmentGateway
     {
         public Establishment GetByUkprn(string ukprn);
-        public List<EstablishmentResponse> GetByTrustUid(string trustUid);
+        public IList<Establishment> GetByTrustUid(string trustUid);
     }
 }

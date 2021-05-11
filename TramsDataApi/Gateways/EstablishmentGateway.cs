@@ -21,10 +21,9 @@ namespace TramsDataApi.Gateways
             return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
         }
 
-        public List<EstablishmentResponse> GetByTrustUid(string trustUid)
+        public IList<Establishment> GetByTrustUid(string trustUid)
         {
             return _dbContext.Establishment.Where(e => e.TrustsCode == trustUid)
-                .Select(e => AcademyResponseFactory.Create(e))
                 .ToList();
         }
     }

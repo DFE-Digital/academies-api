@@ -7,12 +7,12 @@ namespace TramsDataApi.UseCases
     public class GetTrustsByUkprn : IGetTrustsByUkprn
     {
         private readonly ITrustGateway _trustGateway;
-        private readonly IEstablishmentGateway _establishmentGateway;
+        private readonly IGetEstablishmentsByTrustUid _getEstablishmentsByTrustUid;
 
-        public GetTrustsByUkprn(ITrustGateway trustGateway, IEstablishmentGateway establishmentGateway)
+        public GetTrustsByUkprn(ITrustGateway trustGateway, IGetEstablishmentsByTrustUid getEstablishmentsByTrustUid)
         {
             _trustGateway = trustGateway;
-            _establishmentGateway = establishmentGateway;
+            _getEstablishmentsByTrustUid = getEstablishmentsByTrustUid;
         }
         
         public TrustResponse Execute(string ukprn)
@@ -24,7 +24,7 @@ namespace TramsDataApi.UseCases
             }
 
             var trust = _trustGateway.GetIfdTrustByGroupId(group.GroupId);
-            var establishments = _establishmentGateway.GetByTrustUid(group.GroupUid);
+            var establishments = _getEstablishmentsByTrustUid.Execute(group.GroupUid);
             return TrustResponseFactory.Create(group, trust, establishments);
         }
     }
