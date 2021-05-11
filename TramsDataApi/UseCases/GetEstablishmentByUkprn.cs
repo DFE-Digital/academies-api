@@ -16,8 +16,13 @@ namespace TramsDataApi.UseCases
         public EstablishmentResponse Execute(string ukprn)
         {
             var establishment = _establishmentGateway.GetByUkprn(ukprn);
+            if (establishment == null)
+            {
+                return null;
+            }
+            var misEstablishmentData = _establishmentGateway.GetMisEstablishmentByUrn(establishment.Urn);
 
-            return AcademyResponseFactory.Create(establishment);
+            return AcademyResponseFactory.Create(establishment, misEstablishmentData);
         }
     }
 }

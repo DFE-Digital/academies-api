@@ -26,5 +26,10 @@ namespace TramsDataApi.Gateways
             return _dbContext.Establishment.Where(e => e.TrustsCode == trustUid)
                 .ToList();
         }
+
+        public MisEstablishments GetMisEstablishmentByUrn(int establishmentUrn)
+        {
+            return _dbContext.MisEstablishments.FirstOrDefault(m => m.Urn == establishmentUrn);
+        }
     }
 }

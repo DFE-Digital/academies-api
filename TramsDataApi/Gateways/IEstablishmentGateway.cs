@@ -8,5 +8,6 @@ namespace TramsDataApi.Gateways
     {
         public Establishment GetByUkprn(string ukprn);
         public IList<Establishment> GetByTrustUid(string trustUid);
+        public MisEstablishments GetMisEstablishmentByUrn(int establishmentUrn);
     }
 }

@@ -1472,7 +1472,7 @@ namespace TramsDataApi.DatabaseModels
             });
             modelBuilder.Entity<MisEstablishments>(entity =>
                     {
-                        entity.HasNoKey();
+                        entity.HasKey(e => e.Urn);
         
                         entity.ToTable("Establishments", "mis");
         
@@ -1602,7 +1602,7 @@ namespace TramsDataApi.DatabaseModels
         
                         entity.Property(e => e.TypeOfEducation).HasColumnName("Type of education");
         
-                        entity.Property(e => e.Urn).HasColumnName("URN");
+                        entity.Property(e => e.Urn).HasColumnName("URN").ValueGeneratedNever();;
         
                         entity.Property(e => e.UrnAtTimeOfLatestFullInspection).HasColumnName("URN at time of latest full inspection");
         
@@ -1705,7 +1705,7 @@ namespace TramsDataApi.DatabaseModels
         
                     modelBuilder.Entity<SmartData>(entity =>
                     {
-                        entity.HasNoKey();
+                         entity.HasKey(e => e.Urn);
         
                         entity.ToTable("SmartData", "smart");
         

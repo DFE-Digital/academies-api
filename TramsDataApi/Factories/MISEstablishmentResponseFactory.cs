@@ -7,6 +7,10 @@ namespace TramsDataApi.Factories
     {
         public static MISEstablishmentResponse Create(MisEstablishments misEstablishments)
         {
+            if (misEstablishments == null)
+            {
+                return null;
+            }
             return new MISEstablishmentResponse
             {
                 SiteName = null,
