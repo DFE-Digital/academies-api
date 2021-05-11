@@ -4,6 +4,7 @@ using Moq;
 using TramsDataApi.Controllers;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.UseCases;
 using Xunit;
 
 namespace TramsDataApi.Test.Controllers
@@ -13,11 +14,11 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetTrustsByUkPrn_ReturnsNotFoundResult_WhenNoTrustsFound()
         {
-            var gateway = new Mock<ITrustGateway>();
+            var getTrustsByUkprn = new Mock<IGetTrustsByUkprn>();
             var ukprn = "mockukprn";
-            gateway.Setup(g => g.GetByUkprn(ukprn)).Returns(() => null);
+            getTrustsByUkprn.Setup(g => g.Execute(ukprn)).Returns(() => null);
 
-            var controller = new TrustsController(gateway.Object);
+            var controller = new TrustsController(getTrustsByUkprn.Object);
             var result = controller.Get(ukprn);
 
             result.Should().BeOfType(typeof(NotFoundResult));
@@ -48,10 +49,10 @@ namespace TramsDataApi.Test.Controllers
                     Ukprn = ukprn
                 }
             };
-            var gateway = new Mock<ITrustGateway>();
-            gateway.Setup(g => g.GetByUkprn(ukprn)).Returns(trustResponse);
+            var getTrustsByUkprn = new Mock<IGetTrustsByUkprn>();
+            getTrustsByUkprn.Setup(g => g.Execute(ukprn)).Returns(trustResponse);
             
-            var controller = new TrustsController(gateway.Object);
+            var controller = new TrustsController(getTrustsByUkprn.Object);
             var result = controller.Get(ukprn);
 
             result.Should().BeEquivalentTo(new OkObjectResult(trustResponse));

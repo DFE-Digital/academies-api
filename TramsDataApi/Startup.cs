@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
+using TramsDataApi.UseCases;
 
 namespace TramsDataApi
 {
@@ -35,7 +36,7 @@ namespace TramsDataApi
             
             services.AddScoped<ITrustGateway, TrustGateway>();
             services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
-
+            services.AddScoped<IGetTrustsByUkprn, GetTrustsByUkprn>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

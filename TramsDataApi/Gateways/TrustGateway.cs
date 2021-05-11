@@ -16,27 +16,15 @@ namespace TramsDataApi.Gateways
             _dbContext = dbContext;
             _establishmentGateway = establishmentGateway;
         }
-        
-        public TrustResponse GetByUkprn(string ukprn)
-        {
-            var trust = _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukprn);
-            if (trust == null)
-            {
-                return null;
-            }
-            var ifdTrustData = _dbContext.Trust.FirstOrDefault(t => t.TrustRef == trust.GroupId);
-            var establishments = _establishmentGateway.GetByTrustUid(trust.GroupUid);
-            return TrustResponseFactory.Create(trust, ifdTrustData, establishments);
-        }
 
         public Group GetGroupByUkprn(string ukprn)
         {
-            throw new NotImplementedException();
+            return _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukprn);
         }
 
         public Trust GetIfdTrustByGroupId(string groupId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Trust.FirstOrDefault(t => t.TrustRef == groupId);
         }
     }
 }

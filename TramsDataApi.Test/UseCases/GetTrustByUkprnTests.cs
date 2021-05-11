@@ -23,7 +23,7 @@ namespace TramsDataApi.Test.UseCases
             var ukprn = "mockukprn";
             var mockTrustsGateway = new Mock<ITrustGateway>();
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
-            mockTrustsGateway.Setup(gateway => gateway.GetByUkprn(ukprn)).Returns(() => null);
+            mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkprn(ukprn)).Returns(() => null);
             var useCase = new GetTrustsByUkprn(mockTrustsGateway.Object, mockEstablishmentsGateway.Object);
 
             useCase.Execute(ukprn).Should().BeNull();
