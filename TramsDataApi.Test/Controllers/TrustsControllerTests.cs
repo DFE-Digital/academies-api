@@ -20,7 +20,7 @@ namespace TramsDataApi.Test.Controllers
             var controller = new TrustsController(gateway.Object);
             var result = controller.Get(ukprn);
 
-            result.Should().BeOfType(typeof(NotFoundResult));
+            result.Result.Should().BeOfType(typeof(NotFoundResult));
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace TramsDataApi.Test.Controllers
             var controller = new TrustsController(gateway.Object);
             var result = controller.Get(ukprn);
 
-            result.Should().BeEquivalentTo(new OkObjectResult(trustResponse));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(trustResponse));
         }
     }
 }
