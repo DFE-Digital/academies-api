@@ -21,7 +21,7 @@ namespace TramsDataApi.Controllers
         
         [HttpGet]
         [Route("{ukprn}")]
-        public IActionResult Get(string ukprn)
+        public ActionResult<TrustResponse> Get(string ukprn)
         {
             var trust = _trustGateway.GetByUkprn(ukprn);
 
