@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Gateways
 {
     public interface IEstablishmentGateway
     {
-        public EstablishmentResponse GetByUkprn(string ukprn);
+        public Establishment GetByUkprn(string ukprn);
         public List<EstablishmentResponse> GetByTrustUid(string trustUid);
     }
 }

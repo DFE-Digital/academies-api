@@ -16,10 +16,9 @@ namespace TramsDataApi.Gateways
             _dbContext = dbContext;
         }
 
-        public EstablishmentResponse GetByUkprn(string ukprn)
-        {
-            var establishment = _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
-            return AcademyResponseFactory.Create(establishment);
+        public Establishment GetByUkprn(string ukprn)
+        { 
+            return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
         }
 
         public List<EstablishmentResponse> GetByTrustUid(string trustUid)

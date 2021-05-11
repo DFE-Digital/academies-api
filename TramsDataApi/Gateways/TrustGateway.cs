@@ -1,8 +1,5 @@
-using System;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
-using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Gateways
 {

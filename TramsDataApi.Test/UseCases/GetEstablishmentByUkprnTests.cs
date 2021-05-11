@@ -1,18 +1,43 @@
+using FizzWare.NBuilder;
+using FizzWare.NBuilder.PropertyNaming;
+using FluentAssertions;
+using Moq;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.UseCases;
+using Xunit;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Test.UseCases
 {
-    public class AcademyResponseFactory
+    public class GetEstablishmentByUkprnTests
     {
-        public static EstablishmentResponse Create(Establishment establishment)
+        public GetEstablishmentByUkprnTests()
         {
-            if (establishment == null)
-            {
-                return null;
-            }
+            BuilderSetup.SetDefaultPropertyName(new RandomValuePropertyNamer(new BuilderSettings()));
+        }
+        
+        [Fact]
+        public void GetEstablishmentByUkprn_ReturnsNull_WhenNoEstablishmentsAreFound()
+        {
+            var ukprn = "mockukprn";
+            var establishmentsGateway = new Mock<IEstablishmentGateway>();
+            establishmentsGateway.Setup(gateway => gateway.GetByUkprn(ukprn)).Returns(() => null);
+
+            var useCase = new GetEstablishmentByUkprn(establishmentsGateway.Object);
+            useCase.Execute(ukprn).Should().BeNull();
+        }
+
+        [Fact]
+        public void GetEstablishmentByUkprn_ReturnsEstablishment_WhenAnEstablishmentIsFound()
+        {
+            var ukprn = "mockukprn";
+            var establishment = Builder<Establishment>.CreateNew().With(e => e.Ukprn = ukprn).Build();
+            var establishmentGateway = new Mock<IEstablishmentGateway>();
+
+            establishmentGateway.Setup(gateway => gateway.GetByUkprn(ukprn)).Returns(establishment);
             
-            var academyResponse = new EstablishmentResponse
+            var expected = new EstablishmentResponse
             {
                 Urn = establishment.Urn.ToString(),
                 LocalAuthorityCode = establishment.LaCode,
@@ -173,7 +198,11 @@ namespace TramsDataApi.Factories
                 Financial = null,
                 Concerns = null
             };
-            return academyResponse;
+
+            var useCase = new GetEstablishmentByUkprn(establishmentGateway.Object);
+            var result = useCase.Execute(ukprn);
+            
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }
