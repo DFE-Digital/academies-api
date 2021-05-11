@@ -8,7 +8,7 @@ namespace TramsDataApi.Factories
 {
     public static class TrustResponseFactory
     {
-        public static TrustResponse Create(Group group, Trust ifdTrustData, List<Establishment> establishments)
+        public static TrustResponse Create(Group group, Trust ifdTrustData, List<EstablishmentResponse> establishments)
         {
             IFDDataResponse ifdDataResponse;
             if (ifdTrustData == null)
@@ -60,9 +60,8 @@ namespace TramsDataApi.Factories
                 },
                 Ukprn = group.Ukprn
             };
-            var academyResponses = establishments.Select(e => AcademyResponseFactory.Create(e)).ToList();
             return new TrustResponse
-                {IfdData = ifdDataResponse, GiasData = giasDataResponse, Academies = academyResponses};
+                {IfdData = ifdDataResponse, GiasData = giasDataResponse, Academies = establishments};
         }
     }
 }

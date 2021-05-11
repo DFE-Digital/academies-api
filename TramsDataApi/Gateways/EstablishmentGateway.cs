@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
@@ -19,6 +20,13 @@ namespace TramsDataApi.Gateways
         {
             var establishment = _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
             return AcademyResponseFactory.Create(establishment);
+        }
+
+        public List<EstablishmentResponse> GetByTrustUid(string trustUid)
+        {
+            return _dbContext.Establishment.Where(e => e.TrustsCode == trustUid)
+                .Select(e => AcademyResponseFactory.Create(e))
+                .ToList();
         }
     }
 }

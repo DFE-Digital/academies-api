@@ -9,10 +9,12 @@ namespace TramsDataApi.Gateways
     public class TrustGateway : ITrustGateway
     {
         private readonly TramsDbContext _dbContext;
+        private readonly IEstablishmentGateway _establishmentGateway;
 
-        public TrustGateway(TramsDbContext dbContext)
+        public TrustGateway(TramsDbContext dbContext, IEstablishmentGateway establishmentGateway)
         {
             _dbContext = dbContext;
+            _establishmentGateway = establishmentGateway;
         }
         
         public TrustResponse GetByUkprn(string ukprn)
@@ -23,7 +25,7 @@ namespace TramsDataApi.Gateways
                 return null;
             }
             var ifdTrustData = _dbContext.Trust.FirstOrDefault(t => t.TrustRef == trust.GroupId);
-            var establishments = _dbContext.Establishment.Where(e => e.TrustsCode == trust.GroupUid).ToList();
+            var establishments = _establishmentGateway.GetByTrustUid(trust.GroupUid);
             return TrustResponseFactory.Create(trust, ifdTrustData, establishments);
         }
     }
