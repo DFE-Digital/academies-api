@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -22,14 +23,100 @@ namespace TramsDataApi.Test.Integration
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
             _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
+            
         }
 
         [Fact]
         public async Task CanGetEstablishmentByUkprn()
         {
             var establishment = GenerateEstablishment();
+            var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
             await _dbContext.Establishment.AddAsync(establishment);
+            await _dbContext.MisEstablishments.AddAsync(misEstablishment);
             await _dbContext.SaveChangesAsync();
+
+            var expectedMisEstablishmentResponse = new MISEstablishmentResponse
+            {
+                SiteName = null,
+                WebLink = misEstablishment.WebLink,
+                LAESTAB = misEstablishment.Laestab.ToString(),
+                SchoolName = misEstablishment.SchoolName,
+                OfstedPhase = misEstablishment.OfstedPhase,
+                TypeOfEducation = misEstablishment.TypeOfEducation,
+                SchoolOpenDate = misEstablishment.SchoolOpenDate,
+                SixthForm = misEstablishment.SixthForm,
+                DesignatedReligiousCharacter = misEstablishment.DesignatedReligiousCharacter,
+                ReligiousEthos = misEstablishment.ReligiousEthos,
+                FaithGrouping = misEstablishment.FaithGrouping,
+                OfstedRegion = misEstablishment.OfstedRegion,
+                Region = misEstablishment.Region,
+                LocalAuthority = misEstablishment.LocalAuthority,
+                ParliamentaryConstituency = misEstablishment.ParliamentaryConstituency,
+                Postcode = misEstablishment.Postcode,
+                IncomeDeprivationAffectingChildrenIndexQuintile =
+                    misEstablishment.TheIncomeDeprivationAffectingChildrenIndexIdaciQuintile.ToString(),
+                TotalNumberOfPupils = misEstablishment.TotalNumberOfPupils.ToString(),
+                LatestSection8InspectionNumberSinceLastFullInspection =
+                    misEstablishment.LatestSection8InspectionNumberSinceLastFullInspection,
+                Section8InspectionRelatedToCurrentSchoolUrn =
+                    misEstablishment.DoesTheSection8InspectionRelateToTheUrnOfTheCurrentSchool,
+                UrnAtTimeOfSection8Inspection = misEstablishment.UrnAtTimeOfTheSection8Inspection.ToString(),
+                SchoolNameAtTimeOfSection8Inspection = misEstablishment.SchoolNameAtTimeOfTheLatestSection8Inspection,
+                SchoolTypeAtTimeOfSection8Inspection = misEstablishment.SchoolTypeAtTimeOfTheLatestSection8Inspection,
+                NumberOfSection8InspectionsSinceLastFullInspection =
+                    misEstablishment.NumberOfSection8InspectionsSinceTheLastFullInspection.ToString(),
+                DateOfLatestSection8Inspection = misEstablishment.DateOfLatestSection8Inspection,
+                Section8InspectionPublicationDate = misEstablishment.Section8InspectionPublicationDate,
+                LatestSection8InspectionConvertedToFullInspection =
+                    misEstablishment.DidTheLatestSection8InspectionConvertToAFullInspection,
+                Section8InspectionOverallOutcome = misEstablishment.Section8InspectionOverallOutcome,
+                InspectionNumberOfLatestFullInspection = misEstablishment.InspectionNumberOfLatestFullInspection,
+                InspectionType = misEstablishment.InspectionType,
+                InspectionTypeGrouping = misEstablishment.InspectionTypeGrouping,
+                InspectionStartDate = misEstablishment.InspectionStartDate,
+                InspectionEndDate = misEstablishment.InspectionEndDate,
+                PublicationDate = misEstablishment.PublicationDate,
+                LatestFullInspectionRelatesToCurrentSchoolUrn =
+                    misEstablishment.DoesTheLatestFullInspectionRelateToTheUrnOfTheCurrentSchool,
+                SchoolUrnAtTimeOfLastFullInspection = misEstablishment.UrnAtTimeOfLatestFullInspection.ToString(),
+                LAESTABAtTimeOfLastFullInspection = misEstablishment.LaestabAtTimeOfLatestFullInspection.ToString(),
+                SchoolNameAtTimeOfLastFullInspection = misEstablishment.SchoolNameAtTimeOfLatestFullInspection,
+                SchoolTypeAtTimeOfLastFullInspection = misEstablishment.SchoolTypeAtTimeOfLatestFullInspection,
+                OverallEffectiveness = misEstablishment.OverallEffectiveness.ToString(),
+                CategoryOfConcern = misEstablishment.CategoryOfConcern,
+                QualityOfEducation = misEstablishment.QualityOfEducation.ToString(),
+                BehaviourAndAttitudes = misEstablishment.BehaviourAndAttitudes.ToString(),
+                PersonalDevelopment = misEstablishment.PersonalDevelopment.ToString(),
+                EffectivenessOfLeadershipAndManagement =
+                    misEstablishment.EffectivenessOfLeadershipAndManagement.ToString(),
+                SafeguardingIsEffective = misEstablishment.SafeguardingIsEffective,
+                EarlyYearsProvision = misEstablishment.EarlyYearsProvisionWhereApplicable.ToString(),
+                SixthFormProvision = misEstablishment.SixthFormProvisionWhereApplicable.ToString(),
+                PreviousFullInspectionNumber = misEstablishment.PreviousFullInspectionNumber,
+                PreviousInspectionStartDate = misEstablishment.PreviousInspectionStartDate,
+                PreviousInspectionEndDate = misEstablishment.PreviousInspectionEndDate,
+                PreviousPublicationDate = misEstablishment.PreviousPublicationDate,
+                PreviousFullInspectionRelatesToUrnOfCurrentSchool =
+                    misEstablishment.DoesThePreviousFullInspectionRelateToTheUrnOfTheCurrentSchool,
+                UrnAtTheTimeOfPreviousFullInspection = misEstablishment.UrnAtTimeOfPreviousFullInspection.ToString(),
+                LAESTABAtTheTimeOfPreviousFullInspection =
+                    misEstablishment.LaestabAtTimeOfPreviousFullInspection.ToString(),
+                SchoolNameAtTheTimeOfPreviousFullInspection =
+                    misEstablishment.SchoolNameAtTimeOfPreviousFullInspection,
+                SchoolTypeAtTheTimeOfPreviousFullInspection =
+                    misEstablishment.SchoolTypeAtTimeOfPreviousFullInspection,
+                PreviousFullInspectionOverallEffectiveness =
+                    misEstablishment.PreviousFullInspectionOverallEffectiveness,
+                PreviousCategoryOfConcern = misEstablishment.PreviousCategoryOfConcern,
+                PreviousQualityOfEducation = misEstablishment.PreviousQualityOfEducation.ToString(),
+                PreviousBehaviourAndAttitudes = misEstablishment.PreviousBehaviourAndAttitudes.ToString(),
+                PreviousPersonalDevelopment = misEstablishment.PreviousPersonalDevelopment.ToString(),
+                PreviousEffectivenessOfLeadershipAndManagement =
+                    misEstablishment.PreviousEffectivenessOfLeadershipAndManagement.ToString(),
+                PreviousIsSafeguardingEffective = misEstablishment.PreviousSafeguardingIsEffective,
+                PreviousEarlyYearsProvision = misEstablishment.PreviousEarlyYearsProvisionWhereApplicable.ToString(),
+                PreviousSixthFormProvision = misEstablishment.PreviousSixthFormProvisionWhereApplicable
+            };
 
             var expected = new EstablishmentResponse
             {
@@ -186,7 +273,7 @@ namespace TramsDataApi.Test.Integration
                 RSCRegion = establishment.RscregionName,
                 Country = establishment.CountryName,
                 UPRN = establishment.Uprn,
-                MISEstablishment = null,
+                MISEstablishment = expectedMisEstablishmentResponse,
                 MISFurtherEducationEstablishment = null,
                 SMARTData = null,
                 Financial = null,
@@ -210,6 +297,7 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected);
             
             _dbContext.Establishment.Remove(establishment);
+            _dbContext.MisEstablishments.Remove(misEstablishment);
             await _dbContext.SaveChangesAsync();
         }
         

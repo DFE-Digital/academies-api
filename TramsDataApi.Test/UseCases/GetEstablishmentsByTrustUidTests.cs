@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.UseCases
 
             establishmentsGateway.Setup(gateway => gateway.GetByTrustUid(trustUid)).Returns(establishments);
 
-            var expected = establishments.Select(AcademyResponseFactory.Create).ToList();
+            var expected = establishments.Select(e => AcademyResponseFactory.Create(e, null)).ToList();
             var useCase = new GetEstablishmentsByTrustUid(establishmentsGateway.Object);
             var result = useCase.Execute(trustUid);
 
