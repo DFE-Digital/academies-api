@@ -38,10 +38,10 @@ namespace TramsDataApi.Test.Integration
                 .Build();
             var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
             var smartData = Generators.GenerateSmartData(establishment.Urn);
-            await _dbContext.Establishment.AddAsync(establishment);
-            await _dbContext.MisEstablishments.AddAsync(misEstablishment);
-            await _dbContext.SmartData.AddAsync(smartData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Establishment.Add(establishment);
+            _dbContext.MisEstablishments.Add(misEstablishment);
+            _dbContext.SmartData.Add(smartData);
+            _dbContext.SaveChanges();
 
             var expectedMisEstablishmentResponse = new MISEstablishmentResponse
             {
@@ -320,7 +320,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.Establishment.Remove(establishment);
             _dbContext.MisEstablishments.Remove(misEstablishment);
             _dbContext.SmartData.Remove(smartData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
     }
 }

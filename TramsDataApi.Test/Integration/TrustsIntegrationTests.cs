@@ -54,9 +54,9 @@ namespace TramsDataApi.Test.Integration
         {
             var testGroupData = GenerateTestGroup();
             var testTrustData = GenerateTestTrust();
-            await _dbContext.Group.AddAsync(testGroupData);
-            await _dbContext.Trust.AddAsync(testTrustData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Group.Add(testGroupData);
+            _dbContext.Trust.Add(testTrustData);
+            _dbContext.SaveChanges();
 
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -124,7 +124,7 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected); 
             _dbContext.Group.Remove(testGroupData);
             _dbContext.Trust.Remove(testTrustData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
         
         [Fact]
@@ -154,8 +154,8 @@ namespace TramsDataApi.Test.Integration
                 IncorporatedOnOpenDate = "01/01/1970",
                 OpenDate = "01/01/1970"
             };
-            await _dbContext.Group.AddAsync(testGroupData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Group.Add(testGroupData);
+            _dbContext.SaveChanges();
 
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -197,7 +197,7 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected);
             
             _dbContext.Group.Remove(testGroupData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
 
           [Fact]
@@ -236,12 +236,12 @@ namespace TramsDataApi.Test.Integration
                 .All().With(e => e.TrustsCode = "000")
                 .Build();
             
-            await _dbContext.Group.AddAsync(testGroupData);
-            await _dbContext.Establishment.AddAsync(testEstablishment);
-            await _dbContext.Establishment.AddRangeAsync(nonTrustAcademies);
-            await _dbContext.MisEstablishments.AddAsync(misEstablishment);
-            await _dbContext.SmartData.AddAsync(smartData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Group.Add(testGroupData);
+            _dbContext.Establishment.Add(testEstablishment);
+            _dbContext.Establishment.AddRange(nonTrustAcademies);
+            _dbContext.MisEstablishments.Add(misEstablishment);
+            _dbContext.SmartData.Add(smartData);
+            _dbContext.SaveChanges();
             
              var establishmentResponses = new List<EstablishmentResponse>
              {
@@ -289,7 +289,7 @@ namespace TramsDataApi.Test.Integration
             
             _dbContext.Group.Remove(testGroupData);
             _dbContext.Establishment.Remove(testEstablishment);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
         private Group GenerateTestGroup()
         {
