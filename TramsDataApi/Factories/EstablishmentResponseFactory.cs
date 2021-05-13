@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class EstablishmentResponseFactory
     {
-        public static EstablishmentResponse Create(Establishment establishment, MisEstablishments misEstablishment)
+        public static EstablishmentResponse Create(Establishment establishment, MisEstablishments misEstablishment, SmartData smartData)
         {
             if (establishment == null)
             {
@@ -169,7 +169,7 @@ namespace TramsDataApi.Factories
                 UPRN = establishment.Uprn,
                 MISEstablishment = MISEstablishmentResponseFactory.Create(misEstablishment),
                 MISFurtherEducationEstablishment = null,
-                SMARTData = null,
+                SMARTData = SmartDataResponseFactory.Create(smartData),
                 Financial = null,
                 Concerns = null
             };

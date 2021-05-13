@@ -18,7 +18,7 @@ namespace TramsDataApi.UseCases
         public List<EstablishmentResponse> Execute(string trustUid)
         {
             return _establishmentGateway.GetByTrustUid(trustUid)
-                .Select(e => EstablishmentResponseFactory.Create(e, null))
+                .Select(e => EstablishmentResponseFactory.Create(e, null, null))
                 .ToList();
         }
     }

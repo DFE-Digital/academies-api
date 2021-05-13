@@ -3,10 +3,14 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Factories
 {
-    public class SmartDataResponseFactory
+    public static class SmartDataResponseFactory
     {
-        public SMARTDataResponse Create(SmartData smartData)
+        public static SMARTDataResponse Create(SmartData smartData)
         {
+            if (smartData == null)
+            {
+                return null;
+            }
             return new SMARTDataResponse
             {
                 ProbabilityOfDeclining = smartData.ProbabilityOfDeclining.ToString(),
