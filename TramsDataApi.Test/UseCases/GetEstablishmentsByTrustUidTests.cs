@@ -68,5 +68,31 @@ namespace TramsDataApi.Test.UseCases
 
             result.Should().BeEquivalentTo(expected);
         }
+        
+        [Fact]
+        public void
+            GetEstablishmentsByTrustUid_ReturnsListOfEstablishmentResponsesWithSmartData_WhenSmartDataIsFound()
+        {
+            var trustUid = "trustuid";
+            var establishmentsGateway = new Mock<IEstablishmentGateway>();
+            var establishments = Builder<Establishment>.CreateListOfSize(10).All()
+                .With(e => e.TrustsCode = trustUid).Build();
+            var smartDataList = Builder<SmartData>.CreateListOfSize(establishments.Count)
+                .All()
+                .With((s, i) => s.Urn = establishments[i].Urn.ToString())
+                .Build();
+            
+            establishmentsGateway.Setup(gateway => gateway.GetByTrustUid(trustUid)).Returns(establishments);
+            for (var i = 0; i < establishments.Count; i++)
+            {
+                establishmentsGateway.Setup(gateway => gateway.GetSmartDataByUrn(establishments[i].Urn)).Returns(smartDataList[i]);
+            }
+
+            var expected = establishments.Select((e, i) => EstablishmentResponseFactory.Create(e, null, smartDataList[i])).ToList();
+            var useCase = new GetEstablishmentsByTrustUid(establishmentsGateway.Object);
+            var result = useCase.Execute(trustUid);
+
+            result.Should().BeEquivalentTo(expected);
+        }
     }
 }
