@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers
 {
@@ -12,18 +13,18 @@ namespace TramsDataApi.Controllers
     [Route("trust")]
     public class TrustsController : ControllerBase
     {
-        private readonly ITrustGateway _trustGateway;
+        private readonly IGetTrustByUkprn _getTrustByUkprn;
 
-        public TrustsController(ITrustGateway trustGateway)
+        public TrustsController(IGetTrustByUkprn getTrustByUkprn)
         {
-            _trustGateway = trustGateway;
+            _getTrustByUkprn = getTrustByUkprn;
         }
         
         [HttpGet]
         [Route("{ukprn}")]
         public ActionResult<TrustResponse> Get(string ukprn)
         {
-            var trust = _trustGateway.GetByUkprn(ukprn);
+            var trust = _getTrustByUkprn.Execute(ukprn);
 
             if (trust == null)
             {

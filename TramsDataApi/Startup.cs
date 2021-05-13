@@ -9,6 +9,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
+using TramsDataApi.UseCases;
 
 namespace TramsDataApi
 {
@@ -35,7 +36,10 @@ namespace TramsDataApi
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<ITrustGateway, TrustGateway>();
-
+            services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
+            services.AddScoped<IGetTrustByUkprn, GetTrustByUkprn>();
+            services.AddScoped<IGetEstablishmentByUkprn, GetEstablishmentByUkprn>();
+            services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

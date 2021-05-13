@@ -1,6 +1,6 @@
 namespace TramsDataApi.ResponseModels
 {
-    public class AcademyResponse
+    public class EstablishmentResponse
     {
         public string Urn { get; set; }
         public string LocalAuthorityCode { get; set; }

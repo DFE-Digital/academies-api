@@ -9,7 +9,9 @@ using TramsDataApi.DatabaseModels;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.Test.Utils;
 using Xunit;
 using Xunit.Sdk;
 
@@ -20,13 +22,14 @@ namespace TramsDataApi.Test.Integration
     {
         private readonly HttpClient _client;
         private readonly TramsDbContext _dbContext;
+        private readonly RandomGenerator _randomGenerator;
 
         public TrustsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
             _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
-           
+            _randomGenerator = new RandomGenerator();
         }
 
         [Fact]
@@ -51,9 +54,9 @@ namespace TramsDataApi.Test.Integration
         {
             var testGroupData = GenerateTestGroup();
             var testTrustData = GenerateTestTrust();
-            await _dbContext.Group.AddAsync(testGroupData);
-            await _dbContext.Trust.AddAsync(testTrustData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Group.Add(testGroupData);
+            _dbContext.Trust.Add(testTrustData);
+            _dbContext.SaveChanges();
 
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -94,7 +97,7 @@ namespace TramsDataApi.Test.Integration
                         .TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview,
                     NumberInTrust = testTrustData.NumberInTrust.ToString()
                 },
-                Academies = new List<AcademyResponse>(),
+                Establishments = new List<EstablishmentResponse>(),
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
@@ -121,11 +124,10 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected); 
             _dbContext.Group.Remove(testGroupData);
             _dbContext.Trust.Remove(testTrustData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
-   
         
-         [Fact]
+        [Fact]
         public async Task  ShouldReturnNullForIfdData_WhenNoCorrespondingIfdTrustIsFound()
         {
             var testGroupData = new Group
@@ -152,8 +154,8 @@ namespace TramsDataApi.Test.Integration
                 IncorporatedOnOpenDate = "01/01/1970",
                 OpenDate = "01/01/1970"
             };
-            await _dbContext.Group.AddAsync(testGroupData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Group.Add(testGroupData);
+            _dbContext.SaveChanges();
 
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -168,7 +170,7 @@ namespace TramsDataApi.Test.Integration
             var expected = new TrustResponse
             {
                 IfdData = null,
-                Academies = new List<AcademyResponse>(),
+                Establishments = new List<EstablishmentResponse>(),
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
@@ -195,11 +197,11 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected);
             
             _dbContext.Group.Remove(testGroupData);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
 
           [Fact]
-        public async Task  ShouldReturnAcademyData_WhenTrustHasAnAcademy()
+        public async Task ShouldReturnEstablishmentData_WhenTrustHasAnEstablishment()
         {
             var testGroupData = new Group
             {
@@ -227,150 +229,23 @@ namespace TramsDataApi.Test.Integration
             };
 
             var testEstablishment = GenerateEstablishment();
+            var misEstablishment =
+                Builder<MisEstablishments>.CreateNew().With(m => m.Urn = testEstablishment.Urn).Build();
+            var smartData = Generators.GenerateSmartData(testEstablishment.Urn);
             var nonTrustAcademies = Builder<Establishment>.CreateListOfSize(5)
                 .All().With(e => e.TrustsCode = "000")
                 .Build();
             
-            await _dbContext.Group.AddAsync(testGroupData);
-            await _dbContext.Establishment.AddAsync(testEstablishment);
-            await _dbContext.Establishment.AddRangeAsync(nonTrustAcademies);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Group.Add(testGroupData);
+            _dbContext.Establishment.Add(testEstablishment);
+            _dbContext.Establishment.AddRange(nonTrustAcademies);
+            _dbContext.MisEstablishments.Add(misEstablishment);
+            _dbContext.SmartData.Add(smartData);
+            _dbContext.SaveChanges();
             
-             var academyResponses = new List<AcademyResponse>
+             var establishmentResponses = new List<EstablishmentResponse>
              {
-                 new AcademyResponse
-                 {
-                     Urn = testEstablishment.Urn.ToString(),
-                     LocalAuthorityCode = testEstablishment.LaCode,
-                     LocalAuthorityName = testEstablishment.LaName,
-                     EstablishmentNumber = testEstablishment.EstablishmentNumber,
-                     EstablishmentName = testEstablishment.EstablishmentName,
-                     EstablishmentType = new NameAndCodeResponse {Name = testEstablishment.TypeOfEstablishmentName, Code = testEstablishment.TypeOfEstablishmentCode},
-                     EstablishmentTypeGroup =
-                         new NameAndCodeResponse {Name = testEstablishment.EstablishmentTypeGroupName, Code = testEstablishment.EstablishmentTypeGroupCode},
-                     EstablishmentStatus = new NameAndCodeResponse {Name = testEstablishment.EstablishmentStatusName, Code = testEstablishment.EstablishmentStatusCode},
-                     ReasonEstablishmentOpened = new NameAndCodeResponse {Name = testEstablishment.ReasonEstablishmentOpenedName, Code = testEstablishment.ReasonEstablishmentOpenedCode},
-                     OpenDate = testEstablishment.OpenDate,
-                     ReasonEstablishmentClosed = new NameAndCodeResponse {Name = testEstablishment.ReasonEstablishmentClosedName, Code = testEstablishment.ReasonEstablishmentClosedCode},
-                     CloseDate = testEstablishment.CloseDate,
-                     PhaseOfEducation = new NameAndCodeResponse {Name = testEstablishment.PhaseOfEducationName, Code = testEstablishment.PhaseOfEducationCode},
-                     StatutoryLowAge = testEstablishment.StatutoryLowAge,
-                     StatutoryHighAge = testEstablishment.StatutoryHighAge,
-                     Boarders = new NameAndCodeResponse {Name = testEstablishment.BoardersName, Code = testEstablishment.BoardersCode},
-                     NurseryProvision = testEstablishment.NurseryProvisionName,
-                     OfficialSixthForm =
-                         new NameAndCodeResponse {Name = testEstablishment.OfficialSixthFormName, Code = testEstablishment.OfficialSixthFormCode},
-                     Gender = new NameAndCodeResponse {Name = testEstablishment.GenderName, Code = testEstablishment.GenderCode},
-                     ReligiousCharacter = new NameAndCodeResponse {Name = testEstablishment.ReligiousCharacterName, Code = testEstablishment.ReligiousCharacterCode},
-                     ReligiousEthos = testEstablishment.ReligiousEthosName,
-                     Diocese = new NameAndCodeResponse {Name = testEstablishment.DioceseName, Code = testEstablishment.DioceseCode},
-                     AdmissionsPolicy = new NameAndCodeResponse {Name = testEstablishment.AdmissionsPolicyName, Code = testEstablishment.AdmissionsPolicyCode},
-                     SchoolCapacity = testEstablishment.SchoolCapacity,
-                     SpecialClasses = new NameAndCodeResponse {Name = testEstablishment.SpecialClassesName, Code = testEstablishment.SpecialClassesCode},
-                     Census =
-                         new CensusResponse
-                         {
-                             CensusDate = testEstablishment.CensusDate,
-                             NumberOfPupils = testEstablishment.NumberOfPupils,
-                             NumberOfBoys = testEstablishment.NumberOfBoys,
-                             NumberOfGirls = testEstablishment.NumberOfGirls,
-                             PercentageFsm = testEstablishment.PercentageFsm
-                         },
-                     TrustSchoolFlag = new NameAndCodeResponse {Name = testEstablishment.TrustSchoolFlagName, Code = testEstablishment.TrustSchoolFlagCode},
-                     Trusts = new NameAndCodeResponse {Name = testEstablishment.TrustsName, Code = testEstablishment.TrustsCode},
-                     SchoolSponsorFlag = testEstablishment.SchoolSponsorFlagName,
-                     SchoolSponsors = testEstablishment.SchoolSponsorsName,
-                     FederationFlag = testEstablishment.FederationFlagName,
-                     Federations = new NameAndCodeResponse {Name = testEstablishment.FederationsName, Code = testEstablishment.FederationsCode},
-                     Ukprn = testEstablishment.Ukprn,
-                     FeheiIdentifier = testEstablishment.Feheidentifier,
-                     FurtherEducationType = testEstablishment.FurtherEducationTypeName,
-                     OfstedLastInspection = testEstablishment.OfstedLastInsp,
-                     OfstedSpecialMeasures = new NameAndCodeResponse {Name = testEstablishment.OfstedSpecialMeasuresName, Code = testEstablishment.OfstedSpecialMeasuresCode},
-                     LastChangedDate = testEstablishment.LastChangedDate,
-                     Address =
-                         new AddressResponse
-                         {
-                             Street = testEstablishment.Street,
-                             Locality = testEstablishment.Locality,
-                             AdditionalLine = testEstablishment.Address3,
-                             Town = testEstablishment.Town,
-                             County = testEstablishment.CountyName,
-                             Postcode = testEstablishment.Postcode
-                         },
-                     SchoolWebsite = testEstablishment.SchoolWebsite,
-                     TelephoneNumber = testEstablishment.TelephoneNum,
-                     HeadteacherTitle = testEstablishment.HeadTitleName,
-                     HeadteacherFirstName = testEstablishment.HeadFirstName,
-                     HeadteacherLastName = testEstablishment.HeadLastName,
-                     HeadteacherPreferredJobTitle = testEstablishment.HeadPreferredJobTitle,
-                     InspectorateName = testEstablishment.InspectorateNameName,
-                     InspectorateReport = testEstablishment.InspectorateReport,
-                     DateOfLastInspectionVisit = testEstablishment.DateOfLastInspectionVisit,
-                     DateOfNextInspectionVisit = testEstablishment.NextInspectionVisit,
-                     TeenMoth = testEstablishment.TeenMothName,
-                     TeenMothPlaces = testEstablishment.TeenMothPlaces,
-                     CCF = testEstablishment.CcfName,
-                     SENPRU = testEstablishment.SenpruName,
-                     EBD = testEstablishment.EbdName,
-                     PlacesPRU = testEstablishment.PlacesPru,
-                     FTProv = testEstablishment.FtprovName,
-                     EdByOther = testEstablishment.EdByOtherName,
-                     Section14Approved = testEstablishment.Section41ApprovedName,
-                     SEN1 = testEstablishment.Sen1Name,
-                     SEN2 = testEstablishment.Sen2Name,
-                     SEN3 = testEstablishment.Sen3Name,
-                     SEN4 = testEstablishment.Sen4Name,
-                     SEN5 = testEstablishment.Sen5Name,
-                     SEN6 = testEstablishment.Sen6Name,
-                     SEN7 = testEstablishment.Sen7Name,
-                     SEN8 = testEstablishment.Sen8Name,
-                     SEN9 = testEstablishment.Sen9Name,
-                     SEN10 = testEstablishment.Sen10Name,
-                     SEN11 = testEstablishment.Sen11Name,
-                     SEN12 = testEstablishment.Sen12Name,
-                     SEN13 = testEstablishment.Sen13Name,
-                     TypeOfResourcedProvision = testEstablishment.TypeOfResourcedProvisionName,
-                     ResourcedProvisionOnRoll = testEstablishment.ResourcedProvisionOnRoll,
-                     ResourcedProvisionOnCapacity = testEstablishment.ResourcedProvisionCapacity,
-                     SenUnitOnRoll = testEstablishment.SenUnitOnRoll,
-                     SenUnitCapacity = testEstablishment.SenUnitCapacity,
-                     GOR = new NameAndCodeResponse {Name = testEstablishment.GorName, Code = testEstablishment.GorCode},
-                     DistrictAdministrative =
-                         new NameAndCodeResponse {Name = testEstablishment.DistrictAdministrativeName, Code = testEstablishment.DistrictAdministrativeCode},
-                     AdministractiveWard = new NameAndCodeResponse {Name = testEstablishment.AdministrativeWardName, Code = testEstablishment.AdministrativeWardCode},
-                     ParliamentaryConstituency =
-                         new NameAndCodeResponse
-                         {
-                             Name = testEstablishment.ParliamentaryConstituencyName, Code = testEstablishment.ParliamentaryConstituencyCode
-                         },
-                     UrbanRural =
-                         new NameAndCodeResponse
-                         {
-                             Name = testEstablishment.UrbanRuralName, Code = testEstablishment.UrbanRuralCode
-                         },
-                     GSSLACode = testEstablishment.GsslacodeName,
-                     Easting = testEstablishment.Easting,
-                     Northing = testEstablishment.Northing,
-                     CensusAreaStatisticWard = testEstablishment.CensusAreaStatisticWardName,
-                     MSOA = new NameAndCodeResponse {Name = testEstablishment.MsoaName, Code = testEstablishment.MsoaCode},
-                     LSOA = new NameAndCodeResponse {Name = testEstablishment.LsoaName, Code = testEstablishment.LsoaCode},
-                     SENStat = testEstablishment.Senstat,
-                     SENNoStat = testEstablishment.SennoStat,
-                     BoardingEstablishment = testEstablishment.BoardingEstablishmentName,
-                     PropsName = testEstablishment.PropsName,
-                     PreviousLocalAuthority = new NameAndCodeResponse {Name = testEstablishment.PreviousLaName, Code = testEstablishment.PreviousLaCode},
-                     PreviousEstablishmentNumber = testEstablishment.PreviousEstablishmentNumber,
-                     OfstedRating = testEstablishment.OfstedRatingName,
-                     RSCRegion = testEstablishment.RscregionName,
-                     Country = testEstablishment.CountryName,
-                     UPRN = testEstablishment.Uprn,
-                     MISEstablishment = null,
-                     MISFurtherEducationEstablishment = null,
-                     SMARTData = null,
-                     Financial = null,
-                     Concerns = null
-                 }
+                 EstablishmentResponseFactory.Create(testEstablishment, misEstablishment, smartData)
              };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -386,7 +261,7 @@ namespace TramsDataApi.Test.Integration
             var expected = new TrustResponse
             {
                 IfdData = null,
-                Academies = academyResponses,
+                Establishments = establishmentResponses,
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
@@ -414,7 +289,7 @@ namespace TramsDataApi.Test.Integration
             
             _dbContext.Group.Remove(testGroupData);
             _dbContext.Establishment.Remove(testEstablishment);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
         private Group GenerateTestGroup()
         {
