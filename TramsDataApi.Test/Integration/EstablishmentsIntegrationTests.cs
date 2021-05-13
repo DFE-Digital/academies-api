@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
+using FizzWare.NBuilder.PropertyNaming;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -17,22 +18,25 @@ namespace TramsDataApi.Test.Integration
     {
         private readonly HttpClient _client;
         private readonly TramsDbContext _dbContext;
+        private readonly RandomGenerator _randomGenerator;
 
         public EstablishmentsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
             _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
-            
+            _randomGenerator = new RandomGenerator();
         }
 
         [Fact]
         public async Task CanGetEstablishmentByUkprn()
         {
-            var establishment = GenerateEstablishment();
+            var establishment = Builder<Establishment>.CreateNew().With(e => e.Ukprn = "mockukprn").Build();
             var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
+            var smartData = GenerateSmartData(establishment.Urn);
             await _dbContext.Establishment.AddAsync(establishment);
             await _dbContext.MisEstablishments.AddAsync(misEstablishment);
+            await _dbContext.SmartData.AddAsync(smartData);
             await _dbContext.SaveChangesAsync();
 
             var expectedMisEstablishmentResponse = new MISEstablishmentResponse
@@ -117,6 +121,19 @@ namespace TramsDataApi.Test.Integration
                 PreviousEarlyYearsProvision = misEstablishment.PreviousEarlyYearsProvisionWhereApplicable.ToString(),
                 PreviousSixthFormProvision = misEstablishment.PreviousSixthFormProvisionWhereApplicable
             };
+
+            var expectedSmartDataResponse = new SMARTDataResponse
+            {
+                ProbabilityOfDeclining = smartData.ProbabilityOfDeclining.ToString(),
+                ProbabilityOfStayingTheSame = smartData.ProbabilityOfStayingTheSame.ToString(),
+                ProbabilityOfImproving = smartData.ProbabilityOfImproving.ToString(),
+                PredictedChangeInProgress8Score = smartData.PredictedChangeInProgress8Score,
+                PredictedChanceOfChangeOccurring = smartData.PredictedChanceOfChangeOccuring.ToString(),
+                TotalNumberOfRisks = smartData.TotalNumberOfRisks.ToString(),
+                TotalRiskScore = smartData.TotalRiskScore.ToString(),
+                RiskRatingNum = smartData.RiskRatingNum.ToString()
+            };
+            
 
             var expected = new EstablishmentResponse
             {
@@ -275,7 +292,7 @@ namespace TramsDataApi.Test.Integration
                 UPRN = establishment.Uprn,
                 MISEstablishment = expectedMisEstablishmentResponse,
                 MISFurtherEducationEstablishment = null,
-                SMARTData = null,
+                SMARTData = expectedSmartDataResponse,
                 Financial = null,
                 Concerns = null
             };
@@ -298,153 +315,25 @@ namespace TramsDataApi.Test.Integration
             
             _dbContext.Establishment.Remove(establishment);
             _dbContext.MisEstablishments.Remove(misEstablishment);
+            _dbContext.SmartData.Remove(smartData);
             await _dbContext.SaveChangesAsync();
         }
-        
-        private Establishment GenerateEstablishment()
-        {
-            return new Establishment
-            {
-                Urn = 100001,
-                LaCode = "203",
-                LaName = "Greenwich",
-                EstablishmentNumber = "4100",
-                EstablishmentName = "Plum Village School",
-                TypeOfEstablishmentCode = "02",
-                TypeOfEstablishmentName = "Voluntary added school",
-                EstablishmentTypeGroupCode = "4",
-                EstablishmentTypeGroupName = "Local authority maintained schools",
-                EstablishmentStatusCode = "1",
-                EstablishmentStatusName = "Open",
-                ReasonEstablishmentOpenedCode = "00",
-                ReasonEstablishmentOpenedName = "Not applicable",
-                OpenDate = "01-01-1999",
-                ReasonEstablishmentClosedCode = "00",
-                ReasonEstablishmentClosedName = "Not applicable",
-                CloseDate = null,
-                PhaseOfEducationCode = "2",
-                PhaseOfEducationName = "Primary",
-                StatutoryLowAge = "3",
-                StatutoryHighAge = "11",
-                BoardersCode = "1",
-                BoardersName = "No boarders",
-                NurseryProvisionName = "Has Nursery Classes",
-                OfficialSixthFormCode = "2",
-                OfficialSixthFormName = "Doers not have a sixth form",
-                GenderCode = "3",
-                GenderName = "Mixed",
-                ReligiousCharacterCode = "02",
-                ReligiousCharacterName = "Church of England",
-                ReligiousEthosName = "Does not apply",
-                DioceseCode = "CE23",
-                DioceseName = "Diocese of London",
-                AdmissionsPolicyCode = "0",
-                AdmissionsPolicyName = "Not applicable",
-                SchoolCapacity = "300",
-                SpecialClassesCode = "2",
-                SpecialClassesName = "No Special Classes",
-                CensusDate = "16-01-2020",
-                NumberOfPupils = "276",
-                NumberOfBoys = "136",
-                NumberOfGirls = "140",
-                PercentageFsm = "10.2",
-                TrustSchoolFlagCode = "0",
-                TrustSchoolFlagName = "Not applicable",
-                TrustsCode = "500",
-                TrustsName = "Test Group",
-                SchoolSponsorFlagName = "Not applicable",
-                SchoolSponsorsName = null,
-                FederationFlagName = "Not under a federation",
-                FederationsCode = null,
-                FederationsName = null,
-                Ukprn = "mockukprn",
-                Feheidentifier = null,
-                FurtherEducationTypeName = "Not applicable",
-                OfstedLastInsp = "19-04-2013",
-                OfstedSpecialMeasuresCode = "0",
-                OfstedSpecialMeasuresName = "Not applicable",
-                LastChangedDate =  "04-02-2021",
-                Street = "St Jame's Passage",
-                Locality = "Duke's Place",
-                Address3 = null,
-                Town = "London",
-                CountyName = null,
-                Postcode = "EC3A 9DA",
-                SchoolWebsite = "www.test-school.com",
-                TelephoneNum = "02072342211",
-                HeadTitleName = "Miss",
-                HeadFirstName = "Jenny",
-                HeadLastName = "Bloggs",
-                HeadPreferredJobTitle = "Headteacher",
-                InspectorateNameName = "ISI",
-                InspectorateReport = null,
-                DateOfLastInspectionVisit = null,
-                NextInspectionVisit = null,
-                TeenMothName = "Not applicable",
-                TeenMothPlaces = null,
-                CcfName = "Not applicable",
-                SenpruName = "Not applicable",
-                EbdName = "Not applicable",
-                PlacesPru = null,
-                FtprovName = null,
-                EdByOtherName = "Not applicable",
-                Section41ApprovedName = "Not applicable",
-                Sen1Name = null,
-                Sen2Name = null,
-                Sen3Name = null,
-                Sen4Name = null,
-                Sen5Name = null,
-                Sen6Name = null,
-                Sen7Name = null,
-                Sen8Name = null,
-                Sen9Name = null,
-                Sen10Name = null,
-                Sen11Name = null,
-                Sen12Name = null,
-                Sen13Name = null,
-                TypeOfResourcedProvisionName = null,
-                ResourcedProvisionOnRoll = null,
-                ResourcedProvisionCapacity = null,
-                SenUnitOnRoll = null,
-                SenUnitCapacity = null,
-                GorCode = "H",
-                GorName = "London",
-                DistrictAdministrativeCode = "E09000001",
-                DistrictAdministrativeName = "City of London",
-                AdministrativeWardCode = "E05009293",
-                AdministrativeWardName = "Cripplegate",
-                ParliamentaryConstituencyCode = "E14000639",
-                ParliamentaryConstituencyName = "Cities of London and Westminster",
-                UrbanRuralCode = "A1",
-                UrbanRuralName = "(England/Wales) Urban major conurbation",
-                GsslacodeName = "E09000001",
-                Easting = "533498",
-                Northing = "181201",
-                CensusAreaStatisticWardName = null,
-                MsoaName = "City of London 001",
-                LsoaName = "City of London 001F",
-                Senstat = "0",
-                SennoStat = "63",
-                BoardingEstablishmentName = "Does not have boarders",
-                PropsName = "Corporation of London",
-                PreviousLaCode = "000",
-                PreviousLaName = "Not applicable",
-                PreviousEstablishmentNumber = null,
-                OfstedRatingName = "Outstanding",
-                RscregionName = "North-West London and South-Central England",
-                CountryName = "United Kingdom",
-                Uprn = "20000007192",
-                SiteName = null,
-                MsoaCode = null,
-                LsoaCode = null,
-                BsoinspectorateNameName = null,
-                Chnumber = null,
-                EstablishmentAccreditedCode = null,
-                EstablishmentAccreditedName = null,
-                QabnameCode = null,
-                QabnameName = null,
-                Qabreport = null
-            };
-        }
+
+        private SmartData GenerateSmartData(int urn)
+            => Builder<SmartData>.CreateNew()
+            .With(s => s.Urn = urn.ToString())
+            .With(s => s.PredictedChangeInProgress8Score = _randomGenerator.NextString(23, 23))
+            .With(s => s.TotalRiskScore = Decimal.Round(_randomGenerator.Decimal(), 1))
+            .With(s => s.PredictedChanceOfChangeOccuring = _randomGenerator.Float())
+            .With(s => s.ProbabilityOfDeclining = _randomGenerator.Float())
+            .With(s => s.ProbabilityOfImproving = _randomGenerator.Float())
+            .With(s => s.ProbabilityOfStayingTheSame = _randomGenerator.Float())
+            .With(s => s.PredecessorUrn = _randomGenerator.NextString(8, 8))
+            .With(s => s.PsdFlag = _randomGenerator.Char().ToString())
+            .With(s => s.RatGrade = _randomGenerator.NextString(2, 2))
+            .With(s => s.RscShort = _randomGenerator.NextString(8, 8))
+            .With(s => s.SponsorId = _randomGenerator.NextString(7, 7))
+            .With(s => s.TrustId = _randomGenerator.NextString(7, 7))
+            .Build();
     }
 }

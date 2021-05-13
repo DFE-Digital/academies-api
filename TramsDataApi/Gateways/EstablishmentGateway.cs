@@ -34,7 +34,7 @@ namespace TramsDataApi.Gateways
 
         public SmartData GetSmartDataByUrn(int establishmentUrn)
         {
-            throw new System.NotImplementedException();
+            return _dbContext.SmartData.FirstOrDefault(s => s.Urn == establishmentUrn.ToString());
         }
     }
 }
