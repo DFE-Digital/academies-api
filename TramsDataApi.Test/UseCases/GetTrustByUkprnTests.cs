@@ -24,13 +24,13 @@ namespace TramsDataApi.Test.UseCases
             var mockTrustsGateway = new Mock<ITrustGateway>();
             var mockGetEstablishmentsByTrustUid = new Mock<IGetEstablishmentsByTrustUid>();
             mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkprn(ukprn)).Returns(() => null);
-            var useCase = new GetTrustsByUkprn(mockTrustsGateway.Object, mockGetEstablishmentsByTrustUid.Object);
+            var useCase = new GetTrustByUkprn(mockTrustsGateway.Object, mockGetEstablishmentsByTrustUid.Object);
 
             useCase.Execute(ukprn).Should().BeNull();
         }
 
         [Fact]
-        public void TestGettingTrustsByUkprn_ReturnsTrustResponse_WithoutAcademies_WhenEstablishmentsAreNull()
+        public void TestGettingTrustByUkprn_ReturnsTrustResponse_WithoutAcademies_WhenEstablishmentsAreNull()
         {
             var ukprn = "mockukprn";
             var expectedGroup = Builder<Group>.CreateNew().With(g => g.Ukprn = ukprn).Build();
@@ -46,7 +46,7 @@ namespace TramsDataApi.Test.UseCases
             mockGetEstablishmentsByTrustUid.Setup(gateway => gateway.Execute(expectedGroup.GroupUid))
                 .Returns(() => null);
             
-            var useCase = new GetTrustsByUkprn(mockTrustsGateway.Object, mockGetEstablishmentsByTrustUid.Object);
+            var useCase = new GetTrustByUkprn(mockTrustsGateway.Object, mockGetEstablishmentsByTrustUid.Object);
             var expected = TrustResponseFactory.Create(expectedGroup, expectedTrust, null);
             var result = useCase.Execute(ukprn);
 

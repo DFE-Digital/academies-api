@@ -14,7 +14,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetTrustsByUkPrn_ReturnsNotFoundResult_WhenNoTrustsFound()
         {
-            var getTrustsByUkprn = new Mock<IGetTrustsByUkprn>();
+            var getTrustsByUkprn = new Mock<IGetTrustByUkprn>();
             var ukprn = "mockukprn";
             getTrustsByUkprn.Setup(g => g.Execute(ukprn)).Returns(() => null);
 
@@ -49,10 +49,10 @@ namespace TramsDataApi.Test.Controllers
                     Ukprn = ukprn
                 }
             };
-            var getTrustsByUkprn = new Mock<IGetTrustsByUkprn>();
-            getTrustsByUkprn.Setup(g => g.Execute(ukprn)).Returns(trustResponse);
+            var getTrustByUkprn = new Mock<IGetTrustByUkprn>();
+            getTrustByUkprn.Setup(g => g.Execute(ukprn)).Returns(trustResponse);
             
-            var controller = new TrustsController(getTrustsByUkprn.Object);
+            var controller = new TrustsController(getTrustByUkprn.Object);
             var result = controller.Get(ukprn);
 
             result.Should().BeEquivalentTo(new OkObjectResult(trustResponse));

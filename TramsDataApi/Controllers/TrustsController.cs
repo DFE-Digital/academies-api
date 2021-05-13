@@ -13,18 +13,18 @@ namespace TramsDataApi.Controllers
     [Route("trust")]
     public class TrustsController : ControllerBase
     {
-        private readonly IGetTrustsByUkprn _getTrustsByUkprn;
+        private readonly IGetTrustByUkprn _getTrustByUkprn;
 
-        public TrustsController(IGetTrustsByUkprn getTrustsByUkprn)
+        public TrustsController(IGetTrustByUkprn getTrustByUkprn)
         {
-            _getTrustsByUkprn = getTrustsByUkprn;
+            _getTrustByUkprn = getTrustByUkprn;
         }
         
         [HttpGet]
         [Route("{ukprn}")]
         public IActionResult Get(string ukprn)
         {
-            var trust = _getTrustsByUkprn.Execute(ukprn);
+            var trust = _getTrustByUkprn.Execute(ukprn);
 
             if (trust == null)
             {

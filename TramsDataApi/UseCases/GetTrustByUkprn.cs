@@ -4,12 +4,12 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetTrustsByUkprn : IGetTrustsByUkprn
+    public class GetTrustByUkprn : IGetTrustByUkprn
     {
         private readonly ITrustGateway _trustGateway;
         private readonly IGetEstablishmentsByTrustUid _getEstablishmentsByTrustUid;
 
-        public GetTrustsByUkprn(ITrustGateway trustGateway, IGetEstablishmentsByTrustUid getEstablishmentsByTrustUid)
+        public GetTrustByUkprn(ITrustGateway trustGateway, IGetEstablishmentsByTrustUid getEstablishmentsByTrustUid)
         {
             _trustGateway = trustGateway;
             _getEstablishmentsByTrustUid = getEstablishmentsByTrustUid;

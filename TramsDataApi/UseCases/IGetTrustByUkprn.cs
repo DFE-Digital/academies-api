@@ -2,7 +2,7 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public interface IGetTrustsByUkprn
+    public interface IGetTrustByUkprn
     {
         public TrustResponse Execute(string ukprn);
     }
