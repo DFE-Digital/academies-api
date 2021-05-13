@@ -22,7 +22,7 @@ namespace TramsDataApi.UseCases
             }
             var misEstablishmentData = _establishmentGateway.GetMisEstablishmentByUrn(establishment.Urn);
 
-            return AcademyResponseFactory.Create(establishment, misEstablishmentData);
+            return EstablishmentResponseFactory.Create(establishment, misEstablishmentData);
         }
     }
 }

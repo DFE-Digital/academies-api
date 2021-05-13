@@ -3,7 +3,7 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Factories
 {
-    public class AcademyResponseFactory
+    public class EstablishmentResponseFactory
     {
         public static EstablishmentResponse Create(Establishment establishment, MisEstablishments misEstablishment)
         {
