@@ -6,10 +6,10 @@ using TramsDataApi.UseCases;
 namespace TramsDataApi.Controllers
 {
     [ApiController]
-    public class AcademiesController : ControllerBase
+    public class EstablishmentsController : ControllerBase
     {
         private readonly IGetEstablishmentByUkprn _getEstablishmentByUkprn;
-        public AcademiesController(IGetEstablishmentByUkprn getEstablishmentByUkprn)
+        public EstablishmentsController(IGetEstablishmentByUkprn getEstablishmentByUkprn)
         {
             _getEstablishmentByUkprn = getEstablishmentByUkprn;
         }

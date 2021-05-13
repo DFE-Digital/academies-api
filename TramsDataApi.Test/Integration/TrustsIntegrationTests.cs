@@ -97,7 +97,7 @@ namespace TramsDataApi.Test.Integration
                         .TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview,
                     NumberInTrust = testTrustData.NumberInTrust.ToString()
                 },
-                Academies = new List<EstablishmentResponse>(),
+                Establishments = new List<EstablishmentResponse>(),
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
@@ -170,7 +170,7 @@ namespace TramsDataApi.Test.Integration
             var expected = new TrustResponse
             {
                 IfdData = null,
-                Academies = new List<EstablishmentResponse>(),
+                Establishments = new List<EstablishmentResponse>(),
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
@@ -201,7 +201,7 @@ namespace TramsDataApi.Test.Integration
         }
 
           [Fact]
-        public async Task ShouldReturnAcademyData_WhenTrustHasAnAcademy()
+        public async Task ShouldReturnEstablishmentData_WhenTrustHasAnEstablishment()
         {
             var testGroupData = new Group
             {
@@ -243,7 +243,7 @@ namespace TramsDataApi.Test.Integration
             await _dbContext.SmartData.AddAsync(smartData);
             await _dbContext.SaveChangesAsync();
             
-             var academyResponses = new List<EstablishmentResponse>
+             var establishmentResponses = new List<EstablishmentResponse>
              {
                  EstablishmentResponseFactory.Create(testEstablishment, misEstablishment, smartData)
              };
@@ -261,7 +261,7 @@ namespace TramsDataApi.Test.Integration
             var expected = new TrustResponse
             {
                 IfdData = null,
-                Academies = academyResponses,
+                Establishments = establishmentResponses,
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,

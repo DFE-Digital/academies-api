@@ -14,30 +14,30 @@ namespace TramsDataApi.Test.Controllers
     public class EstablishmentsControllerTests
     {
         [Fact]
-        public void GetEstablishmentByUkprn_ReturnsNotFoundResult_WhenNoAcademyFound()
+        public void GetEstablishmentByUkprn_ReturnsNotFoundResult_WhenNoEstablishmentFound()
         {
             var gateway = new Mock<IGetEstablishmentByUkprn>();
             var ukprn = "mockukprn";
             gateway.Setup(g => g.Execute(ukprn)).Returns(() => null);
 
-            var controller = new AcademiesController(gateway.Object);
+            var controller = new EstablishmentsController(gateway.Object);
             var result = controller.GetByUkprn(ukprn);
 
             result.Should().BeOfType(typeof(NotFoundResult));
         }
 
         [Fact]
-        public void GetEstablishmentByUkprn_ReturnsAcademyResponse_WhenAcademyFound()
+        public void GetEstablishmentByUkprn_ReturnsEstablishmentResponse_WhenEstablishmentFound()
         {
             var gateway = new Mock<IGetEstablishmentByUkprn>();
             var ukprn = "mockukprn";
-            var academyResponse = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = ukprn).Build();
-            gateway.Setup(g => g.Execute(ukprn)).Returns(() => academyResponse);
+            var establishmentResponse = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = ukprn).Build();
+            gateway.Setup(g => g.Execute(ukprn)).Returns(() => establishmentResponse);
 
-            var controller = new AcademiesController(gateway.Object);
+            var controller = new EstablishmentsController(gateway.Object);
             var result = controller.GetByUkprn(ukprn);
             
-            result.Should().BeEquivalentTo(new OkObjectResult(academyResponse));
+            result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
         }
     }
 }

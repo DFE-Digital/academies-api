@@ -61,7 +61,7 @@ namespace TramsDataApi.Factories
                 Ukprn = group.Ukprn
             };
             return new TrustResponse
-                {IfdData = ifdDataResponse, GiasData = giasDataResponse, Academies = establishments};
+                {IfdData = ifdDataResponse, GiasData = giasDataResponse, Establishments = establishments};
         }
     }
 }

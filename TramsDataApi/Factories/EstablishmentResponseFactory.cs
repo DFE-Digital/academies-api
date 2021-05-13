@@ -12,7 +12,7 @@ namespace TramsDataApi.Factories
                 return null;
             }
             
-            var academyResponse = new EstablishmentResponse
+            var establishmentResponse = new EstablishmentResponse
             {
                 Urn = establishment.Urn.ToString(),
                 LocalAuthorityCode = establishment.LaCode,
@@ -173,7 +173,7 @@ namespace TramsDataApi.Factories
                 Financial = null,
                 Concerns = null
             };
-            return academyResponse;
+            return establishmentResponse;
         }
     }
 }

@@ -65,9 +65,9 @@ namespace TramsDataApi.Test.Factories
                 },
                 Ukprn = group.Ukprn
             };
-            var academyResponses = new List<EstablishmentResponse>();
+            var establishmentResponses = new List<EstablishmentResponse>();
             var expected = new TrustResponse
-                {IfdData = ifdDataResponse, GiasData = giasDataResponse, Academies = academyResponses};
+                {IfdData = ifdDataResponse, GiasData = giasDataResponse, Establishments = establishmentResponses};
 
             var result = TrustResponseFactory.Create(group, ifdTrustData, new List<EstablishmentResponse>());
             result.Should().BeEquivalentTo(expected);
@@ -93,9 +93,9 @@ namespace TramsDataApi.Test.Factories
                 },
                 Ukprn = group.Ukprn
             };
-            var academyResponses = new List<EstablishmentResponse>();
+            var establishmentResponses = new List<EstablishmentResponse>();
             var expected = new TrustResponse
-                {IfdData = null, GiasData = giasDataResponse, Academies = academyResponses};
+                {IfdData = null, GiasData = giasDataResponse, Establishments = establishmentResponses};
 
             var result = TrustResponseFactory.Create(group, null, new List<EstablishmentResponse>());
             result.Should().BeEquivalentTo(expected);
