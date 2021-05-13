@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.Test.Utils;
 using Xunit;
 
 namespace TramsDataApi.Test.Integration
@@ -31,9 +32,12 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanGetEstablishmentByUkprn()
         {
-            var establishment = Builder<Establishment>.CreateNew().With(e => e.Ukprn = "mockukprn").Build();
+            var establishment = Builder<Establishment>.CreateNew()
+                .With(e => e.Ukprn = "mockukprn")
+                .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
+                .Build();
             var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
-            var smartData = GenerateSmartData(establishment.Urn);
+            var smartData = Generators.GenerateSmartData(establishment.Urn);
             await _dbContext.Establishment.AddAsync(establishment);
             await _dbContext.MisEstablishments.AddAsync(misEstablishment);
             await _dbContext.SmartData.AddAsync(smartData);
@@ -318,22 +322,5 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SmartData.Remove(smartData);
             await _dbContext.SaveChangesAsync();
         }
-
-        private SmartData GenerateSmartData(int urn)
-            => Builder<SmartData>.CreateNew()
-            .With(s => s.Urn = urn.ToString())
-            .With(s => s.PredictedChangeInProgress8Score = _randomGenerator.NextString(23, 23))
-            .With(s => s.TotalRiskScore = Decimal.Round(_randomGenerator.Decimal(), 1))
-            .With(s => s.PredictedChanceOfChangeOccuring = _randomGenerator.Float())
-            .With(s => s.ProbabilityOfDeclining = _randomGenerator.Float())
-            .With(s => s.ProbabilityOfImproving = _randomGenerator.Float())
-            .With(s => s.ProbabilityOfStayingTheSame = _randomGenerator.Float())
-            .With(s => s.PredecessorUrn = _randomGenerator.NextString(8, 8))
-            .With(s => s.PsdFlag = _randomGenerator.Char().ToString())
-            .With(s => s.RatGrade = _randomGenerator.NextString(2, 2))
-            .With(s => s.RscShort = _randomGenerator.NextString(8, 8))
-            .With(s => s.SponsorId = _randomGenerator.NextString(7, 7))
-            .With(s => s.TrustId = _randomGenerator.NextString(7, 7))
-            .Build();
     }
 }
