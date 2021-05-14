@@ -10,19 +10,20 @@ using TramsDataApi.UseCases;
 namespace TramsDataApi.Controllers
 {
     [ApiController]
-    [Route("trust")]
     public class TrustsController : ControllerBase
     {
         private readonly IGetTrustByUkprn _getTrustByUkprn;
+        private readonly ISearchTrusts _searchTrusts;
 
-        public TrustsController(IGetTrustByUkprn getTrustByUkprn)
+        public TrustsController(IGetTrustByUkprn getTrustByUkprn, ISearchTrusts searchTrusts)
         {
             _getTrustByUkprn = getTrustByUkprn;
+            _searchTrusts = searchTrusts;
         }
         
         [HttpGet]
-        [Route("{ukprn}")]
-        public ActionResult<TrustResponse> Get(string ukprn)
+        [Route("trust/{ukprn}")]
+        public ActionResult<TrustResponse> GetTrustByUkprn(string ukprn)
         {
             var trust = _getTrustByUkprn.Execute(ukprn);
 
@@ -32,6 +33,15 @@ namespace TramsDataApi.Controllers
             }
 
             return Ok(trust);
+        }
+
+        [HttpGet]
+        [Route("trusts")]
+        public ActionResult<List<TrustListItemResponse>> SearchTrusts(string groupName, string urn,
+            string companiesHouseNumber)
+        {
+            var trusts = _searchTrusts.Execute(groupName, urn, companiesHouseNumber);
+            return Ok(trusts);
         }
     }
 }
