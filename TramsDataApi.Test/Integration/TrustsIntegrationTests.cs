@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
+using FizzWare.NBuilder.PropertyNaming;
 using TramsDataApi.DatabaseModels;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -325,6 +326,53 @@ namespace TramsDataApi.Test.Integration
             _dbContext.GroupLink.RemoveRange(groupLinks);
             _dbContext.SaveChanges();
         }
+        
+        [Fact]
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByGroupName()
+        {
+            var groupName = "Mygroupname";
+            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .Build();
+
+            var groupLinksWithGroupName = groupLinks.GetRange(0, 5);
+            var groupLinksWithoutGroupName = groupLinks.GetRange(5, 10);
+
+            groupLinksWithGroupName = groupLinksWithGroupName.Select(g =>
+            {
+                g.GroupName = groupName;
+                return g;
+            }).ToList();
+                
+            _dbContext.GroupLink.AddRange(groupLinksWithGroupName);
+            _dbContext.GroupLink.AddRange(groupLinksWithoutGroupName);
+            _dbContext.SaveChanges();
+
+            var expected = groupLinksWithGroupName
+                .Select(g => TrustListItemResponseFactory.Create(g, new List<Establishment>()))
+                .ToList();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?groupName=" + groupName),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _dbContext.GroupLink.RemoveRange(groupLinksWithGroupName);
+            _dbContext.GroupLink.RemoveRange(groupLinksWithoutGroupName);
+            _dbContext.SaveChanges();
+        }
+        
         private Group GenerateTestGroup()
         {
             return new Group

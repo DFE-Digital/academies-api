@@ -27,7 +27,11 @@ namespace TramsDataApi.Gateways
 
         public IList<GroupLink> SearchGroups(string groupName, string urn, string companiesHouseNumber)
         {
-            return _dbContext.GroupLink.ToList();
+            return _dbContext.GroupLink
+                .Where(g => (
+                    (groupName == null || g.GroupName == groupName)
+                ))
+                .ToList();
         }
     }
 }
