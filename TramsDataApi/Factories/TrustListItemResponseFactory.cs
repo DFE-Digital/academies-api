@@ -9,6 +9,11 @@ namespace TramsDataApi.Factories
     {
         public static TrustListItemResponse Create(GroupLink groupLink, IList<Establishment> establishments)
         {
+            if (groupLink == null)
+            {
+                return null;
+            }
+            
             return new TrustListItemResponse
             {
                 Urn = groupLink.Urn,

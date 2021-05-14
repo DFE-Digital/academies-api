@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -25,7 +26,7 @@ namespace TramsDataApi.Test.UseCases
             gateway.Setup(g => g.SearchGroups(groupName, urn, companiesHouseNumber))
                 .Returns(new List<GroupLink>());
 
-            var useCase = new SearchTrusts(gateway.Object);
+            var useCase = new SearchTrusts(gateway.Object, new Mock<IEstablishmentGateway>().Object);
             var result = useCase.Execute(groupName, urn, companiesHouseNumber);
 
             result.Should().BeEquivalentTo(new List<TrustListItemResponse>());
@@ -41,12 +42,20 @@ namespace TramsDataApi.Test.UseCases
                 .With(g => g.GroupName = groupName)
                 .Build();
 
-            var gateway = new Mock<ITrustGateway>();
-            gateway.Setup(g => g.SearchGroups(groupName, null, null))
+            var trustsGateway = new Mock<ITrustGateway>();
+            var establishmentsGateway = new Mock<IEstablishmentGateway>();
+            
+            trustsGateway.Setup(g => g.SearchGroups(groupName, null, null))
                 .Returns(expectedTrusts);
+            
+            establishmentsGateway.Setup(g => g.GetByTrustUid(It.IsAny<string>()))
+                .Returns(new List<Establishment>());
 
-            var expected = expectedTrusts.Select(e => TrustListItemResponseFactory.Create(e)).ToList();
-            var searchTrusts = new SearchTrusts(gateway.Object);
+            var expected = expectedTrusts.
+                Select(e => TrustListItemResponseFactory.Create(e, new List<Establishment>()))
+                .ToList();
+            
+            var searchTrusts = new SearchTrusts(trustsGateway.Object, establishmentsGateway.Object);
             var result = searchTrusts.Execute(groupName, null, null);
 
             result.Should().BeEquivalentTo(expected);
@@ -76,7 +85,7 @@ namespace TramsDataApi.Test.UseCases
 
             var expected = new List<TrustListItemResponse>
             {
-                TrustListItemResponseFactory.Create(expectedTrust, expectedEstablishments);
+                TrustListItemResponseFactory.Create(expectedTrust, expectedEstablishments)
             };
 
             var searchTrusts = new SearchTrusts(trustGateway.Object, establishmentGateway.Object);

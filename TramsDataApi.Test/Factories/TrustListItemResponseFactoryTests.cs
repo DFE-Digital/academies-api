@@ -29,7 +29,7 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void TrustListItemResponseFactory_ReturnsNull_WhenGroupLinkIsNull()
         {
-            TrustListItemResponseFactory.Create(null).Should().BeNull();
+            TrustListItemResponseFactory.Create(null, new List<Establishment>()).Should().BeNull();
         }
 
         [Fact]
