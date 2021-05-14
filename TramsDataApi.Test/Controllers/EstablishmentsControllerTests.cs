@@ -23,7 +23,7 @@ namespace TramsDataApi.Test.Controllers
             var controller = new EstablishmentsController(gateway.Object);
             var result = controller.GetByUkprn(ukprn);
 
-            result.Should().BeOfType(typeof(NotFoundResult));
+            result.Result.Should().BeOfType(typeof(NotFoundResult));
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace TramsDataApi.Test.Controllers
             var controller = new EstablishmentsController(gateway.Object);
             var result = controller.GetByUkprn(ukprn);
             
-            result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
         }
     }
 }
