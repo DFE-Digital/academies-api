@@ -16,7 +16,7 @@ namespace TramsDataApi.Controllers
 
         [HttpGet]
         [Route("establishment/{ukprn}")]
-        public IActionResult GetByUkprn(string ukprn)
+        public ActionResult<EstablishmentResponse> GetByUkprn(string ukprn)
         {
             var establishment = _getEstablishmentByUkprn.Execute(ukprn);
 
