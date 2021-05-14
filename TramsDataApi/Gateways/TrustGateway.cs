@@ -27,7 +27,7 @@ namespace TramsDataApi.Gateways
 
         public IList<GroupLink> SearchGroups(string groupName, string urn, string companiesHouseNumber)
         {
-            throw new System.NotImplementedException();
+            return _dbContext.GroupLink.ToList();
         }
     }
 }

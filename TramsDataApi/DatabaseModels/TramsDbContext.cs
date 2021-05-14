@@ -689,7 +689,7 @@ namespace TramsDataApi.DatabaseModels
 
             modelBuilder.Entity<GroupLink>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Urn);
 
                 entity.ToTable("GroupLink", "gias");
 

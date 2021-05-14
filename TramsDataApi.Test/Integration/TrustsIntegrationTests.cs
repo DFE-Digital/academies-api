@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
 
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be (HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -200,7 +201,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
         }
 
-          [Fact]
+        [Fact]
         public async Task ShouldReturnEstablishmentData_WhenTrustHasAnEstablishment()
         {
             var testGroupData = new Group
@@ -289,6 +290,39 @@ namespace TramsDataApi.Test.Integration
             
             _dbContext.Group.Remove(testGroupData);
             _dbContext.Establishment.Remove(testEstablishment);
+            _dbContext.SaveChanges();
+        }
+
+        [Fact]
+        public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_WithNoQueryParameters()
+        {
+            var groupLinks = Builder<GroupLink>.CreateListOfSize(10).Build();
+
+            _dbContext.GroupLink.AddRange(groupLinks);
+            _dbContext.SaveChanges();
+
+            var expected = groupLinks
+                .Select(g => TrustListItemResponseFactory.Create(g, new List<Establishment>()))
+                .ToList();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _dbContext.GroupLink.RemoveRange(groupLinks);
             _dbContext.SaveChanges();
         }
         private Group GenerateTestGroup()
