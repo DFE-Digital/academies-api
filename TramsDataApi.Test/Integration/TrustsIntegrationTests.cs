@@ -374,6 +374,52 @@ namespace TramsDataApi.Test.Integration
         }
         
         [Fact]
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByCompaniesHouseNumber()
+        {
+            var companiesHouseNumber = "MyCompaniesHouseNumber";
+            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .Build();
+
+            var groupLinksWithCompaniesHouseNumber = groupLinks.GetRange(0, 5);
+            var groupLinksWithoutCompaniesHouseNumber = groupLinks.GetRange(5, 10);
+
+            groupLinksWithCompaniesHouseNumber = groupLinksWithCompaniesHouseNumber.Select(g =>
+            {
+                g.CompaniesHouseNumber = companiesHouseNumber;
+                return g;
+            }).ToList();
+                
+            _dbContext.GroupLink.AddRange(groupLinksWithCompaniesHouseNumber);
+            _dbContext.GroupLink.AddRange(groupLinksWithoutCompaniesHouseNumber);
+            _dbContext.SaveChanges();
+
+            var expected = groupLinksWithCompaniesHouseNumber
+                .Select(g => TrustListItemResponseFactory.Create(g, new List<Establishment>()))
+                .ToList();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?companiesHouseNumber=" + companiesHouseNumber),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _dbContext.GroupLink.RemoveRange(groupLinksWithCompaniesHouseNumber);
+            _dbContext.GroupLink.RemoveRange(groupLinksWithoutCompaniesHouseNumber);
+            _dbContext.SaveChanges();
+        }
+        
+        [Fact]
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByUrn()
         {
             var urn = "mockurn";
@@ -411,6 +457,94 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
         }
         
+        [Fact]
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByAllFields()
+        {
+            var urn = "mockurn";
+            var companiesHouseNumber = "mockcompanieshousenumber";
+            var groupName = "mockgroupname";
+            
+            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .Build();
+
+            groupLinks[0].Urn = urn;
+            groupLinks[0].CompaniesHouseNumber = companiesHouseNumber;
+            groupLinks[0].GroupName = groupName;
+            
+            _dbContext.GroupLink.AddRange(groupLinks);
+            _dbContext.SaveChanges();
+
+            var expected = new List<TrustListItemResponse>
+            {
+                TrustListItemResponseFactory.Create(groupLinks[0], new List<Establishment>())
+            };
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/trusts?groupName={groupName}&urn={urn}&companiesHouseNumber={companiesHouseNumber}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _dbContext.GroupLink.RemoveRange(groupLinks);
+            _dbContext.SaveChanges();
+        }
+        
+        [Fact]
+        public async Task ShouldReturnSubsetOfTrusts_WithEstablishments_WhenSearchingTrusts()
+        {
+            var urn = "mockurn";
+            
+            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .Build();
+            groupLinks[0].Urn = urn;
+
+            var establishments = Builder<Establishment>.CreateListOfSize(4)
+                .All()
+                .With(e => e.TrustsCode = groupLinks[0].GroupUid)
+                .Build();
+            
+            _dbContext.GroupLink.AddRange(groupLinks);
+            _dbContext.Establishment.AddRange(establishments);
+            _dbContext.SaveChanges();
+
+            var expected = new List<TrustListItemResponse>
+            {
+                TrustListItemResponseFactory.Create(groupLinks[0], establishments)
+            };
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/trusts?urn={urn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _dbContext.GroupLink.RemoveRange(groupLinks);
+            _dbContext.Establishment.RemoveRange(establishments);
+            _dbContext.SaveChanges();
+        }
+
         private Group GenerateTestGroup()
         {
             return new Group
