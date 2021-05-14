@@ -297,7 +297,10 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_WithNoQueryParameters()
         {
-            var groupLinks = Builder<GroupLink>.CreateListOfSize(10).Build();
+            var groupLinks = Builder<GroupLink>.CreateListOfSize(10)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Int().ToString())
+                .Build();
 
             _dbContext.GroupLink.AddRange(groupLinks);
             _dbContext.SaveChanges();
@@ -332,6 +335,8 @@ namespace TramsDataApi.Test.Integration
         {
             var groupName = "Mygroupname";
             var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Int().ToString())
                 .Build();
 
             var groupLinksWithGroupName = groupLinks.GetRange(0, 5);
@@ -378,6 +383,8 @@ namespace TramsDataApi.Test.Integration
         {
             var companiesHouseNumber = "MyCompaniesHouseNumber";
             var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Int().ToString())
                 .Build();
 
             var groupLinksWithCompaniesHouseNumber = groupLinks.GetRange(0, 5);
@@ -424,6 +431,8 @@ namespace TramsDataApi.Test.Integration
         {
             var urn = "mockurn";
             var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Int().ToString())
                 .Build();
 
             groupLinks[0].Urn = urn;
@@ -465,6 +474,8 @@ namespace TramsDataApi.Test.Integration
             var groupName = "mockgroupname";
             
             var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Int().ToString())
                 .Build();
 
             groupLinks[0].Urn = urn;
@@ -506,12 +517,15 @@ namespace TramsDataApi.Test.Integration
             var urn = "mockurn";
             
             var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Int().ToString())
                 .Build();
             groupLinks[0].Urn = urn;
 
             var establishments = Builder<Establishment>.CreateListOfSize(4)
                 .All()
                 .With(e => e.TrustsCode = groupLinks[0].GroupUid)
+                .With(e => e.Urn = _randomGenerator.Int())
                 .Build();
             
             _dbContext.GroupLink.AddRange(groupLinks);
