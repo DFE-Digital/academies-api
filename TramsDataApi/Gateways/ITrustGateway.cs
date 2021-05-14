@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Gateways
 {
@@ -7,5 +7,7 @@ namespace TramsDataApi.Gateways
     {
         public Group GetGroupByUkprn(string ukprn);
         public Trust GetIfdTrustByGroupId(string groupId);
+
+        public IList<GroupLink> SearchGroups(string groupName, string urn, string companiesHouseNumber);
     }
 }

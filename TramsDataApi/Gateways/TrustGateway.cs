@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 
@@ -22,6 +23,11 @@ namespace TramsDataApi.Gateways
         public Trust GetIfdTrustByGroupId(string groupId)
         {
             return _dbContext.Trust.FirstOrDefault(t => t.TrustRef == groupId);
+        }
+
+        public IList<GroupLink> SearchGroups(string groupName, string urn, string companiesHouseNumber)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
