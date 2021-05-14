@@ -373,6 +373,44 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
         }
         
+        [Fact]
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByUrn()
+        {
+            var urn = "mockurn";
+            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+                .Build();
+
+            groupLinks[0].Urn = urn;
+            
+            _dbContext.GroupLink.AddRange(groupLinks);
+            _dbContext.SaveChanges();
+
+            var expected = new List<TrustListItemResponse>
+            {
+                TrustListItemResponseFactory.Create(groupLinks[0], new List<Establishment>())
+            };
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?urn=" + urn),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _dbContext.GroupLink.RemoveRange(groupLinks);
+            _dbContext.SaveChanges();
+        }
+        
         private Group GenerateTestGroup()
         {
             return new Group
