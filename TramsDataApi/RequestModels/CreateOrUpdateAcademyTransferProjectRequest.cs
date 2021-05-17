@@ -1,0 +1,20 @@
+using System;
+using System.Collections.Generic;
+using TramsDataApi.DatabaseModels;
+
+namespace TramsDataApi.RequestModels
+{
+    public class CreateOrUpdateAcademyTransferProjectRequest
+    {
+        public string ProjectUrn { get; set; }
+        public string OutgoingTrustUkprn { get; set; }
+        public List<TransferringAcademiesRequest> TransferringAcademies { get; set; }
+        public AcademyTransferProjectFeaturesRequest Features { get; set; }
+        public AcademyTransferProjectDates Dates { get; set; }
+        public AcademyTransferProjectBenefits Benefits { get; set; }
+        public AcademyTransferProjectRationale Rationale { get; set; }
+        public string State { get; set; }
+        public string Status { get; set; }
+        
+    }
+}
