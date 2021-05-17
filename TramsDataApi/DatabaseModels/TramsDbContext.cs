@@ -29,7 +29,6 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<AcademyTransferProjects> AcademyTransferProjects { get; set; }
         public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -1925,32 +1924,31 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(10)
                     .IsUnicode(false);
             });
-            modelBuilder.Entity<AcademyTransferProjectIntendedTransferBenefits>(entity =>
+             modelBuilder.Entity<AcademyTransferProjectIntendedTransferBenefits>(entity =>
             {
                 entity.ToTable("AcademyTransferProjectIntendedTransferBenefits", "sdd");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.FkAcademyTransferProjectUrn).HasColumnName("fk_AcademyTransferProjectUrn");
+                entity.Property(e => e.FkAcademyTransferProjectId).HasColumnName("fk_AcademyTransferProjectId");
 
                 entity.Property(e => e.SelectedBenefit).IsRequired();
 
-                entity.HasOne(d => d.FkAcademyTransferProjectUrnNavigation)
+                entity.HasOne(d => d.FkAcademyTransferProject)
                     .WithMany(p => p.AcademyTransferProjectIntendedTransferBenefits)
-                    .HasForeignKey(d => d.FkAcademyTransferProjectUrn)
-                    .HasConstraintName("FK__AcademyTr__fk_Ac__3B75D760");
+                    .HasForeignKey(d => d.FkAcademyTransferProjectId)
+                    .HasConstraintName("FK__AcademyTr__fk_Ac__4D94879B");
             });
 
             modelBuilder.Entity<AcademyTransferProjects>(entity =>
             {
-                entity.HasKey(e => e.Urn)
-                    .HasName("PK__AcademyT__C5B214364F2554C6");
-
                 entity.ToTable("AcademyTransferProjects", "sdd");
 
-                entity.Property(e => e.Urn).ValueGeneratedNever();
+                entity.HasIndex(e => e.ProjectNumber)
+                    .HasName("AcademyTransferProjectNumber");
+
+                entity.HasIndex(e => e.Urn)
+                    .HasName("AcademyTransferProjectUrn");
 
                 entity.Property(e => e.ComplexLandAndBuildingFurtherSpecification).IsRequired();
 
@@ -1967,6 +1965,10 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.OutgoingTrustUkprn)
                     .IsRequired()
                     .HasMaxLength(8);
+
+                entity.Property(e => e.ProjectNumber)
+                    .IsRequired()
+                    .HasMaxLength(7);
 
                 entity.Property(e => e.ProjectRationale).IsRequired();
 
@@ -1993,20 +1995,18 @@ namespace TramsDataApi.DatabaseModels
             {
                 entity.ToTable("TransferringAcademies", "sdd");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.FkAcademyTransferProjectUrn).HasColumnName("fk_AcademyTransferProjectUrn");
+                entity.Property(e => e.FkAcademyTransferProjectId).HasColumnName("fk_AcademyTransferProjectId");
 
                 entity.Property(e => e.IncomingTrustUkprn).HasMaxLength(8);
 
                 entity.Property(e => e.OutgoingAcademyUkprn).HasMaxLength(8);
 
-                entity.HasOne(d => d.FkAcademyTransferProjectUrnNavigation)
+                entity.HasOne(d => d.FkAcademyTransferProject)
                     .WithMany(p => p.TransferringAcademies)
-                    .HasForeignKey(d => d.FkAcademyTransferProjectUrn)
-                    .HasConstraintName("FK__Transferr__fk_Ac__38996AB5");
+                    .HasForeignKey(d => d.FkAcademyTransferProjectId)
+                    .HasConstraintName("FK__Transferr__fk_Ac__4AB81AF0");
             });
 
             OnModelCreatingPartial(modelBuilder);

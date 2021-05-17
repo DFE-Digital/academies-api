@@ -10,10 +10,10 @@ namespace TramsDataApi.DatabaseModels
     public partial class TransferringAcademies
     {
         public int Id { get; set; }
-        public int? FkAcademyTransferProjectUrn { get; set; }
+        public int? FkAcademyTransferProjectId { get; set; }
         public string OutgoingAcademyUkprn { get; set; }
         public string IncomingTrustUkprn { get; set; }
 
-        public virtual AcademyTransferProjects FkAcademyTransferProjectUrnNavigation { get; set; }
+        public virtual AcademyTransferProjects FkAcademyTransferProject { get; set; }
     }
 }

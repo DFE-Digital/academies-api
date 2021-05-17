@@ -15,7 +15,9 @@ namespace TramsDataApi.DatabaseModels
             TransferringAcademies = new HashSet<TransferringAcademies>();
         }
 
+        public int Id { get; set; }
         public int Urn { get; set; }
+        public string ProjectNumber { get; set; }
         public string OutgoingTrustUkprn { get; set; }
         public string WhoInitiatedTheTransfer { get; set; }
         public string RddOrEsfaIntervention { get; set; }
