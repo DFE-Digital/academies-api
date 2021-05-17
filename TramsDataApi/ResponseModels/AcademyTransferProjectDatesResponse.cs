@@ -1,6 +1,6 @@
-namespace TramsDataApi.RequestModels
+namespace TramsDataApi.ResponseModels
 {
-    public class AcademyTransferProjectDates
+    public class AcademyTransferProjectDatesResponse
     {
         public string TransferFirstDiscussed { get; set; }
         public string TargetDateForTransfer { get; set; }

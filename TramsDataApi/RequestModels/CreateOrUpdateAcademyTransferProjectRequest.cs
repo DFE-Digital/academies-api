@@ -10,9 +10,9 @@ namespace TramsDataApi.RequestModels
         public string OutgoingTrustUkprn { get; set; }
         public List<TransferringAcademiesRequest> TransferringAcademies { get; set; }
         public AcademyTransferProjectFeaturesRequest Features { get; set; }
-        public AcademyTransferProjectDates Dates { get; set; }
-        public AcademyTransferProjectBenefits Benefits { get; set; }
-        public AcademyTransferProjectRationale Rationale { get; set; }
+        public AcademyTransferProjectDatesRequest Dates { get; set; }
+        public AcademyTransferProjectBenefitsRequest Benefits { get; set; }
+        public AcademyTransferProjectRationaleRequest Rationale { get; set; }
         public string State { get; set; }
         public string Status { get; set; }
         

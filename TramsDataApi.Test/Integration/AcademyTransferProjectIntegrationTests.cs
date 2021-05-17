@@ -10,9 +10,12 @@ using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels;
 using Xunit;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Mvc;
+using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Test.Integration
 {
+    [Collection("Database")]
     public class AcademyTransferProjectIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
@@ -41,6 +44,7 @@ namespace TramsDataApi.Test.Integration
             };
             
             var response = await _client.SendAsync(httpRequestMessage);
+            response.StatusCode.Should().Be(201);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
