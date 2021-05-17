@@ -7,7 +7,9 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.RequestModels;
 using Xunit;
+using System.Net.Http.Json;
 
 namespace TramsDataApi.Test.Integration
 {
@@ -25,7 +27,7 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanCreateAcademyTransferProject()
         {
-            var createRequest = Builder<CreateAcademyTransferProjectRequest>.CreateNew().Build();
+            var createRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>.CreateNew().Build();
             
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -35,7 +37,7 @@ namespace TramsDataApi.Test.Integration
                 {
                     {"ApiKey", "testing-api-key"}
                 },
-                Content = JsonConvert.SerializeObject(createRequest);
+                Content =  JsonContent.Create(createRequest)
             };
             
             var response = await _client.SendAsync(httpRequestMessage);
