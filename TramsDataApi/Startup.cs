@@ -42,6 +42,7 @@ namespace TramsDataApi
             services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
             services.AddScoped<ISearchTrusts, SearchTrusts>();
             services.AddScoped<ICreateAcademyTransferProject, CreateAcademyTransferProject>();
+            services.AddScoped<IAcademyTransferProjectGateway, AcademyTransferProjectGateway>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
