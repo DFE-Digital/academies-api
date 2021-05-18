@@ -4,5 +4,6 @@ namespace TramsDataApi.ResponseModels
     {
         public string Urn { get; set; }
         public string Name { get; set; }
+        public string Ukprn { get; set; }
     }
 }

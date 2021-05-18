@@ -44,7 +44,7 @@ namespace TramsDataApi.Test.Factories
                 GroupName = group.GroupName,
                 CompaniesHouseNumber = group.CompaniesHouseNumber,
                 Establishments = establishments
-                    .Select(e => new EstablishmentSummaryResponse { Name = e.EstablishmentName, Urn = e.Urn.ToString() })
+                    .Select(e => new EstablishmentSummaryResponse { Name = e.EstablishmentName, Urn = e.Urn.ToString(), Ukprn = e.Ukprn })
                     .ToList()
             };
 

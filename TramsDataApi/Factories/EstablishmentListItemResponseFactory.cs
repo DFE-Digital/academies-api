@@ -10,7 +10,8 @@ namespace TramsDataApi.Factories
             return new EstablishmentSummaryResponse
             {
                 Name = e.EstablishmentName,
-                Urn = e.Urn.ToString()
+                Urn = e.Urn.ToString(),
+                Ukprn = e.Ukprn
             };
         }
     }
