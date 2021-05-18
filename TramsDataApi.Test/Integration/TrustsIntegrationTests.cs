@@ -306,7 +306,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
 
             var expected = groupLinks
-                .Select(g => TrustListItemResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -321,7 +321,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
@@ -353,7 +353,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
 
             var expected = groupLinksWithGroupName
-                .Select(g => TrustListItemResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -368,7 +368,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
@@ -401,7 +401,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
 
             var expected = groupLinksWithCompaniesHouseNumber
-                .Select(g => TrustListItemResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -416,7 +416,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
@@ -440,9 +440,9 @@ namespace TramsDataApi.Test.Integration
             _dbContext.GroupLink.AddRange(groupLinks);
             _dbContext.SaveChanges();
 
-            var expected = new List<TrustListItemResponse>
+            var expected = new List<TrustSummaryResponse>
             {
-                TrustListItemResponseFactory.Create(groupLinks[0], new List<Establishment>())
+                TrustSummaryResponseFactory.Create(groupLinks[0], new List<Establishment>())
             };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -457,7 +457,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
@@ -485,9 +485,9 @@ namespace TramsDataApi.Test.Integration
             _dbContext.GroupLink.AddRange(groupLinks);
             _dbContext.SaveChanges();
 
-            var expected = new List<TrustListItemResponse>
+            var expected = new List<TrustSummaryResponse>
             {
-                TrustListItemResponseFactory.Create(groupLinks[0], new List<Establishment>())
+                TrustSummaryResponseFactory.Create(groupLinks[0], new List<Establishment>())
             };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -502,7 +502,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
@@ -532,9 +532,9 @@ namespace TramsDataApi.Test.Integration
             _dbContext.Establishment.AddRange(establishments);
             _dbContext.SaveChanges();
 
-            var expected = new List<TrustListItemResponse>
+            var expected = new List<TrustSummaryResponse>
             {
-                TrustListItemResponseFactory.Create(groupLinks[0], establishments)
+                TrustSummaryResponseFactory.Create(groupLinks[0], establishments)
             };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -549,7 +549,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<TrustListItemResponse>>(jsonString);
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);

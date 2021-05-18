@@ -29,11 +29,11 @@ namespace TramsDataApi.Test.UseCases
             var useCase = new SearchTrusts(gateway.Object, new Mock<IEstablishmentGateway>().Object);
             var result = useCase.Execute(groupName, urn, companiesHouseNumber);
 
-            result.Should().BeEquivalentTo(new List<TrustListItemResponse>());
+            result.Should().BeEquivalentTo(new List<TrustSummaryResponse>());
         }
 
         [Fact]
-        public void SearchTrusts_ReturnsListOfTrustListItemResponses_WhenTrustsFound()
+        public void SearchTrusts_ReturnsListOfTrustSummaryResponses_WhenTrustsFound()
         {
             var groupName = "groupName";
 
@@ -52,7 +52,7 @@ namespace TramsDataApi.Test.UseCases
                 .Returns(new List<Establishment>());
 
             var expected = expectedTrusts.
-                Select(e => TrustListItemResponseFactory.Create(e, new List<Establishment>()))
+                Select(e => TrustSummaryResponseFactory.Create(e, new List<Establishment>()))
                 .ToList();
             
             var searchTrusts = new SearchTrusts(trustsGateway.Object, establishmentsGateway.Object);
@@ -83,9 +83,9 @@ namespace TramsDataApi.Test.UseCases
             establishmentGateway.Setup(g => g.GetByTrustUid(expectedTrust.GroupUid))
                 .Returns(expectedEstablishments);
 
-            var expected = new List<TrustListItemResponse>
+            var expected = new List<TrustSummaryResponse>
             {
-                TrustListItemResponseFactory.Create(expectedTrust, expectedEstablishments)
+                TrustSummaryResponseFactory.Create(expectedTrust, expectedEstablishments)
             };
 
             var searchTrusts = new SearchTrusts(trustGateway.Object, establishmentGateway.Object);

@@ -66,7 +66,7 @@ namespace TramsDataApi.Test.Controllers
         }
         
         [Fact]
-        public void SearchTrusts_ReturnsEmptySetOfTrustListItems_WhenNoTrustsFound()
+        public void SearchTrusts_ReturnsEmptySetOfTrustSummaries_WhenNoTrustsFound()
         {
             var groupName = "Mockgroupname";
             var urn = "Mockurn";
@@ -74,21 +74,21 @@ namespace TramsDataApi.Test.Controllers
 
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(groupName, urn, companiesHouseNumber))
-                .Returns(new List<TrustListItemResponse>());
+                .Returns(new List<TrustSummaryResponse>());
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(groupName, urn, companiesHouseNumber);
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<TrustListItemResponse>()));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<TrustSummaryResponse>()));
         }
 
         [Fact]
-        public void SearchTrusts_ByGroupNameAndCompaniesHouseNumber_ReturnsListOfTrustListItems_WhenTrustsAreFound()
+        public void SearchTrusts_ByGroupNameAndCompaniesHouseNumber_ReturnsListOfTrustSummaries_WhenTrustsAreFound()
         {
             var groupName = "Mockgroupname";
             var companiesHouseNumber = "Mockcompanieshousenumber";
 
-            var expectedTrustListItems = Builder<TrustListItemResponse>.CreateListOfSize(5)
+            var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(5)
                 .All()
                 .With(g => g.GroupName = groupName)
                 .With(g => g.CompaniesHouseNumber = companiesHouseNumber)
@@ -96,48 +96,48 @@ namespace TramsDataApi.Test.Controllers
             
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(groupName, null, companiesHouseNumber))
-                .Returns(expectedTrustListItems);
+                .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(groupName, null, companiesHouseNumber);
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustListItems));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustSummaries));
         }
         
         
         [Fact]
-        public void SearchTrusts_ByUrn_ReturnsListOfTrustListItems_WhenTrustsAreFound()
+        public void SearchTrusts_ByUrn_ReturnsListOfTrustSummaries_WhenTrustsAreFound()
         {
             var urn = "Mockurn";
 
-            var expectedTrustListItems = Builder<TrustListItemResponse>.CreateListOfSize(5)
+            var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(5)
                 .All()
                 .With(g => g.Urn = urn)
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(null, urn, null))
-                .Returns(expectedTrustListItems);
+                .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(null, urn, null);
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustListItems));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustSummaries));
         }
 
         [Fact]
         public void SearchTrusts_WithNoParams_ReturnsAllTrusts()
         {
-            var expectedTrustListItems = Builder<TrustListItemResponse>.CreateListOfSize(5).Build();
+            var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(5).Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(null, null, null))
-                .Returns(expectedTrustListItems);
+                .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(null, null, null);
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustListItems));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustSummaries));
         }
     }
 }
