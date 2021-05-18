@@ -7,6 +7,6 @@ namespace TramsDataApi.ResponseModels
         public string Urn { get; set; }
         public string GroupName { get; set; }
         public string CompaniesHouseNumber { get; set; }
-        public List<EstablishmentListItemResponse> Establishments { get; set; }
+        public List<EstablishmentSummaryResponse> Establishments { get; set; }
     }
 }

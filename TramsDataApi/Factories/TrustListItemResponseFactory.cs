@@ -19,7 +19,7 @@ namespace TramsDataApi.Factories
                 Urn = groupLink.Urn,
                 GroupName = groupLink.GroupName,
                 CompaniesHouseNumber = groupLink.CompaniesHouseNumber,
-                Establishments = establishments.Select(EstablishmentListItemResponseFactory.Create).ToList()
+                Establishments = establishments.Select(EstablishmentSummaryResponseFactory.Create).ToList()
             };
         }
     }

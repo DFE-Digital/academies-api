@@ -20,7 +20,7 @@ namespace TramsDataApi.Test.Factories
                 Urn = group.Urn,
                 GroupName = group.GroupName,
                 CompaniesHouseNumber = group.CompaniesHouseNumber,
-                Establishments = new List<EstablishmentListItemResponse>()
+                Establishments = new List<EstablishmentSummaryResponse>()
             };
             var result = TrustListItemResponseFactory.Create(group, new List<Establishment>());
             result.Should().BeEquivalentTo(expected);
@@ -44,7 +44,7 @@ namespace TramsDataApi.Test.Factories
                 GroupName = group.GroupName,
                 CompaniesHouseNumber = group.CompaniesHouseNumber,
                 Establishments = establishments
-                    .Select(e => new EstablishmentListItemResponse { Name = e.EstablishmentName, Urn = e.Urn.ToString() })
+                    .Select(e => new EstablishmentSummaryResponse { Name = e.EstablishmentName, Urn = e.Urn.ToString() })
                     .ToList()
             };
 
