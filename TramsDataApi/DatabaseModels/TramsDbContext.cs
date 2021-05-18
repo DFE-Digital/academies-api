@@ -1967,8 +1967,9 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(8);
 
                 entity.Property(e => e.ProjectNumber)
-                    .IsRequired()
-                    .HasMaxLength(7);
+                    .HasMaxLength(7)
+                    .IsUnicode(false)
+                    .HasComputedColumnSql("('AT-'+right('0000'+CONVERT([varchar](20),[Id]),(4)))");
 
                 entity.Property(e => e.ProjectRationale).IsRequired();
 
