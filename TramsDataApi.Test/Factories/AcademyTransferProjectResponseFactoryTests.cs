@@ -66,6 +66,7 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjectResponse
             {
                 ProjectUrn = academyTransferProjectModel.Urn.ToString(),
+                ProjectNumber = academyTransferProjectModel.ProjectNumber,
                 OutgoingTrustUkprn = academyTransferProjectModel.OutgoingTrustUkprn,
                 TransferringAcademies = expectedTransferringAcademies,
                 Features = expectedFeatures,

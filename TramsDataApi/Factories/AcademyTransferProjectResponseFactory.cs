@@ -59,6 +59,7 @@ namespace TramsDataApi.Factories
             return new AcademyTransferProjectResponse
             {
                 ProjectUrn = model.Urn.ToString(),
+                ProjectNumber = model.ProjectNumber,
                 OutgoingTrustUkprn = model.OutgoingTrustUkprn,
                 TransferringAcademies = transferringAcademies,
                 Features = features,

@@ -8,6 +8,8 @@ namespace TramsDataApi.ResponseModels
     public class AcademyTransferProjectResponse
     {
         public string ProjectUrn { get; set; }
+        
+        public string ProjectNumber { get; set; }
         public string OutgoingTrustUkprn { get; set; }
         public List<TransferringAcademiesResponse> TransferringAcademies { get; set; }
         public AcademyTransferProjectFeaturesResponse Features { get; set; }
