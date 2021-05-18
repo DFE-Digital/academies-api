@@ -2,7 +2,7 @@ namespace TramsDataApi.ResponseModels
 {
     public class AcademyTransferProjectBenefitsResponse
     {
-        public IntendedTransferBenefitRequest IntendedTransferBenefits { get; set; }
-        public OtherFactorsToConsiderRequest OtherFactorsToConsider { get; set; }
+        public IntendedTransferBenefitResponse IntendedTransferBenefits { get; set; }
+        public OtherFactorsToConsiderResponse OtherFactorsToConsider { get; set; }
     }
 }

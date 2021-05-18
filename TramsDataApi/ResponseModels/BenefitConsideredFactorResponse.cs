@@ -1,6 +1,6 @@
 namespace TramsDataApi.ResponseModels
 {
-    public class BenefitConsideredFactorRequest
+    public class BenefitConsideredFactorResponse
     {
         public bool ShouldBeConsidered { get; set; }
         public string FurtherSpecification { get; set; }

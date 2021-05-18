@@ -20,7 +20,7 @@ namespace TramsDataApi.DatabaseModels
         public string ProjectNumber { get; set; }
         public string OutgoingTrustUkprn { get; set; }
         public string WhoInitiatedTheTransfer { get; set; }
-        public bool? RddOrEsfaIntervention { get; set; }
+        public bool RddOrEsfaIntervention { get; set; }
         public string RddOrEsfaInterventionDetail { get; set; }
         public string TypeOfTransfer { get; set; }
         public string OtherTransferTypeDescription { get; set; }
@@ -31,11 +31,11 @@ namespace TramsDataApi.DatabaseModels
         public string TrustSponsorRationale { get; set; }
         public string State { get; set; }
         public string Status { get; set; }
-        public bool? HighProfileShouldBeConsidered { get; set; }
+        public bool HighProfileShouldBeConsidered { get; set; }
         public string HighProfileFurtherSpecification { get; set; }
-        public bool? ComplexLandAndBuildingShouldBeConsidered { get; set; }
+        public bool ComplexLandAndBuildingShouldBeConsidered { get; set; }
         public string ComplexLandAndBuildingFurtherSpecification { get; set; }
-        public bool? FinanceAndDebtShouldBeConsidered { get; set; }
+        public bool FinanceAndDebtShouldBeConsidered { get; set; }
         public string FinanceAndDebtFurtherSpecification { get; set; }
         public string OtherBenefitValue { get; set; }
 

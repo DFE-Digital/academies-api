@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FizzWare.NBuilder;
+using FluentAssertions;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Factories;
 using TramsDataApi.RequestModels;
+using TramsDataApi.ResponseModels;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
@@ -14,12 +17,33 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsAnAcademyTransferProject_WhenGivenACreateOrUpdateAcademyTransferProjectRequest()
         {
+            var randomGenerator = new RandomGenerator();
+
+            var benefitsRequest = Builder<AcademyTransferProjectBenefitsRequest>.CreateNew()
+                .With(b => b.IntendedTransferBenefits = Builder<IntendedTransferBenefitRequest>.CreateNew()
+                    .With(i => i.SelectedBenefits =  new List<string>()).Build())
+                .With(b => b.OtherFactorsToConsider = Builder<OtherFactorsToConsiderRequest>.CreateNew()
+                    .With(o => o.ComplexLandAndBuilding = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .With(o => o.FinanceAndDebt = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .With(o => o.HighProfile = Builder<BenefitConsideredFactorRequest>.CreateNew().Build()).Build())
+                .Build();
+            
+            var datesRequest = Builder<AcademyTransferProjectDatesRequest>.CreateNew()
+                .With(d => d.TransferFirstDiscussed =
+                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.TargetDateForTransfer =
+                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .Build();
+            
             var createRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>.CreateNew()
                 .With(c => c.ProjectUrn = null)
-                .With(c => c.Benefits = Builder<AcademyTransferProjectBenefitsRequest>.CreateNew().Build())
-                .With(c => c.Dates = Builder<AcademyTransferProjectDatesRequest>.CreateNew().Build())
+                .With(c => c.Benefits = benefitsRequest)
+                .With(c => c.Dates = datesRequest)
                 .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
-                .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>.CreateListOfSize(5).Build())
+                .With(c => c.Features = Builder<AcademyTransferProjectFeaturesRequest>.CreateNew().Build())
+                .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
+                    .CreateListOfSize(5).Build())
                 .Build();
 
             var expected = new AcademyTransferProjects
