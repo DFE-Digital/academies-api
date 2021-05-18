@@ -52,7 +52,7 @@ namespace TramsDataApi.Test.Integration
                 .Build();
             
             var createRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>.CreateNew()
-                .With(c => c.OutgoingTrustUkprn = randomGenerator.Phrase(8))
+                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
                 .With(c => c.ProjectUrn = randomGenerator.Int().ToString())
                 .With(c => c.Benefits = benefitsRequest)
                 .With(c => c.Dates = datesRequest)

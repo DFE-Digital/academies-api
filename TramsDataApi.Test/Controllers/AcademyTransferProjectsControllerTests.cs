@@ -18,7 +18,7 @@ namespace TramsDataApi.Test.Controllers
         {
             var createAcademyTransferProject = new Mock<ICreateAcademyTransferProject>();
             var createAcademyTransferRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>
-                .CreateNew().Build();
+                .CreateNew().With(atp => atp.OutgoingTrustUkprn = "12345678").Build();
 
             var academyTransferProjectResponse = Builder<AcademyTransferProjectResponse>
                 .CreateNew().Build();
@@ -30,6 +30,22 @@ namespace TramsDataApi.Test.Controllers
             var result = controller.Create(createAcademyTransferRequest);
             
             result.Result.Should().BeEquivalentTo(new CreatedAtActionResult("Create", null, null,academyTransferProjectResponse));
+        }
+        
+        [Fact]
+        public void CreateAcademyTransferProject_Returns401WhenGivenIncompleteRequest()
+        {
+            var createAcademyTransferProject = new Mock<ICreateAcademyTransferProject>();
+            var createAcademyTransferRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>
+                .CreateNew().With(atp => atp.OutgoingTrustUkprn = null).Build();
+
+            createAcademyTransferProject.Setup(a => a.Execute(createAcademyTransferRequest))
+                .Throws(new Exception("Shouldn't be called."));
+
+            var controller = new AcademyTransferProjectController(createAcademyTransferProject.Object);
+            var result = controller.Create(createAcademyTransferRequest);
+            
+            result.Result.Should().BeEquivalentTo(new BadRequestResult());
         }
     }
 }
