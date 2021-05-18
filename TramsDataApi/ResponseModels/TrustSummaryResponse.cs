@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TramsDataApi.ResponseModels
 {
-    public class TrustListItemResponse
+    public class TrustSummaryResponse
     {
         public string Urn { get; set; }
         public string GroupName { get; set; }
