@@ -7,7 +7,6 @@ namespace TramsDataApi.RequestModels
 {
     public class CreateOrUpdateAcademyTransferProjectRequest
     {
-        public string ProjectUrn { get; set; }
         public string OutgoingTrustUkprn { get; set; }
         public List<TransferringAcademiesRequest> TransferringAcademies { get; set; }
         public AcademyTransferProjectFeaturesRequest Features { get; set; }

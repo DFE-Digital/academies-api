@@ -37,7 +37,6 @@ namespace TramsDataApi.Test.Factories
                 .Build();
             
             var createRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>.CreateNew()
-                .With(c => c.ProjectUrn = null)
                 .With(c => c.Benefits = benefitsRequest)
                 .With(c => c.Dates = datesRequest)
                 .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())

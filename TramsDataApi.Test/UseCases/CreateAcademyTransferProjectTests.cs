@@ -39,7 +39,6 @@ namespace TramsDataApi.Test.UseCases
                 .Build();
             
             var createRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>.CreateNew()
-                .With(c => c.ProjectUrn = null)
                 .With(c => c.Benefits = benefitsRequest)
                 .With(c => c.Dates = datesRequest)
                 .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
@@ -50,7 +49,6 @@ namespace TramsDataApi.Test.UseCases
 
             var convertedAcademyTransferProject = AcademyTransferProjectFactory.Create(createRequest);
             var createdAcademyTransferProject = AcademyTransferProjectFactory.Create(createRequest);
-            createdAcademyTransferProject.Id = randomGenerator.Int();
             createdAcademyTransferProject.Urn = randomGenerator.Int();
 
             var expected = AcademyTransferProjectResponseFactory.Create(createdAcademyTransferProject);
