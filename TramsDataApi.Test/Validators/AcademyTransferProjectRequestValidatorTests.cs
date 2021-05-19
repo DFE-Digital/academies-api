@@ -1,3 +1,4 @@
+using System.Linq;
 using FizzWare.NBuilder;
 using FluentValidation.TestHelper;
 using TramsDataApi.RequestModels;
@@ -33,6 +34,5 @@ namespace TramsDataApi.Test.Validators
             result.ShouldHaveValidationErrorFor(atp => atp.OutgoingTrustUkprn)
                 .WithErrorCode("ExactLengthValidator");;
         }
-
     }
 }

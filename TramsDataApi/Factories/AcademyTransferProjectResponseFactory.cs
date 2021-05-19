@@ -25,15 +25,15 @@ namespace TramsDataApi.Factories
 
             var dates = new AcademyTransferProjectDatesResponse
             {
-                TransferFirstDiscussed = model.TransferFirstDiscussed.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
-                TargetDateForTransfer = model.TargetDateForTransfer.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
-                HtbDate = model.HtbDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                TransferFirstDiscussed = model.TransferFirstDiscussed?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                TargetDateForTransfer = model.TargetDateForTransfer?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                HtbDate = model.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
             };
 
             var intendedTransferBenefits = new IntendedTransferBenefitResponse
             {
                 OtherBenefitValue = model.OtherBenefitValue,
-                SelectedBenefits = model.AcademyTransferProjectIntendedTransferBenefits
+                SelectedBenefits = model.AcademyTransferProjectIntendedTransferBenefits?
                     .Select(b => b.SelectedBenefit).ToList()
             };
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -11,8 +12,75 @@ namespace TramsDataApi.Test.Factories
 {
     public class AcademyTransferProjectResponseFactoryTests
     {
+
         [Fact]
-        public void ReturnsAnAcademyTransferProject_WhenGivenACreateOrUpdateAcademyTransferProjectRequest()
+        public void ReturnsAnAcademyTransferProjectResponse_WhenGivenAnInitialAcademyTransferProject()
+        {
+            
+      
+            var academyTransferProjectModel = new AcademyTransferProjects
+            {
+                Urn = 0,
+                ProjectNumber = "AT-0001",
+                OutgoingTrustUkprn = "00000001",
+                WhoInitiatedTheTransfer = null,
+                RddOrEsfaIntervention = null,
+                RddOrEsfaInterventionDetail = null,
+                TypeOfTransfer = null,
+                OtherTransferTypeDescription = null,
+                TransferFirstDiscussed = null,
+                TargetDateForTransfer = null,
+                HtbDate = null,
+                ProjectRationale = null,
+                TrustSponsorRationale = null,
+                State = null,
+                Status = null,
+                HighProfileShouldBeConsidered = null,
+                HighProfileFurtherSpecification = null,
+                ComplexLandAndBuildingShouldBeConsidered = null,
+                ComplexLandAndBuildingFurtherSpecification = null,
+                FinanceAndDebtShouldBeConsidered = null,
+                FinanceAndDebtFurtherSpecification = null,
+                OtherBenefitValue = null,
+                AcademyTransferProjectIntendedTransferBenefits = null,
+                TransferringAcademies = Builder<TransferringAcademies>
+                    .CreateListOfSize(1).All()
+                    .With(ta => ta.IncomingTrustUkprn = null)
+                    .Build()
+            };
+            
+            var expected = new AcademyTransferProjectResponse
+            {
+                ProjectUrn = academyTransferProjectModel.Urn.ToString(),
+                ProjectNumber = academyTransferProjectModel.ProjectNumber,
+                OutgoingTrustUkprn = academyTransferProjectModel.OutgoingTrustUkprn,
+                TransferringAcademies = academyTransferProjectModel.TransferringAcademies.Select(ta =>
+                    new TransferringAcademiesResponse
+                        {IncomingTrustUkprn = null, OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn}).ToList(),
+                Features = new AcademyTransferProjectFeaturesResponse(),
+                Dates = new AcademyTransferProjectDatesResponse(),
+                Benefits = new AcademyTransferProjectBenefitsResponse
+                {
+                    IntendedTransferBenefits = new IntendedTransferBenefitResponse(),
+                    OtherFactorsToConsider = new OtherFactorsToConsiderResponse
+                    {
+                        HighProfile = new BenefitConsideredFactorResponse(),
+                        ComplexLandAndBuilding = new BenefitConsideredFactorResponse(),
+                        FinanceAndDebt = new BenefitConsideredFactorResponse()
+                    }
+                },
+                Rationale = new AcademyTransferProjectRationaleResponse(),
+                State = null,
+                Status = null
+            };
+
+            var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);
+            
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void ReturnsAnAcademyTransferProjectResponse_WhenGivenACompleteAcademyTransferProject()
         {
             var academyTransferProjectModel = Builder<AcademyTransferProjects>.CreateNew().Build();
 
@@ -32,9 +100,9 @@ namespace TramsDataApi.Test.Factories
 
             var expectedDates = new AcademyTransferProjectDatesResponse
             {
-                TransferFirstDiscussed = academyTransferProjectModel.TransferFirstDiscussed.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
-                TargetDateForTransfer = academyTransferProjectModel.TargetDateForTransfer.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
-                HtbDate = academyTransferProjectModel.HtbDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                TransferFirstDiscussed = academyTransferProjectModel.TransferFirstDiscussed?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                TargetDateForTransfer = academyTransferProjectModel.TargetDateForTransfer?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                HtbDate = academyTransferProjectModel.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
             };
 
             var expectedIntendedTransferBenefits = new IntendedTransferBenefitResponse

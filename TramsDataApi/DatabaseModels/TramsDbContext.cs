@@ -1924,7 +1924,8 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(10)
                     .IsUnicode(false);
             });
-            modelBuilder.Entity<AcademyTransferProjectIntendedTransferBenefits>(entity =>
+            
+             modelBuilder.Entity<AcademyTransferProjectIntendedTransferBenefits>(entity =>
             {
                 entity.ToTable("AcademyTransferProjectIntendedTransferBenefits", "sdd");
 
@@ -1937,13 +1938,13 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasOne(d => d.FkAcademyTransferProject)
                     .WithMany(p => p.AcademyTransferProjectIntendedTransferBenefits)
                     .HasForeignKey(d => d.FkAcademyTransferProjectId)
-                    .HasConstraintName("FK__AcademyTr__fk_Ac__3B75D760");
+                    .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
             });
 
             modelBuilder.Entity<AcademyTransferProjects>(entity =>
             {
                 entity.HasKey(e => e.Urn)
-                    .HasName("PK__AcademyT__C5B21436886D370A");
+                    .HasName("PK__AcademyT__C5B214360AF6201A");
 
                 entity.ToTable("AcademyTransferProjects", "sdd");
 
@@ -1953,17 +1954,7 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasIndex(e => e.Urn)
                     .HasName("AcademyTransferProjectUrn");
 
-                entity.Property(e => e.ComplexLandAndBuildingFurtherSpecification).IsRequired();
-
-                entity.Property(e => e.FinanceAndDebtFurtherSpecification).IsRequired();
-
-                entity.Property(e => e.HighProfileFurtherSpecification).IsRequired();
-
                 entity.Property(e => e.HtbDate).HasColumnType("date");
-
-                entity.Property(e => e.OtherBenefitValue).IsRequired();
-
-                entity.Property(e => e.OtherTransferTypeDescription).IsRequired();
 
                 entity.Property(e => e.OutgoingTrustUkprn)
                     .IsRequired()
@@ -1974,23 +1965,9 @@ namespace TramsDataApi.DatabaseModels
                     .IsUnicode(false)
                     .HasComputedColumnSql("('AT-'+right('0000'+CONVERT([varchar](20),[Urn]),(4)))");
 
-                entity.Property(e => e.ProjectRationale).IsRequired();
-
-                entity.Property(e => e.RddOrEsfaInterventionDetail).IsRequired();
-
-                entity.Property(e => e.State).IsRequired();
-
-                entity.Property(e => e.Status).IsRequired();
-
                 entity.Property(e => e.TargetDateForTransfer).HasColumnType("date");
 
                 entity.Property(e => e.TransferFirstDiscussed).HasColumnType("date");
-
-                entity.Property(e => e.TrustSponsorRationale).IsRequired();
-
-                entity.Property(e => e.TypeOfTransfer).IsRequired();
-
-                entity.Property(e => e.WhoInitiatedTheTransfer).IsRequired();
             });
 
             modelBuilder.Entity<TransferringAcademies>(entity =>
@@ -2003,14 +1980,15 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.IncomingTrustUkprn).HasMaxLength(8);
 
-                entity.Property(e => e.OutgoingAcademyUkprn).HasMaxLength(8);
+                entity.Property(e => e.OutgoingAcademyUkprn)
+                    .IsRequired()
+                    .HasMaxLength(8);
 
                 entity.HasOne(d => d.FkAcademyTransferProject)
                     .WithMany(p => p.TransferringAcademies)
                     .HasForeignKey(d => d.FkAcademyTransferProjectId)
-                    .HasConstraintName("FK__Transferr__fk_Ac__38996AB5");
+                    .HasConstraintName("FK__Transferr__fk_Ac__403A8C7D");
             });
-
             OnModelCreatingPartial(modelBuilder);
         }
 

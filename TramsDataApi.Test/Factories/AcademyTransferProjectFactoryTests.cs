@@ -14,8 +14,61 @@ namespace TramsDataApi.Test.Factories
 {
     public class AcademyTransferProjectFactoryTests
     {
+
         [Fact]
-        public void ReturnsAnAcademyTransferProject_WhenGivenACreateOrUpdateAcademyTransferProjectRequest()
+        public void ReturnsAnAcademyTransferProject_WhenGivenAnInitialAcademyTransferProjectRequest()
+        {
+            var randomGenerator = new RandomGenerator();
+            var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
+                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
+                .With(c => c.Status = null)
+                .With(c => c.State = null)
+                .With(c => c.Benefits = null)
+                .With(c => c.Dates = null)
+                .With(c => c.Rationale = null)
+                .With(c => c.Features = null)
+                .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
+                    .CreateListOfSize(5)
+                    .All()
+                    .With(t => t.OutgoingAcademyUkprn = randomGenerator.NextString(8,8))
+                    .With(t => t.IncomingTrustUkprn = null).Build())
+                .Build();
+            
+            var expected = new AcademyTransferProjects
+            {
+                OutgoingTrustUkprn = createRequest.OutgoingTrustUkprn,
+                WhoInitiatedTheTransfer = null,
+                RddOrEsfaIntervention = null,
+                RddOrEsfaInterventionDetail = null,
+                TypeOfTransfer = null,
+                OtherTransferTypeDescription = null,
+                TransferFirstDiscussed = null,
+                TargetDateForTransfer = null,
+                HtbDate = null,
+                ProjectRationale = null,
+                TrustSponsorRationale = null,
+                State = null,
+                Status = null,
+                HighProfileShouldBeConsidered = null,
+                HighProfileFurtherSpecification = null,
+                ComplexLandAndBuildingShouldBeConsidered = null,
+                ComplexLandAndBuildingFurtherSpecification = null,
+                FinanceAndDebtShouldBeConsidered = null,
+                FinanceAndDebtFurtherSpecification = null,
+                OtherBenefitValue = null,
+                AcademyTransferProjectIntendedTransferBenefits = null,
+                TransferringAcademies = createRequest.TransferringAcademies
+                    .Select(t => new TransferringAcademies { OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = null })
+                    .ToList()
+            };
+            
+            var result = AcademyTransferProjectFactory.Create(createRequest);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void ReturnsAnAcademyTransferProject_WhenGivenACompleteAcademyTransferProjectRequest()
         {
             var randomGenerator = new RandomGenerator();
 
@@ -37,6 +90,7 @@ namespace TramsDataApi.Test.Factories
                 .Build();
             
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
+                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
                 .With(c => c.Benefits = benefitsRequest)
                 .With(c => c.Dates = datesRequest)
                 .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
