@@ -3,9 +3,9 @@ using TramsDataApi.RequestModels;
 
 namespace TramsDataApi.Validators
 {
-    public class CreateOrUpdateAcademyTransferProjectRequestValidator : AbstractValidator<CreateOrUpdateAcademyTransferProjectRequest>
+    public class AcademyTransferProjectRequestValidator : AbstractValidator<AcademyTransferProjectRequest>
     {
-        public CreateOrUpdateAcademyTransferProjectRequestValidator()
+        public AcademyTransferProjectRequestValidator()
         {
             RuleFor(x => x.OutgoingTrustUkprn).Length(8)
                 .WithMessage("OutgoingTrustUkprn must be length 8")

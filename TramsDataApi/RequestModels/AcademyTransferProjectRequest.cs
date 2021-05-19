@@ -5,7 +5,7 @@ using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.RequestModels
 {
-    public class CreateOrUpdateAcademyTransferProjectRequest
+    public class AcademyTransferProjectRequest
     {
         public string OutgoingTrustUkprn { get; set; }
         public List<TransferringAcademiesRequest> TransferringAcademies { get; set; }

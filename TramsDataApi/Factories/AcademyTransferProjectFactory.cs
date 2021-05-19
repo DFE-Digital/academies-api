@@ -8,7 +8,7 @@ namespace TramsDataApi.Factories
 {
     public class AcademyTransferProjectFactory
     {
-        public static AcademyTransferProjects Create(CreateOrUpdateAcademyTransferProjectRequest request)
+        public static AcademyTransferProjects Create(AcademyTransferProjectRequest request)
         {
             return new AcademyTransferProjects
             {

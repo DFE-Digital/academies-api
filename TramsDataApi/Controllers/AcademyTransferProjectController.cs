@@ -17,9 +17,9 @@ namespace TramsDataApi.Controllers
         
         [HttpPost]
         [Route("academyTransferProject")]
-        public ActionResult<AcademyTransferProjectResponse> Create(CreateOrUpdateAcademyTransferProjectRequest request)
+        public ActionResult<AcademyTransferProjectResponse> Create(AcademyTransferProjectRequest request)
         {
-            var validator = new CreateOrUpdateAcademyTransferProjectRequestValidator();
+            var validator = new AcademyTransferProjectRequestValidator();
             if (validator.Validate(request).IsValid)
             {
                 var createdAcademyTransferProject = _createAcademyTransferProject.Execute(request);

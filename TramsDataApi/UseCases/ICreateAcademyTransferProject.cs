@@ -5,6 +5,6 @@ namespace TramsDataApi.UseCases
 {
     public interface ICreateAcademyTransferProject
     {
-        public AcademyTransferProjectResponse Execute(CreateOrUpdateAcademyTransferProjectRequest request);
+        public AcademyTransferProjectResponse Execute(AcademyTransferProjectRequest request);
     }
 }

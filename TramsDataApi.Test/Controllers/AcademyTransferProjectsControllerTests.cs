@@ -17,7 +17,7 @@ namespace TramsDataApi.Test.Controllers
         public void CreateAcademyTransferProject_Returns201WhenSuccessfullyCreatesAnAcademyTransferProject()
         {
             var createAcademyTransferProject = new Mock<ICreateAcademyTransferProject>();
-            var createAcademyTransferRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>
+            var createAcademyTransferRequest = Builder<AcademyTransferProjectRequest>
                 .CreateNew().With(atp => atp.OutgoingTrustUkprn = "12345678").Build();
 
             var academyTransferProjectResponse = Builder<AcademyTransferProjectResponse>
@@ -36,7 +36,7 @@ namespace TramsDataApi.Test.Controllers
         public void CreateAcademyTransferProject_Returns401WhenGivenIncompleteRequest()
         {
             var createAcademyTransferProject = new Mock<ICreateAcademyTransferProject>();
-            var createAcademyTransferRequest = Builder<CreateOrUpdateAcademyTransferProjectRequest>
+            var createAcademyTransferRequest = Builder<AcademyTransferProjectRequest>
                 .CreateNew().With(atp => atp.OutgoingTrustUkprn = null).Build();
 
             createAcademyTransferProject.Setup(a => a.Execute(createAcademyTransferRequest))
