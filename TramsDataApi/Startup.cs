@@ -33,6 +33,8 @@ namespace TramsDataApi
             
             // EF setup
             services.AddDbContext<LegacyTramsDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));// EF setup
+            services.AddDbContext<TramsDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<ITrustGateway, TrustGateway>();
