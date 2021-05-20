@@ -21,12 +21,14 @@ namespace TramsDataApi.Test.Integration
     public class AcademyTransferProjectIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
-        private readonly LegacyTramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
         
         public AcademyTransferProjectIntegrationTests(TramsDataApiFactory fixture){
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
-            _dbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
+            _legacyTramsDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
+            _tramsDbContext = fixture.Services.GetRequiredService<TramsDbContext>();
         }
 
         [Fact]
@@ -62,7 +64,7 @@ namespace TramsDataApi.Test.Integration
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
-            var createdProject = _dbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.ProjectNumber == result.ProjectNumber);
+            var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.ProjectNumber == result.ProjectNumber);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
         }
@@ -117,7 +119,7 @@ namespace TramsDataApi.Test.Integration
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
-            var createdProject = _dbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.ProjectNumber == result.ProjectNumber);
+            var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.ProjectNumber == result.ProjectNumber);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
         }

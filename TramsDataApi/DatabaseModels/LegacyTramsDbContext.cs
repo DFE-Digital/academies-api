@@ -25,10 +25,6 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<MisEstablishments> MisEstablishments { get; set; }
         public virtual DbSet<FurtherEducationEstablishments> FurtherEducationEstablishments { get; set; }
         public virtual DbSet<SmartData> SmartData { get; set; }
-        public virtual DbSet<AcademyTransferProjectIntendedTransferBenefits> AcademyTransferProjectIntendedTransferBenefits { get; set; }
-        public virtual DbSet<AcademyTransferProjects> AcademyTransferProjects { get; set; }
-        public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

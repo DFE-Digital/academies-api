@@ -8,9 +8,11 @@ namespace TramsDataApi.Test
 {
     public class DbFixture : IDisposable
     {
-        private readonly LegacyTramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
         private readonly string _tramsDbName = $"Trams-{Guid.NewGuid()}";
-        private readonly IDbContextTransaction _transaction;
+        private readonly IDbContextTransaction _legacyTransaction;
+        private readonly IDbContextTransaction _tramsTransaction;
         public readonly string ConnString;
         
         private bool _disposed;
@@ -19,19 +21,29 @@ namespace TramsDataApi.Test
         {
             ConnString = $"Server=localhost,1433;Database={_tramsDbName};User=sa;Password=StrongPassword905";
 
-            var builder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
+            var legacyContextBuilder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
+            var tramsContextBuilder = new DbContextOptionsBuilder<TramsDbContext>();
 
-            builder.UseSqlServer(ConnString);
-            _dbContext = new LegacyTramsDbContext(builder.Options);
+            legacyContextBuilder.UseSqlServer(ConnString);
+            _legacyTramsDbContext = new LegacyTramsDbContext(legacyContextBuilder.Options);
 
-            _dbContext.Database.Migrate();
-            _transaction = _dbContext.Database.BeginTransaction();
+            tramsContextBuilder.UseSqlServer(ConnString);
+            _tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
+            
+
+            _legacyTramsDbContext.Database.Migrate();
+            _tramsDbContext.Database.Migrate();
+            
+            _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
+            _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
         }
 
         public void Dispose()
         {
-            _transaction.Rollback();
-            _transaction.Dispose();
+            _legacyTransaction.Rollback();
+            _legacyTransaction.Dispose();
+            _tramsTransaction.Rollback();
+            _tramsTransaction.Dispose();
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
@@ -43,7 +55,8 @@ namespace TramsDataApi.Test
                 if (disposing)
                 {
                     // remove the temp db from the server once all tests are done
-                    _dbContext.Database.EnsureDeleted();
+                    _legacyTramsDbContext.Database.EnsureDeleted();
+                    _tramsDbContext.Database.EnsureDeleted();
                 }
 
                 _disposed = true;
