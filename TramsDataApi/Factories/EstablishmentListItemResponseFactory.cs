@@ -3,14 +3,15 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Factories
 {
-    public class EstablishmentListItemResponseFactory
+    public class EstablishmentSummaryResponseFactory
     {
-        public static EstablishmentListItemResponse Create(Establishment e)
+        public static EstablishmentSummaryResponse Create(Establishment e)
         {
-            return new EstablishmentListItemResponse
+            return new EstablishmentSummaryResponse
             {
                 Name = e.EstablishmentName,
-                Urn = e.Urn.ToString()
+                Urn = e.Urn.ToString(),
+                Ukprn = e.Ukprn
             };
         }
     }
