@@ -21,12 +21,12 @@ namespace TramsDataApi.Test.Integration
     public class AcademyTransferProjectIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
         
         public AcademyTransferProjectIntegrationTests(TramsDataApiFactory fixture){
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
-            _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
+            _dbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
         }
 
         [Fact]

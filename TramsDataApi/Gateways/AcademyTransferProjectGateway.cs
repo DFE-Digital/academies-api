@@ -5,9 +5,9 @@ namespace TramsDataApi.Gateways
     public class AcademyTransferProjectGateway : IAcademyTransferProjectGateway
     {
         
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
 
-        public AcademyTransferProjectGateway(TramsDbContext dbContext)
+        public AcademyTransferProjectGateway(LegacyTramsDbContext dbContext)
         {
             _dbContext = dbContext;
         }

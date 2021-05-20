@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TramsDataApi.DatabaseModels
 {
-    public partial class TramsDbContext : DbContext
+    public partial class LegacyTramsDbContext : DbContext
     {
-        public TramsDbContext()
+        public LegacyTramsDbContext()
         {
         }
 
-        public TramsDbContext(DbContextOptions<TramsDbContext> options)
+        public LegacyTramsDbContext(DbContextOptions<LegacyTramsDbContext> options)
             : base(options)
         {
         }

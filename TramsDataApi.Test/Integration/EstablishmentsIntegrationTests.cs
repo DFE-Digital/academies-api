@@ -18,14 +18,14 @@ namespace TramsDataApi.Test.Integration
     public class EstablishmentsIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
         private readonly RandomGenerator _randomGenerator;
 
         public EstablishmentsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
-            _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
+            _dbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _randomGenerator = new RandomGenerator();
         }
 

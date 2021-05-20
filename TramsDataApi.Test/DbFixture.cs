@@ -8,7 +8,7 @@ namespace TramsDataApi.Test
 {
     public class DbFixture : IDisposable
     {
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
         private readonly string _tramsDbName = $"Trams-{Guid.NewGuid()}";
         private readonly IDbContextTransaction _transaction;
         public readonly string ConnString;
@@ -19,10 +19,10 @@ namespace TramsDataApi.Test
         {
             ConnString = $"Server=localhost,1433;Database={_tramsDbName};User=sa;Password=StrongPassword905";
 
-            var builder = new DbContextOptionsBuilder<TramsDbContext>();
+            var builder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
 
             builder.UseSqlServer(ConnString);
-            _dbContext = new TramsDbContext(builder.Options);
+            _dbContext = new LegacyTramsDbContext(builder.Options);
 
             _dbContext.Database.Migrate();
             _transaction = _dbContext.Database.BeginTransaction();

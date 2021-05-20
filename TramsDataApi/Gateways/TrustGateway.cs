@@ -6,10 +6,10 @@ namespace TramsDataApi.Gateways
 {
     public class TrustGateway : ITrustGateway
     {
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
         private readonly IEstablishmentGateway _establishmentGateway;
 
-        public TrustGateway(TramsDbContext dbContext, IEstablishmentGateway establishmentGateway)
+        public TrustGateway(LegacyTramsDbContext dbContext, IEstablishmentGateway establishmentGateway)
         {
             _dbContext = dbContext;
             _establishmentGateway = establishmentGateway;
