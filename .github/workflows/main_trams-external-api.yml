@@ -32,8 +32,6 @@ jobs:
         run: dotnet tool install --global dotnet-ef
       - name: Restore tools for tests
         run: dotnet tool restore
-      - name: Run migrations for TramsDb
-        run: dotnet ef database update --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext 
       - name: Create migrations for LegacyTramsDb
         run: dotnet ef migrations add INITIAL_MIGRATION --project TramsDataApi --context TramsDataApi.DatabaseModels.LegacyTramsDbContext -o Migrations/LegacyTramsDb
       - name: Restore dependencies
@@ -52,6 +50,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.301'
+
+    - name: Install EF
+      run: dotnet tool install --global dotnet-ef
+      
+    - name: Run migrations for TramsDb
+      run: dotnet ef database update --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
