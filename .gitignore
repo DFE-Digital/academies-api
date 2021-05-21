@@ -142,4 +142,4 @@ $RECYCLE.BIN/
 _NCrunch*
 
 # Add migrations (Will come back and look at how to handle migrations)
-*/Migrations
+*/Migrations/LegacyTramsDb
