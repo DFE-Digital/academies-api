@@ -55,7 +55,7 @@ jobs:
       run: dotnet tool install --global dotnet-ef
       
     - name: Run migrations for TramsDb
-      run: dotnet ef database update --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext
+      run: dotnet ef database update --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext --connection ${{ secrets.Azure_Dev_Conn_String }}
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
