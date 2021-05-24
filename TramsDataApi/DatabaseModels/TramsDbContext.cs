@@ -43,29 +43,26 @@ namespace TramsDataApi.DatabaseModels
                     .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
             });
 
+            modelBuilder.HasSequence<int>("AcademyTransferProjectUrns").HasMin(10000000);
+            
             modelBuilder.Entity<AcademyTransferProjects>(entity =>
             {
-                entity.HasKey(e => e.Urn)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__AcademyT__C5B214360AF6201A");
 
                 entity.ToTable("AcademyTransferProjects", "sdd");
 
-                entity.HasIndex(e => e.ProjectNumber)
-                    .HasName("AcademyTransferProjectNumber");
-
                 entity.HasIndex(e => e.Urn)
                     .HasName("AcademyTransferProjectUrn");
+
+                entity.Property(e => e.Urn)
+                    .HasDefaultValueSql("NEXT VALUE FOR AcademyTransferProjectUrns");
 
                 entity.Property(e => e.HtbDate).HasColumnType("date");
 
                 entity.Property(e => e.OutgoingTrustUkprn)
                     .IsRequired()
                     .HasMaxLength(8);
-
-                entity.Property(e => e.ProjectNumber)
-                    .HasMaxLength(7)
-                    .IsUnicode(false)
-                    .HasComputedColumnSql("('AT-'+right('0000'+CONVERT([varchar](20),[Urn]),(4)))");
 
                 entity.Property(e => e.TargetDateForTransfer).HasColumnType("date");
 

@@ -10,14 +10,19 @@ namespace TramsDataApi.Migrations.TramsDb
             migrationBuilder.EnsureSchema(
                 name: "sdd");
 
+            migrationBuilder.CreateSequence<int>(
+                name: "AcademyTransferProjectUrns",
+                minValue: 10000000L);
+
             migrationBuilder.CreateTable(
                 name: "AcademyTransferProjects",
                 schema: "sdd",
                 columns: table => new
                 {
-                    Urn = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectNumber = table.Column<string>(unicode: false, maxLength: 7, nullable: true, computedColumnSql: "('AT-'+right('0000'+CONVERT([varchar](20),[Urn]),(4)))"),
+                    Urn = table.Column<int>(nullable: false, defaultValueSql: "NEXT VALUE FOR AcademyTransferProjectUrns"),
+                    ProjectNumber = table.Column<string>(nullable: true),
                     OutgoingTrustUkprn = table.Column<string>(maxLength: 8, nullable: false),
                     WhoInitiatedTheTransfer = table.Column<string>(nullable: true),
                     RddOrEsfaIntervention = table.Column<bool>(nullable: true),
@@ -41,7 +46,7 @@ namespace TramsDataApi.Migrations.TramsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__AcademyT__C5B214360AF6201A", x => x.Urn);
+                    table.PrimaryKey("PK__AcademyT__C5B214360AF6201A", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +67,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         column: x => x.fk_AcademyTransferProjectId,
                         principalSchema: "sdd",
                         principalTable: "AcademyTransferProjects",
-                        principalColumn: "Urn",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -85,7 +90,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         column: x => x.fk_AcademyTransferProjectId,
                         principalSchema: "sdd",
                         principalTable: "AcademyTransferProjects",
-                        principalColumn: "Urn",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -94,12 +99,6 @@ namespace TramsDataApi.Migrations.TramsDb
                 schema: "sdd",
                 table: "AcademyTransferProjectIntendedTransferBenefits",
                 column: "fk_AcademyTransferProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "AcademyTransferProjectNumber",
-                schema: "sdd",
-                table: "AcademyTransferProjects",
-                column: "ProjectNumber");
 
             migrationBuilder.CreateIndex(
                 name: "AcademyTransferProjectUrn",
@@ -127,6 +126,9 @@ namespace TramsDataApi.Migrations.TramsDb
             migrationBuilder.DropTable(
                 name: "AcademyTransferProjects",
                 schema: "sdd");
+
+            migrationBuilder.DropSequence(
+                name: "AcademyTransferProjectUrns");
         }
     }
 }

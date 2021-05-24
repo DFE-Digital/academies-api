@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20210521094627_INITIAL_MIGRATION")]
+    [Migration("20210521144128_INITIAL_MIGRATION")]
     partial class INITIAL_MIGRATION
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,6 +19,7 @@ namespace TramsDataApi.Migrations.TramsDb
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("Relational:Sequence:.AcademyTransferProjectUrns", "'AcademyTransferProjectUrns', '', '1', '1', '10000000', '', 'Int32', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyTransferProjectIntendedTransferBenefits", b =>
@@ -46,7 +47,7 @@ namespace TramsDataApi.Migrations.TramsDb
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyTransferProjects", b =>
                 {
-                    b.Property<int>("Urn")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -84,11 +85,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasMaxLength(8);
 
                     b.Property<string>("ProjectNumber")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("varchar(7)")
-                        .HasComputedColumnSql("('AT-'+right('0000'+CONVERT([varchar](20),[Urn]),(4)))")
-                        .HasMaxLength(7)
-                        .IsUnicode(false);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProjectRationale")
                         .HasColumnType("nvarchar(max)");
@@ -117,14 +114,16 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("TypeOfTransfer")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Urn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR AcademyTransferProjectUrns");
+
                     b.Property<string>("WhoInitiatedTheTransfer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Urn")
+                    b.HasKey("Id")
                         .HasName("PK__AcademyT__C5B214360AF6201A");
-
-                    b.HasIndex("ProjectNumber")
-                        .HasName("AcademyTransferProjectNumber");
 
                     b.HasIndex("Urn")
                         .HasName("AcademyTransferProjectUrn");
