@@ -67,6 +67,10 @@ namespace TramsDataApi.Test.Integration
             var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn.ToString() == result.ProjectUrn);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
+            
+            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
+            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
+            _tramsDbContext.SaveChanges();
         }
 
         [Fact]
@@ -122,6 +126,10 @@ namespace TramsDataApi.Test.Integration
             var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn.ToString() == result.ProjectUrn);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
+            
+            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
+            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
+            _tramsDbContext.SaveChanges();
         }
     }
     

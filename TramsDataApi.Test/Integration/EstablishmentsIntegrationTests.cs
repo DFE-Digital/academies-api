@@ -18,14 +18,14 @@ namespace TramsDataApi.Test.Integration
     public class EstablishmentsIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
-        private readonly LegacyTramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _legacyDbContext;
         private readonly RandomGenerator _randomGenerator;
 
         public EstablishmentsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.BaseAddress = new Uri("https://trams-api.com/");
-            _dbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
+            _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _randomGenerator = new RandomGenerator();
         }
 
@@ -38,10 +38,10 @@ namespace TramsDataApi.Test.Integration
                 .Build();
             var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
             var smartData = Generators.GenerateSmartData(establishment.Urn);
-            _dbContext.Establishment.Add(establishment);
-            _dbContext.MisEstablishments.Add(misEstablishment);
-            _dbContext.SmartData.Add(smartData);
-            _dbContext.SaveChanges();
+            _legacyDbContext.Establishment.Add(establishment);
+            _legacyDbContext.MisEstablishments.Add(misEstablishment);
+            _legacyDbContext.SmartData.Add(smartData);
+            _legacyDbContext.SaveChanges();
 
             var expectedMisEstablishmentResponse = new MISEstablishmentResponse
             {
@@ -317,10 +317,10 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
-            _dbContext.Establishment.Remove(establishment);
-            _dbContext.MisEstablishments.Remove(misEstablishment);
-            _dbContext.SmartData.Remove(smartData);
-            _dbContext.SaveChanges();
+            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
+            _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
+            _legacyDbContext.SmartData.RemoveRange(_legacyDbContext.SmartData);
+            _legacyDbContext.SaveChanges();
         }
     }
 }
