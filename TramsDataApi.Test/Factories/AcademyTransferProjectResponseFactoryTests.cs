@@ -21,7 +21,6 @@ namespace TramsDataApi.Test.Factories
             var academyTransferProjectModel = new AcademyTransferProjects
             {
                 Urn = 0,
-                ProjectNumber = "AT-0001",
                 OutgoingTrustUkprn = "00000001",
                 WhoInitiatedTheTransfer = null,
                 RddOrEsfaIntervention = null,
@@ -52,7 +51,6 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjectResponse
             {
                 ProjectUrn = academyTransferProjectModel.Urn.ToString(),
-                ProjectNumber = academyTransferProjectModel.ProjectNumber,
                 OutgoingTrustUkprn = academyTransferProjectModel.OutgoingTrustUkprn,
                 TransferringAcademies = academyTransferProjectModel.TransferringAcademies.Select(ta =>
                     new TransferringAcademiesResponse
@@ -134,7 +132,6 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjectResponse
             {
                 ProjectUrn = academyTransferProjectModel.Urn.ToString(),
-                ProjectNumber = academyTransferProjectModel.ProjectNumber,
                 OutgoingTrustUkprn = academyTransferProjectModel.OutgoingTrustUkprn,
                 TransferringAcademies = expectedTransferringAcademies,
                 Features = expectedFeatures,

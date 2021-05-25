@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
-    public partial class INITIAL_MIGRATION : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,6 +12,7 @@ namespace TramsDataApi.Migrations.TramsDb
 
             migrationBuilder.CreateSequence<int>(
                 name: "AcademyTransferProjectUrns",
+                startValue: 10000000L,
                 minValue: 10000000L);
 
             migrationBuilder.CreateTable(
@@ -22,7 +23,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Urn = table.Column<int>(nullable: false, defaultValueSql: "NEXT VALUE FOR AcademyTransferProjectUrns"),
-                    ProjectNumber = table.Column<string>(nullable: true),
                     OutgoingTrustUkprn = table.Column<string>(maxLength: 8, nullable: false),
                     WhoInitiatedTheTransfer = table.Column<string>(nullable: true),
                     RddOrEsfaIntervention = table.Column<bool>(nullable: true),

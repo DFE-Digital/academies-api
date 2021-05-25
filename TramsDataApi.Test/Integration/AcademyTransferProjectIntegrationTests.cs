@@ -64,7 +64,7 @@ namespace TramsDataApi.Test.Integration
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
-            var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.ProjectNumber == result.ProjectNumber);
+            var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn.ToString() == result.ProjectUrn);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
         }
@@ -119,7 +119,7 @@ namespace TramsDataApi.Test.Integration
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
-            var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.ProjectNumber == result.ProjectNumber);
+            var createdProject = _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn.ToString() == result.ProjectUrn);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
         }

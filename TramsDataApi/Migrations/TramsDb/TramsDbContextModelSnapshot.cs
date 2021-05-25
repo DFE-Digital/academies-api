@@ -17,7 +17,7 @@ namespace TramsDataApi.Migrations.TramsDb
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("Relational:Sequence:.AcademyTransferProjectUrns", "'AcademyTransferProjectUrns', '', '1', '1', '10000000', '', 'Int32', 'False'")
+                .HasAnnotation("Relational:Sequence:.AcademyTransferProjectUrns", "'AcademyTransferProjectUrns', '', '10000000', '1', '10000000', '', 'Int32', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyTransferProjectIntendedTransferBenefits", b =>
@@ -81,9 +81,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .IsRequired()
                         .HasColumnType("nvarchar(8)")
                         .HasMaxLength(8);
-
-                    b.Property<string>("ProjectNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProjectRationale")
                         .HasColumnType("nvarchar(max)");
