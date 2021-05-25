@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - create-academy-transfer-project
   workflow_dispatch:
 
 jobs:
@@ -15,12 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     services:
       db:
-        image: 'mcr.microsoft.com/mssql/server:2019-CU5-ubuntu-16.04'
+        image: 'ghcr.io/dfe-digital/trams-development-database:latest'
         ports:
           - 1433:1433/tcp
-        env:
-          ACCEPT_EULA: 'Y'
-          SA_PASSWORD: 'StrongPassword905'
 
     steps:
       - uses: actions/checkout@v2
@@ -32,8 +28,6 @@ jobs:
         run: dotnet tool install --global dotnet-ef
       - name: Restore tools for tests
         run: dotnet tool restore
-      - name: Create migrations for LegacyTramsDb
-        run: dotnet ef migrations add INITIAL_MIGRATION --project TramsDataApi --context TramsDataApi.DatabaseModels.LegacyTramsDbContext -o Migrations/LegacyTramsDb
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
@@ -54,9 +48,6 @@ jobs:
     - name: Install EF
       run: dotnet tool install --global dotnet-ef
       
-    - name: Run migrations for TramsDb
-      run: dotnet ef database update --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext --connection ${{ secrets.Azure_Dev_Conn_String }}
-
     - name: Build with dotnet
       run: dotnet build --configuration Release
 
