@@ -9,12 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     services:
       db:
-        image: 'mcr.microsoft.com/mssql/server:2019-CU5-ubuntu-16.04'
+        image: 'ghcr.io/dfe-digital/trams-development-database:latest'
         ports:
           - 1433:1433/tcp
-        env:
-          ACCEPT_EULA: 'Y'
-          SA_PASSWORD: 'StrongPassword905'
 
     steps:
     - uses: actions/checkout@v2
@@ -26,9 +23,6 @@ jobs:
       run: dotnet tool install --global dotnet-ef
     - name: Restore tools for tests
       run: dotnet tool restore
-    - name: create migrations for test
-      working-directory: ./TramsDataApi
-      run: dotnet ef migrations add CreateForTests
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
