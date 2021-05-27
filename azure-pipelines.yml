@@ -2,12 +2,12 @@
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-resources:
-  containers:
-    - container: 'sqlserver_linux_container_for_integration_tests'
-      image: 'ghcr.io/dfe-digital/trams-development-database:latest'
-      ports:
-        - 1433:1433/tcp
+# resources:
+#   containers:
+#     - container: 'sqlserver_linux_container_for_integration_tests'
+#       image: 'ghcr.io/dfe-digital/trams-development-database:latest'
+#       ports:
+#         - 1433:1433/tcp
 
 trigger:
 - main
@@ -21,15 +21,9 @@ variables:
   dotnetSdkVersion: '3.1.300'
   buildPlatform: 'Any CPU'
   
-services:
-  sqlserver_linux_container_for_integration_tests: sqlserver_linux_container_for_integration_tests
+# services:
+#   sqlserver_linux_container_for_integration_tests: sqlserver_linux_container_for_integration_tests
   
-steps:
-  - task: Docker@2
-    inputs:
-      command: 'login'
-      arguments: ghcr.io -u $(github_user) -p $(github_pass)
-
   - task: UseDotNet@2
     displayName: 'Use .Net Core SDK $(dotnetSdkVersion)'
     inputs:
@@ -60,14 +54,10 @@ steps:
       command: 'build'
       arguments: '--no-restore'
       projects: 'TramsDataApi.Test/*.csproj'
-  
-  - task: DotNetCoreCLI@2
-    displayName: 'Create migrations for test db'
-    inputs:
-      command: custom
-      custom: 'ef'
-      arguments: 'migrations add CreateForTests'
-      workingDirectory: TramsDataApi
+
+  - script: |
+      docker login ghcr.io -u $(github_user) -p $(github_pass)
+      docker run -d -p 1433:1433 ghcr.io/dfe-digital/trams-development-database:latest
 
   - task: DotNetCoreCLI@2
     displayName: 'Run unit tests'
