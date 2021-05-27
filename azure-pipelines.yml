@@ -28,7 +28,7 @@ steps:
   - task: Docker@2
     inputs:
       command: 'login'
-      arguments: ghcr.io -u ${{github_user}} --password-stdin -p ${{github_pass}}
+      arguments: ghcr.io -u $(github_user) -p $(github_pass)
 
   - task: UseDotNet@2
     displayName: 'Use .Net Core SDK $(dotnetSdkVersion)'
