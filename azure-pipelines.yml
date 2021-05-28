@@ -66,14 +66,29 @@ steps:
       publishTestResults: true
       projects: '**/*.Test.csproj'
 
-  
   - task: DotNetCoreCLI@2
+    displayName: 'Create SQL Scripts'
+    inputs:
+      command: custom
+      custom: 'ef '
+      arguments: migrations script --output $(Build.SourcesDirectory)/SQL/tramsDbMigrationScript.sql --idempotent -p TramsDataApi -c TramsDbContext
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: SQLScripts'
+    inputs:
+      PathtoPublish: $(Build.SourcesDirectory)/SQL/tramsDbMigrationScript.sql
+      ArtifactName: SQLScripts
+      
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Project'
     inputs:
       command: publish
       arguments: '--output $(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: TramsAPIBuild'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'tramsApiBuild'
       publishLocation: 'Container'
+      
