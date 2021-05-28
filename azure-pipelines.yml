@@ -2,13 +2,6 @@
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-# resources:
-#   containers:
-#     - container: 'sqlserver_linux_container_for_integration_tests'
-#       image: 'ghcr.io/dfe-digital/trams-development-database:latest'
-#       ports:
-#         - 1433:1433/tcp
-
 trigger:
 - main
 
@@ -21,8 +14,6 @@ variables:
   dotnetSdkVersion: '3.1.300'
   buildPlatform: 'Any CPU'
   
-# services:
-#   sqlserver_linux_container_for_integration_tests: sqlserver_linux_container_for_integration_tests
 steps:
   - task: UseDotNet@2
     displayName: 'Use .Net Core SDK $(dotnetSdkVersion)'
