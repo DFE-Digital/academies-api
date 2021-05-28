@@ -4,14 +4,23 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <UserSecretsId>98bff7f2-ac39-4bca-a8d1-799eea25223f</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="integration_settings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.14" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.15" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
         <PackageReference Include="Moq" Version="4.16.1" />
         <PackageReference Include="NBuilder" Version="6.1.0" />
+        <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,7 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="./integration_settings.json">
+        <Content Include="integration_settings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

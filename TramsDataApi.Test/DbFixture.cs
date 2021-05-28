@@ -1,6 +1,9 @@
 using System;
+using System.IO;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using TramsDataApi.DatabaseModels;
 using Xunit;
 
@@ -17,14 +20,23 @@ namespace TramsDataApi.Test
         
         public DbFixture()
         {
-            ConnString = $"Server=localhost,1433;Database={_tramsDbName};User=sa;Password=StrongPassword905";
+            var projectDir = Directory.GetCurrentDirectory();
+            var configPath = Path.Combine(projectDir, "integration_settings.json");
+
+            var config = new ConfigurationBuilder()
+                .AddJsonFile(configPath)
+                .AddUserSecrets(typeof(DbFixture).Assembly)
+                .AddEnvironmentVariables()
+                .Build();
+
+            ConnString = Regex.Replace(config.GetConnectionString("DefaultConnection"), @"Database\=\w+;", $"Database={_tramsDbName};");
 
             var builder = new DbContextOptionsBuilder<TramsDbContext>();
 
             builder.UseSqlServer(ConnString);
             _dbContext = new TramsDbContext(builder.Options);
 
-            _dbContext.Database.Migrate();
+            _dbContext.Database.EnsureCreated();
             _transaction = _dbContext.Database.BeginTransaction();
         }
 

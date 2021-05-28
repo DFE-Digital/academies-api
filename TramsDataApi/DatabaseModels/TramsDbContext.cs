@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -1922,6 +1920,8 @@ namespace TramsDataApi.DatabaseModels
                             .HasMaxLength(10)
                             .IsUnicode(false);
                     });
+
+            OnModelCreatingIfdPipeline(modelBuilder);
 
             OnModelCreatingPartial(modelBuilder);
         }
