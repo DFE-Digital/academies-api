@@ -4,6 +4,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetAcademyTransferProject
     {
-        AcademyTransferProjectResponse Execute(string urn);
+        AcademyTransferProjectResponse Execute(int urn);
     }
 }

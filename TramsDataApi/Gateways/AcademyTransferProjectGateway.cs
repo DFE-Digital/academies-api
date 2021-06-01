@@ -21,5 +21,10 @@ namespace TramsDataApi.Gateways
 
             return project;
         }
+
+        public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

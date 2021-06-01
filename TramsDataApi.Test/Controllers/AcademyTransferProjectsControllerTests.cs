@@ -59,7 +59,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void UpdateAcademyTransferProject_Returns404WhenProjectNotFound()
         {
-            var urn = "10001001";
+            var urn = 10001001;
             var updateAcademyTransferProject = new Mock<IUpdateAcademyTransferProject>();
             var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
 
@@ -80,7 +80,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void UpdateAcademyTransferProject_UpdatesTheProject_WhenItIsFound()
         {
-            var urn = "10000323";
+            var urn = 10000323;
             var updateAcademyTransferProject = new Mock<IUpdateAcademyTransferProject>();
             var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
 
@@ -107,7 +107,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void UpdateAcademyTransferProject_ReturnsBadRequest_WhenInvalidRequestIsGiven()
         {
-            var urn = "10000323";
+            var urn = 10000323;
             var updateAcademyTransferProject = new Mock<IUpdateAcademyTransferProject>();
             var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
 

@@ -39,7 +39,7 @@ namespace TramsDataApi.Controllers
             return BadRequest();
         }
 
-        public ActionResult<AcademyTransferProjectResponse> Update(string urn, AcademyTransferProjectRequest request)
+        public ActionResult<AcademyTransferProjectResponse> Update(int urn, AcademyTransferProjectRequest request)
         {
             if (_getAcademyTransferProject.Execute(urn) == null)
             {
