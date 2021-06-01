@@ -1,3 +1,4 @@
+using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
 
@@ -14,7 +15,8 @@ namespace TramsDataApi.UseCases
 
         public AcademyTransferProjectResponse Execute(int urn)
         {
-            return null;
+            return AcademyTransferProjectResponseFactory
+                .Create(_academyTransferProjectGateway.GetAcademyTransferProjectByUrn(urn));
         }
     }
 }
