@@ -1,6 +1,9 @@
 using System;
+using System.IO;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using TramsDataApi.DatabaseModels;
 using Xunit;
 
@@ -17,7 +20,16 @@ namespace TramsDataApi.Test
         
         public DbFixture()
         {
-            ConnString = $"Server=localhost,1433;Database=sip;User=sa;Password=StrongPassword905";
+            var projectDir = Directory.GetCurrentDirectory();
+            var configPath = Path.Combine(projectDir, "integration_settings.json");
+
+            var config = new ConfigurationBuilder()
+                .AddJsonFile(configPath)
+                .AddUserSecrets(typeof(DbFixture).Assembly)
+                .AddEnvironmentVariables()
+                .Build();
+
+            ConnString = config.GetConnectionString("DefaultConnection");
 
             var legacyContextBuilder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
             var tramsContextBuilder = new DbContextOptionsBuilder<TramsDbContext>();
@@ -28,7 +40,7 @@ namespace TramsDataApi.Test
             tramsContextBuilder.UseSqlServer(ConnString);
             _tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
             
-            
+            _tramsDbContext.Database.EnsureCreated();
             _tramsDbContext.Database.Migrate();
             
             _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();

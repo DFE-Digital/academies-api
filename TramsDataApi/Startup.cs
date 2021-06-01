@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
@@ -45,6 +44,8 @@ namespace TramsDataApi
             services.AddScoped<ISearchTrusts, SearchTrusts>();
             services.AddScoped<ICreateAcademyTransferProject, CreateAcademyTransferProject>();
             services.AddScoped<IAcademyTransferProjectGateway, AcademyTransferProjectGateway>();
+
+            services.AddUseCases();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

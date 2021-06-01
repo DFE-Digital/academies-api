@@ -7,5 +7,8 @@
     }
   },
   "AllowedHosts": "*",
-  "ApiKey": "testing-api-key"
+  "ApiKey": "testing-api-key",
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost,1433;Database=sip;User=sa;Password=StrongPassword905"
+  }
 }

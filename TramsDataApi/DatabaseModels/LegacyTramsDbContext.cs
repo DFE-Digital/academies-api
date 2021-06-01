@@ -1920,7 +1920,7 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(10)
                     .IsUnicode(false);
             });
-           
+            OnModelCreatingIfdPipeline(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 
