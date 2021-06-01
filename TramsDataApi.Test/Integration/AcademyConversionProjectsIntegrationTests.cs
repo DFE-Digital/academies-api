@@ -31,7 +31,6 @@ namespace TramsDataApi.Test.Integration
             _dbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _fixture = new Fixture();
             _fixture.Customizations.Add(new RandomDateGenerator(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
-            _fixture.Customize<IfdPipeline>(c => c.Without(x => x.Sk));
         }
 
         [Fact]
