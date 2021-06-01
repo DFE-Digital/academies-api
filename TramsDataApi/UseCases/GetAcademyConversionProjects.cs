@@ -12,16 +12,16 @@ namespace TramsDataApi.UseCases
         IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>, 
         IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>
     {
-        private readonly TramsDbContext _tramsDbContext;
+        private readonly LegacyTramsDbContext _LegacyTramsDbContext;
 
-        public GetAcademyConversionProjects(TramsDbContext tramsDbContext)
+        public GetAcademyConversionProjects(LegacyTramsDbContext legacyTramsDbContext)
         {
-            _tramsDbContext = tramsDbContext;
+            _LegacyTramsDbContext = legacyTramsDbContext;
         }
 
         public AcademyConversionProjectResponse Execute(GetAcademyConversionProjectByIdRequest request)
         {
-            var ifdPipeline = _tramsDbContext.IfdPipeline.AsNoTracking().FirstOrDefault(p => p.Sk == request.Id);
+            var ifdPipeline = _LegacyTramsDbContext.IfdPipeline.AsNoTracking().FirstOrDefault(p => p.Sk == request.Id);
             if (ifdPipeline == null)
             {
                 return null;
@@ -32,7 +32,7 @@ namespace TramsDataApi.UseCases
 
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAllAcademyConversionProjectsRequest request)
         {
-            var ifdPipelines = _tramsDbContext.IfdPipeline.Take(request.Count).AsNoTracking().ToList();
+            var ifdPipelines = _LegacyTramsDbContext.IfdPipeline.Take(request.Count).AsNoTracking().ToList();
 
             return ifdPipelines.Select(AcademyConversionProjectResponseFactory.Create).ToList();
         }

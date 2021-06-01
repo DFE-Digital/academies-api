@@ -11,12 +11,12 @@ namespace TramsDataApi.Test
 {
     public class DbFixture : IDisposable
     {
-        private readonly TramsDbContext _dbContext;
-        private readonly string _tramsDbName = $"Trams-{Guid.NewGuid()}";
-        private readonly IDbContextTransaction _transaction;
+        private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
+        private readonly IDbContextTransaction _legacyTransaction;
+        private readonly IDbContextTransaction _tramsTransaction;
         public readonly string ConnString;
         
-        private bool _disposed;
         
         public DbFixture()
         {
@@ -29,41 +29,35 @@ namespace TramsDataApi.Test
                 .AddEnvironmentVariables()
                 .Build();
 
-            ConnString = Regex.Replace(config.GetConnectionString("DefaultConnection"), @"Database\=\w+;", $"Database={_tramsDbName};");
+            ConnString = config.GetConnectionString("DefaultConnection");
 
-            var builder = new DbContextOptionsBuilder<TramsDbContext>();
+            var legacyContextBuilder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
+            var tramsContextBuilder = new DbContextOptionsBuilder<TramsDbContext>();
 
-            builder.UseSqlServer(ConnString);
-            _dbContext = new TramsDbContext(builder.Options);
+            legacyContextBuilder.UseSqlServer(ConnString);
+            _legacyTramsDbContext = new LegacyTramsDbContext(legacyContextBuilder.Options);
 
-            _dbContext.Database.EnsureCreated();
-            _transaction = _dbContext.Database.BeginTransaction();
+            tramsContextBuilder.UseSqlServer(ConnString);
+            _tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
+            
+            _tramsDbContext.Database.EnsureCreated();
+            _tramsDbContext.Database.Migrate();
+            
+            _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
+            _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
         }
 
         public void Dispose()
         {
-            _transaction.Rollback();
-            _transaction.Dispose();
-            Dispose(disposing: true);
+            _legacyTransaction.Rollback();
+            _legacyTransaction.Dispose();
+            _tramsTransaction.Rollback();
+            _tramsTransaction.Dispose();
             GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    // remove the temp db from the server once all tests are done
-                    _dbContext.Database.EnsureDeleted();
-                }
-
-                _disposed = true;
-            }
         }
     }
     
-    [CollectionDefinition("Database")]
+    [CollectionDefinition("Database", DisableParallelization = true)]
     public class DatabaseCollection : ICollectionFixture<DbFixture>
     {
         // This class has no code, and is never created. Its purpose is simply

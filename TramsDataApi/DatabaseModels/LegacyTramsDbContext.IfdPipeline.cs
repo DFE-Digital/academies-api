@@ -2,7 +2,7 @@
 
 namespace TramsDataApi.DatabaseModels
 {
-    public partial class TramsDbContext
+    public partial class LegacyTramsDbContext
     {
         public virtual DbSet<IfdPipeline> IfdPipeline { get; set; }
 

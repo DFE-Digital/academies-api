@@ -18,6 +18,7 @@ jobs:
       with:
         dotnet-version: '3.1.301'
 
+
     - name: Build with dotnet
       run: dotnet build --configuration Release
 

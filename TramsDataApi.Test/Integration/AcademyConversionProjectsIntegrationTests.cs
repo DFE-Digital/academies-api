@@ -21,17 +21,16 @@ namespace TramsDataApi.Test.Integration
     public class AcademyConversionProjectsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
         private readonly HttpClient _client;
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
         private readonly Fixture _fixture;
 
         public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
-            _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
+            _dbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _fixture = new Fixture();
             _fixture.Customizations.Add(new RandomDateGenerator(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
-            _fixture.Customize<IfdPipeline>(c => c.Without(x => x.Sk));
         }
 
         [Fact]

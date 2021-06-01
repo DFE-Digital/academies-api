@@ -9,9 +9,9 @@ namespace TramsDataApi.Gateways
 {
     public class EstablishmentGateway : IEstablishmentGateway
     {
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
 
-        public EstablishmentGateway(TramsDbContext dbContext)
+        public EstablishmentGateway(LegacyTramsDbContext dbContext)
         {
             _dbContext = dbContext;
         }

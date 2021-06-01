@@ -2,16 +2,6 @@
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-resources:
-  containers:
-    - container: 'sqlserver_linux_container_for_integration_tests'
-      image: 'mcr.microsoft.com/mssql/server:2019-CU5-ubuntu-16.04'
-      ports:
-        - 1433:1433/tcp
-      env:
-        ACCEPT_EULA: 'Y'
-        SA_PASSWORD: 'StrongPassword905'
-
 trigger:
 - main
 
@@ -23,9 +13,6 @@ pool:
 variables:
   dotnetSdkVersion: '3.1.300'
   buildPlatform: 'Any CPU'
-  
-services:
-  sqlserver_linux_container_for_integration_tests: sqlserver_linux_container_for_integration_tests
   
 steps:
   - task: UseDotNet@2
@@ -58,14 +45,10 @@ steps:
       command: 'build'
       arguments: '--no-restore'
       projects: 'TramsDataApi.Test/*.csproj'
-  
-  - task: DotNetCoreCLI@2
-    displayName: 'Create migrations for test db'
-    inputs:
-      command: custom
-      custom: 'ef'
-      arguments: 'migrations add CreateForTests'
-      workingDirectory: TramsDataApi
+
+  - script: |
+      docker login ghcr.io -u $(github_user) -p $(github_pass)
+      docker run -d -p 1433:1433 ghcr.io/dfe-digital/trams-development-database:latest
 
   - task: DotNetCoreCLI@2
     displayName: 'Run unit tests'
@@ -74,14 +57,29 @@ steps:
       publishTestResults: true
       projects: '**/*.Test.csproj'
 
-  
   - task: DotNetCoreCLI@2
+    displayName: 'Create SQL Scripts'
+    inputs:
+      command: custom
+      custom: 'ef '
+      arguments: migrations script --output $(Build.SourcesDirectory)/SQL/tramsDbMigrationScript.sql --idempotent -p TramsDataApi -c TramsDbContext
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: SQLScripts'
+    inputs:
+      PathtoPublish: $(Build.SourcesDirectory)/SQL/tramsDbMigrationScript.sql
+      ArtifactName: SQLScripts
+      
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Project'
     inputs:
       command: publish
       arguments: '--output $(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: TramsAPIBuild'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'tramsApiBuild'
       publishLocation: 'Container'
+      

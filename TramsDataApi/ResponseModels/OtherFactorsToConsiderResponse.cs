@@ -1,0 +1,9 @@
+namespace TramsDataApi.ResponseModels
+{
+    public class OtherFactorsToConsiderResponse
+    {
+        public BenefitConsideredFactorResponse HighProfile { get; set; }
+        public BenefitConsideredFactorResponse ComplexLandAndBuilding { get; set; }
+        public BenefitConsideredFactorResponse FinanceAndDebt { get; set; }
+    }
+}

@@ -9,9 +9,9 @@ namespace TramsDataApi.Controllers
     [Route("[controller]")]
     public class HealthCheckController : ControllerBase
     {
-        private readonly TramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _dbContext;
 
-        public HealthCheckController(TramsDbContext context)
+        public HealthCheckController(LegacyTramsDbContext context)
         {
             _dbContext = context;
         }

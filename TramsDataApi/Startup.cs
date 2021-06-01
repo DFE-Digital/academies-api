@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
@@ -32,6 +31,8 @@ namespace TramsDataApi
             });
             
             // EF setup
+            services.AddDbContext<LegacyTramsDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));// EF setup
             services.AddDbContext<TramsDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
@@ -41,6 +42,8 @@ namespace TramsDataApi
             services.AddScoped<IGetEstablishmentByUkprn, GetEstablishmentByUkprn>();
             services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
             services.AddScoped<ISearchTrusts, SearchTrusts>();
+            services.AddScoped<ICreateAcademyTransferProject, CreateAcademyTransferProject>();
+            services.AddScoped<IAcademyTransferProjectGateway, AcademyTransferProjectGateway>();
 
             services.AddUseCases();
         }
