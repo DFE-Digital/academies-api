@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using TramsDataApi.RequestModels;
@@ -11,9 +12,17 @@ namespace TramsDataApi.Controllers
     public class AcademyTransferProjectController : ControllerBase
     {
         private readonly ICreateAcademyTransferProject _createAcademyTransferProject;
-        public AcademyTransferProjectController(ICreateAcademyTransferProject createAcademyTransferProject)
+        private readonly IGetAcademyTransferProject _getAcademyTransferProject;
+        private readonly IUpdateAcademyTransferProject _updateAcademyTransferProject;
+
+        public AcademyTransferProjectController(
+            ICreateAcademyTransferProject createAcademyTransferProject,
+            IGetAcademyTransferProject getAcademyTransferProject,
+            IUpdateAcademyTransferProject updateAcademyTransferProject)
         {
             _createAcademyTransferProject = createAcademyTransferProject;
+            _getAcademyTransferProject = getAcademyTransferProject;
+            _updateAcademyTransferProject = updateAcademyTransferProject;
         }
         
         [HttpPost]
@@ -25,6 +34,23 @@ namespace TramsDataApi.Controllers
             {
                 var createdAcademyTransferProject = _createAcademyTransferProject.Execute(request);
                 return CreatedAtAction("Create", createdAcademyTransferProject);
+            }
+
+            return BadRequest();
+        }
+
+        public ActionResult<AcademyTransferProjectResponse> Update(string urn, AcademyTransferProjectRequest request)
+        {
+            if (_getAcademyTransferProject.Execute(urn) == null)
+            {
+                return NotFound();
+            }
+
+            var validator = new AcademyTransferProjectRequestValidator();
+            if (validator.Validate(request).IsValid)
+            {
+                var updatedAcademyTransferProject = _updateAcademyTransferProject.Execute(urn, request);
+                return Ok(updatedAcademyTransferProject);
             }
 
             return BadRequest();
