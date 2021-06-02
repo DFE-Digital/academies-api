@@ -1,3 +1,4 @@
+using System.Linq;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -14,9 +15,9 @@ namespace TramsDataApi.Gateways
             _tramsDbContext = tramsDbContext;
         }
         
-        public AcademyTransferProjects CreateAcademyTransferProject(AcademyTransferProjects project)
+        public AcademyTransferProjects SaveAcademyTransferProject(AcademyTransferProjects project)
         {
-            _tramsDbContext.AcademyTransferProjects.Add(project);
+            _tramsDbContext.AcademyTransferProjects.Update(project);
             _tramsDbContext.SaveChanges();
 
             return project;
@@ -24,7 +25,7 @@ namespace TramsDataApi.Gateways
 
         public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)
         {
-            throw new System.NotImplementedException();
+            return _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn == urn);
         }
     }
 }

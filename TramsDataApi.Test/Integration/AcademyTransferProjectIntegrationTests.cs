@@ -131,7 +131,81 @@ namespace TramsDataApi.Test.Integration
             _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
             _tramsDbContext.SaveChanges();
         }
+
+        [Fact]
+        public async Task CanUpdateAnAcademyTransferProject()
+        {
+            var randomGenerator = new RandomGenerator();
+            
+            var benefitsRequest = Builder<AcademyTransferProjectBenefitsRequest>.CreateNew()
+                .With(b => b.IntendedTransferBenefits = Builder<IntendedTransferBenefitRequest>.CreateNew()
+                    .With(i => i.SelectedBenefits =  new List<string>()).Build())
+                .With(b => b.OtherFactorsToConsider = Builder<OtherFactorsToConsiderRequest>.CreateNew()
+                    .With(o => o.ComplexLandAndBuilding = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .With(o => o.FinanceAndDebt = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .With(o => o.HighProfile = Builder<BenefitConsideredFactorRequest>.CreateNew().Build()).Build())
+                .Build();
+            
+            var datesRequest = Builder<AcademyTransferProjectDatesRequest>.CreateNew()
+                .With(d => d.TransferFirstDiscussed =
+                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.TargetDateForTransfer =
+                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .Build();
+            
+            var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
+                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
+                .With(c => c.Benefits = benefitsRequest)
+                .With(c => c.Dates = datesRequest)
+                .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
+                .With(c => c.Features = Builder<AcademyTransferProjectFeaturesRequest>.CreateNew().Build())
+                .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
+                    .CreateListOfSize(5).All()
+                    .With(ta => ta.IncomingTrustUkprn = randomGenerator.NextString(8,8))
+                    .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8,8)).Build())
+                .Build();
+            
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(createRequest)
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            response.StatusCode.Should().Be(201);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
+
+            createRequest.OutgoingTrustUkprn = "14567231";
+
+            var updateRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject/{result.ProjectUrn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(createRequest)
+            };
+
+            var updateResponse = await _client.SendAsync(updateRequestMessage);
+            updateResponse.StatusCode.Should().Be(200);
+            var updateJson = await updateResponse.Content.ReadAsStringAsync();
+            var updatedProjectResponse = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(updateJson);
+
+            var updatedProject = _tramsDbContext.AcademyTransferProjects.Find(updatedProjectResponse.ProjectUrn);
+            updatedProject.OutgoingTrustUkprn.Should().Be(createRequest.OutgoingTrustUkprn);
+            
+            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
+            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
+            _tramsDbContext.SaveChanges();
+        }
     }
-    
-    
 }

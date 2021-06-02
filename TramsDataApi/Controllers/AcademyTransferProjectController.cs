@@ -39,6 +39,8 @@ namespace TramsDataApi.Controllers
             return BadRequest();
         }
 
+        [HttpPatch]
+        [Route("academyTransferProject/{urn}")]
         public ActionResult<AcademyTransferProjectResponse> Update(int urn, AcademyTransferProjectRequest request)
         {
             if (_getAcademyTransferProject.Execute(urn) == null)

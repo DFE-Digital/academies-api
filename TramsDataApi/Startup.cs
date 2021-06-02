@@ -44,6 +44,8 @@ namespace TramsDataApi
             services.AddScoped<ISearchTrusts, SearchTrusts>();
             services.AddScoped<ICreateAcademyTransferProject, CreateAcademyTransferProject>();
             services.AddScoped<IAcademyTransferProjectGateway, AcademyTransferProjectGateway>();
+            services.AddScoped<IGetAcademyTransferProject, GetAcademyTransferProject>();
+            services.AddScoped<IUpdateAcademyTransferProject, UpdateAcademyTransferProject>();
 
             services.AddUseCases();
         }
