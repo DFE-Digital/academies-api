@@ -52,5 +52,47 @@ namespace TramsDataApi.Factories
                     .ToList()
             };
         }
+
+        public static AcademyTransferProjects Update(AcademyTransferProjects original, AcademyTransferProjectRequest updateRequest)
+        {
+            if (updateRequest == null)
+            {
+                return original;
+            }
+
+            return new AcademyTransferProjects
+            {
+                Id = original.Id,
+                Urn = original.Urn,
+                OutgoingTrustUkprn = updateRequest.OutgoingTrustUkprn ?? original.OutgoingTrustUkprn,
+                WhoInitiatedTheTransfer = updateRequest?.Features?.WhoInitiatedTheTransfer ?? original.WhoInitiatedTheTransfer,
+                RddOrEsfaIntervention = updateRequest?.Features?.RddOrEsfaIntervention == null ? original.RddOrEsfaIntervention : updateRequest.Features.RddOrEsfaIntervention,
+                RddOrEsfaInterventionDetail = updateRequest?.Features?.RddOrEsfaInterventionDetail ?? original.RddOrEsfaInterventionDetail,
+                TypeOfTransfer = updateRequest?.Features?.TypeOfTransfer ?? original.TypeOfTransfer,
+                OtherTransferTypeDescription = updateRequest?.Features?.OtherTransferTypeDescription ?? original.OtherTransferTypeDescription,
+                TransferFirstDiscussed = updateRequest?.Dates?.TransferFirstDiscussed == null ?
+                    original.TransferFirstDiscussed : DateTime.ParseExact(updateRequest.Dates.TransferFirstDiscussed, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                TargetDateForTransfer = updateRequest?.Dates?.TargetDateForTransfer == null ?
+                    original.TargetDateForTransfer : DateTime.ParseExact(updateRequest.Dates.TargetDateForTransfer, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                HtbDate = updateRequest?.Dates?.HtbDate == null ?
+                    original.HtbDate : DateTime.ParseExact(updateRequest.Dates.HtbDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                ProjectRationale = updateRequest?.Rationale?.ProjectRationale ?? original.ProjectRationale,
+                TrustSponsorRationale = updateRequest?.Rationale?.TrustSponsorRationale ?? original.TrustSponsorRationale,
+                State = updateRequest?.State ?? original.State,
+                Status = updateRequest?.Status ?? original.Status,
+                HighProfileShouldBeConsidered = updateRequest?.Benefits?.OtherFactorsToConsider?.HighProfile?.ShouldBeConsidered == null ?
+                    original.HighProfileShouldBeConsidered : updateRequest.Benefits.OtherFactorsToConsider.HighProfile.ShouldBeConsidered,
+                HighProfileFurtherSpecification = updateRequest?.Benefits?.OtherFactorsToConsider?.HighProfile?.FurtherSpecification ?? original.HighProfileFurtherSpecification,
+                ComplexLandAndBuildingFurtherSpecification = updateRequest?.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.FurtherSpecification ?? original.ComplexLandAndBuildingFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered = updateRequest?.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.ShouldBeConsidered == null ?
+                    original.ComplexLandAndBuildingShouldBeConsidered : updateRequest.Benefits.OtherFactorsToConsider.ComplexLandAndBuilding.ShouldBeConsidered,
+                FinanceAndDebtShouldBeConsidered = updateRequest?.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.ShouldBeConsidered == null ?
+                    original.FinanceAndDebtShouldBeConsidered : updateRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
+                FinanceAndDebtFurtherSpecification = updateRequest?.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.FurtherSpecification ?? original.FinanceAndDebtFurtherSpecification,
+                OtherBenefitValue = updateRequest?.Benefits?.IntendedTransferBenefits?.OtherBenefitValue ?? original.OtherBenefitValue,
+                AcademyTransferProjectIntendedTransferBenefits = original.AcademyTransferProjectIntendedTransferBenefits,
+                TransferringAcademies = original.TransferringAcademies,
+            };
+        }
     }
 }
