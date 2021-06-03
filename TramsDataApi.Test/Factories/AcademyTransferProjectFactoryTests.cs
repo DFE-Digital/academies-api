@@ -7,7 +7,6 @@ using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels;
-using TramsDataApi.ResponseModels;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
@@ -56,7 +55,7 @@ namespace TramsDataApi.Test.Factories
                 FinanceAndDebtShouldBeConsidered = null,
                 FinanceAndDebtFurtherSpecification = null,
                 OtherBenefitValue = null,
-                AcademyTransferProjectIntendedTransferBenefits = new List<AcademyTransferProjectIntendedTransferBenefits>(),
+                AcademyTransferProjectIntendedTransferBenefits = null,
                 TransferringAcademies = createRequest.TransferringAcademies
                     .Select(t => new TransferringAcademies { OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = null })
                     .ToList()

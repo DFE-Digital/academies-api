@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels;
+using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Factories
 {
@@ -11,15 +12,9 @@ namespace TramsDataApi.Factories
     {
         public static AcademyTransferProjects Create(AcademyTransferProjectRequest request)
         {
-            var transferFirstDiscussed = request.Dates?.TransferFirstDiscussed == null
-                ? (DateTime?) null
-                : DateTime.ParseExact(request.Dates.TransferFirstDiscussed, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            var targetDateForTransfer = request.Dates?.TargetDateForTransfer == null
-                ? (DateTime?) null
-                : DateTime.ParseExact(request.Dates.TargetDateForTransfer, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            var htbDate = request.Dates?.HtbDate == null
-                ? (DateTime?) null
-                : DateTime.ParseExact(request.Dates.HtbDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var transferFirstDiscussed = ParseDate(request?.Dates?.TransferFirstDiscussed);
+            var targetDateForTransfer = ParseDate(request?.Dates?.TargetDateForTransfer);
+            var htbDate = ParseDate(request?.Dates?.HtbDate);
 
             return new AcademyTransferProjects
             {
@@ -36,12 +31,12 @@ namespace TramsDataApi.Factories
                 TrustSponsorRationale = request.Rationale?.TrustSponsorRationale,
                 State = request.State,
                 Status = request.Status,
-                HighProfileShouldBeConsidered = request.Benefits?.OtherFactorsToConsider.HighProfile.ShouldBeConsidered,
-                HighProfileFurtherSpecification = request.Benefits?.OtherFactorsToConsider.HighProfile.FurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = request.Benefits?.OtherFactorsToConsider.ComplexLandAndBuilding.ShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = request.Benefits?.OtherFactorsToConsider.ComplexLandAndBuilding.FurtherSpecification,
-                FinanceAndDebtShouldBeConsidered = request.Benefits?.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
-                FinanceAndDebtFurtherSpecification = request.Benefits?.OtherFactorsToConsider.FinanceAndDebt.FurtherSpecification,
+                HighProfileShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.HighProfile?.ShouldBeConsidered,
+                HighProfileFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.HighProfile?.FurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.ShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.FurtherSpecification,
+                FinanceAndDebtShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.ShouldBeConsidered,
+                FinanceAndDebtFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.FurtherSpecification,
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
                 AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
@@ -50,6 +45,11 @@ namespace TramsDataApi.Factories
 
         private static IList<TransferringAcademies> ConvertTransferringAcademiesList(IList<TransferringAcademiesRequest> transferringAcademiesRequests)
         {
+            if (transferringAcademiesRequests == null)
+            {
+                return null;
+            }
+
             return transferringAcademiesRequests
                     .Select(t => new TransferringAcademies {OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = t.IncomingTrustUkprn})
                     .ToList();
@@ -58,10 +58,17 @@ namespace TramsDataApi.Factories
         private static IList<AcademyTransferProjectIntendedTransferBenefits> ConvertAcademyTransferProjectIntendedTransferBenefits(IList<string> selectedBenefits)
         {
             if (selectedBenefits == null) {
-                return new List<AcademyTransferProjectIntendedTransferBenefits>();
+                return null;
             }
-            
+
             return selectedBenefits.Select(b => new AcademyTransferProjectIntendedTransferBenefits { SelectedBenefit = b }).ToList();
+        }
+
+        private static DateTime? ParseDate(string date)
+        {
+            return date == null
+                ? (DateTime?) null
+                : DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
 
         public static AcademyTransferProjects Update(AcademyTransferProjects original, AcademyTransferProjectRequest updateRequest)
@@ -71,42 +78,42 @@ namespace TramsDataApi.Factories
                 return original;
             }
 
+            var toMerge = Create(updateRequest);
+
             return new AcademyTransferProjects
             {
                 Id = original.Id,
                 Urn = original.Urn,
-                OutgoingTrustUkprn = updateRequest.OutgoingTrustUkprn ?? original.OutgoingTrustUkprn,
-                WhoInitiatedTheTransfer = updateRequest?.Features?.WhoInitiatedTheTransfer ?? original.WhoInitiatedTheTransfer,
-                RddOrEsfaIntervention = updateRequest?.Features?.RddOrEsfaIntervention == null ? original.RddOrEsfaIntervention : updateRequest.Features.RddOrEsfaIntervention,
-                RddOrEsfaInterventionDetail = updateRequest?.Features?.RddOrEsfaInterventionDetail ?? original.RddOrEsfaInterventionDetail,
-                TypeOfTransfer = updateRequest?.Features?.TypeOfTransfer ?? original.TypeOfTransfer,
-                OtherTransferTypeDescription = updateRequest?.Features?.OtherTransferTypeDescription ?? original.OtherTransferTypeDescription,
-                TransferFirstDiscussed = updateRequest?.Dates?.TransferFirstDiscussed == null ?
-                    original.TransferFirstDiscussed : DateTime.ParseExact(updateRequest.Dates.TransferFirstDiscussed, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                TargetDateForTransfer = updateRequest?.Dates?.TargetDateForTransfer == null ?
-                    original.TargetDateForTransfer : DateTime.ParseExact(updateRequest.Dates.TargetDateForTransfer, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                HtbDate = updateRequest?.Dates?.HtbDate == null ?
-                    original.HtbDate : DateTime.ParseExact(updateRequest.Dates.HtbDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                ProjectRationale = updateRequest?.Rationale?.ProjectRationale ?? original.ProjectRationale,
-                TrustSponsorRationale = updateRequest?.Rationale?.TrustSponsorRationale ?? original.TrustSponsorRationale,
-                State = updateRequest?.State ?? original.State,
-                Status = updateRequest?.Status ?? original.Status,
-                HighProfileShouldBeConsidered = updateRequest?.Benefits?.OtherFactorsToConsider?.HighProfile?.ShouldBeConsidered == null ?
-                    original.HighProfileShouldBeConsidered : updateRequest.Benefits.OtherFactorsToConsider.HighProfile.ShouldBeConsidered,
-                HighProfileFurtherSpecification = updateRequest?.Benefits?.OtherFactorsToConsider?.HighProfile?.FurtherSpecification ?? original.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingFurtherSpecification = updateRequest?.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.FurtherSpecification ?? original.ComplexLandAndBuildingFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = updateRequest?.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.ShouldBeConsidered == null ?
-                    original.ComplexLandAndBuildingShouldBeConsidered : updateRequest.Benefits.OtherFactorsToConsider.ComplexLandAndBuilding.ShouldBeConsidered,
-                FinanceAndDebtShouldBeConsidered = updateRequest?.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.ShouldBeConsidered == null ?
-                    original.FinanceAndDebtShouldBeConsidered : updateRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
-                FinanceAndDebtFurtherSpecification = updateRequest?.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.FurtherSpecification ?? original.FinanceAndDebtFurtherSpecification,
-                OtherBenefitValue = updateRequest?.Benefits?.IntendedTransferBenefits?.OtherBenefitValue ?? original.OtherBenefitValue,
-                AcademyTransferProjectIntendedTransferBenefits = updateRequest?.Benefits?.IntendedTransferBenefits?.SelectedBenefits == null
-                    ? original.AcademyTransferProjectIntendedTransferBenefits
-                    : ConvertAcademyTransferProjectIntendedTransferBenefits(updateRequest.Benefits.IntendedTransferBenefits.SelectedBenefits),
-                TransferringAcademies = updateRequest.TransferringAcademies == null
-                    ? original.TransferringAcademies
-                    : ConvertTransferringAcademiesList(updateRequest.TransferringAcademies),
+                OutgoingTrustUkprn = toMerge.OutgoingTrustUkprn ?? original.OutgoingTrustUkprn,
+                WhoInitiatedTheTransfer = toMerge?.WhoInitiatedTheTransfer ?? original.WhoInitiatedTheTransfer,
+                RddOrEsfaIntervention = toMerge?.RddOrEsfaIntervention == null
+                    ? original.RddOrEsfaIntervention
+                    : toMerge.RddOrEsfaIntervention,
+                RddOrEsfaInterventionDetail = toMerge?.RddOrEsfaInterventionDetail ?? original.RddOrEsfaInterventionDetail,
+                TypeOfTransfer = toMerge?.TypeOfTransfer ?? original.TypeOfTransfer,
+                OtherTransferTypeDescription = toMerge?.OtherTransferTypeDescription ?? original.OtherTransferTypeDescription,
+                TransferFirstDiscussed = toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed,
+                TargetDateForTransfer = toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer,
+                HtbDate = toMerge.HtbDate ?? original.HtbDate,
+                ProjectRationale = toMerge.ProjectRationale ?? original.ProjectRationale,
+                TrustSponsorRationale = toMerge.TrustSponsorRationale ?? original.TrustSponsorRationale,
+                State = toMerge.State ?? original.State,
+                Status = toMerge.Status ?? original.Status,
+                HighProfileShouldBeConsidered = toMerge.HighProfileShouldBeConsidered == null
+                    ? original.HighProfileShouldBeConsidered
+                    : toMerge.HighProfileShouldBeConsidered,
+                HighProfileFurtherSpecification = toMerge.HighProfileFurtherSpecification ?? original.HighProfileFurtherSpecification,
+                ComplexLandAndBuildingFurtherSpecification = toMerge.ComplexLandAndBuildingFurtherSpecification ?? original.ComplexLandAndBuildingFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered = toMerge.ComplexLandAndBuildingShouldBeConsidered == null
+                    ? original.ComplexLandAndBuildingShouldBeConsidered
+                    : toMerge.ComplexLandAndBuildingShouldBeConsidered,
+                FinanceAndDebtShouldBeConsidered = toMerge.FinanceAndDebtShouldBeConsidered == null
+                    ? original.FinanceAndDebtShouldBeConsidered
+                    : toMerge.FinanceAndDebtShouldBeConsidered,
+                FinanceAndDebtFurtherSpecification = toMerge.FinanceAndDebtFurtherSpecification ?? original.FinanceAndDebtFurtherSpecification,
+                OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue,
+                AcademyTransferProjectIntendedTransferBenefits = toMerge.AcademyTransferProjectIntendedTransferBenefits ?? original.AcademyTransferProjectIntendedTransferBenefits,
+                TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies
             };
         }
     }
