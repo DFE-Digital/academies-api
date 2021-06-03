@@ -8,6 +8,7 @@ using System.Globalization;
 using Xunit;
 using System;
 using TramsDataApi.UseCases;
+using TramsDataApi.Factories;
 
 namespace TramsDataApi.Test.UseCases
 {
@@ -35,37 +36,16 @@ namespace TramsDataApi.Test.UseCases
             
             gateway.Setup(g => g.GetAcademyTransferProjectByUrn(urn)).Returns(academyTransferProject);
 
-            var expected = new AcademyTransferProjects
-            {
-                Id = academyTransferProject.Id,
-                OutgoingTrustUkprn = updateAcademyTransferProject.OutgoingTrustUkprn,
-                TransferringAcademies = academyTransferProject.TransferringAcademies,
-                WhoInitiatedTheTransfer = updateAcademyTransferProject.Features.WhoInitiatedTheTransfer,
-                TargetDateForTransfer = DateTime.ParseExact(updateAcademyTransferProject.Dates.TargetDateForTransfer, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                RddOrEsfaIntervention = updateAcademyTransferProject.Features.RddOrEsfaIntervention,
-                RddOrEsfaInterventionDetail = academyTransferProject.RddOrEsfaInterventionDetail,
-                TypeOfTransfer = academyTransferProject.TypeOfTransfer,
-                OtherTransferTypeDescription = academyTransferProject.OtherTransferTypeDescription,
-                TransferFirstDiscussed = academyTransferProject.TransferFirstDiscussed,
-                HtbDate = academyTransferProject.HtbDate,
-                ProjectRationale = academyTransferProject.ProjectRationale,
-                TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
-                State = academyTransferProject.State,
-                Status = academyTransferProject.Status,
-                HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
-                HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
-                FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
-                FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
-                OtherBenefitValue = academyTransferProject.OtherBenefitValue,
-                AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
-            };
+            var expectedUpdatedProject = AcademyTransferProjectFactory.Update(academyTransferProject, updateAcademyTransferProject);
 
-            gateway.Setup(g => g.SaveAcademyTransferProject(expected)).Returns(expected);
+            gateway.Setup(g => g.SaveAcademyTransferProject(
+                It.Is<AcademyTransferProjects>(atp => atp.Id == academyTransferProject.Id && atp.OutgoingTrustUkprn == updateAcademyTransferProject.OutgoingTrustUkprn))
+            ).Returns(expectedUpdatedProject);
 
+            var expected = AcademyTransferProjectResponseFactory.Create(expectedUpdatedProject);
             var useCase = new UpdateAcademyTransferProject(gateway.Object);
             var result = useCase.Execute(urn, updateAcademyTransferProject);
+
             result.Should().BeEquivalentTo(expected);
         }
     }
