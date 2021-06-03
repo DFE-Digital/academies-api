@@ -43,14 +43,25 @@ namespace TramsDataApi.Factories
                 FinanceAndDebtShouldBeConsidered = request.Benefits?.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = request.Benefits?.OtherFactorsToConsider.FinanceAndDebt.FurtherSpecification,
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
-                AcademyTransferProjectIntendedTransferBenefits = request.Benefits?.IntendedTransferBenefits
-                    .SelectedBenefits
-                    .Select(b => new AcademyTransferProjectIntendedTransferBenefits { SelectedBenefit = b }).ToList(),
-                TransferringAcademies = request.TransferringAcademies
-                    .Select(t => new TransferringAcademies
-                        {OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = t.IncomingTrustUkprn})
-                    .ToList()
+                AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
+                TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
             };
+        }
+
+        private static IList<TransferringAcademies> ConvertTransferringAcademiesList(IList<TransferringAcademiesRequest> transferringAcademiesRequests)
+        {
+            return transferringAcademiesRequests
+                    .Select(t => new TransferringAcademies {OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = t.IncomingTrustUkprn})
+                    .ToList();
+        }
+
+        private static IList<AcademyTransferProjectIntendedTransferBenefits> ConvertAcademyTransferProjectIntendedTransferBenefits(IList<string> selectedBenefits)
+        {
+            if (selectedBenefits == null) {
+                return new List<AcademyTransferProjectIntendedTransferBenefits>();
+            }
+            
+            return selectedBenefits.Select(b => new AcademyTransferProjectIntendedTransferBenefits { SelectedBenefit = b }).ToList();
         }
 
         public static AcademyTransferProjects Update(AcademyTransferProjects original, AcademyTransferProjectRequest updateRequest)
@@ -90,8 +101,12 @@ namespace TramsDataApi.Factories
                     original.FinanceAndDebtShouldBeConsidered : updateRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = updateRequest?.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.FurtherSpecification ?? original.FinanceAndDebtFurtherSpecification,
                 OtherBenefitValue = updateRequest?.Benefits?.IntendedTransferBenefits?.OtherBenefitValue ?? original.OtherBenefitValue,
-                AcademyTransferProjectIntendedTransferBenefits = original.AcademyTransferProjectIntendedTransferBenefits,
-                TransferringAcademies = original.TransferringAcademies,
+                AcademyTransferProjectIntendedTransferBenefits = updateRequest?.Benefits?.IntendedTransferBenefits?.SelectedBenefits == null
+                    ? original.AcademyTransferProjectIntendedTransferBenefits
+                    : ConvertAcademyTransferProjectIntendedTransferBenefits(updateRequest.Benefits.IntendedTransferBenefits.SelectedBenefits),
+                TransferringAcademies = updateRequest.TransferringAcademies == null
+                    ? original.TransferringAcademies
+                    : ConvertTransferringAcademiesList(updateRequest.TransferringAcademies),
             };
         }
     }
