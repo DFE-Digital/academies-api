@@ -7,12 +7,10 @@ namespace TramsDataApi.Gateways
     public class TrustGateway : ITrustGateway
     {
         private readonly LegacyTramsDbContext _dbContext;
-        private readonly IEstablishmentGateway _establishmentGateway;
 
-        public TrustGateway(LegacyTramsDbContext dbContext, IEstablishmentGateway establishmentGateway)
+        public TrustGateway(LegacyTramsDbContext dbContext)
         {
             _dbContext = dbContext;
-            _establishmentGateway = establishmentGateway;
         }
 
         public Group GetGroupByUkprn(string ukprn)

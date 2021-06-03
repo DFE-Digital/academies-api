@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
-using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Gateways
 {
@@ -19,6 +16,11 @@ namespace TramsDataApi.Gateways
         public Establishment GetByUkprn(string ukprn)
         { 
             return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
+        }
+
+        public Establishment GetByUrn(int urn)
+        {
+            return _dbContext.Establishment.SingleOrDefault(e => e.Urn == urn);
         }
 
         public IList<Establishment> GetByTrustUid(string trustUid)

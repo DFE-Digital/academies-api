@@ -1,10 +1,14 @@
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetEstablishmentByUkprn : IGetEstablishmentByUkprn
+    public class GetEstablishmentByUkprn : 
+        IGetEstablishmentByUkprn,
+        IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>
     {
         private readonly IEstablishmentGateway _establishmentGateway;
 
@@ -16,6 +20,17 @@ namespace TramsDataApi.UseCases
         public EstablishmentResponse Execute(string ukprn)
         {
             var establishment = _establishmentGateway.GetByUkprn(ukprn);
+            return BuildResponse(establishment);
+        }
+
+        public EstablishmentResponse Execute(GetEstablishmentByUrnRequest request)
+        {
+            var establishment = _establishmentGateway.GetByUrn(request.URN);
+            return BuildResponse(establishment);
+        }
+
+        private EstablishmentResponse BuildResponse(Establishment establishment)
+        {
             if (establishment == null)
             {
                 return null;
