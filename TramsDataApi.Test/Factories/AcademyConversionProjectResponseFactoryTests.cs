@@ -47,7 +47,7 @@ namespace TramsDataApi.Test.Factories
                 AssignedDate = academyConversionProject.ApprovalProcessApplicationDate,
                 Phase = ProjectPhase.PreHTB,
                 ProjectDocuments = new DocumentDetailsResponse[0],
-                RationaleResponse = new RationaleResponse
+                Rationale = new RationaleResponse
                 {
                     ProjectRationale = academyConversionProject.ProjectTemplateInformationRationaleForProject,
                     TrustRationale = academyConversionProject.ProjectTemplateInformationRationaleForSponsor

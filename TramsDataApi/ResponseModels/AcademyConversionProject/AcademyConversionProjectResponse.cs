@@ -12,6 +12,6 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
 		public DateTime? AssignedDate { get; set; }
 		public ProjectPhase Phase { get; set; }
 		public IEnumerable<DocumentDetailsResponse> ProjectDocuments { get; set; }
-		public RationaleResponse RationaleResponse { get; set; }
+		public RationaleResponse Rationale { get; set; }
 	}
 }
