@@ -6,13 +6,13 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetEstablishmentByUkprn : 
+    public class GetEstablishment : 
         IGetEstablishmentByUkprn,
         IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>
     {
         private readonly IEstablishmentGateway _establishmentGateway;
 
-        public GetEstablishmentByUkprn(IEstablishmentGateway establishmentGateway)
+        public GetEstablishment(IEstablishmentGateway establishmentGateway)
         {
             _establishmentGateway = establishmentGateway;
         }

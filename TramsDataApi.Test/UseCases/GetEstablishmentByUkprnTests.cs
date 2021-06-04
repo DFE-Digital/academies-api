@@ -14,7 +14,7 @@ namespace TramsDataApi.Test.UseCases
 {
     public class GetEstablishmentByUkprnTests
     {
-        private readonly GetEstablishmentByUkprn _useCase;
+        private readonly GetEstablishment _useCase;
         private readonly Mock<IEstablishmentGateway> _establishmentGateway;
 
         private const string UKPRN = "mockukprn";
@@ -25,7 +25,7 @@ namespace TramsDataApi.Test.UseCases
             BuilderSetup.SetDefaultPropertyName(new RandomValuePropertyNamer(new BuilderSettings()));
 
             _establishmentGateway = new Mock<IEstablishmentGateway>();
-            _useCase = new GetEstablishmentByUkprn(_establishmentGateway.Object);
+            _useCase = new GetEstablishment(_establishmentGateway.Object);
         }
         
         [Fact]
