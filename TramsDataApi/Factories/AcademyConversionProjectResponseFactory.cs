@@ -25,7 +25,12 @@ namespace TramsDataApi.Factories
 				ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
 				AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
 				Phase = ProjectPhase.PreHTB,
-				ProjectDocuments = new DocumentDetailsResponse[0]
+				ProjectDocuments = new DocumentDetailsResponse[0],
+				Rationale = new RationaleResponse
+				{
+					ProjectRationale = ifdPipeline.ProjectTemplateInformationRationaleForProject,
+					TrustRationale = ifdPipeline.ProjectTemplateInformationRationaleForSponsor
+				}
 			};
 		}
     }
