@@ -16,7 +16,7 @@ You can connect to the MSSQL Server on port `1433`.
 
 ### EntityFramework and Migrations
 
-We currently have two database contexts defined: `LegacyTramsDbContext` and `TramsDbContext`
+We currently have two database contexts defined: `LegacyTramsDbContext` and `TramsDbContext`. Both database contexts manage the same database, but are used to manage different sets of tables.
 
 `LegacyTramsDbContext` is used to manage our models for tables which exist in the `sip` database and we have no control over - we treat these tables as read-only and don't commit migrations for them. If you do generate migrations for this context, it should not be commited to the repository.
 
