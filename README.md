@@ -22,7 +22,7 @@ We currently have two database contexts defined: `LegacyTramsDbContext` and `Tra
 
 `TramsDbContext` is the db context for models that we _do_ control, and we can generate migrations for. These migrations will be applied to the database in `dev`, `pre-prod`, and `prod`, and so should be commited to the repository when changes are made to models.
 
-#### Generating Migrations
+### Generating Migrations
 
 To generate migrations for `TramsDbContext`, use the following command:
 
@@ -38,7 +38,7 @@ dotnet ef migrations add <MIGRATION_NAME> --project TramsDataApi --context Trams
 
 Migrations put into the `Migrations/LegacyTramsDb` directory will not be commited to git.
 
-#### Applying Migrations
+### Applying Migrations
 
 To apply a set of migrations to the database, use `dotnet ef database update`:
 
