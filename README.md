@@ -22,7 +22,7 @@ We currently have two database contexts defined: `LegacyTramsDbContext` and `Tra
 
 `TramsDbContext` is the db context for models that we _do_ control, and we can generate migrations for. These migrations will be applied to the database in `dev`, `pre-prod`, and `prod`, and so should be commited to the repository when changes are made to models.
 
-### Generating Migrations
+### Generating Migrations
 
 To generate migrations for `TramsDbContext`, use the following command:
 
