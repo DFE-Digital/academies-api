@@ -22,8 +22,8 @@ namespace TramsDataApi.Test.Factories
                 GeneralDetailsLocalAuthority = fixture.Create<string>(),
                 TrustSponsorManagementCoSponsor1 = fixture.Create<string>(),
                 TrustSponsorManagementCoSponsor1SponsorName = fixture.Create<string>(),
-                InterestDateOfInterest = new DateTime(),
-                ApprovalProcessApplicationDate = new DateTime(),
+                InterestDateOfInterest = DateTime.Now,
+                ApprovalProcessApplicationDate = DateTime.Now.AddMonths(2),
                 ProjectTemplateInformationRationaleForProject = fixture.Create<string>(),
                 ProjectTemplateInformationRationaleForSponsor = fixture.Create<string>()
             };
