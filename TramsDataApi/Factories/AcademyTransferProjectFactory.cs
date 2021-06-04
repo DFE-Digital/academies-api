@@ -71,6 +71,21 @@ namespace TramsDataApi.Factories
                 : DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
 
+        private static void MergeIntendedTransferBenefits(IList<AcademyTransferProjectIntendedTransferBenefits> originalList, IList<AcademyTransferProjectIntendedTransferBenefits> updatedList)
+        {
+            if (updatedList == null)
+            {
+                return;
+            }
+
+            originalList.Clear();
+            foreach (var updatedIntendedTransferBenefits in updatedList)
+            {
+                originalList.Add(updatedIntendedTransferBenefits);
+            }
+        }
+        
+
         public static AcademyTransferProjects Update(AcademyTransferProjects original, AcademyTransferProjectRequest updateRequest)
         {
             if (updateRequest == null)
@@ -80,41 +95,45 @@ namespace TramsDataApi.Factories
 
             var toMerge = Create(updateRequest);
 
-            return new AcademyTransferProjects
-            {
-                Id = original.Id,
-                Urn = original.Urn,
-                OutgoingTrustUkprn = toMerge.OutgoingTrustUkprn ?? original.OutgoingTrustUkprn,
-                WhoInitiatedTheTransfer = toMerge?.WhoInitiatedTheTransfer ?? original.WhoInitiatedTheTransfer,
-                RddOrEsfaIntervention = toMerge?.RddOrEsfaIntervention == null
-                    ? original.RddOrEsfaIntervention
-                    : toMerge.RddOrEsfaIntervention,
-                RddOrEsfaInterventionDetail = toMerge?.RddOrEsfaInterventionDetail ?? original.RddOrEsfaInterventionDetail,
-                TypeOfTransfer = toMerge?.TypeOfTransfer ?? original.TypeOfTransfer,
-                OtherTransferTypeDescription = toMerge?.OtherTransferTypeDescription ?? original.OtherTransferTypeDescription,
-                TransferFirstDiscussed = toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed,
-                TargetDateForTransfer = toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer,
-                HtbDate = toMerge.HtbDate ?? original.HtbDate,
-                ProjectRationale = toMerge.ProjectRationale ?? original.ProjectRationale,
-                TrustSponsorRationale = toMerge.TrustSponsorRationale ?? original.TrustSponsorRationale,
-                State = toMerge.State ?? original.State,
-                Status = toMerge.Status ?? original.Status,
-                HighProfileShouldBeConsidered = toMerge.HighProfileShouldBeConsidered == null
-                    ? original.HighProfileShouldBeConsidered
-                    : toMerge.HighProfileShouldBeConsidered,
-                HighProfileFurtherSpecification = toMerge.HighProfileFurtherSpecification ?? original.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingFurtherSpecification = toMerge.ComplexLandAndBuildingFurtherSpecification ?? original.ComplexLandAndBuildingFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = toMerge.ComplexLandAndBuildingShouldBeConsidered == null
-                    ? original.ComplexLandAndBuildingShouldBeConsidered
-                    : toMerge.ComplexLandAndBuildingShouldBeConsidered,
-                FinanceAndDebtShouldBeConsidered = toMerge.FinanceAndDebtShouldBeConsidered == null
-                    ? original.FinanceAndDebtShouldBeConsidered
-                    : toMerge.FinanceAndDebtShouldBeConsidered,
-                FinanceAndDebtFurtherSpecification = toMerge.FinanceAndDebtFurtherSpecification ?? original.FinanceAndDebtFurtherSpecification,
-                OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue,
-                AcademyTransferProjectIntendedTransferBenefits = toMerge.AcademyTransferProjectIntendedTransferBenefits ?? original.AcademyTransferProjectIntendedTransferBenefits,
-                TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies
-            };
+            original.OutgoingTrustUkprn = toMerge.OutgoingTrustUkprn ?? original.OutgoingTrustUkprn;
+            original.WhoInitiatedTheTransfer = toMerge?.WhoInitiatedTheTransfer ?? original.WhoInitiatedTheTransfer;
+            original.RddOrEsfaIntervention = toMerge?.RddOrEsfaIntervention == null
+                ? original.RddOrEsfaIntervention
+                : toMerge.RddOrEsfaIntervention;
+            original.RddOrEsfaInterventionDetail =
+                toMerge?.RddOrEsfaInterventionDetail ?? original.RddOrEsfaInterventionDetail;
+            original.TypeOfTransfer = toMerge?.TypeOfTransfer ?? original.TypeOfTransfer;
+            original.OtherTransferTypeDescription =
+                toMerge?.OtherTransferTypeDescription ?? original.OtherTransferTypeDescription;
+            original.TransferFirstDiscussed = toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed;
+            original.TargetDateForTransfer = toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer;
+            original.HtbDate = toMerge.HtbDate ?? original.HtbDate;
+            original.ProjectRationale = toMerge.ProjectRationale ?? original.ProjectRationale;
+            original.TrustSponsorRationale = toMerge.TrustSponsorRationale ?? original.TrustSponsorRationale;
+            original.State = toMerge.State ?? original.State;
+            original.Status = toMerge.Status ?? original.Status;
+            original.HighProfileShouldBeConsidered = toMerge.HighProfileShouldBeConsidered == null
+                ? original.HighProfileShouldBeConsidered
+                : toMerge.HighProfileShouldBeConsidered;
+            original.HighProfileFurtherSpecification =
+                toMerge.HighProfileFurtherSpecification ?? original.HighProfileFurtherSpecification;
+            original.ComplexLandAndBuildingFurtherSpecification = toMerge.ComplexLandAndBuildingFurtherSpecification ??
+                                                                  original.ComplexLandAndBuildingFurtherSpecification;
+            original.ComplexLandAndBuildingShouldBeConsidered = toMerge.ComplexLandAndBuildingShouldBeConsidered == null
+                ? original.ComplexLandAndBuildingShouldBeConsidered
+                : toMerge.ComplexLandAndBuildingShouldBeConsidered;
+            original.FinanceAndDebtShouldBeConsidered = toMerge.FinanceAndDebtShouldBeConsidered == null
+                ? original.FinanceAndDebtShouldBeConsidered
+                : toMerge.FinanceAndDebtShouldBeConsidered;
+            original.FinanceAndDebtFurtherSpecification = toMerge.FinanceAndDebtFurtherSpecification ?? 
+                                                          original.FinanceAndDebtFurtherSpecification;
+            original.OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue;
+            original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
+            original.AcademyTransferProjectIntendedTransferBenefits =
+                toMerge.AcademyTransferProjectIntendedTransferBenefits ??
+                original.AcademyTransferProjectIntendedTransferBenefits;
+            
+            return original;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -25,7 +26,10 @@ namespace TramsDataApi.Gateways
 
         public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)
         {
-            return _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn == urn);
+            return _tramsDbContext.AcademyTransferProjects
+                .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
+                .Include(atp => atp.TransferringAcademies)
+                .FirstOrDefault(atp => atp.Urn == urn);
         }
     }
 }

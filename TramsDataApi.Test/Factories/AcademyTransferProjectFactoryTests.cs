@@ -183,6 +183,7 @@ namespace TramsDataApi.Test.Factories
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
+            
             result.Should().BeEquivalentTo(expected);
         }
 
