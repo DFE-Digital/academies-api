@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
@@ -41,6 +42,11 @@ namespace TramsDataApi.Gateways
             _tramsDbContext.SaveChanges();
 
             return project;
+        }
+
+        public IList<AcademyTransferProjects> IndexAcademyTransferProjects(int page)
+        {
+            throw new System.NotImplementedException();
         }
 
         public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)

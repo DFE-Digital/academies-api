@@ -14,15 +14,18 @@ namespace TramsDataApi.Controllers
         private readonly ICreateAcademyTransferProject _createAcademyTransferProject;
         private readonly IGetAcademyTransferProject _getAcademyTransferProject;
         private readonly IUpdateAcademyTransferProject _updateAcademyTransferProject;
+        private readonly IIndexAcademyTransferProjects _indexAcademyTransferProject;
 
         public AcademyTransferProjectController(
             ICreateAcademyTransferProject createAcademyTransferProject,
             IGetAcademyTransferProject getAcademyTransferProject,
-            IUpdateAcademyTransferProject updateAcademyTransferProject)
+            IUpdateAcademyTransferProject updateAcademyTransferProject,
+            IIndexAcademyTransferProjects indexAcademyTransferProjects)
         {
             _createAcademyTransferProject = createAcademyTransferProject;
             _getAcademyTransferProject = getAcademyTransferProject;
             _updateAcademyTransferProject = updateAcademyTransferProject;
+            _indexAcademyTransferProject = indexAcademyTransferProjects;
         }
         
         [HttpPost]
@@ -69,6 +72,13 @@ namespace TramsDataApi.Controllers
             }
 
             return Ok(academyTransferProject);
-        }        
+        }
+        
+        [HttpGet]
+        [Route("academyTransferProject")]
+        public ActionResult<AcademyTransferProjectResponse> Index([FromQuery(Name="page")]int page = 1)
+        {
+            return Ok(_indexAcademyTransferProject.Execute(page));
+        }
     }
 }

@@ -447,11 +447,13 @@ namespace TramsDataApi.Test.Integration
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
             indexResponse.StatusCode.Should().Be(200);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
-            var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectResponse>>(indexJson);
+            var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
 
             indexProjectResponse.Count().Should().Be(2);
         }
-        public async Task Returns404WhenAcademyTranserProjectDoesNotExist()
+        
+        [Fact]
+        public async Task Returns404WhenAcademyTransferProjectDoesNotExist()
         {
              var getAcademyTransferProjectRequest = new HttpRequestMessage
             {

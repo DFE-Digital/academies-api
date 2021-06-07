@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +31,8 @@ namespace TramsDataApi.Test.Controllers
             var controller = new AcademyTransferProjectController(
                 createAcademyTransferProject.Object,
                 new Mock<IGetAcademyTransferProject>().Object,
-                new Mock<IUpdateAcademyTransferProject>().Object
+                new Mock<IUpdateAcademyTransferProject>().Object,
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
             var result = controller.Create(createAcademyTransferRequest);
             
@@ -49,7 +52,8 @@ namespace TramsDataApi.Test.Controllers
             var controller = new AcademyTransferProjectController(
                 createAcademyTransferProject.Object,
                 new Mock<IGetAcademyTransferProject>().Object,
-                new Mock<IUpdateAcademyTransferProject>().Object
+                new Mock<IUpdateAcademyTransferProject>().Object,
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
             var result = controller.Create(createAcademyTransferRequest);
             
@@ -70,7 +74,8 @@ namespace TramsDataApi.Test.Controllers
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
-                updateAcademyTransferProject.Object
+                updateAcademyTransferProject.Object,
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
@@ -97,7 +102,8 @@ namespace TramsDataApi.Test.Controllers
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
-                updateAcademyTransferProject.Object
+                updateAcademyTransferProject.Object,
+                new Mock<IIndexAcademyTransferProjects>().Object
             ); 
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
@@ -120,7 +126,8 @@ namespace TramsDataApi.Test.Controllers
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
-                updateAcademyTransferProject.Object
+                updateAcademyTransferProject.Object,
+                new Mock<IIndexAcademyTransferProjects>().Object
             ); 
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
@@ -140,7 +147,8 @@ namespace TramsDataApi.Test.Controllers
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
-                new Mock<IUpdateAcademyTransferProject>().Object
+                new Mock<IUpdateAcademyTransferProject>().Object,
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
 
             var result = controller.GetByUrn(urn);
@@ -162,12 +170,57 @@ namespace TramsDataApi.Test.Controllers
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
-                new Mock<IUpdateAcademyTransferProject>().Object
+                new Mock<IUpdateAcademyTransferProject>().Object,
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
 
             var result = controller.GetByUrn(urn);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(academyTransferProjectResponse));
+        }
+        
+        [Fact]
+        public void IndexAcademyTransferProject_ReturnsEmptyList_WhenThereAreNoAcademyTransferProjects()
+        {
+            var indexAcademyTransferProject = new Mock<IIndexAcademyTransferProjects>();
+
+            indexAcademyTransferProject
+                .Setup(get => get.Execute(1))
+                .Returns(() => new List<AcademyTransferProjectSummaryResponse>());
+
+            var controller = new AcademyTransferProjectController(
+                new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<IGetAcademyTransferProject>().Object,
+                new Mock<IUpdateAcademyTransferProject>().Object,
+                indexAcademyTransferProject.Object
+            );
+
+            var result = controller.Index();
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<AcademyTransferProjectSummaryResponse>()));
+        }
+        
+        [Fact]
+        public void IndexAcademyTransferProject_ReturnsListOfAcademyTransferProjects_WhenThereAreAcademyTransferProjects()
+        {
+            var expectedIndexAcademyTransferProjectResponse = Builder<AcademyTransferProjectSummaryResponse>.CreateListOfSize(5).Build();
+
+            var indexAcademyTransferProject = new Mock<IIndexAcademyTransferProjects>();
+
+            indexAcademyTransferProject
+                .Setup(get => get.Execute(1))
+                .Returns(() => expectedIndexAcademyTransferProjectResponse);
+
+            var controller = new AcademyTransferProjectController(
+                new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<IGetAcademyTransferProject>().Object,
+                new Mock<IUpdateAcademyTransferProject>().Object,
+                indexAcademyTransferProject.Object
+            );
+
+            var result = controller.Index();
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedIndexAcademyTransferProjectResponse));
         }
     }
 }
