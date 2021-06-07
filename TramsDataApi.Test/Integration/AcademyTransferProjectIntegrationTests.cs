@@ -405,6 +405,23 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
+        public async Task Returns404WhenAcademyTranserProjectDoesNotExist()
+        {
+             var getAcademyTransferProjectRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject/10012313"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+            };
+
+            var getResponse = await _client.SendAsync(getAcademyTransferProjectRequest);
+            getResponse.StatusCode.Should().Be(404);
+        }
+
+        [Fact]
         public async Task CanGetAnAcademyTransferProject()
         {
             var randomGenerator = new RandomGenerator();
