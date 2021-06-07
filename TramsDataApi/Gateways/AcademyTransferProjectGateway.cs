@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
@@ -41,6 +42,14 @@ namespace TramsDataApi.Gateways
             _tramsDbContext.SaveChanges();
 
             return project;
+        }
+
+        public IList<AcademyTransferProjects> IndexAcademyTransferProjects(int page)
+        {
+            return _tramsDbContext.AcademyTransferProjects
+                .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
+                .Include(atp => atp.TransferringAcademies)
+                .Skip((page - 1) * 10).Take(10).ToList();
         }
 
         public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)
