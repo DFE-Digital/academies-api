@@ -46,7 +46,10 @@ namespace TramsDataApi.Gateways
 
         public IList<AcademyTransferProjects> IndexAcademyTransferProjects(int page)
         {
-            throw new System.NotImplementedException();
+            return _tramsDbContext.AcademyTransferProjects
+                .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
+                .Include(atp => atp.TransferringAcademies)
+                .Skip((page - 1) * 10).Take(10).ToList();
         }
 
         public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)

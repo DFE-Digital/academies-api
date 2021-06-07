@@ -46,6 +46,7 @@ namespace TramsDataApi
             services.AddScoped<IAcademyTransferProjectGateway, AcademyTransferProjectGateway>();
             services.AddScoped<IGetAcademyTransferProject, GetAcademyTransferProject>();
             services.AddScoped<IUpdateAcademyTransferProject, UpdateAcademyTransferProject>();
+            services.AddScoped<IIndexAcademyTransferProjects, IndexAcademyTransferProjects>();
 
             services.AddUseCases();
         }
