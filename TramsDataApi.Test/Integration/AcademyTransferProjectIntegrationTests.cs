@@ -397,5 +397,85 @@ namespace TramsDataApi.Test.Integration
             _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
             _tramsDbContext.SaveChanges();
         }
+
+        [Fact]
+        public async Task CanGetTheIndexOfAllAcademyTransferProjects()
+        {
+            var createHttpRequestMessage1 = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(GenerateCreateRequest())
+            };
+            var createResponse1 = await _client.SendAsync(createHttpRequestMessage1);
+            createResponse1.StatusCode.Should().Be(201);
+            
+            var createHttpRequestMessage2 = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(GenerateCreateRequest())
+            };
+            var createResponse2 = await _client.SendAsync(createHttpRequestMessage2);
+            createResponse2.StatusCode.Should().Be(201);
+            
+            var indexAcademyTransferProjectRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject/"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+            };
+            
+            var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
+            indexResponse.StatusCode.Should().Be(200);
+            var indexJson = await indexResponse.Content.ReadAsStringAsync();
+            var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectResponse>>(indexJson);
+            indexProjectResponse.Count().Should().Be(2);
+        }
+
+        private AcademyTransferProjectRequest GenerateCreateRequest()
+        {
+            var randomGenerator = new RandomGenerator();
+            
+            var benefitsRequest = Builder<AcademyTransferProjectBenefitsRequest>.CreateNew()
+                .With(b => b.IntendedTransferBenefits = Builder<IntendedTransferBenefitRequest>.CreateNew()
+                    .With(i => i.SelectedBenefits =  new List<string>()).Build())
+                .With(b => b.OtherFactorsToConsider = Builder<OtherFactorsToConsiderRequest>.CreateNew()
+                    .With(o => o.ComplexLandAndBuilding = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .With(o => o.FinanceAndDebt = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .With(o => o.HighProfile = Builder<BenefitConsideredFactorRequest>.CreateNew().Build()).Build())
+                .Build();
+            
+            var datesRequest = Builder<AcademyTransferProjectDatesRequest>.CreateNew()
+                .With(d => d.TransferFirstDiscussed =
+                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.TargetDateForTransfer =
+                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .Build();
+            
+            return Builder<AcademyTransferProjectRequest>.CreateNew()
+                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
+                .With(c => c.Benefits = benefitsRequest)
+                .With(c => c.Dates = datesRequest)
+                .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
+                .With(c => c.Features = Builder<AcademyTransferProjectFeaturesRequest>.CreateNew().Build())
+                .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
+                    .CreateListOfSize(2).All()
+                    .With(ta => ta.IncomingTrustUkprn = randomGenerator.NextString(8,8))
+                    .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8,8)).Build())
+                .Build();
+        }
     }
 }
