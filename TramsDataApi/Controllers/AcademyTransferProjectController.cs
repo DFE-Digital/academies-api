@@ -60,7 +60,13 @@ namespace TramsDataApi.Controllers
 
         public ActionResult<AcademyTransferProjectResponse> GetByUrn(int urn)
         {
-            return NotFound();
+            var academyTransferProject = _getAcademyTransferProject.Execute(urn);
+            if (academyTransferProject == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(academyTransferProject);
         }        
     }
 }
