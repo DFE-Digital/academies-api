@@ -16,6 +16,11 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.ResponseModels;
+using AutoFixture.Kernel;
+using AutoFixture;
+using TramsDataApi.Test.Utils;
+using System.Text.Json.Serialization;
+using TramsDataApi.Factories;
 
 namespace TramsDataApi.Test.Integration
 {
@@ -25,6 +30,7 @@ namespace TramsDataApi.Test.Integration
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
         private readonly TramsDbContext _tramsDbContext;
+
         
         public AcademyTransferProjectIntegrationTests(TramsDataApiFactory fixture){
             _client = fixture.CreateClient();
@@ -424,6 +430,7 @@ namespace TramsDataApi.Test.Integration
                 },
                 Content =  JsonContent.Create(GenerateCreateRequest())
             };
+
             var createResponse2 = await _client.SendAsync(createHttpRequestMessage2);
             createResponse2.StatusCode.Should().Be(201);
             
@@ -436,12 +443,86 @@ namespace TramsDataApi.Test.Integration
                     {"ApiKey", "testing-api-key"}
                 },
             };
-            
+
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
             indexResponse.StatusCode.Should().Be(200);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectResponse>>(indexJson);
+
             indexProjectResponse.Count().Should().Be(2);
+        }
+        public async Task Returns404WhenAcademyTranserProjectDoesNotExist()
+        {
+             var getAcademyTransferProjectRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject/10012313"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+
+            };
+
+            var getResponse = await _client.SendAsync(getAcademyTransferProjectRequest);
+            getResponse.StatusCode.Should().Be(404);
+        }
+
+        [Fact]
+        public async Task CanGetAnAcademyTransferProject()
+        {
+            var randomGenerator = new RandomGenerator();
+
+            var academyTransferProject = Builder<AcademyTransferProjects>
+                .CreateNew()
+                .With(atp => atp.OutgoingTrustUkprn = randomGenerator.NextString(8, 8))
+                .With(atp => atp.Urn = 0)
+                .With(atp => atp.Id = 0)
+                .With(atp => atp.TransferringAcademies = Builder<TransferringAcademies>
+                    .CreateListOfSize(3)
+                    .All()
+                    .With(ta => ta.Id = 0)
+                    .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
+                    .With(ta => ta.IncomingTrustUkprn = randomGenerator.NextString(8, 8))
+                    .With(ta => ta.FkAcademyTransferProjectId = null)
+                    .Build()
+                )
+                .With(atp => atp.AcademyTransferProjectIntendedTransferBenefits = Builder<AcademyTransferProjectIntendedTransferBenefits>
+                    .CreateListOfSize(5)
+                    .All()
+                    .With(benefit => benefit.Id = 0)
+                    .Build()
+                )
+                .Build();
+            
+            _tramsDbContext.AcademyTransferProjects.Add(academyTransferProject);
+            _tramsDbContext.SaveChanges();
+
+            var getAcademyTransferProjectRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject/{academyTransferProject.Urn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+            };
+
+            var getResponse = await _client.SendAsync(getAcademyTransferProjectRequest);
+            getResponse.StatusCode.Should().Be(200);
+
+            var responseJson = await getResponse.Content.ReadAsStringAsync();
+            var responseModel = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(responseJson);
+
+            var expected = AcademyTransferProjectResponseFactory.Create(academyTransferProject);
+
+            responseModel.Should().BeEquivalentTo(expected);
+
+            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
+            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits
+                .RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits);
+            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
+            _tramsDbContext.SaveChanges();
         }
 
         private AcademyTransferProjectRequest GenerateCreateRequest()
