@@ -19,7 +19,7 @@ namespace TramsDataApi.UseCases
             var currentAcademyTransferProject = _academyTransferProjectGateway.GetAcademyTransferProjectByUrn(urn);
             var updatedAcademyTransferProject = AcademyTransferProjectFactory.Update(currentAcademyTransferProject, updateRequest);
 
-            return AcademyTransferProjectResponseFactory.Create(_academyTransferProjectGateway.SaveAcademyTransferProject(updatedAcademyTransferProject));
+            return AcademyTransferProjectResponseFactory.Create(_academyTransferProjectGateway.UpdateAcademyTransferProject(updatedAcademyTransferProject));
         }
     }
 }

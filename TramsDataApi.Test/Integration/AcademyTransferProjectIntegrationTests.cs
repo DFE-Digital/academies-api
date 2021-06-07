@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -242,6 +243,8 @@ namespace TramsDataApi.Test.Integration
                     .With(ta => ta.IncomingTrustUkprn = randomGenerator.NextString(8,8))
                     .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8,8)).Build())
                 .Build();
+
+            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits.Count().Should().Be(0);
             
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -280,10 +283,13 @@ namespace TramsDataApi.Test.Integration
             var updatedProject = _tramsDbContext.AcademyTransferProjects
                 .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
                 .FirstOrDefault(atp => atp.Urn.ToString() == updatedProjectResponse.ProjectUrn);
-            updatedProject.AcademyTransferProjectIntendedTransferBenefits.Count.Should().Be(2);
-            updatedProject.AcademyTransferProjectIntendedTransferBenefits
+            
+            updatedProject?.AcademyTransferProjectIntendedTransferBenefits.Count.Should().Be(2);
+            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits.Count().Should().Be(2);
+            
+            updatedProject?.AcademyTransferProjectIntendedTransferBenefits
                 .ElementAt(0).SelectedBenefit.Should().Be("new initial benefit");
-            updatedProject.AcademyTransferProjectIntendedTransferBenefits
+            updatedProject?.AcademyTransferProjectIntendedTransferBenefits
                 .ElementAt(1).SelectedBenefit.Should().Be("new other benefit");
             
             _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
@@ -326,6 +332,8 @@ namespace TramsDataApi.Test.Integration
                     .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8,8)).Build())
                 .Build();
             
+            _tramsDbContext.TransferringAcademies.Count().Should().Be(0);
+            
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
@@ -355,7 +363,7 @@ namespace TramsDataApi.Test.Integration
                     IncomingTrustUkprn = "87654321"
                 }
             };
-
+            
             var updateRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Patch,
@@ -371,16 +379,19 @@ namespace TramsDataApi.Test.Integration
             updateResponse.StatusCode.Should().Be(200);
             var updateJson = await updateResponse.Content.ReadAsStringAsync();
             var updatedProjectResponse = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(updateJson);
-
+            
             var updatedProject = _tramsDbContext.AcademyTransferProjects
                 .Include(atp => atp.TransferringAcademies)
                 .FirstOrDefault(atp => atp.Urn.ToString() == updatedProjectResponse.ProjectUrn);
-            updatedProject.TransferringAcademies.Count.Should().Be(2);
-            updatedProject.TransferringAcademies.ElementAt(0).IncomingTrustUkprn.Should().Be("12345678");
-            updatedProject.TransferringAcademies.ElementAt(0).OutgoingAcademyUkprn.Should().Be("12345678");
             
-            updatedProject.TransferringAcademies.ElementAt(1).IncomingTrustUkprn.Should().Be("87654321");
-            updatedProject.TransferringAcademies.ElementAt(1).OutgoingAcademyUkprn.Should().Be("87654321");
+            updatedProject?.TransferringAcademies.Count.Should().Be(2);
+            _tramsDbContext.TransferringAcademies.Count().Should().Be(2);
+            
+            updatedProject?.TransferringAcademies.ElementAt(0).IncomingTrustUkprn.Should().Be("12345678");
+            updatedProject?.TransferringAcademies.ElementAt(0).OutgoingAcademyUkprn.Should().Be("12345678");
+            
+            updatedProject?.TransferringAcademies.ElementAt(1).IncomingTrustUkprn.Should().Be("87654321");
+            updatedProject?.TransferringAcademies.ElementAt(1).OutgoingAcademyUkprn.Should().Be("87654321");
             
             _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
             _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);

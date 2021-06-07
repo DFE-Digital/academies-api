@@ -6,5 +6,6 @@ namespace TramsDataApi.Gateways
     {
         AcademyTransferProjects SaveAcademyTransferProject(AcademyTransferProjects project);
         AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn);
+        AcademyTransferProjects UpdateAcademyTransferProject(AcademyTransferProjects project);
     }
 }

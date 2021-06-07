@@ -70,22 +70,7 @@ namespace TramsDataApi.Factories
                 ? (DateTime?) null
                 : DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
-
-        private static void MergeIntendedTransferBenefits(IList<AcademyTransferProjectIntendedTransferBenefits> originalList, IList<AcademyTransferProjectIntendedTransferBenefits> updatedList)
-        {
-            if (updatedList == null)
-            {
-                return;
-            }
-
-            originalList.Clear();
-            foreach (var updatedIntendedTransferBenefits in updatedList)
-            {
-                originalList.Add(updatedIntendedTransferBenefits);
-            }
-        }
         
-
         public static AcademyTransferProjects Update(AcademyTransferProjects original, AcademyTransferProjectRequest updateRequest)
         {
             if (updateRequest == null)
@@ -128,7 +113,9 @@ namespace TramsDataApi.Factories
             original.FinanceAndDebtFurtherSpecification = toMerge.FinanceAndDebtFurtherSpecification ?? 
                                                           original.FinanceAndDebtFurtherSpecification;
             original.OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue;
+            
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
+
             original.AcademyTransferProjectIntendedTransferBenefits =
                 toMerge.AcademyTransferProjectIntendedTransferBenefits ??
                 original.AcademyTransferProjectIntendedTransferBenefits;

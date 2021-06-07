@@ -38,7 +38,7 @@ namespace TramsDataApi.Test.UseCases
 
             var expectedUpdatedProject = AcademyTransferProjectFactory.Update(academyTransferProject, updateAcademyTransferProject);
 
-            gateway.Setup(g => g.SaveAcademyTransferProject(
+            gateway.Setup(g => g.UpdateAcademyTransferProject(
                 It.Is<AcademyTransferProjects>(atp => atp.Id == academyTransferProject.Id && atp.OutgoingTrustUkprn == updateAcademyTransferProject.OutgoingTrustUkprn))
             ).Returns(expectedUpdatedProject);
 

@@ -23,6 +23,25 @@ namespace TramsDataApi.Gateways
 
             return project;
         }
+        
+        public AcademyTransferProjects UpdateAcademyTransferProject(AcademyTransferProjects project)
+        {
+            
+            _tramsDbContext.TransferringAcademies.RemoveRange(
+                _tramsDbContext.TransferringAcademies.Where(
+                    ta => ta.FkAcademyTransferProject == project
+                    )
+                );
+            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits.RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits.Where(
+                    ta => ta.FkAcademyTransferProject == project
+                )
+            );
+            _tramsDbContext.AcademyTransferProjects.Update(project);
+            
+            _tramsDbContext.SaveChanges();
+
+            return project;
+        }
 
         public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)
         {
