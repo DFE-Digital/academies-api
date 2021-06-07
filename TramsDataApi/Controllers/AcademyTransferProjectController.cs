@@ -57,5 +57,10 @@ namespace TramsDataApi.Controllers
 
             return BadRequest();
         }
+
+        public ActionResult<AcademyTransferProjectResponse> GetByUrn(int urn)
+        {
+            return NotFound();
+        }        
     }
 }
