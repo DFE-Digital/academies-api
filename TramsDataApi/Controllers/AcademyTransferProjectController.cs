@@ -57,5 +57,18 @@ namespace TramsDataApi.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("academyTransferProject/{urn}")]
+        public ActionResult<AcademyTransferProjectResponse> GetByUrn(int urn)
+        {
+            var academyTransferProject = _getAcademyTransferProject.Execute(urn);
+            if (academyTransferProject == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(academyTransferProject);
+        }        
     }
 }

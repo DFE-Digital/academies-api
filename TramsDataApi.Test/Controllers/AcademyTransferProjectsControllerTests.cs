@@ -126,5 +126,48 @@ namespace TramsDataApi.Test.Controllers
 
             result.Result.Should().BeEquivalentTo(new BadRequestResult());
         }
+
+        [Fact]
+        public void GetAcademyTransferProject_ReturnsNotFound_WhenAcademyTransferProjectDoesNotExist()
+        {
+            var urn = 10021231;
+            var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
+
+            getAcademyTransferProject
+                .Setup(get => get.Execute(urn))
+                .Returns(() => null);
+
+            var controller = new AcademyTransferProjectController(
+                new Mock<ICreateAcademyTransferProject>().Object,
+                getAcademyTransferProject.Object,
+                new Mock<IUpdateAcademyTransferProject>().Object
+            );
+
+            var result = controller.GetByUrn(urn);
+
+            result.Result.Should().BeEquivalentTo(new NotFoundResult());
+        }
+
+        [Fact]
+        public void GetAcademyTransferProject_ReturnsOkResult_WhenAcademyTransferProjectExists()
+        {
+            var urn = 10546231;
+            var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
+            var academyTransferProjectResponse = Builder<AcademyTransferProjectResponse>.CreateNew().Build();
+
+            getAcademyTransferProject
+                .Setup(get => get.Execute(urn))
+                .Returns(academyTransferProjectResponse);
+
+            var controller = new AcademyTransferProjectController(
+                new Mock<ICreateAcademyTransferProject>().Object,
+                getAcademyTransferProject.Object,
+                new Mock<IUpdateAcademyTransferProject>().Object
+            );
+
+            var result = controller.GetByUrn(urn);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(academyTransferProjectResponse));
+        }
     }
 }
