@@ -154,5 +154,12 @@ namespace TramsDataApi.Test.Factories
             
             result.Should().BeEquivalentTo(expected);
         }
+
+        [Fact]
+        public void ReturnsNull_WhenGivenANullValue()
+        {
+            var result = AcademyTransferProjectResponseFactory.Create(null);
+            result.Should().BeNull();
+        }
     }
 }

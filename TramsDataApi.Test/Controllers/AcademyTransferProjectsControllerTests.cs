@@ -26,7 +26,11 @@ namespace TramsDataApi.Test.Controllers
             createAcademyTransferProject.Setup(a => a.Execute(createAcademyTransferRequest))
                 .Returns(academyTransferProjectResponse);
 
-            var controller = new AcademyTransferProjectController(createAcademyTransferProject.Object);
+            var controller = new AcademyTransferProjectController(
+                createAcademyTransferProject.Object,
+                new Mock<IGetAcademyTransferProject>().Object,
+                new Mock<IUpdateAcademyTransferProject>().Object
+            );
             var result = controller.Create(createAcademyTransferRequest);
             
             result.Result.Should().BeEquivalentTo(new CreatedAtActionResult("Create", null, null,academyTransferProjectResponse));
@@ -42,9 +46,84 @@ namespace TramsDataApi.Test.Controllers
             createAcademyTransferProject.Setup(a => a.Execute(createAcademyTransferRequest))
                 .Throws(new Exception("Shouldn't be called."));
 
-            var controller = new AcademyTransferProjectController(createAcademyTransferProject.Object);
+            var controller = new AcademyTransferProjectController(
+                createAcademyTransferProject.Object,
+                new Mock<IGetAcademyTransferProject>().Object,
+                new Mock<IUpdateAcademyTransferProject>().Object
+            );
             var result = controller.Create(createAcademyTransferRequest);
             
+            result.Result.Should().BeEquivalentTo(new BadRequestResult());
+        }
+
+        [Fact]
+        public void UpdateAcademyTransferProject_Returns404WhenProjectNotFound()
+        {
+            var urn = 10001001;
+            var updateAcademyTransferProject = new Mock<IUpdateAcademyTransferProject>();
+            var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
+
+            var updateAcademyTransferRequest = Builder<AcademyTransferProjectRequest>.CreateNew().Build();
+            
+            getAcademyTransferProject.Setup(useCase => useCase.Execute(urn)).Returns(() => null);
+
+            var controller = new AcademyTransferProjectController(
+                new Mock<ICreateAcademyTransferProject>().Object,
+                getAcademyTransferProject.Object,
+                updateAcademyTransferProject.Object
+            );
+            var result = controller.Update(urn, updateAcademyTransferRequest);
+
+            result.Result.Should().BeEquivalentTo(new NotFoundResult());
+        }
+
+        [Fact]
+        public void UpdateAcademyTransferProject_UpdatesTheProject_WhenItIsFound()
+        {
+            var urn = 10000323;
+            var updateAcademyTransferProject = new Mock<IUpdateAcademyTransferProject>();
+            var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
+
+            var updateAcademyTransferRequest = Builder<AcademyTransferProjectRequest>
+                .CreateNew().With(uat => uat.OutgoingTrustUkprn = "12345671").Build();
+            var updateAcademyTransferResponse = Builder<AcademyTransferProjectResponse>.CreateNew().Build();
+            
+            getAcademyTransferProject.Setup(useCase => useCase.Execute(urn))
+                .Returns(Builder<AcademyTransferProjectResponse>.CreateNew().Build);
+            
+            updateAcademyTransferProject.Setup(useCase => useCase.Execute(urn, updateAcademyTransferRequest))
+                .Returns(updateAcademyTransferResponse);
+
+            var controller = new AcademyTransferProjectController(
+                new Mock<ICreateAcademyTransferProject>().Object,
+                getAcademyTransferProject.Object,
+                updateAcademyTransferProject.Object
+            ); 
+            var result = controller.Update(urn, updateAcademyTransferRequest);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(updateAcademyTransferResponse));
+        }
+
+        [Fact]
+        public void UpdateAcademyTransferProject_ReturnsBadRequest_WhenInvalidRequestIsGiven()
+        {
+            var urn = 10000323;
+            var updateAcademyTransferProject = new Mock<IUpdateAcademyTransferProject>();
+            var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
+
+            var updateAcademyTransferRequest = Builder<AcademyTransferProjectRequest>
+                .CreateNew().With(uat => uat.OutgoingTrustUkprn = null).Build();
+            
+            getAcademyTransferProject.Setup(useCase => useCase.Execute(urn))
+                .Returns(Builder<AcademyTransferProjectResponse>.CreateNew().Build);
+
+            var controller = new AcademyTransferProjectController(
+                new Mock<ICreateAcademyTransferProject>().Object,
+                getAcademyTransferProject.Object,
+                updateAcademyTransferProject.Object
+            ); 
+            var result = controller.Update(urn, updateAcademyTransferRequest);
+
             result.Result.Should().BeEquivalentTo(new BadRequestResult());
         }
     }

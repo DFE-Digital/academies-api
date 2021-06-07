@@ -9,6 +9,11 @@ namespace TramsDataApi.Factories
     {
         public static AcademyTransferProjectResponse Create(AcademyTransferProjects model)
         {
+            if (model == null) 
+            {
+                return null;
+            }
+            
             var transferringAcademies = model.TransferringAcademies
                 .Select(a => new TransferringAcademiesResponse
                     {IncomingTrustUkprn = a.IncomingTrustUkprn, OutgoingAcademyUkprn = a.OutgoingAcademyUkprn})

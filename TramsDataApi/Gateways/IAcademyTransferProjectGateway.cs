@@ -4,6 +4,8 @@ namespace TramsDataApi.Gateways
 {
     public interface IAcademyTransferProjectGateway
     {
-        public AcademyTransferProjects CreateAcademyTransferProject(AcademyTransferProjects project);
+        AcademyTransferProjects SaveAcademyTransferProject(AcademyTransferProjects project);
+        AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn);
+        AcademyTransferProjects UpdateAcademyTransferProject(AcademyTransferProjects project);
     }
 }

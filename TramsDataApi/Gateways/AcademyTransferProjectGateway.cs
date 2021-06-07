@@ -1,3 +1,5 @@
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -14,12 +16,39 @@ namespace TramsDataApi.Gateways
             _tramsDbContext = tramsDbContext;
         }
         
-        public AcademyTransferProjects CreateAcademyTransferProject(AcademyTransferProjects project)
+        public AcademyTransferProjects SaveAcademyTransferProject(AcademyTransferProjects project)
         {
-            _tramsDbContext.AcademyTransferProjects.Add(project);
+            _tramsDbContext.AcademyTransferProjects.Update(project);
             _tramsDbContext.SaveChanges();
 
             return project;
+        }
+        
+        public AcademyTransferProjects UpdateAcademyTransferProject(AcademyTransferProjects project)
+        {
+            
+            _tramsDbContext.TransferringAcademies.RemoveRange(
+                _tramsDbContext.TransferringAcademies.Where(
+                    ta => ta.FkAcademyTransferProject == project
+                    )
+                );
+            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits.RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits.Where(
+                    ta => ta.FkAcademyTransferProject == project
+                )
+            );
+            _tramsDbContext.AcademyTransferProjects.Update(project);
+            
+            _tramsDbContext.SaveChanges();
+
+            return project;
+        }
+
+        public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)
+        {
+            return _tramsDbContext.AcademyTransferProjects
+                .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
+                .Include(atp => atp.TransferringAcademies)
+                .FirstOrDefault(atp => atp.Urn == urn);
         }
     }
 }

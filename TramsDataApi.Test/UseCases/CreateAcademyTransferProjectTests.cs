@@ -53,7 +53,7 @@ namespace TramsDataApi.Test.UseCases
 
             var expected = AcademyTransferProjectResponseFactory.Create(createdAcademyTransferProject);
         
-            gateway.Setup(g => g.CreateAcademyTransferProject(It.IsAny<AcademyTransferProjects>())).Returns(createdAcademyTransferProject); 
+            gateway.Setup(g => g.SaveAcademyTransferProject(It.IsAny<AcademyTransferProjects>())).Returns(createdAcademyTransferProject); 
             
         
             var useCase = new CreateAcademyTransferProject(gateway.Object);
