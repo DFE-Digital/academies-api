@@ -454,6 +454,9 @@ namespace TramsDataApi.Test.Integration
 
             responseModel.Should().BeEquivalentTo(expected);
 
+            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
+            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits
+                .RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits);
             _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
             _tramsDbContext.SaveChanges();
         }
