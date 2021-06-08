@@ -22,5 +22,21 @@ namespace TramsDataApi.Factories
                 Establishments = establishments.Select(EstablishmentSummaryResponseFactory.Create).ToList()
             };
         }
+
+        public static TrustSummaryResponse Create(Group group, IList<Establishment> establishments)
+        {
+            if (group == null)
+            {
+                return null;
+            }
+            
+            return new TrustSummaryResponse
+            {
+                Ukprn = group.Ukprn,
+                GroupName = group.GroupName,
+                CompaniesHouseNumber = group.CompaniesHouseNumber,
+                Establishments = establishments.Select(EstablishmentSummaryResponseFactory.Create).ToList()
+            };
+        }
     }
 }
