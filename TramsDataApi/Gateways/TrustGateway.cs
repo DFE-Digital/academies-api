@@ -23,12 +23,12 @@ namespace TramsDataApi.Gateways
             return _dbContext.Trust.FirstOrDefault(t => t.TrustRef == groupId);
         }
 
-        public IList<GroupLink> SearchGroups(string groupName, string urn, string companiesHouseNumber)
+        public IList<Group> SearchGroups(string groupName, string ukprn, string companiesHouseNumber)
         {
-            return _dbContext.GroupLink
+            return _dbContext.Group
                 .Where(g => (
                     (groupName == null || g.GroupName == groupName) &&
-                    (urn == null || g.Urn == urn) &&
+                    (ukprn == null || g.Ukprn == ukprn) &&
                     (companiesHouseNumber == null || g.CompaniesHouseNumber == companiesHouseNumber)
                 ))
                 .ToList();
