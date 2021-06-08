@@ -299,15 +299,15 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_WithNoQueryParameters()
         {
-            var groupLinks = Builder<GroupLink>.CreateListOfSize(10)
+            var groups = Builder<Group>.CreateListOfSize(10)
                 .All()
-                .With(e => e.Urn = _randomGenerator.Int().ToString())
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
 
-            _legacyDbContext.GroupLink.AddRange(groupLinks);
+            _legacyDbContext.Group.AddRange(groups);
             _legacyDbContext.SaveChanges();
 
-            var expected = groupLinks
+            var expected = groups
                 .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
                 .ToList();
 
@@ -328,7 +328,7 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
-            _legacyDbContext.GroupLink.RemoveRange(_legacyDbContext.GroupLink);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
             _legacyDbContext.SaveChanges();
         }
         
@@ -336,13 +336,14 @@ namespace TramsDataApi.Test.Integration
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByGroupName()
         {
             var groupName = "Mygroupname";
-            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+            var groups = Builder<Group>.CreateListOfSize(15)
                 .All()
-                .With(e => e.Urn = _randomGenerator.Int().ToString())
-                .Build();
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
+                .Build()
+                .ToList();
 
-            var groupLinksWithGroupName = groupLinks.GetRange(0, 5);
-            var groupLinksWithoutGroupName = groupLinks.GetRange(5, 10);
+            var groupLinksWithGroupName = groups.GetRange(0, 5);
+            var groupLinksWithoutGroupName = groups.GetRange(5, 10);
 
             groupLinksWithGroupName = groupLinksWithGroupName.Select(g =>
             {
@@ -350,8 +351,8 @@ namespace TramsDataApi.Test.Integration
                 return g;
             }).ToList();
                 
-            _legacyDbContext.GroupLink.AddRange(groupLinksWithGroupName);
-            _legacyDbContext.GroupLink.AddRange(groupLinksWithoutGroupName);
+            _legacyDbContext.Group.AddRange(groupLinksWithGroupName);
+            _legacyDbContext.Group.AddRange(groupLinksWithoutGroupName);
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksWithGroupName
@@ -375,7 +376,7 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
-            _legacyDbContext.GroupLink.RemoveRange(_legacyDbContext.GroupLink);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
            
             _legacyDbContext.SaveChanges();
         }
@@ -384,13 +385,14 @@ namespace TramsDataApi.Test.Integration
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByCompaniesHouseNumber()
         {
             var companiesHouseNumber = "MyCompaniesHouseNumber";
-            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+            var groups = Builder<Group>.CreateListOfSize(15)
                 .All()
-                .With(e => e.Urn = _randomGenerator.Int().ToString())
-                .Build();
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
+                .Build()
+                .ToList();
 
-            var groupLinksWithCompaniesHouseNumber = groupLinks.GetRange(0, 5);
-            var groupLinksWithoutCompaniesHouseNumber = groupLinks.GetRange(5, 10);
+            var groupLinksWithCompaniesHouseNumber = groups.GetRange(0, 5);
+            var groupLinksWithoutCompaniesHouseNumber = groups.GetRange(5, 10);
 
             groupLinksWithCompaniesHouseNumber = groupLinksWithCompaniesHouseNumber.Select(g =>
             {
@@ -398,8 +400,8 @@ namespace TramsDataApi.Test.Integration
                 return g;
             }).ToList();
                 
-            _legacyDbContext.GroupLink.AddRange(groupLinksWithCompaniesHouseNumber);
-            _legacyDbContext.GroupLink.AddRange(groupLinksWithoutCompaniesHouseNumber);
+            _legacyDbContext.Group.AddRange(groupLinksWithCompaniesHouseNumber);
+            _legacyDbContext.Group.AddRange(groupLinksWithoutCompaniesHouseNumber);
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksWithCompaniesHouseNumber
@@ -423,33 +425,33 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
-            _legacyDbContext.GroupLink.RemoveRange(_legacyDbContext.GroupLink);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
             _legacyDbContext.SaveChanges();
         }
         
         [Fact]
-        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByUrn()
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByUkprn()
         {
-            var urn = "mockurn";
-            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+            var ukprn = "mockurn";
+            var groups = Builder<Group>.CreateListOfSize(15)
                 .All()
-                .With(e => e.Urn = _randomGenerator.Int().ToString())
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
 
-            groupLinks[0].Urn = urn;
+            groups[0].Ukprn = ukprn;
             
-            _legacyDbContext.GroupLink.AddRange(groupLinks);
+            _legacyDbContext.Group.AddRange(groups);
             _legacyDbContext.SaveChanges();
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groupLinks[0], new List<Establishment>())
+                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>())
             };
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://trams-api.com/trusts?urn=" + urn),
+                RequestUri = new Uri("https://trams-api.com/trusts?ukprn=" + ukprn),
                 Headers =
                 {
                     {"ApiKey", "testing-api-key"}
@@ -463,38 +465,38 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
-            _legacyDbContext.GroupLink.RemoveRange(_legacyDbContext.GroupLink);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
             _legacyDbContext.SaveChanges();
         }
         
         [Fact]
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByAllFields()
         {
-            var urn = "mockurn";
+            var ukprn = "mockurn";
             var companiesHouseNumber = "mockcompanieshousenumber";
             var groupName = "mockgroupname";
             
-            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+            var groups = Builder<Group>.CreateListOfSize(15)
                 .All()
-                .With(e => e.Urn = _randomGenerator.Int().ToString())
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
 
-            groupLinks[0].Urn = urn;
-            groupLinks[0].CompaniesHouseNumber = companiesHouseNumber;
-            groupLinks[0].GroupName = groupName;
+            groups[0].Ukprn = ukprn;
+            groups[0].CompaniesHouseNumber = companiesHouseNumber;
+            groups[0].GroupName = groupName;
             
-            _legacyDbContext.GroupLink.AddRange(groupLinks);
+            _legacyDbContext.Group.AddRange(groups);
             _legacyDbContext.SaveChanges();
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groupLinks[0], new List<Establishment>())
+                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>())
             };
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://trams-api.com/trusts?groupName={groupName}&urn={urn}&companiesHouseNumber={companiesHouseNumber}"),
+                RequestUri = new Uri($"https://trams-api.com/trusts?groupName={groupName}&ukprn={ukprn}&companiesHouseNumber={companiesHouseNumber}"),
                 Headers =
                 {
                     {"ApiKey", "testing-api-key"}
@@ -508,40 +510,40 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
-            _legacyDbContext.GroupLink.RemoveRange(_legacyDbContext.GroupLink);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
             _legacyDbContext.SaveChanges();
         }
         
         [Fact]
         public async Task ShouldReturnSubsetOfTrusts_WithEstablishments_WhenSearchingTrusts()
         {
-            var urn = "mockurn";
+            var ukprn = "mockurn";
             
-            var groupLinks = (List<GroupLink>) Builder<GroupLink>.CreateListOfSize(15)
+            var groups = Builder<Group>.CreateListOfSize(15)
                 .All()
-                .With(e => e.Urn = _randomGenerator.Int().ToString())
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
-            groupLinks[0].Urn = urn;
+            groups[0].Ukprn = ukprn;
 
             var establishments = Builder<Establishment>.CreateListOfSize(4)
                 .All()
-                .With(e => e.TrustsCode = groupLinks[0].GroupUid)
+                .With(e => e.TrustsCode = groups[0].GroupUid)
                 .With(e => e.Urn = _randomGenerator.Int())
                 .Build();
             
-            _legacyDbContext.GroupLink.AddRange(groupLinks);
+            _legacyDbContext.Group.AddRange(groups);
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.SaveChanges();
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groupLinks[0], establishments)
+                TrustSummaryResponseFactory.Create(groups[0], establishments)
             };
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://trams-api.com/trusts?urn={urn}"),
+                RequestUri = new Uri($"https://trams-api.com/trusts?ukprn={ukprn}"),
                 Headers =
                 {
                     {"ApiKey", "testing-api-key"}
@@ -555,7 +557,7 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
-            _legacyDbContext.GroupLink.RemoveRange(_legacyDbContext.GroupLink);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
             _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
             _legacyDbContext.SaveChanges();
         }
