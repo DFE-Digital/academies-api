@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
-using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases

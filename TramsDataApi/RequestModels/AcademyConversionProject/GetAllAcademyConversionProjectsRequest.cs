@@ -1,4 +1,4 @@
-﻿namespace TramsDataApi.RequestModels
+﻿namespace TramsDataApi.RequestModels.AcademyConversionProject
 {
     public class GetAllAcademyConversionProjectsRequest
     {

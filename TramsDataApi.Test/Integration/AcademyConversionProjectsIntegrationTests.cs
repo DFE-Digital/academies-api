@@ -1,6 +1,5 @@
 ﻿using AutoFixture;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.Test.Utils;
 using Xunit;
@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Should_get_all_academy_conversion_projects()
+        public async Task Get_request_should_get_all_academy_conversion_projects()
         {
             var ifdPipelines = _fixture.CreateMany<IfdPipeline>();
             _dbContext.IfdPipeline.AddRange(ifdPipelines);
@@ -49,7 +49,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Should_get_an_academy_conversion_project_by_id()
+        public async Task Get_request_should_get_an_academy_conversion_project_by_id()
         {
             var ifdPipeline = _fixture.Create<IfdPipeline>();
             _dbContext.IfdPipeline.Add(ifdPipeline);
@@ -64,13 +64,51 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Should_get_a_not_found_response_when_id_does_not_match()
+        public async Task Get_request_should_be_a_not_found_response_when_id_does_not_match()
+        {
+            var ifdPipeline = _fixture.Create<IfdPipeline>();
+
+            var response = await _client.GetAsync($"/conversion-projects/{ifdPipeline.Sk}");
+
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async Task Put_request_should_update_an_academy_conversion_project()
         {
             var ifdPipeline = _fixture.Create<IfdPipeline>();
             _dbContext.IfdPipeline.Add(ifdPipeline);
             _dbContext.SaveChanges();
 
-            var response = await _client.GetAsync($"/conversion-projects/{ifdPipeline.Sk + 1}");
+            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().With(x => x.Id, ifdPipeline.Sk).Create();
+
+            var response = await _client.PutAsJsonAsync($"/conversion-projects/{ifdPipeline.Sk}", updateRequest);
+
+            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+            _dbContext.Entry(ifdPipeline).Reload();
+
+            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
+            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForSponsor);
+        }
+
+        [Fact]
+        public async Task Put_request_should_be_a_bad_request_response_when_route_id_and_model_id_dont_match()
+        {
+            var ifdPipeline = _fixture.Create<IfdPipeline>();
+            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().Create();
+
+            var response = await _client.PutAsJsonAsync($"/conversion-projects/{ifdPipeline.Sk}", updateRequest);
+
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task Put_request_should_be_a_not_found_response_when_id_does_not_match()
+        {
+            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().Create();
+
+            var response = await _client.PutAsJsonAsync($"/conversion-projects/{updateRequest.Id}", updateRequest);
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
