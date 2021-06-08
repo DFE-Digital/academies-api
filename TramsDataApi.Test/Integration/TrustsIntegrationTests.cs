@@ -481,16 +481,20 @@ namespace TramsDataApi.Test.Integration
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
 
-            groups[0].Ukprn = ukprn;
             groups[0].CompaniesHouseNumber = companiesHouseNumber;
-            groups[0].GroupName = groupName;
+
+            groups[1].Ukprn = ukprn;
+            
+            groups[3].GroupName = groupName;
             
             _legacyDbContext.Group.AddRange(groups);
             _legacyDbContext.SaveChanges();
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>())
+                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>()),
+                TrustSummaryResponseFactory.Create(groups[1], new List<Establishment>()),
+                TrustSummaryResponseFactory.Create(groups[3], new List<Establishment>()),
             };
 
             var httpRequestMessage = new HttpRequestMessage

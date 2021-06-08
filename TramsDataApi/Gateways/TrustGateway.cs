@@ -27,8 +27,8 @@ namespace TramsDataApi.Gateways
         {
             return _dbContext.Group
                 .Where(g => (
-                    (groupName == null || g.GroupName == groupName) &&
-                    (ukprn == null || g.Ukprn == ukprn) &&
+                    (groupName == null || g.GroupName == groupName) ||
+                    (ukprn == null || g.Ukprn == ukprn) ||
                     (companiesHouseNumber == null || g.CompaniesHouseNumber == companiesHouseNumber)
                 ))
                 .ToList();
