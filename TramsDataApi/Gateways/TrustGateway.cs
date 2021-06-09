@@ -25,11 +25,16 @@ namespace TramsDataApi.Gateways
 
         public IList<Group> SearchGroups(string groupName, string ukprn, string companiesHouseNumber)
         {
+            if (groupName == null && ukprn == null && companiesHouseNumber == null)
+            {
+                return _dbContext.Group.ToList();
+            }
+            
             return _dbContext.Group
                 .Where(g => (
-                    (groupName == null || g.GroupName == groupName) &&
-                    (ukprn == null || g.Ukprn == ukprn) &&
-                    (companiesHouseNumber == null || g.CompaniesHouseNumber == companiesHouseNumber)
+                    g.GroupName == groupName ||
+                    g.Ukprn == ukprn ||
+                    g.CompaniesHouseNumber == companiesHouseNumber
                 ))
                 .ToList();
         }
