@@ -2,7 +2,7 @@
 {
 	public class RationaleResponse
 	{
-		public string ProjectRationale { get; set; }
-		public string TrustRationale { get; set; }
+		public string RationaleForProject { get; set; }
+		public string RationaleForTrust { get; set; }
 	}
 }

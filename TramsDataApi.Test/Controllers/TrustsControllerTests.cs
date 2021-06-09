@@ -69,15 +69,15 @@ namespace TramsDataApi.Test.Controllers
         public void SearchTrusts_ReturnsEmptySetOfTrustSummaries_WhenNoTrustsFound()
         {
             var groupName = "Mockgroupname";
-            var urn = "Mockurn";
+            var ukprn = "Mockurn";
             var companiesHouseNumber = "Mockcompanieshousenumber";
 
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(groupName, urn, companiesHouseNumber))
+            searchTrusts.Setup(s => s.Execute(groupName, ukprn, companiesHouseNumber))
                 .Returns(new List<TrustSummaryResponse>());
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
-            var result = controller.SearchTrusts(groupName, urn, companiesHouseNumber);
+            var result = controller.SearchTrusts(groupName, ukprn, companiesHouseNumber);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<TrustSummaryResponse>()));
         }
@@ -108,19 +108,19 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void SearchTrusts_ByUrn_ReturnsListOfTrustSummaries_WhenTrustsAreFound()
         {
-            var urn = "Mockurn";
+            var ukprn = "Mockurn";
 
             var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(5)
                 .All()
-                .With(g => g.Urn = urn)
+                .With(g => g.Ukprn = ukprn)
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(null, urn, null))
+            searchTrusts.Setup(s => s.Execute(null, ukprn, null))
                 .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
-            var result = controller.SearchTrusts(null, urn, null);
+            var result = controller.SearchTrusts(null, ukprn, null);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustSummaries));
         }

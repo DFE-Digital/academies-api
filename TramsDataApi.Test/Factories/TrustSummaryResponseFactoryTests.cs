@@ -14,10 +14,10 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void TrustSummaryResponseFactory_CreatesTrustSummaryResponse_FromGroupLink()
         {
-            var group = Builder<GroupLink>.CreateNew().Build();
+            var group = Builder<Group>.CreateNew().Build();
             var expected = new TrustSummaryResponse
             {
-                Urn = group.Urn,
+                Ukprn = group.Ukprn,
                 GroupName = group.GroupName,
                 CompaniesHouseNumber = group.CompaniesHouseNumber,
                 Establishments = new List<EstablishmentSummaryResponse>()
@@ -27,20 +27,20 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void TrustSummaryResponseFactory_ReturnsNull_WhenGroupLinkIsNull()
+        public void TrustSummaryResponseFactory_ReturnsNull_WhenGroupIsNull()
         {
-            TrustSummaryResponseFactory.Create(null, new List<Establishment>()).Should().BeNull();
+            TrustSummaryResponseFactory.Create((Group) null, new List<Establishment>()).Should().BeNull();
         }
 
         [Fact]
         public void TrustSummaryResponseFactory_ReturnsTrustSummaryResponse_WithEstablishmentListItemResponses()
         {
-            var group = Builder<GroupLink>.CreateNew().Build();
+            var group = Builder<Group>.CreateNew().Build();
             var establishments = Builder<Establishment>.CreateListOfSize(5).Build();
 
             var expected = new TrustSummaryResponse
             {
-                Urn = group.Urn,
+                Ukprn = group.Ukprn,
                 GroupName = group.GroupName,
                 CompaniesHouseNumber = group.CompaniesHouseNumber,
                 Establishments = establishments
