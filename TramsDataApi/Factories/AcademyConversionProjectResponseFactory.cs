@@ -28,8 +28,8 @@ namespace TramsDataApi.Factories
 				ProjectDocuments = new DocumentDetailsResponse[0],
 				Rationale = new RationaleResponse
 				{
-					ProjectRationale = ifdPipeline.ProjectTemplateInformationRationaleForProject,
-					TrustRationale = ifdPipeline.ProjectTemplateInformationRationaleForSponsor
+					RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
+					RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor
 				}
 			};
 		}
