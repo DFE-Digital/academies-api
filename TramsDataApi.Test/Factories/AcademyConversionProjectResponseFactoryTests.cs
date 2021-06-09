@@ -49,8 +49,8 @@ namespace TramsDataApi.Test.Factories
                 ProjectDocuments = new DocumentDetailsResponse[0],
                 Rationale = new RationaleResponse
                 {
-                    ProjectRationale = academyConversionProject.ProjectTemplateInformationRationaleForProject,
-                    TrustRationale = academyConversionProject.ProjectTemplateInformationRationaleForSponsor
+                    RationaleForProject = academyConversionProject.ProjectTemplateInformationRationaleForProject,
+                    RationaleForTrust = academyConversionProject.ProjectTemplateInformationRationaleForSponsor
                 }
             };
 
