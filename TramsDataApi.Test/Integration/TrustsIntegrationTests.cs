@@ -15,7 +15,6 @@ using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.Test.Utils;
 using Xunit;
-using Xunit.Sdk;
 
 namespace TramsDataApi.Test.Integration
 {
@@ -482,9 +481,7 @@ namespace TramsDataApi.Test.Integration
                 .Build();
 
             groups[0].CompaniesHouseNumber = companiesHouseNumber;
-
             groups[1].Ukprn = ukprn;
-            
             groups[3].GroupName = groupName;
             
             _legacyDbContext.Group.AddRange(groups);
