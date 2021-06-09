@@ -23,11 +23,11 @@ namespace TramsDataApi.Gateways
             return _dbContext.Trust.FirstOrDefault(t => t.TrustRef == groupId);
         }
 
-        public IList<Group> SearchGroups(string groupName, string ukprn, string companiesHouseNumber)
+        public IList<Group> SearchGroups(string groupName, string ukprn, string companiesHouseNumber, int page)
         {
             if (groupName == null && ukprn == null && companiesHouseNumber == null)
             {
-                return _dbContext.Group.ToList();
+                return _dbContext.Group.Skip((page - 1) * 10).Take(10).ToList();
             }
             
             return _dbContext.Group
@@ -36,7 +36,7 @@ namespace TramsDataApi.Gateways
                     g.Ukprn == ukprn ||
                     g.CompaniesHouseNumber == companiesHouseNumber
                 ))
-                .ToList();
+                .Skip((page - 1) * 10).Take(10).ToList();
         }
     }
 }
