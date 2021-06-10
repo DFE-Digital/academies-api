@@ -74,7 +74,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Put_request_should_update_an_academy_conversion_project()
+        public async Task Patch_request_should_update_an_academy_conversion_project()
         {
             var ifdPipeline = _fixture.Create<IfdPipeline>();
             _dbContext.IfdPipeline.Add(ifdPipeline);
@@ -82,9 +82,22 @@ namespace TramsDataApi.Test.Integration
 
             var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().With(x => x.Id, ifdPipeline.Sk).Create();
 
-            var response = await _client.PutAsJsonAsync($"/conversion-projects/{ifdPipeline.Sk}", updateRequest);
+            var updateRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{ifdPipeline.Sk}"),
+                Content =  JsonContent.Create(updateRequest)
+            };
 
-            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
+            expected.Rationale.RationaleForProject = updateRequest.RationaleForProject;
+            expected.Rationale.RationaleForTrust = updateRequest.RationaleForTrust;
+
+            var response = await _client.SendAsync(updateRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
 
             _dbContext.Entry(ifdPipeline).Reload();
 
@@ -93,23 +106,69 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Put_request_should_be_a_bad_request_response_when_route_id_and_model_id_dont_match()
+        public async Task Patch_request_should_not_update_academy_conversion_project_when_update_request_fields_are_null()
+        {
+            var ifdPipeline = _fixture.Create<IfdPipeline>();
+            _dbContext.IfdPipeline.Add(ifdPipeline);
+            _dbContext.SaveChanges();
+
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                Id = ifdPipeline.Sk,
+                RationaleForProject = null,
+                RationaleForTrust = null
+            };
+
+            var updateRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{ifdPipeline.Sk}"),
+                Content =  JsonContent.Create(updateRequest)
+            };
+
+            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
+
+            var response = await _client.SendAsync((updateRequestMessage));
+            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+
+            _dbContext.Entry(ifdPipeline).Reload();
+
+            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(expected.Rationale.RationaleForProject);
+            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(expected.Rationale.RationaleForTrust);
+        }
+
+        [Fact]
+        public async Task Patch_request_should_be_a_bad_request_response_when_route_id_and_model_id_dont_match()
         {
             var ifdPipeline = _fixture.Create<IfdPipeline>();
             var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().Create();
 
-            var response = await _client.PutAsJsonAsync($"/conversion-projects/{ifdPipeline.Sk}", updateRequest);
+            var updateRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{ifdPipeline.Sk}"),
+                Content =  JsonContent.Create(updateRequest)
+            };
 
+            var response = await _client.SendAsync(updateRequestMessage);
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
-        public async Task Put_request_should_be_a_not_found_response_when_id_does_not_match()
+        public async Task Patch_request_should_be_a_not_found_response_when_id_does_not_match_project()
         {
             var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().Create();
+            var updateRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{updateRequest.Id}"),
+                Content =  JsonContent.Create(updateRequest)
+            };
 
-            var response = await _client.PutAsJsonAsync($"/conversion-projects/{updateRequest.Id}", updateRequest);
-
+            var response = await _client.SendAsync(updateRequestMessage);
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 

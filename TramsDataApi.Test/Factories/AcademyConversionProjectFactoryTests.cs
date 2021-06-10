@@ -46,7 +46,6 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsUpdatedAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestFieldsAreEmpty()
         {
-            var fixture = new Fixture();
             var academyConversionProject = CreateAcademyConversionProject();
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
@@ -56,7 +55,7 @@ namespace TramsDataApi.Test.Factories
                 RationaleForTrust = ""
             };
 
-            var expectedResult = new IfdPipeline
+            var expected = new IfdPipeline
             {
                 Sk = academyConversionProject.Sk,
                 GeneralDetailsUrn = academyConversionProject.GeneralDetailsUrn,
@@ -71,7 +70,7 @@ namespace TramsDataApi.Test.Factories
             };
 
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
-            result.Should().BeEquivalentTo(expectedResult);
+            result.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -89,7 +88,7 @@ namespace TramsDataApi.Test.Factories
 
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
 
-            var expectedResult = new IfdPipeline
+            var expected = new IfdPipeline
             {
                 Sk = academyConversionProject.Sk,
                 GeneralDetailsUrn = academyConversionProject.GeneralDetailsUrn,
@@ -103,7 +102,7 @@ namespace TramsDataApi.Test.Factories
                 ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust
             };
 
-            result.Should().BeEquivalentTo(expectedResult);
+            result.Should().BeEquivalentTo(expected);
         }
 
         private IfdPipeline CreateAcademyConversionProject()
