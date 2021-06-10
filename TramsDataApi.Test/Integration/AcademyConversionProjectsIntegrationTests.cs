@@ -141,23 +141,6 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Patch_request_should_be_a_bad_request_response_when_route_id_and_model_id_dont_match()
-        {
-            var ifdPipeline = _fixture.Create<IfdPipeline>();
-            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().Create();
-
-            var updateRequestMessage = new HttpRequestMessage
-            {
-                Method = HttpMethod.Patch,
-                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{ifdPipeline.Sk}"),
-                Content =  JsonContent.Create(updateRequest)
-            };
-
-            var response = await _client.SendAsync(updateRequestMessage);
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-
-        [Fact]
         public async Task Patch_request_should_be_a_not_found_response_when_id_does_not_match_project()
         {
             var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().Create();

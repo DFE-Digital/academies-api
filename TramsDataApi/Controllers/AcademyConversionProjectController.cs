@@ -48,11 +48,6 @@ namespace TramsDataApi.Controllers
 		[HttpPatch("{id}")]
 		public IActionResult UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
-			if (id != request.Id)
-			{
-				return BadRequest();
-			}
-
 			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(request);
 			if (updatedAcademyConversionProject == null)
 			{
