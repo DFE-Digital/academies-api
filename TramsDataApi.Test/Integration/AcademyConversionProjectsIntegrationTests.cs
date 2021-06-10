@@ -89,7 +89,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.Entry(ifdPipeline).Reload();
 
             ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForSponsor);
+            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
         }
 
         [Fact]
