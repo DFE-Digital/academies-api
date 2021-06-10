@@ -6,7 +6,7 @@ using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class UpdateAcademyConversionProject : IUseCase<UpdateAcademyConversionProjectRequest, AcademyConversionProjectResponse>
+    public class UpdateAcademyConversionProject : IUpdateAcademyConversionProject
     {
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
 
@@ -15,9 +15,9 @@ namespace TramsDataApi.UseCases
             _legacyTramsDbContext = legacyTramsDbContext;
         }
 
-        public AcademyConversionProjectResponse Execute(UpdateAcademyConversionProjectRequest request)
+        public AcademyConversionProjectResponse Execute(int id, UpdateAcademyConversionProjectRequest request)
         {
-            var ifdPipeline = _legacyTramsDbContext.IfdPipeline.SingleOrDefault(x => x.Sk == request.Id);
+            var ifdPipeline = _legacyTramsDbContext.IfdPipeline.SingleOrDefault(x => x.Sk == id);
             if (ifdPipeline == null)
             {
                 return null;

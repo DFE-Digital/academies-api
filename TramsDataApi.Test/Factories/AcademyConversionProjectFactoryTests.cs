@@ -34,7 +34,6 @@ namespace TramsDataApi.Test.Factories
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
-                Id = academyConversionProject.Sk,
                 RationaleForProject = null,
                 RationaleForTrust = null
             };
@@ -50,7 +49,6 @@ namespace TramsDataApi.Test.Factories
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
-                Id = academyConversionProject.Sk,
                 RationaleForProject = "",
                 RationaleForTrust = ""
             };
@@ -76,14 +74,12 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsUpdatedAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
         {
-            var fixture = new Fixture();
             var academyConversionProject = CreateAcademyConversionProject();
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
-                Id = academyConversionProject.Sk,
-                RationaleForProject = fixture.Create<string>(),
-                RationaleForTrust = fixture.Create<string>()
+                RationaleForProject = _fixture.Create<string>(),
+                RationaleForTrust = _fixture.Create<string>()
             };
 
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);

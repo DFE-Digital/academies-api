@@ -12,12 +12,12 @@ namespace TramsDataApi.Controllers
 	{
 		private readonly IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> _getAcademyConversionProjectById;
 		private readonly IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> _getAllAcademyConversionProjects;
-		private readonly IUseCase<UpdateAcademyConversionProjectRequest, AcademyConversionProjectResponse> _updateAcademyConversionProject;
+		private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
 
 		public AcademyConversionProjectController(
 			IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> getAcademyConversionProjectById,
 			IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> getAllAcademyConversionProjects,
-			IUseCase<UpdateAcademyConversionProjectRequest, AcademyConversionProjectResponse> updateAcademyConversionProject)
+			IUpdateAcademyConversionProject updateAcademyConversionProject)
 		{
 			_getAcademyConversionProjectById = getAcademyConversionProjectById;
 			_getAllAcademyConversionProjects = getAllAcademyConversionProjects;
@@ -48,7 +48,7 @@ namespace TramsDataApi.Controllers
 		[HttpPatch("{id}")]
 		public IActionResult UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
-			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(request);
+			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(id, request);
 			if (updatedAcademyConversionProject == null)
 			{
 				return NotFound();

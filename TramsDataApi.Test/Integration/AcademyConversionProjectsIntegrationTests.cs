@@ -80,7 +80,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.IfdPipeline.Add(ifdPipeline);
             _dbContext.SaveChanges();
 
-            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().With(x => x.Id, ifdPipeline.Sk).Create();
+            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
             var updateRequestMessage = new HttpRequestMessage
             {
@@ -114,7 +114,6 @@ namespace TramsDataApi.Test.Integration
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
-                Id = ifdPipeline.Sk,
                 RationaleForProject = null,
                 RationaleForTrust = null
             };
@@ -143,11 +142,11 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Patch_request_should_be_a_not_found_response_when_id_does_not_match_project()
         {
-            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().Create();
+            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
             var updateRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Patch,
-                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{updateRequest.Id}"),
+                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{_fixture.Create<int>()}"),
                 Content =  JsonContent.Create(updateRequest)
             };
 
