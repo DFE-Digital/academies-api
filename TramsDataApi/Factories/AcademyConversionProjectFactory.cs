@@ -5,8 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class AcademyConversionProjectFactory
     {
-        public static IfdPipeline Update(IfdPipeline project,
-            UpdateAcademyConversionProjectRequest updateRequest)
+        public static IfdPipeline Update(IfdPipeline project, UpdateAcademyConversionProjectRequest updateRequest)
         {
             if (updateRequest == null)
             {
