@@ -22,7 +22,7 @@ namespace TramsDataApi.UseCases
             }
 
             ifdPipeline.ProjectTemplateInformationRationaleForProject = request.RationaleForProject;
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor = request.RationaleForSponsor;
+            ifdPipeline.ProjectTemplateInformationRationaleForSponsor = request.RationaleForTrust;
 
             _LegacyTramsDbContext.SaveChanges();
 
