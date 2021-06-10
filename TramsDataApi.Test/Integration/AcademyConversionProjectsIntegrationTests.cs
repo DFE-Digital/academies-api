@@ -82,18 +82,11 @@ namespace TramsDataApi.Test.Integration
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
-            var updateRequestMessage = new HttpRequestMessage
-            {
-                Method = HttpMethod.Patch,
-                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{ifdPipeline.Sk}"),
-                Content =  JsonContent.Create(updateRequest)
-            };
-
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
             expected.Rationale.RationaleForProject = updateRequest.RationaleForProject;
             expected.Rationale.RationaleForTrust = updateRequest.RationaleForTrust;
 
-            var response = await _client.SendAsync(updateRequestMessage);
+            var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -118,16 +111,9 @@ namespace TramsDataApi.Test.Integration
                 RationaleForTrust = null
             };
 
-            var updateRequestMessage = new HttpRequestMessage
-            {
-                Method = HttpMethod.Patch,
-                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{ifdPipeline.Sk}"),
-                Content =  JsonContent.Create(updateRequest)
-            };
-
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
 
-            var response = await _client.SendAsync((updateRequestMessage));
+            var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -143,14 +129,8 @@ namespace TramsDataApi.Test.Integration
         public async Task Patch_request_should_be_a_not_found_response_when_id_does_not_match_project()
         {
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
-            var updateRequestMessage = new HttpRequestMessage
-            {
-                Method = HttpMethod.Patch,
-                RequestUri = new Uri($"https://trams-api.com/conversion-projects/{_fixture.Create<int>()}"),
-                Content =  JsonContent.Create(updateRequest)
-            };
 
-            var response = await _client.SendAsync(updateRequestMessage);
+            var response = await _client.PatchAsync($"/conversion-projects/{_fixture.Create<int>()}", JsonContent.Create(updateRequest));
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
