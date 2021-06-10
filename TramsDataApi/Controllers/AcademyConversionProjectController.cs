@@ -12,12 +12,12 @@ namespace TramsDataApi.Controllers
 	{
 		private readonly IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> _getAcademyConversionProjectById;
 		private readonly IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> _getAllAcademyConversionProjects;
-		private readonly IUseCase<UpdateAcademyConversionProjectRequest, bool> _updateAcademyConversionProject;
+		private readonly IUseCase<UpdateAcademyConversionProjectRequest, AcademyConversionProjectResponse> _updateAcademyConversionProject;
 
 		public AcademyConversionProjectController(
 			IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> getAcademyConversionProjectById,
 			IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> getAllAcademyConversionProjects,
-			IUseCase<UpdateAcademyConversionProjectRequest, bool> updateAcademyConversionProject)
+			IUseCase<UpdateAcademyConversionProjectRequest, AcademyConversionProjectResponse> updateAcademyConversionProject)
 		{
 			_getAcademyConversionProjectById = getAcademyConversionProjectById;
 			_getAllAcademyConversionProjects = getAllAcademyConversionProjects;
@@ -45,7 +45,7 @@ namespace TramsDataApi.Controllers
 			return Ok(project);
 		}
 
-		[HttpPut("{id}")]
+		[HttpPatch("{id}")]
 		public IActionResult UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
 			if (id != request.Id)
@@ -53,13 +53,13 @@ namespace TramsDataApi.Controllers
 				return BadRequest();
 			}
 
-			var success = _updateAcademyConversionProject.Execute(request);
-			if (!success)
+			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(request);
+			if (updatedAcademyConversionProject == null)
 			{
 				return NotFound();
 			}
 
-			return NoContent();
+			return Ok(updatedAcademyConversionProject);
 		}
 	}
 }

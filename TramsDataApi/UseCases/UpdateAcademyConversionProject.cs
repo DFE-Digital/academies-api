@@ -1,32 +1,34 @@
 ﻿using System.Linq;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
+using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class UpdateAcademyConversionProject : IUseCase<UpdateAcademyConversionProjectRequest, bool>
+    public class UpdateAcademyConversionProject : IUseCase<UpdateAcademyConversionProjectRequest, AcademyConversionProjectResponse>
     {
-        private readonly LegacyTramsDbContext _LegacyTramsDbContext;
+        private readonly LegacyTramsDbContext _legacyTramsDbContext;
 
         public UpdateAcademyConversionProject(LegacyTramsDbContext legacyTramsDbContext)
         {
-            _LegacyTramsDbContext = legacyTramsDbContext;
+            _legacyTramsDbContext = legacyTramsDbContext;
         }
 
-        public bool Execute(UpdateAcademyConversionProjectRequest request)
+        public AcademyConversionProjectResponse Execute(UpdateAcademyConversionProjectRequest request)
         {
-            var ifdPipeline = _LegacyTramsDbContext.IfdPipeline.SingleOrDefault(x => x.Sk == request.Id);
+            var ifdPipeline = _legacyTramsDbContext.IfdPipeline.SingleOrDefault(x => x.Sk == request.Id);
             if (ifdPipeline == null)
             {
-                return false;
+                return null;
             }
 
-            ifdPipeline.ProjectTemplateInformationRationaleForProject = request.RationaleForProject;
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor = request.RationaleForTrust;
+            var updatedProject = AcademyConversionProjectFactory.Update(ifdPipeline, request);
 
-            _LegacyTramsDbContext.SaveChanges();
+            _legacyTramsDbContext.Update(updatedProject);
+            _legacyTramsDbContext.SaveChanges();
 
-            return true;
+            return AcademyConversionProjectResponseFactory.Create(updatedProject);
         }
     }
 }
