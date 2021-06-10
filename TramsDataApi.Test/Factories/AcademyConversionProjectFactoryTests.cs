@@ -74,7 +74,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsUpdatedAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestAreNotNull()
+        public void ReturnsUpdatedAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
         {
             var fixture = new Fixture();
             var academyConversionProject = CreateAcademyConversionProject();
