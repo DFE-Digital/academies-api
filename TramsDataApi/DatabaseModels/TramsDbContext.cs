@@ -12,11 +12,12 @@ namespace TramsDataApi.DatabaseModels
             : base(options)
         {
         }
-        
+
         public virtual DbSet<AcademyTransferProjectIntendedTransferBenefits> AcademyTransferProjectIntendedTransferBenefits { get; set; }
         public virtual DbSet<AcademyTransferProjects> AcademyTransferProjects { get; set; }
         public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
-        
+        public virtual DbSet<AcademyConversionProject> AcademyConversionProject { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -44,7 +45,7 @@ namespace TramsDataApi.DatabaseModels
             });
 
             modelBuilder.HasSequence<int>("AcademyTransferProjectUrns").HasMin(10000000).StartsAt(10000000);
-            
+
             modelBuilder.Entity<AcademyTransferProjects>(entity =>
             {
                 entity.HasKey(e => e.Id)
@@ -88,7 +89,8 @@ namespace TramsDataApi.DatabaseModels
                     .HasForeignKey(d => d.FkAcademyTransferProjectId)
                     .HasConstraintName("FK__Transferr__fk_Ac__403A8C7D");
             });
-            OnModelCreatingPartial(modelBuilder);
+
+        OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
