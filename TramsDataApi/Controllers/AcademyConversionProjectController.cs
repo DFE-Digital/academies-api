@@ -14,7 +14,7 @@ namespace TramsDataApi.Controllers
 		private readonly IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> _getAllAcademyConversionProjects;
 		private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
 
-		public static Dictionary<int, bool> _rationaleMarkAsComplete = new Dictionary<int, bool>();
+		public static Dictionary<int, bool?> _rationaleMarkAsComplete = new Dictionary<int, bool?>();
 
 		public AcademyConversionProjectController(
 			IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> getAcademyConversionProjectById,
@@ -75,7 +75,7 @@ namespace TramsDataApi.Controllers
 		private void UpdateMarkAsComplete(AcademyConversionProjectResponse response)
         {
 			_rationaleMarkAsComplete.TryGetValue(response.Id, out var complete);
-			response.Rationale.RationaleMarkAsComplete = complete;
+			response.Rationale.RationaleMarkAsComplete = complete ?? false;
 		}
 	}
 }
