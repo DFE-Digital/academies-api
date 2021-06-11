@@ -564,17 +564,16 @@ namespace TramsDataApi.Test.Integration
         }
         
         [Fact]
-        public async Task ShouldReturnFirstPaginationPageOfTrusts_With10TrustsPerPage_WhenSearchingTrust()
+        public async Task ShouldReturnFirstPaginationPageOfTrusts_With10TrustsPerPage_WhenSearchingTrustWithNoPageSpecified()
         {
             var groups = Builder<Group>.CreateListOfSize(30)
-                .All()
-                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build().ToList();
-
+            
             _legacyDbContext.Group.AddRange(groups);
             _legacyDbContext.SaveChanges();
 
             var expected = groups
+                .OrderBy(group => group.GroupUid)
                 .Take(10)
                 .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
                 .ToList();
@@ -592,9 +591,81 @@ namespace TramsDataApi.Test.Integration
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
-
+            
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Count.Should().Be(10);
+            result.Should().BeEquivalentTo(expected);
+            
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.SaveChanges();
+        }
+        
+        [Fact]
+        public async Task ShouldReturnSecondPaginationPageOfTrusts_With10TrustsPerPage_WhenSearchingTrustWithTheSecondPage()
+        {
+            var groups = Builder<Group>.CreateListOfSize(30)
+                .Build().ToList();
+
+            _legacyDbContext.Group.AddRange(groups);
+            _legacyDbContext.SaveChanges();
+
+            var expected = groups
+                .OrderBy(group => group.GroupUid)
+                .Skip(10)
+                .Take(10)
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .ToList();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?page=2"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
+            
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Count.Should().Be(10);
+            result.Should().BeEquivalentTo(expected);
+            
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.SaveChanges();
+        }
+        
+        
+        [Fact]
+        public async Task ShouldReturnEmptyList_WhenSearchingTrustWithAPageThatIsTooHigh()
+        {
+            var groups = Builder<Group>.CreateListOfSize(30)
+                .Build().ToList();
+            
+            _legacyDbContext.Group.AddRange(groups);
+            _legacyDbContext.SaveChanges();
+
+            var expected = new List<TrustSummaryResponse>();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?page=10"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
+            
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Count.Should().Be(0);
             result.Should().BeEquivalentTo(expected);
             
             _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);

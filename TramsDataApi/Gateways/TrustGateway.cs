@@ -27,7 +27,7 @@ namespace TramsDataApi.Gateways
         {
             if (groupName == null && ukprn == null && companiesHouseNumber == null)
             {
-                return _dbContext.Group.Skip((page - 1) * 10).Take(10).ToList();
+                return _dbContext.Group.OrderBy(group => group.GroupUid).Skip((page - 1) * 10).Take(10).ToList();
             }
             
             return _dbContext.Group
@@ -36,6 +36,7 @@ namespace TramsDataApi.Gateways
                     g.Ukprn == ukprn ||
                     g.CompaniesHouseNumber == companiesHouseNumber
                 ))
+                .OrderBy(group => group.GroupUid)
                 .Skip((page - 1) * 10).Take(10).ToList();
         }
     }
