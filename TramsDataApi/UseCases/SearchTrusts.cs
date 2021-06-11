@@ -17,9 +17,9 @@ namespace TramsDataApi.UseCases
             _establishmentGateway = establishmentGateway;
         }
         
-        public IList<TrustSummaryResponse> Execute(string groupName, string ukprn, string companiesHouseNumber)
+        public IList<TrustSummaryResponse> Execute(string groupName, string ukprn, string companiesHouseNumber, int page)
         {
-            return _trustGateway.SearchGroups(groupName, ukprn, companiesHouseNumber)
+            return _trustGateway.SearchGroups(groupName, ukprn, companiesHouseNumber, page)
                 .Select(g => TrustSummaryResponseFactory.Create(g, _establishmentGateway.GetByTrustUid(g.GroupUid)))
                 .ToList();
         }

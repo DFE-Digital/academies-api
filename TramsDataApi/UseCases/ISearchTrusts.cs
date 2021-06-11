@@ -7,6 +7,6 @@ namespace TramsDataApi.UseCases
 {
     public interface ISearchTrusts
     {
-        public IList<TrustSummaryResponse> Execute(string groupName, string urn, string companiesHouseNumber);
+        public IList<TrustSummaryResponse> Execute(string groupName, string urn, string companiesHouseNumber, int page);
     }
 }
