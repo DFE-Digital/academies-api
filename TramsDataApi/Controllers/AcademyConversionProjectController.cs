@@ -14,6 +14,8 @@ namespace TramsDataApi.Controllers
 		private readonly IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> _getAllAcademyConversionProjects;
 		private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
 
+		public static Dictionary<int, bool> _rationaleMarkAsComplete = new Dictionary<int, bool>();
+
 		public AcademyConversionProjectController(
 			IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> getAcademyConversionProjectById,
 			IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> getAllAcademyConversionProjects,
@@ -30,6 +32,11 @@ namespace TramsDataApi.Controllers
 			// temporarily limiting count until we know rules around which to return as there's hundreds in db
 			var projects = _getAllAcademyConversionProjects.Execute(new GetAllAcademyConversionProjectsRequest { Count = count });
 
+			foreach (var project in projects)
+            {
+				UpdateMarkAsComplete(project);
+			}
+
 			return Ok(projects);
 		}
 
@@ -42,19 +49,33 @@ namespace TramsDataApi.Controllers
 				return NotFound();
 			}
 
+			UpdateMarkAsComplete(project);
+
 			return Ok(project);
 		}
 
 		[HttpPatch("{id}")]
 		public IActionResult UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
+			if (!_rationaleMarkAsComplete.ContainsKey(id))
+            {
+				_rationaleMarkAsComplete.Add(id, false);
+            }
+			_rationaleMarkAsComplete[id] = request.RationaleMarkAsComplete;
+
 			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(id, request);
 			if (updatedAcademyConversionProject == null)
 			{
 				return NotFound();
 			}
-
+			UpdateMarkAsComplete(updatedAcademyConversionProject);
 			return Ok(updatedAcademyConversionProject);
+		}
+
+		private void UpdateMarkAsComplete(AcademyConversionProjectResponse response)
+        {
+			_rationaleMarkAsComplete.TryGetValue(response.Id, out var complete);
+			response.Rationale.RationaleMarkAsComplete = complete;
 		}
 	}
 }
