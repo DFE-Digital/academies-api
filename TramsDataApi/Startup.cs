@@ -29,13 +29,13 @@ namespace TramsDataApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "TramsDataApi", Version = "v1"});
             });
-            
+
             // EF setup
-            services.AddDbContext<LegacyTramsDbContext>(options => 
+            services.AddDbContext<LegacyTramsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));// EF setup
-            services.AddDbContext<TramsDbContext>(options => 
+            services.AddDbContext<TramsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+
             services.AddScoped<ITrustGateway, TrustGateway>();
             services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
             services.AddScoped<IGetTrustByUkprn, GetTrustByUkprn>();
@@ -47,6 +47,7 @@ namespace TramsDataApi
             services.AddScoped<IGetAcademyTransferProject, GetAcademyTransferProject>();
             services.AddScoped<IUpdateAcademyTransferProject, UpdateAcademyTransferProject>();
             services.AddScoped<IIndexAcademyTransferProjects, IndexAcademyTransferProjects>();
+            services.AddScoped<IUpdateAcademyConversionProject, UpdateAcademyConversionProject>();
 
             services.AddUseCases();
         }
@@ -65,7 +66,7 @@ namespace TramsDataApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseMiddleware<ApiKeyMiddleware>();
 
             app.UseHttpsRedirection();
