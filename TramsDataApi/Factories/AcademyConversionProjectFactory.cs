@@ -17,5 +17,18 @@ namespace TramsDataApi.Factories
 
             return project;
         }
+
+        public static AcademyConversionProject Update(AcademyConversionProject project, UpdateAcademyConversionProjectRequest updateRequest)
+        {
+            if (updateRequest == null)
+            {
+                return project;
+            }
+
+            project.RationaleSectionComplete =
+                updateRequest.RationaleSectionComplete ?? project.RationaleSectionComplete;
+
+            return project;
+        }
     }
 }

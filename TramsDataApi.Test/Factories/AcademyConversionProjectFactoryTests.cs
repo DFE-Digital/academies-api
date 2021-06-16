@@ -18,9 +18,9 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsOriginalAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestIsNull()
+        public void ReturnsOriginalAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestIsNull()
         {
-            var academyConversionProject = CreateAcademyConversionProject();
+            var academyConversionProject = CreateIfdPipeline();
 
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, null);
 
@@ -28,9 +28,9 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsOriginalAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestFieldsAreNull()
+        public void ReturnsOriginalAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestFieldsAreNull()
         {
-            var academyConversionProject = CreateAcademyConversionProject();
+            var academyConversionProject = CreateIfdPipeline();
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
@@ -43,9 +43,9 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsUpdatedAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestFieldsAreEmpty()
+        public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestFieldsAreEmpty()
         {
-            var academyConversionProject = CreateAcademyConversionProject();
+            var academyConversionProject = CreateIfdPipeline();
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
@@ -72,9 +72,9 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsUpdatedAcademyConversionProject_WhenUpdating_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
+        public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
         {
-            var academyConversionProject = CreateAcademyConversionProject();
+            var academyConversionProject = CreateIfdPipeline();
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
@@ -101,7 +101,52 @@ namespace TramsDataApi.Test.Factories
             result.Should().BeEquivalentTo(expected);
         }
 
-        private IfdPipeline CreateAcademyConversionProject()
+        [Fact]
+        public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestIsNull()
+        {
+            var academyConversionProject = CreateAcademyConversionProject();
+
+            var result = AcademyConversionProjectFactory.Update(academyConversionProject, null);
+
+            result.Should().BeEquivalentTo(academyConversionProject);
+        }
+
+        [Fact]
+        public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestFieldsAreNull()
+        {
+            var academyConversionProject = CreateAcademyConversionProject();
+
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                RationaleSectionComplete = null,
+            };
+
+            var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
+            result.Should().BeEquivalentTo(academyConversionProject);
+        }
+
+        [Fact]
+        public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
+        {
+            var academyConversionProject = CreateAcademyConversionProject();
+
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                RationaleSectionComplete = _fixture.Create<bool>(),
+            };
+
+            var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
+
+            var expected = new AcademyConversionProject
+            {
+                Id = academyConversionProject.Id,
+                RationaleSectionComplete = updateRequest.RationaleSectionComplete
+            };
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private IfdPipeline CreateIfdPipeline()
         {
             return new IfdPipeline
             {
@@ -115,6 +160,15 @@ namespace TramsDataApi.Test.Factories
                 ApprovalProcessApplicationDate = DateTime.Now.AddMonths(2),
                 ProjectTemplateInformationRationaleForProject = _fixture.Create<string>(),
                 ProjectTemplateInformationRationaleForSponsor = _fixture.Create<string>()
+            };
+        }
+
+        private AcademyConversionProject CreateAcademyConversionProject()
+        {
+            return new AcademyConversionProject
+            {
+                Id = _fixture.Create<int>(),
+                RationaleSectionComplete = _fixture.Create<bool>()
             };
         }
     }
