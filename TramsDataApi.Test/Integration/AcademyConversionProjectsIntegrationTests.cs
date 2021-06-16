@@ -83,8 +83,8 @@ namespace TramsDataApi.Test.Integration
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
-            expected.Rationale.RationaleForProject = updateRequest.RationaleForProject;
-            expected.Rationale.RationaleForTrust = updateRequest.RationaleForTrust;
+            expected.RationaleForProject = updateRequest.RationaleForProject;
+            expected.RationaleForTrust = updateRequest.RationaleForTrust;
 
             var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -121,8 +121,8 @@ namespace TramsDataApi.Test.Integration
 
             _dbContext.Entry(ifdPipeline).Reload();
 
-            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(expected.Rationale.RationaleForProject);
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(expected.Rationale.RationaleForTrust);
+            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(expected.RationaleForProject);
+            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(expected.RationaleForTrust);
         }
 
         [Fact]
