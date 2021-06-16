@@ -97,6 +97,6 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
         public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
         //key stage performance tables
-        public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
+        public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
     }
 }
