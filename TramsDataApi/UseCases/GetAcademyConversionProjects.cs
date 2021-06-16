@@ -8,8 +8,8 @@ using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetAcademyConversionProjects : 
-        IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>, 
+    public class GetAcademyConversionProjects :
+        IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>,
         IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>
     {
         private readonly LegacyTramsDbContext _LegacyTramsDbContext;
@@ -34,7 +34,7 @@ namespace TramsDataApi.UseCases
         {
             var ifdPipelines = _LegacyTramsDbContext.IfdPipeline.Take(request.Count).AsNoTracking().ToList();
 
-            return ifdPipelines.Select(AcademyConversionProjectResponseFactory.Create).ToList();
+            return ifdPipelines.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class AcademyConversionProjectResponseFactory
     {
-        public static AcademyConversionProjectResponse Create(IfdPipeline ifdPipeline)
+	    public static AcademyConversionProjectResponse Create(IfdPipeline ifdPipeline, AcademyConversionProject academyConversionProject = null)
         {
 			return new AcademyConversionProjectResponse
 			{
@@ -17,7 +17,8 @@ namespace TramsDataApi.Factories
 				AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
 				ProjectStatus = "Pre HTB",
 				RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
-				RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor
+				RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
+				RationaleSectionComplete = academyConversionProject?.RationaleSectionComplete
 			};
 		}
     }
