@@ -49,12 +49,15 @@ namespace TramsDataApi.DatabaseModels
         public int? ActualPupilNumbers { get; set; }
         public int? Capacity { get; set; }
         public string PublishedAdmissionNumber { get; set; }
+        [Column(TypeName = "decimal(38, 3)")]
         public decimal? PercentageFreeSchoolMeals { get; set; }
         public string PartOfPfiScheme { get; set; }
         public bool? ViabilityIssues { get; set; }
         public bool? FinancialSurplusOrDeficit { get; set; }
         public bool? IsThisADiocesanTrust { get; set; }
+        [Column(TypeName = "decimal(38, 3)")]
         public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
+        [Column(TypeName = "decimal(38, 3)")]
         public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
         public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
         public string MemberOfParliamentParty { get; set; }
@@ -74,9 +77,13 @@ namespace TramsDataApi.DatabaseModels
         public bool? RisksAndIssuesSectionComplete { get; set; }
 
         // school budget info
+        [Column(TypeName = "decimal(38, 2)")]
         public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
+        [Column(TypeName = "decimal(38, 2)")]
         public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+        [Column(TypeName = "decimal(38, 2)")]
         public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
+        [Column(TypeName = "decimal(38, 2)")]
         public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
         public string SchoolBudgetInformationAdditionalInformation { get; set; }
         public bool? SchoolBudgetInformationSectionComplete { get; set; }

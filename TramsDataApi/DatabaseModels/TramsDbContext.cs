@@ -90,6 +90,11 @@ namespace TramsDataApi.DatabaseModels
                     .HasConstraintName("FK__Transferr__fk_Ac__403A8C7D");
             });
 
+            modelBuilder.Entity<AcademyConversionProject>(entity =>
+            {
+                entity.ToTable("AcademyConversionProject", "sdd");
+            });
+
         OnModelCreatingPartial(modelBuilder);
         }
 
