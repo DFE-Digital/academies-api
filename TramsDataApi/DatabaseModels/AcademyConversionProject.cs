@@ -46,16 +46,17 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolPhase { get; set; }
         public string AgeRange { get; set; }
         public string SchoolType { get; set; }
-        public int ActualPupilNumbers { get; set; }
-        public int Capacity { get; set; }
+        public int? ActualPupilNumbers { get; set; }
+        public int? Capacity { get; set; }
         public string PublishedAdmissionNumber { get; set; }
         public decimal? PercentageFreeSchoolMeals { get; set; }
         public string PartOfPfiScheme { get; set; }
-        public string ViabilityIssues { get; set; }
-        public string FinancialSurplusOrDeficit { get; set; }
+        public bool? ViabilityIssues { get; set; }
+        public bool? FinancialSurplusOrDeficit { get; set; }
         public bool? IsThisADiocesanTrust { get; set; }
         public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
         public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
+        public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
         public string MemberOfParliamentParty { get; set; }
         public bool? GeneralInformationSectionComplete { get; set; }
 
@@ -81,8 +82,6 @@ namespace TramsDataApi.DatabaseModels
         public bool? SchoolBudgetInformationSectionComplete { get; set; }
 
         // pupil schools forecast
-        public int? CurrentYearCapacity { get; set; }
-        public int? CurrentYearPupilNumbers { get; set; }
         public int? YearOneProjectedCapacity { get; set; }
         public int? YearOneProjectedPupilNumbers { get; set; }
         public int? YearTwoProjectedCapacity { get; set; }
@@ -91,7 +90,7 @@ namespace TramsDataApi.DatabaseModels
         public int? YearThreeProjectedPupilNumbers { get; set; }
         public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-        //key stage performance tables
-        public bool? KeyStagePerformanceTablesAdditionalInformation { get; set; }
+        //key stage performance
+        public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
     }
 }
