@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -9,10 +11,12 @@ namespace TramsDataApi.UseCases
     public class UpdateAcademyConversionProject : IUpdateAcademyConversionProject
     {
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
 
-        public UpdateAcademyConversionProject(LegacyTramsDbContext legacyTramsDbContext)
+        public UpdateAcademyConversionProject(LegacyTramsDbContext legacyTramsDbContext, TramsDbContext tramsDbContext)
         {
             _legacyTramsDbContext = legacyTramsDbContext;
+            _tramsDbContext = tramsDbContext;
         }
 
         public AcademyConversionProjectResponse Execute(int id, UpdateAcademyConversionProjectRequest request)
@@ -23,12 +27,19 @@ namespace TramsDataApi.UseCases
                 return null;
             }
 
-            var updatedProject = AcademyConversionProjectFactory.Update(ifdPipeline, request);
+            var academyConversionProject = _tramsDbContext.AcademyConversionProject.SingleOrDefault(p => p.IfdPipelineId == id) ??
+                                           new AcademyConversionProject{IfdPipelineId = id};
 
-            _legacyTramsDbContext.Update(updatedProject);
+            var updatedIfdPipeline = AcademyConversionProjectFactory.Update(ifdPipeline, request);
+            _legacyTramsDbContext.Update(updatedIfdPipeline);
+
+            var updatedProject = AcademyConversionProjectFactory.Update(academyConversionProject, request);
+            _tramsDbContext.Update(updatedProject);
+
             _legacyTramsDbContext.SaveChanges();
+            _tramsDbContext.SaveChanges();
 
-            return AcademyConversionProjectResponseFactory.Create(updatedProject);
+            return AcademyConversionProjectResponseFactory.Create(updatedIfdPipeline, updatedProject);
         }
     }
 }
