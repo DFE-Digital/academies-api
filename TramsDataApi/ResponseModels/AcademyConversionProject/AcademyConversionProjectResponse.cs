@@ -5,13 +5,6 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
     public class AcademyConversionProjectResponse
 	{
 		public int Id { get; set; }
-        /*public SchoolResponse School { get; set; }
-		public TrustResponse Trust { get; set; }
-		public DateTime? ApplicationReceivedDate { get; set; }
-		public DateTime? AssignedDate { get; set; }
-		public ProjectPhase Phase { get; set; }
-		public IEnumerable<DocumentDetailsResponse> ProjectDocuments { get; set; }
-		public RationaleResponse Rationale { get; set; }*/
         public int Urn { get; set; }
         public string SchoolName { get; set; }
         public string LocalAuthority { get; set; }
