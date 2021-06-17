@@ -12,27 +12,32 @@ namespace TramsDataApi.UseCases
         IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>,
         IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>
     {
-        private readonly LegacyTramsDbContext _LegacyTramsDbContext;
+        private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
 
-        public GetAcademyConversionProjects(LegacyTramsDbContext legacyTramsDbContext)
+        public GetAcademyConversionProjects(LegacyTramsDbContext legacyTramsDbContext, TramsDbContext tramsDbContext)
         {
-            _LegacyTramsDbContext = legacyTramsDbContext;
+            _legacyTramsDbContext = legacyTramsDbContext;
+            _tramsDbContext = tramsDbContext;
         }
 
         public AcademyConversionProjectResponse Execute(GetAcademyConversionProjectByIdRequest request)
         {
-            var ifdPipeline = _LegacyTramsDbContext.IfdPipeline.AsNoTracking().FirstOrDefault(p => p.Sk == request.Id);
+            var ifdPipeline = _legacyTramsDbContext.IfdPipeline.AsNoTracking().FirstOrDefault(p => p.Sk == request.Id);
             if (ifdPipeline == null)
             {
                 return null;
             }
 
-            return AcademyConversionProjectResponseFactory.Create(ifdPipeline);
+            var academyConversionProject = _tramsDbContext.AcademyConversionProject.SingleOrDefault(p => p.IfdPipelineId == request.Id) ??
+                                           new AcademyConversionProject{IfdPipelineId = request.Id};
+
+            return AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
         }
 
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAllAcademyConversionProjectsRequest request)
         {
-            var ifdPipelines = _LegacyTramsDbContext.IfdPipeline.Take(request.Count).AsNoTracking().ToList();
+            var ifdPipelines = _legacyTramsDbContext.IfdPipeline.Take(request.Count).AsNoTracking().ToList();
 
             return ifdPipelines.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
         }

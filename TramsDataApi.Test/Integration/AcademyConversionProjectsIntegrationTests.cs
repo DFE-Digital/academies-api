@@ -21,14 +21,16 @@ namespace TramsDataApi.Test.Integration
     public class AcademyConversionProjectsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
         private readonly HttpClient _client;
-        private readonly LegacyTramsDbContext _dbContext;
+        private readonly LegacyTramsDbContext _legacyDbContext;
+        private readonly TramsDbContext _dbContext;
         private readonly Fixture _fixture;
 
         public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
-            _dbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
+            _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
+            _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
             _fixture = new Fixture();
             _fixture.Customizations.Add(new RandomDateGenerator(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
         }
@@ -36,9 +38,9 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_get_all_academy_conversion_projects()
         {
-            var ifdPipelines = _fixture.CreateMany<IfdPipeline>();
-            _dbContext.IfdPipeline.AddRange(ifdPipelines);
-            _dbContext.SaveChanges();
+            var ifdPipelines = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "123456").CreateMany();
+            _legacyDbContext.IfdPipeline.AddRange(ifdPipelines);
+            _legacyDbContext.SaveChanges();
             var expected = ifdPipelines.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
 
             var response = await _client.GetAsync("/conversion-projects");
@@ -51,10 +53,15 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_get_an_academy_conversion_project_by_id()
         {
-            var ifdPipeline = _fixture.Create<IfdPipeline>();
-            _dbContext.IfdPipeline.Add(ifdPipeline);
+            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "789456").Create();
+            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
+            _legacyDbContext.SaveChanges();
+
+            var academyConversionProject = _fixture.Build<AcademyConversionProject>()
+                .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
+            _dbContext.AcademyConversionProject.Add(academyConversionProject);
             _dbContext.SaveChanges();
-            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
+            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
 
             var response = await _client.GetAsync($"/conversion-projects/{ifdPipeline.Sk}");
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -76,15 +83,16 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Patch_request_should_update_an_academy_conversion_project()
         {
-            var ifdPipeline = _fixture.Create<IfdPipeline>();
-            _dbContext.IfdPipeline.Add(ifdPipeline);
-            _dbContext.SaveChanges();
+            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "987654").Create();
+            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
+            _legacyDbContext.SaveChanges();
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
             expected.RationaleForProject = updateRequest.RationaleForProject;
             expected.RationaleForTrust = updateRequest.RationaleForTrust;
+            expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
 
             var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -92,23 +100,60 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
 
-            _dbContext.Entry(ifdPipeline).Reload();
+            _legacyDbContext.Entry(ifdPipeline).Reload();
+            var academyConversionProject = _dbContext.AcademyConversionProject
+                .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
 
             ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
             ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
+            academyConversionProject.RationaleSectionComplete.Should().Be(updateRequest.RationaleSectionComplete);
+        }
+
+        [Fact]
+        public async Task Patch_request_should_update_an_academy_conversion_project_when_project_entity_already_exists_in_db()
+        {
+            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "987654").Create();
+            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
+            _legacyDbContext.SaveChanges();
+
+            var academyConversionProject = _fixture.Build<AcademyConversionProject>()
+                .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
+            _dbContext.AcademyConversionProject.Add(academyConversionProject);
+            _dbContext.SaveChanges();
+
+            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
+
+            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
+            expected.RationaleForProject = updateRequest.RationaleForProject;
+            expected.RationaleForTrust = updateRequest.RationaleForTrust;
+            expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
+
+            var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
+            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+
+            _legacyDbContext.Entry(ifdPipeline).Reload();
+            _dbContext.Entry(academyConversionProject).Reload();
+
+            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
+            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
+            academyConversionProject.RationaleSectionComplete.Should().Be(updateRequest.RationaleSectionComplete);
         }
 
         [Fact]
         public async Task Patch_request_should_not_update_academy_conversion_project_when_update_request_fields_are_null()
         {
-            var ifdPipeline = _fixture.Create<IfdPipeline>();
-            _dbContext.IfdPipeline.Add(ifdPipeline);
-            _dbContext.SaveChanges();
+            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "123456789").Create();
+            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
+            _legacyDbContext.SaveChanges();
 
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
                 RationaleForProject = null,
-                RationaleForTrust = null
+                RationaleForTrust = null,
+                RationaleSectionComplete = null
             };
 
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
@@ -119,10 +164,13 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
 
-            _dbContext.Entry(ifdPipeline).Reload();
+            _legacyDbContext.Entry(ifdPipeline).Reload();
+            var academyConversionProject = _dbContext.AcademyConversionProject
+                .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
 
             ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(expected.RationaleForProject);
             ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(expected.RationaleForTrust);
+            academyConversionProject.RationaleSectionComplete.Should().BeNull();
         }
 
         [Fact]
@@ -136,9 +184,15 @@ namespace TramsDataApi.Test.Integration
 
         public void Dispose()
         {
-            foreach (var entity in _dbContext.IfdPipeline)
+            foreach (var entity in _legacyDbContext.IfdPipeline)
             {
-                _dbContext.IfdPipeline.Remove(entity);
+                _legacyDbContext.IfdPipeline.Remove(entity);
+            }
+            _legacyDbContext.SaveChanges();
+
+            foreach (var entity in _dbContext.AcademyConversionProject)
+            {
+                _dbContext.AcademyConversionProject.Remove(entity);
             }
             _dbContext.SaveChanges();
         }
