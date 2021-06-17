@@ -119,6 +119,11 @@ namespace TramsDataApi.Test.Factories
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
                 RationaleSectionComplete = null,
+                LocalAuthorityInformationTemplateSentDate = null,
+                LocalAuthorityInformationTemplateReturnedDate = null,
+                LocalAuthorityInformationTemplateComments = null,
+                LocalAuthorityInformationTemplateLink = null,
+                LocalAuthorityInformationTemplateSectionComplete = null
             };
 
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
@@ -133,6 +138,11 @@ namespace TramsDataApi.Test.Factories
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
                 RationaleSectionComplete = _fixture.Create<bool>(),
+                LocalAuthorityInformationTemplateSentDate = DateTime.Now,
+                LocalAuthorityInformationTemplateReturnedDate = DateTime.Now.AddDays(10),
+                LocalAuthorityInformationTemplateComments = _fixture.Create<string>(),
+                LocalAuthorityInformationTemplateLink = _fixture.Create<string>(),
+                LocalAuthorityInformationTemplateSectionComplete = _fixture.Create<bool>()
             };
 
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
@@ -140,7 +150,12 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyConversionProject
             {
                 Id = academyConversionProject.Id,
-                RationaleSectionComplete = updateRequest.RationaleSectionComplete
+                RationaleSectionComplete = updateRequest.RationaleSectionComplete,
+                LocalAuthorityInformationTemplateSentDate = updateRequest.LocalAuthorityInformationTemplateSentDate,
+                LocalAuthorityInformationTemplateReturnedDate = updateRequest.LocalAuthorityInformationTemplateReturnedDate,
+                LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments,
+                LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink,
+                LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete
             };
 
             result.Should().BeEquivalentTo(expected);
