@@ -8,7 +8,7 @@ namespace TramsDataApi.DatabaseModels
         // project list
         public int Id { get; set; }
         public int IfdPipelineId { get; set; }
-        public int Urn { get; set; }
+        public int? Urn { get; set; }
         public string SchoolName { get; set; }
         public string LocalAuthority { get; set; }
         public string ApplicationReferenceNumber { get; set; }
@@ -31,7 +31,7 @@ namespace TramsDataApi.DatabaseModels
         public string Author { get; set; }
         public string Version { get; set; }
         public string ClearedBy { get; set; }
-        public bool? IsAoRequired { get; set; }
+        public string AcademyOrderRequired { get; set; }
         public DateTime? PreviousHeadTeacherBoardDate { get; set; }
         public string PreviousHeadTeacherBoardLink { get; set; }
         public string TrustReferenceNumber { get; set; }
@@ -52,9 +52,9 @@ namespace TramsDataApi.DatabaseModels
         [Column(TypeName = "decimal(38, 3)")]
         public decimal? PercentageFreeSchoolMeals { get; set; }
         public string PartOfPfiScheme { get; set; }
-        public bool? ViabilityIssues { get; set; }
-        public bool? FinancialSurplusOrDeficit { get; set; }
-        public bool? IsThisADiocesanTrust { get; set; }
+        public string ViabilityIssues { get; set; }
+        public string FinancialDeficit { get; set; }
+        public string DiocesanTrust { get; set; }
         [Column(TypeName = "decimal(38, 3)")]
         public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
         [Column(TypeName = "decimal(38, 3)")]

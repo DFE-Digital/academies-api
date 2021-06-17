@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20210616130237_AddAcademyConversionProjectTable")]
+    [Migration("20210617091320_AddAcademyConversionProjectTable")]
     partial class AddAcademyConversionProjectTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,9 @@ namespace TramsDataApi.Migrations.TramsDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AcademyOrderRequired")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AcademyTypeAndRoute")
                         .HasColumnType("nvarchar(max)");
@@ -65,6 +68,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("ClearedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DiocesanTrust")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal?>("DistanceFromSchoolToTrustHeadquarters")
                         .HasColumnType("decimal(38, 3)");
 
@@ -74,8 +80,8 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("EqualitiesImpactAssessmentConsidered")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("FinancialSurplusOrDeficit")
-                        .HasColumnType("bit");
+                    b.Property<string>("FinancialDeficit")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("GeneralInformationSectionComplete")
                         .HasColumnType("bit");
@@ -85,12 +91,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<int>("IfdPipelineId")
                         .HasColumnType("int");
-
-                    b.Property<bool?>("IsAoRequired")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsThisADiocesanTrust")
-                        .HasColumnType("bit");
 
                     b.Property<string>("KeyStagePerformanceTablesAdditionalInformation")
                         .HasColumnType("nvarchar(max)");
@@ -203,14 +203,14 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("TrustReferenceNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Urn")
+                    b.Property<int?>("Urn")
                         .HasColumnType("int");
 
                     b.Property<string>("Version")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("ViabilityIssues")
-                        .HasColumnType("bit");
+                    b.Property<string>("ViabilityIssues")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("YearOneProjectedCapacity")
                         .HasColumnType("int");
