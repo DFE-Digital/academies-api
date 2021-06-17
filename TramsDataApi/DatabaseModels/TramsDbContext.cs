@@ -95,7 +95,7 @@ namespace TramsDataApi.DatabaseModels
                 entity.ToTable("AcademyConversionProject", "sdd");
             });
 
-        OnModelCreatingPartial(modelBuilder);
+            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
