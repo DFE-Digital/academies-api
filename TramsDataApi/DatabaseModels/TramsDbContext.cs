@@ -16,7 +16,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<AcademyTransferProjectIntendedTransferBenefits> AcademyTransferProjectIntendedTransferBenefits { get; set; }
         public virtual DbSet<AcademyTransferProjects> AcademyTransferProjects { get; set; }
         public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
-        public virtual DbSet<AcademyConversionProject> AcademyConversionProject { get; set; }
+        public virtual DbSet<AcademyConversionProject> AcademyConversionProjects { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

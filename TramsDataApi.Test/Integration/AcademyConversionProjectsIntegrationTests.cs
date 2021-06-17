@@ -59,7 +59,7 @@ namespace TramsDataApi.Test.Integration
 
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
-            _dbContext.AcademyConversionProject.Add(academyConversionProject);
+            _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
 
@@ -101,7 +101,7 @@ namespace TramsDataApi.Test.Integration
             content.Should().BeEquivalentTo(expected);
 
             _legacyDbContext.Entry(ifdPipeline).Reload();
-            var academyConversionProject = _dbContext.AcademyConversionProject
+            var academyConversionProject = _dbContext.AcademyConversionProjects
                 .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
 
             ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
@@ -118,7 +118,7 @@ namespace TramsDataApi.Test.Integration
 
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
-            _dbContext.AcademyConversionProject.Add(academyConversionProject);
+            _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
@@ -165,7 +165,7 @@ namespace TramsDataApi.Test.Integration
             content.Should().BeEquivalentTo(expected);
 
             _legacyDbContext.Entry(ifdPipeline).Reload();
-            var academyConversionProject = _dbContext.AcademyConversionProject
+            var academyConversionProject = _dbContext.AcademyConversionProjects
                 .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
 
             ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(expected.RationaleForProject);
@@ -190,9 +190,9 @@ namespace TramsDataApi.Test.Integration
             }
             _legacyDbContext.SaveChanges();
 
-            foreach (var entity in _dbContext.AcademyConversionProject)
+            foreach (var entity in _dbContext.AcademyConversionProjects)
             {
-                _dbContext.AcademyConversionProject.Remove(entity);
+                _dbContext.AcademyConversionProjects.Remove(entity);
             }
             _dbContext.SaveChanges();
         }
