@@ -18,7 +18,9 @@ namespace TramsDataApi.Factories
 				ProjectStatus = "Pre HTB",
 				RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
 				RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
-				RationaleSectionComplete = academyConversionProject?.RationaleSectionComplete
+				RationaleSectionComplete = academyConversionProject?.RationaleSectionComplete,
+				RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
+				RisksAndIssuesSectionComplete = academyConversionProject?.RisksAndIssuesSectionComplete
 			};
 		}
     }

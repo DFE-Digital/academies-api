@@ -26,7 +26,9 @@ namespace TramsDataApi.Test.Factories
                 ProjectStatus = "Pre HTB",
                 RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
                 RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
-                RationaleSectionComplete = null
+                RationaleSectionComplete = null,
+                RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
+                RisksAndIssuesSectionComplete = null
             };
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
@@ -52,7 +54,9 @@ namespace TramsDataApi.Test.Factories
                 ProjectStatus = "Pre HTB",
                 RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
                 RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
-                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete
+                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,
+                RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
+                RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete
             };
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
