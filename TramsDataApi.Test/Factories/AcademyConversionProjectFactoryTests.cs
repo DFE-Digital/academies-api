@@ -178,6 +178,37 @@ namespace TramsDataApi.Test.Factories
             };
         }
 
+        [Fact]
+        public void ReturnsUpdatedAcademyConversionProjectWithNullDates_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateFieldsAreSetToDefaultDateTime()
+        {
+            var academyConversionProject = CreateAcademyConversionProject();
+
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                RationaleSectionComplete = null,
+                LocalAuthorityInformationTemplateSentDate = default(DateTime),
+                LocalAuthorityInformationTemplateReturnedDate = default(DateTime),
+                LocalAuthorityInformationTemplateComments = null,
+                LocalAuthorityInformationTemplateLink = null,
+                LocalAuthorityInformationTemplateSectionComplete = null
+            };
+
+            var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
+
+            var expected = new AcademyConversionProject
+            {
+                Id = academyConversionProject.Id,
+                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,
+                LocalAuthorityInformationTemplateSentDate = null,
+                LocalAuthorityInformationTemplateReturnedDate = null,
+                LocalAuthorityInformationTemplateComments = academyConversionProject.LocalAuthorityInformationTemplateComments,
+                LocalAuthorityInformationTemplateLink = academyConversionProject.LocalAuthorityInformationTemplateLink,
+                LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete
+            };
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
         private AcademyConversionProject CreateAcademyConversionProject()
         {
             return new AcademyConversionProject
