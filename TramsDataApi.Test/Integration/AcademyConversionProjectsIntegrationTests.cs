@@ -131,6 +131,8 @@ namespace TramsDataApi.Test.Integration
             expected.RationaleForProject = updateRequest.RationaleForProject;
             expected.RationaleForTrust = updateRequest.RationaleForTrust;
             expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
+            expected.RisksAndIssues = updateRequest.RisksAndIssues;
+            expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
 
             var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -144,6 +146,8 @@ namespace TramsDataApi.Test.Integration
             ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
             ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
             academyConversionProject.RationaleSectionComplete.Should().Be(updateRequest.RationaleSectionComplete);
+            ifdPipeline.ProjectTemplateInformationRisksAndIssues.Should().Be(updateRequest.RisksAndIssues);
+            academyConversionProject.RisksAndIssuesSectionComplete.Should().Be(updateRequest.RisksAndIssuesSectionComplete);
         }
 
         [Fact]
