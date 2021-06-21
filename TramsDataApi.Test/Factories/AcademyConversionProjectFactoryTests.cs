@@ -129,6 +129,23 @@ namespace TramsDataApi.Test.Factories
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }
 
+        [Fact]
+        public void ReturnsUpdatedAcademyConversionProjectWithNullDates_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateFieldsAreSetToDefaultDateTime()
+        {
+            var academyConversionProject = CreateAcademyConversionProject();
+
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                LocalAuthorityInformationTemplateSentDate = default(DateTime),
+                LocalAuthorityInformationTemplateReturnedDate = default(DateTime),
+            };
+
+            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
+            expected.LocalAuthorityInformationTemplateSentDate = null;
+            expected.LocalAuthorityInformationTemplateReturnedDate = null;
+            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
+        }
+
         private IfdPipeline CreateIfdPipeline()
         {
             return _fixture.Create<IfdPipeline>();
@@ -141,37 +158,6 @@ namespace TramsDataApi.Test.Factories
             expected.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust;
             expected.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues;
             return expected;
-        }
-
-        [Fact]
-        public void ReturnsUpdatedAcademyConversionProjectWithNullDates_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateFieldsAreSetToDefaultDateTime()
-        {
-            var academyConversionProject = CreateAcademyConversionProject();
-
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RationaleSectionComplete = null,
-                LocalAuthorityInformationTemplateSentDate = default(DateTime),
-                LocalAuthorityInformationTemplateReturnedDate = default(DateTime),
-                LocalAuthorityInformationTemplateComments = null,
-                LocalAuthorityInformationTemplateLink = null,
-                LocalAuthorityInformationTemplateSectionComplete = null
-            };
-
-            var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
-
-            var expected = new AcademyConversionProject
-            {
-                Id = academyConversionProject.Id,
-                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,
-                LocalAuthorityInformationTemplateSentDate = null,
-                LocalAuthorityInformationTemplateReturnedDate = null,
-                LocalAuthorityInformationTemplateComments = academyConversionProject.LocalAuthorityInformationTemplateComments,
-                LocalAuthorityInformationTemplateLink = academyConversionProject.LocalAuthorityInformationTemplateLink,
-                LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete
-            };
-
-            result.Should().BeEquivalentTo(expected);
         }
 
         private AcademyConversionProject CreateAcademyConversionProject()
