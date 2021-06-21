@@ -37,9 +37,9 @@ namespace TramsDataApi.Controllers
 
         [HttpGet]
         [Route("trusts")]
-        public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukprn, string companiesHouseNumber)
+        public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukprn, string companiesHouseNumber, int page = 1)
         {
-            var trusts = _searchTrusts.Execute(groupName, ukprn, companiesHouseNumber);
+            var trusts = _searchTrusts.Execute(groupName, ukprn, companiesHouseNumber, page);
             return Ok(trusts);
         }
     }

@@ -73,7 +73,7 @@ namespace TramsDataApi.Test.Controllers
             var companiesHouseNumber = "Mockcompanieshousenumber";
 
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(groupName, ukprn, companiesHouseNumber))
+            searchTrusts.Setup(s => s.Execute(groupName, ukprn, companiesHouseNumber, 1))
                 .Returns(new List<TrustSummaryResponse>());
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
@@ -95,7 +95,7 @@ namespace TramsDataApi.Test.Controllers
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(groupName, null, companiesHouseNumber))
+            searchTrusts.Setup(s => s.Execute(groupName, null, companiesHouseNumber, 1))
                 .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
@@ -116,7 +116,7 @@ namespace TramsDataApi.Test.Controllers
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(null, ukprn, null))
+            searchTrusts.Setup(s => s.Execute(null, ukprn, null, 1))
                 .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
@@ -131,7 +131,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(5).Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(null, null, null))
+            searchTrusts.Setup(s => s.Execute(null, null, null, 1))
                 .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
