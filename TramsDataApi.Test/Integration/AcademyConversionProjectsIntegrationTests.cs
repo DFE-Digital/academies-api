@@ -93,6 +93,15 @@ namespace TramsDataApi.Test.Integration
             expected.RationaleForProject = updateRequest.RationaleForProject;
             expected.RationaleForTrust = updateRequest.RationaleForTrust;
             expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
+            expected.LocalAuthorityInformationTemplateSentDate =
+                updateRequest.LocalAuthorityInformationTemplateSentDate;
+            expected.LocalAuthorityInformationTemplateReturnedDate =
+                updateRequest.LocalAuthorityInformationTemplateReturnedDate;
+            expected.LocalAuthorityInformationTemplateComments =
+                updateRequest.LocalAuthorityInformationTemplateComments;
+            expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
+            expected.LocalAuthorityInformationTemplateSectionComplete =
+                updateRequest.LocalAuthorityInformationTemplateSectionComplete;
 
             var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -127,6 +136,15 @@ namespace TramsDataApi.Test.Integration
             expected.RationaleForProject = updateRequest.RationaleForProject;
             expected.RationaleForTrust = updateRequest.RationaleForTrust;
             expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
+            expected.LocalAuthorityInformationTemplateSentDate =
+                updateRequest.LocalAuthorityInformationTemplateSentDate;
+            expected.LocalAuthorityInformationTemplateReturnedDate =
+                updateRequest.LocalAuthorityInformationTemplateReturnedDate;
+            expected.LocalAuthorityInformationTemplateComments =
+                updateRequest.LocalAuthorityInformationTemplateComments;
+            expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
+            expected.LocalAuthorityInformationTemplateSectionComplete =
+                updateRequest.LocalAuthorityInformationTemplateSectionComplete;
 
             var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
