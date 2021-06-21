@@ -61,7 +61,8 @@ namespace TramsDataApi.Test.Factories
                 LocalAuthorityInformationTemplateLink = academyConversionProject.LocalAuthorityInformationTemplateLink,
                 LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete,
                 RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
-                RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete
+                RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete,
+                SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation
             };
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
