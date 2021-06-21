@@ -52,7 +52,12 @@ namespace TramsDataApi.Test.Factories
                 ProjectStatus = "Pre HTB",
                 RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
                 RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
-                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete
+                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,
+                LocalAuthorityInformationTemplateSentDate = academyConversionProject.LocalAuthorityInformationTemplateSentDate,
+                LocalAuthorityInformationTemplateReturnedDate = academyConversionProject.LocalAuthorityInformationTemplateReturnedDate,
+                LocalAuthorityInformationTemplateComments = academyConversionProject.LocalAuthorityInformationTemplateComments,
+                LocalAuthorityInformationTemplateLink = academyConversionProject.LocalAuthorityInformationTemplateLink,
+                LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete
             };
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);

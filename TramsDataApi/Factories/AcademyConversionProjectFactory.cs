@@ -25,8 +25,21 @@ namespace TramsDataApi.Factories
                 return project;
             }
 
-            project.RationaleSectionComplete =
-                updateRequest.RationaleSectionComplete ?? project.RationaleSectionComplete;
+            project.RationaleSectionComplete = updateRequest.RationaleSectionComplete ?? project.RationaleSectionComplete;
+            project.LocalAuthorityInformationTemplateSentDate =
+                updateRequest.LocalAuthorityInformationTemplateSentDate ??
+                project.LocalAuthorityInformationTemplateSentDate;
+            project.LocalAuthorityInformationTemplateReturnedDate =
+                updateRequest.LocalAuthorityInformationTemplateReturnedDate ??
+                project.LocalAuthorityInformationTemplateReturnedDate;
+            project.LocalAuthorityInformationTemplateComments =
+                updateRequest.LocalAuthorityInformationTemplateComments ??
+                project.LocalAuthorityInformationTemplateComments;
+            project.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink ??
+                project.LocalAuthorityInformationTemplateLink;
+            project.LocalAuthorityInformationTemplateSectionComplete =
+                updateRequest.LocalAuthorityInformationTemplateSectionComplete ??
+                project.LocalAuthorityInformationTemplateSectionComplete;
 
             return project;
         }
