@@ -19,6 +19,11 @@ namespace TramsDataApi.Factories
 				RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
 				RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
 				RationaleSectionComplete = academyConversionProject?.RationaleSectionComplete,
+				LocalAuthorityInformationTemplateSentDate = academyConversionProject?.LocalAuthorityInformationTemplateSentDate,
+				LocalAuthorityInformationTemplateReturnedDate = academyConversionProject?.LocalAuthorityInformationTemplateReturnedDate,
+				LocalAuthorityInformationTemplateComments = academyConversionProject?.LocalAuthorityInformationTemplateComments,
+				LocalAuthorityInformationTemplateLink = academyConversionProject?.LocalAuthorityInformationTemplateLink,
+				LocalAuthorityInformationTemplateSectionComplete = academyConversionProject?.LocalAuthorityInformationTemplateSectionComplete,
 				RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
 				RisksAndIssuesSectionComplete = academyConversionProject?.RisksAndIssuesSectionComplete
 			};

@@ -97,7 +97,12 @@ namespace TramsDataApi.Test.Factories
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
                 RationaleSectionComplete = null,
-                RisksAndIssuesSectionComplete = null,
+                LocalAuthorityInformationTemplateSentDate = null,
+                LocalAuthorityInformationTemplateReturnedDate = null,
+                LocalAuthorityInformationTemplateComments = null,
+                LocalAuthorityInformationTemplateLink = null,
+                LocalAuthorityInformationTemplateSectionComplete = null,
+                RisksAndIssuesSectionComplete = null
             };
 
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(academyConversionProject);
@@ -111,6 +116,11 @@ namespace TramsDataApi.Test.Factories
             var updateRequest = new UpdateAcademyConversionProjectRequest
             {
                 RationaleSectionComplete = _fixture.Create<bool>(),
+                LocalAuthorityInformationTemplateSentDate = DateTime.Now,
+                LocalAuthorityInformationTemplateReturnedDate = DateTime.Now.AddDays(10),
+                LocalAuthorityInformationTemplateComments = _fixture.Create<string>(),
+                LocalAuthorityInformationTemplateLink = _fixture.Create<string>(),
+                LocalAuthorityInformationTemplateSectionComplete = _fixture.Create<bool>(),
                 RisksAndIssuesSectionComplete = _fixture.Create<bool>(),
             };
 
@@ -142,6 +152,11 @@ namespace TramsDataApi.Test.Factories
         {
             var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(original));
             expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
+            expected.LocalAuthorityInformationTemplateSentDate = updateRequest.LocalAuthorityInformationTemplateSentDate;
+            expected.LocalAuthorityInformationTemplateReturnedDate = updateRequest.LocalAuthorityInformationTemplateReturnedDate;
+            expected.LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments;
+            expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
+            expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             return expected;
         }
