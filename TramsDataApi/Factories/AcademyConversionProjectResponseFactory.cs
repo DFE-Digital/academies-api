@@ -23,7 +23,9 @@ namespace TramsDataApi.Factories
 				LocalAuthorityInformationTemplateReturnedDate = academyConversionProject?.LocalAuthorityInformationTemplateReturnedDate,
 				LocalAuthorityInformationTemplateComments = academyConversionProject?.LocalAuthorityInformationTemplateComments,
 				LocalAuthorityInformationTemplateLink = academyConversionProject?.LocalAuthorityInformationTemplateLink,
-				LocalAuthorityInformationTemplateSectionComplete = academyConversionProject?.LocalAuthorityInformationTemplateSectionComplete
+				LocalAuthorityInformationTemplateSectionComplete = academyConversionProject?.LocalAuthorityInformationTemplateSectionComplete,
+				RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
+				RisksAndIssuesSectionComplete = academyConversionProject?.RisksAndIssuesSectionComplete
 			};
 		}
     }
