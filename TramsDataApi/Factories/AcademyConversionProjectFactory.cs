@@ -15,6 +15,7 @@ namespace TramsDataApi.Factories
 
             project.ProjectTemplateInformationRationaleForProject = updateRequest.RationaleForProject ?? project.ProjectTemplateInformationRationaleForProject;
             project.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust ?? project.ProjectTemplateInformationRationaleForSponsor;
+            project.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues ?? project.ProjectTemplateInformationRisksAndIssues;
 
             return project;
         }
@@ -41,6 +42,7 @@ namespace TramsDataApi.Factories
             project.LocalAuthorityInformationTemplateSectionComplete =
                 updateRequest.LocalAuthorityInformationTemplateSectionComplete ??
                 project.LocalAuthorityInformationTemplateSectionComplete;
+            project.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete ?? project.RisksAndIssuesSectionComplete;
 
             return project;
         }

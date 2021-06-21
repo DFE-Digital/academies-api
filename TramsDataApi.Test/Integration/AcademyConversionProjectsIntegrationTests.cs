@@ -89,19 +89,7 @@ namespace TramsDataApi.Test.Integration
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
-            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
-            expected.RationaleForProject = updateRequest.RationaleForProject;
-            expected.RationaleForTrust = updateRequest.RationaleForTrust;
-            expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
-            expected.LocalAuthorityInformationTemplateSentDate =
-                updateRequest.LocalAuthorityInformationTemplateSentDate;
-            expected.LocalAuthorityInformationTemplateReturnedDate =
-                updateRequest.LocalAuthorityInformationTemplateReturnedDate;
-            expected.LocalAuthorityInformationTemplateComments =
-                updateRequest.LocalAuthorityInformationTemplateComments;
-            expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
-            expected.LocalAuthorityInformationTemplateSectionComplete =
-                updateRequest.LocalAuthorityInformationTemplateSectionComplete;
+            var expected = CreateExpectedApiResponse(ifdPipeline, updateRequest);
 
             var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -113,9 +101,7 @@ namespace TramsDataApi.Test.Integration
             var academyConversionProject = _dbContext.AcademyConversionProjects
                 .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
 
-            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
-            academyConversionProject.RationaleSectionComplete.Should().Be(updateRequest.RationaleSectionComplete);
+            AssertDatabaseUpdated(ifdPipeline, academyConversionProject, updateRequest);
         }
 
         [Fact]
@@ -132,19 +118,7 @@ namespace TramsDataApi.Test.Integration
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
-            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
-            expected.RationaleForProject = updateRequest.RationaleForProject;
-            expected.RationaleForTrust = updateRequest.RationaleForTrust;
-            expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
-            expected.LocalAuthorityInformationTemplateSentDate =
-                updateRequest.LocalAuthorityInformationTemplateSentDate;
-            expected.LocalAuthorityInformationTemplateReturnedDate =
-                updateRequest.LocalAuthorityInformationTemplateReturnedDate;
-            expected.LocalAuthorityInformationTemplateComments =
-                updateRequest.LocalAuthorityInformationTemplateComments;
-            expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
-            expected.LocalAuthorityInformationTemplateSectionComplete =
-                updateRequest.LocalAuthorityInformationTemplateSectionComplete;
+            var expected = CreateExpectedApiResponse(ifdPipeline, updateRequest);
 
             var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -155,9 +129,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.Entry(ifdPipeline).Reload();
             _dbContext.Entry(academyConversionProject).Reload();
 
-            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
-            academyConversionProject.RationaleSectionComplete.Should().Be(updateRequest.RationaleSectionComplete);
+            AssertDatabaseUpdated(ifdPipeline, academyConversionProject, updateRequest);
         }
 
         [Fact]
@@ -198,6 +170,36 @@ namespace TramsDataApi.Test.Integration
 
             var response = await _client.PatchAsync($"/conversion-projects/{_fixture.Create<int>()}", JsonContent.Create(updateRequest));
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        private void AssertDatabaseUpdated(IfdPipeline ifdPipeline, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
+        {
+            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
+            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
+            academyConversionProject.RationaleSectionComplete.Should().Be(updateRequest.RationaleSectionComplete);
+            academyConversionProject.LocalAuthorityInformationTemplateSentDate.Should().Be(updateRequest.LocalAuthorityInformationTemplateSentDate);
+            academyConversionProject.LocalAuthorityInformationTemplateReturnedDate.Should().Be(updateRequest.LocalAuthorityInformationTemplateReturnedDate);
+            academyConversionProject.LocalAuthorityInformationTemplateComments.Should().Be(updateRequest.LocalAuthorityInformationTemplateComments);
+            academyConversionProject.LocalAuthorityInformationTemplateLink.Should().Be(updateRequest.LocalAuthorityInformationTemplateLink);
+            academyConversionProject.LocalAuthorityInformationTemplateSectionComplete.Should().Be(updateRequest.LocalAuthorityInformationTemplateSectionComplete);
+            ifdPipeline.ProjectTemplateInformationRisksAndIssues.Should().Be(updateRequest.RisksAndIssues);
+            academyConversionProject.RisksAndIssuesSectionComplete.Should().Be(updateRequest.RisksAndIssuesSectionComplete);
+        }
+
+        private AcademyConversionProjectResponse CreateExpectedApiResponse(IfdPipeline ifdPipeline, UpdateAcademyConversionProjectRequest updateRequest)
+        {
+            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
+            expected.RationaleForProject = updateRequest.RationaleForProject;
+            expected.RationaleForTrust = updateRequest.RationaleForTrust;
+            expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
+            expected.LocalAuthorityInformationTemplateSentDate = updateRequest.LocalAuthorityInformationTemplateSentDate;
+            expected.LocalAuthorityInformationTemplateReturnedDate = updateRequest.LocalAuthorityInformationTemplateReturnedDate;
+            expected.LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments;
+            expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
+            expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
+            expected.RisksAndIssues = updateRequest.RisksAndIssues;
+            expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
+            return expected;
         }
 
         public void Dispose()
