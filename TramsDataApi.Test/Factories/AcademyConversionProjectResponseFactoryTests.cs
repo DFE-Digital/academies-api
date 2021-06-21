@@ -1,4 +1,3 @@
-using System;
 using AutoFixture;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
@@ -11,50 +10,52 @@ namespace TramsDataApi.Test.Factories
     public class AcademyConversionProjectResponseFactoryTests
     {
         [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenAnAcademyConversionProject()
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipeline()
         {
             var fixture = new Fixture();
-            var academyConversionProject = new IfdPipeline
-            {
-                Sk = fixture.Create<int>(),
-                GeneralDetailsUrn = fixture.Create<string>(),
-                GeneralDetailsProjectName = fixture.Create<string>(),
-                GeneralDetailsLocalAuthority = fixture.Create<string>(),
-                TrustSponsorManagementCoSponsor1 = fixture.Create<string>(),
-                TrustSponsorManagementCoSponsor1SponsorName = fixture.Create<string>(),
-                InterestDateOfInterest = DateTime.Now,
-                ApprovalProcessApplicationDate = DateTime.Now.AddMonths(2),
-                ProjectTemplateInformationRationaleForProject = fixture.Create<string>(),
-                ProjectTemplateInformationRationaleForSponsor = fixture.Create<string>()
-            };
+            var ifdPipeline = fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "12345").Create();
 
             var expectedResponse = new AcademyConversionProjectResponse
             {
-                Id = (int)academyConversionProject.Sk,
-                School = new SchoolResponse
-                {
-                    Id = academyConversionProject.GeneralDetailsUrn,
-                    Name = academyConversionProject.GeneralDetailsProjectName,
-                    URN = academyConversionProject.GeneralDetailsUrn,
-                    LocalAuthority = academyConversionProject.GeneralDetailsLocalAuthority
-                },
-                Trust = new TrustResponse
-                {
-                    Id = academyConversionProject.TrustSponsorManagementCoSponsor1,
-                    Name = academyConversionProject.TrustSponsorManagementCoSponsor1SponsorName
-                },
-                ApplicationReceivedDate = academyConversionProject.InterestDateOfInterest,
-                AssignedDate = academyConversionProject.ApprovalProcessApplicationDate,
-                Phase = ProjectPhase.PreHTB,
-                ProjectDocuments = new DocumentDetailsResponse[0],
-                Rationale = new RationaleResponse
-                {
-                    RationaleForProject = academyConversionProject.ProjectTemplateInformationRationaleForProject,
-                    RationaleForTrust = academyConversionProject.ProjectTemplateInformationRationaleForSponsor
-                }
+                Id = (int)ifdPipeline.Sk,
+                Urn = int.Parse(ifdPipeline.GeneralDetailsUrn),
+                SchoolName = ifdPipeline.GeneralDetailsProjectName,
+                LocalAuthority = ifdPipeline.GeneralDetailsLocalAuthority,
+                ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
+                AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
+                ProjectStatus = "Pre HTB",
+                RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
+                RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
+                RationaleSectionComplete = null
             };
 
-            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
+            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
+
+            academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
+        }
+
+        [Fact]
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProject()
+        {
+            var fixture = new Fixture();
+            var ifdPipeline = fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "12345").Create();
+            var academyConversionProject = fixture.Create<AcademyConversionProject>();
+
+            var expectedResponse = new AcademyConversionProjectResponse
+            {
+                Id = (int)ifdPipeline.Sk,
+                Urn = int.Parse(ifdPipeline.GeneralDetailsUrn),
+                SchoolName = ifdPipeline.GeneralDetailsProjectName,
+                LocalAuthority = ifdPipeline.GeneralDetailsLocalAuthority,
+                ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
+                AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
+                ProjectStatus = "Pre HTB",
+                RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
+                RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
+                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete
+            };
+
+            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
 
             academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
         }

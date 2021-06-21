@@ -5,32 +5,20 @@ namespace TramsDataApi.Factories
 {
     public class AcademyConversionProjectResponseFactory
     {
-        public static AcademyConversionProjectResponse Create(IfdPipeline ifdPipeline)
+	    public static AcademyConversionProjectResponse Create(IfdPipeline ifdPipeline, AcademyConversionProject academyConversionProject = null)
         {
 			return new AcademyConversionProjectResponse
 			{
 				Id = (int)ifdPipeline.Sk,
-				School = new SchoolResponse
-				{
-					Id = ifdPipeline.GeneralDetailsUrn,
-					Name = ifdPipeline.GeneralDetailsProjectName,
-					URN = ifdPipeline.GeneralDetailsUrn,
-					LocalAuthority = ifdPipeline.GeneralDetailsLocalAuthority
-				},
-				Trust = new TrustResponse
-				{
-					Id = ifdPipeline.TrustSponsorManagementCoSponsor1,
-					Name = ifdPipeline.TrustSponsorManagementCoSponsor1SponsorName
-				},
+				Urn = int.Parse(ifdPipeline.GeneralDetailsUrn),
+				SchoolName = ifdPipeline.GeneralDetailsProjectName,
+				LocalAuthority = ifdPipeline.GeneralDetailsLocalAuthority,
 				ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
 				AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
-				Phase = ProjectPhase.PreHTB,
-				ProjectDocuments = new DocumentDetailsResponse[0],
-				Rationale = new RationaleResponse
-				{
-					RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
-					RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor
-				}
+				ProjectStatus = "Pre HTB",
+				RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
+				RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
+				RationaleSectionComplete = academyConversionProject?.RationaleSectionComplete
 			};
 		}
     }

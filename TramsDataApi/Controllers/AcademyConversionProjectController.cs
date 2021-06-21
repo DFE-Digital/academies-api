@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
@@ -53,7 +53,6 @@ namespace TramsDataApi.Controllers
 			{
 				return NotFound();
 			}
-
 			return Ok(updatedAcademyConversionProject);
 		}
 	}
