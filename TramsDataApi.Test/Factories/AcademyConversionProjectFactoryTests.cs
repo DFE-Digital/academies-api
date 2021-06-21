@@ -98,6 +98,23 @@ namespace TramsDataApi.Test.Factories
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }
 
+        [Fact]
+        public void ReturnsUpdatedAcademyConversionProjectWithNullDates_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateFieldsAreSetToDefaultDateTime()
+        {
+            var academyConversionProject = CreateAcademyConversionProject();
+
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                LocalAuthorityInformationTemplateSentDate = default(DateTime),
+                LocalAuthorityInformationTemplateReturnedDate = default(DateTime),
+            };
+
+            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
+            expected.LocalAuthorityInformationTemplateSentDate = null;
+            expected.LocalAuthorityInformationTemplateReturnedDate = null;
+            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
+        }
+
         private IfdPipeline CreateIfdPipeline()
         {
             return _fixture.Create<IfdPipeline>();
