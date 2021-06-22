@@ -126,6 +126,8 @@ namespace TramsDataApi.Test.Factories
             expected.ProjectTemplateInformationRationaleForProject = updateRequest.RationaleForProject;
             expected.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust;
             expected.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues;
+            expected.ProjectTemplateInformationFyRevenueBalanceCarriedForward = updateRequest.RevenueCarryForwardAtEndMarchCurrentYear.ToString();
+            expected.ProjectTemplateInformationFy1RevenueBalanceCarriedForward = updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear.ToString();
             return expected;
         }
 
@@ -145,6 +147,8 @@ namespace TramsDataApi.Test.Factories
             expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
+            expected.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
+            expected.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
             return expected;
         }
     }
