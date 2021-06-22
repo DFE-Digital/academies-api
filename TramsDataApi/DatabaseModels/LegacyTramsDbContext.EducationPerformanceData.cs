@@ -21,16 +21,6 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Createdby).HasColumnName("createdby");
-
-                entity.Property(e => e.CreatedbyEntitytype)
-                    .HasColumnName("createdby_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Createdbyname)
-                    .HasColumnName("createdbyname")
-                    .HasMaxLength(100);
-
                 entity.Property(e => e.Createdbyyominame)
                     .HasColumnName("createdbyyominame")
                     .HasMaxLength(100);
@@ -38,12 +28,6 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Createdon)
                     .HasColumnName("createdon")
                     .HasColumnType("datetime");
-
-                entity.Property(e => e.Createdonbehalfby).HasColumnName("createdonbehalfby");
-
-                entity.Property(e => e.CreatedonbehalfbyEntitytype)
-                    .HasColumnName("createdonbehalfby_entitytype")
-                    .HasMaxLength(128);
 
                 entity.Property(e => e.Createdonbehalfbyname)
                     .HasColumnName("createdonbehalfbyname")
@@ -54,79 +38,7 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(100);
 
                 entity.Property(e => e.Importsequencenumber).HasColumnName("importsequencenumber");
-
-                entity.Property(e => e.Modifiedby).HasColumnName("modifiedby");
-
-                entity.Property(e => e.ModifiedbyEntitytype)
-                    .HasColumnName("modifiedby_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Modifiedbyname)
-                    .HasColumnName("modifiedbyname")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Modifiedbyyominame)
-                    .HasColumnName("modifiedbyyominame")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Modifiedon)
-                    .HasColumnName("modifiedon")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Modifiedonbehalfby).HasColumnName("modifiedonbehalfby");
-
-                entity.Property(e => e.ModifiedonbehalfbyEntitytype)
-                    .HasColumnName("modifiedonbehalfby_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Modifiedonbehalfbyname)
-                    .HasColumnName("modifiedonbehalfbyname")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Modifiedonbehalfbyyominame)
-                    .HasColumnName("modifiedonbehalfbyyominame")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Overriddencreatedon)
-                    .HasColumnName("overriddencreatedon")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Ownerid).HasColumnName("ownerid");
-
-                entity.Property(e => e.OwneridEntitytype)
-                    .HasColumnName("ownerid_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Owneridname)
-                    .HasColumnName("owneridname")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Owneridtype)
-                    .HasColumnName("owneridtype")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.Owneridyominame)
-                    .HasColumnName("owneridyominame")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Owningbusinessunit).HasColumnName("owningbusinessunit");
-
-                entity.Property(e => e.OwningbusinessunitEntitytype)
-                    .HasColumnName("owningbusinessunit_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Owningteam).HasColumnName("owningteam");
-
-                entity.Property(e => e.OwningteamEntitytype)
-                    .HasColumnName("owningteam_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Owninguser).HasColumnName("owninguser");
-
-                entity.Property(e => e.OwninguserEntitytype)
-                    .HasColumnName("owninguser_entitytype")
-                    .HasMaxLength(128);
-
+                
                 entity.Property(e => e.SinkCreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.SinkModifiedOn).HasColumnType("datetime");
@@ -1107,12 +1019,6 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("sip_enteringebaccschool")
                     .HasColumnType("decimal(38, 2)");
 
-                entity.Property(e => e.SipEstablishmenttypeid).HasColumnName("sip_establishmenttypeid");
-
-                entity.Property(e => e.SipEstablishmenttypeidEntitytype)
-                    .HasColumnName("sip_establishmenttypeid_entitytype")
-                    .HasMaxLength(128);
-
                 entity.Property(e => e.SipEstablishmenttypeidname)
                     .HasColumnName("sip_establishmenttypeidname")
                     .HasMaxLength(100);
@@ -1698,8 +1604,6 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Timezoneruleversionnumber).HasColumnName("timezoneruleversionnumber");
 
                 entity.Property(e => e.Utcconversiontimezonecode).HasColumnName("utcconversiontimezonecode");
-
-                entity.Property(e => e.Versionnumber).HasColumnName("versionnumber");
             });
         }
     }

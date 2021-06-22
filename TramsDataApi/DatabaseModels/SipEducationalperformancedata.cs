@@ -25,30 +25,10 @@ namespace TramsDataApi.DatabaseModels
         public int? SipAprogress8scorecategorysecondary { get; set; }
         public Guid? SipParentaccountid { get; set; }
         public string SipParentaccountidEntitytype { get; set; }
-        public Guid? Owningbusinessunit { get; set; }
-        public string OwningbusinessunitEntitytype { get; set; }
-        public Guid? Modifiedby { get; set; }
-        public string ModifiedbyEntitytype { get; set; }
-        public Guid? Modifiedonbehalfby { get; set; }
-        public string ModifiedonbehalfbyEntitytype { get; set; }
-        public Guid? Owninguser { get; set; }
-        public string OwninguserEntitytype { get; set; }
-        public Guid? Owningteam { get; set; }
-        public string OwningteamEntitytype { get; set; }
-        public Guid? Createdonbehalfby { get; set; }
-        public string CreatedonbehalfbyEntitytype { get; set; }
-        public Guid? Createdby { get; set; }
-        public string CreatedbyEntitytype { get; set; }
-        public Guid? SipEstablishmenttypeid { get; set; }
-        public string SipEstablishmenttypeidEntitytype { get; set; }
-        public Guid? Ownerid { get; set; }
-        public string OwneridEntitytype { get; set; }
         public decimal? SipAmathsscoreprimarydisadvantagedengland { get; set; }
         public decimal? SipSenpupilswithstatementorehcplansecondary { get; set; }
         public decimal? SipEbaccaveragepointscoreenglandaverage { get; set; }
         public int? SipTotalschoolssecondary { get; set; }
-        public DateTime? Modifiedon { get; set; }
-        public DateTime? Overriddencreatedon { get; set; }
         public decimal? SipAebaccaveragepointscoreenglandaverage { get; set; }
         public decimal? SipEbacc4cdisadvantagedtrustengland { get; set; }
         public decimal? SipAmeetinghigherstdrwmdisadvantagedprimeng { get; set; }
@@ -68,7 +48,6 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipAattainment8scoreengland { get; set; }
         public decimal? SipAebaccaveragepointscorelocalauthaverage { get; set; }
         public decimal? SipOfpupilsenteringtheebacclanguagesubject { get; set; }
-        public string Modifiedbyname { get; set; }
         public decimal? SipAmeetinghigherstdinrwmprimareng { get; set; }
         public decimal? SipEnteringebaccenglandaverage { get; set; }
         public int? SipTotalschoolsintrust { get; set; }
@@ -110,7 +89,6 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipEbaccaveragepointscoreengland { get; set; }
         public decimal? SipAachievingebaccatgrade5corabovelocalauth { get; set; }
         public int? Timezoneruleversionnumber { get; set; }
-        public string Createdbyname { get; set; }
         public int? SipNumberofconverteracademiessecondary { get; set; }
         public decimal? SipProgress8measureforenglishelementks4 { get; set; }
         public DateTime? SipReportingenddate { get; set; }
@@ -187,7 +165,6 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipAprogress8scoresecondary { get; set; }
         public decimal? SipAmeetingexpectedstandardinrwmprimary { get; set; }
         public decimal? SipAenteringebacclocalauthorityaverage { get; set; }
-        public long? Versionnumber { get; set; }
         public decimal? SipAreadingscoreprimary { get; set; }
         public decimal? SipSenpupilswithstatementorehcplantrust { get; set; }
         public int? SipNumberofschoolsinmat3years { get; set; }

@@ -26,6 +26,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<FurtherEducationEstablishments> FurtherEducationEstablishments { get; set; }
         public virtual DbSet<SmartData> SmartData { get; set; }
         public virtual DbSet<SipPhonics> SipPhonics { get; set; }
+        public virtual DbSet<Account> Account { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -2163,7 +2164,18 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Versionnumber).HasColumnName("versionnumber");
             });
+            modelBuilder.Entity<Account>(entity =>
+            {
+                entity.ToTable("account", "cdm");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.SipUrn)
+                    .HasColumnName("sip_urn")
+                    .HasMaxLength(100);
+            });
             OnModelCreatingIfdPipeline(modelBuilder);
+            OnModelCreatingEducationPerformancedata(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

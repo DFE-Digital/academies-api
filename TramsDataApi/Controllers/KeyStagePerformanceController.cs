@@ -7,24 +7,24 @@ namespace TramsDataApi.Controllers
 {
     public class KeyStagePerformanceController : ControllerBase
     {
-        private readonly IGetKeyStagePerformanceByUkprn _getKeyStagePerformanceByUkprn;
+        private readonly IGetKeyStagePerformanceByUrn _getKeyStagePerformanceByUrn;
 
-        public KeyStagePerformanceController(IGetKeyStagePerformanceByUkprn getKeyStagePerformanceByUkprn)
+        public KeyStagePerformanceController(IGetKeyStagePerformanceByUrn getKeyStagePerformanceByUrn)
         {
-            _getKeyStagePerformanceByUkprn = getKeyStagePerformanceByUkprn;
+            _getKeyStagePerformanceByUrn = getKeyStagePerformanceByUrn;
         }
         
         [HttpGet]
-        [Route("phonics/{year}")]
-        public ActionResult<List<SipPhonics>> GetPhonicsByYear(string year)
+        [Route("educationPerformance/{urn}")]
+        public ActionResult<List<SipEducationalperformancedata>> GetEducationPerformanceByUrn(string urn)
         {
-            var phonics = _getKeyStagePerformanceByUkprn.Execute(year);
-            if (phonics == null)
+            var performanceData = _getKeyStagePerformanceByUrn.Execute(urn);
+            if (performanceData == null)
             {
                 return NotFound();
             }
 
-            return Ok(phonics);
+            return Ok(performanceData);
         }
     }
 }
