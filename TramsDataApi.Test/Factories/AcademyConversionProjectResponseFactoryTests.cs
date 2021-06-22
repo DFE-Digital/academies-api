@@ -73,10 +73,60 @@ namespace TramsDataApi.Test.Factories
                 RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
                 RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete,
                 SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation,
-                RevenueCarryForwardAtEndMarchCurrentYear = academyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear,
-                ProjectedRevenueBalanceAtEndMarchNextYear = academyConversionProject.ProjectedRevenueBalanceAtEndMarchNextYear,
+                RevenueCarryForwardAtEndMarchCurrentYear = decimal.Parse(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward),
+                ProjectedRevenueBalanceAtEndMarchNextYear = decimal.Parse(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward),
+                CapitalCarryForwardAtEndMarchCurrentYear = academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear,
+                CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear,
                 SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation,
                 SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete
+            };
+
+            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
+
+            academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
+        }
+
+        [Fact]
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProjectWithNullSchoolBudgetValues()
+        {
+            var fixture = new Fixture();
+            var ifdPipeline = fixture.Build<IfdPipeline>()
+                .With(x => x.GeneralDetailsUrn, "12345")
+                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, (string)null)
+                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, (string)null)
+                .Create();
+
+            var academyConversionProject = fixture.Build<AcademyConversionProject>()
+                .With(x => x.CapitalCarryForwardAtEndMarchCurrentYear, (decimal?)null)
+                .With(x => x.CapitalCarryForwardAtEndMarchNextYear, (decimal?)null)
+                .Create();
+
+            var expectedResponse = new AcademyConversionProjectResponse
+            {
+                Id = (int)ifdPipeline.Sk,
+                Urn = int.Parse(ifdPipeline.GeneralDetailsUrn),
+                SchoolName = ifdPipeline.GeneralDetailsProjectName,
+                LocalAuthority = ifdPipeline.GeneralDetailsLocalAuthority,
+                ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
+                AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
+                ProjectStatus = "Pre HTB",
+                RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
+                RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
+                RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,
+                LocalAuthorityInformationTemplateSentDate = academyConversionProject.LocalAuthorityInformationTemplateSentDate,
+                LocalAuthorityInformationTemplateReturnedDate = academyConversionProject.LocalAuthorityInformationTemplateReturnedDate,
+                LocalAuthorityInformationTemplateComments = academyConversionProject.LocalAuthorityInformationTemplateComments,
+                LocalAuthorityInformationTemplateLink = academyConversionProject.LocalAuthorityInformationTemplateLink,
+                LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete,
+                RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
+                RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete,
+                SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation,
+                RevenueCarryForwardAtEndMarchCurrentYear = null,
+                ProjectedRevenueBalanceAtEndMarchNextYear = null,
+                CapitalCarryForwardAtEndMarchCurrentYear = null,
+                CapitalCarryForwardAtEndMarchNextYear = null,
+                SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation,
+                SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete,
             };
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
