@@ -13,7 +13,11 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipeline()
         {
             var fixture = new Fixture();
-            var ifdPipeline = fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "12345").Create();
+            var ifdPipeline = fixture.Build<IfdPipeline>()
+                .With(x => x.GeneralDetailsUrn, "12345")
+                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, fixture.Create<decimal>().ToString)
+                .Create();
 
             var expectedResponse = new AcademyConversionProjectResponse
             {
@@ -28,7 +32,10 @@ namespace TramsDataApi.Test.Factories
                 RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
                 RationaleSectionComplete = null,
                 RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
-                RisksAndIssuesSectionComplete = null
+                RisksAndIssuesSectionComplete = null,
+                RevenueCarryForwardAtEndMarchCurrentYear = decimal.Parse(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward),
+                ProjectedRevenueBalanceAtEndMarchNextYear = decimal.Parse(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward)
+
             };
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
@@ -40,7 +47,10 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProject()
         {
             var fixture = new Fixture();
-            var ifdPipeline = fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "12345").Create();
+            var ifdPipeline = fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "12345")
+                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, fixture.Create<decimal>().ToString)
+                .Create();
             var academyConversionProject = fixture.Create<AcademyConversionProject>();
 
             var expectedResponse = new AcademyConversionProjectResponse
@@ -62,7 +72,11 @@ namespace TramsDataApi.Test.Factories
                 LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete,
                 RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
                 RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete,
-                SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation
+                SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation,
+                RevenueCarryForwardAtEndMarchCurrentYear = academyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear,
+                ProjectedRevenueBalanceAtEndMarchNextYear = academyConversionProject.ProjectedRevenueBalanceAtEndMarchNextYear,
+                SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation,
+                SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete
             };
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
