@@ -35,11 +35,7 @@ namespace TramsDataApi.Test.Factories
         {
             var academyConversionProject = CreateIfdPipeline();
 
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RationaleForProject = null,
-                RationaleForTrust = null
-            };
+            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().WithAutoProperties().Create();
 
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
             result.Should().BeEquivalentTo(academyConversionProject);
@@ -50,12 +46,8 @@ namespace TramsDataApi.Test.Factories
         {
             var academyConversionProject = CreateIfdPipeline();
 
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RationaleForProject = "",
-                RationaleForTrust = "",
-                RisksAndIssues = ""
-            };
+            _fixture.Customize<string>(x => x.FromFactory(() => string.Empty));
+            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
             var expected = CreateExpectedIfdPipeline(academyConversionProject, updateRequest);
 
@@ -67,12 +59,7 @@ namespace TramsDataApi.Test.Factories
         {
             var academyConversionProject = CreateIfdPipeline();
 
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RationaleForProject = _fixture.Create<string>(),
-                RationaleForTrust = _fixture.Create<string>(),
-                RisksAndIssues = _fixture.Create<string>()
-            };
+            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
             var expected = CreateExpectedIfdPipeline(academyConversionProject, updateRequest);
 
@@ -94,16 +81,7 @@ namespace TramsDataApi.Test.Factories
         {
             var academyConversionProject = CreateAcademyConversionProject();
 
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RationaleSectionComplete = null,
-                LocalAuthorityInformationTemplateSentDate = null,
-                LocalAuthorityInformationTemplateReturnedDate = null,
-                LocalAuthorityInformationTemplateComments = null,
-                LocalAuthorityInformationTemplateLink = null,
-                LocalAuthorityInformationTemplateSectionComplete = null,
-                RisksAndIssuesSectionComplete = null
-            };
+            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().WithAutoProperties().Create();
 
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(academyConversionProject);
         }
@@ -113,16 +91,7 @@ namespace TramsDataApi.Test.Factories
         {
             var academyConversionProject = CreateAcademyConversionProject();
 
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RationaleSectionComplete = _fixture.Create<bool>(),
-                LocalAuthorityInformationTemplateSentDate = DateTime.Now,
-                LocalAuthorityInformationTemplateReturnedDate = DateTime.Now.AddDays(10),
-                LocalAuthorityInformationTemplateComments = _fixture.Create<string>(),
-                LocalAuthorityInformationTemplateLink = _fixture.Create<string>(),
-                LocalAuthorityInformationTemplateSectionComplete = _fixture.Create<bool>(),
-                RisksAndIssuesSectionComplete = _fixture.Create<bool>(),
-            };
+            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
             var expected = CreateExpectedAcademyConversionProject(academyConversionProject, updateRequest);
 
@@ -175,6 +144,7 @@ namespace TramsDataApi.Test.Factories
             expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
             expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
+            expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
             return expected;
         }
     }

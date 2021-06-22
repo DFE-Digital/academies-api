@@ -43,6 +43,7 @@ namespace TramsDataApi.Factories
                 updateRequest.LocalAuthorityInformationTemplateSectionComplete ??
                 project.LocalAuthorityInformationTemplateSectionComplete;
             project.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete ?? project.RisksAndIssuesSectionComplete;
+            project.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation ?? project.SchoolPerformanceAdditionalInformation;
 
             return project;
         }
