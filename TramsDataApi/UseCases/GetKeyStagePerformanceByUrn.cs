@@ -1,28 +1,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 
 namespace TramsDataApi.UseCases
 {
     public class GetKeyStagePerformanceByUrn : IGetKeyStagePerformanceByUrn
     {
-        private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly IEducationPerformanceGateway _educationPerformanceGateway;
 
-        public GetKeyStagePerformanceByUrn(LegacyTramsDbContext legacyTramsDbContext)
+        public GetKeyStagePerformanceByUrn(IEducationPerformanceGateway educationPerformanceGateway)
         {
-            _legacyTramsDbContext = legacyTramsDbContext;
+            _educationPerformanceGateway = educationPerformanceGateway;
         }
 
         public EducationalPerformanceResponse Execute(string urn)
         {
-            var academy = _legacyTramsDbContext.Account.FirstOrDefault(a => a.SipUrn == urn);
+            var academy = _educationPerformanceGateway.GetAccountByUrn(urn);
             if (academy == null)
             {
                 return null;
             }
 
-            var ks1Responses = _legacyTramsDbContext.SipPhonics.Where(ph => ph.SipUrn == urn)
+            var ks1Responses = _educationPerformanceGateway.GetPhonicsByUrn(urn)
                 .Select(ph => new KeyStage1PerformanceResponse
                 {
                     Year = ph.SipYear,
