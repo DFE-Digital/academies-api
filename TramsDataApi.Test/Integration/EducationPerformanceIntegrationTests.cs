@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,7 +31,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task CanGetKeyStage1PerformanceData()
+        public async Task CanGetEducationPerformanceData()
         {
 
             var accountGuid = Guid.NewGuid();
@@ -50,9 +51,21 @@ namespace TramsDataApi.Test.Integration
                 .With(ph => ph.SipKs1mathspercentageresults = _randomGenerator.Int())
                 .With(ph => ph.SipUrn = accountUrn)
                 .Build();
-            
+
+            var educationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
+                .With(epd => epd.SipParentaccountid = accountGuid)
+                .With(epd => epd.SipName = "2016-2017")
+                .With(epd => epd.SipMeetingexpectedstandardinrwm = 20)
+                .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 10)
+                .With(epd => epd.SipMeetinghigherstandardinrwm = 12)
+                .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 50)
+                .With(epd => epd.SipProgress8score = 70)
+                .With(epd => epd.SipProgress8scoredisadvantaged = 50)
+                .Build();
+
             _legacyDbContext.Account.Add(account);
             _legacyDbContext.SipPhonics.AddRange(phonics);
+            _legacyDbContext.SipEducationalperformancedata.AddRange(educationPerformanceData);
             _legacyDbContext.SaveChanges();
 
             var expectedKs1Response = phonics.Select(ph => new KeyStage1PerformanceResponse
@@ -62,11 +75,33 @@ namespace TramsDataApi.Test.Integration
                 Writing = ph.SipKs1writingpercentageresults,
                 Maths = ph.SipKs1mathspercentageresults
             }).ToList();
-                
+
+            var expectedKs2Response = Builder<KeyStage2PerformanceResponse>.CreateListOfSize(1)
+                .All()
+                .With(epd => epd.Year = "2016-2017")
+                .With(epd => epd.PercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = 12,
+                    Disadvantaged = 50
+                })
+                .With(epd => epd.PercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = 20,
+                    Disadvantaged = 10
+                })
+                .With(epd => epd.ProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = 70,
+                    Disadvantaged = 50
+                })
+                .Build().ToList();
+            
+            
             var expected = new EducationalPerformanceResponse
             {
                 SchoolName = account.Name,
-                KeyStage1Responses = expectedKs1Response
+                KeyStage1 = expectedKs1Response,
+                KeyStage2 = expectedKs2Response
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
@@ -77,13 +112,12 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected);
 
         }
-        
 
         public void Dispose()
         {
             _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
             _legacyDbContext.SipPhonics.RemoveRange(_legacyDbContext.SipPhonics);
-            // _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
+            _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
             _legacyDbContext.SaveChanges();
         }
     }

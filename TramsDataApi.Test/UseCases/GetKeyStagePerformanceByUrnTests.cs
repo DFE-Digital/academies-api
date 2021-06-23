@@ -57,7 +57,7 @@ namespace TramsDataApi.Test.UseCases
             var expected = new EducationalPerformanceResponse
             {
                 SchoolName = account.Name,
-                KeyStage1Responses = expectedKs1
+                KeyStage1 = expectedKs1
             };
             
             var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object);

@@ -44,7 +44,7 @@ namespace TramsDataApi.Test.Controllers
             var educationalPerformanceResponse = new EducationalPerformanceResponse
             {
                 SchoolName = "Test establishment",
-                KeyStage1Responses = keyStage1Response
+                KeyStage1 = keyStage1Response
             };
             
             _getKeyStagePerformanceByUrn

@@ -32,10 +32,32 @@ namespace TramsDataApi.UseCases
                     Maths = ph.SipKs1mathspercentageresults
                 }).ToList();
 
+            var ks2Response = _educationPerformanceGateway.GetEducationalPerformanceForAccount(academy)
+                .Select(epd => new KeyStage2PerformanceResponse
+                {
+                    Year = epd.Year,
+                    PercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.PercentageMeetingExpectedStdInRWM,
+                        Disadvantaged = epd.PercentageMeetingExpectedStdInRWMDisadvantaged
+                    },
+                    PercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.PercentageAchievingHigherStdInRWM,
+                        Disadvantaged = epd.PercentageAchievingHigherStdInRWMDisadvantaged
+                    },
+                    ProgressScore = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.ProgressScore,
+                        Disadvantaged = epd.ProgressScoreDisadvantaged
+                    }
+                }).ToList();
+            
             return new EducationalPerformanceResponse
             {
                 SchoolName = academy.Name,
-                KeyStage1Responses = ks1Responses
+                KeyStage1 = ks1Responses,
+                KeyStage2 = ks2Response
             };
 
         }
