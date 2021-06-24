@@ -5,6 +5,8 @@ namespace TramsDataApi.ResponseModels.EducationalPerformance
         public string Year { get; set; }
         public DisadvantagedPupilsResponse PercentageMeetingExpectedStdInRWM { get; set; }
         public DisadvantagedPupilsResponse PercentageAchievingHigherStdInRWM { get; set; }
-        public DisadvantagedPupilsResponse ProgressScore { get; set; }
+        public DisadvantagedPupilsResponse ReadingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse WritingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse MathsProgressScore { get; set; }
     }
 }

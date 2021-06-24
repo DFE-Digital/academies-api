@@ -61,6 +61,12 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 50)
                 .With(epd => epd.SipProgress8score = 70)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 50)
+                .With(epd => epd.SipReadingprogressscore = 2)
+                .With(epd => epd.SipReadingprogressscoredisadv = 7)
+                .With(epd => epd.SipWritingprogressscore = 3)
+                .With(epd => epd.SipWritingprogressscoredisadv = 8)
+                .With(epd => epd.SipMathsprogressscore = 4)
+                .With(epd => epd.SipMathsprogressscoredisadv = 9)
                 .Build();
 
             _legacyDbContext.Account.Add(account);
@@ -89,10 +95,20 @@ namespace TramsDataApi.Test.Integration
                     NotDisadvantaged = 20,
                     Disadvantaged = 10
                 })
-                .With(epd => epd.ProgressScore = new DisadvantagedPupilsResponse
+                .With(epd => epd.ReadingProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = 70,
-                    Disadvantaged = 50
+                    NotDisadvantaged = 2,
+                    Disadvantaged = 7
+                })
+                .With(epd => epd.WritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = 3,
+                    Disadvantaged = 8
+                })
+                .With(epd => epd.MathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = 4,
+                    Disadvantaged = 9
                 })
                 .Build().ToList();
             
