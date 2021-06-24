@@ -123,6 +123,9 @@ namespace TramsDataApi.Test.Factories
         private IfdPipeline CreateExpectedIfdPipeline(IfdPipeline original, UpdateAcademyConversionProjectRequest updateRequest)
         {
             var expected = JsonConvert.DeserializeObject<IfdPipeline>(JsonConvert.SerializeObject(original));
+            expected.DeliveryProcessPan = updateRequest.PublishedAdmissionNumber;
+            expected.ProjectTemplateInformationViabilityIssue = updateRequest.ViabilityIssues;
+            expected.ProjectTemplateInformationDeficit = updateRequest.FinancialDeficit;
             expected.ProjectTemplateInformationRationaleForProject = updateRequest.RationaleForProject;
             expected.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust;
             expected.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues;
@@ -143,6 +146,9 @@ namespace TramsDataApi.Test.Factories
             expected.LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments;
             expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
             expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
+            expected.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters;
+            expected.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+            expected.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
             return expected;
