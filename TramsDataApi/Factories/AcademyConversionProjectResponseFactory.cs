@@ -19,6 +19,10 @@ namespace TramsDataApi.Factories
 				RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
 				RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
 				RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
+				RevenueCarryForwardAtEndMarchCurrentYear = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward) ?
+				    decimal.Parse(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward) : (decimal?)null,
+				ProjectedRevenueBalanceAtEndMarchNextYear = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward) ?
+					decimal.Parse(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward) : (decimal?)null
 			};
 
 			if (academyConversionProject != null)
@@ -31,7 +35,11 @@ namespace TramsDataApi.Factories
 				response.LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete;
 				response.RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete;
 				response.SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation;
-			}
+				response.CapitalCarryForwardAtEndMarchCurrentYear = academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear;
+				response.CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear;
+				response.SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation;
+				response.SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete;
+            }
 
 			return response;
 		}

@@ -38,7 +38,11 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_get_all_academy_conversion_projects()
         {
-            var ifdPipelines = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "123456").CreateMany();
+            var ifdPipelines = _fixture.Build<IfdPipeline>()
+                .With(x => x.GeneralDetailsUrn, "123456")
+                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .CreateMany();
             _legacyDbContext.IfdPipeline.AddRange(ifdPipelines);
             _legacyDbContext.SaveChanges();
             var expected = ifdPipelines.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
@@ -53,7 +57,10 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_get_an_academy_conversion_project_by_id()
         {
-            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "789456").Create();
+            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "789456")
+                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .Create();
             _legacyDbContext.IfdPipeline.Add(ifdPipeline);
             _legacyDbContext.SaveChanges();
 
@@ -83,7 +90,10 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Patch_request_should_update_an_academy_conversion_project()
         {
-            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "987654").Create();
+            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "987654")
+                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .Create();
             _legacyDbContext.IfdPipeline.Add(ifdPipeline);
             _legacyDbContext.SaveChanges();
 
@@ -107,7 +117,11 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Patch_request_should_update_an_academy_conversion_project_when_project_entity_already_exists_in_db()
         {
-            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "987654").Create();
+            var ifdPipeline = _fixture.Build<IfdPipeline>()
+                .With(x => x.GeneralDetailsUrn, "987654")
+                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .Create();
             _legacyDbContext.IfdPipeline.Add(ifdPipeline);
             _legacyDbContext.SaveChanges();
 
@@ -133,37 +147,6 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Patch_request_should_not_update_academy_conversion_project_when_update_request_fields_are_null()
-        {
-            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "123456789").Create();
-            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
-            _legacyDbContext.SaveChanges();
-
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RationaleForProject = null,
-                RationaleForTrust = null,
-                RationaleSectionComplete = null
-            };
-
-            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline);
-
-            var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
-            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
-
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected);
-
-            _legacyDbContext.Entry(ifdPipeline).Reload();
-            var academyConversionProject = _dbContext.AcademyConversionProjects
-                .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
-
-            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(expected.RationaleForProject);
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(expected.RationaleForTrust);
-            academyConversionProject.RationaleSectionComplete.Should().BeNull();
-        }
-
-        [Fact]
         public async Task Patch_request_should_be_a_not_found_response_when_id_does_not_match_project()
         {
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
@@ -185,6 +168,12 @@ namespace TramsDataApi.Test.Integration
             ifdPipeline.ProjectTemplateInformationRisksAndIssues.Should().Be(updateRequest.RisksAndIssues);
             academyConversionProject.RisksAndIssuesSectionComplete.Should().Be(updateRequest.RisksAndIssuesSectionComplete);
             academyConversionProject.SchoolPerformanceAdditionalInformation.Should().Be(updateRequest.SchoolPerformanceAdditionalInformation);
+            ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward.Should().Be(updateRequest.RevenueCarryForwardAtEndMarchCurrentYear.ToString());
+            ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward.Should().Be(updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear.ToString());
+            academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear;
+            academyConversionProject.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
+            academyConversionProject.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
+            academyConversionProject.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
         }
 
         private AcademyConversionProjectResponse CreateExpectedApiResponse(IfdPipeline ifdPipeline, UpdateAcademyConversionProjectRequest updateRequest)
@@ -201,6 +190,12 @@ namespace TramsDataApi.Test.Integration
             expected.RisksAndIssues = updateRequest.RisksAndIssues;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
+            expected.RevenueCarryForwardAtEndMarchCurrentYear = updateRequest.RevenueCarryForwardAtEndMarchCurrentYear;
+            expected.ProjectedRevenueBalanceAtEndMarchNextYear = updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear;
+            expected.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear;
+            expected.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
+            expected.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
+            expected.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
             return expected;
         }
 
