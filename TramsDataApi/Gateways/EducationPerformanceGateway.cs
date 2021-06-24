@@ -24,20 +24,10 @@ namespace TramsDataApi.Gateways
             return _dbContext.SipPhonics.Where(ph => ph.SipUrn == urn).ToList();
         }
 
-        public IList<EducationalPerformanceDto> GetEducationalPerformanceForAccount(Account account)
+        public IList<SipEducationalperformancedata> GetEducationalPerformanceForAccount(Account account)
         {
             var results = _dbContext.SipEducationalperformancedata
                 .Where(epd => epd.SipParentaccountid == account.Id)
-                .Select(epd => new EducationalPerformanceDto
-                {   
-                    Year = epd.SipName,
-                    PercentageMeetingExpectedStdInRWM = epd.SipMeetingexpectedstandardinrwm,
-                    PercentageMeetingExpectedStdInRWMDisadvantaged = epd.SipMeetingexpectedstandardinrwmdisadv,
-                    PercentageAchievingHigherStdInRWM = epd.SipMeetinghigherstandardinrwm,
-                    PercentageAchievingHigherStdInRWMDisadvantaged = epd.SipMeetinghigherstandardrwmdisadv,
-                    ProgressScore = epd.SipProgress8score,
-                    ProgressScoreDisadvantaged = epd.SipProgress8scoredisadvantaged
-                })
                 .ToList();
 
             return results;

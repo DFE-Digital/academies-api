@@ -8,6 +8,6 @@ namespace TramsDataApi.Gateways
     {
         public Account GetAccountByUrn(string urn);
         public IList<SipPhonics> GetPhonicsByUrn(string urn);
-        public IList<EducationalPerformanceDto> GetEducationalPerformanceForAccount(Account account);
+        public IList<SipEducationalperformancedata> GetEducationalPerformanceForAccount(Account account);
     }
 }

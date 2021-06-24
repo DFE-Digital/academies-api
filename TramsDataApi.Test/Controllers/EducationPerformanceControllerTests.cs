@@ -36,15 +36,17 @@ namespace TramsDataApi.Test.Controllers
         }
         
         [Fact]
-        public void GetEducationalPerformance_ReturnsKS1PerformanceData_WhenAccountIsFound()
+        public void GetEducationalPerformance_ReturnsKS1and2PerformanceData_WhenAccountIsFound()
         {
             var urn = "11121277";
 
             var keyStage1Response = Builder<KeyStage1PerformanceResponse>.CreateListOfSize(3).Build().ToList();
+            var keyStage2Response = Builder<KeyStage2PerformanceResponse>.CreateListOfSize(2).Build().ToList();
             var educationalPerformanceResponse = new EducationalPerformanceResponse
             {
                 SchoolName = "Test establishment",
-                KeyStage1 = keyStage1Response
+                KeyStage1 = keyStage1Response,
+                KeyStage2 = keyStage2Response
             };
             
             _getKeyStagePerformanceByUrn
