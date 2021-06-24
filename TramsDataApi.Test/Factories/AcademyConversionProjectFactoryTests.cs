@@ -67,7 +67,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsUpdatedAcademyConversionProjectWithNullDates_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestDecimalFieldsAreSetToDefaultValues()
+        public void ReturnsUpdatedAcademyConversionProjectWithFieldValues_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestDecimalFieldsAreSetToDefaultValues()
         {
             var ifdPipeline = CreateIfdPipeline();
 
@@ -116,7 +116,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsUpdatedAcademyConversionProjectWithNullDates_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateAndDecimalFieldsAreSetToDefaulValues()
+        public void ReturnsUpdatedAcademyConversionProjectWithNullFieldValues_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateAndDecimalFieldsAreSetToDefaulValues()
         {
             var academyConversionProject = CreateAcademyConversionProject();
 
