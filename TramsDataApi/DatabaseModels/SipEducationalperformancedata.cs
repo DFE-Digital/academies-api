@@ -17,7 +17,12 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipMeetinghigherstandardrwmdisadv { get; set; }
         public decimal? SipProgress8score { get; set; }
         public decimal? SipProgress8scoredisadvantaged { get; set; }
-        
         public Guid? SipParentaccountid { get; set; }
+        public decimal? SipReadingprogressscore { get; set; }
+        public decimal? SipReadingprogressscoredisadv { get; set; }
+        public decimal? SipWritingprogressscoredisadv { get; set; }
+        public decimal? SipWritingprogressscore { get; set; }
+        public decimal? SipMathsprogressscore { get; set; }
+        public decimal? SipMathsprogressscoredisadv { get; set; }
     }
 }

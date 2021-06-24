@@ -50,6 +50,30 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.SipProgress8scoredisadvantaged)
                      .HasColumnName("sip_progress8scoredisadvantaged")
                      .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipReadingprogressscore)
+                    .HasColumnName("sip_readingprogressscore")
+                    .HasColumnType("decimal(38, 2)");
+
+                entity.Property(e => e.SipReadingprogressscoredisadv)
+                    .HasColumnName("sip_readingprogressscoredisadv")
+                    .HasColumnType("decimal(38, 2)");
+
+                entity.Property(e => e.SipWritingprogressscore)
+                    .HasColumnName("sip_writingprogressscore")
+                    .HasColumnType("decimal(38, 2)");
+
+                entity.Property(e => e.SipWritingprogressscoredisadv)
+                    .HasColumnName("sip_writingprogressscoredisadv")
+                    .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipMathsprogressscore)
+                    .HasColumnName("sip_mathsprogressscore")
+                    .HasColumnType("decimal(38, 2)");
+
+                entity.Property(e => e.SipMathsprogressscoredisadv)
+                    .HasColumnName("sip_mathsprogressscoredisadv")
+                    .HasColumnType("decimal(38, 2)");
             });
         }
     }

@@ -14,10 +14,11 @@ namespace TramsDataApi.Test.UseCases
 {
     public class GetKeyStagePerformanceByUrnTests
     {
-        
+        private RandomGenerator _randomGenerator;
+
         public GetKeyStagePerformanceByUrnTests()
         {
-            BuilderSetup.SetDefaultPropertyName(new RandomValuePropertyNamer(new BuilderSettings()));
+            _randomGenerator = new RandomGenerator();
         }
         
         [Fact]
@@ -48,6 +49,17 @@ namespace TramsDataApi.Test.UseCases
             var educationPerformanceData = Builder<SipEducationalperformancedata>.CreateListOfSize(1)
                 .All()
                 .With(epd => epd.SipParentaccountid = guid)
+                .With(epd => epd.SipName = _randomGenerator.DateTime().Year.ToString())
+                .With(epd => epd.SipMathsprogressscore = _randomGenerator.Int())
+                .With(epd => epd.SipMathsprogressscoredisadv = _randomGenerator.Int())
+                .With(epd => epd.SipReadingprogressscore = _randomGenerator.Int())
+                .With(epd => epd.SipReadingprogressscoredisadv = _randomGenerator.Int())
+                .With(epd => epd.SipWritingprogressscore = _randomGenerator.Int())
+                .With(epd => epd.SipWritingprogressscoredisadv = _randomGenerator.Int())
+                .With(epd => epd.SipMeetingexpectedstandardinrwm = _randomGenerator.Int())
+                .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = _randomGenerator.Int())
+                .With(epd => epd.SipMeetinghigherstandardinrwm = _randomGenerator.Int())
+                .With(epd => epd.SipMeetinghigherstandardrwmdisadv = _randomGenerator.Int())
                 .Build();
             
             var mockEducationPerformanceGateway = new Mock<IEducationPerformanceGateway>();
@@ -76,10 +88,20 @@ namespace TramsDataApi.Test.UseCases
                     NotDisadvantaged = epd.SipMeetinghigherstandardinrwm,
                     Disadvantaged = epd.SipMeetinghigherstandardrwmdisadv
                 },
-                ProgressScore = new DisadvantagedPupilsResponse
+                ReadingProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = epd.SipProgress8score,
-                    Disadvantaged = epd.SipProgress8score
+                    NotDisadvantaged = epd.SipReadingprogressscore,
+                    Disadvantaged = epd.SipReadingprogressscoredisadv
+                },
+                WritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = epd.SipWritingprogressscore,
+                    Disadvantaged = epd.SipWritingprogressscoredisadv
+                },
+                MathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = epd.SipMathsprogressscore,
+                    Disadvantaged = epd.SipMathsprogressscoredisadv
                 }
             }).ToList();
             

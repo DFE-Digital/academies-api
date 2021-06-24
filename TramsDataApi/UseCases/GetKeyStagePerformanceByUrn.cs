@@ -46,10 +46,20 @@ namespace TramsDataApi.UseCases
                         NotDisadvantaged = epd.SipMeetinghigherstandardinrwm,
                         Disadvantaged = epd.SipMeetinghigherstandardrwmdisadv
                     },
-                    ProgressScore = new DisadvantagedPupilsResponse
+                    ReadingProgressScore = new DisadvantagedPupilsResponse
                     {
-                        NotDisadvantaged = epd.SipProgress8score,
-                        Disadvantaged = epd.SipProgress8scoredisadvantaged
+                        NotDisadvantaged = epd.SipReadingprogressscore,
+                        Disadvantaged = epd.SipReadingprogressscoredisadv
+                    },
+                    WritingProgressScore = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipWritingprogressscore,
+                        Disadvantaged = epd.SipWritingprogressscoredisadv
+                    },
+                    MathsProgressScore = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipMathsprogressscore,
+                        Disadvantaged = epd.SipMathsprogressscoredisadv
                     }
                 }).ToList();
             
