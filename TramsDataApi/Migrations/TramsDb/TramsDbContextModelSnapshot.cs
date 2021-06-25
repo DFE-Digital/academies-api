@@ -365,7 +365,7 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasIndex("AcademyConversionProjectId");
 
-                    b.ToTable("ProjectNotes");
+                    b.ToTable("ProjectNote","sdd");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.TransferringAcademies", b =>

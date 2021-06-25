@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20210625072725_AddProjectNoteTable")]
+    [Migration("20210625074213_AddProjectNoteTable")]
     partial class AddProjectNoteTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -367,7 +367,7 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasIndex("AcademyConversionProjectId");
 
-                    b.ToTable("ProjectNotes");
+                    b.ToTable("ProjectNote","sdd");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.TransferringAcademies", b =>

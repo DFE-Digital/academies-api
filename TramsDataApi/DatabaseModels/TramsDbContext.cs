@@ -96,6 +96,11 @@ namespace TramsDataApi.DatabaseModels
                 entity.ToTable("AcademyConversionProject", "sdd");
             });
 
+            modelBuilder.Entity<ProjectNote>(entity =>
+            {
+                entity.ToTable("ProjectNote", "sdd");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
