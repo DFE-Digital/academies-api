@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 
@@ -54,6 +55,22 @@ namespace TramsDataApi.Factories
             project.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation ??
                 project.SchoolBudgetInformationAdditionalInformation;
             project.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete ?? project.SchoolBudgetInformationSectionComplete;
+            if (updateRequest.ProjectNote == null) return project;
+            var projectNote = new ProjectNote
+            {
+                Subject = updateRequest.ProjectNote.Subject,
+                Note = updateRequest.ProjectNote.Note,
+                Author = updateRequest.ProjectNote.Author,
+                Date = updateRequest.ProjectNote.Date,
+            };
+            if (project.ProjectNotes == null)
+            {
+                project.ProjectNotes = new List<ProjectNote> {projectNote};
+            }
+            else
+            {
+                project.ProjectNotes.Add(projectNote);
+            }
 
             return project;
         }
