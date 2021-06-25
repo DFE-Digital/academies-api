@@ -165,6 +165,12 @@ namespace TramsDataApi.Test.Integration
             academyConversionProject.LocalAuthorityInformationTemplateComments.Should().Be(updateRequest.LocalAuthorityInformationTemplateComments);
             academyConversionProject.LocalAuthorityInformationTemplateLink.Should().Be(updateRequest.LocalAuthorityInformationTemplateLink);
             academyConversionProject.LocalAuthorityInformationTemplateSectionComplete.Should().Be(updateRequest.LocalAuthorityInformationTemplateSectionComplete);
+            ifdPipeline.DeliveryProcessPan.Should().Be(updateRequest.PublishedAdmissionNumber);
+            ifdPipeline.ProjectTemplateInformationViabilityIssue.Should().Be(updateRequest.ViabilityIssues);
+            ifdPipeline.ProjectTemplateInformationDeficit.Should().Be(updateRequest.FinancialDeficit);
+            academyConversionProject.DistanceFromSchoolToTrustHeadquarters.Should().Be(updateRequest.DistanceFromSchoolToTrustHeadquarters);
+            academyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation.Should().Be(updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
+            academyConversionProject.GeneralInformationSectionComplete.Should().Be(updateRequest.GeneralInformationSectionComplete);
             ifdPipeline.ProjectTemplateInformationRisksAndIssues.Should().Be(updateRequest.RisksAndIssues);
             academyConversionProject.RisksAndIssuesSectionComplete.Should().Be(updateRequest.RisksAndIssuesSectionComplete);
             academyConversionProject.SchoolPerformanceAdditionalInformation.Should().Be(updateRequest.SchoolPerformanceAdditionalInformation);
@@ -187,6 +193,12 @@ namespace TramsDataApi.Test.Integration
             expected.LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments;
             expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
             expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
+            expected.PublishedAdmissionNumber = updateRequest.PublishedAdmissionNumber;
+            expected.ViabilityIssues = updateRequest.ViabilityIssues;
+            expected.FinancialDeficit = updateRequest.FinancialDeficit;
+            expected.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters;
+            expected.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+            expected.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete;
             expected.RisksAndIssues = updateRequest.RisksAndIssues;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
