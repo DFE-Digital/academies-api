@@ -67,6 +67,23 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
+        public void ReturnsUpdatedAcademyConversionProjectWithFieldValues_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestDecimalFieldsAreSetToDefaultValues()
+        {
+            var ifdPipeline = CreateIfdPipeline();
+
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                RevenueCarryForwardAtEndMarchCurrentYear = default(decimal),
+                ProjectedRevenueBalanceAtEndMarchNextYear = default(decimal),
+            };
+
+            var expected = JsonConvert.DeserializeObject<IfdPipeline>(JsonConvert.SerializeObject(ifdPipeline));
+            expected.ProjectTemplateInformationFyRevenueBalanceCarriedForward = null;
+            expected.ProjectTemplateInformationFy1RevenueBalanceCarriedForward = null;
+            AcademyConversionProjectFactory.Update(ifdPipeline, updateRequest).Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
         public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestIsNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
@@ -99,7 +116,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsUpdatedAcademyConversionProjectWithNullDates_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateFieldsAreSetToDefaultDateTime()
+        public void ReturnsUpdatedAcademyConversionProjectWithNullFieldValues_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestDateAndDecimalFieldsAreSetToDefaulValues()
         {
             var academyConversionProject = CreateAcademyConversionProject();
 
@@ -107,11 +124,15 @@ namespace TramsDataApi.Test.Factories
             {
                 LocalAuthorityInformationTemplateSentDate = default(DateTime),
                 LocalAuthorityInformationTemplateReturnedDate = default(DateTime),
+                CapitalCarryForwardAtEndMarchCurrentYear = default(decimal),
+                CapitalCarryForwardAtEndMarchNextYear = default(decimal)
             };
 
             var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
             expected.LocalAuthorityInformationTemplateSentDate = null;
             expected.LocalAuthorityInformationTemplateReturnedDate = null;
+            expected.CapitalCarryForwardAtEndMarchCurrentYear = null;
+            expected.CapitalCarryForwardAtEndMarchNextYear = null;
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }
 
@@ -129,6 +150,8 @@ namespace TramsDataApi.Test.Factories
             expected.ProjectTemplateInformationRationaleForProject = updateRequest.RationaleForProject;
             expected.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust;
             expected.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues;
+            expected.ProjectTemplateInformationFyRevenueBalanceCarriedForward = updateRequest.RevenueCarryForwardAtEndMarchCurrentYear.ToString();
+            expected.ProjectTemplateInformationFy1RevenueBalanceCarriedForward = updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear.ToString();
             return expected;
         }
 
@@ -151,6 +174,10 @@ namespace TramsDataApi.Test.Factories
             expected.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
+            expected.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear;
+            expected.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
+            expected.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
+            expected.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
             return expected;
         }
     }
