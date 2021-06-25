@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
@@ -99,5 +100,7 @@ namespace TramsDataApi.DatabaseModels
 
         //key stage performance
         public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
+
+        public ICollection<ProjectNote> ProjectNotes { get; set; }
     }
 }
