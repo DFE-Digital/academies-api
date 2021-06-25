@@ -2,7 +2,7 @@ namespace TramsDataApi.ResponseModels.EducationalPerformance
 {
     public class DisadvantagedPupilsResponse
     {
-        public decimal? NotDisadvantaged { get; set; }
-        public decimal? Disadvantaged { get; set; }
+        public string NotDisadvantaged { get; set; }
+        public string Disadvantaged { get; set; }
     }
 }

@@ -100,28 +100,28 @@ namespace TramsDataApi.Test.UseCases
                 Year = epd.SipName,
                 PercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = epd.SipMeetingexpectedstandardinrwm,
-                    Disadvantaged = epd.SipMeetingexpectedstandardinrwmdisadv
+                    NotDisadvantaged = epd.SipMeetingexpectedstandardinrwm.ToString(),
+                    Disadvantaged = epd.SipMeetingexpectedstandardinrwmdisadv.ToString()
                 },
                 PercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = epd.SipMeetinghigherstandardinrwm,
-                    Disadvantaged = epd.SipMeetinghigherstandardrwmdisadv
+                    NotDisadvantaged = epd.SipMeetinghigherstandardinrwm.ToString(),
+                    Disadvantaged = epd.SipMeetinghigherstandardrwmdisadv.ToString()
                 },
                 ReadingProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = epd.SipReadingprogressscore,
-                    Disadvantaged = epd.SipReadingprogressscoredisadv
+                    NotDisadvantaged = epd.SipReadingprogressscore.ToString(),
+                    Disadvantaged = epd.SipReadingprogressscoredisadv.ToString()
                 },
                 WritingProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = epd.SipWritingprogressscore,
-                    Disadvantaged = epd.SipWritingprogressscoredisadv
+                    NotDisadvantaged = epd.SipWritingprogressscore.ToString(),
+                    Disadvantaged = epd.SipWritingprogressscoredisadv.ToString()
                 },
                 MathsProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = epd.SipMathsprogressscore,
-                    Disadvantaged = epd.SipMathsprogressscoredisadv
+                    NotDisadvantaged = epd.SipMathsprogressscore.ToString(),
+                    Disadvantaged = epd.SipMathsprogressscoredisadv.ToString()
                 }
             }).ToList();
 

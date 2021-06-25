@@ -21,28 +21,28 @@ namespace TramsDataApi.Factories
                 Year = educationalPerformanceData.SipName,
                 PercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = educationalPerformanceData.SipMeetingexpectedstandardinrwm,
-                    Disadvantaged = educationalPerformanceData.SipMeetingexpectedstandardinrwmdisadv
+                    NotDisadvantaged = educationalPerformanceData.SipMeetingexpectedstandardinrwm.ToString(),
+                    Disadvantaged = educationalPerformanceData.SipMeetingexpectedstandardinrwmdisadv.ToString()
                 },
                 PercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = educationalPerformanceData.SipMeetinghigherstandardinrwm,
-                    Disadvantaged = educationalPerformanceData.SipMeetinghigherstandardrwmdisadv
+                    NotDisadvantaged = educationalPerformanceData.SipMeetinghigherstandardinrwm.ToString(),
+                    Disadvantaged = educationalPerformanceData.SipMeetinghigherstandardrwmdisadv.ToString()
                 },
                 ReadingProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = educationalPerformanceData.SipReadingprogressscore,
-                    Disadvantaged = educationalPerformanceData.SipReadingprogressscoredisadv
+                    NotDisadvantaged = educationalPerformanceData.SipReadingprogressscore.ToString(),
+                    Disadvantaged = educationalPerformanceData.SipReadingprogressscoredisadv.ToString()
                 },
                 WritingProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = educationalPerformanceData.SipWritingprogressscore,
-                    Disadvantaged = educationalPerformanceData.SipWritingprogressscoredisadv
+                    NotDisadvantaged = educationalPerformanceData.SipWritingprogressscore.ToString(),
+                    Disadvantaged = educationalPerformanceData.SipWritingprogressscoredisadv.ToString()
                 },
                 MathsProgressScore = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = educationalPerformanceData.SipMathsprogressscore,
-                    Disadvantaged = educationalPerformanceData.SipMathsprogressscoredisadv
+                    NotDisadvantaged = educationalPerformanceData.SipMathsprogressscore.ToString(),
+                    Disadvantaged = educationalPerformanceData.SipMathsprogressscoredisadv.ToString()
                 }
             };
         }
