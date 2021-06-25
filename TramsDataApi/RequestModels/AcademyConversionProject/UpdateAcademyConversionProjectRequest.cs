@@ -58,7 +58,10 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
         // pupil schools forecast
         public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-        //key stage performance tables
+        // key stage performance tables
         public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
+
+        // project notes
+        public ProjectNoteRequest ProjectNote { get; set; }
     }
 }
