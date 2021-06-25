@@ -9,6 +9,7 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 using Xunit;
 
@@ -31,7 +32,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task CanGetEducationPerformanceData()
+        public async Task CanGetEducationPerformanceDataWithKeyStage1and2Data()
         {
 
             var accountGuid = Guid.NewGuid();
@@ -112,12 +113,14 @@ namespace TramsDataApi.Test.Integration
                 })
                 .Build().ToList();
             
-            
+            var expectedKs4Response = new List<KeyStage4PerformanceResponse> {KeyStage4PerformanceResponseFactory.Create(educationPerformanceData)};
+
             var expected = new EducationalPerformanceResponse
             {
                 SchoolName = account.Name,
                 KeyStage1 = expectedKs1Response,
-                KeyStage2 = expectedKs2Response
+                KeyStage2 = expectedKs2Response,
+                KeyStage4 = expectedKs4Response
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
@@ -126,6 +129,124 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
+            
+            _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
+            _legacyDbContext.SipPhonics.RemoveRange(_legacyDbContext.SipPhonics);
+            _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
+        }
+        
+        [Fact]
+        public async Task CanGetEducationPerformanceDataWithKeyStage4Data()
+        {
+
+            var accountGuid = Guid.NewGuid();
+            var accountUrn = "147259";
+
+            var account = Builder<Account>.CreateNew()
+                .With(a => a.Name = "Gillshill Primary School")
+                .With(a => a.SipUrn = accountUrn)
+                .With(a => a.Id = accountGuid)
+                .Build();
+
+
+            var educationPerformanceData = Builder<SipEducationalperformancedata>.CreateListOfSize(1)
+                .All()
+                .With(epd => epd.SipParentaccountid = accountGuid)
+                .With(epd => epd.SipName = "2016-2017")
+                .With(epd => epd.SipAttainment8score = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoredisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreenglish = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreenglishdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoremaths = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoremathsdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreebacc = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreebaccdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipNumberofpupilsprogress8 = _randomGenerator.Int())
+                .With(epd => epd.SipNumberofpupilsprogress8disadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8upperconfidence = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8lowerconfidence = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8english = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8englishdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8maths = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8ebacc = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
+                .Build().ToList();
+
+            _legacyDbContext.Account.Add(account);
+            _legacyDbContext.SipEducationalperformancedata.AddRange(educationPerformanceData);
+            _legacyDbContext.SaveChanges();
+
+            var expectedKeyStage2Response = educationPerformanceData
+                .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd))
+                .ToList();
+
+            var expectedKeyStage4Response = educationPerformanceData
+                .Select(epd => new KeyStage4PerformanceResponse
+                {
+                    Year = epd.SipName,
+                    SipAttainment8score = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipAttainment8score,
+                        Disadvantaged = epd.SipAttainment8scoredisadvantaged
+                    },
+                    SipAttainment8scoreenglish = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipAttainment8scoreenglish,
+                        Disadvantaged = epd.SipAttainment8scoreenglishdisadvantaged
+                    },
+                    SipAttainment8scoremaths = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipAttainment8scoremaths,
+                        Disadvantaged = epd.SipAttainment8scoremathsdisadvantaged
+                    },
+                    SipAttainment8scoreebacc = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipAttainment8scoreebacc,
+                        Disadvantaged = epd.SipAttainment8scoreebaccdisadvantaged
+                    },
+                    SipNumberofpupilsprogress8 = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipNumberofpupilsprogress8,
+                        Disadvantaged = epd.SipNumberofpupilsprogress8disadvantaged
+                    },
+                    SipProgress8upperconfidence = epd.SipProgress8upperconfidence,
+                    SipProgress8lowerconfidence = epd.SipProgress8lowerconfidence,
+                    SipProgress8english = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipProgress8english,
+                        Disadvantaged = epd.SipProgress8englishdisadvantaged
+                    },
+                    SipProgress8maths = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipProgress8maths,
+                        Disadvantaged = epd.SipProgress8mathsdisadvantaged
+                    },
+                    SipProgress8ebacc = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = epd.SipProgress8ebacc,
+                        Disadvantaged = epd.SipProgress8ebaccdisadvantaged
+                    }
+                }).ToList();
+            
+            
+            var expected = new EducationalPerformanceResponse
+            {
+                SchoolName = account.Name,
+                KeyStage1 = new List<KeyStage1PerformanceResponse>(),
+                KeyStage2 = expectedKeyStage2Response,
+                KeyStage4 = expectedKeyStage4Response
+            };
+            
+            var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<EducationalPerformanceResponse>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
+            _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
 
         }
 

@@ -5,6 +5,7 @@ using FizzWare.NBuilder.PropertyNaming;
 using FluentAssertions;
 using Moq;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 using TramsDataApi.UseCases;
@@ -60,6 +61,24 @@ namespace TramsDataApi.Test.UseCases
                 .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = _randomGenerator.Int())
                 .With(epd => epd.SipMeetinghigherstandardinrwm = _randomGenerator.Int())
                 .With(epd => epd.SipMeetinghigherstandardrwmdisadv = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8score = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoredisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreenglish = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreenglishdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoremaths = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoremathsdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreebacc = _randomGenerator.Int())
+                .With(epd => epd.SipAttainment8scoreebaccdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipNumberofpupilsprogress8 = _randomGenerator.Int())
+                .With(epd => epd.SipNumberofpupilsprogress8disadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8upperconfidence = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8lowerconfidence = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8english = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8englishdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8maths = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8ebacc = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
                 .Build();
             
             var mockEducationPerformanceGateway = new Mock<IEducationPerformanceGateway>();
@@ -75,7 +94,8 @@ namespace TramsDataApi.Test.UseCases
                 Maths = ph.SipKs1mathspercentageresults
             }).ToList();
 
-            var expectedKs2 = educationPerformanceData.Select(epd => new KeyStage2PerformanceResponse
+            var expectedKs2 = educationPerformanceData
+                .Select(epd => new KeyStage2PerformanceResponse
             {
                 Year = epd.SipName,
                 PercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
@@ -104,12 +124,16 @@ namespace TramsDataApi.Test.UseCases
                     Disadvantaged = epd.SipMathsprogressscoredisadv
                 }
             }).ToList();
+
+            var expectedKs4 = educationPerformanceData
+                .Select(epd => KeyStage4PerformanceResponseFactory.Create(epd)).ToList();
             
             var expected = new EducationalPerformanceResponse
             {
                 SchoolName = account.Name,
                 KeyStage1 = expectedKs1,
-                KeyStage2 = expectedKs2
+                KeyStage2 = expectedKs2,
+                KeyStage4 = expectedKs4
             };
             
             var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object);

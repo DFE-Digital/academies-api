@@ -7,5 +7,6 @@ namespace TramsDataApi.ResponseModels.EducationalPerformance
         public string SchoolName { get; set; }
         public List<KeyStage1PerformanceResponse> KeyStage1 { get; set; }
         public List<KeyStage2PerformanceResponse> KeyStage2 { get; set; }
+        public List<KeyStage4PerformanceResponse> KeyStage4 { get; set; }
     }
 }
