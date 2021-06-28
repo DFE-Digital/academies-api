@@ -13,6 +13,10 @@ namespace TramsDataApi.Factories
                 return project;
             }
 
+            project.DeliveryProcessDateForDiscussionByRscHtb = updateRequest.HeadTeacherBoardDate ?? project.DeliveryProcessDateForDiscussionByRscHtb;
+            project.GeneralDetailsProjectLead = updateRequest.Author ?? project.GeneralDetailsProjectLead;
+            project.GeneralDetailsTeamLeader = updateRequest.ClearedBy ?? project.GeneralDetailsTeamLeader;
+            project.GeneralDetailsExpectedOpeningDate = updateRequest.ProposedAcademyOpeningDate ?? project.GeneralDetailsExpectedOpeningDate;
             project.DeliveryProcessPan = updateRequest.PublishedAdmissionNumber ?? project.DeliveryProcessPan;
             project.ProjectTemplateInformationViabilityIssue = updateRequest.ViabilityIssues ?? project.ProjectTemplateInformationViabilityIssue;
             project.ProjectTemplateInformationDeficit = updateRequest.FinancialDeficit ?? project.ProjectTemplateInformationDeficit;
@@ -47,6 +51,9 @@ namespace TramsDataApi.Factories
                 project.LocalAuthorityInformationTemplateLink;
             project.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete ??
                 project.LocalAuthorityInformationTemplateSectionComplete;
+            project.RecommendationForProject = updateRequest.RecommendationForProject ?? project.RecommendationForProject;
+            project.AcademyOrderRequired = updateRequest.AcademyOrderRequired ?? project.AcademyOrderRequired;
+            project.SchoolAndTrustInformationSectionComplete = updateRequest.SchoolAndTrustInformationSectionComplete ?? project.SchoolAndTrustInformationSectionComplete;
             project.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters ?? project.DistanceFromSchoolToTrustHeadquarters;
             project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
             project.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete ?? project.GeneralInformationSectionComplete;

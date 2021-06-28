@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class AcademyConversionProjectResponseFactory
     {
-	    public static AcademyConversionProjectResponse Create(IfdPipeline ifdPipeline, AcademyConversionProject academyConversionProject = null)
+	    public static AcademyConversionProjectResponse Create(IfdPipeline ifdPipeline, Trust trust = null, AcademyConversionProject academyConversionProject = null)
         {
 			var response = new AcademyConversionProjectResponse
 			{
@@ -16,6 +16,11 @@ namespace TramsDataApi.Factories
 				ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
 				AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
 				ProjectStatus = "Pre HTB",
+				Author = ifdPipeline.GeneralDetailsProjectLead,
+				ClearedBy = ifdPipeline.GeneralDetailsTeamLeader,
+				HeadTeacherBoardDate = ifdPipeline.DeliveryProcessDateForDiscussionByRscHtb,
+				AcademyTypeAndRoute = ifdPipeline.GeneralDetailsRouteOfProject,
+				ProposedAcademyOpeningDate = ifdPipeline.GeneralDetailsExpectedOpeningDate,
 				PublishedAdmissionNumber = ifdPipeline.DeliveryProcessPan,
 				PartOfPfiScheme = ifdPipeline.DeliveryProcessPfi,
 				ViabilityIssues = ifdPipeline.ProjectTemplateInformationViabilityIssue,
@@ -29,6 +34,14 @@ namespace TramsDataApi.Factories
 					decimal.Parse(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward) : (decimal?)null
 			};
 
+			if (trust != null)
+            {
+				response.TrustReferenceNumber = trust.TrustRef;
+				response.NameOfTrust = trust.TrustsTrustName;
+				response.SponsorReferenceNumber = trust.LeadSponsor;
+				response.SponsorName = trust.TrustsLeadSponsorName;
+            }
+
 			if (academyConversionProject != null)
             {
 				response.RationaleSectionComplete = academyConversionProject.RationaleSectionComplete;
@@ -37,6 +50,9 @@ namespace TramsDataApi.Factories
 				response.LocalAuthorityInformationTemplateComments = academyConversionProject.LocalAuthorityInformationTemplateComments;
 				response.LocalAuthorityInformationTemplateLink = academyConversionProject.LocalAuthorityInformationTemplateLink;
 				response.LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete;
+				response.RecommendationForProject = academyConversionProject.RecommendationForProject;
+				response.AcademyOrderRequired = academyConversionProject.AcademyOrderRequired;
+				response.SchoolAndTrustInformationSectionComplete = academyConversionProject.SchoolAndTrustInformationSectionComplete;
 				response.DistanceFromSchoolToTrustHeadquarters = academyConversionProject.DistanceFromSchoolToTrustHeadquarters;
 				response.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = academyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
 				response.GeneralInformationSectionComplete = academyConversionProject.GeneralInformationSectionComplete;
