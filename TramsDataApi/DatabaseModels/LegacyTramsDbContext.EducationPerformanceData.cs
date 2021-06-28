@@ -144,6 +144,8 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.SipProgress8ebaccdisadvantaged)
                     .HasColumnName("sip_progress8ebaccdisadvantaged")
                     .HasColumnType("decimal(38, 2)");
+                    
+                entity.Property(e => e.SipPerformancetype).HasColumnName("sip_performancetype");
             });
         }
     }

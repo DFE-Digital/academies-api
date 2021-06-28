@@ -57,6 +57,11 @@ namespace TramsDataApi.Factories
                     {
                         NotDisadvantaged = educationalPerformanceData.SipProgress8ebacc.ToString(),
                         Disadvantaged = educationalPerformanceData.SipProgress8ebaccdisadvantaged.ToString()
+                    },
+                    SipProgress8Score = new DisadvantagedPupilsResponse
+                    {
+                        NotDisadvantaged = educationalPerformanceData.SipProgress8score.ToString(),
+                        Disadvantaged = educationalPerformanceData.SipProgress8scoredisadvantaged.ToString()
                     }
             };
         }

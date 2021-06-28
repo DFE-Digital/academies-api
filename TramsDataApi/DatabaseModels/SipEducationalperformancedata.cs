@@ -42,5 +42,7 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipProgress8mathsdisadvantaged { get; set; }
         public decimal? SipProgress8ebacc { get; set; }
         public decimal? SipProgress8ebaccdisadvantaged { get; set; }
+        
+        public int? SipPerformancetype { get; set; }
     }
 }
