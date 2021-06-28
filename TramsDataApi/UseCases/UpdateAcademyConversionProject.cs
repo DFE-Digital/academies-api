@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
@@ -10,11 +11,13 @@ namespace TramsDataApi.UseCases
     {
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
         private readonly TramsDbContext _tramsDbContext;
+        private readonly ITrustGateway _trustGateway;
 
-        public UpdateAcademyConversionProject(LegacyTramsDbContext legacyTramsDbContext, TramsDbContext tramsDbContext)
+        public UpdateAcademyConversionProject(LegacyTramsDbContext legacyTramsDbContext, TramsDbContext tramsDbContext, ITrustGateway trustGateway)
         {
             _legacyTramsDbContext = legacyTramsDbContext;
             _tramsDbContext = tramsDbContext;
+            _trustGateway = trustGateway;
         }
 
         public AcademyConversionProjectResponse Execute(int id, UpdateAcademyConversionProjectRequest request)
@@ -37,7 +40,13 @@ namespace TramsDataApi.UseCases
             _legacyTramsDbContext.SaveChanges();
             _tramsDbContext.SaveChanges();
 
-            return AcademyConversionProjectResponseFactory.Create(updatedIfdPipeline, updatedProject);
+            Trust trust = null;
+            if (!string.IsNullOrEmpty(ifdPipeline.TrustSponsorManagementTrust))
+            {
+                trust = _trustGateway.GetIfdTrustByGroupId(ifdPipeline.TrustSponsorManagementTrust);
+            }
+
+            return AcademyConversionProjectResponseFactory.Create(updatedIfdPipeline, trust, updatedProject);
         }
     }
 }
