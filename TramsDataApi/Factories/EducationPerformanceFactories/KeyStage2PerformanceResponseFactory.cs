@@ -1,8 +1,4 @@
 using TramsDataApi.DatabaseModels;
-using System.Globalization;
-using System.Linq;
-using TramsDataApi.DatabaseModels;
-using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 
 namespace TramsDataApi.Factories

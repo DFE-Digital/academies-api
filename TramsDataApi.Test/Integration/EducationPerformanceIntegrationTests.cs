@@ -87,6 +87,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8mathsdisadvantaged = 50.00M)
                 .With(epd => epd.SipProgress8ebacc = 50.00M)
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 50.00M)
+                .With(epd => epd.SipProgress8score = 50.00M)
+                .With(epd => epd.SipProgress8scoredisadvantaged = 50.00M)
                 .Build();
 
             _legacyDbContext.Account.Add(account);
@@ -202,6 +204,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8mathsdisadvantaged = 70.41M)
                 .With(epd => epd.SipProgress8ebacc = 54.27M)
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 100.49M)
+                .With(epd => epd.SipProgress8score = 99.17M)
+                .With(epd => epd.SipProgress8scoredisadvantaged = 37.78M)
                 .Build();
 
             var nationalEducationPerformance = Builder<SipEducationalperformancedata>.CreateNew()
@@ -227,6 +231,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8mathsdisadvantaged = 97.11M)
                 .With(epd => epd.SipProgress8ebacc = 32.45M)
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 22.79M)
+                .With(epd => epd.SipProgress8score = 105.77M)
+                .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
                 .Build();
 
             var educationPerformanceDataList = new List<SipEducationalperformancedata>
