@@ -1,3 +1,4 @@
+using System;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 
