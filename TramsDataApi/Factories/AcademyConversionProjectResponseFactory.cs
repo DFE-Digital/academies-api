@@ -17,6 +17,10 @@ namespace TramsDataApi.Factories
 				ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
 				AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
 				ProjectStatus = "Pre HTB",
+				PublishedAdmissionNumber = ifdPipeline.DeliveryProcessPan,
+				PartOfPfiScheme = ifdPipeline.DeliveryProcessPfi,
+				ViabilityIssues = ifdPipeline.ProjectTemplateInformationViabilityIssue,
+				FinancialDeficit = ifdPipeline.ProjectTemplateInformationDeficit,
 				RationaleForProject = ifdPipeline.ProjectTemplateInformationRationaleForProject,
 				RationaleForTrust = ifdPipeline.ProjectTemplateInformationRationaleForSponsor,
 				RisksAndIssues = ifdPipeline.ProjectTemplateInformationRisksAndIssues,
@@ -34,6 +38,9 @@ namespace TramsDataApi.Factories
 				response.LocalAuthorityInformationTemplateComments = academyConversionProject.LocalAuthorityInformationTemplateComments;
 				response.LocalAuthorityInformationTemplateLink = academyConversionProject.LocalAuthorityInformationTemplateLink;
 				response.LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete;
+				response.DistanceFromSchoolToTrustHeadquarters = academyConversionProject.DistanceFromSchoolToTrustHeadquarters;
+				response.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = academyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+				response.GeneralInformationSectionComplete = academyConversionProject.GeneralInformationSectionComplete;
 				response.RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete;
 				response.SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation;
 				response.CapitalCarryForwardAtEndMarchCurrentYear = academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear;

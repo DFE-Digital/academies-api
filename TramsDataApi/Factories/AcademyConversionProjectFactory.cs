@@ -14,6 +14,9 @@ namespace TramsDataApi.Factories
                 return project;
             }
 
+            project.DeliveryProcessPan = updateRequest.PublishedAdmissionNumber ?? project.DeliveryProcessPan;
+            project.ProjectTemplateInformationViabilityIssue = updateRequest.ViabilityIssues ?? project.ProjectTemplateInformationViabilityIssue;
+            project.ProjectTemplateInformationDeficit = updateRequest.FinancialDeficit ?? project.ProjectTemplateInformationDeficit;
             project.ProjectTemplateInformationRationaleForProject = updateRequest.RationaleForProject ?? project.ProjectTemplateInformationRationaleForProject;
             project.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust ?? project.ProjectTemplateInformationRationaleForSponsor;
             project.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues ?? project.ProjectTemplateInformationRisksAndIssues;
@@ -45,6 +48,9 @@ namespace TramsDataApi.Factories
                 project.LocalAuthorityInformationTemplateLink;
             project.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete ??
                 project.LocalAuthorityInformationTemplateSectionComplete;
+            project.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters ?? project.DistanceFromSchoolToTrustHeadquarters;
+            project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+            project.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete ?? project.GeneralInformationSectionComplete;
             project.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete ?? project.RisksAndIssuesSectionComplete;
             project.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation ??
                 project.SchoolPerformanceAdditionalInformation;
