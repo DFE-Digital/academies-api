@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoFixture;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
@@ -44,7 +45,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProjectWithNullSchoolBudgetValues()
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProjectWithNullSchoolBudgetAndProjectNotesValues()
         {
             var fixture = new Fixture();
             var ifdPipeline = fixture.Build<IfdPipeline>()
@@ -56,6 +57,7 @@ namespace TramsDataApi.Test.Factories
             var academyConversionProject = fixture.Build<AcademyConversionProject>()
                 .Without(x => x.CapitalCarryForwardAtEndMarchCurrentYear)
                 .Without(x => x.CapitalCarryForwardAtEndMarchNextYear)
+                .Without(x => x.ProjectNotes)
                 .Create();
 
             var expectedResponse = CreateExpected(ifdPipeline, academyConversionProject);
@@ -105,6 +107,13 @@ namespace TramsDataApi.Test.Factories
                 expected.CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear;
                 expected.SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation;
                 expected.SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete;
+                expected.ProjectNotes = academyConversionProject.ProjectNotes?.Select(p => new ProjectNoteResponse
+                {
+                    Subject = p.Subject,
+                    Note = p.Note,
+                    Author = p.Author,
+                    Date = p.Date
+                }).ToList();
             }
             return expected;
         }
