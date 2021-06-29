@@ -32,21 +32,19 @@ namespace TramsDataApi.Gateways
 
             return results;
         }
-
-        public SipEducationalperformancedata GetNationalEducationalPerformanceForYear(string year)
+        
+        public IList<SipEducationalperformancedata> GetNationalEducationalPerformanceData()
         {
-            var result = _dbContext.SipEducationalperformancedata
+            var results = _dbContext.SipEducationalperformancedata
                 .Join(_dbContext.GlobalOptionSetMetadata,
                     gpd => gpd.SipPerformancetype,
                     gom => gom.Option,
                     (gpd, gom) => new {performanceData = gpd, globalMetaData = gom})
-                 .Where(data => data.globalMetaData.OptionSetName == "sip_performancetype")
-                 .Where(data => data.globalMetaData.LocalizedLabel == "National")
-                 .Where(data => data.performanceData.SipName == year)
-                .Select(data => data.performanceData)
-                .FirstOrDefault();
+                .Where(data => data.globalMetaData.OptionSetName == "sip_performancetype")
+                .Where(data => data.globalMetaData.LocalizedLabel == "National")
+                .Select(data => data.performanceData).ToList();
 
-            return result;
+            return results;
         }
     }
 }

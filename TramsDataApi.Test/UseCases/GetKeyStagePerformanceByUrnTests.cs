@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.UseCases
         {
             var urn = "123453";
             var guid = Guid.NewGuid();
-            var year = _randomGenerator.DateTime().Year.ToString();
+            var year = "2017-2018";
             
             var account = Builder<Account>.CreateNew()
                 .With(a => a.SipUrn = urn)
@@ -83,10 +83,10 @@ namespace TramsDataApi.Test.UseCases
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
                 .Build();
 
-            var nationalEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
+            var nationalEducationPerformanceData1 = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(nepd => nepd.SipParentaccountid = null)
                 .With(nepd => nepd.SipPerformancetype = _randomGenerator.Int())
-                .With(nepd => nepd.SipName = _randomGenerator.DateTime().Year.ToString())
+                .With(nepd => nepd.SipName = year)
                 .With(nepd => nepd.SipMathsprogressscore = _randomGenerator.Int())
                 .With(nepd => nepd.SipMathsprogressscoredisadv = _randomGenerator.Int())
                 .With(nepd => nepd.SipReadingprogressscore = _randomGenerator.Int())
@@ -117,11 +117,52 @@ namespace TramsDataApi.Test.UseCases
                 .With(nepd => nepd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
                 .Build();
             
+            var nationalEducationPerformanceData2 = Builder<SipEducationalperformancedata>.CreateNew()
+                .With(nepd => nepd.SipParentaccountid = null)
+                .With(nepd => nepd.SipPerformancetype = _randomGenerator.Int())
+                .With(nepd => nepd.SipName = "2018-2019")
+                .With(nepd => nepd.SipMathsprogressscore = _randomGenerator.Int())
+                .With(nepd => nepd.SipMathsprogressscoredisadv = _randomGenerator.Int())
+                .With(nepd => nepd.SipReadingprogressscore = _randomGenerator.Int())
+                .With(nepd => nepd.SipReadingprogressscoredisadv = _randomGenerator.Int())
+                .With(nepd => nepd.SipWritingprogressscore = _randomGenerator.Int())
+                .With(nepd => nepd.SipWritingprogressscoredisadv = _randomGenerator.Int())
+                .With(nepd => nepd.SipMeetingexpectedstandardinrwm = _randomGenerator.Int())
+                .With(nepd => nepd.SipMeetingexpectedstandardinrwmdisadv = _randomGenerator.Int())
+                .With(nepd => nepd.SipMeetinghigherstandardinrwm = _randomGenerator.Int())
+                .With(nepd => nepd.SipMeetinghigherstandardrwmdisadv = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8score = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8scoredisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8scoreenglish = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8scoreenglishdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8scoremaths = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8scoremathsdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8scoreebacc = _randomGenerator.Int())
+                .With(nepd => nepd.SipAttainment8scoreebaccdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipNumberofpupilsprogress8 = _randomGenerator.Int())
+                .With(nepd => nepd.SipNumberofpupilsprogress8disadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8upperconfidence = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8lowerconfidence = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8english = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8englishdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8maths = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8ebacc = _randomGenerator.Int())
+                .With(nepd => nepd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
+                .Build();
+
+            var nationalEducationPerformanceDataList = new List<SipEducationalperformancedata>
+            {
+                nationalEducationPerformanceData1,
+                nationalEducationPerformanceData2
+
+            };
+            
             var mockEducationPerformanceGateway = new Mock<IEducationPerformanceGateway>();
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetAccountByUrn(urn)).Returns(() => account);
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetPhonicsByUrn(urn)).Returns(() => phonics);
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetEducationalPerformanceForAccount(account)).Returns(() => new List<SipEducationalperformancedata> {educationPerformanceData});
-            mockEducationPerformanceGateway.Setup(gateway => gateway.GetNationalEducationalPerformanceForYear(year)).Returns(() => nationalEducationPerformanceData);
+            mockEducationPerformanceGateway.Setup(gateway => gateway.GetNationalEducationalPerformanceData()).Returns(nationalEducationPerformanceDataList);
 
             
             var expectedKs1 = phonics.Select(ph => new KeyStage1PerformanceResponse
@@ -162,7 +203,7 @@ namespace TramsDataApi.Test.UseCases
                 }
             };
 
-            var expectedKs4 = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalEducationPerformanceData);
+            var expectedKs4 = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalEducationPerformanceData1);
             
             var expected = new EducationalPerformanceResponse
             {

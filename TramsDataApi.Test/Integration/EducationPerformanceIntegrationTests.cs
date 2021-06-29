@@ -208,7 +208,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8scoredisadvantaged = 37.78M)
                 .Build();
 
-            var nationalEducationPerformance = Builder<SipEducationalperformancedata>.CreateNew()
+            var nationalEducationPerformance1 = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
                 .With(epd => epd.SipParentaccountid = null)
                 .With(epd => epd.SipPerformancetype = 123)
@@ -234,10 +234,37 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8score = 105.77M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
                 .Build();
+            
+            var nationalEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
+                .With(epd => epd.Id = Guid.NewGuid())
+                .With(epd => epd.SipParentaccountid = null)
+                .With(epd => epd.SipPerformancetype = 123)
+                .With(epd => epd.SipName = "2017-2018")
+                .With(epd => epd.SipAttainment8score = 100.23M)
+                .With(epd => epd.SipAttainment8scoredisadvantaged =  54.19M)
+                .With(epd => epd.SipAttainment8scoreenglish =  58.51M)
+                .With(epd => epd.SipAttainment8scoreenglishdisadvantaged = 58.65M)
+                .With(epd => epd.SipAttainment8scoremaths = 45.41M)
+                .With(epd => epd.SipAttainment8scoremathsdisadvantaged =  41.70M)
+                .With(epd => epd.SipAttainment8scoreebacc =  85.35M)
+                .With(epd => epd.SipAttainment8scoreebaccdisadvantaged =  98.30M)
+                .With(epd => epd.SipNumberofpupilsprogress8 = _randomGenerator.Int())
+                .With(epd => epd.SipNumberofpupilsprogress8disadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8upperconfidence =  11.05M)
+                .With(epd => epd.SipProgress8lowerconfidence =  65.90M)
+                .With(epd => epd.SipProgress8english =  56.12M)
+                .With(epd => epd.SipProgress8englishdisadvantaged =  89.21M)
+                .With(epd => epd.SipProgress8maths = 50.96M)
+                .With(epd => epd.SipProgress8mathsdisadvantaged = 97.11M)
+                .With(epd => epd.SipProgress8ebacc = 32.45M)
+                .With(epd => epd.SipProgress8ebaccdisadvantaged = 22.79M)
+                .With(epd => epd.SipProgress8score = 105.77M)
+                .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
+                .Build();
 
             var educationPerformanceDataList = new List<SipEducationalperformancedata>
             {
-                educationPerformanceData, nationalEducationPerformance
+                educationPerformanceData, nationalEducationPerformance1, nationalEducationPerformance2
             };
 
             var globalOptionMetadata = Builder<GlobalOptionSetMetadata>.CreateNew()
@@ -311,63 +338,63 @@ namespace TramsDataApi.Test.Integration
                 },
                 NationalAverageA8Score = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance.SipAttainment8score),
+                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance1.SipAttainment8score),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipAttainment8scoredisadvantaged)
+                        nationalEducationPerformance1.SipAttainment8scoredisadvantaged)
                 },
                 NationalAverageA8English = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged =
-                        String.Format("{0:0.00}", nationalEducationPerformance.SipAttainment8scoreenglish),
+                        String.Format("{0:0.00}", nationalEducationPerformance1.SipAttainment8scoreenglish),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipAttainment8scoreenglishdisadvantaged)
+                        nationalEducationPerformance1.SipAttainment8scoreenglishdisadvantaged)
                 },
                 NationalAverageA8Maths = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance.SipAttainment8scoremaths),
+                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance1.SipAttainment8scoremaths),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipAttainment8scoremathsdisadvantaged)
+                        nationalEducationPerformance1.SipAttainment8scoremathsdisadvantaged)
                 },
                 NationalAverageA8EBacc = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance.SipAttainment8scoreebacc),
+                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance1.SipAttainment8scoreebacc),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipAttainment8scoreebaccdisadvantaged)
+                        nationalEducationPerformance1.SipAttainment8scoreebaccdisadvantaged)
                 },
                 NationalAverageP8PupilsIncluded = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = nationalEducationPerformance.SipNumberofpupilsprogress8.ToString(),
-                    Disadvantaged = nationalEducationPerformance.SipNumberofpupilsprogress8disadvantaged.ToString()
+                    NotDisadvantaged = nationalEducationPerformance1.SipNumberofpupilsprogress8.ToString(),
+                    Disadvantaged = nationalEducationPerformance1.SipNumberofpupilsprogress8disadvantaged.ToString()
                 },
                 NationalAverageP8Score = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance.SipProgress8score),
+                    NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance1.SipProgress8score),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipProgress8scoredisadvantaged)
+                        nationalEducationPerformance1.SipProgress8scoredisadvantaged)
                 },
                 NationalAverageP8English = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipProgress8english.ToString()),
+                        nationalEducationPerformance1.SipProgress8english.ToString()),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipProgress8englishdisadvantaged.ToString())
+                        nationalEducationPerformance1.SipProgress8englishdisadvantaged.ToString())
                 },
                 NationalAverageP8Maths = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipProgress8maths.ToString()),
+                        nationalEducationPerformance1.SipProgress8maths.ToString()),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipProgress8mathsdisadvantaged.ToString())
+                        nationalEducationPerformance1.SipProgress8mathsdisadvantaged.ToString())
                 },
                 NationalAverageP8Ebacc = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipProgress8ebacc.ToString()),
+                        nationalEducationPerformance1.SipProgress8ebacc.ToString()),
                     Disadvantaged = String.Format("{0:0.00}",
-                        nationalEducationPerformance.SipProgress8ebaccdisadvantaged.ToString())
+                        nationalEducationPerformance1.SipProgress8ebaccdisadvantaged.ToString())
                 },
-                NationalAverageP8LowerConfidence = nationalEducationPerformance.SipProgress8lowerconfidence,
-                NationalAverageP8UpperConfidence = nationalEducationPerformance.SipProgress8upperconfidence,
+                NationalAverageP8LowerConfidence = nationalEducationPerformance1.SipProgress8lowerconfidence,
+                NationalAverageP8UpperConfidence = nationalEducationPerformance1.SipProgress8upperconfidence,
                 NationalAverage = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = null,

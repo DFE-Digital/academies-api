@@ -26,6 +26,9 @@ namespace TramsDataApi.UseCases
                 .Select(ph => KeyStage1PerformanceResponseFactory.Create(ph)).ToList();
 
             var educationPerformance = _educationPerformanceGateway.GetEducationalPerformanceForAccount(academy);
+
+            var nationalAverageEducationPerformances =
+                _educationPerformanceGateway.GetNationalEducationalPerformanceData();
             
             var ks2Response = educationPerformance
                 .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd)).ToList();
@@ -33,7 +36,8 @@ namespace TramsDataApi.UseCases
             
             var ks4Response = educationPerformance
                 .Select(epd => KeyStage4PerformanceResponseFactory
-                    .Create(epd, _educationPerformanceGateway.GetNationalEducationalPerformanceForYear(epd.SipName))).ToList();
+                    .Create(epd, nationalAverageEducationPerformances
+                        .FirstOrDefault(national => national.SipName == epd.SipName))).ToList();
             
             return new EducationalPerformanceResponse
             {
