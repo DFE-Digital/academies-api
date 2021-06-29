@@ -74,7 +74,7 @@ namespace TramsDataApi.Factories
                 Subject = updateRequest.ProjectNote.Subject,
                 Note = updateRequest.ProjectNote.Note,
                 Author = updateRequest.ProjectNote.Author,
-                Date = updateRequest.ProjectNote.Date,
+                Date = DateTime.Now,
             };
             if (project.ProjectNotes == null)
             {

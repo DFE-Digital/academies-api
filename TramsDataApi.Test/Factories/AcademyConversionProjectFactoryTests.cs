@@ -115,7 +115,8 @@ namespace TramsDataApi.Test.Factories
 
             var expected = CreateExpectedAcademyConversionProject(academyConversionProject, updateRequest);
 
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
+            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should()
+                .BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
         }
 
         [Fact]
@@ -156,11 +157,12 @@ namespace TramsDataApi.Test.Factories
                 Subject = updateRequest.ProjectNote.Subject,
                 Note = updateRequest.ProjectNote.Note,
                 Author = updateRequest.ProjectNote.Author,
-                Date = updateRequest.ProjectNote.Date,
+                Date = DateTime.Now,
             };
             expected.ProjectNotes = new List<ProjectNote> {projectNote};
 
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
+            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should()
+                .BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
         }
 
         private IfdPipeline CreateIfdPipeline()
@@ -217,7 +219,7 @@ namespace TramsDataApi.Test.Factories
                 Subject = updateRequest.ProjectNote.Subject,
                 Note = updateRequest.ProjectNote.Note,
                 Author = updateRequest.ProjectNote.Author,
-                Date = updateRequest.ProjectNote.Date,
+                Date = DateTime.Now,
             };
             expected.ProjectNotes.Add(projectNote);
             return expected;

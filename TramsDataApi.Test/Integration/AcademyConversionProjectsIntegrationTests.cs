@@ -121,7 +121,7 @@ namespace TramsDataApi.Test.Integration
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected);
+            content.Should().BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
 
             _legacyDbContext.Entry(ifdPipeline).Reload();
             var academyConversionProject = _dbContext.AcademyConversionProjects
@@ -167,7 +167,7 @@ namespace TramsDataApi.Test.Integration
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected);
+            content.Should().BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
 
             _legacyDbContext.Entry(ifdPipeline).Reload();
             _dbContext.Entry(academyConversionProject).Reload();
@@ -218,7 +218,7 @@ namespace TramsDataApi.Test.Integration
                 Subject = updateRequest.ProjectNote.Subject,
                 Note = updateRequest.ProjectNote.Note,
                 Author = updateRequest.ProjectNote.Author,
-                Date = updateRequest.ProjectNote.Date,
+                Date = DateTime.Now,
                 AcademyConversionProjectId = academyConversionProject.Id
             };
 
