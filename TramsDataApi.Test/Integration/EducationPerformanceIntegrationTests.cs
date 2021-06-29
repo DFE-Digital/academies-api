@@ -134,7 +134,7 @@ namespace TramsDataApi.Test.Integration
                 })
                 .Build().ToList();
             
-            var expectedKs4Response = new List<KeyStage4PerformanceResponse> {KeyStage4PerformanceResponseFactory.Create(educationPerformanceData)};
+            var expectedKs4Response = new List<KeyStage4PerformanceResponse> {KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, null)};
 
             var expected = new EducationalPerformanceResponse
             {
@@ -243,7 +243,7 @@ namespace TramsDataApi.Test.Integration
             var globalOptionMetadata = Builder<GlobalOptionSetMetadata>.CreateNew()
                 .With(gom => gom.Option = 123)
                 .With(gom => gom.OptionSetName = "sip_performancetype")
-                .With(gom => gom.LocalizedLabel == "National")
+                .With(gom => gom.LocalizedLabel = "National")
                 .Build();
 
             _legacyDbContext.GlobalOptionSetMetadata.Add(globalOptionMetadata);

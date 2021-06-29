@@ -26,11 +26,14 @@ namespace TramsDataApi.UseCases
                 .Select(ph => KeyStage1PerformanceResponseFactory.Create(ph)).ToList();
 
             var educationPerformance = _educationPerformanceGateway.GetEducationalPerformanceForAccount(academy);
+            
             var ks2Response = educationPerformance
                 .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd)).ToList();
+
             
             var ks4Response = educationPerformance
-                .Select(epd => KeyStage4PerformanceResponseFactory.Create(epd)).ToList();
+                .Select(epd => KeyStage4PerformanceResponseFactory
+                    .Create(epd, _educationPerformanceGateway.GetNationalEducationalPerformanceForYear(epd.SipName))).ToList();
             
             return new EducationalPerformanceResponse
             {
