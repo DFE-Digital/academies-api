@@ -22,6 +22,8 @@ namespace TramsDataApi.Test.Factories
                 .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
                 .With(c => c.Status = null)
                 .With(c => c.State = null)
+                .With(c => c.Author = null)
+                .With(c => c.Recommendation = null)
                 .With(c => c.Benefits = null)
                 .With(c => c.Dates = null)
                 .With(c => c.Rationale = null)
@@ -48,6 +50,8 @@ namespace TramsDataApi.Test.Factories
                 TrustSponsorRationale = null,
                 State = null,
                 Status = null,
+                Author = null,
+                Recommendation = null,
                 HighProfileShouldBeConsidered = null,
                 HighProfileFurtherSpecification = null,
                 ComplexLandAndBuildingShouldBeConsidered = null,
@@ -113,6 +117,8 @@ namespace TramsDataApi.Test.Factories
                 TrustSponsorRationale = createRequest.Rationale.TrustSponsorRationale,
                 State = createRequest.State,
                 Status = createRequest.Status,
+                Author = createRequest.Author,
+                Recommendation = createRequest.Recommendation,
                 HighProfileShouldBeConsidered = createRequest.Benefits.OtherFactorsToConsider.HighProfile.ShouldBeConsidered,
                 HighProfileFurtherSpecification = createRequest.Benefits.OtherFactorsToConsider.HighProfile.FurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered = createRequest.Benefits.OtherFactorsToConsider.ComplexLandAndBuilding.ShouldBeConsidered,
@@ -172,6 +178,8 @@ namespace TramsDataApi.Test.Factories
                 TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
                 State = academyTransferProject.State,
                 Status = academyTransferProject.Status,
+                Author = academyTransferProject.Author,
+                Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
@@ -232,6 +240,8 @@ namespace TramsDataApi.Test.Factories
                 TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
                 State = academyTransferProject.State,
                 Status = academyTransferProject.Status,
+                Author = academyTransferProject.Author,
+                Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
@@ -295,6 +305,8 @@ namespace TramsDataApi.Test.Factories
                 TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
                 State = updateRequest.State,
                 Status = academyTransferProject.Status,
+                Author = academyTransferProject.Author,
+                Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,

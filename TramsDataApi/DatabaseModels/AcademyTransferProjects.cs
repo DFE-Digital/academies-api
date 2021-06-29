@@ -38,6 +38,8 @@ namespace TramsDataApi.DatabaseModels
         public bool? FinanceAndDebtShouldBeConsidered { get; set; }
         public string FinanceAndDebtFurtherSpecification { get; set; }
         public string OtherBenefitValue { get; set; }
+        public string Author { get; set; }
+        public string Recommendation { get; set; }
 
         public virtual ICollection<AcademyTransferProjectIntendedTransferBenefits> AcademyTransferProjectIntendedTransferBenefits { get; set; }
         public virtual ICollection<TransferringAcademies> TransferringAcademies { get; set; }
