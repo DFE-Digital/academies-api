@@ -163,12 +163,16 @@ namespace TramsDataApi.Test.Factories
 
         private IfdPipeline CreateIfdPipeline()
         {
-            return _fixture.Create<IfdPipeline>();
+            return _fixture.Build<IfdPipeline>().OmitAutoProperties().Create();
         }
 
         private IfdPipeline CreateExpectedIfdPipeline(IfdPipeline original, UpdateAcademyConversionProjectRequest updateRequest)
         {
             var expected = JsonConvert.DeserializeObject<IfdPipeline>(JsonConvert.SerializeObject(original));
+            expected.DeliveryProcessDateForDiscussionByRscHtb = updateRequest.HeadTeacherBoardDate;
+            expected.GeneralDetailsProjectLead = updateRequest.Author;
+            expected.GeneralDetailsTeamLeader = updateRequest.ClearedBy;
+            expected.GeneralDetailsExpectedOpeningDate = updateRequest.ProposedAcademyOpeningDate;
             expected.DeliveryProcessPan = updateRequest.PublishedAdmissionNumber;
             expected.ProjectTemplateInformationViabilityIssue = updateRequest.ViabilityIssues;
             expected.ProjectTemplateInformationDeficit = updateRequest.FinancialDeficit;
@@ -182,7 +186,7 @@ namespace TramsDataApi.Test.Factories
 
         private AcademyConversionProject CreateAcademyConversionProject()
         {
-            return _fixture.Create<AcademyConversionProject>();
+            return _fixture.Build<AcademyConversionProject>().OmitAutoProperties().Create();
         }
 
         private AcademyConversionProject CreateExpectedAcademyConversionProject(AcademyConversionProject original, UpdateAcademyConversionProjectRequest updateRequest)
@@ -194,6 +198,9 @@ namespace TramsDataApi.Test.Factories
             expected.LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments;
             expected.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink;
             expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
+            expected.RecommendationForProject = updateRequest.RecommendationForProject;
+            expected.AcademyOrderRequired = updateRequest.AcademyOrderRequired;
+            expected.SchoolAndTrustInformationSectionComplete = updateRequest.SchoolAndTrustInformationSectionComplete;
             expected.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters;
             expected.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
             expected.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete;
