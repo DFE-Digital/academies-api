@@ -218,11 +218,11 @@ namespace TramsDataApi.Test.Integration
                 Subject = updateRequest.ProjectNote.Subject,
                 Note = updateRequest.ProjectNote.Note,
                 Author = updateRequest.ProjectNote.Author,
-                Date = DateTime.Now,
                 AcademyConversionProjectId = academyConversionProject.Id
             };
 
-            academyConversionProject.ProjectNotes.Should().ContainEquivalentOf(projectNote, config => config.Excluding(p => p.Id));
+            academyConversionProject.ProjectNotes.Should()
+                .ContainEquivalentOf(projectNote, config => config.Excluding(p => p.Id).Excluding(p => p.SelectedMemberPath.Contains("Date")));
         }
 
         private AcademyConversionProjectResponse CreateExpectedApiResponse(IfdPipeline ifdPipeline, Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)

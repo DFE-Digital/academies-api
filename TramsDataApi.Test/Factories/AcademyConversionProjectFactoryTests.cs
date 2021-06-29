@@ -219,7 +219,6 @@ namespace TramsDataApi.Test.Factories
                 Subject = updateRequest.ProjectNote.Subject,
                 Note = updateRequest.ProjectNote.Note,
                 Author = updateRequest.ProjectNote.Author,
-                Date = DateTime.Now,
             };
             expected.ProjectNotes.Add(projectNote);
             return expected;
