@@ -34,6 +34,8 @@ namespace TramsDataApi.Test.Factories
                 TrustSponsorRationale = null,
                 State = null,
                 Status = null,
+                Author = null,
+                Recommendation = null,
                 HighProfileShouldBeConsidered = null,
                 HighProfileFurtherSpecification = null,
                 ComplexLandAndBuildingShouldBeConsidered = null,
@@ -69,7 +71,9 @@ namespace TramsDataApi.Test.Factories
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse(),
                 State = null,
-                Status = null
+                Status = null,
+                Author = null,
+                Recommendation = null
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);
@@ -147,7 +151,9 @@ namespace TramsDataApi.Test.Factories
                     TrustSponsorRationale = academyTransferProjectModel.TrustSponsorRationale
                 },
                 State = academyTransferProjectModel.State,
-                Status = academyTransferProjectModel.Status
+                Status = academyTransferProjectModel.Status,
+                Author = academyTransferProjectModel.Author,
+                Recommendation = academyTransferProjectModel.Recommendation
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);

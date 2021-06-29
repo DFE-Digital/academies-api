@@ -31,6 +31,8 @@ namespace TramsDataApi.Factories
                 TrustSponsorRationale = request.Rationale?.TrustSponsorRationale,
                 State = request.State,
                 Status = request.Status,
+                Author = request.Author,
+                Recommendation = request.Recommendation,
                 HighProfileShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.HighProfile?.ShouldBeConsidered,
                 HighProfileFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.HighProfile?.FurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.ShouldBeConsidered,
@@ -97,6 +99,8 @@ namespace TramsDataApi.Factories
             original.TrustSponsorRationale = toMerge.TrustSponsorRationale ?? original.TrustSponsorRationale;
             original.State = toMerge.State ?? original.State;
             original.Status = toMerge.Status ?? original.Status;
+            original.Author = toMerge.Author ?? original.Author;
+            original.Recommendation = toMerge.Recommendation ?? original.Recommendation;
             original.HighProfileShouldBeConsidered = toMerge.HighProfileShouldBeConsidered == null
                 ? original.HighProfileShouldBeConsidered
                 : toMerge.HighProfileShouldBeConsidered;

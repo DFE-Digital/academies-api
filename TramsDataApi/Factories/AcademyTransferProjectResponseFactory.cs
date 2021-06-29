@@ -79,7 +79,9 @@ namespace TramsDataApi.Factories
                     TrustSponsorRationale = model.TrustSponsorRationale
                 },
                 State = model.State,
-                Status = model.Status
+                Status = model.Status,
+                Author = model.Author,
+                Recommendation = model.Recommendation
             };
         }
     }
