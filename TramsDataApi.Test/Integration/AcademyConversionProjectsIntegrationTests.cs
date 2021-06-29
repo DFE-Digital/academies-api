@@ -80,7 +80,7 @@ namespace TramsDataApi.Test.Integration
                 .With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
-            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline, academyConversionProject);
+            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline, trust, academyConversionProject);
 
             var response = await _client.GetAsync($"/conversion-projects/{ifdPipeline.Sk}");
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();

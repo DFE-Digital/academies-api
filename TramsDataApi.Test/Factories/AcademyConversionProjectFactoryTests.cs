@@ -108,6 +108,8 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
+            var projectNote = _fixture.Create<ProjectNote>();
+            academyConversionProject.ProjectNotes = new List<ProjectNote> {projectNote};
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
