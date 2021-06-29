@@ -24,5 +24,25 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipWritingprogressscore { get; set; }
         public decimal? SipMathsprogressscore { get; set; }
         public decimal? SipMathsprogressscoredisadv { get; set; }
+        public decimal? SipAttainment8score { get; set; }
+        public decimal? SipAttainment8scoredisadvantaged { get; set; }
+        public decimal? SipAttainment8scoreenglish { get; set; }
+        public decimal? SipAttainment8scoreenglishdisadvantaged { get; set; }
+        public decimal? SipAttainment8scoremaths { get; set; }
+        public decimal? SipAttainment8scoremathsdisadvantaged { get; set; }
+        public decimal? SipAttainment8scoreebacc { get; set; }
+        public decimal? SipAttainment8scoreebaccdisadvantaged { get; set; }
+        public int? SipNumberofpupilsprogress8 { get; set; }
+        public int? SipNumberofpupilsprogress8disadvantaged { get; set; }
+        public decimal? SipProgress8upperconfidence { get; set; }
+        public decimal? SipProgress8lowerconfidence { get; set; }
+        public decimal? SipProgress8english { get; set; }
+        public decimal? SipProgress8englishdisadvantaged { get; set; }
+        public decimal? SipProgress8maths { get; set; }
+        public decimal? SipProgress8mathsdisadvantaged { get; set; }
+        public decimal? SipProgress8ebacc { get; set; }
+        public decimal? SipProgress8ebaccdisadvantaged { get; set; }
+        
+        public int? SipPerformancetype { get; set; }
     }
 }

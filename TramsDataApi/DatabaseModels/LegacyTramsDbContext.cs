@@ -27,6 +27,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<SmartData> SmartData { get; set; }
         public virtual DbSet<SipPhonics> SipPhonics { get; set; }
         public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<GlobalOptionSetMetadata> GlobalOptionSetMetadata { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -2174,6 +2175,23 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("sip_urn")
                     .HasMaxLength(100);
             });
+            
+            modelBuilder.Entity<GlobalOptionSetMetadata>(entity =>
+            {
+                entity.HasKey(e => new { e.OptionSetName, e.Option, e.IsUserLocalizedLabel, e.LocalizedLabelLanguageCode })
+                    .HasName("PK__GlobalOp__C1071A5B45CD0479");
+
+                entity.ToTable("GlobalOptionSetMetadata", "cdm");
+
+                entity.Property(e => e.OptionSetName).HasMaxLength(64);
+
+                entity.Property(e => e.LocalizedLabel).HasMaxLength(350);
+            });
+
+            modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
+                .StartsAt(10000000)
+                .HasMin(10000000);
+            
             OnModelCreatingIfdPipeline(modelBuilder);
             OnModelCreatingEducationPerformancedata(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
