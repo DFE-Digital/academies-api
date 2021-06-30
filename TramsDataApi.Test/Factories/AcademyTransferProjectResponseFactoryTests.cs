@@ -16,8 +16,6 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsAnAcademyTransferProjectResponse_WhenGivenAnInitialAcademyTransferProject()
         {
-            
-      
             var academyTransferProjectModel = new AcademyTransferProjects
             {
                 Urn = 0,
@@ -70,10 +68,9 @@ namespace TramsDataApi.Test.Factories
                     }
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse(),
+                GeneralInformation = new AcademyTransferProjectGeneralInformationResponse(),
                 State = null,
-                Status = null,
-                Author = null,
-                Recommendation = null
+                Status = null
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);
@@ -150,10 +147,13 @@ namespace TramsDataApi.Test.Factories
                     ProjectRationale = academyTransferProjectModel.ProjectRationale,
                     TrustSponsorRationale = academyTransferProjectModel.TrustSponsorRationale
                 },
+                GeneralInformation = new AcademyTransferProjectGeneralInformationResponse
+                {
+                    Author = academyTransferProjectModel.Author,
+                    Recommendation = academyTransferProjectModel.Recommendation
+                },
                 State = academyTransferProjectModel.State,
-                Status = academyTransferProjectModel.Status,
-                Author = academyTransferProjectModel.Author,
-                Recommendation = academyTransferProjectModel.Recommendation
+                Status = academyTransferProjectModel.Status
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);

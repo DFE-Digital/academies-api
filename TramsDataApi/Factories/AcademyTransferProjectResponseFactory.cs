@@ -78,10 +78,13 @@ namespace TramsDataApi.Factories
                     ProjectRationale = model.ProjectRationale,
                     TrustSponsorRationale = model.TrustSponsorRationale
                 },
+                GeneralInformation = new AcademyTransferProjectGeneralInformationResponse
+                {
+                    Author = model.Author,
+                    Recommendation = model.Recommendation
+                },
                 State = model.State,
-                Status = model.Status,
-                Author = model.Author,
-                Recommendation = model.Recommendation
+                Status = model.Status
             };
         }
     }
