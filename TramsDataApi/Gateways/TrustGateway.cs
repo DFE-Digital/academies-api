@@ -46,7 +46,7 @@ namespace TramsDataApi.Gateways
             
             return _dbContext.Group
                 .Where(g => (
-                    g.GroupName == groupName ||
+                    g.GroupName.ToLower().Contains(groupName.ToLower()) ||
                     g.Ukprn == ukprn ||
                     g.CompaniesHouseNumber == companiesHouseNumber
                 ))
