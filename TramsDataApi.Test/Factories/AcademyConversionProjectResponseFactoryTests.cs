@@ -67,7 +67,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProjectWithNullSchoolBudgetAndProjectNotesValues()
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProjectWithNullSchoolBudgetValues()
         {
             var ifdPipeline = _fixture.Build<IfdPipeline>()
                 .With(x => x.GeneralDetailsUrn, "12345")

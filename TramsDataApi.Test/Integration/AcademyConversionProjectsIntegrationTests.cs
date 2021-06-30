@@ -69,8 +69,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
-                .Without(p => p.Id)
-                .With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
+                .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline, trust, academyConversionProject);
@@ -139,9 +138,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
-                .Without(p => p.Id)
-                .With(p => p.IfdPipelineId, ifdPipeline.Sk)
-                .Create();
+                .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
 

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;

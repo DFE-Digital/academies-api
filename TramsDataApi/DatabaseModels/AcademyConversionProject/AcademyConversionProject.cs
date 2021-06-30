@@ -98,10 +98,7 @@ namespace TramsDataApi.DatabaseModels
         public int? YearThreeProjectedPupilNumbers { get; set; }
         public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-        //key stage performance
+        // key stage performance
         public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
-
-        // don't think we'll need this anymore
-        //public ICollection<ProjectNote> ProjectNotes { get; set; }
     }
 }
