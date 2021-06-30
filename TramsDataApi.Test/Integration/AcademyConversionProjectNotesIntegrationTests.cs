@@ -109,7 +109,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task Post_request_should_add_project_note()
+        public async Task Post_request_should_add_project_note_to_database_and_respond_with_added_note()
         {
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(p => p.Id)
@@ -142,6 +142,20 @@ namespace TramsDataApi.Test.Integration
             projectNoteInDb.Note.Should().Be(addProjectNoteRequest.Note);
             projectNoteInDb.Author.Should().Be(addProjectNoteRequest.Author);
             projectNoteInDb.Date.Should().BeCloseTo(DateTime.Now, 1000);
+        }
+
+        [Fact]
+        public async Task Post_request_should_respond_with_bad_request_when_project_id_not_found()
+        {
+            var requestId = _fixture.Create<int>();
+            var addProjectNoteRequest = _fixture.Create<AddAcademyConversionProjectNoteRequest>();
+            var response = await _client.PostAsync($"/project-notes/{requestId}", JsonContent.Create(addProjectNoteRequest));
+
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+            var projectNotesInDb = _dbContext.AcademyConversionProjectNotes
+                .Where(pn => pn.AcademyConversionProjectId == requestId).ToList();
+            projectNotesInDb.Count.Should().Be(0);
         }
 
         public void Dispose()

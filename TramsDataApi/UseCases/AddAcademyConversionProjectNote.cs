@@ -18,6 +18,9 @@ namespace TramsDataApi.UseCases
 
         public AcademyConversionProjectNoteResponse Execute(int academyConversionProjectId, AddAcademyConversionProjectNoteRequest request)
         {
+            if(_tramsDbContext.AcademyConversionProjects.SingleOrDefault(p => p.Id == academyConversionProjectId) == null)
+                return null;
+
             var projectNote = new AcademyConversionProjectNote
             {
                 Subject = request.Subject,

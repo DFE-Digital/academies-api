@@ -34,6 +34,11 @@ namespace TramsDataApi.Controllers
         public IActionResult AddProjectNoe(int id, AddAcademyConversionProjectNoteRequest request)
         {
             var projectNote = _addAcademyConversionProjectNote.Execute(id, request);
+
+            if (projectNote == null)
+            {
+                return BadRequest();
+            }
             return Ok(projectNote);
         }
     }
