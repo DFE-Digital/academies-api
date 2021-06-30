@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
 {
-    public class ProjectNote
+    public class AcademyConversionProjectNote
     {
         public int Id { get; set; }
         public string Subject { get; set; }

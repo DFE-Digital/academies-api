@@ -8,7 +8,7 @@ namespace TramsDataApi.Migrations.TramsDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ProjectNote",
+                name: "AcademyConversionProjectNote",
                 schema: "sdd",
                 columns: table => new
                 {
@@ -22,27 +22,14 @@ namespace TramsDataApi.Migrations.TramsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectNote", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProjectNote_AcademyConversionProject_AcademyConversionProjectId",
-                        column: x => x.AcademyConversionProjectId,
-                        principalSchema: "sdd",
-                        principalTable: "AcademyConversionProject",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_AcademyConversionProjectNote", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectNote_AcademyConversionProjectId",
-                schema: "sdd",
-                table: "ProjectNote",
-                column: "AcademyConversionProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProjectNote",
+                name: "AcademyConversionProjectNote",
                 schema: "sdd");
         }
     }

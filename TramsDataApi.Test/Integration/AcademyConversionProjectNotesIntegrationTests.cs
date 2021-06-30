@@ -50,20 +50,20 @@ namespace TramsDataApi.Test.Integration
             _dbContext.Entry(academyConversionProject).Reload();
             _dbContext.Entry(secondAcademyConversionProject).Reload();
 
-            var projectNotes = _fixture.Build<ProjectNote>()
+            var projectNotes = _fixture.Build<AcademyConversionProjectNote>()
                 .Without(pn => pn.Id)
                 .With(pn => pn.AcademyConversionProjectId, academyConversionProject.Id)
                 .CreateMany(10)
                 .ToList();
 
-            var projectNotesForDifferentProject = _fixture.Build<ProjectNote>()
+            var projectNotesForDifferentProject = _fixture.Build<AcademyConversionProjectNote>()
                 .Without(pn => pn.Id)
                 .With(pn => pn.AcademyConversionProjectId, secondAcademyConversionProject.Id)
                 .CreateMany(10)
                 .ToList();
 
-            _dbContext.ProjectNotes.AddRange(projectNotes);
-            _dbContext.ProjectNotes.AddRange(projectNotesForDifferentProject);
+            _dbContext.AcademyConversionProjectNotes.AddRange(projectNotes);
+            _dbContext.AcademyConversionProjectNotes.AddRange(projectNotesForDifferentProject);
             _dbContext.SaveChanges();
 
             var expected = projectNotes.Select(pn => new AcademyConversionProjectNoteResponse
@@ -92,13 +92,13 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
             _dbContext.Entry(academyConversionProject).Reload();
 
-            var projectNotes = _fixture.Build<ProjectNote>()
+            var projectNotes = _fixture.Build<AcademyConversionProjectNote>()
                 .Without(pn => pn.Id)
                 .With(pn => pn.AcademyConversionProjectId, academyConversionProject.Id)
                 .CreateMany(10)
                 .ToList();
 
-            _dbContext.ProjectNotes.AddRange(projectNotes);
+            _dbContext.AcademyConversionProjectNotes.AddRange(projectNotes);
             _dbContext.SaveChanges();
 
             var response = await _client.GetAsync($"/project-notes/{_fixture.Create<int>()}");
@@ -137,7 +137,7 @@ namespace TramsDataApi.Test.Integration
                 Author = addProjectNoteRequest.Author,
             }, config => config.Excluding(pn => pn.SelectedMemberPath.Contains("Date")));
 
-            var projectNoteInDb = _dbContext.ProjectNotes.Single(pn => pn.AcademyConversionProjectId == academyConversionProject.Id);
+            var projectNoteInDb = _dbContext.AcademyConversionProjectNotes.Single(pn => pn.AcademyConversionProjectId == academyConversionProject.Id);
             projectNoteInDb.Subject.Should().Be(addProjectNoteRequest.Subject);
             projectNoteInDb.Note.Should().Be(addProjectNoteRequest.Note);
             projectNoteInDb.Author.Should().Be(addProjectNoteRequest.Author);
@@ -152,9 +152,9 @@ namespace TramsDataApi.Test.Integration
             }
             _dbContext.SaveChanges();
 
-            foreach (var entity in _dbContext.ProjectNotes)
+            foreach (var entity in _dbContext.AcademyConversionProjectNotes)
             {
-                _dbContext.ProjectNotes.Remove(entity);
+                _dbContext.AcademyConversionProjectNotes.Remove(entity);
             }
             _dbContext.SaveChanges();
         }

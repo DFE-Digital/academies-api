@@ -19,7 +19,7 @@ namespace TramsDataApi.UseCases
 
         public IEnumerable<AcademyConversionProjectNoteResponse> Execute(GetAcademyConversionProjectNotesByIdRequest request)
         {
-            return _tramsDbContext.ProjectNotes
+            return _tramsDbContext.AcademyConversionProjectNotes
                 .Where(pn => pn.AcademyConversionProjectId == request.Id)
                 .Select(pn => AcademyConversionProjectNoteResponseFactory.Create(pn));
         }

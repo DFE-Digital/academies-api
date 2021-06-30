@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20210625074213_AddProjectNoteTable")]
+    [Migration("20210630131302_AddProjectNoteTable")]
     partial class AddProjectNoteTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,33 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.ToTable("AcademyConversionProject","sdd");
                 });
 
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyConversionProjectNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AcademyConversionProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AcademyConversionProjectNote","sdd");
+                });
+
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyTransferProjectIntendedTransferBenefits", b =>
                 {
                     b.Property<int>("Id")
@@ -341,35 +368,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.ToTable("AcademyTransferProjects","sdd");
                 });
 
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.ProjectNote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AcademyConversionProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Author")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AcademyConversionProjectId");
-
-                    b.ToTable("ProjectNote","sdd");
-                });
-
             modelBuilder.Entity("TramsDataApi.DatabaseModels.TransferringAcademies", b =>
                 {
                     b.Property<int>("Id")
@@ -404,15 +402,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .WithMany("AcademyTransferProjectIntendedTransferBenefits")
                         .HasForeignKey("FkAcademyTransferProjectId")
                         .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.ProjectNote", b =>
-                {
-                    b.HasOne("TramsDataApi.DatabaseModels.AcademyConversionProject", null)
-                        .WithMany("ProjectNotes")
-                        .HasForeignKey("AcademyConversionProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.TransferringAcademies", b =>

@@ -18,7 +18,7 @@ namespace TramsDataApi.UseCases
 
         public AcademyConversionProjectNoteResponse Execute(int academyConversionProjectId, AddAcademyConversionProjectNoteRequest request)
         {
-            var projectNote = new ProjectNote
+            var projectNote = new AcademyConversionProjectNote
             {
                 Subject = request.Subject,
                 Note = request.Note,
@@ -27,7 +27,7 @@ namespace TramsDataApi.UseCases
                 AcademyConversionProjectId = academyConversionProjectId
             };
 
-            _tramsDbContext.ProjectNotes.Add(projectNote);
+            _tramsDbContext.AcademyConversionProjectNotes.Add(projectNote);
             _tramsDbContext.SaveChanges();
 
             return AcademyConversionProjectNoteResponseFactory.Create(projectNote);

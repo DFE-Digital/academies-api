@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 

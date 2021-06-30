@@ -1,4 +1,3 @@
-using System;
 using AutoFixture;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
@@ -19,7 +18,7 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsAcademyConversionProjectNoteResponse_WhenGivenAcademyConversionProjectNote()
         {
-            var projectNote = _fixture.Create<ProjectNote>();
+            var projectNote = _fixture.Create<AcademyConversionProjectNote>();
             var response = AcademyConversionProjectNoteResponseFactory.Create(projectNote);
 
             response.Subject.Should().Be(projectNote.Subject);
