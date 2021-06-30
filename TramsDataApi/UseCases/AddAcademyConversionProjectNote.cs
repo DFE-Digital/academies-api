@@ -16,14 +16,15 @@ namespace TramsDataApi.UseCases
             _tramsDbContext = tramsDbContext;
         }
 
-        public AcademyConversionProjectNoteResponse Execute(int id, AddAcademyConversionProjectNoteRequest request)
+        public AcademyConversionProjectNoteResponse Execute(int academyConversionProjectId, AddAcademyConversionProjectNoteRequest request)
         {
             var projectNote = new ProjectNote
             {
                 Subject = request.Subject,
                 Note = request.Note,
                 Author = request.Author,
-                Date = DateTime.Now
+                Date = DateTime.Now,
+                AcademyConversionProjectId = academyConversionProjectId
             };
 
             _tramsDbContext.ProjectNotes.Add(projectNote);

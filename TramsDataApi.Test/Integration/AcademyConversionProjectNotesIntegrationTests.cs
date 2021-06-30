@@ -9,6 +9,7 @@ using AutoFixture;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.Test.Utils;
 using Xunit;
@@ -105,6 +106,42 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(new List<AcademyConversionProjectNoteResponse>());
+        }
+
+        [Fact]
+        public async Task Post_request_should_add_project_note()
+        {
+            var academyConversionProject = _fixture.Build<AcademyConversionProject>()
+                .Without(p => p.Id)
+                .Create();
+
+            var secondAcademyConversionProject = _fixture.Build<AcademyConversionProject>()
+                .Without(p => p.Id)
+                .Create();
+
+            _dbContext.AcademyConversionProjects.Add(academyConversionProject);
+            _dbContext.AcademyConversionProjects.Add(secondAcademyConversionProject);
+            _dbContext.SaveChanges();
+            _dbContext.Entry(academyConversionProject).Reload();
+            _dbContext.Entry(secondAcademyConversionProject).Reload();
+
+            var addProjectNoteRequest = _fixture.Create<AddAcademyConversionProjectNoteRequest>();
+            var response = await _client.PostAsync($"/project-notes/{academyConversionProject.Id}", JsonContent.Create(addProjectNoteRequest));
+            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectNoteResponse>();
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(new AcademyConversionProjectNoteResponse
+            {
+                Subject = addProjectNoteRequest.Subject,
+                Note = addProjectNoteRequest.Note,
+                Author = addProjectNoteRequest.Author,
+            }, config => config.Excluding(pn => pn.SelectedMemberPath.Contains("Date")));
+
+            var projectNoteInDb = _dbContext.ProjectNotes.Single(pn => pn.AcademyConversionProjectId == academyConversionProject.Id);
+            projectNoteInDb.Subject.Should().Be(addProjectNoteRequest.Subject);
+            projectNoteInDb.Note.Should().Be(addProjectNoteRequest.Note);
+            projectNoteInDb.Author.Should().Be(addProjectNoteRequest.Author);
+            projectNoteInDb.Date.Should().BeCloseTo(DateTime.Now, 1000);
         }
 
         public void Dispose()
