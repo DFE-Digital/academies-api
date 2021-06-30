@@ -83,8 +83,5 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
 
         // key stage performance tables
         public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
-
-        // project notes
-        public List<ProjectNoteResponse> ProjectNotes { get; set; }
     }
 }

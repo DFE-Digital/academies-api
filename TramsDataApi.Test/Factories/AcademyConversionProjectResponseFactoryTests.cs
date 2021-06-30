@@ -78,7 +78,6 @@ namespace TramsDataApi.Test.Factories
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.CapitalCarryForwardAtEndMarchCurrentYear)
                 .Without(x => x.CapitalCarryForwardAtEndMarchNextYear)
-                .Without(x => x.ProjectNotes)
                 .Create();
 
             var expectedResponse = CreateExpected(ifdPipeline, null, academyConversionProject);
@@ -143,13 +142,6 @@ namespace TramsDataApi.Test.Factories
                 expected.CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear;
                 expected.SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation;
                 expected.SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete;
-                expected.ProjectNotes = academyConversionProject.ProjectNotes?.Select(p => new ProjectNoteResponse
-                {
-                    Subject = p.Subject,
-                    Note = p.Note,
-                    Author = p.Author,
-                    Date = p.Date
-                }).ToList();
             }
             return expected;
         }

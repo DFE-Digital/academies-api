@@ -32,9 +32,7 @@ namespace TramsDataApi.UseCases
                 return null;
             }
 
-            var academyConversionProject = _tramsDbContext.AcademyConversionProjects
-                .Include(p => p.ProjectNotes)
-                .SingleOrDefault(p => p.IfdPipelineId == request.Id);
+            var academyConversionProject = _tramsDbContext.AcademyConversionProjects.SingleOrDefault(p => p.IfdPipelineId == request.Id);
 
             Trust trust = null;
             if (!string.IsNullOrEmpty(ifdPipeline.TrustSponsorManagementTrust))

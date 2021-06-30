@@ -101,6 +101,7 @@ namespace TramsDataApi.DatabaseModels
         //key stage performance
         public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
 
-        public ICollection<ProjectNote> ProjectNotes { get; set; }
+        // don't think we'll need this anymore
+        //public ICollection<ProjectNote> ProjectNotes { get; set; }
     }
 }

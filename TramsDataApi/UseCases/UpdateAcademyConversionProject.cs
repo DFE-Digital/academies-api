@@ -29,9 +29,7 @@ namespace TramsDataApi.UseCases
                 return null;
             }
 
-            var academyConversionProject = _tramsDbContext.AcademyConversionProjects
-                                               .Include(p => p.ProjectNotes)
-                                               .SingleOrDefault(p => p.IfdPipelineId == id) ??
+            var academyConversionProject = _tramsDbContext.AcademyConversionProjects.SingleOrDefault(p => p.IfdPipelineId == id) ??
                                            new AcademyConversionProject{IfdPipelineId = id};
 
             var updatedIfdPipeline = AcademyConversionProjectFactory.Update(ifdPipeline, request);

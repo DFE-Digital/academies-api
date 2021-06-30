@@ -108,15 +108,12 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
-            var projectNote = _fixture.Create<ProjectNote>();
-            academyConversionProject.ProjectNotes = new List<ProjectNote> {projectNote};
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
             var expected = CreateExpectedAcademyConversionProject(academyConversionProject, updateRequest);
 
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should()
-                .BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
+            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -138,31 +135,6 @@ namespace TramsDataApi.Test.Factories
             expected.CapitalCarryForwardAtEndMarchCurrentYear = null;
             expected.CapitalCarryForwardAtEndMarchNextYear = null;
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfProjectNoteFieldIsNull()
-        {
-            var academyConversionProject = _fixture
-                .Build<AcademyConversionProject>().Without(p => p.ProjectNotes).Create();
-
-            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>()
-                .OmitAutoProperties()
-                .With(p => p.ProjectNote)
-                .Create();
-
-            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
-            var projectNote = new ProjectNote
-            {
-                Subject = updateRequest.ProjectNote.Subject,
-                Note = updateRequest.ProjectNote.Note,
-                Author = updateRequest.ProjectNote.Author,
-                Date = DateTime.Now,
-            };
-            expected.ProjectNotes = new List<ProjectNote> {projectNote};
-
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should()
-                .BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
         }
 
         private IfdPipeline CreateIfdPipeline()
@@ -214,13 +186,7 @@ namespace TramsDataApi.Test.Factories
             expected.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
             expected.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
             expected.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
-            var projectNote = new ProjectNote
-            {
-                Subject = updateRequest.ProjectNote.Subject,
-                Note = updateRequest.ProjectNote.Note,
-                Author = updateRequest.ProjectNote.Author,
-            };
-            expected.ProjectNotes.Add(projectNote);
+
             return expected;
         }
     }

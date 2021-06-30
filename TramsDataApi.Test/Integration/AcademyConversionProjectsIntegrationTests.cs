@@ -8,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -69,14 +68,8 @@ namespace TramsDataApi.Test.Integration
 
             _legacyDbContext.SaveChanges();
 
-            var projectNote = _fixture.Build<ProjectNote>()
-                .Without(pn => pn.Id)
-                .Without(pn => pn.AcademyConversionProjectId)
-                .Create();
-
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(p => p.Id)
-                .With(p => p.ProjectNotes, new List<ProjectNote>{projectNote})
                 .With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
@@ -121,11 +114,10 @@ namespace TramsDataApi.Test.Integration
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
+            content.Should().BeEquivalentTo(expected);
 
             _legacyDbContext.Entry(ifdPipeline).Reload();
             var academyConversionProject = _dbContext.AcademyConversionProjects
-                .Include(p => p.ProjectNotes)
                 .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
 
             AssertDatabaseUpdated(ifdPipeline, academyConversionProject, updateRequest);
@@ -146,15 +138,9 @@ namespace TramsDataApi.Test.Integration
 
             _legacyDbContext.SaveChanges();
 
-            var projectNote = _fixture.Build<ProjectNote>()
-                .Without(pn => pn.Id)
-                .Without(pn => pn.AcademyConversionProjectId)
-                .Create();
-
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(p => p.Id)
                 .With(p => p.IfdPipelineId, ifdPipeline.Sk)
-                .With(p => p.ProjectNotes, new List<ProjectNote> {projectNote})
                 .Create();
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
@@ -167,15 +153,12 @@ namespace TramsDataApi.Test.Integration
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected, config => config.Excluding(p => p.SelectedMemberPath.Contains("Date")));
+            content.Should().BeEquivalentTo(expected);
 
             _legacyDbContext.Entry(ifdPipeline).Reload();
             _dbContext.Entry(academyConversionProject).Reload();
-            var academyConversionProjectFromDb = _dbContext.AcademyConversionProjects
-                .Include(p => p.ProjectNotes)
-                .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
 
-            AssertDatabaseUpdated(ifdPipeline, academyConversionProjectFromDb, updateRequest);
+            AssertDatabaseUpdated(ifdPipeline, academyConversionProject, updateRequest);
         }
 
         [Fact]
@@ -212,17 +195,6 @@ namespace TramsDataApi.Test.Integration
             academyConversionProject.CapitalCarryForwardAtEndMarchNextYear.Should().Be(updateRequest.CapitalCarryForwardAtEndMarchNextYear);
             academyConversionProject.SchoolBudgetInformationAdditionalInformation.Should().Be(updateRequest.SchoolBudgetInformationAdditionalInformation);
             academyConversionProject.SchoolBudgetInformationSectionComplete.Should().Be(updateRequest.SchoolBudgetInformationSectionComplete);
-            if (updateRequest.ProjectNote == null) return;
-            var projectNote = new ProjectNote
-            {
-                Subject = updateRequest.ProjectNote.Subject,
-                Note = updateRequest.ProjectNote.Note,
-                Author = updateRequest.ProjectNote.Author,
-                AcademyConversionProjectId = academyConversionProject.Id
-            };
-
-            academyConversionProject.ProjectNotes.Should()
-                .ContainEquivalentOf(projectNote, config => config.Excluding(p => p.Id).Excluding(p => p.SelectedMemberPath.Contains("Date")));
         }
 
         private AcademyConversionProjectResponse CreateExpectedApiResponse(IfdPipeline ifdPipeline, Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)

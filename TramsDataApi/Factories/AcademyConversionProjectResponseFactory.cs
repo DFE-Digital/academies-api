@@ -63,13 +63,6 @@ namespace TramsDataApi.Factories
 				response.CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear;
 				response.SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation;
 				response.SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete;
-				response.ProjectNotes = academyConversionProject.ProjectNotes?.Select(p => new ProjectNoteResponse
-				{
-					Subject = p.Subject,
-					Note = p.Note,
-					Author = p.Author,
-					Date = p.Date
-				}).ToList();
             }
 
 			return response;
