@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
@@ -18,16 +19,9 @@ namespace TramsDataApi.UseCases
 
         public IEnumerable<AcademyConversionProjectNoteResponse> Execute(GetAcademyConversionProjectNotesByIdRequest request)
         {
-            // separate factory method for this mapping to response, for consistency and so it can be unit tested
             return _tramsDbContext.ProjectNotes
                 .Where(pn => pn.AcademyConversionProjectId == request.Id)
-                .Select(pn => new AcademyConversionProjectNoteResponse
-                {
-                    Subject = pn.Subject,
-                    Note = pn.Note,
-                    Author = pn.Author,
-                    Date = DateTime.Now
-                });
+                .Select(pn => AcademyConversionProjectNoteResponseFactory.Create(pn));
         }
     }
 }
