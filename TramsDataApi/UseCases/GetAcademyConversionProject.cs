@@ -15,7 +15,7 @@ namespace TramsDataApi.UseCases
         private readonly ITrustGateway _trustGateway;
 
         public GetAcademyConversionProject(
-            LegacyTramsDbContext legacyTramsDbContext, 
+            LegacyTramsDbContext legacyTramsDbContext,
             TramsDbContext tramsDbContext,
             ITrustGateway trustGateway)
         {

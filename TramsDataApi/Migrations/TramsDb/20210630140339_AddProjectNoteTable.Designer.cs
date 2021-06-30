@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210630140339_AddProjectNoteTable")]
+    partial class AddProjectNoteTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,9 +294,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Author")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ComplexLandAndBuildingFurtherSpecification")
                         .HasColumnType("nvarchar(max)");
 
@@ -334,9 +333,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("bit");
 
                     b.Property<string>("RddOrEsfaInterventionDetail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Recommendation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")

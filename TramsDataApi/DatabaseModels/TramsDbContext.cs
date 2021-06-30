@@ -17,6 +17,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<AcademyTransferProjects> AcademyTransferProjects { get; set; }
         public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
         public virtual DbSet<AcademyConversionProject> AcademyConversionProjects { get; set; }
+        public virtual DbSet<AcademyConversionProjectNote> AcademyConversionProjectNotes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -93,6 +94,11 @@ namespace TramsDataApi.DatabaseModels
             modelBuilder.Entity<AcademyConversionProject>(entity =>
             {
                 entity.ToTable("AcademyConversionProject", "sdd");
+            });
+
+            modelBuilder.Entity<AcademyConversionProjectNote>(entity =>
+            {
+                entity.ToTable("AcademyConversionProjectNote", "sdd");
             });
 
             OnModelCreatingPartial(modelBuilder);

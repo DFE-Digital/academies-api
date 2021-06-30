@@ -72,7 +72,6 @@ namespace TramsDataApi.Test.Integration
                 .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
-
             var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline, trust, academyConversionProject);
 
             var response = await _client.GetAsync($"/conversion-projects/{ifdPipeline.Sk}");
@@ -189,10 +188,10 @@ namespace TramsDataApi.Test.Integration
             academyConversionProject.SchoolPerformanceAdditionalInformation.Should().Be(updateRequest.SchoolPerformanceAdditionalInformation);
             ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward.Should().Be(updateRequest.RevenueCarryForwardAtEndMarchCurrentYear.ToString());
             ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward.Should().Be(updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear.ToString());
-            academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear;
-            academyConversionProject.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
-            academyConversionProject.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
-            academyConversionProject.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
+            academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear.Should().Be(updateRequest.CapitalCarryForwardAtEndMarchCurrentYear);
+            academyConversionProject.CapitalCarryForwardAtEndMarchNextYear.Should().Be(updateRequest.CapitalCarryForwardAtEndMarchNextYear);
+            academyConversionProject.SchoolBudgetInformationAdditionalInformation.Should().Be(updateRequest.SchoolBudgetInformationAdditionalInformation);
+            academyConversionProject.SchoolBudgetInformationSectionComplete.Should().Be(updateRequest.SchoolBudgetInformationSectionComplete);
         }
 
         private AcademyConversionProjectResponse CreateExpectedApiResponse(IfdPipeline ifdPipeline, Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
