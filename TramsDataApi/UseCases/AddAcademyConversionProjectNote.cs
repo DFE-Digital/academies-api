@@ -7,16 +7,16 @@ using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class UpdateAcademyConversionProjectNotes : IUpdateAcademyConversionProjectNote
+    public class AddAcademyConversionProjectNote : IAddAcademyConversionProjectNote
     {
         private readonly TramsDbContext _tramsDbContext;
 
-        public UpdateAcademyConversionProjectNotes(TramsDbContext tramsDbContext)
+        public AddAcademyConversionProjectNote(TramsDbContext tramsDbContext)
         {
             _tramsDbContext = tramsDbContext;
         }
 
-        public AcademyConversionProjectNoteResponse Execute(int id, UpdateAcademyConversionProjectNoteRequest request)
+        public AcademyConversionProjectNoteResponse Execute(int id, AddAcademyConversionProjectNoteRequest request)
         {
             var projectNote = new ProjectNote
             {

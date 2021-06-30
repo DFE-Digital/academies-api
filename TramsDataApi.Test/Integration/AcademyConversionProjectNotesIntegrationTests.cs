@@ -69,14 +69,15 @@ namespace TramsDataApi.Test.Integration
             {
                 Subject = pn.Subject,
                 Note = pn.Note,
-                Author = pn.Author
+                Author = pn.Author,
+                Date = pn.Date
             });
 
             var response = await _client.GetAsync($"/project-notes/{academyConversionProject.Id}");
             var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectNoteResponse>>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected, config => config.Excluding(pn => pn.SelectedMemberPath.Contains("Date")));
+            content.Should().BeEquivalentTo(expected);
         }
 
         [Fact]

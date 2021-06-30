@@ -25,7 +25,7 @@ namespace TramsDataApi.Test.Factories
             response.Subject.Should().Be(projectNote.Subject);
             response.Note.Should().Be(projectNote.Note);
             response.Author.Should().Be(projectNote.Author);
-            response.Date.Should().BeCloseTo(DateTime.Now);
+            response.Date.Should().Be(projectNote.Date);
         }
     }
 }

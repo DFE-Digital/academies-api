@@ -13,11 +13,13 @@ namespace TramsDataApi.Controllers
         private readonly
             IUseCase<GetAcademyConversionProjectNotesByIdRequest, IEnumerable<AcademyConversionProjectNoteResponse>>
             _getAcademyConversionProjectNotesById;
+        private readonly IAddAcademyConversionProjectNote _addAcademyConversionProjectNote;
 
         public AcademyConversionProjectNotesController(IUseCase<GetAcademyConversionProjectNotesByIdRequest,
-            IEnumerable<AcademyConversionProjectNoteResponse>> getAcademyConversionProjectNotesById)
+            IEnumerable<AcademyConversionProjectNoteResponse>> getAcademyConversionProjectNotesById, IAddAcademyConversionProjectNote addAcademyConversionProjectNote)
         {
             _getAcademyConversionProjectNotesById = getAcademyConversionProjectNotesById;
+            _addAcademyConversionProjectNote = addAcademyConversionProjectNote;
         }
 
         [HttpGet("{id}")]
@@ -26,6 +28,13 @@ namespace TramsDataApi.Controllers
             var projectNotes = _getAcademyConversionProjectNotesById.Execute(new GetAcademyConversionProjectNotesByIdRequest { Id = id });
 
             return Ok(projectNotes);
+        }
+
+        [HttpPost("{id}")]
+        public IActionResult AddProjectNoe(int id, AddAcademyConversionProjectNoteRequest request)
+        {
+            var projectNote = _addAcademyConversionProjectNote.Execute(id, request);
+            return Ok(projectNote);
         }
     }
 }
