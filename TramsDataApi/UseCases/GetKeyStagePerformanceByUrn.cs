@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels.EducationalPerformance;
@@ -27,9 +29,28 @@ namespace TramsDataApi.UseCases
 
             var educationPerformance = _educationPerformanceGateway.GetEducationalPerformanceForAccount(academy);
 
-            var nationalAverageEducationPerformances =
-                _educationPerformanceGateway.GetNationalEducationalPerformanceData();
-            
+            var groupedNationalAverages =
+                _educationPerformanceGateway.GetNationalEducationalPerformanceData().GroupBy(epd => epd.SipName);
+
+            var nationalAverageEducationPerformances = new List<SipEducationalperformancedata>();
+
+            foreach (var group in groupedNationalAverages)
+            {
+                var nationalEducationPerformanceDataForYear = new SipEducationalperformancedata
+                {
+                    SipName = group.Key
+                };
+                foreach (var nationalEducationalPerformanceData in group)
+                {
+                    nationalEducationPerformanceDataForYear =
+                        GroupedEducationPerformanceFactory.Create(nationalEducationPerformanceDataForYear,
+                            nationalEducationalPerformanceData);
+                }
+
+                nationalAverageEducationPerformances.Add(nationalEducationPerformanceDataForYear);
+            }
+
+
             var ks2Response = educationPerformance
                 .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd)).ToList();
 
