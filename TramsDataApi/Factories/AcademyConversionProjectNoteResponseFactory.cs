@@ -13,7 +13,7 @@ namespace TramsDataApi.Factories
                 Subject = projectNote.Subject,
                 Note = projectNote.Note,
                 Author = projectNote.Author,
-                Date = DateTime.Now
+                Date = projectNote.Date
             };
         }
     }

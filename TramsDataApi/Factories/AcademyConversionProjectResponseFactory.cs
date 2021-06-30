@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TramsDataApi.DatabaseModels;
+﻿using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.Factories

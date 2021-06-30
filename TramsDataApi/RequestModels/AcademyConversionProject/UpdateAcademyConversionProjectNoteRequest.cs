@@ -2,7 +2,7 @@ using System;
 
 namespace TramsDataApi.RequestModels.AcademyConversionProject
 {
-    public class ProjectNoteRequest
+    public class UpdateAcademyConversionProjectNoteRequest
     {
         public string Subject { get; set; }
         public string Note { get; set; }
