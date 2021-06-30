@@ -42,6 +42,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(c => c.Benefits = benefitsRequest)
                 .With(c => c.Dates = datesRequest)
                 .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
+                .With(c => c.GeneralInformation = Builder<AcademyTransferProjectGeneralInformationRequest>.CreateNew().Build())
                 .With(c => c.Features = Builder<AcademyTransferProjectFeaturesRequest>.CreateNew().Build())
                 .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
                     .CreateListOfSize(5).Build())

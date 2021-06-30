@@ -16,9 +16,8 @@ namespace TramsDataApi.ResponseModels
         public AcademyTransferProjectDatesResponse Dates { get; set; }
         public AcademyTransferProjectBenefitsResponse Benefits { get; set; }
         public AcademyTransferProjectRationaleResponse Rationale { get; set; }
+        public AcademyTransferProjectGeneralInformationResponse GeneralInformation { get; set; }
         public string State { get; set; }
         public string Status { get; set; }
-        public string Author { get; set; }
-        public string Recommendation { get; set; }
     }
 }
