@@ -23,7 +23,20 @@ namespace TramsDataApi.Migrations.TramsDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AcademyConversionProjectNote", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AcademyConversionProjectNote_AcademyConversionProject_AcademyConversionProjectId",
+                        column: x => x.AcademyConversionProjectId,
+                        principalSchema: "sdd",
+                        principalTable: "AcademyConversionProject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AcademyConversionProjectNote_AcademyConversionProjectId",
+                schema: "sdd",
+                table: "AcademyConversionProjectNote",
+                column: "AcademyConversionProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

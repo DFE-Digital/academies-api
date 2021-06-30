@@ -52,13 +52,13 @@ namespace TramsDataApi.Test.Integration
 
             var projectNotes = _fixture.Build<AcademyConversionProjectNote>()
                 .Without(pn => pn.Id)
-                .With(pn => pn.AcademyConversionProjectId, academyConversionProject.Id)
+                .With(pn => pn.AcademyConversionProject, academyConversionProject)
                 .CreateMany(10)
                 .ToList();
 
             var projectNotesForDifferentProject = _fixture.Build<AcademyConversionProjectNote>()
                 .Without(pn => pn.Id)
-                .With(pn => pn.AcademyConversionProjectId, secondAcademyConversionProject.Id)
+                .With(pn => pn.AcademyConversionProject, secondAcademyConversionProject)
                 .CreateMany(10)
                 .ToList();
 
@@ -94,7 +94,7 @@ namespace TramsDataApi.Test.Integration
 
             var projectNotes = _fixture.Build<AcademyConversionProjectNote>()
                 .Without(pn => pn.Id)
-                .With(pn => pn.AcademyConversionProjectId, academyConversionProject.Id)
+                .With(pn => pn.AcademyConversionProject, academyConversionProject)
                 .CreateMany(10)
                 .ToList();
 

@@ -12,5 +12,7 @@ namespace TramsDataApi.DatabaseModels
         public DateTime Date { get; set; }
         [ForeignKey("AcademyConversionProjectId")]
         public int AcademyConversionProjectId { get; set; }
+
+        public virtual AcademyConversionProject AcademyConversionProject { get; set; }
     }
 }

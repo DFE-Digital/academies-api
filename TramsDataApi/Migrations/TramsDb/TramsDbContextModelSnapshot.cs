@@ -257,6 +257,8 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AcademyConversionProjectId");
+
                     b.ToTable("AcademyConversionProjectNote","sdd");
                 });
 
@@ -392,6 +394,15 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasIndex("FkAcademyTransferProjectId");
 
                     b.ToTable("TransferringAcademies","sdd");
+                });
+
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyConversionProjectNote", b =>
+                {
+                    b.HasOne("TramsDataApi.DatabaseModels.AcademyConversionProject", "AcademyConversionProject")
+                        .WithMany()
+                        .HasForeignKey("AcademyConversionProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyTransferProjectIntendedTransferBenefits", b =>
