@@ -74,13 +74,14 @@ namespace TramsDataApi.Test.Integration
                 Note = pn.Note,
                 Author = pn.Author,
                 Date = pn.Date
-            });
+            }).OrderByDescending(pn => pn.Date).ToList();
 
             var response = await _client.GetAsync($"/project-notes/{academyConversionProject.Id}");
-            var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectNoteResponse>>();
+            var content = (await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectNoteResponse>>()).ToList();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
+            content.Should().BeInDescendingOrder(c => c.Date);
         }
 
         [Fact]
@@ -110,7 +111,6 @@ namespace TramsDataApi.Test.Integration
             content.Should().BeEquivalentTo(new List<AcademyConversionProjectNoteResponse>());
         }
 
-        // need to update id to be that of ifd pipeline
         [Fact]
         public async Task Post_request_should_add_project_note_to_database_and_respond_with_added_note()
         {
