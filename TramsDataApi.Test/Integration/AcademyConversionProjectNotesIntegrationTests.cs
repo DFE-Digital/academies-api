@@ -191,6 +191,12 @@ namespace TramsDataApi.Test.Integration
 
         public void Dispose()
         {
+            foreach (var entity in _legacyDbContext.IfdPipeline)
+            {
+                _legacyDbContext.IfdPipeline.Remove(entity);
+            }
+            _legacyDbContext.SaveChanges();
+
             foreach (var entity in _dbContext.AcademyConversionProjects)
             {
                 _dbContext.AcademyConversionProjects.Remove(entity);
