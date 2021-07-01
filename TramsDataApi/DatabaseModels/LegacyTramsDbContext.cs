@@ -2192,7 +2192,6 @@ namespace TramsDataApi.DatabaseModels
                 .StartsAt(10000000)
                 .HasMin(10000000);
             
-            OnModelCreatingIfdPipeline(modelBuilder);
             OnModelCreatingEducationPerformancedata(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }

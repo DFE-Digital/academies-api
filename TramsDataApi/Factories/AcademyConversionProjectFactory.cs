@@ -4,39 +4,32 @@ using TramsDataApi.RequestModels.AcademyConversionProject;
 
 namespace TramsDataApi.Factories
 {
+    /// <remarks>
+    /// NB: any changes here may need replicating in TramsDataApi.ApplyToBecome.SyncAcademyConversionProjectFactory
+    /// </remarks>
     public class AcademyConversionProjectFactory
     {
-        public static IfdPipeline Update(IfdPipeline project, UpdateAcademyConversionProjectRequest updateRequest)
-        {
-            if (updateRequest == null)
-            {
-                return project;
-            }
-
-            project.DeliveryProcessDateForDiscussionByRscHtb = updateRequest.HeadTeacherBoardDate ?? project.DeliveryProcessDateForDiscussionByRscHtb;
-            project.GeneralDetailsProjectLead = updateRequest.Author ?? project.GeneralDetailsProjectLead;
-            project.GeneralDetailsTeamLeader = updateRequest.ClearedBy ?? project.GeneralDetailsTeamLeader;
-            project.GeneralDetailsExpectedOpeningDate = updateRequest.ProposedAcademyOpeningDate ?? project.GeneralDetailsExpectedOpeningDate;
-            project.DeliveryProcessPan = updateRequest.PublishedAdmissionNumber ?? project.DeliveryProcessPan;
-            project.ProjectTemplateInformationViabilityIssue = updateRequest.ViabilityIssues ?? project.ProjectTemplateInformationViabilityIssue;
-            project.ProjectTemplateInformationDeficit = updateRequest.FinancialDeficit ?? project.ProjectTemplateInformationDeficit;
-            project.ProjectTemplateInformationRationaleForProject = updateRequest.RationaleForProject ?? project.ProjectTemplateInformationRationaleForProject;
-            project.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust ?? project.ProjectTemplateInformationRationaleForSponsor;
-            project.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues ?? project.ProjectTemplateInformationRisksAndIssues;
-            project.ProjectTemplateInformationFyRevenueBalanceCarriedForward = updateRequest.RevenueCarryForwardAtEndMarchCurrentYear == default(decimal) ? null :
-                updateRequest.RevenueCarryForwardAtEndMarchCurrentYear?.ToString() ?? project.ProjectTemplateInformationFyRevenueBalanceCarriedForward;
-            project.ProjectTemplateInformationFy1RevenueBalanceCarriedForward = updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear == default(decimal) ? null :
-                updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear?.ToString() ?? project.ProjectTemplateInformationFy1RevenueBalanceCarriedForward;
-
-            return project;
-        }
-
         public static AcademyConversionProject Update(AcademyConversionProject project, UpdateAcademyConversionProjectRequest updateRequest)
         {
             if (updateRequest == null)
             {
                 return project;
             }
+
+            project.HeadTeacherBoardDate = updateRequest.HeadTeacherBoardDate ?? project.HeadTeacherBoardDate;
+            project.Author = updateRequest.Author ?? project.Author;
+            project.ClearedBy = updateRequest.ClearedBy ?? project.ClearedBy;
+            project.ProposedAcademyOpeningDate = updateRequest.ProposedAcademyOpeningDate ?? project.ProposedAcademyOpeningDate;
+            project.PublishedAdmissionNumber = updateRequest.PublishedAdmissionNumber ?? project.PublishedAdmissionNumber;
+            project.ViabilityIssues = updateRequest.ViabilityIssues ?? project.ViabilityIssues;
+            project.FinancialDeficit = updateRequest.FinancialDeficit ?? project.FinancialDeficit;
+            project.RationaleForProject = updateRequest.RationaleForProject ?? project.RationaleForProject;
+            project.RationaleForTrust = updateRequest.RationaleForTrust ?? project.RationaleForTrust;
+            project.RisksAndIssues = updateRequest.RisksAndIssues ?? project.RisksAndIssues;
+            project.RevenueCarryForwardAtEndMarchCurrentYear = updateRequest.RevenueCarryForwardAtEndMarchCurrentYear == default(decimal) ? null :
+                updateRequest.RevenueCarryForwardAtEndMarchCurrentYear ?? project.RevenueCarryForwardAtEndMarchCurrentYear;
+            project.ProjectedRevenueBalanceAtEndMarchNextYear = updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear == default(decimal) ? null :
+                updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear ?? project.ProjectedRevenueBalanceAtEndMarchNextYear;
 
             project.RationaleSectionComplete = updateRequest.RationaleSectionComplete ?? project.RationaleSectionComplete;
             project.LocalAuthorityInformationTemplateSentDate =

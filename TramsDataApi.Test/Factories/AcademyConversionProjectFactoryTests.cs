@@ -21,69 +21,6 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsOriginalAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestIsNull()
-        {
-            var academyConversionProject = CreateIfdPipeline();
-
-            var result = AcademyConversionProjectFactory.Update(academyConversionProject, null);
-
-            result.Should().BeEquivalentTo(academyConversionProject);
-        }
-
-        [Fact]
-        public void ReturnsOriginalAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestFieldsAreNull()
-        {
-            var academyConversionProject = CreateIfdPipeline();
-
-            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().OmitAutoProperties().Create();
-
-            var result = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
-            result.Should().BeEquivalentTo(academyConversionProject);
-        }
-
-        [Fact]
-        public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestFieldsAreEmpty()
-        {
-            var academyConversionProject = CreateIfdPipeline();
-
-            _fixture.Customize<string>(x => x.FromFactory(() => string.Empty));
-            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
-
-            var expected = CreateExpectedIfdPipeline(academyConversionProject, updateRequest);
-
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public void ReturnsUpdatedAcademyConversionProject_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestFieldsAreNotNull()
-        {
-            var academyConversionProject = CreateIfdPipeline();
-
-            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
-
-            var expected = CreateExpectedIfdPipeline(academyConversionProject, updateRequest);
-
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public void ReturnsUpdatedAcademyConversionProjectWithFieldValues_WhenUpdatingIfdPipeline_IfUpdateAcademyConversionProjectRequestDecimalFieldsAreSetToDefaultValues()
-        {
-            var ifdPipeline = CreateIfdPipeline();
-
-            var updateRequest = new UpdateAcademyConversionProjectRequest
-            {
-                RevenueCarryForwardAtEndMarchCurrentYear = default(decimal),
-                ProjectedRevenueBalanceAtEndMarchNextYear = default(decimal),
-            };
-
-            var expected = JsonConvert.DeserializeObject<IfdPipeline>(JsonConvert.SerializeObject(ifdPipeline));
-            expected.ProjectTemplateInformationFyRevenueBalanceCarriedForward = null;
-            expected.ProjectTemplateInformationFy1RevenueBalanceCarriedForward = null;
-            AcademyConversionProjectFactory.Update(ifdPipeline, updateRequest).Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
         public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestIsNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
@@ -136,29 +73,6 @@ namespace TramsDataApi.Test.Factories
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }
 
-        private IfdPipeline CreateIfdPipeline()
-        {
-            return _fixture.Build<IfdPipeline>().OmitAutoProperties().Create();
-        }
-
-        private IfdPipeline CreateExpectedIfdPipeline(IfdPipeline original, UpdateAcademyConversionProjectRequest updateRequest)
-        {
-            var expected = JsonConvert.DeserializeObject<IfdPipeline>(JsonConvert.SerializeObject(original));
-            expected.DeliveryProcessDateForDiscussionByRscHtb = updateRequest.HeadTeacherBoardDate;
-            expected.GeneralDetailsProjectLead = updateRequest.Author;
-            expected.GeneralDetailsTeamLeader = updateRequest.ClearedBy;
-            expected.GeneralDetailsExpectedOpeningDate = updateRequest.ProposedAcademyOpeningDate;
-            expected.DeliveryProcessPan = updateRequest.PublishedAdmissionNumber;
-            expected.ProjectTemplateInformationViabilityIssue = updateRequest.ViabilityIssues;
-            expected.ProjectTemplateInformationDeficit = updateRequest.FinancialDeficit;
-            expected.ProjectTemplateInformationRationaleForProject = updateRequest.RationaleForProject;
-            expected.ProjectTemplateInformationRationaleForSponsor = updateRequest.RationaleForTrust;
-            expected.ProjectTemplateInformationRisksAndIssues = updateRequest.RisksAndIssues;
-            expected.ProjectTemplateInformationFyRevenueBalanceCarriedForward = updateRequest.RevenueCarryForwardAtEndMarchCurrentYear.ToString();
-            expected.ProjectTemplateInformationFy1RevenueBalanceCarriedForward = updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear.ToString();
-            return expected;
-        }
-
         private AcademyConversionProject CreateAcademyConversionProject()
         {
             return _fixture.Build<AcademyConversionProject>().OmitAutoProperties().Create();
@@ -167,6 +81,19 @@ namespace TramsDataApi.Test.Factories
         private AcademyConversionProject CreateExpectedAcademyConversionProject(AcademyConversionProject original, UpdateAcademyConversionProjectRequest updateRequest)
         {
             var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(original));
+            expected.HeadTeacherBoardDate = updateRequest.HeadTeacherBoardDate;
+            expected.Author = updateRequest.Author;
+            expected.ClearedBy = updateRequest.ClearedBy;
+            expected.ProposedAcademyOpeningDate = updateRequest.ProposedAcademyOpeningDate;
+            expected.PublishedAdmissionNumber = updateRequest.PublishedAdmissionNumber;
+            expected.ViabilityIssues = updateRequest.ViabilityIssues;
+            expected.FinancialDeficit = updateRequest.FinancialDeficit;
+            expected.RationaleForProject = updateRequest.RationaleForProject;
+            expected.RationaleForTrust = updateRequest.RationaleForTrust;
+            expected.RisksAndIssues = updateRequest.RisksAndIssues;
+            expected.RevenueCarryForwardAtEndMarchCurrentYear = updateRequest.RevenueCarryForwardAtEndMarchCurrentYear;
+            expected.ProjectedRevenueBalanceAtEndMarchNextYear = updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear;
+
             expected.RationaleSectionComplete = updateRequest.RationaleSectionComplete;
             expected.LocalAuthorityInformationTemplateSentDate = updateRequest.LocalAuthorityInformationTemplateSentDate;
             expected.LocalAuthorityInformationTemplateReturnedDate = updateRequest.LocalAuthorityInformationTemplateReturnedDate;

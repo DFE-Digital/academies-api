@@ -22,4 +22,8 @@
       <Folder Include="Migrations" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TramsDataApi.ApplyToBecome\TramsDataApi.ApplyToBecome.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
-using TramsDataApi.DatabaseModels;
+using Microsoft.Extensions.DependencyInjection;
+using TramsDataApi.ApplyToBecome;
+using TramsDataApi.Test.ApplyToBecome;
 
 namespace TramsDataApi.Test
 {
@@ -18,6 +20,12 @@ namespace TramsDataApi.Test
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Test");
+            builder.ConfigureTestServices(services =>
+            {
+                var syncAcpService = services.Single(sd => sd.ImplementationType == typeof(SyncAcademyConversionProjectsService));
+                services.Remove(syncAcpService);
+                services.AddDbContext<ApplyToBecomeDbContextMock>();
+            });
             builder.ConfigureAppConfiguration((context, config) =>
             {
                 config.AddInMemoryCollection(new[]
