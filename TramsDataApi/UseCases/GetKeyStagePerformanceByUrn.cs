@@ -52,7 +52,8 @@ namespace TramsDataApi.UseCases
 
 
             var ks2Response = educationPerformance
-                .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd)).ToList();
+                .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd, nationalAverageEducationPerformances
+                    .FirstOrDefault(national => national.SipName == epd.SipName))).ToList();
 
             
             var ks4Response = educationPerformance

@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class KeyStage2PerformanceResponseFactory
     {
-        public static KeyStage2PerformanceResponse Create(SipEducationalperformancedata educationalPerformanceData)
+        public static KeyStage2PerformanceResponse Create(SipEducationalperformancedata educationalPerformanceData, SipEducationalperformancedata nationalAveragePerformanceData)
         {
             if (educationalPerformanceData == null)
             {
@@ -39,6 +39,16 @@ namespace TramsDataApi.Factories
                 {
                     NotDisadvantaged = educationalPerformanceData.SipMathsprogressscore.ToString(),
                     Disadvantaged = educationalPerformanceData.SipMathsprogressscoredisadv.ToString()
+                },
+                NationalAveragePercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalAveragePerformanceData?.SipMeetingexpectedstandardinrwm.ToString(),
+                    Disadvantaged = nationalAveragePerformanceData?.SipMeetingexpectedstandardinrwmdisadv.ToString()
+                },
+                NationalAveragePercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalAveragePerformanceData?.SipMeetinghigherstandardinrwm.ToString(),
+                    Disadvantaged = nationalAveragePerformanceData?.SipMeetinghigherstandardrwmdisadv.ToString()
                 }
             };
         }

@@ -235,6 +235,16 @@ namespace TramsDataApi.Test.UseCases
                 {
                     NotDisadvantaged = educationPerformanceData.SipMathsprogressscore.ToString(),
                     Disadvantaged = educationPerformanceData.SipMathsprogressscoredisadv.ToString()
+                },
+                NationalAveragePercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalEducationPerformanceData2?.SipMeetingexpectedstandardinrwm.ToString(),
+                    Disadvantaged = nationalEducationPerformanceData2?.SipMeetingexpectedstandardinrwmdisadv.ToString()
+                },
+                NationalAveragePercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalEducationPerformanceData2?.SipMeetinghigherstandardinrwm.ToString(),
+                    Disadvantaged = nationalEducationPerformanceData2?.SipMeetinghigherstandardrwmdisadv.ToString()
                 }
             };
 
