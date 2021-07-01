@@ -35,7 +35,7 @@ namespace TramsDataApi.Test.Factories
         {
             var academyConversionProject = CreateAcademyConversionProject();
 
-            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().WithAutoProperties().Create();
+            var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().OmitAutoProperties().Create();
 
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(academyConversionProject);
         }
@@ -112,6 +112,7 @@ namespace TramsDataApi.Test.Factories
             expected.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
             expected.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
             expected.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
+
             return expected;
         }
     }

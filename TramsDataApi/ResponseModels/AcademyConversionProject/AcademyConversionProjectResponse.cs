@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TramsDataApi.ResponseModels.AcademyConversionProject
 {
@@ -80,7 +81,7 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
         public int? YearThreeProjectedPupilNumbers { get; set; }
         public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-        //key stage performance tables
+        // key stage performance tables
         public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
     }
 }
