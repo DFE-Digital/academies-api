@@ -55,6 +55,7 @@ namespace TramsDataApi.Test.Integration
                 .Build();
 
             var educationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
+                .With(epd => epd.Id = Guid.NewGuid())
                 .With(epd => epd.SipParentaccountid = accountGuid)
                 .With(epd => epd.SipName = "2016-2017")
                 .With(epd => epd.SipMeetingexpectedstandardinrwm = 20)
@@ -91,9 +92,56 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8scoredisadvantaged = 50.00M)
                 .Build();
 
+            var nationalAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
+                .With(epd => epd.Id = Guid.NewGuid())
+                .With(epd => epd.SipParentaccountid = null)
+                .With(epd => epd.SipPerformancetype = 123)
+                .With(epd => epd.SipName = "2016-2017")
+                .With(epd => epd.SipAttainment8score = 100.23M)
+                .With(epd => epd.SipAttainment8scoredisadvantaged =  54.19M)
+                .With(epd => epd.SipAttainment8scoreenglish =  58.51M)
+                .With(epd => epd.SipAttainment8scoreenglishdisadvantaged = 58.65M)
+                .With(epd => epd.SipAttainment8scoremaths = 45.41M)
+                .With(epd => epd.SipAttainment8scoremathsdisadvantaged =  41.70M)
+                .With(epd => epd.SipAttainment8scoreebacc =  85.35M)
+                .With(epd => epd.SipAttainment8scoreebaccdisadvantaged =  98.30M)
+                .With(epd => epd.SipNumberofpupilsprogress8 = _randomGenerator.Int())
+                .With(epd => epd.SipNumberofpupilsprogress8disadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipProgress8upperconfidence =  11.05M)
+                .With(epd => epd.SipProgress8lowerconfidence =  65.90M)
+                .With(epd => epd.SipProgress8english =  56.12M)
+                .With(epd => epd.SipProgress8englishdisadvantaged =  89.21M)
+                .With(epd => epd.SipProgress8maths = 50.96M)
+                .With(epd => epd.SipProgress8mathsdisadvantaged = 97.11M)
+                .With(epd => epd.SipProgress8ebacc = 32.45M)
+                .With(epd => epd.SipProgress8ebaccdisadvantaged = 22.79M)
+                .With(epd => epd.SipProgress8score = 105.77M)
+                .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
+                .With(epd => epd.SipMeetingexpectedstandardinrwm = 55.00M)
+                .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 77.00M)
+                .With(epd => epd.SipMeetinghigherstandardinrwm = 88.00M)
+                .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 22.00M)
+                .With(epd => epd.SipMeetingexpectedstandardinrwm = 89)
+                .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 99)
+                .With(epd => epd.SipMeetinghigherstandardinrwm = 23)
+                .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 74)
+                .Build();
+                
+            var globalOptionMetadata = Builder<GlobalOptionSetMetadata>.CreateNew()
+                .With(gom => gom.LocalizedLabelLanguageCode = 100)
+                .With(gom => gom.Option = 123)
+                .With(gom => gom.OptionSetName = "sip_performancetype")
+                .With(gom => gom.LocalizedLabel = "National")
+                .Build();
+
+            _legacyDbContext.GlobalOptionSetMetadata.Add(globalOptionMetadata);
             _legacyDbContext.Account.Add(account);
             _legacyDbContext.SipPhonics.AddRange(phonics);
-            _legacyDbContext.SipEducationalperformancedata.AddRange(educationPerformanceData);
+            _legacyDbContext.SipEducationalperformancedata
+                .AddRange(new List<SipEducationalperformancedata> 
+                {
+                    educationPerformanceData, nationalAverageEducationPerformanceData
+                });
             _legacyDbContext.SaveChanges();
 
             var expectedKs1Response = phonics.Select(ph => new KeyStage1PerformanceResponse
@@ -132,9 +180,19 @@ namespace TramsDataApi.Test.Integration
                     NotDisadvantaged = "4.00",
                     Disadvantaged = "9.00"
                 })
+                .With(epd => epd.NationalAveragePercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = "23.00",
+                    Disadvantaged = "74.00"
+                })
+                .With(epd => epd.NationalAveragePercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = "89.00",
+                    Disadvantaged = "99.00"
+                })
                 .Build().ToList();
             
-            var expectedKs4Response = new List<KeyStage4PerformanceResponse> {KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, null)};
+            var expectedKs4Response = new List<KeyStage4PerformanceResponse> {KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalAverageEducationPerformanceData)};
 
             var expected = new EducationalPerformanceResponse
             {
@@ -154,6 +212,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
             _legacyDbContext.SipPhonics.RemoveRange(_legacyDbContext.SipPhonics);
             _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
+            _legacyDbContext.GlobalOptionSetMetadata.RemoveRange(_legacyDbContext.GlobalOptionSetMetadata);
         }
         
         [Fact]
@@ -233,6 +292,10 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 22.79M)
                 .With(epd => epd.SipProgress8score = 105.77M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
+                .With(epd => epd.SipMeetingexpectedstandardinrwm = 55.00M)
+                .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 77.00M)
+                .With(epd => epd.SipMeetinghigherstandardinrwm = 88.00M)
+                .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 22.00M)
                 .Build();
             
             var nationalEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -279,7 +342,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expectedKeyStage2Response = KeyStage2PerformanceResponseFactory
-                .Create(educationPerformanceData);
+                .Create(educationPerformanceData, nationalEducationPerformance1);
 
             var expectedKeyStage4Response = new KeyStage4PerformanceResponse
             {
