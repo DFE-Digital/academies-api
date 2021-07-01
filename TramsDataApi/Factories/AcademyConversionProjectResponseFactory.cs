@@ -43,7 +43,8 @@ namespace TramsDataApi.Factories
             }
 
 			if (academyConversionProject != null)
-            {
+			{
+				response.AcademyConversionProjectId = academyConversionProject.Id;
 				response.RationaleSectionComplete = academyConversionProject.RationaleSectionComplete;
 				response.LocalAuthorityInformationTemplateSentDate = academyConversionProject.LocalAuthorityInformationTemplateSentDate;
 				response.LocalAuthorityInformationTemplateReturnedDate = academyConversionProject.LocalAuthorityInformationTemplateReturnedDate;
