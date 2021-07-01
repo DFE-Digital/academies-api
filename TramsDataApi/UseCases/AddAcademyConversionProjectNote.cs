@@ -16,10 +16,18 @@ namespace TramsDataApi.UseCases
             _tramsDbContext = tramsDbContext;
         }
 
-        public AcademyConversionProjectNoteResponse Execute(int academyConversionProjectId, AddAcademyConversionProjectNoteRequest request)
+        public AcademyConversionProjectNoteResponse Execute(int id, AddAcademyConversionProjectNoteRequest request)
         {
-            if(!_tramsDbContext.AcademyConversionProjects.Any(p => p.Id == academyConversionProjectId))
-                return null;
+            var academyConversionProject =
+                _tramsDbContext.AcademyConversionProjects.SingleOrDefault(p => p.IfdPipelineId == id);
+
+            if(academyConversionProject == null)
+            {
+                academyConversionProject = new AcademyConversionProject{IfdPipelineId = id};
+                _tramsDbContext.AcademyConversionProjects.Add(academyConversionProject);
+                _tramsDbContext.SaveChanges();
+                _tramsDbContext.Entry(academyConversionProject).GetDatabaseValues();
+            }
 
             var projectNote = new AcademyConversionProjectNote
             {
@@ -27,7 +35,7 @@ namespace TramsDataApi.UseCases
                 Note = request.Note,
                 Author = request.Author,
                 Date = DateTime.Now,
-                AcademyConversionProjectId = academyConversionProjectId
+                AcademyConversionProjectId = academyConversionProject.Id
             };
 
             _tramsDbContext.AcademyConversionProjectNotes.Add(projectNote);
