@@ -113,7 +113,7 @@ namespace TramsDataApi.Test.Integration
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected, config => config.Excluding(p => p.AcademyConversionProjectId));
+            content.Should().BeEquivalentTo(expected);
 
             _legacyDbContext.Entry(ifdPipeline).Reload();
             var academyConversionProject = _dbContext.AcademyConversionProjects

@@ -5,7 +5,6 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
     public class AcademyConversionProjectResponse
 	{
 		public int Id { get; set; }
-        public int AcademyConversionProjectId { get; set; }
         public int Urn { get; set; }
         public string SchoolName { get; set; }
         public string LocalAuthority { get; set; }

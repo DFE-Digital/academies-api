@@ -123,7 +123,6 @@ namespace TramsDataApi.Test.Factories
             }
             if (academyConversionProject != null)
             {
-                expected.AcademyConversionProjectId = academyConversionProject.Id;
                 expected.RecommendationForProject = academyConversionProject.RecommendationForProject;
                 expected.AcademyOrderRequired = academyConversionProject.AcademyOrderRequired;
                 expected.DistanceFromSchoolToTrustHeadquarters = academyConversionProject.DistanceFromSchoolToTrustHeadquarters;
