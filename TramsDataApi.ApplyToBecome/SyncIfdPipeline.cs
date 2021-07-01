@@ -7,10 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.ApplyToBecome
 {
     [Table("IfdPipeline", Schema = "mstr")]
-    public partial class IfdPipeline
+    public class SyncIfdPipeline
     {
         [Column("SK")]
         public long Sk { get; set; }

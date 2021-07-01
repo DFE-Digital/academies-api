@@ -38,14 +38,12 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_get_all_academy_conversion_projects()
         {
-            var ifdPipelines = _fixture.Build<IfdPipeline>()
-                .With(x => x.GeneralDetailsUrn, "123456")
-                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
-                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+            var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
                 .CreateMany();
-            _legacyDbContext.IfdPipeline.AddRange(ifdPipelines);
-            _legacyDbContext.SaveChanges();
-            var expected = ifdPipelines.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.SaveChanges();
+            var expected = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
 
             var response = await _client.GetAsync("/conversion-projects");
             var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectResponse>>();
@@ -57,25 +55,19 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_get_an_academy_conversion_project_by_id()
         {
-            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "789456")
-                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
-                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
-                .Create();
-            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
-
-            var trust = CreateTrust(ifdPipeline);
-            _legacyDbContext.Trust.Add(trust);
-
-            _legacyDbContext.SaveChanges();
-
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
-                .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
+                .Without(x => x.Id)
+                .Create();
+            var trust = CreateTrust(academyConversionProject);
+
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
+            _legacyDbContext.Trust.Add(trust);
+            _legacyDbContext.SaveChanges();
 
-            var expected = AcademyConversionProjectResponseFactory.Create(ifdPipeline, trust, academyConversionProject);
+            var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust);
 
-            var response = await _client.GetAsync($"/conversion-projects/{ifdPipeline.Sk}");
+            var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -85,78 +77,41 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_be_a_not_found_response_when_id_does_not_match()
         {
-            var ifdPipeline = _fixture.Create<IfdPipeline>();
+            var academyConversionProject = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .Create();
 
-            var response = await _client.GetAsync($"/conversion-projects/{ifdPipeline.Sk}");
+            var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
-        public async Task Patch_request_should_update_an_academy_conversion_project()
-        {
-            var ifdPipeline = _fixture.Build<IfdPipeline>().With(x => x.GeneralDetailsUrn, "987654")
-                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
-                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
-                .Create();
-            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
-
-            var trust = CreateTrust(ifdPipeline);
-            _legacyDbContext.Trust.Add(trust);
-
-            _legacyDbContext.SaveChanges();
-
-            var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
-
-            var expected = CreateExpectedApiResponse(ifdPipeline, trust, null, updateRequest);
-
-            var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
-            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
-
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            content.Should().BeEquivalentTo(expected);
-
-            _legacyDbContext.Entry(ifdPipeline).Reload();
-            var academyConversionProject = _dbContext.AcademyConversionProjects
-                .Single(p => p.IfdPipelineId == ifdPipeline.Sk);
-
-            AssertDatabaseUpdated(ifdPipeline, academyConversionProject, updateRequest);
-        }
-
-        [Fact]
         public async Task Patch_request_should_update_an_academy_conversion_project_when_project_entity_already_exists_in_db()
         {
-            var ifdPipeline = _fixture.Build<IfdPipeline>()
-                .With(x => x.GeneralDetailsUrn, "987654")
-                .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
-                .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
-                .Create();
-            _legacyDbContext.IfdPipeline.Add(ifdPipeline);
-
-            var trust = CreateTrust(ifdPipeline);
-            _legacyDbContext.Trust.Add(trust);
-
-            _legacyDbContext.SaveChanges();
-
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
-                .Without(p => p.Id).With(p => p.IfdPipelineId, ifdPipeline.Sk).Create();
+                .Without(x => x.Id)
+                .Create();
+            var trust = CreateTrust(academyConversionProject);
+
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
+            _legacyDbContext.Trust.Add(trust);
+            _legacyDbContext.SaveChanges();
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
-            var expected = CreateExpectedApiResponse(ifdPipeline, trust, academyConversionProject, updateRequest);
+            var expected = CreateExpectedApiResponse(trust, academyConversionProject, updateRequest);
 
-            var response = await _client.PatchAsync($"/conversion-projects/{ifdPipeline.Sk}", JsonContent.Create(updateRequest));
+            var response = await _client.PatchAsync($"/conversion-projects/{academyConversionProject.Id}", JsonContent.Create(updateRequest));
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
 
-            _legacyDbContext.Entry(ifdPipeline).Reload();
             _dbContext.Entry(academyConversionProject).Reload();
 
-            AssertDatabaseUpdated(ifdPipeline, academyConversionProject, updateRequest);
+            AssertDatabaseUpdated(academyConversionProject, updateRequest);
         }
 
         [Fact]
@@ -168,47 +123,46 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
-        private void AssertDatabaseUpdated(IfdPipeline ifdPipeline, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
+        private void AssertDatabaseUpdated(AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
         {
-            ifdPipeline.ProjectTemplateInformationRationaleForProject.Should().Be(updateRequest.RationaleForProject);
-            ifdPipeline.ProjectTemplateInformationRationaleForSponsor.Should().Be(updateRequest.RationaleForTrust);
+            academyConversionProject.RationaleForProject.Should().Be(updateRequest.RationaleForProject);
+            academyConversionProject.RationaleForTrust.Should().Be(updateRequest.RationaleForTrust);
             academyConversionProject.RationaleSectionComplete.Should().Be(updateRequest.RationaleSectionComplete);
             academyConversionProject.LocalAuthorityInformationTemplateSentDate.Should().Be(updateRequest.LocalAuthorityInformationTemplateSentDate);
             academyConversionProject.LocalAuthorityInformationTemplateReturnedDate.Should().Be(updateRequest.LocalAuthorityInformationTemplateReturnedDate);
             academyConversionProject.LocalAuthorityInformationTemplateComments.Should().Be(updateRequest.LocalAuthorityInformationTemplateComments);
             academyConversionProject.LocalAuthorityInformationTemplateLink.Should().Be(updateRequest.LocalAuthorityInformationTemplateLink);
             academyConversionProject.LocalAuthorityInformationTemplateSectionComplete.Should().Be(updateRequest.LocalAuthorityInformationTemplateSectionComplete);
-            ifdPipeline.DeliveryProcessPan.Should().Be(updateRequest.PublishedAdmissionNumber);
-            ifdPipeline.ProjectTemplateInformationViabilityIssue.Should().Be(updateRequest.ViabilityIssues);
-            ifdPipeline.ProjectTemplateInformationDeficit.Should().Be(updateRequest.FinancialDeficit);
+            academyConversionProject.PublishedAdmissionNumber.Should().Be(updateRequest.PublishedAdmissionNumber);
+            academyConversionProject.ViabilityIssues.Should().Be(updateRequest.ViabilityIssues);
+            academyConversionProject.FinancialDeficit.Should().Be(updateRequest.FinancialDeficit);
             academyConversionProject.DistanceFromSchoolToTrustHeadquarters.Should().Be(updateRequest.DistanceFromSchoolToTrustHeadquarters);
             academyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation.Should().Be(updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation);
             academyConversionProject.GeneralInformationSectionComplete.Should().Be(updateRequest.GeneralInformationSectionComplete);
-            ifdPipeline.ProjectTemplateInformationRisksAndIssues.Should().Be(updateRequest.RisksAndIssues);
+            academyConversionProject.RisksAndIssues.Should().Be(updateRequest.RisksAndIssues);
             academyConversionProject.RisksAndIssuesSectionComplete.Should().Be(updateRequest.RisksAndIssuesSectionComplete);
             academyConversionProject.SchoolPerformanceAdditionalInformation.Should().Be(updateRequest.SchoolPerformanceAdditionalInformation);
-            ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward.Should().Be(updateRequest.RevenueCarryForwardAtEndMarchCurrentYear.ToString());
-            ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward.Should().Be(updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear.ToString());
+            academyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear.Should().Be(updateRequest.RevenueCarryForwardAtEndMarchCurrentYear);
+            academyConversionProject.ProjectedRevenueBalanceAtEndMarchNextYear.Should().Be(updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear);
             academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear;
             academyConversionProject.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
             academyConversionProject.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
             academyConversionProject.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
         }
 
-        private AcademyConversionProjectResponse CreateExpectedApiResponse(IfdPipeline ifdPipeline, Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
+        private AcademyConversionProjectResponse CreateExpectedApiResponse(Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
         {
-            var updatedIfdPipeline = AcademyConversionProjectFactory.Update(ifdPipeline, updateRequest);
             var updatedAcademyConversionProject = AcademyConversionProjectFactory.Update(academyConversionProject ?? new AcademyConversionProject(), updateRequest);
-            return AcademyConversionProjectResponseFactory.Create(updatedIfdPipeline, trust, updatedAcademyConversionProject);
+            return AcademyConversionProjectResponseFactory.Create(updatedAcademyConversionProject, trust);
         }
 
-        private Trust CreateTrust(IfdPipeline ifdPipeline)
+        private Trust CreateTrust(AcademyConversionProject academyConversionProject)
         {
-            ifdPipeline.TrustSponsorManagementTrust = ifdPipeline.TrustSponsorManagementTrust.Substring(0, 7);
+            academyConversionProject.TrustReferenceNumber = academyConversionProject.TrustReferenceNumber.Substring(0, 7);
             return new Trust
             {
                 Rid = _fixture.Create<string>().Substring(0, 11),
-                TrustRef = ifdPipeline.TrustSponsorManagementTrust,
+                TrustRef = academyConversionProject.TrustReferenceNumber,
                 TrustsTrustName = _fixture.Create<string>(),
                 LeadSponsor = _fixture.Create<string>().Substring(0, 7),
                 TrustsLeadSponsorName = _fixture.Create<string>(),
@@ -217,9 +171,9 @@ namespace TramsDataApi.Test.Integration
 
         public void Dispose()
         {
-            foreach (var entity in _legacyDbContext.IfdPipeline)
+            foreach (var entity in _legacyDbContext.Trust)
             {
-                _legacyDbContext.IfdPipeline.Remove(entity);
+                _legacyDbContext.Trust.Remove(entity);
             }
             _legacyDbContext.SaveChanges();
 

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TramsDataApi.ApplyToBecome;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
@@ -51,6 +52,11 @@ namespace TramsDataApi
             services.AddScoped<IGetKeyStagePerformanceByUrn, GetKeyStagePerformanceByUrn>();
             services.AddScoped<IEducationPerformanceGateway, EducationPerformanceGateway>();
 
+            // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
+            // once the a2b external service can write directly to trams this should be removed
+            services.AddDbContext<ApplyToBecomeDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddHostedService<SyncAcademyConversionProjectsService>();
 
             services.AddUseCases();
         }
