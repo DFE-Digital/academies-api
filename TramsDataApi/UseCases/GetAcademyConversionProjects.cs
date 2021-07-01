@@ -10,16 +10,16 @@ namespace TramsDataApi.UseCases
 {
     public class GetAcademyConversionProjects : IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>
     {
-        private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
 
-        public GetAcademyConversionProjects(LegacyTramsDbContext legacyTramsDbContext)
+        public GetAcademyConversionProjects(TramsDbContext tramsDbContext)
         {
-            _legacyTramsDbContext = legacyTramsDbContext;
+            _tramsDbContext = tramsDbContext;
         }
 
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAllAcademyConversionProjectsRequest request)
         {
-            var ifdPipelines = _legacyTramsDbContext.IfdPipeline.Take(request.Count).AsNoTracking().ToList();
+            var ifdPipelines = _tramsDbContext.AcademyConversionProjects.Take(request.Count).AsNoTracking().ToList();
 
             return ifdPipelines.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
         }

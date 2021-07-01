@@ -1,14 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.ApplyToBecome
 {
-    public partial class LegacyTramsDbContext
+    public partial class ApplyToBecomeDbContext : DbContext
     {
-        public virtual DbSet<IfdPipeline> IfdPipeline { get; set; }
-
-        protected void OnModelCreatingIfdPipeline(ModelBuilder modelBuilder)
+        public ApplyToBecomeDbContext(DbContextOptions<ApplyToBecomeDbContext> options)
+            : base(options)
         {
-            modelBuilder.Entity<IfdPipeline>(entity =>
+        }
+
+        public virtual DbSet<SyncIfdPipeline> IfdPipeline { get; set; }
+        public virtual DbSet<SyncAcademyConversionProject> AcademyConversionProjects { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SyncAcademyConversionProject>(entity =>
+            {
+                entity.ToTable("AcademyConversionProject", "sdd");
+            });
+
+            modelBuilder.Entity<SyncIfdPipeline>(entity =>
             {
                 entity.HasKey(e => e.Sk)
                     .HasName("Sk");
@@ -1274,7 +1285,6 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
-
         }
     }
 }
