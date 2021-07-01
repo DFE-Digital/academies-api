@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
@@ -21,6 +20,7 @@ namespace TramsDataApi.UseCases
         {
             return _tramsDbContext.AcademyConversionProjectNotes
                 .Where(pn => pn.AcademyConversionProjectId == request.Id)
+                .OrderByDescending(pn => pn.Date)
                 .Select(pn => AcademyConversionProjectNoteResponseFactory.Create(pn));
         }
     }
