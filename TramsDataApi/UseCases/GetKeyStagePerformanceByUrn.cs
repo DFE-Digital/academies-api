@@ -52,7 +52,7 @@ namespace TramsDataApi.UseCases
 
 
             var ks2Response = educationPerformance
-                .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd)).ToList();
+                .Select(epd => KeyStage2PerformanceResponseFactory.Create(epd, null)).ToList();
 
             
             var ks4Response = educationPerformance

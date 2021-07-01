@@ -279,7 +279,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expectedKeyStage2Response = KeyStage2PerformanceResponseFactory
-                .Create(educationPerformanceData);
+                .Create(educationPerformanceData, null);
 
             var expectedKeyStage4Response = new KeyStage4PerformanceResponse
             {
