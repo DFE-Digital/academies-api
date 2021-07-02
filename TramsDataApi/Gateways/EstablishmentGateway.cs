@@ -38,5 +38,10 @@ namespace TramsDataApi.Gateways
         {
             return _dbContext.SmartData.FirstOrDefault(s => s.Urn == establishmentUrn.ToString());
         }
+
+        public IList<Establishment> SearchEstablishments(int? urn, string ukprn, string name)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
