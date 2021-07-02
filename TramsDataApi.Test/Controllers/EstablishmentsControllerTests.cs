@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace TramsDataApi.Test.Controllers
         private readonly EstablishmentsController _controller;
         private readonly Mock<IGetEstablishmentByUkprn> _getEstablishmentByUkprn;
         private readonly Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>> _getEstablishmentByUrn;
+        private readonly Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>> _searchEstablishments;
         private const string UKPRN = "mockukprn";
         private const int URN = 123456789;
 
@@ -22,8 +24,13 @@ namespace TramsDataApi.Test.Controllers
         {
             _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
             _getEstablishmentByUrn = new Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>>();
+            _searchEstablishments = new Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>>();
 
-            _controller = new EstablishmentsController(_getEstablishmentByUkprn.Object, _getEstablishmentByUrn.Object);
+            _controller = new EstablishmentsController(
+                _getEstablishmentByUkprn.Object,
+                _getEstablishmentByUrn.Object,
+                _searchEstablishments.Object
+            );
         }
 
         [Fact]
@@ -66,6 +73,36 @@ namespace TramsDataApi.Test.Controllers
             var result = _controller.GetByUrn(URN);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
+        }
+
+        [Fact]
+        public void SearchEstablishments_ReturnsEstablishmentSummaryResponse_WhenEstablishmentsFound()
+        {
+            var establishmentResponses = Builder<EstablishmentSummaryResponse>.CreateListOfSize(10).Build();
+
+            var request = new SearchEstablishmentsRequest
+            {
+                Urn = 10010011,
+                Ukprn = "mockukprn",
+                Name = "establishmentname"
+            };
+            _searchEstablishments.Setup(s => s.Execute(request)).Returns(establishmentResponses);
+
+            var result = _controller.SearchEstablishments(request);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponses));
+        }
+
+        [Fact]
+        public void SearchEstablishments_ReturnsEstablishmentSummaryResponse_WhenEstablishmentsFound_AndNoParametersGiven()
+        {
+            var establishmentResponses = Builder<EstablishmentSummaryResponse>.CreateListOfSize(10).Build();
+
+            _searchEstablishments.Setup(s => s.Execute(null)).Returns(establishmentResponses);
+
+            var result = _controller.SearchEstablishments(null);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponses));
         }
     }
 }
