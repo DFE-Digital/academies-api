@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using FluentAssertions;
@@ -55,6 +58,34 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task CanSearchEstablishmentsByUrn()
+        {
+            var establishments = new Establishment[10]
+                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199999)))
+                .ToList();
+            
+            _legacyDbContext.Establishment.AddRange(establishments);
+            _legacyDbContext.SaveChanges();
+
+            var expected = EstablishmentSummaryResponseFactory.Create(establishments[0]);
+            
+            var response = await _client.GetAsync($"/establishments?urn={establishments[0].Urn}");
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private Establishment CreateEstablishment(int urn)
+        {
+            return Builder<Establishment>.CreateNew()
+                .With(e => e.Ukprn = "mockukprn")
+                .With(e => e.Urn = urn)
+                .Build();
         }
 
         private EstablishmentResponse AddTestData(int urn)
