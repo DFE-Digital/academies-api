@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -62,9 +61,11 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanSearchEstablishmentsByUrn()
         {
-            var establishments = new Establishment[10]
-                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199999)))
-                .ToList();
+            var establishments = Builder<Establishment>
+                .CreateListOfSize(10)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
+                .Build();
             
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.SaveChanges();
@@ -85,9 +86,11 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanSearchEstablishmentsByUkprn()
         {
-            var establishments = new Establishment[10]
-                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199999)))
-                .ToList();
+            var establishments = Builder<Establishment>
+                .CreateListOfSize(8)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
+                .Build();
             
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.SaveChanges();
@@ -108,9 +111,12 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanSearchEstablishmentsByName()
         {
-            var establishments = new Establishment[10]
-                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199999)))
-                .ToList();
+            var establishments = Builder<Establishment>
+                .CreateListOfSize(8)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
+                .Build();
+            
             
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.SaveChanges();
@@ -131,9 +137,11 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanSearchEstablishmentsByPartialCaseInsensitiveName()
         {
-            var establishments = new Establishment[10]
-                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199999)))
-                .ToList();
+            var establishments = Builder<Establishment>
+                .CreateListOfSize(10)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
+                .Build();
     
             establishments[9].EstablishmentName = "aFaKeESTABLISHMENT";
 
@@ -157,9 +165,12 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanSearchEstablishmentsByPartialUrn()
         {
-            var establishments = new Establishment[10]
-                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199000)))
-                .ToList();
+            var establishments = Builder<Establishment>
+                .CreateListOfSize(10)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Next(100000, 199000))
+                .Build();
+            
     
             establishments[5].Urn = 199954;
             establishments[9].Urn = 199999;
@@ -185,10 +196,12 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanSearchEstablishmentsByPartialUkprn()
         {
-            var establishments = new Establishment[10]
-                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199000)))
-                .ToList();
-    
+            var establishments = Builder<Establishment>
+                .CreateListOfSize(10)
+                .All()
+                .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
+                .Build();
+            
             establishments[2].Ukprn = "testukprn1";
             establishments[6].Ukprn = "testukprn2";
 
@@ -207,15 +220,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-        }
-
-        private Establishment CreateEstablishment(int urn)
-        {
-            return Builder<Establishment>.CreateNew()
-                .With(e => e.EstablishmentName = _randomGenerator.NextString(10, 20))
-                .With(e => e.Ukprn = _randomGenerator.NextString(8, 8))
-                .With(e => e.Urn = urn)
-                .Build();
         }
 
         private EstablishmentResponse AddTestData(int urn)
