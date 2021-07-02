@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using FluentAssertions;
@@ -213,6 +212,7 @@ namespace TramsDataApi.Test.Integration
         private Establishment CreateEstablishment(int urn)
         {
             return Builder<Establishment>.CreateNew()
+                .With(e => e.EstablishmentName = _randomGenerator.NextString(10, 20))
                 .With(e => e.Ukprn = _randomGenerator.NextString(8, 8))
                 .With(e => e.Urn = urn)
                 .Build();

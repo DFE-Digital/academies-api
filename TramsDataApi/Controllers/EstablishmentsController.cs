@@ -54,7 +54,7 @@ namespace TramsDataApi.Controllers
 
         [HttpGet]
         [Route("establishments")]
-        public ActionResult<List<EstablishmentSummaryResponse>> SearchEstablishments(SearchEstablishmentsRequest request)
+        public ActionResult<List<EstablishmentSummaryResponse>> SearchEstablishments([FromQuery] SearchEstablishmentsRequest request)
         {
             return Ok(_searchEstablishments.Execute(request));
         }
