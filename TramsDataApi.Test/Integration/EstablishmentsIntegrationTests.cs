@@ -120,6 +120,28 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected);
         }
 
+        [Fact]
+        public async Task CanSearchEstablishmentsByPartialCaseInsensitiveName()
+        {
+            var establishments = new Establishment[10]
+                .Select(i => CreateEstablishment(_randomGenerator.Next(100000, 199999)))
+                .ToList();
+    
+            establishments[9].EstablishmentName = "aFaKeESTABLISHMENT";
+
+            _legacyDbContext.Establishment.AddRange(establishments);
+            _legacyDbContext.SaveChanges();
+
+            var expected = EstablishmentSummaryResponseFactory.Create(establishments[9]);
+            
+            var response = await _client.GetAsync($"/establishments?name=afakeestab");
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+        }
+
         private Establishment CreateEstablishment(int urn)
         {
             return Builder<Establishment>.CreateNew()
