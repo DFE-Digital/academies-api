@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using TramsDataApi.DatabaseModels;
+﻿using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -10,20 +8,20 @@ namespace TramsDataApi.UseCases
 {
     public class GetAcademyConversionProject : IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>
     {
-        private readonly TramsDbContext _tramsDbContext;
+        private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
 
         public GetAcademyConversionProject(
-            TramsDbContext tramsDbContext,
+            IAcademyConversionProjectGateway academyConversionProjectGateway,
             ITrustGateway trustGateway)
         {
-            _tramsDbContext = tramsDbContext;
+            _academyConversionProjectGateway = academyConversionProjectGateway;
             _trustGateway = trustGateway;
         }
 
         public AcademyConversionProjectResponse Execute(GetAcademyConversionProjectByIdRequest request)
         {
-            var academyConversionProject = _tramsDbContext.AcademyConversionProjects.SingleOrDefault(p => p.Id == request.Id);
+            var academyConversionProject = _academyConversionProjectGateway.GetById(request.Id);
             if (academyConversionProject == null)
             {
                 return null;

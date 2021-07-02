@@ -16,6 +16,7 @@ namespace TramsDataApi.Factories
 				Urn = academyConversionProject.Urn ?? 0,
 				SchoolName = academyConversionProject.SchoolName,
 				LocalAuthority = academyConversionProject.LocalAuthority,
+				TrustReferenceNumber = academyConversionProject.TrustReferenceNumber,
 				ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate,
 				AssignedDate = academyConversionProject.AssignedDate,
 				ProjectStatus = "Pre HTB",
@@ -55,7 +56,6 @@ namespace TramsDataApi.Factories
 
 			if (trust != null)
             {
-				response.TrustReferenceNumber = trust.TrustRef;
 				response.NameOfTrust = trust.TrustsTrustName;
 				response.SponsorReferenceNumber = trust.LeadSponsor;
 				response.SponsorName = trust.TrustsLeadSponsorName;

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TramsDataApi.DatabaseModels;
+﻿using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -9,26 +8,25 @@ namespace TramsDataApi.UseCases
 {
     public class UpdateAcademyConversionProject : IUpdateAcademyConversionProject
     {
-        private readonly TramsDbContext _tramsDbContext;
+        private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
 
-        public UpdateAcademyConversionProject(TramsDbContext tramsDbContext, ITrustGateway trustGateway)
+        public UpdateAcademyConversionProject(IAcademyConversionProjectGateway academyConversionProjectGateway, ITrustGateway trustGateway)
         {
-            _tramsDbContext = tramsDbContext;
+            _academyConversionProjectGateway = academyConversionProjectGateway;
             _trustGateway = trustGateway;
         }
 
         public AcademyConversionProjectResponse Execute(int id, UpdateAcademyConversionProjectRequest request)
         {
-            var academyConversionProject = _tramsDbContext.AcademyConversionProjects.SingleOrDefault(p => p.Id == id);
+            var academyConversionProject = _academyConversionProjectGateway.GetById(id);
             if (academyConversionProject == null)
             {
                 return null;
             }
 
             var updatedProject = AcademyConversionProjectFactory.Update(academyConversionProject, request);
-            _tramsDbContext.AcademyConversionProjects.Update(updatedProject);
-            _tramsDbContext.SaveChanges();
+            _academyConversionProjectGateway.Update(updatedProject);
 
             Trust trust = null;
             if (!string.IsNullOrEmpty(academyConversionProject.TrustReferenceNumber))

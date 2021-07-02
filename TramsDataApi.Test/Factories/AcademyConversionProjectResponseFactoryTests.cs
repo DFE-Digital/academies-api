@@ -78,6 +78,7 @@ namespace TramsDataApi.Test.Factories
                 ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate,
                 AssignedDate = academyConversionProject.AssignedDate,
                 ProjectStatus = "Pre HTB",
+                TrustReferenceNumber = academyConversionProject.TrustReferenceNumber,
                 Author = academyConversionProject.Author,
                 ClearedBy = academyConversionProject.ClearedBy,
                 HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate,
@@ -114,7 +115,6 @@ namespace TramsDataApi.Test.Factories
             };
             if (trust != null)
             {
-                expected.TrustReferenceNumber = trust.TrustRef;
                 expected.NameOfTrust = trust.TrustsTrustName;
                 expected.SponsorReferenceNumber = trust.LeadSponsor;
                 expected.SponsorName = trust.TrustsLeadSponsorName;

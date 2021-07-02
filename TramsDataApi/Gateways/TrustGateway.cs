@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Extensions;
 
 namespace TramsDataApi.Gateways
 {
@@ -21,6 +24,17 @@ namespace TramsDataApi.Gateways
         public Trust GetIfdTrustByGroupId(string groupId)
         {
             return _dbContext.Trust.FirstOrDefault(t => t.TrustRef == groupId);
+        }
+
+        public IQueryable<Trust> GetIfdTrustsByTrustRef(string[] trustRefs)
+        {
+            var predicate = PredicateBuilder.False<Trust>();
+            foreach (var trustRef in trustRefs)
+            {
+                predicate = predicate.Or(t => t.TrustRef == trustRef);
+            }
+
+            return _dbContext.Trust.Where(predicate);
         }
 
         public IList<Group> SearchGroups(string groupName, string ukprn, string companiesHouseNumber, int page)
