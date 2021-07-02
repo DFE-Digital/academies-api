@@ -16,7 +16,9 @@ namespace TramsDataApi.Factories
                 return project;
             }
 
-            project.HeadTeacherBoardDate = updateRequest.HeadTeacherBoardDate ?? project.HeadTeacherBoardDate;
+            project.HeadTeacherBoardDate = updateRequest.HeadTeacherBoardDate == default(DateTime) 
+                ? null 
+                : updateRequest.HeadTeacherBoardDate ?? project.HeadTeacherBoardDate;
             project.Author = updateRequest.Author ?? project.Author;
             project.ClearedBy = updateRequest.ClearedBy ?? project.ClearedBy;
             project.ProposedAcademyOpeningDate = updateRequest.ProposedAcademyOpeningDate ?? project.ProposedAcademyOpeningDate;
@@ -32,12 +34,12 @@ namespace TramsDataApi.Factories
                 updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear ?? project.ProjectedRevenueBalanceAtEndMarchNextYear;
 
             project.RationaleSectionComplete = updateRequest.RationaleSectionComplete ?? project.RationaleSectionComplete;
-            project.LocalAuthorityInformationTemplateSentDate =
-                updateRequest.LocalAuthorityInformationTemplateSentDate == default(DateTime) ?
-                    null : updateRequest.LocalAuthorityInformationTemplateSentDate ?? project.LocalAuthorityInformationTemplateSentDate;
-            project.LocalAuthorityInformationTemplateReturnedDate =
-                updateRequest.LocalAuthorityInformationTemplateReturnedDate == default(DateTime) ?
-                    null : updateRequest.LocalAuthorityInformationTemplateReturnedDate ?? project.LocalAuthorityInformationTemplateReturnedDate;
+            project.LocalAuthorityInformationTemplateSentDate = updateRequest.LocalAuthorityInformationTemplateSentDate == default(DateTime) 
+                ? null 
+                : updateRequest.LocalAuthorityInformationTemplateSentDate ?? project.LocalAuthorityInformationTemplateSentDate;
+            project.LocalAuthorityInformationTemplateReturnedDate = updateRequest.LocalAuthorityInformationTemplateReturnedDate == default(DateTime) 
+                ? null 
+                : updateRequest.LocalAuthorityInformationTemplateReturnedDate ?? project.LocalAuthorityInformationTemplateReturnedDate;
             project.LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments ??
                 project.LocalAuthorityInformationTemplateComments;
             project.LocalAuthorityInformationTemplateLink = updateRequest.LocalAuthorityInformationTemplateLink ??
