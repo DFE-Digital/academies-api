@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
@@ -10,13 +12,16 @@ namespace TramsDataApi.Controllers
     {
         private readonly IGetEstablishmentByUkprn _getEstablishmentByUkprn;
         private readonly IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> _getEstablishmentByUrn;
+        private readonly IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> _searchEstablishments;
 
         public EstablishmentsController(
             IGetEstablishmentByUkprn getEstablishmentByUkprn, 
-            IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> getEstablishmentByUrn)
+            IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> getEstablishmentByUrn,
+            IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> searchEstablishments)
         {
             _getEstablishmentByUkprn = getEstablishmentByUkprn;
             _getEstablishmentByUrn = getEstablishmentByUrn;
+            _searchEstablishments = searchEstablishments;
         }
 
         [HttpGet]
@@ -45,6 +50,13 @@ namespace TramsDataApi.Controllers
             }
 
             return Ok(establishment);
+        }
+
+        [HttpGet]
+        [Route("establishments")]
+        public ActionResult<List<EstablishmentSummaryResponse>> SearchEstablishments(SearchEstablishmentsRequest request)
+        {
+            return Ok(_searchEstablishments.Execute(request));
         }
     }
 }
