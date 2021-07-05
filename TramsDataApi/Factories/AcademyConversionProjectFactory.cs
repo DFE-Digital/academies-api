@@ -16,8 +16,8 @@ namespace TramsDataApi.Factories
                 return project;
             }
 
-            project.HeadTeacherBoardDate = updateRequest.HeadTeacherBoardDate == default(DateTime) 
-                ? null 
+            project.HeadTeacherBoardDate = updateRequest.HeadTeacherBoardDate == default(DateTime)
+                ? null
                 : updateRequest.HeadTeacherBoardDate ?? project.HeadTeacherBoardDate;
             project.Author = updateRequest.Author ?? project.Author;
             project.ClearedBy = updateRequest.ClearedBy ?? project.ClearedBy;
@@ -34,11 +34,11 @@ namespace TramsDataApi.Factories
                 updateRequest.ProjectedRevenueBalanceAtEndMarchNextYear ?? project.ProjectedRevenueBalanceAtEndMarchNextYear;
 
             project.RationaleSectionComplete = updateRequest.RationaleSectionComplete ?? project.RationaleSectionComplete;
-            project.LocalAuthorityInformationTemplateSentDate = updateRequest.LocalAuthorityInformationTemplateSentDate == default(DateTime) 
-                ? null 
+            project.LocalAuthorityInformationTemplateSentDate = updateRequest.LocalAuthorityInformationTemplateSentDate == default(DateTime)
+                ? null
                 : updateRequest.LocalAuthorityInformationTemplateSentDate ?? project.LocalAuthorityInformationTemplateSentDate;
-            project.LocalAuthorityInformationTemplateReturnedDate = updateRequest.LocalAuthorityInformationTemplateReturnedDate == default(DateTime) 
-                ? null 
+            project.LocalAuthorityInformationTemplateReturnedDate = updateRequest.LocalAuthorityInformationTemplateReturnedDate == default(DateTime)
+                ? null
                 : updateRequest.LocalAuthorityInformationTemplateReturnedDate ?? project.LocalAuthorityInformationTemplateReturnedDate;
             project.LocalAuthorityInformationTemplateComments = updateRequest.LocalAuthorityInformationTemplateComments ??
                 project.LocalAuthorityInformationTemplateComments;
@@ -62,6 +62,8 @@ namespace TramsDataApi.Factories
             project.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation ??
                 project.SchoolBudgetInformationAdditionalInformation;
             project.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete ?? project.SchoolBudgetInformationSectionComplete;
+            project.SchoolPupilForecastsAdditionalInformation = updateRequest.SchoolPupilForecastsAdditionalInformation ??
+                project.SchoolPupilForecastsAdditionalInformation;
 
             return project;
         }
