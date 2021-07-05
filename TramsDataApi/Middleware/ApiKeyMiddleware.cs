@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using TramsDataApi.ResponseModels;
+using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Middleware
 {
@@ -13,7 +13,7 @@ namespace TramsDataApi.Middleware
         {
             _next = next;
         }
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IUseCase<string, ApiUser> apiKeyService)
         {
             if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))
             {
@@ -22,17 +22,15 @@ namespace TramsDataApi.Middleware
                 return;
             }
  
-            var appSettings = context.RequestServices.GetRequiredService<IConfiguration>();
- 
-            var apiKey = appSettings.GetValue<string>(APIKEYNAME);
- 
-            if (!apiKey.Equals(extractedApiKey))
+            var user = apiKeyService.Execute(extractedApiKey);
+            
+            if (user == null)
             {
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("Unauthorized client.");
                 return;
             }
- 
+
             await _next(context);
         }
     }

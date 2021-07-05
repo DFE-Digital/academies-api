@@ -61,6 +61,8 @@ namespace TramsDataApi
             services.AddHostedService<SyncAcademyConversionProjectsService>();
 
             services.AddUseCases();
+
+            services.Configure<AppOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,5 +90,10 @@ namespace TramsDataApi
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
+    }
+
+    public class AppOptions
+    {
+        public string[] TestApiKey { get; set; }
     }
 }
