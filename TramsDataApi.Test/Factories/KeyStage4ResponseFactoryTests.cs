@@ -158,14 +158,56 @@ namespace TramsDataApi.Test.Factories
                 },
                 NationalAverageP8LowerConfidence = nationalEducationPerformance?.SipProgress8lowerconfidence,
                 NationalAverageP8UpperConfidence = nationalEducationPerformance?.SipProgress8upperconfidence,
-                NationalAverage = new DisadvantagedPupilsResponse
+                LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = null,
                     Disadvantaged = null
-                }
+                },
+                LAAverageA8English = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageA8Maths = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageA8EBacc = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8PupilsIncluded = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8Score = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8English = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8Maths = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8Ebacc = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8LowerConfidence = null,
+                LAAverageP8UpperConfidence = null,
             };
 
-            var result = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalEducationPerformance);
+            var result = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalEducationPerformance, null);
              
             result.Should().BeEquivalentTo(expectedKeyStage4Response);
         }
@@ -306,14 +348,56 @@ namespace TramsDataApi.Test.Factories
                 },
                 NationalAverageP8LowerConfidence = null,
                 NationalAverageP8UpperConfidence = null,
-                NationalAverage = new DisadvantagedPupilsResponse
+                LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = null,
                     Disadvantaged = null
-                }
+                },
+                LAAverageA8English = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageA8Maths = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageA8EBacc = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8PupilsIncluded = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8Score = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8English = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8Maths = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8Ebacc = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageP8LowerConfidence = null,
+                LAAverageP8UpperConfidence = null,
             };
 
-            var result = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, null);
+            var result = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, null, null);
              
             result.Should().BeEquivalentTo(expectedKeyStage4Response);
         }
