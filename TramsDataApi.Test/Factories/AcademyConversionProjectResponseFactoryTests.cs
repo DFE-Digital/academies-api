@@ -111,7 +111,8 @@ namespace TramsDataApi.Test.Factories
                 CapitalCarryForwardAtEndMarchCurrentYear = academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear,
                 CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear,
                 SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation,
-                SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete
+                SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete,
+                SchoolPupilForecastsAdditionalInformation = academyConversionProject.SchoolPupilForecastsAdditionalInformation
             };
             if (trust != null)
             {
