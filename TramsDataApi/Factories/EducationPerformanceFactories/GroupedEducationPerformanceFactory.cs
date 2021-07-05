@@ -19,6 +19,7 @@ namespace TramsDataApi.Factories
                     SipProgress8scoredisadvantaged = nationalEducationPerformance1.SipProgress8scoredisadvantaged ?? nationalEducationPerformance2.SipProgress8scoredisadvantaged,
                     SipParentaccountid = nationalEducationPerformance1.SipParentaccountid,
                     SipReadingprogressscore = nationalEducationPerformance1.SipReadingprogressscore ?? nationalEducationPerformance2.SipReadingprogressscore,
+                    SipReadingprogressscoredisadv = nationalEducationPerformance1.SipReadingprogressscoredisadv ?? nationalEducationPerformance2.SipReadingprogressscoredisadv,
                     SipWritingprogressscoredisadv = nationalEducationPerformance1.SipWritingprogressscoredisadv ?? nationalEducationPerformance2.SipWritingprogressscoredisadv,
                     SipWritingprogressscore = nationalEducationPerformance1.SipWritingprogressscore ?? nationalEducationPerformance2.SipWritingprogressscore,
                     SipMathsprogressscore = nationalEducationPerformance1.SipMathsprogressscore ?? nationalEducationPerformance2.SipMathsprogressscore,
