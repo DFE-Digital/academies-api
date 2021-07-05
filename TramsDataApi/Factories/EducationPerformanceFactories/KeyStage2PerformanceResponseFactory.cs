@@ -49,6 +49,21 @@ namespace TramsDataApi.Factories
                 {
                     NotDisadvantaged = nationalAveragePerformanceData?.SipMeetinghigherstandardinrwm.ToString(),
                     Disadvantaged = nationalAveragePerformanceData?.SipMeetinghigherstandardrwmdisadv.ToString()
+                },
+                NationalAverageReadingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalAveragePerformanceData?.SipReadingprogressscore.ToString(),
+                    Disadvantaged = nationalAveragePerformanceData?.SipReadingprogressscoredisadv.ToString()
+                },
+                NationalAverageWritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalAveragePerformanceData?.SipWritingprogressscore.ToString(),
+                    Disadvantaged = nationalAveragePerformanceData?.SipWritingprogressscoredisadv.ToString()
+                },
+                NationalAverageMathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalAveragePerformanceData?.SipMathsprogressscore.ToString(),
+                    Disadvantaged = nationalAveragePerformanceData?.SipMathsprogressscoredisadv.ToString()
                 }
             };
         }

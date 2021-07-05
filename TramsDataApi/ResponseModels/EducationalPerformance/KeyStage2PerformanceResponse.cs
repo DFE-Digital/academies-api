@@ -10,5 +10,8 @@ namespace TramsDataApi.ResponseModels.EducationalPerformance
         public DisadvantagedPupilsResponse MathsProgressScore { get; set; }
         public DisadvantagedPupilsResponse NationalAveragePercentageMeetingExpectedStdInRWM { get; set; }
         public DisadvantagedPupilsResponse NationalAveragePercentageAchievingHigherStdInRWM { get; set; }
+        public DisadvantagedPupilsResponse NationalAverageReadingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse NationalAverageWritingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse NationalAverageMathsProgressScore { get; set; }
     }
 }

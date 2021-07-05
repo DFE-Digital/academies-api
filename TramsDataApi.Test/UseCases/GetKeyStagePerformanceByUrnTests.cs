@@ -283,7 +283,22 @@ namespace TramsDataApi.Test.UseCases
                 {
                     NotDisadvantaged = nationalEducationPerformanceData2?.SipMeetinghigherstandardinrwm.ToString(),
                     Disadvantaged = nationalEducationPerformanceData2?.SipMeetinghigherstandardrwmdisadv.ToString()
-                }
+                },
+                NationalAverageReadingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalEducationPerformanceData2?.SipReadingprogressscore.ToString(),
+                    Disadvantaged = nationalEducationPerformanceData2?.SipReadingprogressscoredisadv.ToString()
+                },
+                NationalAverageWritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalEducationPerformanceData2?.SipWritingprogressscore.ToString(),
+                    Disadvantaged = nationalEducationPerformanceData2?.SipWritingprogressscoredisadv.ToString()
+                },
+                NationalAverageMathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = nationalEducationPerformanceData2?.SipMathsprogressscore.ToString(),
+                    Disadvantaged = nationalEducationPerformanceData2?.SipMathsprogressscoredisadv.ToString()
+                },
             };
 
             var expectedKs4 = new KeyStage4PerformanceResponse

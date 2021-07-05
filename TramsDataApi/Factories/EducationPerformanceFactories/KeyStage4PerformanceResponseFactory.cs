@@ -163,8 +163,7 @@ namespace TramsDataApi.Factories
                     Disadvantaged = localAuthorityEducationPerformance?.SipProgress8ebaccdisadvantaged.ToString()
                 },
                 LAAverageP8LowerConfidence = localAuthorityEducationPerformance?.SipProgress8lowerconfidence,
-                LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence,
-                
+                LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence
             };
         }
     }

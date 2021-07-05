@@ -121,10 +121,12 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 77.00M)
                 .With(epd => epd.SipMeetinghigherstandardinrwm = 88.00M)
                 .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 22.00M)
-                .With(epd => epd.SipMeetingexpectedstandardinrwm = 89)
-                .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 99)
-                .With(epd => epd.SipMeetinghigherstandardinrwm = 23)
-                .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 74)
+                .With(epd => epd.SipReadingprogressscore = 2)
+                .With(epd => epd.SipReadingprogressscoredisadv = 7)
+                .With(epd => epd.SipWritingprogressscore = 3)
+                .With(epd => epd.SipWritingprogressscoredisadv = 8)
+                .With(epd => epd.SipMathsprogressscore = 4)
+                .With(epd => epd.SipMathsprogressscoredisadv = 9)
                 .Build();
                 
             var globalOptionMetadata = Builder<GlobalOptionSetMetadata>.CreateNew()
@@ -182,16 +184,32 @@ namespace TramsDataApi.Test.Integration
                 })
                 .With(epd => epd.NationalAveragePercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = "23.00",
-                    Disadvantaged = "74.00"
+                    NotDisadvantaged = "88.00",
+                    Disadvantaged = "22.00"
                 })
                 .With(epd => epd.NationalAveragePercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = "89.00",
-                    Disadvantaged = "99.00"
+                    NotDisadvantaged = "55.00",
+                    Disadvantaged = "77.00"
+                })
+                .With(epd => epd.NationalAverageReadingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = "2.00",
+                    Disadvantaged = "7.00"
+                })
+                .With(epd => epd.NationalAverageWritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = "3.00",
+                    Disadvantaged = "8.00"
+                })
+                .With(epd => epd.NationalAverageMathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = "4.00",
+                    Disadvantaged = "9.00"
                 })
                 .Build().ToList();
-            
+
+
             var expectedKs4Response = new List<KeyStage4PerformanceResponse> {KeyStage4PerformanceResponseFactory
                 .Create(educationPerformanceData, nationalAverageEducationPerformanceData, null)};
 
@@ -297,6 +315,12 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 77.00M)
                 .With(epd => epd.SipMeetinghigherstandardinrwm = 88.00M)
                 .With(epd => epd.SipMeetinghigherstandardrwmdisadv = 22.00M)
+                .With(epd => epd.SipReadingprogressscore = .00M)
+                .With(epd => epd.SipReadingprogressscoredisadv = 7.00M)
+                .With(epd => epd.SipWritingprogressscore = 3.00M)
+                .With(epd => epd.SipWritingprogressscoredisadv = 8.00M)
+                .With(epd => epd.SipMathsprogressscore = 4.00M)
+                .With(epd => epd.SipMathsprogressscoredisadv = 9.00M)
                 .Build();
             
             var nationalEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
