@@ -143,10 +143,35 @@ namespace TramsDataApi.Test.Factories
                 {
                     NotDisadvantaged = nationalAveragePerformanceData?.SipMathsprogressscore.ToString(),
                     Disadvantaged = nationalAveragePerformanceData?.SipMathsprogressscoredisadv.ToString()
+                },
+                LAAveragePercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAveragePercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageReadingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageWritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageMathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
                 }
             };
             
-            var result = KeyStage2PerformanceResponseFactory.Create(educationalPerformanceData, nationalAveragePerformanceData);
+            var result = KeyStage2PerformanceResponseFactory.Create(educationalPerformanceData, nationalAveragePerformanceData, null);
              
             result.Should().BeEquivalentTo(expectedKeyStage2Response);
         }
@@ -242,9 +267,34 @@ namespace TramsDataApi.Test.Factories
                     NotDisadvantaged = null,
                     Disadvantaged = null
                 },
+                LAAveragePercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAveragePercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageReadingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageWritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                },
+                LAAverageMathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = null,
+                    Disadvantaged = null
+                }
             };
             
-            var result = KeyStage2PerformanceResponseFactory.Create(educationalPerformanceData, null);
+            var result = KeyStage2PerformanceResponseFactory.Create(educationalPerformanceData, null, null);
              
             result.Should().BeEquivalentTo(expectedKeyStage2Response);
         }

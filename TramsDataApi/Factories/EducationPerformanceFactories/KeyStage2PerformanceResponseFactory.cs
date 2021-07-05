@@ -5,7 +5,9 @@ namespace TramsDataApi.Factories
 {
     public class KeyStage2PerformanceResponseFactory
     {
-        public static KeyStage2PerformanceResponse Create(SipEducationalperformancedata educationalPerformanceData, SipEducationalperformancedata nationalAveragePerformanceData)
+        public static KeyStage2PerformanceResponse Create(SipEducationalperformancedata educationalPerformanceData, 
+            SipEducationalperformancedata nationalAveragePerformanceData,
+            SipEducationalperformancedata laAveragePerformanceData)
         {
             if (educationalPerformanceData == null)
             {
@@ -64,6 +66,31 @@ namespace TramsDataApi.Factories
                 {
                     NotDisadvantaged = nationalAveragePerformanceData?.SipMathsprogressscore.ToString(),
                     Disadvantaged = nationalAveragePerformanceData?.SipMathsprogressscoredisadv.ToString()
+                },
+                LAAveragePercentageMeetingExpectedStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = laAveragePerformanceData?.SipMeetingexpectedstandardinrwm.ToString(),
+                    Disadvantaged = laAveragePerformanceData?.SipMeetingexpectedstandardinrwmdisadv.ToString()
+                },
+                LAAveragePercentageAchievingHigherStdInRWM = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = laAveragePerformanceData?.SipMeetinghigherstandardinrwm.ToString(),
+                    Disadvantaged = laAveragePerformanceData?.SipMeetinghigherstandardrwmdisadv.ToString()
+                },
+                LAAverageReadingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = laAveragePerformanceData?.SipReadingprogressscore.ToString(),
+                    Disadvantaged = laAveragePerformanceData?.SipReadingprogressscoredisadv.ToString()
+                },
+                LAAverageWritingProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = laAveragePerformanceData?.SipWritingprogressscore.ToString(),
+                    Disadvantaged = laAveragePerformanceData?.SipWritingprogressscoredisadv.ToString()
+                },
+                LAAverageMathsProgressScore = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = laAveragePerformanceData?.SipMathsprogressscore.ToString(),
+                    Disadvantaged = laAveragePerformanceData?.SipMathsprogressscoredisadv.ToString()
                 }
             };
         }
