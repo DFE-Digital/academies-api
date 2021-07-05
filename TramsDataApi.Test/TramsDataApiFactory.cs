@@ -3,8 +3,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using TramsDataApi.ApplyToBecome;
 using TramsDataApi.Test.ApplyToBecome;
 
@@ -32,7 +34,9 @@ namespace TramsDataApi.Test
                 {
                     new KeyValuePair<string, string>(
                         "ConnectionStrings:DefaultConnection", _dbFixture.ConnString),
-                    new KeyValuePair<string, string>("ApiKey", "testing-api-key")
+                    new KeyValuePair<string, string>(
+                        "ApiKeys:0", "{\"userName\": \"Test User\", \"apiKey\": \"testing-api-key\"}"
+                    ),
                 });
             });
         }
