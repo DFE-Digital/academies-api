@@ -114,8 +114,6 @@ namespace TramsDataApi.Factories
                 },
                 NationalAverageP8LowerConfidence = nationalEducationPerformance?.SipProgress8lowerconfidence,
                 NationalAverageP8UpperConfidence = nationalEducationPerformance?.SipProgress8upperconfidence,
-                
-                
                 LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8score.ToString(),

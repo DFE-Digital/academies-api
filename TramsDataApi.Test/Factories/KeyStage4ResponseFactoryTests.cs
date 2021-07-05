@@ -59,6 +59,9 @@ namespace TramsDataApi.Test.Factories
 
             var nationalEducationPerformance = Builder<SipEducationalperformancedata>.CreateNew()
                 .Build();
+            
+            var localAuthorityEducationPerformance = Builder<SipEducationalperformancedata>.CreateNew()
+                .Build();
 
             var expectedKeyStage4Response = new KeyStage4PerformanceResponse
             {
@@ -160,54 +163,55 @@ namespace TramsDataApi.Test.Factories
                 NationalAverageP8UpperConfidence = nationalEducationPerformance?.SipProgress8upperconfidence,
                 LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8score.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipAttainment8scoredisadvantaged.ToString()
                 },
                 LAAverageA8English = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8scoreenglish.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipAttainment8scoreenglishdisadvantaged.ToString()
                 },
                 LAAverageA8Maths = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8scoremaths.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipAttainment8scoremathsdisadvantaged.ToString()
                 },
                 LAAverageA8EBacc = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8scoreebacc.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipAttainment8scoreebaccdisadvantaged.ToString()
                 },
                 LAAverageP8PupilsIncluded = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipNumberofpupilsprogress8.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipNumberofpupilsprogress8disadvantaged.ToString()
                 },
                 LAAverageP8Score = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipProgress8score.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipProgress8scoredisadvantaged.ToString()
                 },
                 LAAverageP8English = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipProgress8english?.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipProgress8englishdisadvantaged.ToString()
                 },
                 LAAverageP8Maths = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = 
+                        localAuthorityEducationPerformance?.SipProgress8maths?.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipProgress8mathsdisadvantaged.ToString().ToString()
                 },
                 LAAverageP8Ebacc = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = null,
-                    Disadvantaged = null
+                    NotDisadvantaged = localAuthorityEducationPerformance?.SipProgress8ebacc.ToString(),
+                    Disadvantaged = localAuthorityEducationPerformance?.SipProgress8ebaccdisadvantaged.ToString()
                 },
-                LAAverageP8LowerConfidence = null,
-                LAAverageP8UpperConfidence = null,
+                LAAverageP8LowerConfidence = localAuthorityEducationPerformance?.SipProgress8lowerconfidence,
+                LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence
             };
 
-            var result = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalEducationPerformance, null);
+            var result = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalEducationPerformance, localAuthorityEducationPerformance);
              
             result.Should().BeEquivalentTo(expectedKeyStage4Response);
         }
