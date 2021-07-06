@@ -13,7 +13,7 @@ namespace TramsDataApi.UseCases
         private readonly ITrustGateway _trustGateway;
 
         public GetAcademyConversionProjects(
-            IAcademyConversionProjectGateway academyConversionProjectGateway, 
+            IAcademyConversionProjectGateway academyConversionProjectGateway,
             ITrustGateway trustGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
@@ -26,12 +26,14 @@ namespace TramsDataApi.UseCases
         /// </remarks>
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAllAcademyConversionProjectsRequest request)
         {
-            var academyConversionProjects = _academyConversionProjectGateway.GetProjects(request.Count);
+            var academyConversionProjects = _academyConversionProjectGateway.GetProjects(request.Count).ToList();
             var trustRefs = academyConversionProjects.Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber)).Select(acp => acp.TrustReferenceNumber).ToArray();
 
             var trusts = _trustGateway.GetIfdTrustsByTrustRef(trustRefs).Select(t => new { TrustRef = t.TrustRef, TrustName = t.TrustsTrustName }).ToArray();
 
-            var responses = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            var responses = academyConversionProjects
+                .Where(p => !string.IsNullOrEmpty(p.SchoolName))
+                .Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
             foreach (var response in responses)
             {
                 response.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == response.TrustReferenceNumber)?.TrustName;
