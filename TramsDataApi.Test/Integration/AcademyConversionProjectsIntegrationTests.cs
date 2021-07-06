@@ -149,6 +149,7 @@ namespace TramsDataApi.Test.Integration
             academyConversionProject.SchoolBudgetInformationAdditionalInformation.Should().Be(updateRequest.SchoolBudgetInformationAdditionalInformation);
             academyConversionProject.SchoolBudgetInformationSectionComplete.Should().Be(updateRequest.SchoolBudgetInformationSectionComplete);
             academyConversionProject.SchoolPupilForecastsAdditionalInformation.Should().Be(updateRequest.SchoolPupilForecastsAdditionalInformation);
+            academyConversionProject.KeyStagePerformanceTablesAdditionalInformation.Should().Be(updateRequest.KeyStagePerformanceTablesAdditionalInformation);
         }
 
         private AcademyConversionProjectResponse CreateExpectedApiResponse(Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)

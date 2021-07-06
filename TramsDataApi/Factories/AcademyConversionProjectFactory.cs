@@ -64,6 +64,8 @@ namespace TramsDataApi.Factories
             project.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete ?? project.SchoolBudgetInformationSectionComplete;
             project.SchoolPupilForecastsAdditionalInformation = updateRequest.SchoolPupilForecastsAdditionalInformation ??
                 project.SchoolPupilForecastsAdditionalInformation;
+            project.KeyStagePerformanceTablesAdditionalInformation = updateRequest.KeyStagePerformanceTablesAdditionalInformation ??
+                project.KeyStagePerformanceTablesAdditionalInformation;
 
             return project;
         }
