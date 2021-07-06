@@ -40,8 +40,15 @@ namespace TramsDataApi.Test.Integration
         {
             var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.Id)
-                .CreateMany();
+                .CreateMany()
+                .ToList();
+
+            var academyConversionProjectWithoutName = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .Without(x => x.SchoolName)
+                .Create();
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.AcademyConversionProjects.Add(academyConversionProjectWithoutName);
             _dbContext.SaveChanges();
             var expected = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
 
