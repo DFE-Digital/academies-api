@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using TimeZoneConverter;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
@@ -142,7 +143,8 @@ namespace TramsDataApi.Test.Integration
             projectNoteInDb.Subject.Should().Be(addProjectNoteRequest.Subject);
             projectNoteInDb.Note.Should().Be(addProjectNoteRequest.Note);
             projectNoteInDb.Author.Should().Be(addProjectNoteRequest.Author);
-            projectNoteInDb.Date.Should().BeCloseTo(DateTime.Now, 1000);
+            var timeZoneInfo = TZConvert.GetTimeZoneInfo("GMT Standard Time");
+            projectNoteInDb.Date.Should().BeCloseTo(TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, timeZoneInfo.Id), 1000);
         }
 
         [Fact]
