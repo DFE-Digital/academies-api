@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using TimeZoneConverter;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -21,12 +22,14 @@ namespace TramsDataApi.UseCases
             if(!_tramsDbContext.AcademyConversionProjects.Any(p => p.Id == id))
                 return null;
 
+            var timeZoneInfo = TZConvert.GetTimeZoneInfo("GMT Standard Time");
+
             var projectNote = new AcademyConversionProjectNote
             {
                 Subject = request.Subject,
                 Note = request.Note,
                 Author = request.Author,
-                Date = DateTime.Now,
+                Date = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, timeZoneInfo.Id),
                 AcademyConversionProjectId = id
             };
 
