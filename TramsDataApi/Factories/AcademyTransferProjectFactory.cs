@@ -42,6 +42,12 @@ namespace TramsDataApi.Factories
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
                 AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
+                AcademyPerformanceAdditionalInformation = request.AcademyPerformanceAdditionalInformation,
+                PupilNumbersAdditionalInformation = request.PupilNumbersAdditionalInformation,
+                LatestOfstedJudgementAdditionalInformation = request.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation = request.KeyStage2PerformanceAdditionalInformation, 
+                KeyStage4PerformanceAdditionalInformation = request.KeyStage4PerformanceAdditionalInformation, 
+                KeyStage5PerformanceAdditionalInformation = request.KeyStage5PerformanceAdditionalInformation 
             };
         }
 
@@ -120,6 +126,19 @@ namespace TramsDataApi.Factories
             
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
 
+            original.AcademyPerformanceAdditionalInformation = toMerge.AcademyPerformanceAdditionalInformation ?? 
+                                                         original.AcademyPerformanceAdditionalInformation;
+            original.PupilNumbersAdditionalInformation = toMerge.PupilNumbersAdditionalInformation ?? 
+                                                         original.PupilNumbersAdditionalInformation;
+            original.LatestOfstedJudgementAdditionalInformation = toMerge.LatestOfstedJudgementAdditionalInformation ??
+                                                                  original.LatestOfstedJudgementAdditionalInformation;
+            original.KeyStage2PerformanceAdditionalInformation = toMerge.KeyStage2PerformanceAdditionalInformation ?? 
+                                                                 original.KeyStage2PerformanceAdditionalInformation;
+            original.KeyStage4PerformanceAdditionalInformation = toMerge.KeyStage4PerformanceAdditionalInformation ?? 
+                                                                 original.KeyStage4PerformanceAdditionalInformation;
+            original.KeyStage5PerformanceAdditionalInformation = toMerge.KeyStage5PerformanceAdditionalInformation ??
+                                                                 original.KeyStage5PerformanceAdditionalInformation;
+            
             original.AcademyTransferProjectIntendedTransferBenefits =
                 toMerge.AcademyTransferProjectIntendedTransferBenefits ??
                 original.AcademyTransferProjectIntendedTransferBenefits;
