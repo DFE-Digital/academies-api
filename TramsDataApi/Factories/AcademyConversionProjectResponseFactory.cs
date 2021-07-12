@@ -53,6 +53,12 @@ namespace TramsDataApi.Factories
 				SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation,
 				SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete,
 				SchoolPupilForecastsAdditionalInformation = academyConversionProject.SchoolPupilForecastsAdditionalInformation,
+				YearOneProjectedCapacity = academyConversionProject.YearOneProjectedCapacity,
+				YearOneProjectedPupilNumbers = academyConversionProject.YearOneProjectedPupilNumbers,
+				YearTwoProjectedCapacity = academyConversionProject.YearTwoProjectedCapacity,
+				YearTwoProjectedPupilNumbers = academyConversionProject.YearTwoProjectedPupilNumbers,
+				YearThreeProjectedCapacity = academyConversionProject.YearThreeProjectedCapacity,
+				YearThreeProjectedPupilNumbers = academyConversionProject.YearThreeProjectedPupilNumbers,
 				KeyStagePerformanceTablesAdditionalInformation = academyConversionProject.KeyStagePerformanceTablesAdditionalInformation
 			};
 
