@@ -385,7 +385,7 @@ namespace TramsDataApi.Test.Integration
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_WithFuzzySearch_ByGroupName()
         {
 
-            var groupNamePartial = "Mygroupnam";
+            var groupNamePartial = "MygROupnAM";
 
             var groups = Builder<Group>.CreateListOfSize(15)
                 .All()
@@ -398,7 +398,7 @@ namespace TramsDataApi.Test.Integration
 
             groupLinksThatContainGroupName = groupLinksThatContainGroupName.Select(g =>
             {
-                g.GroupName = $"Mygroupname{GenerateRandomStringSuffix()}";
+                g.GroupName = $"Mygroupname{_randomGenerator.NextString(2, 8)}";
                 return g;
             }).ToList();
 
@@ -414,6 +414,100 @@ namespace TramsDataApi.Test.Integration
             {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri("https://trams-api.com/trusts?groupName=" + groupNamePartial),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.SaveChanges();
+        }
+
+        [Fact]
+        public async Task ShouldReturnSubsetofTrust_WhenSearchingTrust_WithFuzzySearch_ByCompaniesHouse()
+        {
+            var companiesHousePartial = "cOmpanIesHouSEMoCk";
+
+            var groups = Builder<Group>.CreateListOfSize(15)
+                .All()
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
+                .Build()
+                .ToList();
+
+            var groupLinksThatContainCompaniesHouseNumber = groups.GetRange(0, 5);
+            var groupLinksWithoutCompaniesHouseNumber = groups.GetRange(5, 10);
+
+            groupLinksThatContainCompaniesHouseNumber = groupLinksThatContainCompaniesHouseNumber.Select(g =>
+            {
+                g.CompaniesHouseNumber = $"CompaniesHouseMock{_randomGenerator.NextString(2, 8)}";
+                return g;
+            }).ToList();
+
+            _legacyDbContext.Group.AddRange(groupLinksThatContainCompaniesHouseNumber);
+            _legacyDbContext.Group.AddRange(groupLinksWithoutCompaniesHouseNumber);
+            _legacyDbContext.SaveChanges();
+
+            var expected = groupLinksThatContainCompaniesHouseNumber
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .ToList();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?companiesHouseNumber=" + companiesHousePartial),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.SaveChanges();
+        }
+
+        [Fact]
+        public async Task ShouldReturnSubsetOfTrust_WhenSEarchTrust_WithFuzzySearch_ByUkprn()
+        {
+            var ukprnPartial = "UKPrnPARTiAL";
+
+            var groups = Builder<Group>.CreateListOfSize(15)
+                .All()
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
+                .Build()
+                .ToList();
+
+            var groupLinksThatContainUkprn = groups.GetRange(0, 5);
+            var groupLinksWithoutUkprn = groups.GetRange(5, 10);
+
+            groupLinksThatContainUkprn = groupLinksThatContainUkprn.Select(g =>
+            {
+                g.Ukprn = $"UkprnPartial{_randomGenerator.NextString(2, 8)}";
+                return g;
+            }).ToList();
+
+            _legacyDbContext.Group.AddRange(groupLinksThatContainUkprn);
+            _legacyDbContext.Group.AddRange(groupLinksWithoutUkprn);
+            _legacyDbContext.SaveChanges();
+
+            var expected = groupLinksThatContainUkprn
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .ToList();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?ukprn=" + ukprnPartial),
                 Headers =
                 {
                     {"ApiKey", "testing-api-key"}
@@ -565,7 +659,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByAllFields_AndGroupNameUsesFuzzySearch()
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByAllFields_UsingFuzzySearch()
         {
             var ukprn = "mockurn";
             var companiesHouseNumber = "mockcompanieshousenumber";
@@ -576,10 +670,12 @@ namespace TramsDataApi.Test.Integration
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
 
-            groups[0].CompaniesHouseNumber = companiesHouseNumber;
-            groups[1].Ukprn = ukprn;
-            groups[3].GroupName = $"{groupName}{GenerateRandomStringSuffix()}";
+            groups[0].CompaniesHouseNumber = $"{companiesHouseNumber}{ _randomGenerator.NextString(2, 9)}";
+            groups[1].Ukprn = $"{ukprn}{ _randomGenerator.NextString(2, 9)}";
+            groups[3].GroupName = $"{groupName}{_randomGenerator.NextString(2,9)}";
 
+
+            
             _legacyDbContext.Group.AddRange(groups);
             _legacyDbContext.SaveChanges();
 
@@ -968,18 +1064,6 @@ namespace TramsDataApi.Test.Integration
                 QabnameName = null,
                 Qabreport = null
             };
-        }
-
-        private string GenerateRandomStringSuffix()
-        {
-            var length = _randomGenerator.Next(3, 8);
-            StringBuilder randomString = new StringBuilder();
-
-            for (var i = 0; i < length; i++)
-            {
-                randomString.Append("x");
-            }
-            return randomString.ToString();
         }
     }
 }

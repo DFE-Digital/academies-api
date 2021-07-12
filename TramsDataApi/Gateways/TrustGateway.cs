@@ -30,13 +30,11 @@ namespace TramsDataApi.Gateways
                 return _dbContext.Group.OrderBy(group => group.GroupUid).Skip((page - 1) * 10).Take(10).ToList();
             }
 
-            var groupToCheck = groupName?.ToLower();
-
             return _dbContext.Group
                 .Where(g => (
-                    g.GroupName.ToLower().Contains(groupToCheck) ||
-                    g.Ukprn == ukprn ||
-                    g.CompaniesHouseNumber == companiesHouseNumber
+                    g.GroupName.Contains(groupName) ||
+                    g.Ukprn.Contains(ukprn) ||
+                    g.CompaniesHouseNumber.Contains(companiesHouseNumber)
                 ))
                 .OrderBy(group => group.GroupUid)
                 .Skip((page - 1) * 10).Take(10).ToList();
