@@ -16,5 +16,12 @@ namespace TramsDataApi.RequestModels
         public AcademyTransferProjectGeneralInformationRequest GeneralInformation { get; set; }
         public string State { get; set; }
         public string Status { get; set; }
+        public string AcademyPerformanceAdditionalInformation { get; set; }
+        public string PupilNumbersAdditionalInformation { get; set; }
+        public string LatestOfstedJudgementAdditionalInformation { get; set; }
+        public string KeyStage2PerformanceAdditionalInformation { get; set; }
+        public string KeyStage4PerformanceAdditionalInformation { get; set; }
+        public string KeyStage5PerformanceAdditionalInformation { get; set; }
+        
     }
 }
