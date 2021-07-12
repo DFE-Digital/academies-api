@@ -50,29 +50,29 @@
                 //EqualitiesImpactAssessmentConsidered
 
                 // school budget info
-                RevenueCarryForwardAtEndMarchCurrentYear = ParseDecimal(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward),
-                ProjectedRevenueBalanceAtEndMarchNextYear = ParseDecimal(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward),
+                RevenueCarryForwardAtEndMarchCurrentYear = ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward.ToDecimal(),
+                ProjectedRevenueBalanceAtEndMarchNextYear = ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward.ToDecimal(),
                 //CapitalCarryForwardAtEndMarchCurrentYear
                 //CapitalCarryForwardAtEndMarchNextYear
 
                 // pupil schools forecast
-                YearOneProjectedCapacity = ParseInt(ifdPipeline.ProjectTemplateInformationAy1CapacityForecast),
-                YearOneProjectedPupilNumbers = ParseInt(ifdPipeline.ProjectTemplateInformationAy1TotalPupilNumberForecast),
-                YearTwoProjectedCapacity = ParseInt(ifdPipeline.ProjectTemplateInformationAy2CapacityForecast),
-                YearTwoProjectedPupilNumbers = ParseInt(ifdPipeline.ProjectTemplateInformationAy2TotalPupilNumberForecast),
-                YearThreeProjectedCapacity = ParseInt(ifdPipeline.ProjectTemplateInformationAy3CapacityForecast),
-                YearThreeProjectedPupilNumbers = ParseInt(ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast)
+                YearOneProjectedCapacity = ifdPipeline.ProjectTemplateInformationAy1CapacityForecast.ToInt(),
+                YearOneProjectedPupilNumbers = ifdPipeline.ProjectTemplateInformationAy1TotalPupilNumberForecast.ToInt(),
+                YearTwoProjectedCapacity = ifdPipeline.ProjectTemplateInformationAy2CapacityForecast.ToInt(),
+                YearTwoProjectedPupilNumbers = ifdPipeline.ProjectTemplateInformationAy2TotalPupilNumberForecast.ToInt(),
+                YearThreeProjectedCapacity = ifdPipeline.ProjectTemplateInformationAy3CapacityForecast.ToInt(),
+                YearThreeProjectedPupilNumbers = ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast.ToInt()
             };
         }
 
-        private static decimal? ParseDecimal(string decimalString)
+        private static decimal? ToDecimal(this string decimalString)
         {
             if (string.IsNullOrEmpty(decimalString)) return null;
             var parseSuccess = decimal.TryParse(decimalString, out var parsedDecimal);
             return parseSuccess ? parsedDecimal : (decimal?)null;
         }
 
-        private static int? ParseInt(string intString)
+        private static int? ToInt(this string intString)
         {
             if (string.IsNullOrEmpty(intString)) return null;
             var parseSuccess = int.TryParse(intString, out var parsedInt);
