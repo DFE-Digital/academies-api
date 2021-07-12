@@ -17,18 +17,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipeline()
-        {
-            var academyConversionProject = _fixture.Create<AcademyConversionProject>();
-            var expectedResponse = CreateExpected(academyConversionProject);
-
-            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject, null);
-
-            academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
-        }
-
-        [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndTrust()
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenAcademyConversionProjectAndTrust()
         {
             var academyConversionProject = _fixture.Create<AcademyConversionProject>();
             var trust = _fixture.Create<Trust>();
@@ -41,10 +30,9 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProject()
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenAcademyConversionProject()
         {
             var academyConversionProject = _fixture.Create<AcademyConversionProject>();
-
             var expectedResponse = CreateExpected(academyConversionProject, null);
 
             var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject, null);
@@ -53,11 +41,17 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenIfdPipelineAndAcademyConversionProjectWithNullSchoolBudgetValues()
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenAcademyConversionProjectWithNullSchoolBudgetAndPupilForecaseValues()
         {
               var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.CapitalCarryForwardAtEndMarchCurrentYear)
                 .Without(x => x.CapitalCarryForwardAtEndMarchNextYear)
+                .Without(x => x.YearOneProjectedCapacity)
+                .Without(x => x.YearOneProjectedPupilNumbers)
+                .Without(x => x.YearTwoProjectedPupilNumbers)
+                .Without(x => x.YearTwoProjectedPupilNumbers)
+                .Without(x => x.YearThreeProjectedPupilNumbers)
+                .Without(x => x.YearThreeProjectedPupilNumbers)
                 .Create();
 
             var expectedResponse = CreateExpected(academyConversionProject, null);
@@ -113,6 +107,12 @@ namespace TramsDataApi.Test.Factories
                 SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation,
                 SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete,
                 SchoolPupilForecastsAdditionalInformation = academyConversionProject.SchoolPupilForecastsAdditionalInformation,
+                YearOneProjectedCapacity = academyConversionProject.YearOneProjectedCapacity,
+                YearOneProjectedPupilNumbers = academyConversionProject.YearOneProjectedPupilNumbers,
+                YearTwoProjectedCapacity = academyConversionProject.YearTwoProjectedCapacity,
+                YearTwoProjectedPupilNumbers = academyConversionProject.YearTwoProjectedPupilNumbers,
+                YearThreeProjectedCapacity = academyConversionProject.YearThreeProjectedCapacity,
+                YearThreeProjectedPupilNumbers = academyConversionProject.YearThreeProjectedPupilNumbers,
                 KeyStagePerformanceTablesAdditionalInformation = academyConversionProject.KeyStagePerformanceTablesAdditionalInformation
             };
             if (trust != null)
