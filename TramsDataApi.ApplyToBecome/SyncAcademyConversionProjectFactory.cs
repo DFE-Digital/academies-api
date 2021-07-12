@@ -50,21 +50,33 @@
                 //EqualitiesImpactAssessmentConsidered
 
                 // school budget info
-                RevenueCarryForwardAtEndMarchCurrentYear = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward) ?
-                    decimal.Parse(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward) : (decimal?)null,
-                ProjectedRevenueBalanceAtEndMarchNextYear = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward) ?
-                    decimal.Parse(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward) : (decimal?)null
+                RevenueCarryForwardAtEndMarchCurrentYear = ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward.ToDecimal(),
+                ProjectedRevenueBalanceAtEndMarchNextYear = ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward.ToDecimal(),
                 //CapitalCarryForwardAtEndMarchCurrentYear
                 //CapitalCarryForwardAtEndMarchNextYear
 
                 // pupil schools forecast
-                //YearOneProjectedCapacity
-                //YearOneProjectedPupilNumbers
-                //YearTwoProjectedCapacity
-                //YearTwoProjectedPupilNumbers
-                //YearThreeProjectedCapacity
-                //YearThreeProjectedPupilNumbers
+                YearOneProjectedCapacity = ifdPipeline.ProjectTemplateInformationAy1CapacityForecast.ToInt(),
+                YearOneProjectedPupilNumbers = ifdPipeline.ProjectTemplateInformationAy1TotalPupilNumberForecast.ToInt(),
+                YearTwoProjectedCapacity = ifdPipeline.ProjectTemplateInformationAy2CapacityForecast.ToInt(),
+                YearTwoProjectedPupilNumbers = ifdPipeline.ProjectTemplateInformationAy2TotalPupilNumberForecast.ToInt(),
+                YearThreeProjectedCapacity = ifdPipeline.ProjectTemplateInformationAy3CapacityForecast.ToInt(),
+                YearThreeProjectedPupilNumbers = ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast.ToInt()
             };
+        }
+
+        private static decimal? ToDecimal(this string decimalString)
+        {
+            if (string.IsNullOrEmpty(decimalString)) return null;
+            var parseSuccess = decimal.TryParse(decimalString, out var parsedDecimal);
+            return parseSuccess ? parsedDecimal : (decimal?)null;
+        }
+
+        private static int? ToInt(this string intString)
+        {
+            if (string.IsNullOrEmpty(intString)) return null;
+            var parseSuccess = int.TryParse(intString, out var parsedInt);
+            return parseSuccess ? parsedInt : (int?)null;
         }
     }
 }
