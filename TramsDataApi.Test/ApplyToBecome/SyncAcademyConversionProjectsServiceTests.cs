@@ -72,7 +72,14 @@ namespace TramsDataApi.Test.ApplyToBecome
                 .With(x => x.GeneralDetailsUrn, "123456")
                 .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
                 .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationAy1CapacityForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy1TotalPupilNumberForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy2CapacityForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy2TotalPupilNumberForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy3CapacityForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy3TotalPupilNumberForecast, _fixture.Create<int>().ToString)
                 .CreateMany();
+
             _dbContext.IfdPipeline.AddRange(ifdPipelines);
             _dbContext.SaveChanges();
 
@@ -94,6 +101,12 @@ namespace TramsDataApi.Test.ApplyToBecome
                 .With(x => x.GeneralDetailsUrn, "123456")
                 .With(x => x.ProjectTemplateInformationFyRevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
                 .With(x => x.ProjectTemplateInformationFy1RevenueBalanceCarriedForward, _fixture.Create<decimal>().ToString)
+                .With(x => x.ProjectTemplateInformationAy1CapacityForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy1TotalPupilNumberForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy2CapacityForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy2TotalPupilNumberForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy3CapacityForecast, _fixture.Create<int>().ToString)
+                .With(x => x.ProjectTemplateInformationAy3TotalPupilNumberForecast, _fixture.Create<int>().ToString)
                 .CreateMany();
             _dbContext.IfdPipeline.AddRange(ifdPipelines);
             _dbContext.SaveChanges();
