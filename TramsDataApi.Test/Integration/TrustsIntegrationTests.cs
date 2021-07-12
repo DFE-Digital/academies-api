@@ -430,7 +430,7 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task ShouldReturnSubsetofTrust_WhenSearchingTrust_WithFuzzySearch_ByCompaniesHouse()
+        public async Task ShouldReturnSubsetofTrust_WhenSearchingTrust_WithFuzzySearch_ByCompaniesHouseNumber()
         {
             var companiesHousePartial = "cOmpanIesHouSEMoCk";
 
