@@ -50,27 +50,33 @@
                 //EqualitiesImpactAssessmentConsidered
 
                 // school budget info
-                RevenueCarryForwardAtEndMarchCurrentYear = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward) ?
-                    decimal.Parse(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward) : (decimal?)null,
-                ProjectedRevenueBalanceAtEndMarchNextYear = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward) ?
-                    decimal.Parse(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward) : (decimal?)null,
+                RevenueCarryForwardAtEndMarchCurrentYear = ParseDecimal(ifdPipeline.ProjectTemplateInformationFyRevenueBalanceCarriedForward),
+                ProjectedRevenueBalanceAtEndMarchNextYear = ParseDecimal(ifdPipeline.ProjectTemplateInformationFy1RevenueBalanceCarriedForward),
                 //CapitalCarryForwardAtEndMarchCurrentYear
                 //CapitalCarryForwardAtEndMarchNextYear
 
                 // pupil schools forecast
-                YearOneProjectedCapacity = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationAy1CapacityForecast) ?
-                    int.Parse(ifdPipeline.ProjectTemplateInformationAy1CapacityForecast) : (int?)null,
-                YearOneProjectedPupilNumbers = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationAy1TotalPupilNumberForecast) ?
-                    int.Parse(ifdPipeline.ProjectTemplateInformationAy1TotalPupilNumberForecast) : (int?)null,
-                YearTwoProjectedCapacity = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationAy2CapacityForecast) ?
-                    int.Parse(ifdPipeline.ProjectTemplateInformationAy2CapacityForecast) : (int?)null,
-                YearTwoProjectedPupilNumbers = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationAy2TotalPupilNumberForecast) ?
-                    int.Parse(ifdPipeline.ProjectTemplateInformationAy2TotalPupilNumberForecast) : (int?)null,
-                YearThreeProjectedCapacity = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationAy3CapacityForecast) ?
-                int.Parse(ifdPipeline.ProjectTemplateInformationAy3CapacityForecast) : (int?)null,
-                YearThreeProjectedPupilNumbers = !string.IsNullOrEmpty(ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast) ?
-                    int.Parse(ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast) : (int?)null
+                YearOneProjectedCapacity = ParseInt(ifdPipeline.ProjectTemplateInformationAy1CapacityForecast),
+                YearOneProjectedPupilNumbers = ParseInt(ifdPipeline.ProjectTemplateInformationAy1TotalPupilNumberForecast),
+                YearTwoProjectedCapacity = ParseInt(ifdPipeline.ProjectTemplateInformationAy2CapacityForecast),
+                YearTwoProjectedPupilNumbers = ParseInt(ifdPipeline.ProjectTemplateInformationAy2TotalPupilNumberForecast),
+                YearThreeProjectedCapacity = ParseInt(ifdPipeline.ProjectTemplateInformationAy3CapacityForecast),
+                YearThreeProjectedPupilNumbers = ParseInt(ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast)
             };
+        }
+
+        private static decimal? ParseDecimal(string decimalString)
+        {
+            if (string.IsNullOrEmpty(decimalString)) return null;
+            var parseSuccess = decimal.TryParse(decimalString, out var parsedDecimal);
+            return parseSuccess ? parsedDecimal : (decimal?)null;
+        }
+
+        private static int? ParseInt(string intString)
+        {
+            if (string.IsNullOrEmpty(intString)) return null;
+            var parseSuccess = int.TryParse(intString, out var parsedInt);
+            return parseSuccess ? parsedInt : (int?)null;
         }
     }
 }
