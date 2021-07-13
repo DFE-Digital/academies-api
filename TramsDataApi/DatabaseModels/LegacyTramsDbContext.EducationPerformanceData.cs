@@ -146,6 +146,14 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnType("decimal(38, 2)");
                     
                 entity.Property(e => e.SipPerformancetype).HasColumnName("sip_performancetype");
+                
+                entity.Property(e => e.SipAppliedgeneralaveragepspe)
+                    .HasColumnName("sip_appliedgeneralaveragepspe")
+                    .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipAcademiclevelaveragepspe)
+                    .HasColumnName("sip_academiclevelaveragepspe")
+                    .HasColumnType("decimal(38, 2)");
             });
         }
     }

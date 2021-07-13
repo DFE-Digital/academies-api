@@ -42,7 +42,9 @@ namespace TramsDataApi.Factories
                     SipProgress8mathsdisadvantaged = nationalEducationPerformance1.SipProgress8mathsdisadvantaged ?? nationalEducationPerformance2.SipProgress8mathsdisadvantaged,
                     SipProgress8ebacc = nationalEducationPerformance1.SipProgress8ebacc ?? nationalEducationPerformance2.SipProgress8ebacc,
                     SipProgress8ebaccdisadvantaged = nationalEducationPerformance1.SipProgress8ebaccdisadvantaged ?? nationalEducationPerformance2.SipProgress8ebaccdisadvantaged,
-                    SipPerformancetype = nationalEducationPerformance1.SipPerformancetype ?? nationalEducationPerformance2.SipPerformancetype
+                    SipPerformancetype = nationalEducationPerformance1.SipPerformancetype ?? nationalEducationPerformance2.SipPerformancetype,
+                    SipAcademiclevelaveragepspe = nationalEducationPerformance1.SipAcademiclevelaveragepspe ?? nationalEducationPerformance2.SipAcademiclevelaveragepspe,
+                    SipAppliedgeneralaveragepspe = nationalEducationPerformance1.SipAppliedgeneralaveragepspe ?? nationalEducationPerformance2.SipAppliedgeneralaveragepspe
                 };
         }
     }
