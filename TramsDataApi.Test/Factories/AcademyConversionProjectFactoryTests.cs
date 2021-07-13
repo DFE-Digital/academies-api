@@ -113,6 +113,12 @@ namespace TramsDataApi.Test.Factories
             expected.SchoolBudgetInformationAdditionalInformation = updateRequest.SchoolBudgetInformationAdditionalInformation;
             expected.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete;
             expected.SchoolPupilForecastsAdditionalInformation = updateRequest.SchoolPupilForecastsAdditionalInformation;
+            expected.YearOneProjectedCapacity = updateRequest.YearOneProjectedCapacity;
+            expected.YearOneProjectedPupilNumbers = updateRequest.YearOneProjectedPupilNumbers;
+            expected.YearTwoProjectedCapacity = updateRequest.YearTwoProjectedCapacity;
+            expected.YearTwoProjectedPupilNumbers = updateRequest.YearTwoProjectedPupilNumbers;
+            expected.YearThreeProjectedCapacity = updateRequest.YearThreeProjectedCapacity;
+            expected.YearThreeProjectedPupilNumbers = updateRequest.YearThreeProjectedPupilNumbers;
             expected.KeyStagePerformanceTablesAdditionalInformation = updateRequest.KeyStagePerformanceTablesAdditionalInformation;
 
             return expected;

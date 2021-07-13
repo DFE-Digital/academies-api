@@ -64,6 +64,18 @@ namespace TramsDataApi.Factories
             project.SchoolBudgetInformationSectionComplete = updateRequest.SchoolBudgetInformationSectionComplete ?? project.SchoolBudgetInformationSectionComplete;
             project.SchoolPupilForecastsAdditionalInformation = updateRequest.SchoolPupilForecastsAdditionalInformation ??
                 project.SchoolPupilForecastsAdditionalInformation;
+            project.YearOneProjectedCapacity =
+                updateRequest.YearOneProjectedCapacity ?? project.YearOneProjectedCapacity;
+            project.YearOneProjectedPupilNumbers =
+                updateRequest.YearOneProjectedPupilNumbers ?? project.YearOneProjectedPupilNumbers;
+            project.YearTwoProjectedCapacity =
+                updateRequest.YearTwoProjectedCapacity ?? project.YearTwoProjectedCapacity;
+            project.YearTwoProjectedPupilNumbers =
+                updateRequest.YearTwoProjectedPupilNumbers ?? project.YearTwoProjectedPupilNumbers;
+            project.YearThreeProjectedCapacity =
+                updateRequest.YearThreeProjectedCapacity ?? project.YearThreeProjectedCapacity;
+            project.YearThreeProjectedPupilNumbers =
+                updateRequest.YearThreeProjectedPupilNumbers ?? project.YearThreeProjectedPupilNumbers;
             project.KeyStagePerformanceTablesAdditionalInformation = updateRequest.KeyStagePerformanceTablesAdditionalInformation ??
                 project.KeyStagePerformanceTablesAdditionalInformation;
 
