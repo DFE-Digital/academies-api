@@ -90,6 +90,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 50.00M)
                 .With(epd => epd.SipProgress8score = 50.00M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 50.00M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
                 .Build();
 
             var nationalAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
@@ -127,6 +129,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8)
                 .With(epd => epd.SipMathsprogressscore = 4)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 77.76M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 53.78M)
                 .Build();
             
             var laAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
@@ -164,6 +168,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8)
                 .With(epd => epd.SipMathsprogressscore = 4)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 76.99M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 12.87M)
                 .Build();
                 
             var globalOptionMetadata = Builder<GlobalOptionSetMetadata>.CreateNew()
@@ -280,13 +286,17 @@ namespace TramsDataApi.Test.Integration
 
             var expectedKs4Response = new List<KeyStage4PerformanceResponse> {KeyStage4PerformanceResponseFactory
                 .Create(educationPerformanceData, nationalAverageEducationPerformanceData, laAverageEducationPerformanceData)};
+            
+            var expectedKs5Response = new List<KeyStage5PerformanceResponse> {KeyStage5PerformanceResponseFactory
+                .Create(educationPerformanceData, nationalAverageEducationPerformanceData, laAverageEducationPerformanceData)};
 
             var expected = new EducationalPerformanceResponse
             {
                 SchoolName = account.Name,
                 KeyStage1 = expectedKs1Response,
                 KeyStage2 = expectedKs2Response,
-                KeyStage4 = expectedKs4Response
+                KeyStage4 = expectedKs4Response,
+                KeyStage5 = expectedKs5Response
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
@@ -303,7 +313,7 @@ namespace TramsDataApi.Test.Integration
         }
         
         [Fact]
-        public async Task CanGetEducationPerformanceDataWithKeyStage4Data()
+        public async Task CanGetEducationPerformanceDataWithKeyStage4And5Data()
         {
 
             var accountGuid = Guid.NewGuid();
@@ -352,6 +362,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 100.49M)
                 .With(epd => epd.SipProgress8score = 99.17M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 37.78M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
                 .Build();
 
             var nationalEducationPerformance1 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -389,6 +401,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8.00M)
                 .With(epd => epd.SipMathsprogressscore = 4.00M)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9.00M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 66.33M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 71.55M)
                 .Build();
             
             var nationalEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -481,6 +495,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8.00M)
                 .With(epd => epd.SipMathsprogressscore = 4.00M)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9.00M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 77.22M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 67.87M)
                 .Build();
 
             var educationPerformanceDataList = new List<SipEducationalperformancedata>
@@ -688,12 +704,24 @@ namespace TramsDataApi.Test.Integration
                 LAAverageP8UpperConfidence = laEducationPerformance2.SipProgress8upperconfidence
             };
 
+            var expectedKeyStage5Response = new KeyStage5PerformanceResponse
+            {
+                Year = educationPerformanceData.SipName,
+                AcademicQualificationAverage = educationPerformanceData.SipAcademicLevelAveragePspe,
+                AppliedGeneralQualificationAverage = educationPerformanceData.SipAppliedGeneralAveragePspe,
+                NationalAcademicQualificationAverage = nationalEducationPerformance1.SipAcademicLevelAveragePspe,
+                NationalAppliedGeneralQualificationAverage = nationalEducationPerformance1.SipAppliedGeneralAveragePspe,
+                LAAcademicQualificationAverage = laEducationPerformance2.SipAcademicLevelAveragePspe,
+                LAAppliedGeneralQualificationAverage = laEducationPerformance2.SipAppliedGeneralAveragePspe
+            };
+
             var expected = new EducationalPerformanceResponse
             {
                 SchoolName = account.Name,
                 KeyStage1 = new List<KeyStage1PerformanceResponse>(),
                 KeyStage2 = new List<KeyStage2PerformanceResponse> { expectedKeyStage2Response },
-                KeyStage4 = new List<KeyStage4PerformanceResponse> { expectedKeyStage4Response }
+                KeyStage4 = new List<KeyStage4PerformanceResponse> { expectedKeyStage4Response },
+                KeyStage5 = new List<KeyStage5PerformanceResponse> { expectedKeyStage5Response }
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
@@ -706,8 +734,8 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
             _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
             _legacyDbContext.GlobalOptionSetMetadata.RemoveRange(_legacyDbContext.GlobalOptionSetMetadata);
-
         }
+        
 
         public void Dispose()
         {

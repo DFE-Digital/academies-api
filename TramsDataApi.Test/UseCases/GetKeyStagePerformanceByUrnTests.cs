@@ -473,13 +473,25 @@ namespace TramsDataApi.Test.UseCases
                 LAAverageP8LowerConfidence = localAuthorityEducationPerformance?.SipProgress8lowerconfidence,
                 LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence,
             };
+
+            var expectedKS5 = new KeyStage5PerformanceResponse
+            {
+                Year = educationPerformanceData.SipName,
+                AcademicQualificationAverage = educationPerformanceData.SipAcademicLevelAveragePspe,
+                AppliedGeneralQualificationAverage = educationPerformanceData.SipAppliedGeneralAveragePspe,
+                NationalAcademicQualificationAverage = nationalEducationPerformanceData2.SipAcademicLevelAveragePspe,
+                NationalAppliedGeneralQualificationAverage = nationalEducationPerformanceData2.SipAppliedGeneralAveragePspe,
+                LAAcademicQualificationAverage = localAuthorityEducationPerformance?.SipAcademicLevelAveragePspe,
+                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance?.SipAppliedGeneralAveragePspe
+            };
             
             var expected = new EducationalPerformanceResponse
             {
                 SchoolName = account.Name,
                 KeyStage1 = expectedKs1,
                 KeyStage2 = new List<KeyStage2PerformanceResponse>{ expectedKs2 },
-                KeyStage4 = new List<KeyStage4PerformanceResponse>{ expectedKs4 }
+                KeyStage4 = new List<KeyStage4PerformanceResponse>{ expectedKs4 },
+                KeyStage5 = new List<KeyStage5PerformanceResponse>{ expectedKS5 }
             };
             
             var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object);

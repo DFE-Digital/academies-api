@@ -58,12 +58,24 @@ namespace TramsDataApi.UseCases
                         )
                 ).ToList();
             
+            var ks5Response = educationPerformance
+                .Select(epd => KeyStage5PerformanceResponseFactory
+                    .Create(epd, 
+                        nationalAverageEducationPerformances
+                            .FirstOrDefault(
+                                national => national.SipName == epd.SipName), 
+                        localAuthorityAverageEducationPerformances
+                            .FirstOrDefault(la => la.SipName == epd.SipName)
+                    )
+                ).ToList();
+            
             return new EducationalPerformanceResponse
             {
                 SchoolName = academy.Name,
                 KeyStage1 = ks1Responses,
                 KeyStage2 = ks2Response,
-                KeyStage4 = ks4Response
+                KeyStage4 = ks4Response,
+                KeyStage5 = ks5Response
             };
         }
         private List<SipEducationalperformancedata> GroupAverageEducationPerformances(IEnumerable<IGrouping<string, SipEducationalperformancedata>> enumerable)
