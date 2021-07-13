@@ -90,8 +90,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 50.00M)
                 .With(epd => epd.SipProgress8score = 50.00M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 50.00M)
-                .With(epd => epd.SipAcademiclevelaveragepspe = 40.54M)
-                .With(epd => epd.SipAppliedgeneralaveragepspe = 51.44M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
                 .Build();
 
             var nationalAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
@@ -129,8 +129,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8)
                 .With(epd => epd.SipMathsprogressscore = 4)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9)
-                .With(epd => epd.SipAcademiclevelaveragepspe = 77.76M)
-                .With(epd => epd.SipAppliedgeneralaveragepspe = 53.78M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 77.76M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 53.78M)
                 .Build();
             
             var laAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
@@ -168,8 +168,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8)
                 .With(epd => epd.SipMathsprogressscore = 4)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9)
-                .With(epd => epd.SipAcademiclevelaveragepspe = 76.99M)
-                .With(epd => epd.SipAppliedgeneralaveragepspe = 12.87M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 76.99M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 12.87M)
                 .Build();
                 
             var globalOptionMetadata = Builder<GlobalOptionSetMetadata>.CreateNew()
@@ -362,8 +362,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = 100.49M)
                 .With(epd => epd.SipProgress8score = 99.17M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 37.78M)
-                .With(epd => epd.SipAcademiclevelaveragepspe = 40.54M)
-                .With(epd => epd.SipAppliedgeneralaveragepspe = 51.44M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
                 .Build();
 
             var nationalEducationPerformance1 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -401,8 +401,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8.00M)
                 .With(epd => epd.SipMathsprogressscore = 4.00M)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9.00M)
-                .With(epd => epd.SipAcademiclevelaveragepspe = 66.33M)
-                .With(epd => epd.SipAppliedgeneralaveragepspe = 71.55M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 66.33M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 71.55M)
                 .Build();
             
             var nationalEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -495,8 +495,8 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipWritingprogressscoredisadv = 8.00M)
                 .With(epd => epd.SipMathsprogressscore = 4.00M)
                 .With(epd => epd.SipMathsprogressscoredisadv = 9.00M)
-                .With(epd => epd.SipAcademiclevelaveragepspe = 77.22M)
-                .With(epd => epd.SipAppliedgeneralaveragepspe = 67.87M)
+                .With(epd => epd.SipAcademicLevelAveragePspe = 77.22M)
+                .With(epd => epd.SipAppliedGeneralAveragePspe = 67.87M)
                 .Build();
 
             var educationPerformanceDataList = new List<SipEducationalperformancedata>
@@ -707,12 +707,12 @@ namespace TramsDataApi.Test.Integration
             var expectedKeyStage5Response = new KeyStage5PerformanceResponse
             {
                 Year = educationPerformanceData.SipName,
-                AcademicQualificationAverage = educationPerformanceData.SipAcademiclevelaveragepspe,
-                AppliedGeneralQualificationAverage = educationPerformanceData.SipAppliedgeneralaveragepspe,
-                NationalAcademicQualificationAverage = nationalEducationPerformance1.SipAcademiclevelaveragepspe,
-                NationalAppliedGeneralQualificationAverage = nationalEducationPerformance1.SipAppliedgeneralaveragepspe,
-                LAAcademicQualificationAverage = laEducationPerformance2.SipAcademiclevelaveragepspe,
-                LAAppliedGeneralQualificationAverage = laEducationPerformance2.SipAppliedgeneralaveragepspe
+                AcademicQualificationAverage = educationPerformanceData.SipAcademicLevelAveragePspe,
+                AppliedGeneralQualificationAverage = educationPerformanceData.SipAppliedGeneralAveragePspe,
+                NationalAcademicQualificationAverage = nationalEducationPerformance1.SipAcademicLevelAveragePspe,
+                NationalAppliedGeneralQualificationAverage = nationalEducationPerformance1.SipAppliedGeneralAveragePspe,
+                LAAcademicQualificationAverage = laEducationPerformance2.SipAcademicLevelAveragePspe,
+                LAAppliedGeneralQualificationAverage = laEducationPerformance2.SipAppliedGeneralAveragePspe
             };
 
             var expected = new EducationalPerformanceResponse

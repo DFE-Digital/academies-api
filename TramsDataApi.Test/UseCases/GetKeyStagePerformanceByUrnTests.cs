@@ -477,12 +477,12 @@ namespace TramsDataApi.Test.UseCases
             var expectedKS5 = new KeyStage5PerformanceResponse
             {
                 Year = educationPerformanceData.SipName,
-                AcademicQualificationAverage = educationPerformanceData.SipAcademiclevelaveragepspe,
-                AppliedGeneralQualificationAverage = educationPerformanceData.SipAppliedgeneralaveragepspe,
-                NationalAcademicQualificationAverage = nationalEducationPerformanceData2.SipAcademiclevelaveragepspe,
-                NationalAppliedGeneralQualificationAverage = nationalEducationPerformanceData2.SipAppliedgeneralaveragepspe,
-                LAAcademicQualificationAverage = localAuthorityEducationPerformance?.SipAcademiclevelaveragepspe,
-                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance?.SipAppliedgeneralaveragepspe
+                AcademicQualificationAverage = educationPerformanceData.SipAcademicLevelAveragePspe,
+                AppliedGeneralQualificationAverage = educationPerformanceData.SipAppliedGeneralAveragePspe,
+                NationalAcademicQualificationAverage = nationalEducationPerformanceData2.SipAcademicLevelAveragePspe,
+                NationalAppliedGeneralQualificationAverage = nationalEducationPerformanceData2.SipAppliedGeneralAveragePspe,
+                LAAcademicQualificationAverage = localAuthorityEducationPerformance?.SipAcademicLevelAveragePspe,
+                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance?.SipAppliedGeneralAveragePspe
             };
             
             var expected = new EducationalPerformanceResponse
