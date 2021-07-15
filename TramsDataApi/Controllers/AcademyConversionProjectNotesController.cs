@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.UseCases;
@@ -14,6 +15,7 @@ namespace TramsDataApi.Controllers
             IUseCase<GetAcademyConversionProjectNotesByIdRequest, IEnumerable<AcademyConversionProjectNoteResponse>>
             _getAcademyConversionProjectNotesById;
         private readonly IAddAcademyConversionProjectNote _addAcademyConversionProjectNote;
+        private readonly ILogger<AcademyConversionProjectNotesController> _logger;
 
         public AcademyConversionProjectNotesController(IUseCase<GetAcademyConversionProjectNotesByIdRequest,
             IEnumerable<AcademyConversionProjectNoteResponse>> getAcademyConversionProjectNotesById, IAddAcademyConversionProjectNote addAcademyConversionProjectNote)
