@@ -19,7 +19,7 @@ namespace TramsDataApi.UseCases
         {
             return _establishmentGateway.GetByTrustUid(trustUid)
                 .Select(e =>
-                    EstablishmentResponseFactory.Create(e, _establishmentGateway.GetMisEstablishmentByUrn(e.Urn), _establishmentGateway.GetSmartDataByUrn(e.Urn))
+                    EstablishmentResponseFactory.Create(e, _establishmentGateway.GetMisEstablishmentByUrn(e.Urn), _establishmentGateway.GetSmartDataByUrn(e.Urn), _establishmentGateway.GetFurtherEducationEstablishmentByUrn(e.Urn))
                     )
                 .ToList();
         }
