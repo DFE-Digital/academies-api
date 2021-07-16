@@ -34,6 +34,11 @@ namespace TramsDataApi.Gateways
             return _dbContext.MisEstablishments.FirstOrDefault(m => m.Urn == establishmentUrn);
         }
 
+        public FurtherEducationEstablishments GetFurtherEducationEstablishmentByUrn(int establishmentUrn)
+        {
+            return _dbContext.FurtherEducationEstablishments.FirstOrDefault(m => m.ProviderUrn == establishmentUrn);
+        }
+
         public SmartData GetSmartDataByUrn(int establishmentUrn)
         {
             return _dbContext.SmartData.FirstOrDefault(s => s.Urn == establishmentUrn.ToString());
