@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class EstablishmentResponseFactory
     {
-        public static EstablishmentResponse Create(Establishment establishment, MisEstablishments misEstablishment, SmartData smartData)
+        public static EstablishmentResponse Create(Establishment establishment, MisEstablishments misEstablishment, SmartData smartData, FurtherEducationEstablishments furtherEducationEstablishments)
         {
             if (establishment == null)
             {
@@ -168,7 +168,7 @@ namespace TramsDataApi.Factories
                 Country = establishment.CountryName,
                 UPRN = establishment.Uprn,
                 MISEstablishment = MISEstablishmentResponseFactory.Create(misEstablishment),
-                MISFurtherEducationEstablishment = null,
+                MISFurtherEducationEstablishment = FurtherEducationEstablishmentResponseFactory.Create(furtherEducationEstablishments),
                 SMARTData = SmartDataResponseFactory.Create(smartData),
                 Financial = null,
                 Concerns = null
