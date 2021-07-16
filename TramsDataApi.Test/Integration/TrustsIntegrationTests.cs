@@ -247,7 +247,7 @@ namespace TramsDataApi.Test.Integration
             
              var establishmentResponses = new List<EstablishmentResponse>
              {
-                 EstablishmentResponseFactory.Create(testEstablishment, misEstablishment, smartData)
+                 EstablishmentResponseFactory.Create(testEstablishment, misEstablishment, smartData, null)
              };
 
             var httpRequestMessage = new HttpRequestMessage

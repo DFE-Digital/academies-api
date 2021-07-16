@@ -229,14 +229,16 @@ namespace TramsDataApi.Test.Integration
                 .With(e => e.Urn = urn)
                 .Build();
             var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
+            var furtherEducationEstablishment = Builder<FurtherEducationEstablishments>.CreateNew().With(f => f.ProviderUrn = establishment.Urn).Build();
             var smartData = Generators.GenerateSmartData(establishment.Urn);
 
             _legacyDbContext.Establishment.Add(establishment);
             _legacyDbContext.MisEstablishments.Add(misEstablishment);
             _legacyDbContext.SmartData.Add(smartData);
+            _legacyDbContext.FurtherEducationEstablishments.Add(furtherEducationEstablishment);
             _legacyDbContext.SaveChanges();
 
-            return EstablishmentResponseFactory.Create(establishment, misEstablishment, smartData);
+            return EstablishmentResponseFactory.Create(establishment, misEstablishment, smartData, furtherEducationEstablishment);
         }
 
         public void Dispose()

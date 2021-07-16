@@ -43,7 +43,7 @@ namespace TramsDataApi.Test.UseCases
 
             _establishmentGateway.Setup(gateway => gateway.GetByUkprn(UKPRN)).Returns(establishment);
 
-            var expected = EstablishmentResponseFactory.Create(establishment, null, null);
+            var expected = EstablishmentResponseFactory.Create(establishment, null, null, null);
 
             var result = _useCase.Execute(UKPRN);
             
@@ -59,7 +59,7 @@ namespace TramsDataApi.Test.UseCases
             _establishmentGateway.Setup(gateway => gateway.GetByUkprn(UKPRN)).Returns(establishment);
             _establishmentGateway.Setup(gateway => gateway.GetMisEstablishmentByUrn(establishment.Urn)).Returns(misEstablishment);
 
-            var expected = EstablishmentResponseFactory.Create(establishment, misEstablishment, null);
+            var expected = EstablishmentResponseFactory.Create(establishment, misEstablishment, null, null);
             
             var result = _useCase.Execute(UKPRN);
             
@@ -75,10 +75,26 @@ namespace TramsDataApi.Test.UseCases
             _establishmentGateway.Setup(gateway => gateway.GetByUkprn(UKPRN)).Returns(establishment);
             _establishmentGateway.Setup(gateway => gateway.GetSmartDataByUrn(establishment.Urn)).Returns(smartData);
 
-            var expected = EstablishmentResponseFactory.Create(establishment, null, smartData);
+            var expected = EstablishmentResponseFactory.Create(establishment, null, smartData, null);
 
             var result = _useCase.Execute(UKPRN);
             
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void GetEstablishmentByUkprn_ReturnsEstablishmentWithFurtherEducationEstablishment_WhenFurtherEducationEstablishmentIsFound()
+        {
+            var establishment = Builder<Establishment>.CreateNew().With(e => e.Ukprn = UKPRN).Build();
+            var furtherEducationEstablishment = Builder<FurtherEducationEstablishments>.CreateNew().With(s => s.ProviderUrn = establishment.Urn).Build();
+
+            _establishmentGateway.Setup(gateway => gateway.GetByUkprn(UKPRN)).Returns(establishment);
+            _establishmentGateway.Setup(gateway => gateway.GetFurtherEducationEstablishmentByUrn(establishment.Urn)).Returns(furtherEducationEstablishment);
+
+            var expected = EstablishmentResponseFactory.Create(establishment, null, null, furtherEducationEstablishment);
+
+            var result = _useCase.Execute(UKPRN);
+
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -97,7 +113,7 @@ namespace TramsDataApi.Test.UseCases
 
             _establishmentGateway.Setup(gateway => gateway.GetByUrn(URN)).Returns(establishment);
 
-            var expected = EstablishmentResponseFactory.Create(establishment, null, null);
+            var expected = EstablishmentResponseFactory.Create(establishment, null, null, null);
 
             var result = _useCase.Execute(new GetEstablishmentByUrnRequest { URN = URN });
 
