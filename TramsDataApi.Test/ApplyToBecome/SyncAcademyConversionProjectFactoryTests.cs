@@ -15,7 +15,7 @@ namespace TramsDataApi.Test.ApplyToBecome
         }
 
         [Fact]
-        public void ReturnsASyncAcademyConversionProject_WhenGivenASyncIfdPipeline()
+        public void ReturnsSyncAcademyConversionProject_WhenGivenSyncIfdPipeline()
         {
             var ifdPipeline = _fixture.Build<SyncIfdPipeline>()
                 .With(x => x.GeneralDetailsUrn, "123456")
