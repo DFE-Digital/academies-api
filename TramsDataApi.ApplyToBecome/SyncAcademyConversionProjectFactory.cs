@@ -14,7 +14,7 @@
                 LocalAuthority = ifdPipeline.GeneralDetailsLocalAuthority,
                 //ApplicationReferenceNumber
                 ProjectStatus = "Active",
-                ApplicationReceivedDate = ifdPipeline.InterestDateOfInterest,
+                ApplicationReceivedDate = ifdPipeline.ApprovalProcessApplicationDate,
                 AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
                 HeadTeacherBoardDate = ifdPipeline.DeliveryProcessDateForDiscussionByRscHtb,
                 //OpeningDate
