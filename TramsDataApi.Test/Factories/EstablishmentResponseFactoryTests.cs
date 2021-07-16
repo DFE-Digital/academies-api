@@ -13,9 +13,9 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_FromAnEstablishment(Establishment establishment)
         {
-            var expected = BuildExpected(establishment, null, null);
+            var expected = BuildExpected(establishment, null, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, null);
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -24,9 +24,9 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithAMisEstablishment(Establishment establishment, MisEstablishments misEstablishments)
         {
-            var expected = BuildExpected(establishment, misEstablishments, null);
+            var expected = BuildExpected(establishment, misEstablishments, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, misEstablishments, null);
+            var result = EstablishmentResponseFactory.Create(establishment, misEstablishments, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -35,14 +35,28 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithASmartData(Establishment establishment, SmartData smartData)
         {
-            var expected = BuildExpected(establishment, null, smartData);
+            var expected = BuildExpected(establishment, null, smartData, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, smartData);
+            var result = EstablishmentResponseFactory.Create(establishment, null, smartData, null);
 
             result.Should().BeEquivalentTo(expected);
         }
 
-        private EstablishmentResponse BuildExpected(Establishment establishment, MisEstablishments misEstablishments, SmartData smartData)
+        [Theory]
+        [AutoData]
+        public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithAFurtherEducationEstablishment(Establishment establishment, FurtherEducationEstablishments furtherEducationEstablishments)
+        {
+            var expected = BuildExpected(establishment, null, null, furtherEducationEstablishments);
+
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, furtherEducationEstablishments);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private EstablishmentResponse BuildExpected(Establishment establishment, 
+            MisEstablishments misEstablishments, 
+            SmartData smartData, 
+            FurtherEducationEstablishments furtherEducationEstablishments)
         {
             var expected = new EstablishmentResponse
             {
@@ -307,6 +321,47 @@ namespace TramsDataApi.Test.Factories
                     TotalNumberOfRisks = smartData.TotalNumberOfRisks.ToString(),
                     TotalRiskScore = smartData.TotalRiskScore.ToString(),
                     RiskRatingNum = smartData.RiskRatingNum.ToString()
+                };
+            }
+
+            if(furtherEducationEstablishments != null)
+            {
+                expected.MISFurtherEducationEstablishment = new MISFEAResponse
+                {
+                    Provider = new ProviderResponse
+                    {
+                        Urn = furtherEducationEstablishments.ProviderUrn,
+                        Name = furtherEducationEstablishments.ProviderName,
+                        Type = furtherEducationEstablishments.ProviderType,
+                        Group = furtherEducationEstablishments.ProviderGroup,
+                        Ukprn = furtherEducationEstablishments.ProviderUkprn
+                    },
+                    LocalAuthority = furtherEducationEstablishments.LocalAuthority,
+                    Region = furtherEducationEstablishments.Region,
+                    OfstedRegion = furtherEducationEstablishments.OfstedRegion,
+                    DateOfLatestShortInspection = furtherEducationEstablishments.DateOfLatestShortInspection,
+                    NumberOfShortInspectionsSinceLastFullInspection = furtherEducationEstablishments.NumberOfShortInspectionsSinceLastFullInspection.ToString(),
+                    NumberOfShortInspectionsSinceLastFullInspectionRAW = furtherEducationEstablishments.NumberOfShortInspectionsSinceLastFullInspectionRaw,
+                    InspectionNumber = furtherEducationEstablishments.InspectionNumber,
+                    FirstDayOfInspection = furtherEducationEstablishments.FirstDayOfInspection,
+                    LastDayOfInspection = furtherEducationEstablishments.LastDayOfInspection,
+                    InspectionType = furtherEducationEstablishments.InspectionType,
+                    DatePublished = furtherEducationEstablishments.DatePublished,
+                    OverallEffectiveness = furtherEducationEstablishments.OverallEffectiveness.ToString(),
+                    OverallEffectivenessRAW = furtherEducationEstablishments.OverallEffectivenessRaw,
+                    QualityOfEducation = furtherEducationEstablishments.QualityOfEducation.ToString(),
+                    QualityOfEducationRAW = furtherEducationEstablishments.QualityOfEducationRaw,
+                    BehaviourAndAttitudes = furtherEducationEstablishments.BehaviourAndAttitudes.ToString(),
+                    BehaviourAndAttitudesRAW = furtherEducationEstablishments.BehaviourAndAttitudesRaw,
+                    PersonalDevelopment = furtherEducationEstablishments.PersonalDevelopment.ToString(),
+                    PersonalDevelopmentRAW = furtherEducationEstablishments.PersonalDevelopmentRaw,
+                    EffectivenessOfLeadershipAndManagement = furtherEducationEstablishments.EffectivenessOfLeadershipAndManagement.ToString(),
+                    EffectivenessOfLeadershipAndManagementRAW = furtherEducationEstablishments.EffectivenessOfLeadershipAndManagementRaw,
+                    IsSafeguardingEffective = furtherEducationEstablishments.IsSafeguardingEffective,
+                    PreviousInspectionNumber = furtherEducationEstablishments.PreviousInspectionNumber,
+                    PreviousLastDayOfInspection = furtherEducationEstablishments.PreviousLastDayOfInspection,
+                    PreviousOverallEffectiveness = furtherEducationEstablishments.PreviousOverallEffectiveness.ToString(),
+                    PreviousOverallEffectivenessRAW = furtherEducationEstablishments.PreviousOverallEffectivenessRaw,
                 };
             }
 
