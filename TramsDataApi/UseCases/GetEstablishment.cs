@@ -36,9 +36,14 @@ namespace TramsDataApi.UseCases
                 return null;
             }
             var misEstablishmentData = _establishmentGateway.GetMisEstablishmentByUrn(establishment.Urn);
+            var furtherEstablishmentData = _establishmentGateway.GetFurtherEducationEstablishmentByUrn(establishment.Urn);
             var smartData = _establishmentGateway.GetSmartDataByUrn(establishment.Urn);
 
-            return EstablishmentResponseFactory.Create(establishment, misEstablishmentData, smartData);
+            return EstablishmentResponseFactory.Create(establishment, 
+                misEstablishmentData, 
+                smartData,
+                furtherEstablishmentData
+                );
         }
     }
 }
