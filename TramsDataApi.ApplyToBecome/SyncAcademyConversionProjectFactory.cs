@@ -15,7 +15,7 @@
                 //ApplicationReferenceNumber
                 ProjectStatus = "Active",
                 ApplicationReceivedDate = ifdPipeline.ApprovalProcessApplicationDate,
-                AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
+                //AssignedDate
                 HeadTeacherBoardDate = ifdPipeline.DeliveryProcessDateForDiscussionByRscHtb,
                 //OpeningDate
                 //BaselineDate
