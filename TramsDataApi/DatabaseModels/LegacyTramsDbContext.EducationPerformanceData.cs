@@ -154,6 +154,10 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.SipAcademicLevelAveragePspe)
                     .HasColumnName("sip_academiclevelaveragepspe")
                     .HasColumnType("decimal(38, 2)");
+                    
+                entity.Property(e => e.SipLocalauthoritycode)
+                    .HasColumnName("sip_localauthoritycode")
+                    .HasMaxLength(100);
             });
         }
     }

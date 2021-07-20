@@ -2174,6 +2174,9 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.SipUrn)
                     .HasColumnName("sip_urn")
                     .HasMaxLength(100);
+
+                entity.Property(e => e.SipLocalAuthorityNumber)
+                    .HasColumnName("sip_localauthoritynumber");
             });
             
             modelBuilder.Entity<GlobalOptionSetMetadata>(entity =>

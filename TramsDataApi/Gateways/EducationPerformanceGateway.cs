@@ -47,7 +47,7 @@ namespace TramsDataApi.Gateways
             return results;
         }
         
-        public IList<SipEducationalperformancedata> GetLocalAuthorityEducationalPerformanceData()
+        public IList<SipEducationalperformancedata> GetLocalAuthorityEducationalPerformanceData(Account account)
         {
             var results = _dbContext.SipEducationalperformancedata
                 .Join(_dbContext.GlobalOptionSetMetadata,
@@ -56,6 +56,7 @@ namespace TramsDataApi.Gateways
                     (gpd, gom) => new {performanceData = gpd, globalMetaData = gom})
                 .Where(data => data.globalMetaData.OptionSetName == "sip_performancetype")
                 .Where(data => data.globalMetaData.LocalizedLabel == "Authority")
+                .Where(data => data.performanceData.SipLocalauthoritycode == account.SipLocalAuthorityNumber.ToString())
                 .Select(data => data.performanceData).ToList();
 
             return results;
