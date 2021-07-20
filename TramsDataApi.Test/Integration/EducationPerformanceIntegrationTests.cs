@@ -43,6 +43,7 @@ namespace TramsDataApi.Test.Integration
                 .With(a => a.Name = "Gillshill Primary School")
                 .With(a => a.SipUrn = accountUrn)
                 .With(a => a.Id = accountGuid)
+                .With(a => a.SipLocalAuthorityNumber = 123)
                 .Build();
 
             var phonics = Builder<SipPhonics>.CreateListOfSize(3)
@@ -58,6 +59,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.Id = Guid.NewGuid())
                 .With(epd => epd.SipParentaccountid = accountGuid)
                 .With(epd => epd.SipName = "2016-2017")
+                .With(epd => epd.SipLocalauthoritycode = null)
                 .With(epd => epd.SipMeetingexpectedstandardinrwm = 20)
                 .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 10)
                 .With(epd => epd.SipMeetinghigherstandardinrwm = 12)
@@ -97,6 +99,7 @@ namespace TramsDataApi.Test.Integration
             var nationalAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
                 .With(epd => epd.SipParentaccountid = null)
+                .With(epd => epd.SipLocalauthoritycode = null)
                 .With(epd => epd.SipPerformancetype = 123)
                 .With(epd => epd.SipName = "2016-2017")
                 .With(epd => epd.SipAttainment8score = 100.23M)
@@ -135,6 +138,7 @@ namespace TramsDataApi.Test.Integration
             
             var laAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
+                .With(epd => epd.SipLocalauthoritycode = "123")
                 .With(epd => epd.SipParentaccountid = null)
                 .With(epd => epd.SipPerformancetype = 234)
                 .With(epd => epd.SipName = "2016-2017")
@@ -323,12 +327,14 @@ namespace TramsDataApi.Test.Integration
                 .With(a => a.Name = "Gillshill Primary School")
                 .With(a => a.SipUrn = accountUrn)
                 .With(a => a.Id = accountGuid)
+                .With(a => a.SipLocalAuthorityNumber = 456)
                 .Build();
 
             
             var educationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
                 .With(epd => epd.SipParentaccountid = accountGuid)
+                .With(epd => epd.SipLocalauthoritycode = null)
                 .With(epd => epd.SipName = "2016-2017")
                 .With(epd => epd.SipMeetingexpectedstandardinrwm = 20.00M)
                 .With(epd => epd.SipMeetingexpectedstandardinrwmdisadv = 10.00M)
@@ -368,6 +374,7 @@ namespace TramsDataApi.Test.Integration
 
             var nationalEducationPerformance1 = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
+                .With(epd => epd.SipLocalauthoritycode = null)
                 .With(epd => epd.SipParentaccountid = null)
                 .With(epd => epd.SipPerformancetype = 123)
                 .With(epd => epd.SipName = "2016-2017")
@@ -407,6 +414,7 @@ namespace TramsDataApi.Test.Integration
             
             var nationalEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
+                .With(epd => epd.SipLocalauthoritycode = null)
                 .With(epd => epd.SipParentaccountid = null)
                 .With(epd => epd.SipPerformancetype = 123)
                 .With(epd => epd.SipName = "2017-2018")
@@ -434,6 +442,7 @@ namespace TramsDataApi.Test.Integration
             
             var laEducationPerformance1 = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
+                .With(epd => epd.SipLocalauthoritycode = "456")
                 .With(epd => epd.SipParentaccountid = null)
                 .With(epd => epd.SipPerformancetype = 234)
                 .With(epd => epd.SipName = "2017-2018")
@@ -462,6 +471,7 @@ namespace TramsDataApi.Test.Integration
             
             var laEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
                 .With(epd => epd.Id = Guid.NewGuid())
+                .With(epd => epd.SipLocalauthoritycode = "456")
                 .With(epd => epd.SipParentaccountid = null)
                 .With(epd => epd.SipPerformancetype = 234)
                 .With(epd => epd.SipName = "2016-2017")

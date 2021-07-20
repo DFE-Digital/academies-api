@@ -235,7 +235,7 @@ namespace TramsDataApi.Test.UseCases
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetPhonicsByUrn(urn)).Returns(() => phonics);
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetEducationalPerformanceForAccount(account)).Returns(() => new List<SipEducationalperformancedata> {educationPerformanceData});
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetNationalEducationalPerformanceData()).Returns(nationalEducationPerformanceDataList);
-            mockEducationPerformanceGateway.Setup(gateway => gateway.GetLocalAuthorityEducationalPerformanceData()).Returns(localAuthorityPerformanceDataList);
+            mockEducationPerformanceGateway.Setup(gateway => gateway.GetLocalAuthorityEducationalPerformanceData(account)).Returns(localAuthorityPerformanceDataList);
 
             
             var expectedKs1 = phonics.Select(ph => new KeyStage1PerformanceResponse

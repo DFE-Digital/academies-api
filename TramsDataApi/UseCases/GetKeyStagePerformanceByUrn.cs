@@ -35,7 +35,7 @@ namespace TramsDataApi.UseCases
             
             var nationalAverageEducationPerformances = GroupAverageEducationPerformances(groupedNationalAverages);
             
-            var groupedLAAverages = _educationPerformanceGateway.GetLocalAuthorityEducationalPerformanceData().GroupBy(epd => epd.SipName);
+            var groupedLAAverages = _educationPerformanceGateway.GetLocalAuthorityEducationalPerformanceData(academy).GroupBy(epd => epd.SipName);
 
             var localAuthorityAverageEducationPerformances = GroupAverageEducationPerformances(groupedLAAverages);
 
