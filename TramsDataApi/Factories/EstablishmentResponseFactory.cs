@@ -176,7 +176,11 @@ namespace TramsDataApi.Factories
                 MISFurtherEducationEstablishment = FurtherEducationEstablishmentResponseFactory.Create(furtherEducationEstablishments),
                 SMARTData = SmartDataResponseFactory.Create(smartData),
                 Financial = null,
-                Concerns = null
+                Concerns = null,
+                Deficit = viewAcademyConversions.ProjectTemplateInformationDeficit == null ? null : viewAcademyConversions.ProjectTemplateInformationDeficit,
+                ViabilityIssue = viewAcademyConversions.ProjectTemplateInformationViabilityIssue == null ? null : viewAcademyConversions.ProjectTemplateInformationViabilityIssue,
+                PAN = viewAcademyConversions.DeliveryProcessPan == null ? null : viewAcademyConversions.DeliveryProcessPan,
+                PFI = viewAcademyConversions.DeliveryProcessPfi == null ? null : viewAcademyConversions.DeliveryProcessPfi
             };
             return establishmentResponse;
         }

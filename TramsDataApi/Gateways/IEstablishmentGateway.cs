@@ -15,5 +15,6 @@ namespace TramsDataApi.Gateways
 
         public IList<Establishment> SearchEstablishments(int? urn, string ukprn, string name);
         public FurtherEducationEstablishments GetFurtherEducationEstablishmentByUrn(int establishmentUrn);
+        public ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int urn);
     }
 }

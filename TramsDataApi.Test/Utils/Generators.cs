@@ -106,5 +106,19 @@ namespace TramsDataApi.Test.Utils
                 DeliveryProcessPan = randomGenerator.NextString(2, 100)
             };
         }
+
+        public static ViewAcademyConversions GenerateViewAcademyConversionsWithUkprn(string ukprn)
+        {
+            var randomGenerator = new RandomGenerator();
+            return new ViewAcademyConversions
+            {
+                PRid = randomGenerator.NextString(11, 11),
+                GeneralDetailsAcademyUkprn = ukprn,
+                ProjectTemplateInformationDeficit = randomGenerator.NextString(2, 100),
+                ProjectTemplateInformationViabilityIssue = randomGenerator.NextString(2, 100),
+                DeliveryProcessPfi = randomGenerator.NextString(2, 100),
+                DeliveryProcessPan = randomGenerator.NextString(2, 100)
+            };
+        }
     }
 }

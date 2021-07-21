@@ -44,6 +44,13 @@ namespace TramsDataApi.Gateways
             return _dbContext.SmartData.FirstOrDefault(s => s.Urn == establishmentUrn.ToString());
         }
 
+
+         public ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int establishmentUrn) 
+        {
+            var viewAcademyConversionInfo = _dbContext.ViewAcademyConversions.FirstOrDefault(x => x.GeneralDetailsUrn == establishmentUrn.ToString());
+            return viewAcademyConversionInfo;
+        }
+
         public IList<Establishment> SearchEstablishments(int? urn, string ukprn, string name)
         {
             return _dbContext.Establishment

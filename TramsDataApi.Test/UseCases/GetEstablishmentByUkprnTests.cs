@@ -99,6 +99,22 @@ namespace TramsDataApi.Test.UseCases
         }
 
         [Fact]
+        public void GetEstablishmentByUkprn_ReturnsEstablishmentWithViewAcademyConversionInfo_WhenAcademyConversionInfoIsFound()
+        {
+            var establishment = Builder<Establishment>.CreateNew().With(e => e.Ukprn = UKPRN).Build();
+            var viewAcademyConversion = Utils.Generators.GenerateViewAcademyConversionsWithUkprn(establishment.Ukprn);
+
+            _establishmentGateway.Setup(gateway => gateway.GetByUkprn(UKPRN)).Returns(establishment);
+            _establishmentGateway.Setup(gateway => gateway.GetViewAcademyConversionInfoByUrn(establishment.Urn)).Returns(viewAcademyConversion);
+
+            var expected = EstablishmentResponseFactory.Create(establishment, null, null, null, viewAcademyConversion);
+
+            var result = _useCase.Execute(UKPRN);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
         public void GetEstablishmentByUrn_ReturnsNull_WhenNoEstablishmentsAreFound()
         {
             _establishmentGateway.Setup(gateway => gateway.GetByUrn(It.IsAny<int>())).Returns(() => null);
