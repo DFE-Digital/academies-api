@@ -2197,6 +2197,7 @@ namespace TramsDataApi.DatabaseModels
             
             OnModelCreatingEducationPerformancedata(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
+            OnModelCreatingViewAcademyConversions(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
