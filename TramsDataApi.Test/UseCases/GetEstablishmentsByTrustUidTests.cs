@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.UseCases
 
             establishmentsGateway.Setup(gateway => gateway.GetByTrustUid(trustUid)).Returns(establishments);
 
-            var expected = establishments.Select(e => EstablishmentResponseFactory.Create(e, null, null, null)).ToList();
+            var expected = establishments.Select(e => EstablishmentResponseFactory.Create(e, null, null, null, null)).ToList();
             var useCase = new GetEstablishmentsByTrustUid(establishmentsGateway.Object);
             var result = useCase.Execute(trustUid);
 
@@ -61,7 +61,7 @@ namespace TramsDataApi.Test.UseCases
 
             }
 
-            var expected = establishments.Select((e, i) => EstablishmentResponseFactory.Create(e, misEstablishments[i], null, null)).ToList();
+            var expected = establishments.Select((e, i) => EstablishmentResponseFactory.Create(e, misEstablishments[i], null, null, null)).ToList();
 ;
             var useCase = new GetEstablishmentsByTrustUid(establishmentsGateway.Object);
             var result = useCase.Execute(trustUid);
@@ -88,7 +88,7 @@ namespace TramsDataApi.Test.UseCases
                 establishmentsGateway.Setup(gateway => gateway.GetSmartDataByUrn(establishments[i].Urn)).Returns(smartDataList[i]);
             }
 
-            var expected = establishments.Select((e, i) => EstablishmentResponseFactory.Create(e, null, smartDataList[i], null)).ToList();
+            var expected = establishments.Select((e, i) => EstablishmentResponseFactory.Create(e, null, smartDataList[i], null, null)).ToList();
             var useCase = new GetEstablishmentsByTrustUid(establishmentsGateway.Object);
             var result = useCase.Execute(trustUid);
 
@@ -114,7 +114,7 @@ namespace TramsDataApi.Test.UseCases
                 establishmentsGateway.Setup(gateway => gateway.GetFurtherEducationEstablishmentByUrn(establishments[i].Urn)).Returns(furtherEducationEstablishments[i]);
             }
 
-            var expected = establishments.Select((e, i) => EstablishmentResponseFactory.Create(e, null, null, furtherEducationEstablishments[i])).ToList();
+            var expected = establishments.Select((e, i) => EstablishmentResponseFactory.Create(e, null, null, furtherEducationEstablishments[i], null)).ToList();
 
             var useCase = new GetEstablishmentsByTrustUid(establishmentsGateway.Object);
             var result = useCase.Execute(trustUid);

@@ -5,7 +5,12 @@ namespace TramsDataApi.Factories
 {
     public class EstablishmentResponseFactory
     {
-        public static EstablishmentResponse Create(Establishment establishment, MisEstablishments misEstablishment, SmartData smartData, FurtherEducationEstablishments furtherEducationEstablishments)
+        public static EstablishmentResponse Create(
+            Establishment establishment, 
+            MisEstablishments misEstablishment, 
+            SmartData smartData, 
+            FurtherEducationEstablishments furtherEducationEstablishments,
+            ViewAcademyConversions viewAcademyConversions)
         {
             if (establishment == null)
             {

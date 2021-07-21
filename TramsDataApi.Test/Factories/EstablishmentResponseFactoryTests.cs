@@ -15,7 +15,7 @@ namespace TramsDataApi.Test.Factories
         {
             var expected = BuildExpected(establishment, null, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, null, null);
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -26,7 +26,7 @@ namespace TramsDataApi.Test.Factories
         {
             var expected = BuildExpected(establishment, misEstablishments, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, misEstablishments, null, null);
+            var result = EstablishmentResponseFactory.Create(establishment, misEstablishments, null, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -37,7 +37,7 @@ namespace TramsDataApi.Test.Factories
         {
             var expected = BuildExpected(establishment, null, smartData, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, smartData, null);
+            var result = EstablishmentResponseFactory.Create(establishment, null, smartData, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -48,7 +48,7 @@ namespace TramsDataApi.Test.Factories
         {
             var expected = BuildExpected(establishment, null, null, furtherEducationEstablishments);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, null, furtherEducationEstablishments);
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, furtherEducationEstablishments, null);
 
             result.Should().BeEquivalentTo(expected);
         }
