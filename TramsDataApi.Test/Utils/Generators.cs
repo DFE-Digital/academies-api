@@ -92,5 +92,19 @@ namespace TramsDataApi.Test.Utils
                 RiskRatingNum = randomGenerator.Int()
             };
         }
+
+        public static ViewAcademyConversions GenerateViewAcademyConversions(int urn)
+        {
+            var randomGenerator = new RandomGenerator();
+            return new ViewAcademyConversions
+            {
+                PRid = randomGenerator.NextString(11, 11),
+                GeneralDetailsUrn = urn.ToString(),
+                ProjectTemplateInformationDeficit = randomGenerator.NextString(2, 100),
+                ProjectTemplateInformationViabilityIssue = randomGenerator.NextString(2, 100),
+                DeliveryProcessPfi = randomGenerator.NextString(2, 100),
+                DeliveryProcessPan = randomGenerator.NextString(2, 100)
+            };
+        }
     }
 }
