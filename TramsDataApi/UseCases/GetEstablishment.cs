@@ -39,10 +39,16 @@ namespace TramsDataApi.UseCases
             var furtherEstablishmentData = _establishmentGateway.GetFurtherEducationEstablishmentByUrn(establishment.Urn);
             var smartData = _establishmentGateway.GetSmartDataByUrn(establishment.Urn);
 
+            // var projectTemplateInfo = _establishmentGateway.GetProjectTemplateInformationByUrn(establishment.Urn);
+            // var deliveryProcessInfo = _establishmentGateway.GetDeleiveryProcessByUrn(establishment.Urn);
+
+            // then pass the two values into the below Create() method
+
             return EstablishmentResponseFactory.Create(establishment, 
                 misEstablishmentData, 
                 smartData,
-                furtherEstablishmentData
+                furtherEstablishmentData,
+                null
                 );
         }
     }
