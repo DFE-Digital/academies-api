@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels;
@@ -41,6 +43,7 @@ namespace TramsDataApi.Controllers
                 return NotFound();
             }
             _logger.LogInformation($"Returning Establishment with UKPRN {ukprn}");
+            _logger.LogDebug(JsonSerializer.Serialize<EstablishmentResponse>(establishment));
             return Ok(establishment);
         }
 
@@ -57,6 +60,7 @@ namespace TramsDataApi.Controllers
                 return NotFound();
             }
             _logger.LogInformation($"Returning Establishment with URN {urn}");
+            _logger.LogDebug(JsonSerializer.Serialize<EstablishmentResponse>(establishment));
             return Ok(establishment);
         }
 
@@ -65,7 +69,9 @@ namespace TramsDataApi.Controllers
         public ActionResult<List<EstablishmentSummaryResponse>> SearchEstablishments([FromQuery] SearchEstablishmentsRequest request)
         {
             _logger.LogInformation($"Searching for Establishments");
-            return Ok(_searchEstablishments.Execute(request));
+            var establishments = _searchEstablishments.Execute(request);
+            _logger.LogDebug(JsonSerializer.Serialize<IList<EstablishmentSummaryResponse>>(establishments));
+            return Ok(establishments);
         }
     }
 }

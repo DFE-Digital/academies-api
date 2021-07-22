@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.ResponseModels.EducationalPerformance;
 using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers
@@ -21,7 +23,7 @@ namespace TramsDataApi.Controllers
         
         [HttpGet]
         [Route("educationPerformance/{urn}")]
-        public ActionResult<List<SipEducationalperformancedata>> GetEducationPerformanceByUrn(string urn)
+        public ActionResult<EducationalPerformanceResponse> GetEducationPerformanceByUrn(string urn)
         {
             _logger.LogInformation($"Attempting to get Performance Data for URN {urn}");
             var performanceData = _getKeyStagePerformanceByUrn.Execute(urn);
@@ -31,6 +33,7 @@ namespace TramsDataApi.Controllers
                 return NotFound();
             }
             _logger.LogInformation($"Returning Performance Data for URN {urn}");
+            _logger.LogDebug(JsonSerializer.Serialize<EducationalPerformanceResponse>(performanceData));
             return Ok(performanceData);
         }
     }

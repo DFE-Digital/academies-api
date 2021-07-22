@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -40,6 +41,7 @@ namespace TramsDataApi.Controllers
             }
 
             _logger.LogInformation($"Returning trust found by UKPRN {ukprn}");
+            _logger.LogDebug(JsonSerializer.Serialize<TrustResponse>(trust));
             return Ok(trust);
         }
 
@@ -47,10 +49,10 @@ namespace TramsDataApi.Controllers
         [Route("trusts")]
         public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukprn, string companiesHouseNumber, int page = 1)
         {
-            throw new System.Exception("Oh dear");
             _logger.LogInformation($"Searching for trusts by groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");
             var trusts = _searchTrusts.Execute(groupName, ukprn, companiesHouseNumber, page);
             _logger.LogInformation($"Found {trusts.Count} trusts for groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");
+            _logger.LogDebug(JsonSerializer.Serialize<IList<TrustSummaryResponse>>(trusts));
             return Ok(trusts);
         }
     }
