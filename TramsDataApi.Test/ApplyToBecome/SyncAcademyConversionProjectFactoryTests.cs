@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.ApplyToBecome
                 LocalAuthority = ifdPipeline.GeneralDetailsLocalAuthority,
                 ProjectStatus = "Active",
                 ApplicationReceivedDate = ifdPipeline.ApprovalProcessApplicationDate,
-                AssignedDate = ifdPipeline.ApprovalProcessApplicationDate,
+                AssignedDate = null,
                 HeadTeacherBoardDate = ifdPipeline.DeliveryProcessDateForDiscussionByRscHtb,
                 Author = ifdPipeline.GeneralDetailsProjectLead,
                 ClearedBy = ifdPipeline.GeneralDetailsTeamLeader,
