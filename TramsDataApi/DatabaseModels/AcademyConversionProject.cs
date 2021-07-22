@@ -33,6 +33,7 @@ namespace TramsDataApi.DatabaseModels
         public string ClearedBy { get; set; }
         public string AcademyOrderRequired { get; set; }
         public DateTime? PreviousHeadTeacherBoardDate { get; set; }
+        public string PreviousHeadTeacherBoardDateQuestion { get; set; }
         public string PreviousHeadTeacherBoardLink { get; set; }
         public string TrustReferenceNumber { get; set; }
         public string NameOfTrust { get; set; }
