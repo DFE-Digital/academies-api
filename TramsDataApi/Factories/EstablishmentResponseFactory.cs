@@ -16,7 +16,7 @@ namespace TramsDataApi.Factories
             {
                 return null;
             }
-            
+
             var establishmentResponse = new EstablishmentResponse
             {
                 Urn = establishment.Urn.ToString(),
@@ -25,14 +25,14 @@ namespace TramsDataApi.Factories
                 EstablishmentNumber = establishment.EstablishmentNumber,
                 EstablishmentName = establishment.EstablishmentName,
                 EstablishmentType = new NameAndCodeResponse
-                    {Name = establishment.TypeOfEstablishmentName, Code = establishment.TypeOfEstablishmentCode},
+                { Name = establishment.TypeOfEstablishmentName, Code = establishment.TypeOfEstablishmentCode },
                 EstablishmentTypeGroup =
                     new NameAndCodeResponse
                     {
                         Name = establishment.EstablishmentTypeGroupName, Code = establishment.EstablishmentTypeGroupCode
                     },
                 EstablishmentStatus = new NameAndCodeResponse
-                    {Name = establishment.EstablishmentStatusName, Code = establishment.EstablishmentStatusCode},
+                { Name = establishment.EstablishmentStatusName, Code = establishment.EstablishmentStatusCode },
                 ReasonEstablishmentOpened = new NameAndCodeResponse
                 {
                     Name = establishment.ReasonEstablishmentOpenedName,
@@ -46,25 +46,25 @@ namespace TramsDataApi.Factories
                 },
                 CloseDate = establishment.CloseDate,
                 PhaseOfEducation = new NameAndCodeResponse
-                    {Name = establishment.PhaseOfEducationName, Code = establishment.PhaseOfEducationCode},
+                { Name = establishment.PhaseOfEducationName, Code = establishment.PhaseOfEducationCode },
                 StatutoryLowAge = establishment.StatutoryLowAge,
                 StatutoryHighAge = establishment.StatutoryHighAge,
                 Boarders = new NameAndCodeResponse
-                    {Name = establishment.BoardersName, Code = establishment.BoardersCode},
+                { Name = establishment.BoardersName, Code = establishment.BoardersCode },
                 NurseryProvision = establishment.NurseryProvisionName,
                 OfficialSixthForm =
                     new NameAndCodeResponse
-                        {Name = establishment.OfficialSixthFormName, Code = establishment.OfficialSixthFormCode},
-                Gender = new NameAndCodeResponse {Name = establishment.GenderName, Code = establishment.GenderCode},
+                    { Name = establishment.OfficialSixthFormName, Code = establishment.OfficialSixthFormCode },
+                Gender = new NameAndCodeResponse { Name = establishment.GenderName, Code = establishment.GenderCode },
                 ReligiousCharacter = new NameAndCodeResponse
-                    {Name = establishment.ReligiousCharacterName, Code = establishment.ReligiousCharacterCode},
+                { Name = establishment.ReligiousCharacterName, Code = establishment.ReligiousCharacterCode },
                 ReligiousEthos = establishment.ReligiousEthosName,
-                Diocese = new NameAndCodeResponse {Name = establishment.DioceseName, Code = establishment.DioceseCode},
+                Diocese = new NameAndCodeResponse { Name = establishment.DioceseName, Code = establishment.DioceseCode },
                 AdmissionsPolicy = new NameAndCodeResponse
-                    {Name = establishment.AdmissionsPolicyName, Code = establishment.AdmissionsPolicyCode},
+                { Name = establishment.AdmissionsPolicyName, Code = establishment.AdmissionsPolicyCode },
                 SchoolCapacity = establishment.SchoolCapacity,
                 SpecialClasses = new NameAndCodeResponse
-                    {Name = establishment.SpecialClassesName, Code = establishment.SpecialClassesCode},
+                { Name = establishment.SpecialClassesName, Code = establishment.SpecialClassesCode },
                 Census =
                     new CensusResponse
                     {
@@ -75,19 +75,19 @@ namespace TramsDataApi.Factories
                         PercentageFsm = establishment.PercentageFsm
                     },
                 TrustSchoolFlag = new NameAndCodeResponse
-                    {Name = establishment.TrustSchoolFlagName, Code = establishment.TrustSchoolFlagCode},
-                Trusts = new NameAndCodeResponse {Name = establishment.TrustsName, Code = establishment.TrustsCode},
+                { Name = establishment.TrustSchoolFlagName, Code = establishment.TrustSchoolFlagCode },
+                Trusts = new NameAndCodeResponse { Name = establishment.TrustsName, Code = establishment.TrustsCode },
                 SchoolSponsorFlag = establishment.SchoolSponsorFlagName,
                 SchoolSponsors = establishment.SchoolSponsorsName,
                 FederationFlag = establishment.FederationFlagName,
                 Federations = new NameAndCodeResponse
-                    {Name = establishment.FederationsName, Code = establishment.FederationsCode},
+                { Name = establishment.FederationsName, Code = establishment.FederationsCode },
                 Ukprn = establishment.Ukprn,
                 FeheiIdentifier = establishment.Feheidentifier,
                 FurtherEducationType = establishment.FurtherEducationTypeName,
                 OfstedLastInspection = establishment.OfstedLastInsp,
                 OfstedSpecialMeasures = new NameAndCodeResponse
-                    {Name = establishment.OfstedSpecialMeasuresName, Code = establishment.OfstedSpecialMeasuresCode},
+                { Name = establishment.OfstedSpecialMeasuresName, Code = establishment.OfstedSpecialMeasuresCode },
                 LastChangedDate = establishment.LastChangedDate,
                 Address =
                     new AddressResponse
@@ -136,14 +136,14 @@ namespace TramsDataApi.Factories
                 ResourcedProvisionOnCapacity = establishment.ResourcedProvisionCapacity,
                 SenUnitOnRoll = establishment.SenUnitOnRoll,
                 SenUnitCapacity = establishment.SenUnitCapacity,
-                GOR = new NameAndCodeResponse {Name = establishment.GorName, Code = establishment.GorCode},
+                GOR = new NameAndCodeResponse { Name = establishment.GorName, Code = establishment.GorCode },
                 DistrictAdministrative =
                     new NameAndCodeResponse
                     {
                         Name = establishment.DistrictAdministrativeName, Code = establishment.DistrictAdministrativeCode
                     },
                 AdministractiveWard = new NameAndCodeResponse
-                    {Name = establishment.AdministrativeWardName, Code = establishment.AdministrativeWardCode},
+                { Name = establishment.AdministrativeWardName, Code = establishment.AdministrativeWardCode },
                 ParliamentaryConstituency =
                     new NameAndCodeResponse
                     {
@@ -159,14 +159,14 @@ namespace TramsDataApi.Factories
                 Easting = establishment.Easting,
                 Northing = establishment.Northing,
                 CensusAreaStatisticWard = establishment.CensusAreaStatisticWardName,
-                MSOA = new NameAndCodeResponse {Name = establishment.MsoaName, Code = establishment.MsoaCode},
-                LSOA = new NameAndCodeResponse {Name = establishment.LsoaName, Code = establishment.LsoaCode},
+                MSOA = new NameAndCodeResponse { Name = establishment.MsoaName, Code = establishment.MsoaCode },
+                LSOA = new NameAndCodeResponse { Name = establishment.LsoaName, Code = establishment.LsoaCode },
                 SENStat = establishment.Senstat,
                 SENNoStat = establishment.SennoStat,
                 BoardingEstablishment = establishment.BoardingEstablishmentName,
                 PropsName = establishment.PropsName,
                 PreviousLocalAuthority = new NameAndCodeResponse
-                    {Name = establishment.PreviousLaName, Code = establishment.PreviousLaCode},
+                { Name = establishment.PreviousLaName, Code = establishment.PreviousLaCode },
                 PreviousEstablishmentNumber = establishment.PreviousEstablishmentNumber,
                 OfstedRating = establishment.OfstedRatingName,
                 RSCRegion = establishment.RscregionName,
@@ -177,10 +177,7 @@ namespace TramsDataApi.Factories
                 SMARTData = SmartDataResponseFactory.Create(smartData),
                 Financial = null,
                 Concerns = null,
-                Deficit = viewAcademyConversions.ProjectTemplateInformationDeficit == null ? null : viewAcademyConversions.ProjectTemplateInformationDeficit,
-                ViabilityIssue = viewAcademyConversions.ProjectTemplateInformationViabilityIssue == null ? null : viewAcademyConversions.ProjectTemplateInformationViabilityIssue,
-                PAN = viewAcademyConversions.DeliveryProcessPan == null ? null : viewAcademyConversions.DeliveryProcessPan,
-                PFI = viewAcademyConversions.DeliveryProcessPfi == null ? null : viewAcademyConversions.DeliveryProcessPfi
+                ViewAcademyConversion = ViewAcademyConversionResponseFactory.Create(viewAcademyConversions)
             };
             return establishmentResponse;
         }
