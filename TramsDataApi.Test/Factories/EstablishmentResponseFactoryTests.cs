@@ -13,7 +13,7 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_FromAnEstablishment(Establishment establishment)
         {
-            var expected = BuildExpected(establishment, null, null, null);
+            var expected = BuildExpected(establishment, null, null, null, null);
 
             var result = EstablishmentResponseFactory.Create(establishment, null, null, null, null);
 
@@ -24,7 +24,7 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithAMisEstablishment(Establishment establishment, MisEstablishments misEstablishments)
         {
-            var expected = BuildExpected(establishment, misEstablishments, null, null);
+            var expected = BuildExpected(establishment, misEstablishments, null, null, null);
 
             var result = EstablishmentResponseFactory.Create(establishment, misEstablishments, null, null, null);
 
@@ -35,7 +35,7 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithASmartData(Establishment establishment, SmartData smartData)
         {
-            var expected = BuildExpected(establishment, null, smartData, null);
+            var expected = BuildExpected(establishment, null, smartData, null, null);
 
             var result = EstablishmentResponseFactory.Create(establishment, null, smartData, null, null);
 
@@ -46,17 +46,27 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithAFurtherEducationEstablishment(Establishment establishment, FurtherEducationEstablishments furtherEducationEstablishments)
         {
-            var expected = BuildExpected(establishment, null, null, furtherEducationEstablishments);
+            var expected = BuildExpected(establishment, null, null, furtherEducationEstablishments, null);
 
             var result = EstablishmentResponseFactory.Create(establishment, null, null, furtherEducationEstablishments, null);
 
             result.Should().BeEquivalentTo(expected);
         }
 
+        [Theory]
+        [AutoData]
+        public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithViewAcademyConversion(Establishment establishment, ViewAcademyConversions viewAcademyConversions)
+        {
+            var expected = BuildExpected(establishment, null, null, null, viewAcademyConversions);
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, null, viewAcademyConversions);
+            result.Should().BeEquivalentTo(expected);
+        }
+
         private EstablishmentResponse BuildExpected(Establishment establishment, 
             MisEstablishments misEstablishments, 
             SmartData smartData, 
-            FurtherEducationEstablishments furtherEducationEstablishments)
+            FurtherEducationEstablishments furtherEducationEstablishments,
+            ViewAcademyConversions viewAcademyconversions)
         {
             var expected = new EstablishmentResponse
             {
@@ -220,7 +230,7 @@ namespace TramsDataApi.Test.Factories
                 MISFurtherEducationEstablishment = null,
                 SMARTData = null,
                 Financial = null,
-                Concerns = null
+                Concerns = null,
             };
 
             if (misEstablishments != null)
@@ -362,6 +372,17 @@ namespace TramsDataApi.Test.Factories
                     PreviousLastDayOfInspection = furtherEducationEstablishments.PreviousLastDayOfInspection,
                     PreviousOverallEffectiveness = furtherEducationEstablishments.PreviousOverallEffectiveness.ToString(),
                     PreviousOverallEffectivenessRAW = furtherEducationEstablishments.PreviousOverallEffectivenessRaw,
+                };
+            }
+
+            if (viewAcademyconversions != null)
+            {
+                expected.ViewAcademyConversion = new ViewAcademyConversionResponse
+                {
+                    Deficit = viewAcademyconversions.ProjectTemplateInformationDeficit,
+                    ViabilityIssue = viewAcademyconversions.ProjectTemplateInformationViabilityIssue,
+                    PAN = viewAcademyconversions.DeliveryProcessPan,
+                    PFI = viewAcademyconversions.DeliveryProcessPfi,
                 };
             }
 

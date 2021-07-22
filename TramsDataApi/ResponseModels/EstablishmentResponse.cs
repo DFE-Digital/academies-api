@@ -101,14 +101,13 @@ namespace TramsDataApi.ResponseModels
         public string UPRN { get; set; }
         public MISEstablishmentResponse MISEstablishment { get; set; }
         public MISFEAResponse MISFurtherEducationEstablishment { get; set; }
+
+        public ViewAcademyConversionResponse ViewAcademyConversion { get; set; }
         public SMARTDataResponse SMARTData { get; set; }
         public PlaceholderResponse Financial { get; set; }
         public PlaceholderResponse  Concerns { get; set; }
 
-        public string ViabilityIssue { get; set; }
-        public string PFI { get; set; }
-        public string PAN { get; set; }
-        public string Deficit { get; set; }
+
 
     }
 }
