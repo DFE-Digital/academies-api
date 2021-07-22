@@ -62,7 +62,8 @@ namespace TramsDataApi.Test.Factories
                 LocalAuthorityInformationTemplateSentDate = default(DateTime),
                 LocalAuthorityInformationTemplateReturnedDate = default(DateTime),
                 CapitalCarryForwardAtEndMarchCurrentYear = default(decimal),
-                CapitalCarryForwardAtEndMarchNextYear = default(decimal)
+                CapitalCarryForwardAtEndMarchNextYear = default(decimal),
+                PreviousHeadTeacherBoardDate = default(DateTime)
             };
 
             var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
@@ -70,6 +71,7 @@ namespace TramsDataApi.Test.Factories
             expected.LocalAuthorityInformationTemplateReturnedDate = null;
             expected.CapitalCarryForwardAtEndMarchCurrentYear = null;
             expected.CapitalCarryForwardAtEndMarchNextYear = null;
+            expected.PreviousHeadTeacherBoardDate = null;
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }
 
@@ -102,6 +104,8 @@ namespace TramsDataApi.Test.Factories
             expected.LocalAuthorityInformationTemplateSectionComplete = updateRequest.LocalAuthorityInformationTemplateSectionComplete;
             expected.RecommendationForProject = updateRequest.RecommendationForProject;
             expected.AcademyOrderRequired = updateRequest.AcademyOrderRequired;
+            expected.PreviousHeadTeacherBoardDateQuestion = updateRequest.PreviousHeadTeacherBoardDateQuestion;
+            expected.PreviousHeadTeacherBoardDate = updateRequest.PreviousHeadTeacherBoardDate;
             expected.SchoolAndTrustInformationSectionComplete = updateRequest.SchoolAndTrustInformationSectionComplete;
             expected.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters;
             expected.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;

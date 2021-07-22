@@ -157,6 +157,14 @@ namespace TramsDataApi.Test.Integration
             academyConversionProject.SchoolBudgetInformationSectionComplete.Should().Be(updateRequest.SchoolBudgetInformationSectionComplete);
             academyConversionProject.SchoolPupilForecastsAdditionalInformation.Should().Be(updateRequest.SchoolPupilForecastsAdditionalInformation);
             academyConversionProject.KeyStagePerformanceTablesAdditionalInformation.Should().Be(updateRequest.KeyStagePerformanceTablesAdditionalInformation);
+            academyConversionProject.RecommendationForProject.Should().Be(updateRequest.RecommendationForProject);
+            academyConversionProject.Author.Should().Be(updateRequest.Author);
+            academyConversionProject.ClearedBy.Should().Be(updateRequest.ClearedBy);
+            academyConversionProject.HeadTeacherBoardDate.Should().Be(updateRequest.HeadTeacherBoardDate);
+            academyConversionProject.PreviousHeadTeacherBoardDateQuestion.Should().Be(updateRequest.PreviousHeadTeacherBoardDateQuestion);
+            academyConversionProject.PreviousHeadTeacherBoardDate.Should().Be(updateRequest.PreviousHeadTeacherBoardDate);
+            academyConversionProject.ProposedAcademyOpeningDate.Should().Be(updateRequest.ProposedAcademyOpeningDate);
+            academyConversionProject.SchoolAndTrustInformationSectionComplete.Should().Be(updateRequest.SchoolAndTrustInformationSectionComplete);
         }
 
         private AcademyConversionProjectResponse CreateExpectedApiResponse(Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
