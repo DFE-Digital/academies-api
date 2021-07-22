@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.DatabaseModels;
@@ -29,7 +30,7 @@ namespace TramsDataApi.Controllers
         [Route("trust/{ukprn}")]
         public ActionResult<TrustResponse> GetTrustByUkprn(string ukprn)
         {
-            _logger.LogInformation($"Attempting to retrieve trust by UKPRN {ukprn}");
+            _logger.LogInformation($"Attempting to get trust by UKPRN {ukprn}");
             var trust = _getTrustByUkprn.Execute(ukprn);
 
             if (trust == null)
@@ -46,6 +47,7 @@ namespace TramsDataApi.Controllers
         [Route("trusts")]
         public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukprn, string companiesHouseNumber, int page = 1)
         {
+            throw new System.Exception("Oh dear");
             _logger.LogInformation($"Searching for trusts by groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");
             var trusts = _searchTrusts.Execute(groupName, ukprn, companiesHouseNumber, page);
             _logger.LogInformation($"Found {trusts.Count} trusts for groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");

@@ -36,7 +36,7 @@ namespace TramsDataApi.Controllers
 			// temporarily limiting count until we know rules around which to return as there's hundreds in db
 			var projects = _getAllAcademyConversionProjects.Execute(new GetAllAcademyConversionProjectsRequest { Count = count });
 			_logger.LogInformation($"Returning {projects.Count()} Academy Conversion Projects");
-
+			_logger.LogDebug(projects.ToString());
 			return Ok(projects);
 		}
 
