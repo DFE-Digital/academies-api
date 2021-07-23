@@ -99,7 +99,7 @@ namespace TramsDataApi.Test.Utils
             return new ViewAcademyConversions
             {
                 PRid = randomGenerator.NextString(11, 11),
-                GeneralDetailsUrn = urn.ToString(),
+                GeneralDetailsAcademyUrn = urn.ToString(),
                 ProjectTemplateInformationDeficit = randomGenerator.NextString(2, 100),
                 ProjectTemplateInformationViabilityIssue = randomGenerator.NextString(2, 100),
                 DeliveryProcessPfi = randomGenerator.NextString(2, 100),
