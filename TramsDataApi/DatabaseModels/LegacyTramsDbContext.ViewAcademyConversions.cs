@@ -14,7 +14,7 @@ namespace TramsDataApi.DatabaseModels
         {
             modelBuilder.Entity<ViewAcademyConversions>(entity =>
             {
-                entity.HasKey(e => e.PRid);
+                entity.HasKey(e => e.Rid);
 
                 entity.ToTable("vw_AC", "ifd");
 
