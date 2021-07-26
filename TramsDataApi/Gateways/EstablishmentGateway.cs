@@ -47,7 +47,7 @@ namespace TramsDataApi.Gateways
 
          public ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int establishmentUrn) 
         {
-            var viewAcademyConversionInfo = _dbContext.ViewAcademyConversions.FirstOrDefault(x => x.GeneralDetailsUrn == establishmentUrn.ToString());
+            var viewAcademyConversionInfo = _dbContext.ViewAcademyConversions.FirstOrDefault(x => x.GeneralDetailsAcademyUrn == establishmentUrn.ToString());
             return viewAcademyConversionInfo;
         }
 

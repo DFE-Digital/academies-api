@@ -98,8 +98,8 @@ namespace TramsDataApi.Test.Utils
             var randomGenerator = new RandomGenerator();
             return new ViewAcademyConversions
             {
-                PRid = randomGenerator.NextString(11, 11),
-                GeneralDetailsUrn = urn.ToString(),
+                Rid = randomGenerator.NextString(11, 11),
+                GeneralDetailsAcademyUrn = urn.ToString(),
                 ProjectTemplateInformationDeficit = randomGenerator.NextString(2, 100),
                 ProjectTemplateInformationViabilityIssue = randomGenerator.NextString(2, 100),
                 DeliveryProcessPfi = randomGenerator.NextString(2, 100),
@@ -112,7 +112,7 @@ namespace TramsDataApi.Test.Utils
             var randomGenerator = new RandomGenerator();
             return new ViewAcademyConversions
             {
-                PRid = randomGenerator.NextString(11, 11),
+                Rid = randomGenerator.NextString(11, 11),
                 GeneralDetailsAcademyUkprn = ukprn,
                 ProjectTemplateInformationDeficit = randomGenerator.NextString(2, 100),
                 ProjectTemplateInformationViabilityIssue = randomGenerator.NextString(2, 100),
