@@ -25,6 +25,8 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
         public string AcademyOrderRequired { get; set; }
         public DateTime? ProposedAcademyOpeningDate { get; set; }
         public bool? SchoolAndTrustInformationSectionComplete { get; set; }
+        public string PreviousHeadTeacherBoardDateQuestion { get; set; }
+        public DateTime? PreviousHeadTeacherBoardDate { get; set; }
 
         //general info
         public string PublishedAdmissionNumber { get; set; }

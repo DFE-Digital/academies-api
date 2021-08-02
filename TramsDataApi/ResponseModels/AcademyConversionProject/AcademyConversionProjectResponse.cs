@@ -29,6 +29,7 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
         public string Version { get; set; }
         public string ClearedBy { get; set; }
         public string AcademyOrderRequired { get; set; }
+        public string PreviousHeadTeacherBoardDateQuestion { get; set; }
         public DateTime? PreviousHeadTeacherBoardDate { get; set; }
         public string PreviousHeadTeacherBoardLink { get; set; }
         public string TrustReferenceNumber { get; set; }

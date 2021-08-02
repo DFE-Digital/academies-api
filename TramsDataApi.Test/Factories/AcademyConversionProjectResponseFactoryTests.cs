@@ -41,7 +41,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenAcademyConversionProjectWithNullSchoolBudgetAndPupilForecaseValues()
+        public void ReturnsAnAcademyConversionProjectResponse_WhenGivenAcademyConversionProjectWithNullSchoolBudgetAndPupilForecastValues()
         {
               var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.CapitalCarryForwardAtEndMarchCurrentYear)
@@ -92,6 +92,8 @@ namespace TramsDataApi.Test.Factories
                 AcademyOrderRequired = academyConversionProject.AcademyOrderRequired,
                 DistanceFromSchoolToTrustHeadquarters = academyConversionProject.DistanceFromSchoolToTrustHeadquarters,
                 DistanceFromSchoolToTrustHeadquartersAdditionalInformation = academyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
+                PreviousHeadTeacherBoardDateQuestion = academyConversionProject.PreviousHeadTeacherBoardDateQuestion,
+                PreviousHeadTeacherBoardDate = academyConversionProject.PreviousHeadTeacherBoardDate,
                 SchoolAndTrustInformationSectionComplete = academyConversionProject.SchoolAndTrustInformationSectionComplete,
                 GeneralInformationSectionComplete = academyConversionProject.GeneralInformationSectionComplete,
                 RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,

@@ -78,6 +78,10 @@ namespace TramsDataApi.Factories
                 updateRequest.YearThreeProjectedPupilNumbers ?? project.YearThreeProjectedPupilNumbers;
             project.KeyStagePerformanceTablesAdditionalInformation = updateRequest.KeyStagePerformanceTablesAdditionalInformation ??
                 project.KeyStagePerformanceTablesAdditionalInformation;
+            project.PreviousHeadTeacherBoardDateQuestion = updateRequest.PreviousHeadTeacherBoardDateQuestion ??
+                project.PreviousHeadTeacherBoardDateQuestion;
+            project.PreviousHeadTeacherBoardDate = updateRequest.PreviousHeadTeacherBoardDate == default(DateTime) ? null
+                : updateRequest.PreviousHeadTeacherBoardDate ?? project.PreviousHeadTeacherBoardDate;
 
             return project;
         }

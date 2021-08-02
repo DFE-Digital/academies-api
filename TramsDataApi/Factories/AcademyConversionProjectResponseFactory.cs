@@ -42,6 +42,8 @@ namespace TramsDataApi.Factories
 				LocalAuthorityInformationTemplateSectionComplete = academyConversionProject.LocalAuthorityInformationTemplateSectionComplete,
 				RecommendationForProject = academyConversionProject.RecommendationForProject,
 				AcademyOrderRequired = academyConversionProject.AcademyOrderRequired,
+				PreviousHeadTeacherBoardDateQuestion = academyConversionProject.PreviousHeadTeacherBoardDateQuestion,
+				PreviousHeadTeacherBoardDate = academyConversionProject.PreviousHeadTeacherBoardDate,
 				SchoolAndTrustInformationSectionComplete = academyConversionProject.SchoolAndTrustInformationSectionComplete,
 				DistanceFromSchoolToTrustHeadquarters = academyConversionProject.DistanceFromSchoolToTrustHeadquarters,
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = academyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
