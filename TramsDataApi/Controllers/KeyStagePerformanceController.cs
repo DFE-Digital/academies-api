@@ -5,6 +5,7 @@ using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers
 {
+    [ApiVersion("1.0")]
     public class KeyStagePerformanceController : ControllerBase
     {
         private readonly IGetKeyStagePerformanceByUrn _getKeyStagePerformanceByUrn;

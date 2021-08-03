@@ -8,6 +8,7 @@ namespace TramsDataApi.Controllers
 {
     [ApiController]
 	[Route("conversion-projects")]
+	[ApiVersion("1.0")]
 	public class AcademyConversionProjectController : ControllerBase
 	{
 		private readonly IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> _getAcademyConversionProjectById;

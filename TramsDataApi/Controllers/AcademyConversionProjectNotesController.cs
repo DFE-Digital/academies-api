@@ -8,6 +8,7 @@ namespace TramsDataApi.Controllers
 {
     [ApiController]
     [Route("project-notes")]
+    [ApiVersion("1.0")]
     public class AcademyConversionProjectNotesController : ControllerBase
     {
         private readonly
