@@ -337,6 +337,14 @@ namespace TramsDataApi.Test.Integration
         {
             var groupName = "Mygroupname";
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
+                .All()
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build()
@@ -388,6 +396,12 @@ namespace TramsDataApi.Test.Integration
             var groupNamePartial = "MygROupnAM";
 
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build()
@@ -435,6 +449,12 @@ namespace TramsDataApi.Test.Integration
             var companiesHousePartial = "cOmpanIesHouSEMoCk";
 
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build()
@@ -482,6 +502,12 @@ namespace TramsDataApi.Test.Integration
             var ukprnPartial = "UKPrnPARTiAL";
 
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build()
@@ -528,6 +554,12 @@ namespace TramsDataApi.Test.Integration
         {
             var companiesHouseNumber = "MyCompaniesHouseNumber";
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build()
@@ -576,6 +608,12 @@ namespace TramsDataApi.Test.Integration
         {
             var ukprn = "mockurn";
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
@@ -619,6 +657,12 @@ namespace TramsDataApi.Test.Integration
             var groupName = "mockgroupname";
             
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
@@ -666,6 +710,12 @@ namespace TramsDataApi.Test.Integration
             var groupName = "mockgroupname";
 
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
@@ -714,9 +764,16 @@ namespace TramsDataApi.Test.Integration
             var ukprn = "mockurn";
             
             var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(e => e.Ukprn = _randomGenerator.Int().ToString())
                 .Build();
+
             groups[0].Ukprn = ukprn;
 
             var establishments = Builder<Establishment>.CreateListOfSize(4)
@@ -760,6 +817,12 @@ namespace TramsDataApi.Test.Integration
         public async Task ShouldReturnFirstPaginationPageOfTrusts_With10TrustsPerPage_WhenSearchingTrustWithNoPageSpecified()
         {
             var groups = Builder<Group>.CreateListOfSize(30)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .Build().ToList();
             
             _legacyDbContext.Group.AddRange(groups);
@@ -797,6 +860,12 @@ namespace TramsDataApi.Test.Integration
         public async Task ShouldReturnSecondPaginationPageOfTrusts_With10TrustsPerPage_WhenSearchingTrustWithTheSecondPage()
         {
             var groups = Builder<Group>.CreateListOfSize(30)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .Build().ToList();
 
             _legacyDbContext.Group.AddRange(groups);
