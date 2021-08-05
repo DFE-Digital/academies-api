@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.Test.Utils;
 using Xunit;
@@ -21,6 +22,7 @@ namespace TramsDataApi.Test.Integration
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
         private readonly RandomGenerator _randomGenerator;
+        private ICensusDataGateway _censusDataGateway;
 
         public EstablishmentsIntegrationTests(TramsDataApiFactory fixture)
         {
@@ -28,6 +30,7 @@ namespace TramsDataApi.Test.Integration
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _randomGenerator = new RandomGenerator();
+            _censusDataGateway = new CensusDataGateway();
         }
 
         [Fact]
@@ -240,7 +243,9 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.ViewAcademyConversions.Add(viewAcademyConversionData);
             _legacyDbContext.SaveChanges();
 
-            return EstablishmentResponseFactory.Create(establishment, misEstablishment, smartData, furtherEducationEstablishment, viewAcademyConversionData);
+            var censusData = _censusDataGateway.GetCensusDataByURN(urn.ToString());
+
+            return EstablishmentResponseFactory.Create(establishment, misEstablishment, smartData, furtherEducationEstablishment, viewAcademyConversionData, censusData);
         }
 
         public void Dispose()
