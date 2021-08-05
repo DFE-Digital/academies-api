@@ -4,7 +4,6 @@ using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers;
 using TramsDataApi.RequestModels;
@@ -16,8 +15,6 @@ namespace TramsDataApi.Test.Controllers
 {
     public class AcademyTransferProjectsControllerTests
     {
-        private Mock<ILogger<AcademyTransferProjectController>> mockLogger = new Mock<ILogger<AcademyTransferProjectController>>();
-
         [Fact]
         public void CreateAcademyTransferProject_Returns201WhenSuccessfullyCreatesAnAcademyTransferProject()
         {
@@ -35,8 +32,7 @@ namespace TramsDataApi.Test.Controllers
                 createAcademyTransferProject.Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
-                new Mock<IIndexAcademyTransferProjects>().Object,
-                mockLogger.Object
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
             var result = controller.Create(createAcademyTransferRequest);
             
@@ -57,8 +53,7 @@ namespace TramsDataApi.Test.Controllers
                 createAcademyTransferProject.Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
-                new Mock<IIndexAcademyTransferProjects>().Object,
-                mockLogger.Object
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
             var result = controller.Create(createAcademyTransferRequest);
             
@@ -80,8 +75,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
                 updateAcademyTransferProject.Object,
-                new Mock<IIndexAcademyTransferProjects>().Object,
-                mockLogger.Object
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
@@ -109,8 +103,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
                 updateAcademyTransferProject.Object,
-                new Mock<IIndexAcademyTransferProjects>().Object,
-                mockLogger.Object
+                new Mock<IIndexAcademyTransferProjects>().Object
             ); 
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
@@ -134,8 +127,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
                 updateAcademyTransferProject.Object,
-                new Mock<IIndexAcademyTransferProjects>().Object,
-                mockLogger.Object
+                new Mock<IIndexAcademyTransferProjects>().Object
             ); 
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
@@ -156,8 +148,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
-                new Mock<IIndexAcademyTransferProjects>().Object,
-                mockLogger.Object
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
 
             var result = controller.GetByUrn(urn);
@@ -180,8 +171,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ICreateAcademyTransferProject>().Object,
                 getAcademyTransferProject.Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
-                new Mock<IIndexAcademyTransferProjects>().Object,
-                mockLogger.Object
+                new Mock<IIndexAcademyTransferProjects>().Object
             );
 
             var result = controller.GetByUrn(urn);
@@ -202,8 +192,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ICreateAcademyTransferProject>().Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
-                indexAcademyTransferProject.Object,
-                mockLogger.Object
+                indexAcademyTransferProject.Object
             );
 
             var result = controller.Index();
@@ -226,8 +215,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ICreateAcademyTransferProject>().Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
-                indexAcademyTransferProject.Object,
-                mockLogger.Object
+                indexAcademyTransferProject.Object
             );
 
             var result = controller.Index();

@@ -3,7 +3,6 @@ using FizzWare.NBuilder;
 using FizzWare.NBuilder.PropertyNaming;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers;
 using TramsDataApi.ResponseModels;
@@ -14,12 +13,9 @@ namespace TramsDataApi.Test.Controllers
 {
     public class TrustsControllerTests
     {
-        private readonly Mock<ILogger<TrustsController>> mockLogger;
-
         public TrustsControllerTests()
         {
             BuilderSetup.SetDefaultPropertyName(new RandomValuePropertyNamer(new BuilderSettings()));
-            mockLogger = new Mock<ILogger<TrustsController>>();
         }
         
         [Fact]
@@ -29,7 +25,7 @@ namespace TramsDataApi.Test.Controllers
             var ukprn = "mockukprn";
             getTrustsByUkprn.Setup(g => g.Execute(ukprn)).Returns(() => null);
 
-            var controller = new TrustsController(getTrustsByUkprn.Object, new Mock<ISearchTrusts>().Object, mockLogger.Object);
+            var controller = new TrustsController(getTrustsByUkprn.Object, new Mock<ISearchTrusts>().Object);
             var result = controller.GetTrustByUkprn(ukprn);
 
             result.Result.Should().BeOfType(typeof(NotFoundResult));
@@ -63,7 +59,7 @@ namespace TramsDataApi.Test.Controllers
             var getTrustByUkprn = new Mock<IGetTrustByUkprn>();
             getTrustByUkprn.Setup(g => g.Execute(ukprn)).Returns(trustResponse);
             
-            var controller = new TrustsController(getTrustByUkprn.Object, new Mock<ISearchTrusts>().Object, mockLogger.Object);
+            var controller = new TrustsController(getTrustByUkprn.Object, new Mock<ISearchTrusts>().Object);
             var result = controller.GetTrustByUkprn(ukprn);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(trustResponse));
@@ -80,7 +76,7 @@ namespace TramsDataApi.Test.Controllers
             searchTrusts.Setup(s => s.Execute(groupName, ukprn, companiesHouseNumber, 1))
                 .Returns(new List<TrustSummaryResponse>());
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
+            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(groupName, ukprn, companiesHouseNumber);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<TrustSummaryResponse>()));
@@ -102,7 +98,7 @@ namespace TramsDataApi.Test.Controllers
             searchTrusts.Setup(s => s.Execute(groupName, null, companiesHouseNumber, 1))
                 .Returns(expectedTrustSummaries);
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
+            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(groupName, null, companiesHouseNumber);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustSummaries));
@@ -123,7 +119,7 @@ namespace TramsDataApi.Test.Controllers
             searchTrusts.Setup(s => s.Execute(null, ukprn, null, 1))
                 .Returns(expectedTrustSummaries);
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
+            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(null, ukprn, null);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustSummaries));
@@ -138,7 +134,7 @@ namespace TramsDataApi.Test.Controllers
             searchTrusts.Setup(s => s.Execute(null, null, null, 1))
                 .Returns(expectedTrustSummaries);
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
+            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object);
             var result = controller.SearchTrusts(null, null, null);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedTrustSummaries));

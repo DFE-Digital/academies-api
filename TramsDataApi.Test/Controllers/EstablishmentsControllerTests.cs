@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers;
 using TramsDataApi.RequestModels;
@@ -30,8 +29,7 @@ namespace TramsDataApi.Test.Controllers
             _controller = new EstablishmentsController(
                 _getEstablishmentByUkprn.Object,
                 _getEstablishmentByUrn.Object,
-                _searchEstablishments.Object,
-                new Mock<ILogger<EstablishmentsController>>().Object
+                _searchEstablishments.Object
             );
         }
 

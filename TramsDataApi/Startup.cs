@@ -85,7 +85,6 @@ namespace TramsDataApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<ApiKeyMiddleware>();
 
             app.UseHttpsRedirection();
