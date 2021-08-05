@@ -9,6 +9,8 @@ using TramsDataApi.Validators;
 namespace TramsDataApi.Controllers
 {
     [ApiController]
+    [ApiVersion("1.0")]
+
     public class AcademyTransferProjectController : ControllerBase
     {
         private readonly ICreateAcademyTransferProject _createAcademyTransferProject;

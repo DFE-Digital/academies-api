@@ -7,6 +7,7 @@ namespace TramsDataApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiVersion("1.0")]
     public class HealthCheckController : ControllerBase
     {
         private readonly LegacyTramsDbContext _dbContext;

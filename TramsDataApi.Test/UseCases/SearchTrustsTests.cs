@@ -38,6 +38,12 @@ namespace TramsDataApi.Test.UseCases
             var groupName = "groupName";
 
             var expectedTrusts = Builder<Group>.CreateListOfSize(10)
+                .TheFirst(5)
+                .With(g => g.GroupType = "Trust")
+                .TheNext(3)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
                 .All()
                 .With(g => g.GroupName = groupName)
                 .Build();
