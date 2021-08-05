@@ -15,12 +15,13 @@ namespace TramsDataApi.Test.Controllers
     {
         private readonly Mock<IGetKeyStagePerformanceByUrn> _getKeyStagePerformanceByUrn;
         private KeyStagePerformanceController _controller;
-        private Mock<ILogger<KeyStagePerformanceController>> mockLogger = new Mock<ILogger<KeyStagePerformanceController>>();
 
         public EducationPerformanceControllerTests()
         {
             _getKeyStagePerformanceByUrn = new Mock<IGetKeyStagePerformanceByUrn>();
-            _controller = new KeyStagePerformanceController(_getKeyStagePerformanceByUrn.Object, mockLogger.Object);
+            _controller = new KeyStagePerformanceController(
+                _getKeyStagePerformanceByUrn.Object,
+                new Mock<ILogger<KeyStagePerformanceController>>().Object);
         }
 
         [Fact]

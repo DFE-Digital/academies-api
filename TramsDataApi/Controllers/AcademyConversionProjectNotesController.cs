@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.UseCases;
+using System.Linq;
 
 namespace TramsDataApi.Controllers
 {
@@ -20,10 +21,12 @@ namespace TramsDataApi.Controllers
         private readonly ILogger<AcademyConversionProjectNotesController> _logger;
 
         public AcademyConversionProjectNotesController(IUseCase<GetAcademyConversionProjectNotesByIdRequest,
-            IEnumerable<AcademyConversionProjectNoteResponse>> getAcademyConversionProjectNotesById, IAddAcademyConversionProjectNote addAcademyConversionProjectNote)
+            IEnumerable<AcademyConversionProjectNoteResponse>> getAcademyConversionProjectNotesById,
+            IAddAcademyConversionProjectNote addAcademyConversionProjectNote, ILogger<AcademyConversionProjectNotesController> logger)
         {
             _getAcademyConversionProjectNotesById = getAcademyConversionProjectNotesById;
             _addAcademyConversionProjectNote = addAcademyConversionProjectNote;
+            _logger = logger;
         }
 
         [HttpGet("{id}")]
@@ -33,7 +36,7 @@ namespace TramsDataApi.Controllers
             var projectNotes = _getAcademyConversionProjectNotesById.Execute(new GetAcademyConversionProjectNotesByIdRequest { Id = id });
 
             _logger.LogInformation($"Returning Academy Conversion Project Notes for ID {id}");
-            _logger.LogDebug(JsonSerializer.Serialize<IEnumerable<AcademyConversionProjectNoteResponse>>(projectNotes));
+            _logger.LogDebug(JsonSerializer.Serialize<List<AcademyConversionProjectNoteResponse>>(projectNotes.ToList()));
 
             return Ok(projectNotes);
         }
