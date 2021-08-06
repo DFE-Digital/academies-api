@@ -68,3 +68,10 @@ Api Keys are provisioned at the environment level, and are stored as JSON object
 ```
 
 If injected through the environment, use `ApiKeys__x` naming conventions for the variables, as .NET will automatically configure this for us. e.g. `export ApiKeys__0=xxxx` will define the first API in the array. 
+
+
+## Adding new census data csv file
+
+The current census .csv file can be found a `TramsDataApi/CensusData/`
+
+If you need to replace this file with a newer one then add the new file to the `TramsDataApi/CensusData/` folder and then update the `CensusDataGateway.cs` file to reflect the new filename.
