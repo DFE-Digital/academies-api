@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
+using TramsDataApi.CensusData;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels;
@@ -13,9 +14,9 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_FromAnEstablishment(Establishment establishment)
         {
-            var expected = BuildExpected(establishment, null, null, null, null);
+            var expected = BuildExpected(establishment, null, null, null, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, null, null, null);
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, null, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -24,9 +25,9 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithAMisEstablishment(Establishment establishment, MisEstablishments misEstablishments)
         {
-            var expected = BuildExpected(establishment, misEstablishments, null, null, null);
+            var expected = BuildExpected(establishment, misEstablishments, null, null, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, misEstablishments, null, null, null);
+            var result = EstablishmentResponseFactory.Create(establishment, misEstablishments, null, null, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -35,9 +36,9 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithASmartData(Establishment establishment, SmartData smartData)
         {
-            var expected = BuildExpected(establishment, null, smartData, null, null);
+            var expected = BuildExpected(establishment, null, smartData, null, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, smartData, null, null);
+            var result = EstablishmentResponseFactory.Create(establishment, null, smartData, null, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -46,9 +47,9 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithAFurtherEducationEstablishment(Establishment establishment, FurtherEducationEstablishments furtherEducationEstablishments)
         {
-            var expected = BuildExpected(establishment, null, null, furtherEducationEstablishments, null);
+            var expected = BuildExpected(establishment, null, null, furtherEducationEstablishments, null, null);
 
-            var result = EstablishmentResponseFactory.Create(establishment, null, null, furtherEducationEstablishments, null);
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, furtherEducationEstablishments, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -57,8 +58,8 @@ namespace TramsDataApi.Test.Factories
         [AutoData]
         public void EstablishmentResponseFactory_CreatesEstablishmentResponse_WithViewAcademyConversion(Establishment establishment, ViewAcademyConversions viewAcademyConversions)
         {
-            var expected = BuildExpected(establishment, null, null, null, viewAcademyConversions);
-            var result = EstablishmentResponseFactory.Create(establishment, null, null, null, viewAcademyConversions);
+            var expected = BuildExpected(establishment, null, null, null, viewAcademyConversions, null);
+            var result = EstablishmentResponseFactory.Create(establishment, null, null, null, viewAcademyConversions, null);
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -66,7 +67,8 @@ namespace TramsDataApi.Test.Factories
             MisEstablishments misEstablishments, 
             SmartData smartData, 
             FurtherEducationEstablishments furtherEducationEstablishments,
-            ViewAcademyConversions viewAcademyconversions)
+            ViewAcademyConversions viewAcademyconversions,
+            CensusDataModel censusData)
         {
             var expected = new EstablishmentResponse
             {
@@ -384,6 +386,16 @@ namespace TramsDataApi.Test.Factories
                     PAN = viewAcademyconversions.DeliveryProcessPan,
                     PFI = viewAcademyconversions.DeliveryProcessPfi,
                 };
+            }
+            
+            if (censusData != null)
+            {
+                expected.Census.PercentageEnglishNotFirstLanguage = censusData.PNUMEAL;
+                expected.Census.PerceantageEnglishFirstLanguage = censusData.PNUMENGFL;
+                expected.Census.PercentageFirstLanguageUnclassified = censusData.PNUMUNCFL;
+                expected.Census.NumberEligableForFSM = censusData.NUMFSM;
+                expected.Census.NumberEligableForFSM6Years = censusData.NUMFSMEVER;
+                expected.Census.PercentageEligableForFSM6Years = censusData.PNUMFSMEVER;
             }
 
             return expected;

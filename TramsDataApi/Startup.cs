@@ -54,6 +54,7 @@ namespace TramsDataApi
             services.AddScoped<IGetKeyStagePerformanceByUrn, GetKeyStagePerformanceByUrn>();
             services.AddScoped<IEducationPerformanceGateway, EducationPerformanceGateway>();
             services.AddScoped<IAcademyConversionProjectGateway, AcademyConversionProjectGateway>();
+            services.AddScoped<ICensusDataGateway, CensusDataGateway>();
 
             // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
             // once the a2b external service can write directly to trams this should be removed

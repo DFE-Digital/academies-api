@@ -37,7 +37,7 @@ namespace TramsDataApi.Test
                         "ConnectionStrings:DefaultConnection", _dbFixture.ConnString),
                     new KeyValuePair<string, string>(
                         "ApiKeys:0", "{\"userName\": \"Test User\", \"apiKey\": \"testing-api-key\"}"
-                    ),
+                        ),
                 });
             });
         }

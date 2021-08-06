@@ -1,3 +1,4 @@
+using TramsDataApi.CensusData;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
 
@@ -10,7 +11,8 @@ namespace TramsDataApi.Factories
             MisEstablishments misEstablishment, 
             SmartData smartData, 
             FurtherEducationEstablishments furtherEducationEstablishments,
-            ViewAcademyConversions viewAcademyConversions)
+            ViewAcademyConversions viewAcademyConversions,
+            CensusDataModel censusData)
         {
             if (establishment == null)
             {
@@ -72,7 +74,13 @@ namespace TramsDataApi.Factories
                         NumberOfPupils = establishment.NumberOfPupils,
                         NumberOfBoys = establishment.NumberOfBoys,
                         NumberOfGirls = establishment.NumberOfGirls,
-                        PercentageFsm = establishment.PercentageFsm
+                        PercentageFsm = establishment.PercentageFsm,
+                        PercentageEnglishNotFirstLanguage = censusData?.PNUMEAL,
+                        PerceantageEnglishFirstLanguage = censusData?.PNUMENGFL,
+                        PercentageFirstLanguageUnclassified = censusData?.PNUMUNCFL,
+                        NumberEligableForFSM = censusData?.NUMFSM,
+                        NumberEligableForFSM6Years = censusData?.NUMFSMEVER,
+                        PercentageEligableForFSM6Years = censusData?.PNUMFSMEVER
                     },
                 TrustSchoolFlag = new NameAndCodeResponse
                 { Name = establishment.TrustSchoolFlagName, Code = establishment.TrustSchoolFlagCode },
