@@ -94,6 +94,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8scoredisadvantaged = 50.00M)
                 .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
+                .With(epd => epd.SipEnteringebacc = 51.44M)
                 .Build();
 
             var nationalAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
@@ -134,6 +135,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipMathsprogressscoredisadv = 9)
                 .With(epd => epd.SipAcademicLevelAveragePspe = 77.76M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 53.78M)
+                .With(epd => epd.SipEnteringebaccengland = 20.77M )
                 .Build();
             
             var laAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
@@ -174,6 +176,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipMathsprogressscoredisadv = 9)
                 .With(epd => epd.SipAcademicLevelAveragePspe = 76.99M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 12.87M)
+                .With(epd => epd.SipAenteringebacclocalauthorityaverage = 44.87M)
                 .Build();
                 
             var globalOptionMetadata = Builder<GlobalOptionSetMetadata>.CreateNew()
@@ -593,6 +596,7 @@ namespace TramsDataApi.Test.Integration
                     Disadvantaged = String.Format("{0:0.00}",
                         educationPerformanceData.SipProgress8scoredisadvantaged.ToString())
                 },
+                Enteringebacc = educationPerformanceData.SipEnteringebacc,
                 NationalAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = String.Format("{0:0.00}", nationalEducationPerformance1.SipAttainment8score),

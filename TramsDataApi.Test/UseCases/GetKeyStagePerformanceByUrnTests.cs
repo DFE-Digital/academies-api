@@ -376,6 +376,7 @@ namespace TramsDataApi.Test.UseCases
                     NotDisadvantaged = educationPerformanceData.SipProgress8score.ToString(),
                     Disadvantaged = educationPerformanceData.SipProgress8scoredisadvantaged.ToString()
                 },
+                Enteringebacc = educationPerformanceData.SipEnteringebacc,
                 NationalAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = nationalEducationPerformanceData3?.SipAttainment8score.ToString(),

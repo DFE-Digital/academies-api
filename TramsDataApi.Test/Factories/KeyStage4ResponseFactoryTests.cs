@@ -113,6 +113,7 @@ namespace TramsDataApi.Test.Factories
                     NotDisadvantaged = educationPerformanceData.SipProgress8score.ToString(),
                     Disadvantaged = educationPerformanceData.SipProgress8scoredisadvantaged.ToString()
                 },
+                Enteringebacc = educationPerformanceData.SipEnteringebacc,
                 NationalAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = nationalEducationPerformance?.SipAttainment8score.ToString(),
@@ -161,6 +162,7 @@ namespace TramsDataApi.Test.Factories
                 },
                 NationalAverageP8LowerConfidence = nationalEducationPerformance?.SipProgress8lowerconfidence,
                 NationalAverageP8UpperConfidence = nationalEducationPerformance?.SipProgress8upperconfidence,
+                NationalEnteringEbacc = nationalEducationPerformance?.SipEnteringebaccengland,
                 LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8score.ToString(),
@@ -208,7 +210,8 @@ namespace TramsDataApi.Test.Factories
                     Disadvantaged = localAuthorityEducationPerformance?.SipProgress8ebaccdisadvantaged.ToString()
                 },
                 LAAverageP8LowerConfidence = localAuthorityEducationPerformance?.SipProgress8lowerconfidence,
-                LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence
+                LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence,
+                LAEnteringEbacc = localAuthorityEducationPerformance?.SipAenteringebacclocalauthorityaverage
             };
 
             var result = KeyStage4PerformanceResponseFactory.Create(educationPerformanceData, nationalEducationPerformance, localAuthorityEducationPerformance);
@@ -305,6 +308,7 @@ namespace TramsDataApi.Test.Factories
                     NotDisadvantaged = educationPerformanceData.SipProgress8score.ToString(),
                     Disadvantaged = educationPerformanceData.SipProgress8scoredisadvantaged.ToString()
                 },
+                Enteringebacc = educationPerformanceData.SipEnteringebacc,
                 NationalAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = null,
@@ -352,6 +356,7 @@ namespace TramsDataApi.Test.Factories
                 },
                 NationalAverageP8LowerConfidence = null,
                 NationalAverageP8UpperConfidence = null,
+                
                 LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = null,
