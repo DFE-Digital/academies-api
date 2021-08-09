@@ -6,8 +6,8 @@ namespace TramsDataApi.ResponseModels
         public string NumberOfPupils { get; set; }
         public string NumberOfBoys { get; set; }
         public string NumberOfGirls { get; set; }
+        public string PercentageSen { get; set; }
         public string PercentageFsm { get; set; }
-        
         public string PercentageEnglishNotFirstLanguage  { get; set; }
         public string PerceantageEnglishFirstLanguage  { get; set; }
         public string PercentageFirstLanguageUnclassified  { get; set; }
