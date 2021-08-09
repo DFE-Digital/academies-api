@@ -396,6 +396,7 @@ namespace TramsDataApi.Test.Factories
                 expected.Census.NumberEligableForFSM = censusData.NUMFSM;
                 expected.Census.NumberEligableForFSM6Years = censusData.NUMFSMEVER;
                 expected.Census.PercentageEligableForFSM6Years = censusData.PNUMFSMEVER;
+                expected.Census.PercentageSen = censusData.PSENELK;
             }
 
             return expected;
