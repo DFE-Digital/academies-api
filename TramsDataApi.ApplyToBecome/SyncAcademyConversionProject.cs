@@ -95,9 +95,6 @@ namespace TramsDataApi.ApplyToBecome
         public int? YearTwoProjectedPupilNumbers { get; set; }
         public int? YearThreeProjectedCapacity { get; set; }
         public int? YearThreeProjectedPupilNumbers { get; set; }
-        public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
-        //key stage performance
-        public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
     }
 }
