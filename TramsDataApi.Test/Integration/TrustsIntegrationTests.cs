@@ -338,8 +338,6 @@ namespace TramsDataApi.Test.Integration
             var groupName = "Mygroupname";
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -397,8 +395,6 @@ namespace TramsDataApi.Test.Integration
 
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -450,8 +446,6 @@ namespace TramsDataApi.Test.Integration
 
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -503,8 +497,6 @@ namespace TramsDataApi.Test.Integration
 
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -555,8 +547,6 @@ namespace TramsDataApi.Test.Integration
             var companiesHouseNumber = "MyCompaniesHouseNumber";
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -609,8 +599,6 @@ namespace TramsDataApi.Test.Integration
             var ukprn = "mockurn";
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -658,8 +646,6 @@ namespace TramsDataApi.Test.Integration
             
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -711,8 +697,6 @@ namespace TramsDataApi.Test.Integration
 
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -765,8 +749,6 @@ namespace TramsDataApi.Test.Integration
             
             var groups = Builder<Group>.CreateListOfSize(15)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -818,8 +800,6 @@ namespace TramsDataApi.Test.Integration
         {
             var groups = Builder<Group>.CreateListOfSize(30)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
@@ -861,8 +841,6 @@ namespace TramsDataApi.Test.Integration
         {
             var groups = Builder<Group>.CreateListOfSize(30)
                 .TheFirst(2)
-                .With(g => g.GroupType = "Trust")
-                .TheNext(2)
                 .With(g => g.GroupType = "Single-academy trust")
                 .TheRest()
                 .With(g => g.GroupType = "Multi-academy trust")
