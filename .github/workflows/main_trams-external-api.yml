@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - revert-80-revert-73-add-logging
   workflow_dispatch:
 
 jobs:
