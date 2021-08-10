@@ -2,6 +2,7 @@ using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers;
 using TramsDataApi.ResponseModels.EducationalPerformance;
@@ -18,7 +19,9 @@ namespace TramsDataApi.Test.Controllers
         public EducationPerformanceControllerTests()
         {
             _getKeyStagePerformanceByUrn = new Mock<IGetKeyStagePerformanceByUrn>();
-            _controller = new KeyStagePerformanceController(_getKeyStagePerformanceByUrn.Object);
+            _controller = new KeyStagePerformanceController(
+                _getKeyStagePerformanceByUrn.Object,
+                new Mock<ILogger<KeyStagePerformanceController>>().Object);
         }
 
         [Fact]
