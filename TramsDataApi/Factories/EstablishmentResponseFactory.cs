@@ -75,6 +75,7 @@ namespace TramsDataApi.Factories
                         NumberOfBoys = establishment.NumberOfBoys,
                         NumberOfGirls = establishment.NumberOfGirls,
                         PercentageFsm = establishment.PercentageFsm,
+                        PercentageSen = censusData?.PSENELK,
                         PercentageEnglishNotFirstLanguage = censusData?.PNUMEAL,
                         PerceantageEnglishFirstLanguage = censusData?.PNUMENGFL,
                         PercentageFirstLanguageUnclassified = censusData?.PNUMUNCFL,

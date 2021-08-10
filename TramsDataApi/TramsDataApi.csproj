@@ -29,4 +29,10 @@
       <ProjectReference Include="..\TramsDataApi.ApplyToBecome\TramsDataApi.ApplyToBecome.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Include="CensusData/2018-2019_england_census.csv">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
 </Project>
