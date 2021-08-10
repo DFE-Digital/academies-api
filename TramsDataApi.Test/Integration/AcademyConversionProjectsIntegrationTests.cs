@@ -156,7 +156,8 @@ namespace TramsDataApi.Test.Integration
             academyConversionProject.SchoolBudgetInformationAdditionalInformation.Should().Be(updateRequest.SchoolBudgetInformationAdditionalInformation);
             academyConversionProject.SchoolBudgetInformationSectionComplete.Should().Be(updateRequest.SchoolBudgetInformationSectionComplete);
             academyConversionProject.SchoolPupilForecastsAdditionalInformation.Should().Be(updateRequest.SchoolPupilForecastsAdditionalInformation);
-            academyConversionProject.KeyStagePerformanceTablesAdditionalInformation.Should().Be(updateRequest.KeyStagePerformanceTablesAdditionalInformation);
+            academyConversionProject.KeyStage2PerformanceAdditionalInformation.Should().Be(updateRequest.KeyStage2PerformanceAdditionalInformation);
+            academyConversionProject.KeyStage4PerformanceAdditionalInformation.Should().Be(updateRequest.KeyStage4PerformanceAdditionalInformation);
             academyConversionProject.RecommendationForProject.Should().Be(updateRequest.RecommendationForProject);
             academyConversionProject.Author.Should().Be(updateRequest.Author);
             academyConversionProject.ClearedBy.Should().Be(updateRequest.ClearedBy);

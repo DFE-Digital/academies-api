@@ -99,6 +99,7 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolPupilForecastsAdditionalInformation { get; set; }
 
         // key stage performance
-        public string KeyStagePerformanceTablesAdditionalInformation { get; set; }
+        public string KeyStage2PerformanceAdditionalInformation { get; set; }
+        public string KeyStage4PerformanceAdditionalInformation { get; set; }
     }
 }

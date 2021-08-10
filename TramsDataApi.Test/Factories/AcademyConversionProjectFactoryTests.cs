@@ -123,7 +123,8 @@ namespace TramsDataApi.Test.Factories
             expected.YearTwoProjectedPupilNumbers = updateRequest.YearTwoProjectedPupilNumbers;
             expected.YearThreeProjectedCapacity = updateRequest.YearThreeProjectedCapacity;
             expected.YearThreeProjectedPupilNumbers = updateRequest.YearThreeProjectedPupilNumbers;
-            expected.KeyStagePerformanceTablesAdditionalInformation = updateRequest.KeyStagePerformanceTablesAdditionalInformation;
+            expected.KeyStage2PerformanceAdditionalInformation = updateRequest.KeyStage2PerformanceAdditionalInformation;
+            expected.KeyStage4PerformanceAdditionalInformation = updateRequest.KeyStage4PerformanceAdditionalInformation;
 
             return expected;
         }
