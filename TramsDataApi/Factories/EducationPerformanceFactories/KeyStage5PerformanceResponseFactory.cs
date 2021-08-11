@@ -11,13 +11,13 @@ namespace TramsDataApi.Factories
         {
             return new KeyStage5PerformanceResponse
             {
-                Year = educationalPerformanceData?.SipName,
-                AcademicQualificationAverage = educationalPerformanceData?.SipAcademicLevelAveragePspe,
-                AppliedGeneralQualificationAverage = educationalPerformanceData?.SipAppliedGeneralAveragePspe,
-                NationalAcademicQualificationAverage = nationalEducationPerformance?.SipAcademicLevelAveragePspe,
-                NationalAppliedGeneralQualificationAverage = nationalEducationPerformance?.SipAppliedGeneralAveragePspe,
-                LAAcademicQualificationAverage = localAuthorityEducationPerformance?.SipAcademicLevelAveragePspe,
-                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance?.SipAppliedGeneralAveragePspe
+                Year = educationalPerformanceData.SipName,
+                AcademicQualificationAverage = educationalPerformanceData.SipAcademicLevelAveragePspe,
+                AppliedGeneralQualificationAverage = educationalPerformanceData.SipAppliedGeneralAveragePspe,
+                NationalAcademicQualificationAverage = nationalEducationPerformance.SipAcademicLevelAveragePspe,
+                NationalAppliedGeneralQualificationAverage = nationalEducationPerformance.SipAppliedGeneralAveragePspe,
+                LAAcademicQualificationAverage = localAuthorityEducationPerformance.SipAcademicLevelAveragePspe,
+                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance.SipAppliedGeneralAveragePspe
             };
         }
     }
