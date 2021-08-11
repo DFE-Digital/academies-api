@@ -159,15 +159,15 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("sip_localauthoritycode")
                     .HasMaxLength(100);
                 
-                entity.Property(e => e.SipEnteringebacc)
+                entity.Property(e => e.SipEnteringEbacc)
                     .HasColumnName("sip_enteringebacc")
                     .HasColumnType("decimal(38, 2)");
                 
-                entity.Property(e => e.SipEnteringebaccengland)
+                entity.Property(e => e.SipEnteringEbaccEngland)
                     .HasColumnName("sip_enteringebaccengland")
                     .HasColumnType("decimal(38, 2)");
                 
-                entity.Property(e => e.SipAenteringebacclocalauthorityaverage)
+                entity.Property(e => e.SipEnteringEbaccLocalAuthorityAverage)
                     .HasColumnName("sip_aenteringebacclocalauthorityaverage")
                     .HasColumnType("decimal(38, 2)");
             });
