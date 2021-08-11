@@ -80,6 +80,8 @@ namespace TramsDataApi.Factories
                 project.KeyStage2PerformanceAdditionalInformation;
             project.KeyStage4PerformanceAdditionalInformation = updateRequest.KeyStage4PerformanceAdditionalInformation ??
                 project.KeyStage4PerformanceAdditionalInformation;
+            project.KeyStage5PerformanceAdditionalInformation = updateRequest.KeyStage5PerformanceAdditionalInformation ??
+                project.KeyStage5PerformanceAdditionalInformation;
             project.PreviousHeadTeacherBoardDateQuestion = updateRequest.PreviousHeadTeacherBoardDateQuestion ??
                 project.PreviousHeadTeacherBoardDateQuestion;
             project.PreviousHeadTeacherBoardDate = updateRequest.PreviousHeadTeacherBoardDate == default(DateTime) ? null
