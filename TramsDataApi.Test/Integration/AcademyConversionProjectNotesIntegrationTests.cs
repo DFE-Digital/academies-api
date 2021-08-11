@@ -14,6 +14,7 @@ using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.Test.Utils;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace TramsDataApi.Test.Integration
 {
@@ -76,9 +77,11 @@ namespace TramsDataApi.Test.Integration
             }).OrderByDescending(pn => pn.Date).ToList();
 
             var response = await _client.GetAsync($"/project-notes/{academyConversionProject.Id}");
-            var content = (await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectNoteResponse>>()).ToList();
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var content = (await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectNoteResponse>>()).ToList();
+
             content.Should().BeEquivalentTo(expected);
             content.Should().BeInDescendingOrder(c => c.Date);
         }
