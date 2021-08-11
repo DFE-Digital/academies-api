@@ -116,7 +116,8 @@ namespace TramsDataApi.Test.Factories
                 YearThreeProjectedCapacity = academyConversionProject.YearThreeProjectedCapacity,
                 YearThreeProjectedPupilNumbers = academyConversionProject.YearThreeProjectedPupilNumbers,
                 KeyStage2PerformanceAdditionalInformation = academyConversionProject.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation = academyConversionProject.KeyStage4PerformanceAdditionalInformation
+                KeyStage4PerformanceAdditionalInformation = academyConversionProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation
             };
             if (trust != null)
             {
