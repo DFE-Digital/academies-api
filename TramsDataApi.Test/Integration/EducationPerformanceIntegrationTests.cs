@@ -373,6 +373,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8scoredisadvantaged = 37.78M)
                 .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
+                .With(epd => epd.SipEnteringEbacc = 20.98M)
                 .Build();
 
             var nationalEducationPerformance1 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -413,6 +414,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipMathsprogressscoredisadv = 9.00M)
                 .With(epd => epd.SipAcademicLevelAveragePspe = 66.33M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 71.55M)
+                .With(epd => epd.SipEnteringEbaccEngland = 80.98M)
                 .Build();
             
             var nationalEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -470,6 +472,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8score = 105.77M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
+                .With(epd => epd.SipEnteringEbaccLocalAuthorityAverage = 77.98M)
                 .Build();
             
             var laEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
