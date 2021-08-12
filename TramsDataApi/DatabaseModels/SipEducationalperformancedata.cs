@@ -46,5 +46,8 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipAppliedGeneralAveragePspe { get; set; }
         public decimal? SipAcademicLevelAveragePspe { get; set; }
         public string SipLocalauthoritycode { get; set; }
+        public decimal? SipEnteringEbacc { get; set; }
+        public decimal? SipEnteringEbaccEngland { get; set; }
+        public decimal? SipEnteringEbaccLocalAuthorityAverage { get; set; }
     }
 }

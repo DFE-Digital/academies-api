@@ -81,6 +81,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(epd => epd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
                 .With(epd => epd.SipProgress8ebacc = _randomGenerator.Int())
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipEnteringEbacc = _randomGenerator.Int())
                 .Build();
 
             var nationalEducationPerformanceData1 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -149,6 +150,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(nepd => nepd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebacc = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipEnteringEbaccEngland= _randomGenerator.Int())
                 .Build();
             
             var nationalEducationPerformanceData3 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -183,6 +185,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(nepd => nepd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebacc = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipEnteringEbaccEngland= null )
                 .Build();
 
             var nationalEducationPerformanceDataList = new List<SipEducationalperformancedata>
@@ -225,6 +228,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(nepd => nepd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebacc = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipEnteringEbaccLocalAuthorityAverage = _randomGenerator.Int())
                 .Build();
 
              var localAuthorityPerformanceDataList = new List<SipEducationalperformancedata>
@@ -233,7 +237,9 @@ namespace TramsDataApi.Test.UseCases
             var mockEducationPerformanceGateway = new Mock<IEducationPerformanceGateway>();
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetAccountByUrn(urn)).Returns(() => account);
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetPhonicsByUrn(urn)).Returns(() => phonics);
-            mockEducationPerformanceGateway.Setup(gateway => gateway.GetEducationalPerformanceForAccount(account)).Returns(() => new List<SipEducationalperformancedata> {educationPerformanceData});
+            mockEducationPerformanceGateway.Setup(gateway => gateway.GetEducationalPerformanceForAccount(account)).Returns(
+                () => new List<SipEducationalperformancedata> {educationPerformanceData}
+                );
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetNationalEducationalPerformanceData()).Returns(nationalEducationPerformanceDataList);
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetLocalAuthorityEducationalPerformanceData(account)).Returns(localAuthorityPerformanceDataList);
 
@@ -376,6 +382,7 @@ namespace TramsDataApi.Test.UseCases
                     NotDisadvantaged = educationPerformanceData.SipProgress8score.ToString(),
                     Disadvantaged = educationPerformanceData.SipProgress8scoredisadvantaged.ToString()
                 },
+                Enteringebacc = educationPerformanceData.SipEnteringEbacc,
                 NationalAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = nationalEducationPerformanceData3?.SipAttainment8score.ToString(),
@@ -424,6 +431,7 @@ namespace TramsDataApi.Test.UseCases
                 },
                 NationalAverageP8LowerConfidence = nationalEducationPerformanceData2?.SipProgress8lowerconfidence,
                 NationalAverageP8UpperConfidence = nationalEducationPerformanceData2?.SipProgress8upperconfidence,
+                NationalEnteringEbacc = nationalEducationPerformanceData2?.SipEnteringEbaccEngland,
                  LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8score.ToString(),
@@ -472,6 +480,8 @@ namespace TramsDataApi.Test.UseCases
                 },
                 LAAverageP8LowerConfidence = localAuthorityEducationPerformance?.SipProgress8lowerconfidence,
                 LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence,
+                LAEnteringEbacc = localAuthorityEducationPerformance?.SipEnteringEbaccLocalAuthorityAverage
+
             };
 
             var expectedKS5 = new KeyStage5PerformanceResponse

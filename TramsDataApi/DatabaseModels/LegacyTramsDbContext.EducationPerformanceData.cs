@@ -158,6 +158,18 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.SipLocalauthoritycode)
                     .HasColumnName("sip_localauthoritycode")
                     .HasMaxLength(100);
+                
+                entity.Property(e => e.SipEnteringEbacc)
+                    .HasColumnName("sip_enteringebacc")
+                    .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipEnteringEbaccEngland)
+                    .HasColumnName("sip_enteringebaccengland")
+                    .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipEnteringEbaccLocalAuthorityAverage)
+                    .HasColumnName("sip_aenteringebacclocalauthorityaverage")
+                    .HasColumnType("decimal(38, 2)");
             });
         }
     }
