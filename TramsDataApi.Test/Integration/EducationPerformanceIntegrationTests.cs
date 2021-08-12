@@ -473,7 +473,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipProgress8score = 105.77M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
                 .With(epd => epd.SipProgress8scoredisadvantaged = 67.98M)
-                .With(epd => epd.SipEnteringEbaccLocalAuthorityAverage = 77.98M)
+               
                 .Build();
             
             var laEducationPerformance2 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -514,7 +514,7 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipMathsprogressscoredisadv = 9.00M)
                 .With(epd => epd.SipAcademicLevelAveragePspe = 77.22M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 67.87M)
-                .With(epd => epd.SipEnteringEbaccLocalAuthorityAverage = null)
+                .With(epd => epd.SipEnteringEbaccLocalAuthorityAverage = 77.98M)
                 .Build();
 
             var educationPerformanceDataList = new List<SipEducationalperformancedata>
@@ -721,7 +721,7 @@ namespace TramsDataApi.Test.Integration
                 },
                 LAAverageP8LowerConfidence = laEducationPerformance2.SipProgress8lowerconfidence,
                 LAAverageP8UpperConfidence = laEducationPerformance2.SipProgress8upperconfidence,
-                LAEnteringEbacc = laEducationPerformance1.SipEnteringEbaccLocalAuthorityAverage
+                LAEnteringEbacc = laEducationPerformance2.SipEnteringEbaccLocalAuthorityAverage
             };
 
             var expectedKeyStage5Response = new KeyStage5PerformanceResponse
