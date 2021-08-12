@@ -431,7 +431,7 @@ namespace TramsDataApi.Test.UseCases
                 },
                 NationalAverageP8LowerConfidence = nationalEducationPerformanceData2?.SipProgress8lowerconfidence,
                 NationalAverageP8UpperConfidence = nationalEducationPerformanceData2?.SipProgress8upperconfidence,
-                NationalEnteringEbacc = nationalEducationPerformanceData2?.SipEnteringEbaccEngland,
+                NationalEnteringEbacc = nationalEducationPerformanceData2?.SipEnteringEbacc,
                  LAAverageA8Score = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = localAuthorityEducationPerformance?.SipAttainment8score.ToString(),
@@ -480,7 +480,7 @@ namespace TramsDataApi.Test.UseCases
                 },
                 LAAverageP8LowerConfidence = localAuthorityEducationPerformance?.SipProgress8lowerconfidence,
                 LAAverageP8UpperConfidence = localAuthorityEducationPerformance?.SipProgress8upperconfidence,
-                LAEnteringEbacc = localAuthorityEducationPerformance?.SipEnteringEbaccLocalAuthorityAverage
+                LAEnteringEbacc = localAuthorityEducationPerformance?.SipEnteringEbacc
 
             };
 
