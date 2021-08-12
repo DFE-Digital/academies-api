@@ -721,7 +721,7 @@ namespace TramsDataApi.Test.Integration
                 },
                 LAAverageP8LowerConfidence = laEducationPerformance2.SipProgress8lowerconfidence,
                 LAAverageP8UpperConfidence = laEducationPerformance2.SipProgress8upperconfidence,
-                LAEnteringEbacc = laEducationPerformance1.SipEnteringEbaccEngland
+                LAEnteringEbacc = laEducationPerformance1.SipEnteringEbaccLocalAuthorityAverage
             };
 
             var expectedKeyStage5Response = new KeyStage5PerformanceResponse
