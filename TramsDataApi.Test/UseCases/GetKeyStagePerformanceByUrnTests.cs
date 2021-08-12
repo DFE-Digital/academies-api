@@ -225,6 +225,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(nepd => nepd.SipProgress8mathsdisadvantaged = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebacc = _randomGenerator.Int())
                 .With(nepd => nepd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
+                .With(nepd => nepd.SipEnteringEbaccLocalAuthorityAverage = _randomGenerator.Int())
                 .Build();
 
              var localAuthorityPerformanceDataList = new List<SipEducationalperformancedata>
