@@ -17,7 +17,17 @@ namespace TramsDataApi.Factories
                 NationalAcademicQualificationAverage = nationalEducationPerformance.SipAcademicLevelAveragePspe,
                 NationalAppliedGeneralQualificationAverage = nationalEducationPerformance.SipAppliedGeneralAveragePspe,
                 LAAcademicQualificationAverage = localAuthorityEducationPerformance.SipAcademicLevelAveragePspe,
-                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance.SipAppliedGeneralAveragePspe
+                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance.SipAppliedGeneralAveragePspe,
+                AppliedGeneralProgress = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = educationalPerformanceData.SipAppliedGeneralProgress.ToString(),
+                    Disadvantaged = educationalPerformanceData.SipAppliedGeneralProgressDisadvantaged.ToString()
+                },
+                AcademicProgress = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = educationalPerformanceData.SipAcademicProgress.ToString(),
+                    Disadvantaged = educationalPerformanceData.SipAcademicProgressDisadvantaged.ToString()
+                }
             };
         }
     }

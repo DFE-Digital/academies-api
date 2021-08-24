@@ -47,7 +47,11 @@ namespace TramsDataApi.Factories
                     SipAppliedGeneralAveragePspe = nationalEducationPerformance1.SipAppliedGeneralAveragePspe ?? nationalEducationPerformance2.SipAppliedGeneralAveragePspe,
                     SipEnteringEbacc = nationalEducationPerformance1.SipEnteringEbacc ?? nationalEducationPerformance2.SipEnteringEbacc,
                     SipEnteringEbaccLocalAuthorityAverage = nationalEducationPerformance1.SipEnteringEbaccLocalAuthorityAverage ?? nationalEducationPerformance2.SipEnteringEbaccLocalAuthorityAverage,
-                    SipEnteringEbaccEngland = nationalEducationPerformance1.SipEnteringEbaccEngland ?? nationalEducationPerformance2.SipEnteringEbaccEngland
+                    SipEnteringEbaccEngland = nationalEducationPerformance1.SipEnteringEbaccEngland ?? nationalEducationPerformance2.SipEnteringEbaccEngland,
+                    SipAcademicProgress = nationalEducationPerformance1.SipAcademicProgress ?? nationalEducationPerformance2.SipAcademicProgress,
+                    SipAcademicProgressDisadvantaged = nationalEducationPerformance1.SipAcademicProgressDisadvantaged ?? nationalEducationPerformance2.SipAcademicProgressDisadvantaged,
+                    SipAppliedGeneralProgress = nationalEducationPerformance1.SipAppliedGeneralProgress ?? nationalEducationPerformance2.SipAppliedGeneralProgress,
+                    SipAppliedGeneralProgressDisadvantaged = nationalEducationPerformance1.SipAppliedGeneralProgressDisadvantaged ?? nationalEducationPerformance2.SipAppliedGeneralProgressDisadvantaged
                 };
         }
     }

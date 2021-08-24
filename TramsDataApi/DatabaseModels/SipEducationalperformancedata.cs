@@ -49,5 +49,9 @@ namespace TramsDataApi.DatabaseModels
         public decimal? SipEnteringEbacc { get; set; }
         public decimal? SipEnteringEbaccEngland { get; set; }
         public decimal? SipEnteringEbaccLocalAuthorityAverage { get; set; }
+        public decimal? SipAppliedGeneralProgress { get; set; }
+        public decimal? SipAppliedGeneralProgressDisadvantaged { get; set; }
+        public decimal? SipAcademicProgress { get; set; }
+        public decimal? SipAcademicProgressDisadvantaged { get; set; }
     }
 }

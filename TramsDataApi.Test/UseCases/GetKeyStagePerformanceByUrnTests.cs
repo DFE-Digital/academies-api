@@ -82,6 +82,10 @@ namespace TramsDataApi.Test.UseCases
                 .With(epd => epd.SipProgress8ebacc = _randomGenerator.Int())
                 .With(epd => epd.SipProgress8ebaccdisadvantaged = _randomGenerator.Int())
                 .With(epd => epd.SipEnteringEbacc = _randomGenerator.Int())
+                .With(epd => epd.SipAcademicProgress = _randomGenerator.Int())
+                .With(epd => epd.SipAcademicProgressDisadvantaged = _randomGenerator.Int())
+                .With(epd => epd.SipAppliedGeneralProgress = _randomGenerator.Int())
+                .With(epd => epd.SipAppliedGeneralProgressDisadvantaged = _randomGenerator.Int())
                 .Build();
 
             var nationalEducationPerformanceData1 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -492,7 +496,17 @@ namespace TramsDataApi.Test.UseCases
                 NationalAcademicQualificationAverage = nationalEducationPerformanceData2.SipAcademicLevelAveragePspe,
                 NationalAppliedGeneralQualificationAverage = nationalEducationPerformanceData2.SipAppliedGeneralAveragePspe,
                 LAAcademicQualificationAverage = localAuthorityEducationPerformance?.SipAcademicLevelAveragePspe,
-                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance?.SipAppliedGeneralAveragePspe
+                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance?.SipAppliedGeneralAveragePspe,
+                AppliedGeneralProgress = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = educationPerformanceData.SipAppliedGeneralProgress.ToString(),
+                    Disadvantaged = educationPerformanceData.SipAppliedGeneralProgressDisadvantaged.ToString()
+                },
+                AcademicProgress = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = educationPerformanceData.SipAcademicProgress.ToString(),
+                    Disadvantaged = educationPerformanceData.SipAcademicProgressDisadvantaged.ToString()
+                }
             };
             
             var expected = new EducationalPerformanceResponse
