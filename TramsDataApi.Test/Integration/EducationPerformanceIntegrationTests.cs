@@ -95,6 +95,10 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
                 .With(epd => epd.SipEnteringEbacc = 51.44M)
+                .With(epd => epd.SipAcademicProgress = 51.44M)
+                .With(epd => epd.SipAcademicProgressDisadvantaged = 51.44M)
+                .With(epd => epd.SipAppliedGeneralProgress = 51.44M)
+                .With(epd => epd.SipAppliedGeneralProgressDisadvantaged = 51.44M)
                 .Build();
 
             var nationalAverageEducationPerformanceData = Builder<SipEducationalperformancedata>.CreateNew()
@@ -374,6 +378,10 @@ namespace TramsDataApi.Test.Integration
                 .With(epd => epd.SipAcademicLevelAveragePspe = 40.54M)
                 .With(epd => epd.SipAppliedGeneralAveragePspe = 51.44M)
                 .With(epd => epd.SipEnteringEbacc = 20.98M)
+                .With(epd => epd.SipAcademicProgress = 77.40M)
+                .With(epd => epd.SipAcademicProgressDisadvantaged = 88.20M)
+                .With(epd => epd.SipAppliedGeneralProgress = 12.94M)
+                .With(epd => epd.SipAppliedGeneralProgressDisadvantaged = 54.18M)
                 .Build();
 
             var nationalEducationPerformance1 = Builder<SipEducationalperformancedata>.CreateNew()
@@ -732,7 +740,17 @@ namespace TramsDataApi.Test.Integration
                 NationalAcademicQualificationAverage = nationalEducationPerformance1.SipAcademicLevelAveragePspe,
                 NationalAppliedGeneralQualificationAverage = nationalEducationPerformance1.SipAppliedGeneralAveragePspe,
                 LAAcademicQualificationAverage = laEducationPerformance2.SipAcademicLevelAveragePspe,
-                LAAppliedGeneralQualificationAverage = laEducationPerformance2.SipAppliedGeneralAveragePspe
+                LAAppliedGeneralQualificationAverage = laEducationPerformance2.SipAppliedGeneralAveragePspe,
+                AppliedGeneralProgress = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = educationPerformanceData.SipAppliedGeneralProgress.ToString(),
+                    Disadvantaged = educationPerformanceData.SipAppliedGeneralProgressDisadvantaged.ToString()
+                },
+                AcademicProgress = new DisadvantagedPupilsResponse
+                {
+                    NotDisadvantaged = educationPerformanceData.SipAcademicProgress.ToString(),
+                    Disadvantaged = educationPerformanceData.SipAcademicProgressDisadvantaged.ToString()
+                }
             };
 
             var expected = new EducationalPerformanceResponse

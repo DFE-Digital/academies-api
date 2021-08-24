@@ -170,6 +170,22 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.SipEnteringEbaccLocalAuthorityAverage)
                     .HasColumnName("sip_aenteringebacclocalauthorityaverage")
                     .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipAppliedGeneralProgress)
+                    .HasColumnName("sip_appliedgeneralprogress")
+                    .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipAppliedGeneralProgressDisadvantaged)
+                    .HasColumnName("sip_appliedgeneralprogressdisadvantaged")
+                    .HasColumnType("decimal(38, 2)");
+                
+                entity.Property(e => e.SipAcademicProgress)
+                    .HasColumnName("sip_academicprogress")
+                    .HasColumnType("decimal(38, 2)");
+
+                entity.Property(e => e.SipAcademicProgressDisadvantaged)
+                    .HasColumnName("sip_academicprogressdisadvantaged")
+                    .HasColumnType("decimal(38, 2)");
             });
         }
     }
