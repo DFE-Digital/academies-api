@@ -30,5 +30,10 @@ namespace TramsDataApi.Gateways
             _tramsDbContext.SaveChanges();
             return entity.Entity;
         }
+
+        public IList<AcademyConversionProject> GetByStates(int page, List<string> state)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

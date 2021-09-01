@@ -30,6 +30,7 @@ namespace TramsDataApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "TramsDataApi", Version = "v1"});
+                c.SwaggerDoc("v2", new OpenApiInfo {Title = "TramsDataApiv2", Version = "v2"});
             });
 
             // EF setup
@@ -78,6 +79,7 @@ namespace TramsDataApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "TramsDataApi v1");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "TramsDataApi v2");
                 c.SupportedSubmitMethods();
             });
 
