@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -128,6 +129,31 @@ namespace TramsDataApi.Test.Integration
 
             var response = await _client.PatchAsync($"/conversion-projects/{_fixture.Create<int>()}", JsonContent.Create(updateRequest));
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+        
+        [Fact]
+        public async Task Get_request_with_state_should_get_academy_conversion_projects_filtered_by_state()
+        {
+            
+            var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .CreateMany()
+                .ToList();
+            
+
+            _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
+
+            var expected = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            
+            var states = new List<string>{"Approved for AO", "Converter Pre-AO"};
+            var request = $"v2/conversion-projects/?states={states}";
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={states}");
+            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
         }
 
         private void AssertDatabaseUpdated(AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)

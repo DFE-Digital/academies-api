@@ -33,7 +33,7 @@ namespace TramsDataApi.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<Version2AApiResponse<IEnumerable<AcademyConversionProjectResponse>>> GetConversionProjects( [FromBody] List<string> states, [FromQuery] int count = 50)
+		public ActionResult<Version2AApiResponse<IEnumerable<AcademyConversionProjectResponse>>> GetConversionProjects( [FromQuery] List<string> states, [FromQuery] int count = 50)
 		{
 			_logger.LogInformation($"Attempting to retrieve {count} Academy Conversion Projects filtered by {states}");
 			
