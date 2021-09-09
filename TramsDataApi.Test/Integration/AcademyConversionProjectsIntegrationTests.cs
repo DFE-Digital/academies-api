@@ -8,10 +8,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using FizzWare.NBuilder;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
+using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.Test.Utils;
 using Xunit;
@@ -48,6 +48,7 @@ namespace TramsDataApi.Test.Integration
                 .Without(x => x.Id)
                 .Without(x => x.SchoolName)
                 .Create();
+            
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
             _dbContext.AcademyConversionProjects.Add(academyConversionProjectWithoutName);
             _dbContext.SaveChanges();
@@ -132,25 +133,75 @@ namespace TramsDataApi.Test.Integration
         }
         
         [Fact]
-        public async Task Get_request_with_state_should_get_academy_conversion_projects_filtered_by_state()
+        public async Task Get_request_to_V2_with_state_should_get_response_with_data_as_list_of_academy_conversion_projects_filtered_by_state()
         {
-            
             var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.Id)
                 .CreateMany()
                 .ToList();
+
+            var expectedProjects = new List<AcademyConversionProject>
+            {
+                _fixture.Build<AcademyConversionProject>().Without(x => x.Id).Create(),
+                _fixture.Build<AcademyConversionProject>().Without(x => x.Id).Create()
+            };
             
+            expectedProjects.First().ProjectStatus = "Approved for AO";
+            expectedProjects.Last().ProjectStatus = "Converter Pre-AO";
+            academyConversionProjects.AddRange(expectedProjects);
 
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
 
-            var expected = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            var expectedData = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p));
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+            var states = new []{"Approved for AO", "Converter Pre-AO"};
             
-            var states = new List<string>{"Approved for AO", "Converter Pre-AO"};
-            var request = $"v2/conversion-projects/?states={states}";
-            var response = await _client.GetAsync($"v2/conversion-projects/?states={states}");
-            var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async void Get_request_to_V2_with_state_should_get_response_with_data_as_empty_list()
+        {
+            var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .CreateMany()
+                .ToList();
+
+            _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
+
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(new List<AcademyConversionProjectResponse>());
+            var response = await _client.GetAsync($"v2/conversion-projects/");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+        
+        [Fact]
+        public async Task Get_request_to_V2_with_states_not_in_db_should_get_response_with_data_as_empty_list()
+        {
+            var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .CreateMany()
+                .ToList();
+
+            _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
+            
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>();
+            var states = new []{"Approved for AO", "Converter Pre-AO"};
+            
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
  
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);

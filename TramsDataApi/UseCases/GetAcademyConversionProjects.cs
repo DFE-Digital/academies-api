@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -27,15 +26,8 @@ namespace TramsDataApi.UseCases
         /// </remarks>
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAllAcademyConversionProjectsRequest request)
         {
-            IList<AcademyConversionProject> academyConversionProjects;
-            if (request.State != null)
-            {
-                academyConversionProjects = _academyConversionProjectGateway.GetByStates( request.Count, request.State ).ToList();
-            }
-            else{
-                academyConversionProjects = _academyConversionProjectGateway.GetProjects(request.Count).ToList();
-            }
-            
+            var academyConversionProjects = _academyConversionProjectGateway.GetProjects(request.Count).ToList();
+
             var trustRefs = academyConversionProjects.Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber)).Select(acp => acp.TrustReferenceNumber).ToArray();
 
             var trusts = _trustGateway.GetIfdTrustsByTrustRef(trustRefs).Select(t => new { TrustRef = t.TrustRef, TrustName = t.TrustsTrustName }).ToArray();

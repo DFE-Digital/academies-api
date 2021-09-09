@@ -10,9 +10,9 @@ using TramsDataApi.UseCases;
 namespace TramsDataApi.Controllers
 {
     [ApiController]
-	[Route("conversion-projects")]
-	[ApiVersion("1.0")]
-	public class AcademyConversionProjectController : ControllerBase
+    [ApiVersion("1.0")]
+    [Route("conversion-projects")]
+    public class AcademyConversionProjectController : ControllerBase
 	{
 		private readonly IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> _getAcademyConversionProjectById;
 		private readonly IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> _getAllAcademyConversionProjects;
