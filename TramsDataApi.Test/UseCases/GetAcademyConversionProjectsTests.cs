@@ -28,13 +28,15 @@ namespace TramsDataApi.Test.UseCases
             var request = new GetAllAcademyConversionProjectsRequest { Count = 50 };
             
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
-            var mockTrustGateway = new Mock<ITrustGateway>();
-
+            
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(50))
                 .Returns(() => new List<AcademyConversionProject>());
 
-            var useCase = new GetAcademyConversionProjects(mockProjectsGateway.Object, mockTrustGateway.Object);
+            var useCase = new GetAcademyConversionProjects(
+                mockProjectsGateway.Object, 
+                new Mock<ITrustGateway>().Object,
+                new Mock<IEstablishmentGateway>().Object);
             
             var result = useCase.Execute(request).ToList();
 
@@ -45,22 +47,23 @@ namespace TramsDataApi.Test.UseCases
         public void GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyTransferProjectsAreFound()
         {
             var request = new GetAllAcademyConversionProjectsRequest { Count = 50 };
-            
+
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
-            var mockTrustGateway = new Mock<ITrustGateway>();
-            
+
             var project = _fixture.Build<AcademyConversionProject>()
                 .With(f => f.SchoolName, "school")
                 .Create();
 
             var expectedProject = AcademyConversionProjectResponseFactory.Create(project);
-            expectedProject.ProjectStatus = "Pre HTB";
-            
+
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(50))
                 .Returns(() => new List<AcademyConversionProject> { project });
             
-            var useCase = new GetAcademyConversionProjects(mockProjectsGateway.Object, mockTrustGateway.Object);
+            var useCase = new GetAcademyConversionProjects(
+                mockProjectsGateway.Object,
+                new Mock<ITrustGateway>().Object,
+                new Mock<IEstablishmentGateway>().Object);
 
             var result = useCase.Execute(request).ToList();
             

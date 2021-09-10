@@ -9,5 +9,6 @@ namespace TramsDataApi.ResponseModels
         public ApiResponseV2() => Data = new List<TResponse>();        
 
         public ApiResponseV2(IEnumerable<TResponse> data) => Data = data;
+        public ApiResponseV2(TResponse data) => Data = new List<TResponse>{ data };
     }
 }

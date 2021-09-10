@@ -42,7 +42,7 @@ namespace TramsDataApi.UseCases
                 .Where(p => !string.IsNullOrEmpty(p.SchoolName))
                 .Select(p => AcademyConversionProjectResponseFactory.Create(p))
                 .ToList();
-
+            
             responses.ForEach(r =>
             {
                 r.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == r.TrustReferenceNumber)?.TrustName;

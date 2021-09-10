@@ -11,15 +11,16 @@ namespace TramsDataApi.UseCases
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
-        
-        private const string PreHtb = "Pre HTB";
+        private readonly IEstablishmentGateway _establishmentGateway;
 
         public GetAcademyConversionProjects(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
-            ITrustGateway trustGateway)
+            ITrustGateway trustGateway, 
+            IEstablishmentGateway establishmentGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
             _trustGateway = trustGateway;
+            _establishmentGateway = establishmentGateway;
         }
 
         /// <remarks>
@@ -28,21 +29,32 @@ namespace TramsDataApi.UseCases
         /// </remarks>
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAllAcademyConversionProjectsRequest request)
         {
-            var academyConversionProjects = _academyConversionProjectGateway.GetProjects(request.Count).ToList();
+            var academyConversionProjects = _academyConversionProjectGateway
+                .GetProjects(request.Count)
+                .ToList();
 
-            var trustRefs = academyConversionProjects.Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber)).Select(acp => acp.TrustReferenceNumber).ToArray();
+            var trustRefs = academyConversionProjects
+                .Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber))
+                .Select(acp => acp.TrustReferenceNumber)
+                .ToArray();
 
-            var trusts = _trustGateway.GetIfdTrustsByTrustRef(trustRefs).Select(t => new { t.TrustRef, TrustName = t.TrustsTrustName }).ToArray();
+            var trusts = _trustGateway
+                .GetIfdTrustsByTrustRef(trustRefs)
+                .Select(t => new { t.TrustRef, TrustName = t.TrustsTrustName })
+                .ToArray();
 
             var responses = academyConversionProjects
                 .Where(p => !string.IsNullOrEmpty(p.SchoolName))
-                .Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
-            
-            foreach (var response in responses)
+                .Select(p => AcademyConversionProjectResponseFactory.Create(p))
+                .ToList();
+
+            responses.ForEach(r =>
             {
-                response.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == response.TrustReferenceNumber)?.TrustName;
-                response.ProjectStatus = PreHtb;
-            }
+                r.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == r.TrustReferenceNumber)?.TrustName;
+                r.UkPrn = _establishmentGateway.GetByUrn(r.Urn)?.Ukprn;
+                r.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(r.Urn)?.Laestab ?? 0;
+            });
+         
             return responses;
         }
     }

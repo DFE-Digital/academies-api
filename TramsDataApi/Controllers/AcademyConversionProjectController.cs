@@ -10,7 +10,7 @@ using TramsDataApi.UseCases;
 namespace TramsDataApi.Controllers
 {
     [ApiController]
-    [ApiVersion("1.0")]
+    [ApiVersion("1.0", Deprecated = true)]
     [Route("conversion-projects")]
     public class AcademyConversionProjectController : ControllerBase
 	{
@@ -18,6 +18,8 @@ namespace TramsDataApi.Controllers
 		private readonly IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> _getAllAcademyConversionProjects;
 		private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
 		private readonly ILogger<AcademyConversionProjectController> _logger;
+
+		private const string PreHtb = "Pre HTB";
 
 		public AcademyConversionProjectController(
 			IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> getAcademyConversionProjectById,
@@ -35,8 +37,10 @@ namespace TramsDataApi.Controllers
 		public ActionResult<IEnumerable<AcademyConversionProjectResponse>> GetConversionProjects([FromQuery] int count = 50)
 		{
 			_logger.LogInformation($"Attempting to retrieve {count} Academy Conversion Projects");
+			
 			// temporarily limiting count until we know rules around which to return as there's hundreds in db
-			var projects = _getAllAcademyConversionProjects.Execute(new GetAllAcademyConversionProjectsRequest { Count = count });
+			var projects = _getAllAcademyConversionProjects.Execute(new GetAllAcademyConversionProjectsRequest { Count = count }).ToList();
+			projects.ForEach(p => p.ProjectStatus = PreHtb);
 			
 			_logger.LogInformation($"Returning {projects.Count()} Academy Conversion Projects");
 			_logger.LogDebug(JsonSerializer.Serialize<IEnumerable<AcademyConversionProjectResponse>>(projects));
@@ -54,9 +58,10 @@ namespace TramsDataApi.Controllers
 				_logger.LogInformation($"No Academy Conversion Project found for ID {id}");
 				return NotFound();
 			}
+			project.ProjectStatus = PreHtb;
 
 			_logger.LogInformation($"Returning Academy Conversion Project with ID {id}");
-			_logger.LogDebug(JsonSerializer.Serialize<AcademyConversionProjectResponse>(project));
+			_logger.LogDebug(JsonSerializer.Serialize(project));
 
 			return Ok(project);
 		}
@@ -73,7 +78,7 @@ namespace TramsDataApi.Controllers
 			}
 
 			_logger.LogInformation($"Successfully Updated Academy Conversion Project {id}");
-			_logger.LogDebug(JsonSerializer.Serialize<AcademyConversionProjectResponse>(updatedAcademyConversionProject));
+			_logger.LogDebug(JsonSerializer.Serialize(updatedAcademyConversionProject));
 
 			return Ok(updatedAcademyConversionProject);
 		}
