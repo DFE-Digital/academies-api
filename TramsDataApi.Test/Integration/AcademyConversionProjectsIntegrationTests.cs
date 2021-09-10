@@ -53,7 +53,8 @@ namespace TramsDataApi.Test.Integration
             _dbContext.AcademyConversionProjects.Add(academyConversionProjectWithoutName);
             _dbContext.SaveChanges();
             var expected = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
-
+            expected.ForEach(p => p.ProjectStatus = "Pre HTB");
+            
             var response = await _client.GetAsync("/conversion-projects");
             var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectResponse>>();
 
@@ -75,6 +76,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust);
+            expected.ProjectStatus = "Pre HTB";
 
             var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();

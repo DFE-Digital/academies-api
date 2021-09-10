@@ -6,9 +6,11 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
 	{
 		public int Id { get; set; }
         public int Urn { get; set; }
+        public int Laestab { get; set; }
         public string SchoolName { get; set; }
         public string LocalAuthority { get; set; }
         public string ApplicationReferenceNumber { get; set; }
+        public string UkPrn { get; set; }
         public string ProjectStatus { get; set; }
         public DateTime? ApplicationReceivedDate { get; set; }
         public DateTime? AssignedDate { get; set; }

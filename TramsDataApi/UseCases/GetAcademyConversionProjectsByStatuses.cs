@@ -11,13 +11,16 @@ namespace TramsDataApi.UseCases
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
-
+        private readonly IEstablishmentGateway _establishmentGateway;
+        
         public GetAcademyConversionProjectsByStatuses(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
-            ITrustGateway trustGateway)
+            ITrustGateway trustGateway,
+            IEstablishmentGateway establishmentGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
             _trustGateway = trustGateway;
+            _establishmentGateway = establishmentGateway;
         }
 
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAcademyConversionProjectsByStatusesRequest request)
@@ -39,11 +42,13 @@ namespace TramsDataApi.UseCases
                 .Where(p => !string.IsNullOrEmpty(p.SchoolName))
                 .Select(p => AcademyConversionProjectResponseFactory.Create(p))
                 .ToList();
-            
-            foreach (var response in responses)
+
+            responses.ForEach(r =>
             {
-                response.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == response.TrustReferenceNumber)?.TrustName;
-            }
+                r.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == r.TrustReferenceNumber)?.TrustName;
+                r.UkPrn = _establishmentGateway.GetByUrn(r.Urn)?.Ukprn;
+                r.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(r.Urn)?.Laestab ?? 0;
+            });
 
             return responses;
         }

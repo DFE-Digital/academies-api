@@ -19,7 +19,7 @@ namespace TramsDataApi.Factories
 				TrustReferenceNumber = academyConversionProject.TrustReferenceNumber,
 				ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate,
 				AssignedDate = academyConversionProject.AssignedDate,
-				ProjectStatus = "Pre HTB",
+				ProjectStatus = academyConversionProject.ProjectStatus,
 				Author = academyConversionProject.Author,
 				ClearedBy = academyConversionProject.ClearedBy,
 				HeadTeacherBoardDate = academyConversionProject.HeadTeacherBoardDate,

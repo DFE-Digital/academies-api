@@ -11,6 +11,8 @@ namespace TramsDataApi.UseCases
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
+        
+        private const string PreHtb = "Pre HTB";
 
         public GetAcademyConversionProjects(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
@@ -30,14 +32,16 @@ namespace TramsDataApi.UseCases
 
             var trustRefs = academyConversionProjects.Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber)).Select(acp => acp.TrustReferenceNumber).ToArray();
 
-            var trusts = _trustGateway.GetIfdTrustsByTrustRef(trustRefs).Select(t => new { TrustRef = t.TrustRef, TrustName = t.TrustsTrustName }).ToArray();
+            var trusts = _trustGateway.GetIfdTrustsByTrustRef(trustRefs).Select(t => new { t.TrustRef, TrustName = t.TrustsTrustName }).ToArray();
 
             var responses = academyConversionProjects
                 .Where(p => !string.IsNullOrEmpty(p.SchoolName))
                 .Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            
             foreach (var response in responses)
             {
                 response.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == response.TrustReferenceNumber)?.TrustName;
+                response.ProjectStatus = PreHtb;
             }
             return responses;
         }

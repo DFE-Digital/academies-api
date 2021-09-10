@@ -49,18 +49,22 @@ namespace TramsDataApi.Test.UseCases
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
             var mockTrustGateway = new Mock<ITrustGateway>();
             
-            var project = _fixture.Build<AcademyConversionProject>().With(f => f.SchoolName, "school").Create();
-            var expected = AcademyConversionProjectResponseFactory.Create(project);
-           
+            var project = _fixture.Build<AcademyConversionProject>()
+                .With(f => f.SchoolName, "school")
+                .Create();
+
+            var expectedProject = AcademyConversionProjectResponseFactory.Create(project);
+            expectedProject.ProjectStatus = "Pre HTB";
+            
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(50))
-                .Returns(() => new List<AcademyConversionProject>() { project });
+                .Returns(() => new List<AcademyConversionProject> { project });
             
             var useCase = new GetAcademyConversionProjects(mockProjectsGateway.Object, mockTrustGateway.Object);
-            
-            var result = useCase.Execute(request).ToList();
 
-            result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
+            var result = useCase.Execute(request).ToList();
+            
+            result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expectedProject });
         }
     }
 }
