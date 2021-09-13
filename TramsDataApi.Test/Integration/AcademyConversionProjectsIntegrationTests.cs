@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.AcademyConversionProject;
+using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.Test.Utils;
 using Xunit;
@@ -25,6 +26,8 @@ namespace TramsDataApi.Test.Integration
         private readonly TramsDbContext _dbContext;
         private readonly Fixture _fixture;
 
+        private const string PreHtb = "Pre HTB";
+
         public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture)
         {
             _client = fixture.CreateClient();
@@ -35,6 +38,7 @@ namespace TramsDataApi.Test.Integration
             _fixture.Customizations.Add(new RandomDateGenerator(DateTime.Now.AddMonths(-24), DateTime.Now.AddMonths(6)));
         }
 
+#region ApiV1
         [Fact]
         public async Task Get_request_should_get_all_academy_conversion_projects()
         {
@@ -47,11 +51,13 @@ namespace TramsDataApi.Test.Integration
                 .Without(x => x.Id)
                 .Without(x => x.SchoolName)
                 .Create();
+            
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
             _dbContext.AcademyConversionProjects.Add(academyConversionProjectWithoutName);
             _dbContext.SaveChanges();
             var expected = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
-
+            expected.ForEach(p => p.ProjectStatus = PreHtb);
+            
             var response = await _client.GetAsync("/conversion-projects");
             var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectResponse>>();
 
@@ -73,6 +79,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust);
+            expected.ProjectStatus = PreHtb;
 
             var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
@@ -99,6 +106,7 @@ namespace TramsDataApi.Test.Integration
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.Id)
                 .Create();
+            
             var trust = CreateTrust(academyConversionProject);
 
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
@@ -129,6 +137,144 @@ namespace TramsDataApi.Test.Integration
             var response = await _client.PatchAsync($"/conversion-projects/{_fixture.Create<int>()}", JsonContent.Create(updateRequest));
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
+#endregion
+        
+#region ApiV2
+
+        [Fact]
+        public async Task Get_request_with_state_should_get_response_with_data_as_list_of_academy_conversion_projects_filtered_by_state()
+        {
+            var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .CreateMany()
+                .ToList();
+
+            var expectedProjects = new List<AcademyConversionProject>
+            {
+                _fixture.Build<AcademyConversionProject>().Without(x => x.Id).Create(),
+                _fixture.Build<AcademyConversionProject>().Without(x => x.Id).Create()
+            };
+            
+            expectedProjects.First().ProjectStatus = "Approved for AO";
+            expectedProjects.Last().ProjectStatus = "Converter Pre-AO";
+            academyConversionProjects.AddRange(expectedProjects);
+
+            _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
+
+            var expectedData = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p));
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+            var states = new []{"Approved for AO", "Converter Pre-AO"};
+            
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async void Get_request_should_return_response_with_data_having_ukPrn_and_Laestab_set()
+        {
+            var urns = new List<int> {1, 2};
+            var projects = urns
+                .Select(u => _fixture.Build<AcademyConversionProject>().Without(f => f.Id).With(f => f.Urn, u).Create())
+                .ToList();
+            var establishments = urns
+                .Select(u => _fixture.Build<Establishment>().With(e => e.Urn, u).With(e => e.Ukprn, $"est{u}").Create())
+                .ToList();
+            var misEstablishments = urns
+                .Select(u => _fixture.Build<MisEstablishments>().With(m => m.Urn, u).With(m => m.Laestab, 1000 + u).Create())
+                .ToList();
+
+            var expectedData = projects.Select(p =>
+            {
+                var response = AcademyConversionProjectResponseFactory.Create(p);
+                response.UkPrn = $"est{p.Urn}";
+                response.Laestab = 1000 + p.Urn ?? 0;
+                return response;
+            });
+
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+
+            _dbContext.AcademyConversionProjects.AddRange(projects);
+            _legacyDbContext.Establishment.AddRange(establishments);
+            _legacyDbContext.MisEstablishments.AddRange(misEstablishments);
+            
+            _dbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
+            
+            var response = await _client.GetAsync("v2/conversion-projects/");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async void Get_request_without_state_should_return_response_with_data_containing_all_records()
+        {
+            var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .CreateMany()
+                .ToList();
+
+            var academyConversionProjectWithoutName = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .Without(x => x.SchoolName)
+                .Create();
+            
+            _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.AcademyConversionProjects.Add(academyConversionProjectWithoutName);
+            _dbContext.SaveChanges();
+            
+            var expectedData = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+            
+            var response = await _client.GetAsync("v2/conversion-projects/");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task Get_request_with_states_not_in_db_should_get_response_with_data_as_empty_list()
+        {
+            var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(f => f.Id)
+                .CreateMany()
+                .ToList();
+            
+            _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _dbContext.SaveChanges();
+
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>();
+            var states = new []{"Approved for AO", "Converter Pre-AO"};
+            
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+        
+        [Fact]
+        public async Task Get_request_without_states_and_no_projects_in_db_should_get_response_with_data_as_empty_list()
+        {
+            
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>();
+            var states = new []{"Approved for AO", "Converter Pre-AO"};
+            
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+        
+#endregion
 
         private void AssertDatabaseUpdated(AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
         {
@@ -190,16 +336,12 @@ namespace TramsDataApi.Test.Integration
 
         public void Dispose()
         {
-            foreach (var entity in _legacyDbContext.Trust)
-            {
-                _legacyDbContext.Trust.Remove(entity);
-            }
-            _legacyDbContext.SaveChanges();
+            _legacyDbContext.Trust.RemoveRange(_legacyDbContext.Trust);
+            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
+            _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
+            _dbContext.AcademyConversionProjects.RemoveRange(_dbContext.AcademyConversionProjects);
 
-            foreach (var entity in _dbContext.AcademyConversionProjects)
-            {
-                _dbContext.AcademyConversionProjects.Remove(entity);
-            }
+            _legacyDbContext.SaveChanges();
             _dbContext.SaveChanges();
         }
     }

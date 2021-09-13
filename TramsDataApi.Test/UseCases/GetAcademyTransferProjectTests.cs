@@ -12,7 +12,7 @@ namespace TramsDataApi.Test.UseCases
     public class GetAcademyTransferProjectTests
     {
         [Fact]
-        public void GetAcademyTransferProjecyByUrn_ReturnsNull_WhenAcademyTransferProjectIsNotFound()
+        public void GetAcademyTransferProjectByUrn_ReturnsNull_WhenAcademyTransferProjectIsNotFound()
         {
             var urn = 10010010;
             var academyTransferProjectsGateway = new Mock<IAcademyTransferProjectGateway>();

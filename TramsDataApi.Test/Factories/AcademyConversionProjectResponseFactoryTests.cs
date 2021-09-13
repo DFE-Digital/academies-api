@@ -71,7 +71,7 @@ namespace TramsDataApi.Test.Factories
                 LocalAuthority = academyConversionProject.LocalAuthority,
                 ApplicationReceivedDate = academyConversionProject.ApplicationReceivedDate,
                 AssignedDate = academyConversionProject.AssignedDate,
-                ProjectStatus = "Pre HTB",
+                ProjectStatus = academyConversionProject.ProjectStatus,
                 TrustReferenceNumber = academyConversionProject.TrustReferenceNumber,
                 Author = academyConversionProject.Author,
                 ClearedBy = academyConversionProject.ClearedBy,

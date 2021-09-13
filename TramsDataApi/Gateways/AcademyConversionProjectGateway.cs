@@ -30,5 +30,16 @@ namespace TramsDataApi.Gateways
             _tramsDbContext.SaveChanges();
             return entity.Entity;
         }
+        public IEnumerable<AcademyConversionProject> GetByStatuses(int take, List<string> statues)
+        {
+            var lowerStatuses = statues.Select(s => s.ToLower());
+            var results = _tramsDbContext.AcademyConversionProjects
+            .Where(acp => lowerStatuses.Contains(acp.ProjectStatus.ToLower()))
+            .Take(take)
+            .AsNoTracking()
+            .ToList();
+
+            return results;
+        }
     }
 }

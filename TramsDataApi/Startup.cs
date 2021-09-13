@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using TramsDataApi.ApplyToBecome;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
@@ -27,11 +26,8 @@ namespace TramsDataApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "TramsDataApi", Version = "v1"});
-            });
-
+            services.AddApiVersioning();
+            
             // EF setup
             services.AddDbContext<LegacyTramsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));// EF setup
@@ -61,23 +57,35 @@ namespace TramsDataApi
             services.AddDbContext<ApplyToBecomeDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddHostedService<SyncAcademyConversionProjectsService>();
+            
             services.AddApiVersioning(config => 
             {
                 config.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
-                config.ApiVersionReader = new HeaderApiVersionReader("api-version");
             });
+            services.AddVersionedApiExplorer(setup =>
+            {
+                setup.GroupNameFormat = "'v'VVV";
+                setup.SubstituteApiVersionInUrl = true;
+            });
+            services.AddSwaggerGen();
+            services.ConfigureOptions<SwaggerOptions>();
+            
             services.AddUseCases();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TramsDataApi v1");
+                foreach (var desc in provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
+                }
+                
                 c.SupportedSubmitMethods();
             });
 
@@ -91,9 +99,7 @@ namespace TramsDataApi
             app.UseMiddleware<UrlDecoderMiddleware>();
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
