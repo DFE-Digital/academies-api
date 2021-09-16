@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
@@ -24,12 +26,14 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetConversionProjectsByStatuses_ReturnsResponseWithListOfAcademyConversionProjects_WhenProjectsExist()
         {
-            var projectStatus = "AStatus";
+            const string projectStatus = "AStatus";
             
             var mockUseCase = new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>();
             
             var data = new List<AcademyConversionProjectResponse> { new AcademyConversionProjectResponse { ProjectStatus = projectStatus } };
-            var expectedResponse = new ApiResponseV2<AcademyConversionProjectResponse>(data);
+            
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = 1};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
 
             mockUseCase
                 .Setup(uc => uc.Execute(It.IsAny<GetAcademyConversionProjectsByStatusesRequest>()))
@@ -44,7 +48,7 @@ namespace TramsDataApi.Test.Controllers
             
             var result = controller.GetConversionProjects(projectStatus);
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedResponse));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
         
         [Fact]
@@ -57,11 +61,86 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object);
 
-            var expectedResponse = new ApiResponseV2<AcademyConversionProjectResponse>();
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = 0};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
+
             
             var result = controller.GetConversionProjects(It.IsAny<string>());
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedResponse));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+
+        [Fact]
+        public void GetConversionProjects_WithPaging_AndMultiplePages_ShouldHavePagingWithValuesSetAndNextPageURLProvided()
+        {
+            const string expectedNextPageUrl = "localhost/?page=2&count=1";
+            
+            var mockUseCase = new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>();
+            var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
+            
+            var data = new List<AcademyConversionProjectResponse>
+            { 
+                new AcademyConversionProjectResponse(), 
+                new AcademyConversionProjectResponse()
+            };
+            
+            mockUseCase
+                .Setup(uc => uc.Execute(It.IsAny<GetAllAcademyConversionProjectsRequest>()))
+                .Returns(data.Take(1));
+
+            var controller = new AcademyConversionProjectController(
+                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest,
+                    IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                mockUseCase.Object,
+                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                _mockLogger.Object)
+            {
+                ControllerContext = controllerContext
+            };
+            
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 1, NextPageUrl = expectedNextPageUrl};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data.Take(1), expectedPaging);
+
+            var result = controller.GetConversionProjects(null, 1, 1);
+            
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+
+        [Fact] public void GetConversionProjects_WithPaging_AndSinglePage_ShouldHavePagingWithValuesSetAndNextPageUrlAsNull()
+        {
+            const string expectedNextPageUrl = null;
+            
+            var mockUseCase = new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>();
+            var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
+            
+            var data = new List<AcademyConversionProjectResponse>
+            { 
+                new AcademyConversionProjectResponse(), 
+                new AcademyConversionProjectResponse()
+            };
+            
+            mockUseCase
+                .Setup(uc => uc.Execute(It.IsAny<GetAllAcademyConversionProjectsRequest>()))
+                .Returns(data);
+
+            var controller = new AcademyConversionProjectController(
+                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest,
+                    IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                mockUseCase.Object,
+                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                _mockLogger.Object)
+            {
+                ControllerContext = controllerContext
+            };
+            
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 2, NextPageUrl = expectedNextPageUrl};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
+
+            var result = controller.GetConversionProjects(null, 1, 10);
+            
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
     }
 }

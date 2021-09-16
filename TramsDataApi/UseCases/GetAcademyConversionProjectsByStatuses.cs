@@ -26,7 +26,7 @@ namespace TramsDataApi.UseCases
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAcademyConversionProjectsByStatusesRequest request)
         {
             var academyConversionProjects = _academyConversionProjectGateway
-                .GetByStatuses(request.Count, request.Statuses)
+                .GetByStatuses(request.Page, request.Count, request.Statuses)
                 .ToList();
 
             var trustRefs = academyConversionProjects

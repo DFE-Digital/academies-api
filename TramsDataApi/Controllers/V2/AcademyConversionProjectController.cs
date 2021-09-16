@@ -51,13 +51,13 @@ namespace TramsDataApi.Controllers.V2
 			_logger.LogInformation(statusList == null
 				? $"Attempting to retrieve {count} Academy Conversion Projects."
 				: $"Attempting to retrieve {count} Academy Conversion Projects filtered by {states}");
-
+			
 			var projects = statusList == null
 				? _getAllAcademyConversionProjects
-					.Execute(new GetAllAcademyConversionProjectsRequest {Count = count})
+					.Execute(new GetAllAcademyConversionProjectsRequest { Page = page, Count = count})
 					.ToList()
 				: _getConversionProjectsByStatus
-					.Execute(new GetAcademyConversionProjectsByStatusesRequest {Count = count, Statuses = statusList})
+					.Execute(new GetAcademyConversionProjectsByStatusesRequest { Page = page, Count = count, Statuses = statusList})
 					.ToList();
 			
 			_logger.LogInformation($"Returning {projects.Count} Academy Conversion Projects");

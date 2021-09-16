@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -29,6 +28,7 @@ namespace TramsDataApi.Test.UseCases
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -38,7 +38,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByStatuses(50, statuses))
+                .Setup(acg => acg.GetByStatuses(1, 50, statuses))
                 .Returns(() => new List<AcademyConversionProject>());
 
             var useCase = new GetAcademyConversionProjectsByStatuses(
@@ -57,6 +57,7 @@ namespace TramsDataApi.Test.UseCases
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -69,7 +70,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByStatuses(50, statuses))
+                .Setup(acg => acg.GetByStatuses(1, 50, statuses))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
@@ -92,6 +93,7 @@ namespace TramsDataApi.Test.UseCases
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -104,7 +106,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByStatuses(50, statuses))
+                .Setup(acg => acg.GetByStatuses(1, 50, statuses))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
@@ -130,6 +132,7 @@ namespace TramsDataApi.Test.UseCases
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -148,7 +151,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByStatuses(50, statuses))
+                .Setup(acg => acg.GetByStatuses(1, 50, statuses))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
