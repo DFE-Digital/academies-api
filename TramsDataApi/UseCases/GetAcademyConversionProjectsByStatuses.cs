@@ -33,7 +33,7 @@ namespace TramsDataApi.UseCases
                 .ToList();
 
             var academyConversionProjects = _academyConversionProjectGateway
-                .GetByIfdPipelineIds(request.Page, request.Count, ifdProjects.Select(i => i.Sk).ToList()).ToList();
+                .GetByIfdPipelineIds(ifdProjects.Select(i => i.Sk).ToList()).ToList();
 
             var trustRefs = academyConversionProjects
                 .Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber))

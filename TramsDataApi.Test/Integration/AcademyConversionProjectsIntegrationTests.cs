@@ -22,7 +22,6 @@ namespace TramsDataApi.Test.Integration
     [Collection("Database")]
     public class AcademyConversionProjectsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
         private readonly TramsDbContext _dbContext;
@@ -30,9 +29,8 @@ namespace TramsDataApi.Test.Integration
 
         private const string PreHtb = "Pre HTB";
 
-        public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture, ITestOutputHelper testOutputHelper)
+        public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture)
         {
-            _testOutputHelper = testOutputHelper;
             _client = fixture.CreateClient();
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();

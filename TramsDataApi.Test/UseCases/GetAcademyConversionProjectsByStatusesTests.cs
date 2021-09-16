@@ -82,7 +82,7 @@ namespace TramsDataApi.Test.UseCases
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(1, 50, new List<long>{ifdPipelineId}))
+                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>{ifdPipelineId}))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
@@ -129,7 +129,7 @@ namespace TramsDataApi.Test.UseCases
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(1, 50, new List<long>{ifdPipelineId}))
+                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>{ifdPipelineId}))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
@@ -186,7 +186,7 @@ namespace TramsDataApi.Test.UseCases
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(1, 50, new List<long>{ifdPipelineId}))
+                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>{ifdPipelineId}))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway

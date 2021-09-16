@@ -47,12 +47,10 @@ namespace TramsDataApi.Gateways
             return results;
         }
 
-        public IEnumerable<AcademyConversionProject> GetByIfdPipelineIds(int page, int count, List<long> ids)
+        public IEnumerable<AcademyConversionProject> GetByIfdPipelineIds(List<long> ids)
         {
             var results = _tramsDbContext.AcademyConversionProjects
                 .Where(acp => ids.Contains(acp.IfdPipelineId))
-                .Skip((page - 1) * count)
-                .Take(count)
                 .AsNoTracking()
                 .ToList();
 
