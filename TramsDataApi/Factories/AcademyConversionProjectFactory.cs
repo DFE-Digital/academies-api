@@ -49,7 +49,8 @@ namespace TramsDataApi.Factories
             project.RecommendationForProject = updateRequest.RecommendationForProject ?? project.RecommendationForProject;
             project.AcademyOrderRequired = updateRequest.AcademyOrderRequired ?? project.AcademyOrderRequired;
             project.SchoolAndTrustInformationSectionComplete = updateRequest.SchoolAndTrustInformationSectionComplete ?? project.SchoolAndTrustInformationSectionComplete;
-            project.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters ?? project.DistanceFromSchoolToTrustHeadquarters;
+            project.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters == default(decimal) ? null
+                : updateRequest.DistanceFromSchoolToTrustHeadquarters ?? project.DistanceFromSchoolToTrustHeadquarters;
             project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation ?? project.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
             project.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete ?? project.GeneralInformationSectionComplete;
             project.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete ?? project.RisksAndIssuesSectionComplete;

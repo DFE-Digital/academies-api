@@ -63,6 +63,7 @@ namespace TramsDataApi.Test.Factories
                 LocalAuthorityInformationTemplateReturnedDate = default(DateTime),
                 CapitalCarryForwardAtEndMarchCurrentYear = default(decimal),
                 CapitalCarryForwardAtEndMarchNextYear = default(decimal),
+                DistanceFromSchoolToTrustHeadquarters = default(decimal),
                 PreviousHeadTeacherBoardDate = default(DateTime)
             };
 
@@ -71,6 +72,7 @@ namespace TramsDataApi.Test.Factories
             expected.LocalAuthorityInformationTemplateReturnedDate = null;
             expected.CapitalCarryForwardAtEndMarchCurrentYear = null;
             expected.CapitalCarryForwardAtEndMarchNextYear = null;
+            expected.DistanceFromSchoolToTrustHeadquarters = null;
             expected.PreviousHeadTeacherBoardDate = null;
             AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }

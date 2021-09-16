@@ -911,6 +911,60 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
             _legacyDbContext.SaveChanges();
         }
+        
+        [Fact]
+        public async Task ShouldDecodeURLToGetQueryParameters()
+       {
+            var groupName = "Mygroupname";
+            var groups = Builder<Group>.CreateListOfSize(15)
+                .TheFirst(2)
+                .With(g => g.GroupType = "Single-academy trust")
+                .TheRest()
+                .With(g => g.GroupType = "Multi-academy trust")
+                .All()
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
+                .All()
+                .With(e => e.Ukprn = _randomGenerator.Int().ToString())
+                .Build()
+                .ToList();
+
+            var groupLinksWithGroupName = groups.GetRange(0, 5);
+            var groupLinksWithoutGroupName = groups.GetRange(5, 10);
+
+            groupLinksWithGroupName = groupLinksWithGroupName.Select(g =>
+            {
+                g.GroupName = groupName;
+                return g;
+            }).ToList();
+                
+            _legacyDbContext.Group.AddRange(groupLinksWithGroupName);
+            _legacyDbContext.Group.AddRange(groupLinksWithoutGroupName);
+            _legacyDbContext.SaveChanges();
+
+            var expected = groupLinksWithGroupName
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .ToList();
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trusts?groupName%3D" + groupName),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.SaveChanges();
+        }
 
         private Group GenerateTestGroup()
         {

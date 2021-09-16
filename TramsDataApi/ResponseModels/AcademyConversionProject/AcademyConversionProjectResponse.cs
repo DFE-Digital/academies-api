@@ -87,5 +87,7 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
         public string KeyStage2PerformanceAdditionalInformation { get; set; }
         public string KeyStage4PerformanceAdditionalInformation { get; set; }
         public string KeyStage5PerformanceAdditionalInformation { get; set; }
+        public string Upin { get; set; }
+        public string NewAcademyUrn { get; set; }
     }
 }
