@@ -12,22 +12,28 @@ namespace TramsDataApi.UseCases
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
         private readonly IEstablishmentGateway _establishmentGateway;
+        private readonly IIfdPipelineGateway _ifdPipelineGateway;
         
         public GetAcademyConversionProjectsByStatuses(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
             ITrustGateway trustGateway,
-            IEstablishmentGateway establishmentGateway)
+            IEstablishmentGateway establishmentGateway,
+            IIfdPipelineGateway ifdPipelineGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
             _trustGateway = trustGateway;
             _establishmentGateway = establishmentGateway;
+            _ifdPipelineGateway = ifdPipelineGateway;
         }
 
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAcademyConversionProjectsByStatusesRequest request)
         {
-            var academyConversionProjects = _academyConversionProjectGateway
-                .GetByStatuses(request.Count, request.Statuses)
+
+            var ifdProjects = _ifdPipelineGateway.GetPipelineProjectsByStatus(request.Count, request.Statuses)
                 .ToList();
+
+            var academyConversionProjects = _academyConversionProjectGateway
+                .GetByIfdPipelineIds(ifdProjects.Select(i => i.Sk).ToList()).ToList();
 
             var trustRefs = academyConversionProjects
                 .Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber))

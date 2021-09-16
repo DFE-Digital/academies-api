@@ -287,11 +287,13 @@ namespace TramsDataApi.Test.Integration
             var ifdPipelineProjects1 = _fixture.Build<IfdPipeline>()
                 .With(i => i.Sk, 1)
                 .With(i => i.EfaFundingUpin, "1234")
-                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100003").Create();
+                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100003")
+                .With(i => i.GeneralDetailsProjectStatus, "Approved for AO").Create();
             var ifdPipelineProjects2 = _fixture.Build<IfdPipeline>()
                 .With(i => i.Sk, 2)
                 .With(i => i.EfaFundingUpin, "4567")
-                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100089").Create();
+                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100089")
+                .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create();
             var ifdPipelineProjects = new List<IfdPipeline> {ifdPipelineProjects1, ifdPipelineProjects2};
 
 
@@ -312,7 +314,9 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
             
-            var response = await _client.GetAsync("v2/conversion-projects/");
+            var states = new []{"Approved for AO", "Converter Pre-AO"};
+            
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
  
             response.StatusCode.Should().Be(HttpStatusCode.OK);

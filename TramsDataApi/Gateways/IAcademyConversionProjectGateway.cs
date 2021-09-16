@@ -9,5 +9,7 @@ namespace TramsDataApi.Gateways
         IEnumerable<AcademyConversionProject> GetProjects(int take);
         AcademyConversionProject Update(AcademyConversionProject academyConversionProject);
         IEnumerable<AcademyConversionProject> GetByStatuses(int take, List<string> state);
+
+        IEnumerable<AcademyConversionProject> GetByIfdPipelineIds(List<long> ids);
     }
 }
