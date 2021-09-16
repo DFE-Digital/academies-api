@@ -77,6 +77,7 @@ namespace TramsDataApi.Factories
 			{
 				response.Upin = ifd.EfaFundingUpin;
 				response.NewAcademyUrn = ifd.ProposedAcademyDetailsNewAcademyUrn;
+				response.ProjectStatus = ifd.GeneralDetailsProjectStatus;
 			}
 
 			return response;
