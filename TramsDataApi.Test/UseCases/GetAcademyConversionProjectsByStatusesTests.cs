@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockProjectsGateway
                 .Setup(acg => acg.GetByStatuses(50, statuses))
-                .Returns(() => new List<AcademyConversionProject>());
+                .Returns(() => new List<AcademyConversionJoinModel>());
 
             var useCase = new GetAcademyConversionProjectsByStatuses(
                 mockProjectsGateway.Object, 
@@ -61,7 +61,7 @@ namespace TramsDataApi.Test.UseCases
                 Statuses = statuses
             };
             
-            var project = _fixture.Build<AcademyConversionProject>().With(f => f.SchoolName, "school").Create();
+            var project = _fixture.Build<AcademyConversionJoinModel>().With(f => f.SchoolName, "school").Create();
             var expected = AcademyConversionProjectResponseFactory.Create(project);
             
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
@@ -70,7 +70,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockProjectsGateway
                 .Setup(acg => acg.GetByStatuses(50, statuses))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Returns(() => new List<AcademyConversionJoinModel> { project });
 
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
@@ -96,7 +96,7 @@ namespace TramsDataApi.Test.UseCases
                 Statuses = statuses
             };
             
-            var project = _fixture.Build<AcademyConversionProject>().With(f => f.SchoolName, "school").Create();
+            var project = _fixture.Build<AcademyConversionJoinModel>().With(f => f.SchoolName, "school").Create();
             var expected = AcademyConversionProjectResponseFactory.Create(project);
             
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
@@ -105,7 +105,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockProjectsGateway
                 .Setup(acg => acg.GetByStatuses(50, statuses))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Returns(() => new List<AcademyConversionJoinModel> { project });
 
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
@@ -134,7 +134,7 @@ namespace TramsDataApi.Test.UseCases
                 Statuses = statuses
             };
             
-            var project = _fixture.Build<AcademyConversionProject>()
+            var project = _fixture.Build<AcademyConversionJoinModel>()
                 .With(f => f.SchoolName, "school")
                 .With(f => f.Urn, urn)
                 .Create();
@@ -149,7 +149,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockProjectsGateway
                 .Setup(acg => acg.GetByStatuses(50, statuses))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Returns(() => new List<AcademyConversionJoinModel> { project });
 
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(urn))

@@ -6,8 +6,8 @@ namespace TramsDataApi.Gateways
     public interface IAcademyConversionProjectGateway
     {
         AcademyConversionProject GetById(int id);
-        IEnumerable<AcademyConversionProject> GetProjects(int take);
+        IEnumerable<AcademyConversionJoinModel> GetProjects(int take);
         AcademyConversionProject Update(AcademyConversionProject academyConversionProject);
-        IEnumerable<AcademyConversionProject> GetByStatuses(int take, List<string> state);
+        IEnumerable<AcademyConversionJoinModel> GetByStatuses(int take, List<string> state);
     }
 }

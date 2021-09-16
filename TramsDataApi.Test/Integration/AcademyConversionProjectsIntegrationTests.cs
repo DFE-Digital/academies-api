@@ -274,6 +274,51 @@ namespace TramsDataApi.Test.Integration
             content.Should().BeEquivalentTo(expected);
         }
         
+        [Fact]
+        public async void Get_request_should_return_response_with_data_having_Upin_and_NewAcademyUrn_set()
+        {
+            var urns = new List<int> {1, 2};
+            var projects = urns
+                .Select(u => _fixture.Build<AcademyConversionProject>().Without(f => f.Id)
+                    .With(f => f.Urn, u)
+                    .With(f => f.IfdPipelineId, u).Create())
+                .ToList();
+
+            var ifdPipelineProjects1 = _fixture.Build<IfdPipeline>()
+                .With(i => i.Sk, 1)
+                .With(i => i.EfaFundingUpin, "1234")
+                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100003").Create();
+            var ifdPipelineProjects2 = _fixture.Build<IfdPipeline>()
+                .With(i => i.Sk, 2)
+                .With(i => i.EfaFundingUpin, "4567")
+                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100089").Create();
+            var ifdPipelineProjects = new List<IfdPipeline> {ifdPipelineProjects1, ifdPipelineProjects2};
+
+
+            var expectedData = projects.Select(p =>
+            {
+                var ifdProject = ifdPipelineProjects.FirstOrDefault(i => i.Sk == p.IfdPipelineId);
+                var response = AcademyConversionProjectResponseFactory.Create(AcademyConversionJoinModelFactory.Create(p, ifdProject));
+                response.Upin = ifdProject.EfaFundingUpin;
+                response.NewAcademyUrn = ifdProject.ProposedAcademyDetailsNewAcademyUrn;
+                return response;
+            });
+
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+
+            _dbContext.AcademyConversionProjects.AddRange(projects);
+            _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
+
+            _dbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
+            
+            var response = await _client.GetAsync("v2/conversion-projects/");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+        
 #endregion
 
         private void AssertDatabaseUpdated(AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
@@ -337,6 +382,7 @@ namespace TramsDataApi.Test.Integration
         public void Dispose()
         {
             _legacyDbContext.Trust.RemoveRange(_legacyDbContext.Trust);
+            _legacyDbContext.IfdPipeline.RemoveRange(_legacyDbContext.IfdPipeline);
             _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
             _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
             _dbContext.AcademyConversionProjects.RemoveRange(_dbContext.AcademyConversionProjects);
