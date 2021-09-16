@@ -190,8 +190,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
- 
-            _testOutputHelper.WriteLine(content.ToString());
+            
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
         }
