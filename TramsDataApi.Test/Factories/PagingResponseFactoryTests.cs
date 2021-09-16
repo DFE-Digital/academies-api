@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using TramsDataApi.ResponseModels;
@@ -80,6 +82,33 @@ namespace TramsDataApi.Test.Factories
             var mockHttpRequest = new Mock<HttpRequest>();
             mockHttpRequest.SetupGet(r => r.Scheme).Returns("https");
             mockHttpRequest.SetupGet(r => r.Query).Returns(queryCollection);
+
+            var result = PagingResponseFactory.Create(page, count, recordCount, mockHttpRequest.Object);
+            
+            result.Should().BeEquivalentTo(expectedPagingResponse);
+        }
+
+        [Fact]
+        public void CreatingPagingResponse_WithHttpRequestContainingPort_ShouldReturnPortInResponseNextPageUrl()
+        {
+            const int recordCount = 1;
+            const int count = 1;
+            const int page = 1;
+            const int port = 8080;
+            
+            var expectedNextPageUrl = $@"https://localhost:{port}/?page={page + 1}&count={count}";
+            
+            var expectedPagingResponse = new PagingResponse
+            {
+                Page = page,
+                RecordCount = recordCount,
+                NextPageUrl = expectedNextPageUrl
+            };
+
+            var mockHttpRequest = new Mock<HttpRequest>();
+            mockHttpRequest.SetupGet(r => r.Scheme).Returns("https");
+            mockHttpRequest.SetupGet(r => r.Host).Returns(new HostString(string.Empty, port));
+            mockHttpRequest.SetupGet(r => r.Query).Returns(() => new QueryCollection());
 
             var result = PagingResponseFactory.Create(page, count, recordCount, mockHttpRequest.Object);
             
