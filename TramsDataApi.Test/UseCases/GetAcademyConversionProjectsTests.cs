@@ -31,7 +31,7 @@ namespace TramsDataApi.Test.UseCases
             
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(50))
-                .Returns(() => new List<AcademyConversionJoinModel>());
+                .Returns(() => new List<AcademyConversionProject>());
 
             var useCase = new GetAcademyConversionProjects(
                 mockProjectsGateway.Object, 
@@ -50,7 +50,7 @@ namespace TramsDataApi.Test.UseCases
 
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
 
-            var project = _fixture.Build<AcademyConversionJoinModel>()
+            var project = _fixture.Build<AcademyConversionProject>()
                 .With(f => f.SchoolName, "school")
                 .Create();
 
@@ -58,7 +58,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(50))
-                .Returns(() => new List<AcademyConversionJoinModel> { project });
+                .Returns(() => new List<AcademyConversionProject> { project });
             
             var useCase = new GetAcademyConversionProjects(
                 mockProjectsGateway.Object,
