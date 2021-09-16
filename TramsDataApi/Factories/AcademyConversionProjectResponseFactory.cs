@@ -8,7 +8,7 @@ namespace TramsDataApi.Factories
 	/// </remarks>
 	public class AcademyConversionProjectResponseFactory
     {
-	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject, Trust trust = null)
+	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject, Trust trust = null, IfdPipeline ifd = null)
         {
 			var response = new AcademyConversionProjectResponse
 			{
@@ -63,7 +63,7 @@ namespace TramsDataApi.Factories
 				YearThreeProjectedPupilNumbers = academyConversionProject.YearThreeProjectedPupilNumbers,
 				KeyStage2PerformanceAdditionalInformation = academyConversionProject.KeyStage2PerformanceAdditionalInformation,
 				KeyStage4PerformanceAdditionalInformation = academyConversionProject.KeyStage4PerformanceAdditionalInformation,
-				KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation,
+				KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation
 			};
 
 			if (trust != null)
@@ -72,6 +72,13 @@ namespace TramsDataApi.Factories
 				response.SponsorReferenceNumber = trust.LeadSponsor;
 				response.SponsorName = trust.TrustsLeadSponsorName;
             }
+
+			if (ifd != null)
+			{
+				response.Upin = ifd.EfaFundingUpin;
+				response.NewAcademyUrn = ifd.ProposedAcademyDetailsNewAcademyUrn;
+				response.ProjectStatus = ifd.GeneralDetailsProjectStatus;
+			}
 
 			return response;
 		}

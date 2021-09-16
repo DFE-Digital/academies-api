@@ -15,12 +15,14 @@ using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.Test.Utils;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
     public class AcademyConversionProjectsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
+        private readonly ITestOutputHelper _testOutputHelper;
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
         private readonly TramsDbContext _dbContext;
@@ -28,8 +30,9 @@ namespace TramsDataApi.Test.Integration
 
         private const string PreHtb = "Pre HTB";
 
-        public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture)
+        public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture, ITestOutputHelper testOutputHelper)
         {
+            _testOutputHelper = testOutputHelper;
             _client = fixture.CreateClient();
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
@@ -151,15 +154,33 @@ namespace TramsDataApi.Test.Integration
 
             var expectedProjects = new List<AcademyConversionProject>
             {
-                _fixture.Build<AcademyConversionProject>().Without(x => x.Id).Create(),
-                _fixture.Build<AcademyConversionProject>().Without(x => x.Id).Create()
+                _fixture.Build<AcademyConversionProject>()
+                    .Without(x => x.Id)
+                    .With(x => x.IfdPipelineId, 100002).Create(),
+                _fixture.Build<AcademyConversionProject>()
+                    .Without(x => x.Id)
+                    .With(x => x.IfdPipelineId, 100056).Create()
             };
+            
+            var ifdPipelineProjects1 = _fixture.Build<IfdPipeline>()
+                .With(i => i.Sk, 100002)
+                .Without(i => i.EfaFundingUpin)
+                .Without(i => i.ProposedAcademyDetailsNewAcademyUrn)
+                .With(i => i.GeneralDetailsProjectStatus, "Approved for AO").Create();
+            var ifdPipelineProjects2 = _fixture.Build<IfdPipeline>()
+                .With(i => i.Sk, 100056)
+                .Without(i => i.EfaFundingUpin)
+                .Without(i => i.ProposedAcademyDetailsNewAcademyUrn)
+                .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create();
+            var ifdPipelineProjects = new List<IfdPipeline> {ifdPipelineProjects1, ifdPipelineProjects2};
             
             expectedProjects.First().ProjectStatus = "Approved for AO";
             expectedProjects.Last().ProjectStatus = "Converter Pre-AO";
             academyConversionProjects.AddRange(expectedProjects);
 
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
+            _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
+            
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
 
@@ -169,7 +190,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
- 
+            
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
         }
@@ -274,6 +295,53 @@ namespace TramsDataApi.Test.Integration
             content.Should().BeEquivalentTo(expected);
         }
         
+        [Fact]
+        public async void Get_request_should_return_response_with_data_having_Upin_and_NewAcademyUrn_set()
+        {
+            var urns = new List<int> {1, 2};
+            var projects = urns
+                .Select(u => _fixture.Build<AcademyConversionProject>().Without(f => f.Id)
+                    .With(f => f.Urn, u)
+                    .With(f => f.IfdPipelineId, u).Create())
+                .ToList();
+
+            var ifdPipelineProjects1 = _fixture.Build<IfdPipeline>()
+                .With(i => i.Sk, 1)
+                .With(i => i.EfaFundingUpin, "1234")
+                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100003")
+                .With(i => i.GeneralDetailsProjectStatus, "Approved for AO").Create();
+            var ifdPipelineProjects2 = _fixture.Build<IfdPipeline>()
+                .With(i => i.Sk, 2)
+                .With(i => i.EfaFundingUpin, "4567")
+                .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100089")
+                .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create();
+            var ifdPipelineProjects = new List<IfdPipeline> {ifdPipelineProjects1, ifdPipelineProjects2};
+
+
+            var expectedData = projects.Select(p =>
+            {
+                var ifdProject = ifdPipelineProjects.FirstOrDefault(i => i.Sk == p.IfdPipelineId);
+                var response = AcademyConversionProjectResponseFactory.Create(p, null, ifdProject);
+                return response;
+            });
+
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+
+            _dbContext.AcademyConversionProjects.AddRange(projects);
+            _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
+
+            _dbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
+            
+            var states = new []{"Approved for AO", "Converter Pre-AO"};
+            
+            var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
+ 
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            content.Should().BeEquivalentTo(expected);
+        }
+        
 #endregion
 
         private void AssertDatabaseUpdated(AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
@@ -337,6 +405,7 @@ namespace TramsDataApi.Test.Integration
         public void Dispose()
         {
             _legacyDbContext.Trust.RemoveRange(_legacyDbContext.Trust);
+            _legacyDbContext.IfdPipeline.RemoveRange(_legacyDbContext.IfdPipeline);
             _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
             _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
             _dbContext.AcademyConversionProjects.RemoveRange(_dbContext.AcademyConversionProjects);
