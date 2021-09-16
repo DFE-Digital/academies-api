@@ -29,11 +29,11 @@ namespace TramsDataApi.UseCases
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAcademyConversionProjectsByStatusesRequest request)
         {
 
-            var ifdProjects = _ifdPipelineGateway.GetPipelineProjectsByStatus(request.Count, request.Statuses)
+            var ifdProjects = _ifdPipelineGateway.GetPipelineProjectsByStatus(request.Page, request.Count, request.Statuses)
                 .ToList();
 
             var academyConversionProjects = _academyConversionProjectGateway
-                .GetByIfdPipelineIds(ifdProjects.Select(i => i.Sk).ToList()).ToList();
+                .GetByIfdPipelineIds(request.Page, request.Count, ifdProjects.Select(i => i.Sk).ToList()).ToList();
 
             var trustRefs = academyConversionProjects
                 .Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber))

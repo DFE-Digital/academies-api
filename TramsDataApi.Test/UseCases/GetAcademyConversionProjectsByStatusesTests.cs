@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
 
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline>());
 
             var useCase = new GetAcademyConversionProjectsByStatuses(
@@ -78,11 +78,11 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
 
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>{ifdPipelineId}))
+                .Setup(acg => acg.GetByIfdPipelineIds(1, 50, new List<long>{ifdPipelineId}))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
@@ -125,11 +125,11 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
             
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>{ifdPipelineId}))
+                .Setup(acg => acg.GetByIfdPipelineIds(1, 50, new List<long>{ifdPipelineId}))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
@@ -182,11 +182,11 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
 
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>{ifdPipelineId}))
+                .Setup(acg => acg.GetByIfdPipelineIds(1, 50, new List<long>{ifdPipelineId}))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway

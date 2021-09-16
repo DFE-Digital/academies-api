@@ -14,12 +14,13 @@ namespace TramsDataApi.Gateways
             _dbContext = dbContext;
         }
         
-        public IEnumerable<IfdPipeline> GetPipelineProjectsByStatus(int take, List<string> statues)
+        public IEnumerable<IfdPipeline> GetPipelineProjectsByStatus(int page, int count, List<string> statues)
         {
             var lowerStatuses = statues.Select(s => s.ToLower());
             var results = _dbContext.IfdPipeline
                 .Where(ifd => lowerStatuses.Contains(ifd.GeneralDetailsProjectStatus.ToLower()))
-                .Take(take)
+                .Skip((page - 1) * count)
+                .Take(count)
                 .AsNoTracking()
                 .ToList();
             

@@ -5,6 +5,6 @@ namespace TramsDataApi.Gateways
 {
     public interface IIfdPipelineGateway
     {
-        IEnumerable<IfdPipeline> GetPipelineProjectsByStatus(int take, List<string> statues);
+        IEnumerable<IfdPipeline> GetPipelineProjectsByStatus(int page, int take, List<string> statues);
     }
 }

@@ -324,22 +324,23 @@ namespace TramsDataApi.Test.Integration
                 .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100089")
                 .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create();
             var ifdPipelineProjects = new List<IfdPipeline> {ifdPipelineProjects1, ifdPipelineProjects2};
-
-
-            var expectedData = projects.Select(p =>
-            {
-                var ifdProject = ifdPipelineProjects.FirstOrDefault(i => i.Sk == p.IfdPipelineId);
-                var response = AcademyConversionProjectResponseFactory.Create(p, null, ifdProject);
-                return response;
-            });
-
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
-
+            
             _dbContext.AcademyConversionProjects.AddRange(projects);
             _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
 
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
+            
+            var expectedData = projects.Select(p =>
+            {
+                var ifdProject = ifdPipelineProjects.FirstOrDefault(i => i.Sk == p.IfdPipelineId);
+                var ifdResponse = AcademyConversionProjectResponseFactory.Create(p, null, ifdProject);
+                return ifdResponse;
+            }).ToList();
+
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
+
             
             var states = new []{"Approved for AO", "Converter Pre-AO"};
             
