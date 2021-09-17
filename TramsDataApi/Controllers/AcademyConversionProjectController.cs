@@ -39,7 +39,7 @@ namespace TramsDataApi.Controllers
 			_logger.LogInformation($"Attempting to retrieve {count} Academy Conversion Projects");
 			
 			// temporarily limiting count until we know rules around which to return as there's hundreds in db
-			var projects = _getAllAcademyConversionProjects.Execute(new GetAllAcademyConversionProjectsRequest { Count = count }).ToList();
+			var projects = _getAllAcademyConversionProjects.Execute(new GetAllAcademyConversionProjectsRequest { Page = 1, Count = count }).ToList();
 			projects.ForEach(p => p.ProjectStatus = PreHtb);
 			
 			_logger.LogInformation($"Returning {projects.Count()} Academy Conversion Projects");

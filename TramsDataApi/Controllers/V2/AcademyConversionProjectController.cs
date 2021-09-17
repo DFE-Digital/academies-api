@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -38,26 +41,31 @@ namespace TramsDataApi.Controllers.V2
 		
 		[HttpGet]
 		[MapToApiVersion("2.0")]
-		public ActionResult<ApiResponseV2<AcademyConversionProjectResponse>> GetConversionProjects([FromQuery] string states,[FromQuery] int count = 50)
+		public ActionResult<ApiResponseV2<AcademyConversionProjectResponse>> GetConversionProjects(
+			[FromQuery] string states,
+			[FromQuery] int page = 1,
+			[FromQuery] int count = 50)
 		{
 			var statusList = string.IsNullOrWhiteSpace(states) ? null : states.Split(',').ToList();
 
 			_logger.LogInformation(statusList == null
 				? $"Attempting to retrieve {count} Academy Conversion Projects."
 				: $"Attempting to retrieve {count} Academy Conversion Projects filtered by {states}");
-
+			
 			var projects = statusList == null
 				? _getAllAcademyConversionProjects
-					.Execute(new GetAllAcademyConversionProjectsRequest {Count = count})
+					.Execute(new GetAllAcademyConversionProjectsRequest { Page = page, Count = count})
 					.ToList()
 				: _getConversionProjectsByStatus
-					.Execute(new GetAcademyConversionProjectsByStatusesRequest {Count = count, Statuses = statusList})
+					.Execute(new GetAcademyConversionProjectsByStatusesRequest { Page = page, Count = count, Statuses = statusList})
 					.ToList();
 			
 			_logger.LogInformation($"Returning {projects.Count} Academy Conversion Projects");
 			_logger.LogDebug(JsonSerializer.Serialize<IEnumerable<AcademyConversionProjectResponse>>(projects));
-
-			var response = new ApiResponseV2<AcademyConversionProjectResponse>(projects);
+			
+			var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
+			
+			var response = new ApiResponseV2<AcademyConversionProjectResponse>(projects, pagingResponse);
 			return Ok(response);
 		}
 		

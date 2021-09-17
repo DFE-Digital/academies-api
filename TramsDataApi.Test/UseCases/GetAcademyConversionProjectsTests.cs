@@ -30,7 +30,7 @@ namespace TramsDataApi.Test.UseCases
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
             
             mockProjectsGateway
-                .Setup(acg => acg.GetProjects(50))
+                .Setup(acg => acg.GetProjects(1, 50))
                 .Returns(() => new List<AcademyConversionProject>());
 
             var useCase = new GetAcademyConversionProjects(
@@ -46,18 +46,16 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyTransferProjectsAreFound()
         {
-            var request = new GetAllAcademyConversionProjectsRequest { Count = 50 };
+            var request = new GetAllAcademyConversionProjectsRequest { Page = 1, Count = 50 };
 
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
 
-            var project = _fixture.Build<AcademyConversionProject>()
-                .With(f => f.SchoolName, "school")
-                .Create();
+            var project = _fixture.Build<AcademyConversionProject>().Create();
 
             var expectedProject = AcademyConversionProjectResponseFactory.Create(project);
 
             mockProjectsGateway
-                .Setup(acg => acg.GetProjects(50))
+                .Setup(acg => acg.GetProjects(1, 50))
                 .Returns(() => new List<AcademyConversionProject> { project });
             
             var useCase = new GetAcademyConversionProjects(

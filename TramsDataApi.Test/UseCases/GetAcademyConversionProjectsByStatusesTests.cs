@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -29,6 +28,7 @@ namespace TramsDataApi.Test.UseCases
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
 
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline>());
 
             var useCase = new GetAcademyConversionProjectsByStatuses(
@@ -60,6 +60,7 @@ namespace TramsDataApi.Test.UseCases
             var ifdPipelineId = 19876524;
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -77,7 +78,7 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
 
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
@@ -106,6 +107,7 @@ namespace TramsDataApi.Test.UseCases
             var ifdPipelineId = 145678;
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -123,7 +125,7 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
             
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
@@ -155,6 +157,7 @@ namespace TramsDataApi.Test.UseCases
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
+                Page = 1,
                 Count = 50,
                 Statuses = statuses
             };
@@ -179,7 +182,7 @@ namespace TramsDataApi.Test.UseCases
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
 
             mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(50, statuses))
+                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
                 .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway

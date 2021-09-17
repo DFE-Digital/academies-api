@@ -22,7 +22,6 @@ namespace TramsDataApi.Test.Integration
     [Collection("Database")]
     public class AcademyConversionProjectsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
         private readonly TramsDbContext _dbContext;
@@ -30,9 +29,8 @@ namespace TramsDataApi.Test.Integration
 
         private const string PreHtb = "Pre HTB";
 
-        public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture, ITestOutputHelper testOutputHelper)
+        public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture)
         {
-            _testOutputHelper = testOutputHelper;
             _client = fixture.CreateClient();
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
@@ -184,8 +182,10 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
 
-            var expectedData = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p));
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+            var expectedData = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
+
             var states = new []{"Approved for AO", "Converter Pre-AO"};
             
             var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
@@ -209,22 +209,24 @@ namespace TramsDataApi.Test.Integration
                 .Select(u => _fixture.Build<MisEstablishments>().With(m => m.Urn, u).With(m => m.Laestab, 1000 + u).Create())
                 .ToList();
 
-            var expectedData = projects.Select(p =>
-            {
-                var response = AcademyConversionProjectResponseFactory.Create(p);
-                response.UkPrn = $"est{p.Urn}";
-                response.Laestab = 1000 + p.Urn ?? 0;
-                return response;
-            });
-
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
-
             _dbContext.AcademyConversionProjects.AddRange(projects);
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.MisEstablishments.AddRange(misEstablishments);
             
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
+            
+            var expectedData = projects.Select(p =>
+            {
+                var acpResponse = AcademyConversionProjectResponseFactory.Create(p);
+                acpResponse.UkPrn = $"est{p.Urn}";
+                acpResponse.Laestab = 1000 + p.Urn ?? 0;
+                return acpResponse;
+            }).ToList();
+            
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
+            
             
             var response = await _client.GetAsync("v2/conversion-projects/");
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
@@ -251,7 +253,8 @@ namespace TramsDataApi.Test.Integration
             _dbContext.SaveChanges();
             
             var expectedData = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
             
             var response = await _client.GetAsync("v2/conversion-projects/");
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
@@ -271,7 +274,9 @@ namespace TramsDataApi.Test.Integration
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
             _dbContext.SaveChanges();
 
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse>();
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = 0};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
+            
             var states = new []{"Approved for AO", "Converter Pre-AO"};
             
             var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
@@ -284,8 +289,9 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_without_states_and_no_projects_in_db_should_get_response_with_data_as_empty_list()
         {
-            
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse>();
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = 0};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
+
             var states = new []{"Approved for AO", "Converter Pre-AO"};
             
             var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
@@ -316,22 +322,23 @@ namespace TramsDataApi.Test.Integration
                 .With(i => i.ProposedAcademyDetailsNewAcademyUrn, "100089")
                 .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create();
             var ifdPipelineProjects = new List<IfdPipeline> {ifdPipelineProjects1, ifdPipelineProjects2};
-
-
-            var expectedData = projects.Select(p =>
-            {
-                var ifdProject = ifdPipelineProjects.FirstOrDefault(i => i.Sk == p.IfdPipelineId);
-                var response = AcademyConversionProjectResponseFactory.Create(p, null, ifdProject);
-                return response;
-            });
-
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData);
-
+            
             _dbContext.AcademyConversionProjects.AddRange(projects);
             _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
 
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
+            
+            var expectedData = projects.Select(p =>
+            {
+                var ifdProject = ifdPipelineProjects.FirstOrDefault(i => i.Sk == p.IfdPipelineId);
+                var ifdResponse = AcademyConversionProjectResponseFactory.Create(p, null, ifdProject);
+                return ifdResponse;
+            }).ToList();
+
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
+
             
             var states = new []{"Approved for AO", "Converter Pre-AO"};
             

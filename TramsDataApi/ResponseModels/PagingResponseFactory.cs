@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+
+namespace TramsDataApi.ResponseModels
+{
+    public static class PagingResponseFactory
+    {
+        public static PagingResponse Create(int page, int count, int recordCount, HttpRequest request)
+        {
+            var pagingResponse = new PagingResponse
+            {
+                RecordCount = recordCount,
+                Page = page
+            };
+
+            if (recordCount != count) return pagingResponse;
+            
+            var queryAttributes = request.Query
+                .Where(q => q.Key != nameof(page) && q.Key != nameof(count))
+                .Select(q => new KeyValuePair<string, string>(q.Key, q.Value));
+
+            var queryBuilder = new QueryBuilder(queryAttributes)
+            {
+                {nameof(page), $"{page + 1}"}, 
+                {nameof(count), $"{count}"}
+            };
+
+            var uriBuilder = new UriBuilder
+            {
+                Scheme = request.Scheme,
+                Path = request.Path,
+                Query = queryBuilder.ToString()
+            };
+            if (request.Host.Port != null) uriBuilder.Port = request.Host.Port.Value;
+
+            pagingResponse.NextPageUrl = uriBuilder.ToString();
+
+            return pagingResponse;
+        }
+    }
+}

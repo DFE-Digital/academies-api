@@ -19,9 +19,13 @@ namespace TramsDataApi.Gateways
             return _tramsDbContext.AcademyConversionProjects.AsNoTracking().SingleOrDefault(p => p.Id == id);
         }
 
-        public IEnumerable<AcademyConversionProject> GetProjects(int take)
+        public IEnumerable<AcademyConversionProject> GetProjects(int page, int count)
         {
-            return _tramsDbContext.AcademyConversionProjects.Take(take).AsNoTracking().ToList();
+            return _tramsDbContext.AcademyConversionProjects
+                .Skip((page - 1) * count)
+                .Take(count)
+                .AsNoTracking()
+                .ToList();
         }
 
         public AcademyConversionProject Update(AcademyConversionProject academyConversionProject)
@@ -30,12 +34,13 @@ namespace TramsDataApi.Gateways
             _tramsDbContext.SaveChanges();
             return entity.Entity;
         }
-        public IEnumerable<AcademyConversionProject> GetByStatuses(int take, List<string> statues)
+        public IEnumerable<AcademyConversionProject> GetByStatuses(int page, int count, List<string> statues)
         {
             var lowerStatuses = statues.Select(s => s.ToLower());
             var results = _tramsDbContext.AcademyConversionProjects
             .Where(acp => lowerStatuses.Contains(acp.ProjectStatus.ToLower()))
-            .Take(take)
+            .Skip((page - 1) * count)
+            .Take(count)
             .AsNoTracking()
             .ToList();
 
