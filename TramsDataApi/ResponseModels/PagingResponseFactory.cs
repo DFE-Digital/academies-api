@@ -28,7 +28,7 @@ namespace TramsDataApi.ResponseModels
                 {nameof(count), $"{count}"}
             };
 
-            pagingResponse.NextPageUrl = $"{request.GetDisplayUrl().Split('?')[0]}{queryBuilder}";
+            pagingResponse.NextPageUrl = $"{request.Path}{queryBuilder}";
 
             return pagingResponse;
         }

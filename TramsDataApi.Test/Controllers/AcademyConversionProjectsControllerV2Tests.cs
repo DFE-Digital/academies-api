@@ -73,7 +73,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetConversionProjects_WithPaging_AndMultiplePages_ShouldHavePagingWithValuesSetAndNextPageURLProvided()
         {
-            const string expectedNextPageUrl = "localhost/?page=2&count=1";
+            const string expectedNextPageUrl = "?page=2&count=1";
             
             var mockUseCase = new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>();
             var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
