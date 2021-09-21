@@ -26,5 +26,16 @@ namespace TramsDataApi.Gateways
             
             return results;
         }
+        
+        public IEnumerable<IfdPipeline> GetPipelineProjects(int page, int count)
+        {
+            var results = _dbContext.IfdPipeline
+                .Skip((page - 1) * count)
+                .Take(count)
+                .AsNoTracking()
+                .ToList();
+            
+            return results;
+        }
     }
 }
