@@ -28,15 +28,7 @@ namespace TramsDataApi.ResponseModels
                 {nameof(count), $"{count}"}
             };
 
-            var uriBuilder = new UriBuilder
-            {
-                Scheme = request.Scheme,
-                Path = request.Path,
-                Query = queryBuilder.ToString()
-            };
-            if (request.Host.Port != null) uriBuilder.Port = request.Host.Port.Value;
-
-            pagingResponse.NextPageUrl = uriBuilder.ToString();
+            pagingResponse.NextPageUrl = $"{request.GetDisplayUrl().Split('?')[0]}{queryBuilder}";
 
             return pagingResponse;
         }
