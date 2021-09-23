@@ -59,7 +59,8 @@ namespace TramsDataApi.Test.ApplyToBecome
                 YearTwoProjectedCapacity = int.Parse(ifdPipeline.ProjectTemplateInformationAy2CapacityForecast),
                 YearTwoProjectedPupilNumbers = int.Parse(ifdPipeline.ProjectTemplateInformationAy2TotalPupilNumberForecast),
                 YearThreeProjectedCapacity = int.Parse(ifdPipeline.ProjectTemplateInformationAy3CapacityForecast),
-                YearThreeProjectedPupilNumbers = int.Parse(ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast)
+                YearThreeProjectedPupilNumbers = int.Parse(ifdPipeline.ProjectTemplateInformationAy3TotalPupilNumberForecast),
+                ConversionSupportGrantAmount = 25000
             };
 
             var academyConversionProject = SyncAcademyConversionProjectFactory.Create(ifdPipeline);

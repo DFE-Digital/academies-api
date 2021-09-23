@@ -2,6 +2,8 @@
 {
     public static class SyncAcademyConversionProjectFactory
     {
+        private const int DefaultConversionSupportGrantAmount = 25000;
+
         public static SyncAcademyConversionProject Create(SyncIfdPipeline ifdPipeline)
         {
             int.TryParse(ifdPipeline.GeneralDetailsUrn, out var urn);
@@ -34,6 +36,7 @@
                 //SponsorName
                 //AcademyTypeAndRoute
                 ProposedAcademyOpeningDate = ifdPipeline.GeneralDetailsExpectedOpeningDate,
+                ConversionSupportGrantAmount = DefaultConversionSupportGrantAmount,
 
                 //general info
                 PublishedAdmissionNumber = ifdPipeline.DeliveryProcessPan,

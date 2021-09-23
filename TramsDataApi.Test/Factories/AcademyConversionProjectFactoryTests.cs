@@ -128,6 +128,8 @@ namespace TramsDataApi.Test.Factories
             expected.KeyStage2PerformanceAdditionalInformation = updateRequest.KeyStage2PerformanceAdditionalInformation;
             expected.KeyStage4PerformanceAdditionalInformation = updateRequest.KeyStage4PerformanceAdditionalInformation;
             expected.KeyStage5PerformanceAdditionalInformation = updateRequest.KeyStage5PerformanceAdditionalInformation;
+            expected.ConversionSupportGrantAmount = updateRequest.ConversionSupportGrantAmount;
+            expected.ConversionSupportGrantChangeReason = updateRequest.ConversionSupportGrantChangeReason;
 
             return expected;
         }
