@@ -87,6 +87,8 @@ namespace TramsDataApi.Factories
                 project.PreviousHeadTeacherBoardDateQuestion;
             project.PreviousHeadTeacherBoardDate = updateRequest.PreviousHeadTeacherBoardDate == default(DateTime) ? null
                 : updateRequest.PreviousHeadTeacherBoardDate ?? project.PreviousHeadTeacherBoardDate;
+            project.ConversionSupportGrantAmount = updateRequest.ConversionSupportGrantAmount;
+            project.ConversionSupportGrantChangeReason = updateRequest.ConversionSupportGrantChangeReason;
 
             return project;
         }
