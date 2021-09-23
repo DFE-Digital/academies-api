@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
@@ -43,6 +44,9 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? ProposedAcademyOpeningDate { get; set; }
         public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
+        public int ConversionSupportGrantAmount { get; set; }
+        public string ConversionSupportGrantChangeReason { get; set; }
+
         //general info
         public string SchoolPhase { get; set; }
         public string AgeRange { get; set; }
@@ -50,16 +54,16 @@ namespace TramsDataApi.DatabaseModels
         public int? ActualPupilNumbers { get; set; }
         public int? Capacity { get; set; }
         public string PublishedAdmissionNumber { get; set; }
-        [Column(TypeName = "decimal(38, 3)")]
-        public decimal? PercentageFreeSchoolMeals { get; set; }
+        [Column(TypeName = "decimal(38, 3)")] public decimal? PercentageFreeSchoolMeals { get; set; }
         public string PartOfPfiScheme { get; set; }
         public string ViabilityIssues { get; set; }
         public string FinancialDeficit { get; set; }
         public string DiocesanTrust { get; set; }
+
         [Column(TypeName = "decimal(38, 3)")]
         public decimal? PercentageOfGoodOrOutstandingSchoolsInTheDiocesanTrust { get; set; }
-        [Column(TypeName = "decimal(38, 3)")]
-        public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
+
+        [Column(TypeName = "decimal(38, 3)")] public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
         public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
         public string MemberOfParliamentParty { get; set; }
         public bool? GeneralInformationSectionComplete { get; set; }
@@ -78,14 +82,10 @@ namespace TramsDataApi.DatabaseModels
         public bool? RisksAndIssuesSectionComplete { get; set; }
 
         // school budget info
-        [Column(TypeName = "decimal(38, 2)")]
-        public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
-        [Column(TypeName = "decimal(38, 2)")]
-        public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
-        [Column(TypeName = "decimal(38, 2)")]
-        public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
-        [Column(TypeName = "decimal(38, 2)")]
-        public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
+        [Column(TypeName = "decimal(38, 2)")] public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
+        [Column(TypeName = "decimal(38, 2)")] public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+        [Column(TypeName = "decimal(38, 2)")] public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
+        [Column(TypeName = "decimal(38, 2)")] public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
         public string SchoolBudgetInformationAdditionalInformation { get; set; }
         public bool? SchoolBudgetInformationSectionComplete { get; set; }
 
