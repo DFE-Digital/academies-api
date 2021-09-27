@@ -15,7 +15,6 @@ using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.Test.Utils;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace TramsDataApi.Test.Integration
 {
@@ -265,6 +264,7 @@ namespace TramsDataApi.Test.Integration
                 var acpResponse = AcademyConversionProjectResponseFactory.Create(p);
                 acpResponse.UkPrn = $"est{p.Urn}";
                 acpResponse.Laestab = 1000 + p.Urn ?? 0;
+                acpResponse.ProjectStatus = "Approved for AO";
                 return acpResponse;
             }).ToList();
             
@@ -311,6 +311,8 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
             
             var expectedData = academyConversionProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
+            expectedData.ForEach(ed => ed.ProjectStatus = "Approved for AO");
+            
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
             
@@ -363,6 +365,7 @@ namespace TramsDataApi.Test.Integration
         public async void Get_request_should_return_response_with_data_having_Upin_and_NewAcademyUrn_set()
         {
             var urns = new List<int> {1, 2};
+            
             var projects = urns
                 .Select(u => _fixture.Build<AcademyConversionProject>().Without(f => f.Id)
                     .With(f => f.Urn, u)

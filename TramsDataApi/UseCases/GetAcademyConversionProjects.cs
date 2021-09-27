@@ -50,7 +50,8 @@ namespace TramsDataApi.UseCases
 
             var responses = academyConversionProjects
                 .Where(p => !string.IsNullOrEmpty(p.SchoolName))
-                .Select(p => AcademyConversionProjectResponseFactory.Create(p))
+                .Select(p => AcademyConversionProjectResponseFactory
+                    .Create(p, null, ifdProjects.FirstOrDefault(ifd => ifd.Sk == p.IfdPipelineId)))
                 .ToList();
 
             responses.ForEach(r =>
