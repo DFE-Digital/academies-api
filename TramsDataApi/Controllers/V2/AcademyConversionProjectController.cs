@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -48,11 +45,11 @@ namespace TramsDataApi.Controllers.V2
 		{
 			var statusList = string.IsNullOrWhiteSpace(states) ? null : states.Split(',').ToList();
 
-			_logger.LogInformation(statusList == null
+			_logger.LogInformation(statusList == null || !statusList.Any()
 				? $"Attempting to retrieve {count} Academy Conversion Projects."
 				: $"Attempting to retrieve {count} Academy Conversion Projects filtered by {states}");
 			
-			var projects = statusList == null
+			var projects = statusList == null || !statusList.Any()
 				? _getAllAcademyConversionProjects
 					.Execute(new GetAllAcademyConversionProjectsRequest { Page = page, Count = count})
 					.ToList()

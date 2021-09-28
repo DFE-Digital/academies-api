@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -73,7 +74,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetConversionProjects_WithPaging_AndMultiplePages_ShouldHavePagingWithValuesSetAndNextPageURLProvided()
         {
-            const string expectedNextPageUrl = "localhost/?page=2&count=1";
+            const string expectedNextPageUrl = "?page=2&count=1";
             
             var mockUseCase = new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>();
             var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
@@ -125,8 +126,7 @@ namespace TramsDataApi.Test.Controllers
                 .Returns(data);
 
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest,
-                    IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
                 mockUseCase.Object,
                 new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
@@ -141,6 +141,96 @@ namespace TramsDataApi.Test.Controllers
             var result = controller.GetConversionProjects(null, 1, 10);
             
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+        
+         [Fact]
+        public void GetConversionProjectById_ReturnsAcademyConversionProject_WhenIdExists()
+        {
+            var mockUseCase =
+                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>();
+            
+            
+            var academyConversionProjectResponse = Builder<AcademyConversionProjectResponse>.CreateNew().Build();
+
+            mockUseCase
+                .Setup(x => x.Execute(It.IsAny<GetAcademyConversionProjectByIdRequest>()))
+                .Returns(academyConversionProjectResponse);
+            
+            var controller = new AcademyConversionProjectController(
+                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                mockUseCase.Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                _mockLogger.Object
+            );
+
+            var expectedData = new List<AcademyConversionProjectResponse> {academyConversionProjectResponse};
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, null);
+            
+            var result = controller.GetConversionProjectById(It.IsAny<int>());
+            
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+        
+        [Fact]
+        public void GetConversionProjectById_ReturnsNotFound_WhenNoConversionProjectExists()
+        {
+            var controller = new AcademyConversionProjectController(
+                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object, 
+                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                _mockLogger.Object
+            );
+
+            var result = controller.GetConversionProjectById(It.IsAny<int>());
+            
+            result.Result.Should().BeEquivalentTo(new NotFoundResult());
+        }
+
+        [Fact]
+        public void UpdateConversionProject_Returns_UpdatedConversionProject_WhenConversionProjectExists()
+        {
+            var mockUseCase = new Mock<IUpdateAcademyConversionProject>();
+            
+            var updatedAcademyConversionProjectResponse = Builder<AcademyConversionProjectResponse>.CreateNew().Build();
+
+            mockUseCase
+                .Setup(x => x.Execute(It.IsAny<int>(),It.IsAny<UpdateAcademyConversionProjectRequest>()))
+                .Returns(updatedAcademyConversionProjectResponse);
+            
+            var controller = new AcademyConversionProjectController(
+                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object, 
+                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                mockUseCase.Object,
+                _mockLogger.Object
+            );
+
+            var expectedData = new List<AcademyConversionProjectResponse> { updatedAcademyConversionProjectResponse };
+            var expectedResult = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, null);
+            
+            var result = controller.UpdateConversionProject(It.IsAny<int>(), It.IsAny<UpdateAcademyConversionProjectRequest>());
+            
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedResult));
+        }
+
+        [Fact]
+        public void UpdateConversionProject_ReturnsNotFound_WhenConversionProjectExists()
+        {
+            var controller = new AcademyConversionProjectController(
+                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object, 
+                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                _mockLogger.Object
+            );
+
+            var result =
+                controller.UpdateConversionProject(It.IsAny<int>(), It.IsAny<UpdateAcademyConversionProjectRequest>());
+
+            result.Result.Should().BeEquivalentTo(new NotFoundResult());
+            
         }
     }
 }

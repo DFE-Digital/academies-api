@@ -36,7 +36,8 @@ namespace TramsDataApi.Test.UseCases
             var useCase = new GetAcademyConversionProjects(
                 mockProjectsGateway.Object, 
                 new Mock<ITrustGateway>().Object,
-                new Mock<IEstablishmentGateway>().Object);
+                new Mock<IEstablishmentGateway>().Object,
+                new Mock<IIfdPipelineGateway>().Object);
             
             var result = useCase.Execute(request).ToList();
 
@@ -49,19 +50,20 @@ namespace TramsDataApi.Test.UseCases
             var request = new GetAllAcademyConversionProjectsRequest { Page = 1, Count = 50 };
 
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
-
+ 
             var project = _fixture.Build<AcademyConversionProject>().Create();
 
             var expectedProject = AcademyConversionProjectResponseFactory.Create(project);
-
+            
             mockProjectsGateway
-                .Setup(acg => acg.GetProjects(1, 50))
+                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>()))
                 .Returns(() => new List<AcademyConversionProject> { project });
             
             var useCase = new GetAcademyConversionProjects(
                 mockProjectsGateway.Object,
                 new Mock<ITrustGateway>().Object,
-                new Mock<IEstablishmentGateway>().Object);
+                new Mock<IEstablishmentGateway>().Object,
+                new Mock<IIfdPipelineGateway>().Object);
 
             var result = useCase.Execute(request).ToList();
             
