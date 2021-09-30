@@ -41,7 +41,7 @@ namespace TramsDataApi.ApplyToBecome
         public string AcademyTypeAndRoute { get; set; }
         public DateTime? ProposedAcademyOpeningDate { get; set; }
         public bool? SchoolAndTrustInformationSectionComplete { get; set; }
-        public int ConversionSupportGrantAmount { get; set; }
+        public decimal ConversionSupportGrantAmount { get; set; }
 
         //general info
         public string SchoolPhase { get; set; }

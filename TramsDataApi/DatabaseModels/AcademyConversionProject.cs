@@ -44,7 +44,8 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? ProposedAcademyOpeningDate { get; set; }
         public bool? SchoolAndTrustInformationSectionComplete { get; set; }
 
-        public int ConversionSupportGrantAmount { get; set; }
+        [Column(TypeName = "decimal(38, 2)")]
+        public decimal ConversionSupportGrantAmount { get; set; }
         public string ConversionSupportGrantChangeReason { get; set; }
 
         //general info
