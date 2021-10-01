@@ -2,7 +2,8 @@
 {
     public static class SyncAcademyConversionProjectFactory
     {
-        private const int DefaultConversionSupportGrantAmount = 25000;
+        private const decimal DefaultConversionSupportGrantAmount = 25000;
+        private const string DefaultAcademyTypeAndRoute = "Converter";
 
         public static SyncAcademyConversionProject Create(SyncIfdPipeline ifdPipeline)
         {
@@ -34,7 +35,7 @@
                 //NameOfTrust
                 //SponsorReferenceNumber
                 //SponsorName
-                //AcademyTypeAndRoute
+                AcademyTypeAndRoute = DefaultAcademyTypeAndRoute,
                 ProposedAcademyOpeningDate = ifdPipeline.GeneralDetailsExpectedOpeningDate,
                 ConversionSupportGrantAmount = DefaultConversionSupportGrantAmount,
 

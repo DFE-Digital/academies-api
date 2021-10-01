@@ -27,7 +27,7 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
         public bool? SchoolAndTrustInformationSectionComplete { get; set; }
         public string PreviousHeadTeacherBoardDateQuestion { get; set; }
         public DateTime? PreviousHeadTeacherBoardDate { get; set; }
-        public int ConversionSupportGrantAmount { get; set; }
+        public decimal ConversionSupportGrantAmount { get; set; }
         public string ConversionSupportGrantChangeReason { get; set; }
 
         //general info
