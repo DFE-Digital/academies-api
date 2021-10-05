@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using TramsDataApi.ApplyToBecome;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
+using TramsDataApi.Swagger;
 using TramsDataApi.UseCases;
 
 namespace TramsDataApi
@@ -72,7 +74,6 @@ namespace TramsDataApi
             });
             services.AddSwaggerGen();
             services.ConfigureOptions<SwaggerOptions>();
-            
             services.AddUseCases();
         }
 
@@ -87,7 +88,7 @@ namespace TramsDataApi
                     c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
                 }
                 
-                c.SupportedSubmitMethods();
+                c.SupportedSubmitMethods(SubmitMethod.Get);
             });
 
             if (env.IsDevelopment())
