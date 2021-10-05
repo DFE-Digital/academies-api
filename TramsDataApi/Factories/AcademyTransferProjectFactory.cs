@@ -98,9 +98,9 @@ namespace TramsDataApi.Factories
             original.TypeOfTransfer = toMerge?.TypeOfTransfer ?? original.TypeOfTransfer;
             original.OtherTransferTypeDescription =
                 toMerge?.OtherTransferTypeDescription ?? original.OtherTransferTypeDescription;
-            original.TransferFirstDiscussed = toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed;
-            original.TargetDateForTransfer = toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer;
-            original.HtbDate = toMerge.HtbDate ?? original.HtbDate;
+            original.TransferFirstDiscussed = (updateRequest.Dates?.HasTransferFirstDiscussedDate ?? true) ? (toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed) : null;
+            original.TargetDateForTransfer = (updateRequest.Dates?.HasTargetDateForTransfer ?? true) ? (toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer) : null;
+            original.HtbDate = (updateRequest.Dates?.HasHtbDate ?? true) ? (toMerge.HtbDate ?? original.HtbDate) : null;
             original.ProjectRationale = toMerge.ProjectRationale ?? original.ProjectRationale;
             original.TrustSponsorRationale = toMerge.TrustSponsorRationale ?? original.TrustSponsorRationale;
             original.State = toMerge.State ?? original.State;
