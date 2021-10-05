@@ -1,6 +1,7 @@
 using System;
 using AutoFixture;
 using FluentAssertions;
+using FluentAssertions.Common;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
@@ -24,20 +25,40 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestIsNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
-
+            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
+            
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, null);
 
-            result.Should().BeEquivalentTo(academyConversionProject);
+            result.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
         public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestFieldsAreNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
+            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
 
             var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().OmitAutoProperties().Create();
 
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(academyConversionProject);
+            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void
+            ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectGrantFieldsAreNullOrDefault()
+        {
+            var academyConversionProject = CreateAcademyConversionProject();
+            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
+            
+            var updateRequest = new UpdateAcademyConversionProjectRequest
+            {
+                ConversionSupportGrantAmount = null,
+                ConversionSupportGrantChangeReason = null
+            };
+
+            var updatedProject = AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest);
+            updatedProject.ConversionSupportGrantAmount.Should().Be(expected.ConversionSupportGrantAmount);
+            updatedProject.ConversionSupportGrantChangeReason.Should().Be(expected.ConversionSupportGrantChangeReason);
         }
 
         [Fact]
@@ -79,7 +100,7 @@ namespace TramsDataApi.Test.Factories
 
         private AcademyConversionProject CreateAcademyConversionProject()
         {
-            return _fixture.Build<AcademyConversionProject>().OmitAutoProperties().Create();
+            return _fixture.Build<AcademyConversionProject>().Create();
         }
 
         private AcademyConversionProject CreateExpectedAcademyConversionProject(AcademyConversionProject original, UpdateAcademyConversionProjectRequest updateRequest)
@@ -128,7 +149,7 @@ namespace TramsDataApi.Test.Factories
             expected.KeyStage2PerformanceAdditionalInformation = updateRequest.KeyStage2PerformanceAdditionalInformation;
             expected.KeyStage4PerformanceAdditionalInformation = updateRequest.KeyStage4PerformanceAdditionalInformation;
             expected.KeyStage5PerformanceAdditionalInformation = updateRequest.KeyStage5PerformanceAdditionalInformation;
-            expected.ConversionSupportGrantAmount = updateRequest.ConversionSupportGrantAmount;
+            expected.ConversionSupportGrantAmount = updateRequest.ConversionSupportGrantAmount ?? default;
             expected.ConversionSupportGrantChangeReason = updateRequest.ConversionSupportGrantChangeReason;
 
             return expected;
