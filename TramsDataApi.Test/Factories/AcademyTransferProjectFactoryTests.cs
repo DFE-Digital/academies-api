@@ -357,7 +357,121 @@ namespace TramsDataApi.Test.Factories
 
             result.Should().BeEquivalentTo(expected);
         }
-    }
+        
+        [Fact]
+        public void ReturnsUpdatedAcademyTransferProject_WhenUpdating_IfRequestIsToSetDatesBackToNull()
+        {
+            var academyTransferProject = Builder<AcademyTransferProjects>
+                .CreateNew()
+                .Build();
 
-    
+            var updateRequest = new AcademyTransferProjectRequest
+            {
+                Dates = new AcademyTransferProjectDatesRequest
+                {
+                    HasTargetDateForTransfer = false,
+                    HasTransferFirstDiscussedDate = false,
+                    HasHtbDate = false
+                }
+            };
+
+            var expected = new AcademyTransferProjects
+            {
+                Id = academyTransferProject.Id,
+                Urn = academyTransferProject.Urn,   
+                OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
+                ProjectRationale = academyTransferProject.ProjectRationale,
+                TransferringAcademies = academyTransferProject.TransferringAcademies,
+                WhoInitiatedTheTransfer = academyTransferProject.WhoInitiatedTheTransfer,
+                TargetDateForTransfer = null,
+                RddOrEsfaIntervention = academyTransferProject.RddOrEsfaIntervention,
+                RddOrEsfaInterventionDetail = academyTransferProject.RddOrEsfaInterventionDetail,
+                TypeOfTransfer = academyTransferProject.TypeOfTransfer,
+                OtherTransferTypeDescription = academyTransferProject.OtherTransferTypeDescription,
+                TransferFirstDiscussed = null,
+                HtbDate = null,
+                TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
+                State = academyTransferProject.State,
+                Status = academyTransferProject.Status,
+                Author = academyTransferProject.Author,
+                Recommendation = academyTransferProject.Recommendation,
+                HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
+                HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
+                FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
+                FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+                OtherBenefitValue = academyTransferProject.OtherBenefitValue,
+                AcademyPerformanceAdditionalInformation = academyTransferProject.AcademyPerformanceAdditionalInformation,
+                PupilNumbersAdditionalInformation = academyTransferProject.PupilNumbersAdditionalInformation,
+                LatestOfstedJudgementAdditionalInformation = academyTransferProject.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation = academyTransferProject.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
+                AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+            };
+
+            var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+        
+        [Fact]
+        public void ReturnsOriginalAcademyTransferProject_WhenUpdating_IfDatesAreNull()
+        {
+            var academyTransferProject = Builder<AcademyTransferProjects>
+                .CreateNew()
+                .Build();
+
+            var updateRequest = new AcademyTransferProjectRequest
+            {
+                Dates = new AcademyTransferProjectDatesRequest
+                {
+                    TargetDateForTransfer = null,
+                    TransferFirstDiscussed = null,
+                    HtbDate = null
+                }
+            };
+
+            var expected = new AcademyTransferProjects
+            {
+                Id = academyTransferProject.Id,
+                Urn = academyTransferProject.Urn,   
+                OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
+                ProjectRationale = academyTransferProject.ProjectRationale,
+                TransferringAcademies = academyTransferProject.TransferringAcademies,
+                WhoInitiatedTheTransfer = academyTransferProject.WhoInitiatedTheTransfer,
+                TargetDateForTransfer = academyTransferProject.TargetDateForTransfer,
+                RddOrEsfaIntervention = academyTransferProject.RddOrEsfaIntervention,
+                RddOrEsfaInterventionDetail = academyTransferProject.RddOrEsfaInterventionDetail,
+                TypeOfTransfer = academyTransferProject.TypeOfTransfer,
+                OtherTransferTypeDescription = academyTransferProject.OtherTransferTypeDescription,
+                TransferFirstDiscussed = academyTransferProject.TransferFirstDiscussed,
+                HtbDate = academyTransferProject.HtbDate,
+                TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
+                State = academyTransferProject.State,
+                Status = academyTransferProject.Status,
+                Author = academyTransferProject.Author,
+                Recommendation = academyTransferProject.Recommendation,
+                HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
+                HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
+                FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
+                FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+                OtherBenefitValue = academyTransferProject.OtherBenefitValue,
+                AcademyPerformanceAdditionalInformation = academyTransferProject.AcademyPerformanceAdditionalInformation,
+                PupilNumbersAdditionalInformation = academyTransferProject.PupilNumbersAdditionalInformation,
+                LatestOfstedJudgementAdditionalInformation = academyTransferProject.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation = academyTransferProject.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
+                AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+            };
+
+            var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+    }
 }
