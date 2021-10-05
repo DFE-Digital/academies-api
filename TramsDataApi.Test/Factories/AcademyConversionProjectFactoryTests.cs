@@ -25,20 +25,22 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestIsNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
-
+            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
+            
             var result = AcademyConversionProjectFactory.Update(academyConversionProject, null);
 
-            result.Should().BeEquivalentTo(academyConversionProject);
+            result.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
         public void ReturnsOriginalAcademyConversionProject_WhenUpdatingAcademyConversionProject_IfUpdateAcademyConversionProjectRequestFieldsAreNull()
         {
             var academyConversionProject = CreateAcademyConversionProject();
+            var expected = JsonConvert.DeserializeObject<AcademyConversionProject>(JsonConvert.SerializeObject(academyConversionProject));
 
             var updateRequest = _fixture.Build<UpdateAcademyConversionProjectRequest>().OmitAutoProperties().Create();
 
-            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(academyConversionProject);
+            AcademyConversionProjectFactory.Update(academyConversionProject, updateRequest).Should().BeEquivalentTo(expected);
         }
 
         [Fact]
