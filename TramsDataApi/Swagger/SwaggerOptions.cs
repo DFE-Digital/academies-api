@@ -12,9 +12,9 @@ namespace TramsDataApi.Swagger
         private readonly IApiVersionDescriptionProvider _provider;
 
         private const string ApiKeyName = "ApiKey";
-        private const string ServiceTitle = "Acadamies API";
-        private const string ServiceDescription = "The Acadamies API provides users with access to a variety of data " +
-                                           "regarding acadamies and trusts in England.\n\n" +
+        private const string ServiceTitle = "Academies API";
+        private const string ServiceDescription = "The Academies API provides users with access to a variety of data " +
+                                           "regarding academies and trusts in England.\n\n" +
                                            "The available data includes general data acadamy transfers and " +
                                            "applications to become an academy and is compiled from a variety of internal and " +
                                            "external services.";
