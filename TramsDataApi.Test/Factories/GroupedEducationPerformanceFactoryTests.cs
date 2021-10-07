@@ -1,7 +1,7 @@
 using FizzWare.NBuilder;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
+using TramsDataApi.Factories.EducationPerformanceFactories;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories

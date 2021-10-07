@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Gateways;
 
 namespace TramsDataApi.Gateways
 {

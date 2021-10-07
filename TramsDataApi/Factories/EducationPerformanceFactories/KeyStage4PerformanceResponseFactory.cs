@@ -1,19 +1,15 @@
-using System;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.EducationPerformanceFactories
 {
-    public class KeyStage4PerformanceResponseFactory
+    public static class KeyStage4PerformanceResponseFactory
     {
         public static KeyStage4PerformanceResponse Create(SipEducationalperformancedata educationalPerformanceData, 
             SipEducationalperformancedata nationalEducationPerformance, 
             SipEducationalperformancedata localAuthorityEducationPerformance)
         {
-            if (educationalPerformanceData == null)
-            {
-                return null;
-            }
+            if (educationalPerformanceData == null) return null;
 
             return new KeyStage4PerformanceResponse
             {
@@ -48,8 +44,7 @@ namespace TramsDataApi.Factories
                  SipProgress8english = new DisadvantagedPupilsResponse
                  {
                      NotDisadvantaged = educationalPerformanceData.SipProgress8english.ToString(),
-                     Disadvantaged = 
-                         educationalPerformanceData.SipProgress8englishdisadvantaged.ToString()
+                     Disadvantaged = educationalPerformanceData.SipProgress8englishdisadvantaged.ToString()
                  },
                  SipProgress8maths = new DisadvantagedPupilsResponse
                  {
@@ -104,8 +99,7 @@ namespace TramsDataApi.Factories
                 },
                 NationalAverageP8Maths = new DisadvantagedPupilsResponse
                 {
-                    NotDisadvantaged = 
-                        nationalEducationPerformance?.SipProgress8maths?.ToString(),
+                    NotDisadvantaged = nationalEducationPerformance?.SipProgress8maths?.ToString(),
                     Disadvantaged = nationalEducationPerformance?.SipProgress8mathsdisadvantaged.ToString().ToString()
                 },
                 NationalAverageP8Ebacc = new DisadvantagedPupilsResponse

@@ -1,18 +1,15 @@
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.EducationPerformanceFactories
 {
-    public class KeyStage2PerformanceResponseFactory
+    public static class KeyStage2PerformanceResponseFactory
     {
         public static KeyStage2PerformanceResponse Create(SipEducationalperformancedata educationalPerformanceData, 
             SipEducationalperformancedata nationalAveragePerformanceData,
             SipEducationalperformancedata laAveragePerformanceData)
         {
-            if (educationalPerformanceData == null)
-            {
-                return null;
-            }
+            if (educationalPerformanceData == null) return null;
 
             return new KeyStage2PerformanceResponse
             {

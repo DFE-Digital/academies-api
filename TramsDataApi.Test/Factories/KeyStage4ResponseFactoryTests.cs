@@ -4,6 +4,7 @@ using FizzWare.NBuilder.PropertyNaming;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.Factories.EducationPerformanceFactories;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 using Xunit;
 
