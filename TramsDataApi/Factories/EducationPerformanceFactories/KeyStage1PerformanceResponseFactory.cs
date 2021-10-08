@@ -1,16 +1,13 @@
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.EducationPerformanceFactories
 {
-    public class KeyStage1PerformanceResponseFactory
+    public static class KeyStage1PerformanceResponseFactory
     {
         public static KeyStage1PerformanceResponse Create(SipPhonics phonic)
         {
-            if (phonic == null)
-            {
-                return null;
-            }
+            if (phonic == null) return null;
 
             return new KeyStage1PerformanceResponse
             {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,7 +9,7 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
+using TramsDataApi.Factories.EducationPerformanceFactories;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 using Xunit;
 

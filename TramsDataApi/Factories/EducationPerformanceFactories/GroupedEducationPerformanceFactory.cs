@@ -1,6 +1,6 @@
 using TramsDataApi.DatabaseModels;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.EducationPerformanceFactories
 {
     public class GroupedEducationPerformanceFactory
     {

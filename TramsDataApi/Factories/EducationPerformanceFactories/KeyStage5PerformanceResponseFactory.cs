@@ -1,9 +1,9 @@
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels.EducationalPerformance;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.EducationPerformanceFactories
 {
-    public class KeyStage5PerformanceResponseFactory
+    public static class KeyStage5PerformanceResponseFactory
     {
         public static KeyStage5PerformanceResponse Create(SipEducationalperformancedata educationalPerformanceData,
             SipEducationalperformancedata nationalEducationPerformance,
@@ -14,10 +14,10 @@ namespace TramsDataApi.Factories
                 Year = educationalPerformanceData.SipName,
                 AcademicQualificationAverage = educationalPerformanceData.SipAcademicLevelAveragePspe,
                 AppliedGeneralQualificationAverage = educationalPerformanceData.SipAppliedGeneralAveragePspe,
-                NationalAcademicQualificationAverage = nationalEducationPerformance.SipAcademicLevelAveragePspe,
-                NationalAppliedGeneralQualificationAverage = nationalEducationPerformance.SipAppliedGeneralAveragePspe,
-                LAAcademicQualificationAverage = localAuthorityEducationPerformance.SipAcademicLevelAveragePspe,
-                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance.SipAppliedGeneralAveragePspe,
+                NationalAcademicQualificationAverage = nationalEducationPerformance?.SipAcademicLevelAveragePspe,
+                NationalAppliedGeneralQualificationAverage = nationalEducationPerformance?.SipAppliedGeneralAveragePspe,
+                LAAcademicQualificationAverage = localAuthorityEducationPerformance?.SipAcademicLevelAveragePspe,
+                LAAppliedGeneralQualificationAverage = localAuthorityEducationPerformance?.SipAppliedGeneralAveragePspe,
                 AppliedGeneralProgress = new DisadvantagedPupilsResponse
                 {
                     NotDisadvantaged = educationalPerformanceData.SipAppliedGeneralProgress.ToString(),

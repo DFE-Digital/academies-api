@@ -8,6 +8,7 @@ using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers
 {
+    [ApiController]
     [ApiVersion("1.0")]
     public class KeyStagePerformanceController : ControllerBase
     {
