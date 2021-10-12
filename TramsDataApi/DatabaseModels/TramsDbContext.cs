@@ -100,6 +100,19 @@ namespace TramsDataApi.DatabaseModels
             {
                 entity.ToTable("AcademyConversionProjectNote", "sdd");
             });
+            
+            modelBuilder.Entity<ConcernsCase>(entity =>
+            {
+                entity.ToTable("ConcernsCase", "sdd");
+
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__CCase__C5B214360AF620234");
+                
+                entity.HasIndex(e => e.Urn)
+                    .HasName("ConcernsCaseUrns");
+            });
+
+            modelBuilder.HasSequence<int>("ConcernsCaseUrns").HasMin(10000000).StartsAt(10000000);
 
             OnModelCreatingPartial(modelBuilder);
         }
