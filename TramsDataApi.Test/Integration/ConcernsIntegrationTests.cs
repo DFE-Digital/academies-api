@@ -69,14 +69,15 @@ namespace TramsDataApi.Test.Integration
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<ConcernsCaseResponse>(jsonString);
             
-            var createdCase = _dbContext.ConcernsCase.FirstOrDefault(c => c.Urn.ToString() == result.Urn);
+            var createdCase = _dbContext.ConcernsCase.FirstOrDefault(c => c.Urn == result.Urn);
             createdCase.Should().NotBe(null);
             createdCase.Description.Should().BeEquivalentTo(createRequest.Description);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _dbContext.ConcernsCase.RemoveRange(_dbContext.ConcernsCase);
+            _dbContext.SaveChanges();
         }
     }
 }
