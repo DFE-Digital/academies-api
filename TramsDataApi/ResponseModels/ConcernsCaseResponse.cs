@@ -1,11 +1,9 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.ResponseModels
 {
-    public class ConcernsCase
+    public class ConcernsCaseResponse
     {
-        public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime ReviewedAt { get; set; }
@@ -23,9 +21,6 @@ namespace TramsDataApi.DatabaseModels
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
         public string Urn { get; set; }
-        
-        public int FkConcernsStatusId { get; set; }
-        public virtual ConcernsStatus Status { get; set; }
-
+        public int ConcernsStatusId { get; set; }
     }
 }
