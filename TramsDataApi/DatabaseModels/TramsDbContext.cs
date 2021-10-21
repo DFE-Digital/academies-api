@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace TramsDataApi.DatabaseModels
@@ -18,6 +19,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
         public virtual DbSet<AcademyConversionProject> AcademyConversionProjects { get; set; }
         public virtual DbSet<AcademyConversionProjectNote> AcademyConversionProjectNotes { get; set; }
+        public virtual DbSet<ConcernsCase> ConcernsCase { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -99,6 +101,61 @@ namespace TramsDataApi.DatabaseModels
             modelBuilder.Entity<AcademyConversionProjectNote>(entity =>
             {
                 entity.ToTable("AcademyConversionProjectNote", "sdd");
+            });
+            
+            modelBuilder.HasSequence<int>("ConcernsGlobalSequence").HasMin(1).StartsAt(1);
+
+            
+            modelBuilder.Entity<ConcernsCase>(entity =>
+            {
+                entity.ToTable("ConcernsCase", "sdd");
+
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__CCase__C5B214360AF620234");
+                
+                entity.Property(e => e.FkConcernsStatusId).HasColumnName("fk_ConcernsStatusId");
+                
+                entity.Property(e => e.Urn)
+                    .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
+                
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.ConcernsCases)
+                    .HasForeignKey(d => d.FkConcernsStatusId)
+                    .HasConstraintName("FK_Case_fk_Status");
+            });
+
+            modelBuilder.Entity<ConcernsStatus>(entity =>
+            {
+                entity.ToTable("ConcernsStatus", "sdd");
+                
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__CStatus__C5B214360AF620234");
+                
+                entity.Property(e => e.Urn)
+                    .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
+
+                entity.HasData(
+                    new ConcernsStatus
+                    {
+                        Id = 1,
+                        Name = "Live",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    }, 
+                    new ConcernsStatus
+                    {
+                        Id = 2,
+                        Name = "Monitoring",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsStatus
+                    {   Id = 3,
+                        Name = "Close",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    }
+                    );
             });
 
             OnModelCreatingPartial(modelBuilder);
