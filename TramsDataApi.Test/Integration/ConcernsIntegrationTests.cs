@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Factories;
 using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.Test.Utils;
@@ -63,14 +65,20 @@ namespace TramsDataApi.Test.Integration
                 },
                 Content =  JsonContent.Create(createRequest)
             };
+
+            var caseToBeCreated = ConcernsCaseFactory.Create(createRequest);
+            var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(caseToBeCreated);
+            
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
             
             var response = await _client.SendAsync(httpRequestMessage);
             response.StatusCode.Should().Be(201);
-            var jsonString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<ConcernsCaseResponse>(jsonString);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
             
-            var createdCase = _dbContext.ConcernsCase.FirstOrDefault(c => c.Urn == result.Urn);
-            createdCase.Should().NotBe(null);
+            var createdCase = _dbContext.ConcernsCase.FirstOrDefault(c => c.Urn == result.Data.First().Urn);
+            expected.Data.First().Urn = createdCase.Urn;
+            
+            result.Should().BeEquivalentTo(expected);
             createdCase.Description.Should().BeEquivalentTo(createRequest.Description);
         }
 

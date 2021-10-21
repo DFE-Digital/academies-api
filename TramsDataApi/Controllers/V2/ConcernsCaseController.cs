@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.Gateways;
@@ -23,10 +24,12 @@ namespace TramsDataApi.Controllers.V2
             _createConcernsCase = createConcernsCase;
         }
 
-        public ActionResult<ConcernsCaseResponse> Create(ConcernCaseRequest request)
+        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> Create(ConcernCaseRequest request)
         {
             var createdConcernsCase = _createConcernsCase.Execute(request);
-            return CreatedAtAction("Create", createdConcernsCase);
+            var response = new ApiResponseV2<ConcernsCaseResponse>(createdConcernsCase);
+            
+            return new ObjectResult(response) {StatusCode = StatusCodes.Status201Created};
         }
     }
     

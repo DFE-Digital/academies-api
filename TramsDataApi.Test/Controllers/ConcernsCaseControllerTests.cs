@@ -1,5 +1,6 @@
 using FizzWare.NBuilder;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -36,7 +37,9 @@ namespace TramsDataApi.Test.Controllers
             
             var result = controller.Create(createConcernsCaseRequest);
             
-            result.Result.Should().BeEquivalentTo(new CreatedAtActionResult("Create", null, null,concernsCaseResponse));
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(concernsCaseResponse);
+            
+            result.Result.Should().BeEquivalentTo(new ObjectResult(expected) {StatusCode = StatusCodes.Status201Created});
         }
     }
 }
