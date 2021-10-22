@@ -3,22 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211021135350_AT-AddHasDateFields")]
+    partial class ATAddHasDateFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("Relational:Sequence:.AcademyTransferProjectUrns", "'AcademyTransferProjectUrns', '', '10000000', '1', '10000000', '', 'Int32', 'False'")
-                .HasAnnotation("Relational:Sequence:.ConcernsGlobalSequence", "'ConcernsGlobalSequence', '', '1', '1', '1', '', 'Int32', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyConversionProject", b =>
@@ -417,131 +418,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.ToTable("AcademyTransferProjects","sdd");
                 });
 
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsCase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CaseAim")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ClosedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CrmEnquiry")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CurrentStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeEscalation")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeEscalationPoint")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DirectionOfTravel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FkConcernsStatusId")
-                        .HasColumnName("fk_ConcernsStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Issue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NextSteps")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReasonForReview")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ReviewedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TrustUkprn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Urn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
-
-                    b.HasKey("Id")
-                        .HasName("PK__CCase__C5B214360AF620234");
-
-                    b.HasIndex("FkConcernsStatusId");
-
-                    b.ToTable("ConcernsCase","sdd");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Urn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
-
-                    b.HasKey("Id")
-                        .HasName("PK__CStatus__C5B214360AF620234");
-
-                    b.ToTable("ConcernsStatus","sdd");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2021, 10, 20, 19, 14, 3, 879, DateTimeKind.Local).AddTicks(1210),
-                            Name = "Live",
-                            UpdatedAt = new DateTime(2021, 10, 20, 19, 14, 3, 882, DateTimeKind.Local).AddTicks(1600),
-                            Urn = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2021, 10, 20, 19, 14, 3, 882, DateTimeKind.Local).AddTicks(2090),
-                            Name = "Monitoring",
-                            UpdatedAt = new DateTime(2021, 10, 20, 19, 14, 3, 882, DateTimeKind.Local).AddTicks(2100),
-                            Urn = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2021, 10, 20, 19, 14, 3, 882, DateTimeKind.Local).AddTicks(2110),
-                            Name = "Close",
-                            UpdatedAt = new DateTime(2021, 10, 20, 19, 14, 3, 882, DateTimeKind.Local).AddTicks(2120),
-                            Urn = 0
-                        });
-                });
-
             modelBuilder.Entity("TramsDataApi.DatabaseModels.TransferringAcademies", b =>
                 {
                     b.Property<int>("Id")
@@ -585,16 +461,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .WithMany("AcademyTransferProjectIntendedTransferBenefits")
                         .HasForeignKey("FkAcademyTransferProjectId")
                         .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsCase", b =>
-                {
-                    b.HasOne("TramsDataApi.DatabaseModels.ConcernsStatus", "Status")
-                        .WithMany("ConcernsCases")
-                        .HasForeignKey("FkConcernsStatusId")
-                        .HasConstraintName("FK_Case_fk_Status")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.TransferringAcademies", b =>

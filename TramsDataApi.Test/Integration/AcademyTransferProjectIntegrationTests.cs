@@ -102,6 +102,9 @@ namespace TramsDataApi.Test.Integration
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDate = true)
+                .With(d => d.HasTargetDateForTransfer = true)
+                .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
             
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
@@ -162,6 +165,9 @@ namespace TramsDataApi.Test.Integration
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDate = true)
+                .With(d => d.HasTargetDateForTransfer = true)
+                .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
             
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
@@ -239,6 +245,9 @@ namespace TramsDataApi.Test.Integration
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDate = true)
+                .With(d => d.HasTargetDateForTransfer = true)
+                .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
             
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
@@ -328,6 +337,9 @@ namespace TramsDataApi.Test.Integration
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDate = true)
+                .With(d => d.HasTargetDateForTransfer = true)
+                .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
             
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
@@ -700,6 +712,9 @@ namespace TramsDataApi.Test.Integration
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDate = true)
+                .With(d => d.HasTargetDateForTransfer = true)
+                .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
             
             return Builder<AcademyTransferProjectRequest>.CreateNew()

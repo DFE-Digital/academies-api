@@ -101,6 +101,9 @@ namespace TramsDataApi.Test.Factories
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasTransferFirstDiscussedDate = true)
+                .With(d => d.HasHtbDate = true)
+                .With(d => d.HasTargetDateForTransfer = true)
                 .Build();
             
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
@@ -125,6 +128,9 @@ namespace TramsDataApi.Test.Factories
                 TransferFirstDiscussed = DateTime.ParseExact(createRequest.Dates.TransferFirstDiscussed, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TargetDateForTransfer = DateTime.ParseExact(createRequest.Dates.TargetDateForTransfer, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HtbDate = DateTime.ParseExact(createRequest.Dates.HtbDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                HasHtbDate = createRequest.Dates.HasHtbDate,
+                HasTransferFirstDiscussedDate = createRequest.Dates.HasTransferFirstDiscussedDate,
+                HasTargetDateForTransfer = createRequest.Dates.HasTargetDateForTransfer,
                 ProjectRationale = createRequest.Rationale.ProjectRationale,
                 TrustSponsorRationale = createRequest.Rationale.TrustSponsorRationale,
                 State = createRequest.State,
@@ -212,6 +218,9 @@ namespace TramsDataApi.Test.Factories
                 KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
                 KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
+                HasHtbDate = academyTransferProject.HasHtbDate,
+                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -280,6 +289,9 @@ namespace TramsDataApi.Test.Factories
                 KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
                 KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                HasHtbDate = academyTransferProject.HasHtbDate,
+                HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
+                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -351,6 +363,9 @@ namespace TramsDataApi.Test.Factories
                 KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
                 KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = expectedBenefits,
+                HasHtbDate = academyTransferProject.HasHtbDate,
+                HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
+                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -409,6 +424,9 @@ namespace TramsDataApi.Test.Factories
                 KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
                 KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                HasTransferFirstDiscussedDate = false,
+                HasHtbDate = false,
+                HasTargetDateForTransfer = false
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -417,8 +435,10 @@ namespace TramsDataApi.Test.Factories
         }
         
         [Fact]
-        public void ReturnsOriginalAcademyTransferProject_WhenUpdating_IfDatesAreNull()
+        public void ReturnsOriginalAcademyTransferProjectWithDatesSetToNull_WhenUpdating_IfHasDateFieldsAreFalse()
         {
+            var randomGenerator = new RandomGenerator();
+            
             var academyTransferProject = Builder<AcademyTransferProjects>
                 .CreateNew()
                 .Build();
@@ -427,9 +447,12 @@ namespace TramsDataApi.Test.Factories
             {
                 Dates = new AcademyTransferProjectDatesRequest
                 {
-                    TargetDateForTransfer = null,
-                    TransferFirstDiscussed = null,
-                    HtbDate = null
+                    TargetDateForTransfer = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    TransferFirstDiscussed = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    HasHtbDate = false,
+                    HasTargetDateForTransfer = false,
+                    HasTransferFirstDiscussedDate = false
                 }
             };
 
@@ -441,13 +464,13 @@ namespace TramsDataApi.Test.Factories
                 ProjectRationale = academyTransferProject.ProjectRationale,
                 TransferringAcademies = academyTransferProject.TransferringAcademies,
                 WhoInitiatedTheTransfer = academyTransferProject.WhoInitiatedTheTransfer,
-                TargetDateForTransfer = academyTransferProject.TargetDateForTransfer,
+                TargetDateForTransfer = null,
                 RddOrEsfaIntervention = academyTransferProject.RddOrEsfaIntervention,
                 RddOrEsfaInterventionDetail = academyTransferProject.RddOrEsfaInterventionDetail,
                 TypeOfTransfer = academyTransferProject.TypeOfTransfer,
                 OtherTransferTypeDescription = academyTransferProject.OtherTransferTypeDescription,
-                TransferFirstDiscussed = academyTransferProject.TransferFirstDiscussed,
-                HtbDate = academyTransferProject.HtbDate,
+                TransferFirstDiscussed = null,
+                HtbDate = null,
                 TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
                 State = academyTransferProject.State,
                 Status = academyTransferProject.Status,
@@ -467,6 +490,9 @@ namespace TramsDataApi.Test.Factories
                 KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
                 KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                HasTransferFirstDiscussedDate = false,
+                HasHtbDate = false,
+                HasTargetDateForTransfer = false
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);

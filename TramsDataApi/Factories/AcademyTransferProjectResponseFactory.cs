@@ -32,7 +32,10 @@ namespace TramsDataApi.Factories
             {
                 TransferFirstDiscussed = model.TransferFirstDiscussed?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TargetDateForTransfer = model.TargetDateForTransfer?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
-                HtbDate = model.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                HtbDate = model.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                HasHtbDate = model.HasHtbDate,
+                HasTargetDateForTransfer = model.HasTargetDateForTransfer,
+                HasTransferFirstDiscussedDate = model.HasTransferFirstDiscussedDate
             };
 
             var intendedTransferBenefits = new IntendedTransferBenefitResponse
