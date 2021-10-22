@@ -47,7 +47,10 @@ namespace TramsDataApi.Factories
                 LatestOfstedJudgementAdditionalInformation = request.LatestOfstedJudgementAdditionalInformation,
                 KeyStage2PerformanceAdditionalInformation = request.KeyStage2PerformanceAdditionalInformation, 
                 KeyStage4PerformanceAdditionalInformation = request.KeyStage4PerformanceAdditionalInformation, 
-                KeyStage5PerformanceAdditionalInformation = request.KeyStage5PerformanceAdditionalInformation 
+                KeyStage5PerformanceAdditionalInformation = request.KeyStage5PerformanceAdditionalInformation,
+                HasHtbDate = request.Dates?.HasHtbDate,
+                HasTransferFirstDiscussedDate = request.Dates?.HasTransferFirstDiscussedDate,
+                HasTargetDateForTransfer = request.Dates?.HasTargetDateForTransfer
             };
         }
 
@@ -101,6 +104,10 @@ namespace TramsDataApi.Factories
             original.TransferFirstDiscussed = (updateRequest.Dates?.HasTransferFirstDiscussedDate ?? true) ? (toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed) : null;
             original.TargetDateForTransfer = (updateRequest.Dates?.HasTargetDateForTransfer ?? true) ? (toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer) : null;
             original.HtbDate = (updateRequest.Dates?.HasHtbDate ?? true) ? (toMerge.HtbDate ?? original.HtbDate) : null;
+            original.HasHtbDate = toMerge.HasHtbDate ?? original.HasHtbDate;
+            original.HasTargetDateForTransfer = toMerge.HasTargetDateForTransfer ?? original.HasTargetDateForTransfer;
+            original.HasTransferFirstDiscussedDate =
+                toMerge.HasTransferFirstDiscussedDate ?? original.HasTransferFirstDiscussedDate;
             original.ProjectRationale = toMerge.ProjectRationale ?? original.ProjectRationale;
             original.TrustSponsorRationale = toMerge.TrustSponsorRationale ?? original.TrustSponsorRationale;
             original.State = toMerge.State ?? original.State;

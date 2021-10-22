@@ -30,6 +30,9 @@ namespace TramsDataApi.Test.Factories
                 HtbDate = null,
                 ProjectRationale = null,
                 TrustSponsorRationale = null,
+                HasHtbDate = null,
+                HasTransferFirstDiscussedDate = null,
+                HasTargetDateForTransfer = null,
                 State = null,
                 Status = null,
                 Author = null,
@@ -113,7 +116,11 @@ namespace TramsDataApi.Test.Factories
             {
                 TransferFirstDiscussed = academyTransferProjectModel.TransferFirstDiscussed?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TargetDateForTransfer = academyTransferProjectModel.TargetDateForTransfer?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
-                HtbDate = academyTransferProjectModel.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                HtbDate = academyTransferProjectModel.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                HasHtbDate = academyTransferProjectModel.HasHtbDate,
+                HasTransferFirstDiscussedDate = academyTransferProjectModel.HasTransferFirstDiscussedDate,
+                HasTargetDateForTransfer = academyTransferProjectModel.HasTargetDateForTransfer
+                
             };
 
             var expectedIntendedTransferBenefits = new IntendedTransferBenefitResponse
