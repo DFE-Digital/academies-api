@@ -25,6 +25,7 @@ namespace TramsDataApi.Test.Integration
         private readonly HttpClient _client;
         private readonly TramsDbContext _dbContext;
         private readonly Fixture _fixture;
+        private readonly RandomGenerator _randomGenerator;
 
         public ConcernsIntegrationTests(TramsDataApiFactory fixture)
         {
@@ -32,13 +33,12 @@ namespace TramsDataApi.Test.Integration
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _dbContext = fixture.Services.GetRequiredService<TramsDbContext>();
             _fixture = new Fixture();
+            _randomGenerator = new RandomGenerator();
         }
 
         [Fact]
         public async Task CanCreateNewConcernCase()
         {
-            var randomGenerator = new RandomGenerator();
-
             var createRequest = Builder<ConcernCaseRequest>.CreateNew()
                 .With(c => c.CreatedBy = "12345")
                 .With(c => c.Description = "Description for case")
@@ -80,6 +80,91 @@ namespace TramsDataApi.Test.Integration
             
             result.Should().BeEquivalentTo(expected);
             createdCase.Description.Should().BeEquivalentTo(createRequest.Description);
+        }
+
+        [Fact]
+        public async Task CanGetConcernCaseByUrn()
+        {
+            SetupTestData("mockUkprn");
+            var concernsCase = _dbContext.ConcernsCase.First();
+            
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-cases/urn/{concernsCase.Urn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(concernsCase);
+            
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            
+            response.StatusCode.Should().Be(200);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
+            result.Should().BeEquivalentTo(expected);
+            result.Data.First().Urn.Should().BeEquivalentTo(concernsCase.Urn);
+        }
+        
+        [Fact]
+        public async Task CanGetConcernCaseByTrustUkprn()
+        {
+            var ukprn = "100008";
+            SetupTestData(ukprn);
+            var concernsCase = _dbContext.ConcernsCase.First();
+            
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-cases/ukprn/{ukprn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(concernsCase);
+            
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            
+            response.StatusCode.Should().Be(200);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
+            result.Should().BeEquivalentTo(expected);
+            result.Data.First().Urn.Should().BeEquivalentTo(concernsCase.Urn);
+        }
+
+
+        private void SetupTestData(string trustUkprn)
+        {
+            var concernsCase = new ConcernsCase
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewedAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                CreatedBy = _randomGenerator.NextString(3,10),
+                Description = _randomGenerator.NextString(3,10),
+                CrmEnquiry = _randomGenerator.NextString(3,10),
+                TrustUkprn = trustUkprn,
+                ReasonForReview = _randomGenerator.NextString(3,10),
+                DeEscalation = _randomGenerator.DateTime(),
+                Issue = _randomGenerator.NextString(3,10),
+                CurrentStatus = _randomGenerator.NextString(3,10),
+                CaseAim = _randomGenerator.NextString(3,10),
+                DeEscalationPoint = _randomGenerator.NextString(3,10),
+                NextSteps = _randomGenerator.NextString(3,10),
+                DirectionOfTravel = _randomGenerator.NextString(3,10),
+                FkConcernsStatusId = 1,
+            };
+
+            _dbContext.ConcernsCase.Add(concernsCase);
+            _dbContext.SaveChanges();
         }
 
         public void Dispose()
