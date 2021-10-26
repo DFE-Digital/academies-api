@@ -40,9 +40,9 @@ namespace TramsDataApi.Controllers.V2
             return new ObjectResult(response) {StatusCode = StatusCodes.Status201Created};
         }
         
-        [HttpGet("/urn/{urn}")]
+        [HttpGet]
+        [Route("urn/{urn}")]
         [MapToApiVersion("2.0")]
-        
         public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByUrn(string urn)
         {
             _logger.LogInformation($"Attempting to get Concerns Case by Urn {urn}");
@@ -61,9 +61,9 @@ namespace TramsDataApi.Controllers.V2
             return Ok(response);
         }
         
-        [HttpGet("/ukprn/{trustUkprn}")]
+        [HttpGet]
+        [Route("ukprn/{trustUkprn}")]
         [MapToApiVersion("2.0")]
-        
         public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByTrustUkprn(string trustUkprn)
         {
             _logger.LogInformation($"Attempting to get Concerns Case by Trust Ukprn {trustUkprn}");

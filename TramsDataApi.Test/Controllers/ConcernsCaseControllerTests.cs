@@ -45,6 +45,28 @@ namespace TramsDataApi.Test.Controllers
         }
         
         [Fact]
+        public void GetConcernsCaseByUrn_ReturnsNotFound_WhenConcernsCaseIsNotFound()
+        {
+            var urn = "10021231";
+            
+            var getConcernsCaseByUrn = new Mock<IGetConcernsCaseByUrn>();
+            
+
+            getConcernsCaseByUrn.Setup(a => a.Execute(urn))
+                .Returns(() => null);
+
+            var controller = new ConcernsCaseController(
+                mockLogger.Object,
+                null, 
+                getConcernsCaseByUrn.Object, 
+                null
+            );
+            
+            var result = controller.GetByUrn(urn);
+            result.Result.Should().BeEquivalentTo(new NotFoundResult());
+        }
+        
+        [Fact]
         public void GetConcernsCaseByUrn_Returns200AndTheFoundConcernsCase_WhenSuccessfullyGetsAConcernsCaseByUrn()
         {
             var getConcernsCaseByUrn = new Mock<IGetConcernsCaseByUrn>();
@@ -71,7 +93,27 @@ namespace TramsDataApi.Test.Controllers
         }
         
         [Fact]
-        public void GetConcernsCaseByUrn_Returns200AndTheFoundConcernsCase_WhenSuccessfullyGetsAConcernsCaseByTrustUkprn()
+        public void GetConcernsCaseByTrustUkprn_ReturnsNotFound_WhenConcernsCaseIsNotFound()
+        {
+            var getConcernsCaseByTrustUkprn = new Mock<IGetConcernsCaseByTurstUkprn>();
+            var trustUkprn = "100008";
+
+            getConcernsCaseByTrustUkprn.Setup(a => a.Execute(trustUkprn))
+                .Returns(() => null);
+
+            var controller = new ConcernsCaseController(
+                mockLogger.Object,
+                null, 
+                null, 
+                getConcernsCaseByTrustUkprn.Object
+            );
+            
+            var result = controller.GetByTrustUkprn(trustUkprn);
+            result.Result.Should().BeEquivalentTo(new NotFoundResult());
+        }
+        
+        [Fact]
+        public void GetConcernsCaseByTrustUkprn_Returns200AndTheFoundConcernsCase_WhenSuccessfullyGetsAConcernsCaseByTrustUkprn()
         {
             var getConcernsCaseByTrustUkprn = new Mock<IGetConcernsCaseByTurstUkprn>();
             var trustUkprn = "100008";
