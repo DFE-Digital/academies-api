@@ -38,16 +38,25 @@ namespace TramsDataApi.Factories
                     EfficiencyICFPreviewOther = ifdTrustData.TrustPerformanceAndRiskEfficiencyIcfpReviewOther,
                     LinkToWorkplaceForEfficiencyICFReview =
                         ifdTrustData.TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview,
-                    NumberInTrust = ifdTrustData.NumberInTrust.ToString()
+                    NumberInTrust = ifdTrustData.NumberInTrust.ToString(),
+                    TrustType = ifdTrustData.TrustsTrustType,
+                    TrustAddress = new AddressResponse
+                    {
+                        Street = ifdTrustData.TrustContactDetailsTrustAddressLine1,
+                        AdditionalLine = ifdTrustData.TrustContactDetailsTrustAddressLine2,
+                        Locality = ifdTrustData.TrustContactDetailsTrustAddressLine3,
+                        Town = ifdTrustData.TrustContactDetailsTrustTown,
+                        County = ifdTrustData.TrustContactDetailsTrustCounty,
+                        Postcode = ifdTrustData.TrustContactDetailsTrustPostcode
+                    }
                 }; 
             }
-
-           
             
             var giasDataResponse = new GIASDataResponse
             {
                 GroupId = group.GroupId,
                 GroupName = group.GroupName,
+                GroupType = group.GroupType,
                 CompaniesHouseNumber = group.CompaniesHouseNumber,
                 GroupContactAddress = new AddressResponse
                 {
@@ -60,8 +69,13 @@ namespace TramsDataApi.Factories
                 },
                 Ukprn = group.Ukprn
             };
+            
             return new TrustResponse
-                {IfdData = ifdDataResponse, GiasData = giasDataResponse, Establishments = establishments};
+            {
+                IfdData = ifdDataResponse, 
+                GiasData = giasDataResponse, 
+                Establishments = establishments
+            };
         }
     }
 }

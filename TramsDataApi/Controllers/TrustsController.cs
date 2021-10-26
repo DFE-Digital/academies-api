@@ -1,13 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS.Core;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
-using TramsDataApi.DatabaseModels;
-using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
@@ -42,7 +36,7 @@ namespace TramsDataApi.Controllers
             }
 
             _logger.LogInformation($"Returning trust found by UKPRN {ukprn}");
-            _logger.LogDebug(JsonSerializer.Serialize<TrustResponse>(trust));
+            _logger.LogDebug(JsonSerializer.Serialize(trust));
             return Ok(trust);
         }
 
@@ -53,7 +47,7 @@ namespace TramsDataApi.Controllers
             _logger.LogInformation($"Searching for trusts by groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");
             var trusts = _searchTrusts.Execute(groupName, ukprn, companiesHouseNumber, page);
             _logger.LogInformation($"Found {trusts.Count} trusts for groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");
-            _logger.LogDebug(JsonSerializer.Serialize<IList<TrustSummaryResponse>>(trusts));
+            _logger.LogDebug(JsonSerializer.Serialize(trusts));
             return Ok(trusts);
         }
     }

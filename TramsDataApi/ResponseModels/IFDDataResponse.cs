@@ -1,3 +1,5 @@
+using TramsDataApi.DatabaseModels;
+
 namespace TramsDataApi.ResponseModels
 {
     public class IFDDataResponse
@@ -20,5 +22,7 @@ namespace TramsDataApi.ResponseModels
         public string EfficiencyICFPreviewOther { get; set; }
         public string LinkToWorkplaceForEfficiencyICFReview { get; set; }
         public string NumberInTrust { get; set; }
+        public string TrustType { get; set; }
+        public AddressResponse TrustAddress { get; set; }
     }
 }
