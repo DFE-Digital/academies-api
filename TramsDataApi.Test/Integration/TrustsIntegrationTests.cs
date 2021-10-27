@@ -215,100 +215,100 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
         }
 
-        // [Fact]
-        // public async Task ShouldReturnEstablishmentData_WhenTrustHasAnEstablishment()
-        // {
-        //     var testGroupData = new Group
-        //     {
-        //         GroupUid = "345",
-        //         GroupId = "TR45322",
-        //         GroupName = "Test Group",
-        //         CompaniesHouseNumber = "011013254",
-        //         GroupTypeCode = "5",
-        //         GroupType = "FS",
-        //         ClosedDate = "01/01/1970",
-        //         GroupStatusCode = "45",
-        //         GroupStatus = "CS",
-        //         GroupContactStreet = "Street Name",
-        //         GroupContactLocality = "Locality",
-        //         GroupContactAddress3 = "Address 3",
-        //         GroupContactTown = "Town Name",
-        //         GroupContactCounty = "County Name",
-        //         GroupContactPostcode = "P05 7CD",
-        //         HeadOfGroupTitle = "Mx",
-        //         HeadOfGroupFirstName = "First Name",
-        //         HeadOfGroupLastName = "Last Name",
-        //         Ukprn = "testukprn",
-        //         IncorporatedOnOpenDate = "01/01/1970",
-        //         OpenDate = "01/01/1970"
-        //     };
-        //
-        //     var testEstablishment = GenerateEstablishment();
-        //     var misEstablishment =
-        //         Builder<MisEstablishments>.CreateNew().With(m => m.Urn = testEstablishment.Urn).Build();
-        //     var smartData = Generators.GenerateSmartData(testEstablishment.Urn);
-        //     var nonTrustAcademies = Builder<Establishment>.CreateListOfSize(5)
-        //         .All().With(e => e.TrustsCode = "000")
-        //         .Build();
-        //     
-        //     _legacyDbContext.Group.Add(testGroupData);
-        //     _legacyDbContext.Establishment.Add(testEstablishment);
-        //     _legacyDbContext.Establishment.AddRange(nonTrustAcademies);
-        //     _legacyDbContext.MisEstablishments.Add(misEstablishment);
-        //     _legacyDbContext.SmartData.Add(smartData);
-        //     _legacyDbContext.SaveChanges();
-        //     
-        //      var establishmentResponses = new List<EstablishmentResponse>
-        //      {
-        //          EstablishmentResponseFactory.Create(testEstablishment, misEstablishment, smartData, null, null, null)
-        //      };
-        //
-        //     var httpRequestMessage = new HttpRequestMessage
-        //     {
-        //         Method = HttpMethod.Get,
-        //         RequestUri = new Uri("https://trams-api.com/trust/testukprn"),
-        //         Headers =
-        //         {
-        //             {"ApiKey", "testing-api-key"}
-        //         }
-        //     };
-        //
-        //     var expected = new TrustResponse
-        //     {
-        //         IfdData = null,
-        //         Establishments = establishmentResponses,
-        //         GiasData = new GIASDataResponse
-        //         {
-        //             GroupId = testGroupData.GroupId,
-        //             GroupName = testGroupData.GroupName,
-        //             GroupType = testGroupData.GroupType,
-        //             CompaniesHouseNumber = testGroupData.CompaniesHouseNumber,
-        //             GroupContactAddress = new AddressResponse
-        //             {
-        //                 Street = testGroupData.GroupContactStreet,
-        //                 AdditionalLine = testGroupData.GroupContactAddress3,
-        //                 Locality = testGroupData.GroupContactLocality,
-        //                 Town = testGroupData.GroupContactTown,
-        //                 County = testGroupData.GroupContactCounty,
-        //                 Postcode = testGroupData.GroupContactPostcode
-        //             },
-        //             Ukprn = testGroupData.Ukprn
-        //         }
-        //     };
-        //
-        //     var response = await _client.SendAsync(httpRequestMessage);
-        //     var jsonString = await response.Content.ReadAsStringAsync();
-        //     var result = JsonConvert.DeserializeObject<TrustResponse>(jsonString);
-        //
-        //     response.StatusCode.Should().Be(HttpStatusCode.OK);
-        //     result.Should().BeEquivalentTo(expected);
-        //     
-        //     _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-        //     _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
-        //     _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
-        //     _legacyDbContext.SmartData.RemoveRange(_legacyDbContext.SmartData);
-        //     _legacyDbContext.SaveChanges();
-        // }
+        [Fact]
+        public async Task ShouldReturnEstablishmentData_WhenTrustHasAnEstablishment()
+        {
+            var testGroupData = new Group
+            {
+                GroupUid = "345",
+                GroupId = "TR45322",
+                GroupName = "Test Group",
+                CompaniesHouseNumber = "011013254",
+                GroupTypeCode = "5",
+                GroupType = "FS",
+                ClosedDate = "01/01/1970",
+                GroupStatusCode = "45",
+                GroupStatus = "CS",
+                GroupContactStreet = "Street Name",
+                GroupContactLocality = "Locality",
+                GroupContactAddress3 = "Address 3",
+                GroupContactTown = "Town Name",
+                GroupContactCounty = "County Name",
+                GroupContactPostcode = "P05 7CD",
+                HeadOfGroupTitle = "Mx",
+                HeadOfGroupFirstName = "First Name",
+                HeadOfGroupLastName = "Last Name",
+                Ukprn = "testukprn",
+                IncorporatedOnOpenDate = "01/01/1970",
+                OpenDate = "01/01/1970"
+            };
+        
+            var testEstablishment = GenerateEstablishment();
+            var misEstablishment =
+                Builder<MisEstablishments>.CreateNew().With(m => m.Urn = testEstablishment.Urn).Build();
+            var smartData = Generators.GenerateSmartData(testEstablishment.Urn);
+            var nonTrustAcademies = Builder<Establishment>.CreateListOfSize(5)
+                .All().With(e => e.TrustsCode = "000")
+                .Build();
+            
+            _legacyDbContext.Group.Add(testGroupData);
+            _legacyDbContext.Establishment.Add(testEstablishment);
+            _legacyDbContext.Establishment.AddRange(nonTrustAcademies);
+            _legacyDbContext.MisEstablishments.Add(misEstablishment);
+            _legacyDbContext.SmartData.Add(smartData);
+            _legacyDbContext.SaveChanges();
+            
+             var establishmentResponses = new List<EstablishmentResponse>
+             {
+                 EstablishmentResponseFactory.Create(testEstablishment, misEstablishment, smartData, null, null, null)
+             };
+        
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://trams-api.com/trust/testukprn"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+        
+            var expected = new TrustResponse
+            {
+                IfdData = null,
+                Establishments = establishmentResponses,
+                GiasData = new GIASDataResponse
+                {
+                    GroupId = testGroupData.GroupId,
+                    GroupName = testGroupData.GroupName,
+                    GroupType = testGroupData.GroupType,
+                    CompaniesHouseNumber = testGroupData.CompaniesHouseNumber,
+                    GroupContactAddress = new AddressResponse
+                    {
+                        Street = testGroupData.GroupContactStreet,
+                        AdditionalLine = testGroupData.GroupContactAddress3,
+                        Locality = testGroupData.GroupContactLocality,
+                        Town = testGroupData.GroupContactTown,
+                        County = testGroupData.GroupContactCounty,
+                        Postcode = testGroupData.GroupContactPostcode
+                    },
+                    Ukprn = testGroupData.Ukprn
+                }
+            };
+        
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<TrustResponse>(jsonString);
+        
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(expected);
+            
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
+            _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
+            _legacyDbContext.SmartData.RemoveRange(_legacyDbContext.SmartData);
+            _legacyDbContext.SaveChanges();
+        }
 
         [Fact]
         public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_WithNoQueryParameters()
