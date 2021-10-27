@@ -23,7 +23,7 @@ namespace TramsDataApi.Test.UseCases
             var ukprn = "mockukprn";
             var mockTrustsGateway = new Mock<ITrustGateway>();
             var mockGetEstablishmentsByTrustUid = new Mock<IGetEstablishmentsByTrustUid>();
-            mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkprn(ukprn)).Returns(() => null);
+            mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkPrn(ukprn)).Returns(() => null);
             var useCase = new GetTrustByUkprn(mockTrustsGateway.Object, mockGetEstablishmentsByTrustUid.Object);
 
             useCase.Execute(ukprn).Should().BeNull();
@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.UseCases
             var mockTrustsGateway = new Mock<ITrustGateway>();
             var mockGetEstablishmentsByTrustUid = new Mock<IGetEstablishmentsByTrustUid>();
             
-            mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkprn(ukprn))
+            mockTrustsGateway.Setup(gateway => gateway.GetGroupByUkPrn(ukprn))
                 .Returns(expectedGroup);
             mockTrustsGateway.Setup(gateway => gateway.GetIfdTrustByGroupId(expectedGroup.GroupId))
                 .Returns(expectedTrust);

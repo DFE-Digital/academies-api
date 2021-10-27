@@ -23,11 +23,11 @@ namespace TramsDataApi.Test.UseCases
             var companiesHouseNumber = "companiesHouseNumber";
             
             var gateway = new Mock<ITrustGateway>();
-            gateway.Setup(g => g.SearchGroups(groupName, ukprn, companiesHouseNumber, 1))
+            gateway.Setup(g => g.SearchGroups(1, 10, groupName, ukprn, companiesHouseNumber))
                 .Returns(new List<Group>());
 
             var useCase = new SearchTrusts(gateway.Object, new Mock<IEstablishmentGateway>().Object);
-            var result = useCase.Execute(groupName, ukprn, companiesHouseNumber, 1);
+            var result = useCase.Execute(1, 10, groupName, ukprn, companiesHouseNumber);
 
             result.Should().BeEquivalentTo(new List<TrustSummaryResponse>());
         }
@@ -51,7 +51,7 @@ namespace TramsDataApi.Test.UseCases
             var trustsGateway = new Mock<ITrustGateway>();
             var establishmentsGateway = new Mock<IEstablishmentGateway>();
             
-            trustsGateway.Setup(g => g.SearchGroups(groupName, null, null, 1))
+            trustsGateway.Setup(g => g.SearchGroups(1, 10, groupName, null, null))
                 .Returns(expectedTrusts);
             
             establishmentsGateway.Setup(g => g.GetByTrustUid(It.IsAny<string>()))
@@ -62,7 +62,7 @@ namespace TramsDataApi.Test.UseCases
                 .ToList();
             
             var searchTrusts = new SearchTrusts(trustsGateway.Object, establishmentsGateway.Object);
-            var result = searchTrusts.Execute(groupName, null, null, 1);
+            var result = searchTrusts.Execute(1, 10, groupName, null, null);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -84,7 +84,7 @@ namespace TramsDataApi.Test.UseCases
             var trustGateway = new Mock<ITrustGateway>();
             var establishmentGateway = new Mock<IEstablishmentGateway>();
 
-            trustGateway.Setup(g => g.SearchGroups(null, ukprn, null, 1))
+            trustGateway.Setup(g => g.SearchGroups(1, 10, null, ukprn, null))
                 .Returns(new List<Group> {expectedTrust});
             establishmentGateway.Setup(g => g.GetByTrustUid(expectedTrust.GroupUid))
                 .Returns(expectedEstablishments);
@@ -95,7 +95,7 @@ namespace TramsDataApi.Test.UseCases
             };
 
             var searchTrusts = new SearchTrusts(trustGateway.Object, establishmentGateway.Object);
-            var result = searchTrusts.Execute(null, ukprn, null, 1);
+            var result = searchTrusts.Execute(1, 10, null, ukprn, null);
             result.Should().BeEquivalentTo(expected);
         }
     }

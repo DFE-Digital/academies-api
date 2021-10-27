@@ -6,9 +6,9 @@ namespace TramsDataApi.Gateways
 {
     public interface ITrustGateway
     {
-        Group GetGroupByUkprn(string ukprn);
+        Group GetGroupByUkPrn(string ukPrn);
         Trust GetIfdTrustByGroupId(string groupId);
         IQueryable<Trust> GetIfdTrustsByTrustRef(string[] trustRefs);
-        IList<Group> SearchGroups(string groupName, string ukprn, string companiesHouseNumber, int page);
+        IList<Group> SearchGroups(int page, int count, string groupName, string ukPrn, string companiesHouseNumber);
     }
 }
