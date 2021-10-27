@@ -97,13 +97,25 @@ namespace TramsDataApi.Test.Integration
                     EfficiencyICFPreviewOther = testTrustData.TrustPerformanceAndRiskEfficiencyIcfpReviewOther,
                     LinkToWorkplaceForEfficiencyICFReview = testTrustData
                         .TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview,
-                    NumberInTrust = testTrustData.NumberInTrust.ToString()
+                    NumberInTrust = testTrustData.NumberInTrust.ToString(),
+                    TrustType = testTrustData.TrustsTrustType,
+                    TrustAddress = new AddressResponse
+                    {
+                        Street = testTrustData.TrustContactDetailsTrustAddressLine1,
+                        AdditionalLine = testTrustData.TrustContactDetailsTrustAddressLine2,
+                        Locality = testTrustData.TrustContactDetailsTrustAddressLine3,
+                        Town = testTrustData.TrustContactDetailsTrustTown,
+                        County = testTrustData.TrustContactDetailsTrustCounty,
+                        Postcode = testTrustData.TrustContactDetailsTrustPostcode
+                    }
+                    
                 },
                 Establishments = new List<EstablishmentResponse>(),
                 GiasData = new GIASDataResponse
                 {
                     GroupId = testGroupData.GroupId,
                     GroupName = testGroupData.GroupName,
+                    GroupType = testGroupData.GroupType,
                     CompaniesHouseNumber = testGroupData.CompaniesHouseNumber,
                     GroupContactAddress = new AddressResponse
                     {
@@ -177,6 +189,7 @@ namespace TramsDataApi.Test.Integration
                 {
                     GroupId = testGroupData.GroupId,
                     GroupName = testGroupData.GroupName,
+                    GroupType = testGroupData.GroupType,
                     CompaniesHouseNumber = testGroupData.CompaniesHouseNumber,
                     GroupContactAddress = new AddressResponse
                     {
@@ -268,6 +281,7 @@ namespace TramsDataApi.Test.Integration
                 {
                     GroupId = testGroupData.GroupId,
                     GroupName = testGroupData.GroupName,
+                    GroupType = testGroupData.GroupType,
                     CompaniesHouseNumber = testGroupData.CompaniesHouseNumber,
                     GroupContactAddress = new AddressResponse
                     {
