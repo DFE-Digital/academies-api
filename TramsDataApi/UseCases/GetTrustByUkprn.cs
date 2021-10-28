@@ -17,7 +17,7 @@ namespace TramsDataApi.UseCases
         
         public TrustResponse Execute(string ukprn)
         {
-            var group = _trustGateway.GetGroupByUkprn(ukprn);
+            var group = _trustGateway.GetGroupByUkPrn(ukprn);
             if (group == null)
             {
                 return null;

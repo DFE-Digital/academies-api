@@ -77,7 +77,7 @@ namespace TramsDataApi.Test.Controllers
             var companiesHouseNumber = "Mockcompanieshousenumber";
 
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(groupName, ukprn, companiesHouseNumber, 1))
+            searchTrusts.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber))
                 .Returns(new List<TrustSummaryResponse>());
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
@@ -99,7 +99,7 @@ namespace TramsDataApi.Test.Controllers
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(groupName, null, companiesHouseNumber, 1))
+            searchTrusts.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber))
                 .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
@@ -120,7 +120,7 @@ namespace TramsDataApi.Test.Controllers
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(null, ukprn, null, 1))
+            searchTrusts.Setup(s => s.Execute(1, 10, null, ukprn, null))
                 .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
@@ -135,7 +135,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(5).Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(null, null, null, 1))
+            searchTrusts.Setup(s => s.Execute(1, 10, null, null, null))
                 .Returns(expectedTrustSummaries);
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);

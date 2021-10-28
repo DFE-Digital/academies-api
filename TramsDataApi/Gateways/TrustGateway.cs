@@ -16,9 +16,9 @@ namespace TramsDataApi.Gateways
             _dbContext = dbContext;
         }
 
-        public Group GetGroupByUkprn(string ukprn)
+        public Group GetGroupByUkPrn(string ukPrn)
         {
-            return _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukprn);
+            return _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukPrn);
         }
 
         public Trust GetIfdTrustByGroupId(string groupId)
@@ -37,17 +37,17 @@ namespace TramsDataApi.Gateways
             return _dbContext.Trust.Where(predicate);
         }
 
-        public IList<Group> SearchGroups(string groupName, string ukprn, string companiesHouseNumber, int page)
+        public IList<Group> SearchGroups(int page, int count, string groupName, string ukPrn, string companiesHouseNumber)
         {
-            if (groupName == null && ukprn == null && companiesHouseNumber == null)
+            if (groupName == null && ukPrn == null && companiesHouseNumber == null)
             {
-                return _dbContext.Group.OrderBy(group => group.GroupUid).Skip((page - 1) * 10).Take(10).ToList();
+                return _dbContext.Group.OrderBy(group => group.GroupUid).Skip((page - 1) * count).Take(count).ToList();
             }
 
             return _dbContext.Group
                 .Where(g => (
                     (g.GroupName.Contains(groupName) ||
-                     g.Ukprn.Contains(ukprn) ||
+                     g.Ukprn.Contains(ukPrn) ||
                      g.CompaniesHouseNumber.Contains(companiesHouseNumber))
                     && (
                         g.GroupType == "Single-academy trust" ||
@@ -55,7 +55,7 @@ namespace TramsDataApi.Gateways
                     )
                 ))
                 .OrderBy(group => group.GroupUid)
-                .Skip((page - 1) * 10).Take(10).ToList();
+                .Skip((page - 1) * count).Take(count).ToList();
         }
     }
 }

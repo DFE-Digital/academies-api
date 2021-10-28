@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -42,11 +43,19 @@ namespace TramsDataApi.Controllers
 
         [HttpGet]
         [Route("trusts")]
-        public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukprn, string companiesHouseNumber, int page = 1)
+        public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, int page = 1, int count = 10)
         {
-            _logger.LogInformation($"Searching for trusts by groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");
-            var trusts = _searchTrusts.Execute(groupName, ukprn, companiesHouseNumber, page);
-            _logger.LogInformation($"Found {trusts.Count} trusts for groupName \"{groupName}\", UKPRN \"{ukprn}\", companiesHouseNumber \"{companiesHouseNumber}\", page {page}");
+            _logger.LogInformation(
+                "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
+                groupName, ukPrn, companiesHouseNumber, page, count);
+
+            var trusts = _searchTrusts
+                .Execute(page, count, groupName, ukPrn, companiesHouseNumber);
+            
+            _logger.LogInformation(
+                "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
+                trusts.Count, groupName, ukPrn, companiesHouseNumber, page, count);
+            
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
             return Ok(trusts);
         }

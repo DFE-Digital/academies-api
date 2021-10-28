@@ -1,4 +1,7 @@
+
+using System.Linq;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.ResponseModels;
@@ -9,7 +12,7 @@ namespace TramsDataApi.Controllers.V2
     [ApiVersion("2.0")]
     [ApiController]
     [Route("v{version:apiVersion}/trusts")]
-    public class TrustsController
+    public class TrustsController : ControllerBase
     {
         private readonly IGetTrustByUkprn _getTrustByUkPrn;
         private readonly ISearchTrusts _searchTrusts;
@@ -24,20 +27,23 @@ namespace TramsDataApi.Controllers.V2
         
         [HttpGet]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukprn, string companiesHouseNumber, int page = 1)
+        public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, int page = 1, int count = 50)
         {
             _logger.LogInformation(
-                "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}",
-                groupName, ukprn, companiesHouseNumber, page);
+                "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
+                groupName, ukPrn, companiesHouseNumber, page, count);
+
+            var trusts = _searchTrusts
+                .Execute(page, count, groupName, ukPrn, companiesHouseNumber);
             
-            var trusts = _searchTrusts.Execute(groupName, ukprn, companiesHouseNumber, page);
             _logger.LogInformation(
-                "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}",
-                trusts.Count, groupName, ukprn, companiesHouseNumber, page);
+                "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
+                trusts.Count, groupName, ukPrn, companiesHouseNumber, page, count);
             
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
             
-            var response = new ApiResponseV2<TrustSummaryResponse>(trusts, null);
+            var pagingResponse = PagingResponseFactory.Create(page, count, trusts.Count, Request);
+            var response = new ApiResponseV2<TrustSummaryResponse>(trusts, pagingResponse);
             return new OkObjectResult(response);
         }
         

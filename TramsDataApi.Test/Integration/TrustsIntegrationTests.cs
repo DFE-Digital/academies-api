@@ -242,7 +242,7 @@ namespace TramsDataApi.Test.Integration
                 IncorporatedOnOpenDate = "01/01/1970",
                 OpenDate = "01/01/1970"
             };
-
+        
             var testEstablishment = GenerateEstablishment();
             var misEstablishment =
                 Builder<MisEstablishments>.CreateNew().With(m => m.Urn = testEstablishment.Urn).Build();
@@ -262,7 +262,7 @@ namespace TramsDataApi.Test.Integration
              {
                  EstablishmentResponseFactory.Create(testEstablishment, misEstablishment, smartData, null, null, null)
              };
-
+        
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -272,7 +272,7 @@ namespace TramsDataApi.Test.Integration
                     {"ApiKey", "testing-api-key"}
                 }
             };
-
+        
             var expected = new TrustResponse
             {
                 IfdData = null,
@@ -295,11 +295,11 @@ namespace TramsDataApi.Test.Integration
                     Ukprn = testGroupData.Ukprn
                 }
             };
-
+        
             var response = await _client.SendAsync(httpRequestMessage);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<TrustResponse>(jsonString);
-
+        
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
             
