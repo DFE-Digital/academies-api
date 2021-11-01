@@ -25,7 +25,7 @@ namespace TramsDataApi.Factories
                 DeEscalationPoint = request.DeEscalationPoint,
                 NextSteps = request.NextSteps,
                 DirectionOfTravel = request.DirectionOfTravel,
-                ConcernsStatusUrn = request.Status
+                StatusUrn = request.StatusUrn
             };
         }
     }

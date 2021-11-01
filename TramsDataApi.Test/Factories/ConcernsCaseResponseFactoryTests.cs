@@ -33,7 +33,7 @@ namespace TramsDataApi.Test.Factories
                 NextSteps = "next steps",
                 DirectionOfTravel = "Direction",
                 Urn = "10988",
-                ConcernsStatusUrn = "564329"
+                StatusUrn = 1
             };
 
             var expected = new ConcernsCaseResponse
@@ -55,7 +55,7 @@ namespace TramsDataApi.Test.Factories
                 NextSteps = concernsCase.NextSteps,
                 DirectionOfTravel = concernsCase.DirectionOfTravel,
                 Urn = concernsCase.Urn,
-                Status = concernsCase.ConcernsStatusUrn
+                StatusUrn = concernsCase.StatusUrn
             };
 
             var result = ConcernsCaseResponseFactory.Create(concernsCase);

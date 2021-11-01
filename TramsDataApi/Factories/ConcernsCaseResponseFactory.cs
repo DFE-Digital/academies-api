@@ -26,7 +26,7 @@ namespace TramsDataApi.Factories
                 NextSteps = concernsCase.NextSteps,
                 DirectionOfTravel = concernsCase.DirectionOfTravel,
                 Urn = concernsCase.Urn,
-                Status = concernsCase.ConcernsStatusUrn
+                StatusUrn = concernsCase.StatusUrn
             };
         }
     }

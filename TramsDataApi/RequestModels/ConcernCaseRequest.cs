@@ -22,6 +22,6 @@ namespace TramsDataApi.RequestModels
         public string DeEscalationPoint { get; set; }
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
-        public string Status { get; set; }
+        public int StatusUrn { get; set; }
     }
 }

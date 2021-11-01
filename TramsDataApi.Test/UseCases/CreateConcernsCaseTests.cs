@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(c => c.DeEscalationPoint = "Point of de-escalation")
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
-                .With(c => c.Status = "12355")
+                .With(c => c.StatusUrn = 2)
                 .Build();
             
             var createdConcernsCase = ConcernsCaseFactory.Create(createRequest);

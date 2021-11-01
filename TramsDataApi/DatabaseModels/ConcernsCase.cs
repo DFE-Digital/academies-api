@@ -23,6 +23,6 @@ namespace TramsDataApi.DatabaseModels
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
         public string Urn { get; set; }
-        public string ConcernsStatusUrn { get; set; }
+        public int StatusUrn { get; set; }
     }
 }
