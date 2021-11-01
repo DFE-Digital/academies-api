@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211101144057_UpdateConcernsCaseMigration")]
+    partial class UpdateConcernsCaseMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -433,6 +435,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<int?>("ConcernsStatusId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ConcernsStatusUrn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -468,9 +473,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<DateTime>("ReviewAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("StatusUrn")
-                        .HasColumnType("int");
 
                     b.Property<string>("TrustUkprn")
                         .HasColumnType("nvarchar(max)");
@@ -521,25 +523,25 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 11, 1, 15, 46, 15, 533, DateTimeKind.Local).AddTicks(3970),
+                            CreatedAt = new DateTime(2021, 11, 1, 14, 40, 56, 645, DateTimeKind.Local).AddTicks(9630),
                             Name = "Live",
-                            UpdatedAt = new DateTime(2021, 11, 1, 15, 46, 15, 536, DateTimeKind.Local).AddTicks(2910),
+                            UpdatedAt = new DateTime(2021, 11, 1, 14, 40, 56, 648, DateTimeKind.Local).AddTicks(8580),
                             Urn = 0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 11, 1, 15, 46, 15, 536, DateTimeKind.Local).AddTicks(3380),
+                            CreatedAt = new DateTime(2021, 11, 1, 14, 40, 56, 648, DateTimeKind.Local).AddTicks(9030),
                             Name = "Monitoring",
-                            UpdatedAt = new DateTime(2021, 11, 1, 15, 46, 15, 536, DateTimeKind.Local).AddTicks(3400),
+                            UpdatedAt = new DateTime(2021, 11, 1, 14, 40, 56, 648, DateTimeKind.Local).AddTicks(9050),
                             Urn = 0
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 11, 1, 15, 46, 15, 536, DateTimeKind.Local).AddTicks(3410),
+                            CreatedAt = new DateTime(2021, 11, 1, 14, 40, 56, 648, DateTimeKind.Local).AddTicks(9060),
                             Name = "Close",
-                            UpdatedAt = new DateTime(2021, 11, 1, 15, 46, 15, 536, DateTimeKind.Local).AddTicks(3410),
+                            UpdatedAt = new DateTime(2021, 11, 1, 14, 40, 56, 648, DateTimeKind.Local).AddTicks(9060),
                             Urn = 0
                         });
                 });

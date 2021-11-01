@@ -18,13 +18,13 @@ namespace TramsDataApi.Test.Factories
                 Id = 123,
                 CreatedAt = new DateTime(2021, 10,07),
                 UpdatedAt = new DateTime(2021, 10,07),
-                ReviewedAt = new DateTime(2021, 10,07),
+                ReviewAt = new DateTime(2021, 10,07),
                 ClosedAt = new DateTime(2021, 10,07),
                 CreatedBy = "12345",
                 Description = "Test description",
                 CrmEnquiry = "9876",
                 TrustUkprn = "7654893",
-                ReasonForReview = "34567",
+                ReasonAtReview = "34567",
                 DeEscalation = new DateTime(2021, 10,07),
                 Issue = "564378",
                 CurrentStatus = "87960",
@@ -33,20 +33,20 @@ namespace TramsDataApi.Test.Factories
                 NextSteps = "next steps",
                 DirectionOfTravel = "Direction",
                 Urn = "10988",
-                FkConcernsStatusId = 7
+                StatusUrn = 1
             };
 
             var expected = new ConcernsCaseResponse
             {
                 CreatedAt = concernsCase.CreatedAt,
                 UpdatedAt = concernsCase.UpdatedAt,
-                ReviewedAt = concernsCase.ReviewedAt,
+                ReviewedAt = concernsCase.ReviewAt,
                 ClosedAt = concernsCase.ClosedAt,
                 CreatedBy = concernsCase.CreatedBy,
                 Description = concernsCase.Description,
                 CrmEnquiry = concernsCase.CrmEnquiry,
                 TrustUkprn = concernsCase.TrustUkprn,
-                ReasonForReview = concernsCase.ReasonForReview,
+                ReasonForReview = concernsCase.ReasonAtReview,
                 DeEscalation = concernsCase.DeEscalation,
                 Issue = concernsCase.Issue,
                 CurrentStatus = concernsCase.CurrentStatus,
@@ -55,7 +55,7 @@ namespace TramsDataApi.Test.Factories
                 NextSteps = concernsCase.NextSteps,
                 DirectionOfTravel = concernsCase.DirectionOfTravel,
                 Urn = concernsCase.Urn,
-                ConcernsStatusId = concernsCase.FkConcernsStatusId
+                StatusUrn = concernsCase.StatusUrn
             };
 
             var result = ConcernsCaseResponseFactory.Create(concernsCase);

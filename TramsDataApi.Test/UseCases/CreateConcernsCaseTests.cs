@@ -21,7 +21,7 @@ namespace TramsDataApi.Test.UseCases
             var createRequest = Builder<ConcernCaseRequest>.CreateNew()
                 .With(c => c.CreatedAt = new DateTime(2022,10,13))
                 .With(c => c.UpdatedAt = new DateTime(2022,06,07))
-                .With(c => c.ReviewedAt = new DateTime(2022,07,10))
+                .With(c => c.ReviewAt = new DateTime(2022,07,10))
                 .With(c => c.CreatedBy = "7654")
                 .With(c => c.Description = " Test Description for case")
                 .With(c => c.CrmEnquiry = "3456")
@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(c => c.DeEscalationPoint = "Point of de-escalation")
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
-                .With(c => c.ConcernsStatusId = 1)
+                .With(c => c.StatusUrn = 2)
                 .Build();
             
             var createdConcernsCase = ConcernsCaseFactory.Create(createRequest);

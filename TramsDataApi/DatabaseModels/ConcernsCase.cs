@@ -8,13 +8,13 @@ namespace TramsDataApi.DatabaseModels
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public DateTime ReviewedAt { get; set; }
+        public DateTime ReviewAt { get; set; }
         public DateTime ClosedAt { get; set; }
         public string CreatedBy { get; set; }
         public string Description { get; set; }
         public string CrmEnquiry { get; set; }
         public string TrustUkprn { get; set; }
-        public string ReasonForReview { get; set; }
+        public string ReasonAtReview { get; set; }
         public DateTime? DeEscalation { get; set; }
         public string Issue { get; set; }
         public string CurrentStatus { get; set; }
@@ -23,9 +23,6 @@ namespace TramsDataApi.DatabaseModels
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
         public string Urn { get; set; }
-        
-        public int FkConcernsStatusId { get; set; }
-        public virtual ConcernsStatus Status { get; set; }
-
+        public int StatusUrn { get; set; }
     }
 }

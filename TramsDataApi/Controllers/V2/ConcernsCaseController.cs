@@ -16,18 +16,18 @@ namespace TramsDataApi.Controllers.V2
         private readonly ILogger<ConcernsCaseController> _logger;
         private readonly ICreateConcernsCase _createConcernsCase;
         private readonly IGetConcernsCaseByUrn _getConcernsCaseByUrn;
-        private readonly IGetConcernsCaseByTurstUkprn _getConcernsCaseByTurstUkprn;
+        private readonly IGetConcernsCaseByTrustUkprn _getConcernsCaseByTrustUkprn;
 
         public ConcernsCaseController(
             ILogger<ConcernsCaseController> logger, 
             ICreateConcernsCase createConcernsCase,
             IGetConcernsCaseByUrn getConcernsCaseByUrn,
-            IGetConcernsCaseByTurstUkprn getConcernsCaseByTurstUkprn)
+            IGetConcernsCaseByTrustUkprn getConcernsCaseByTrustUkprn)
         {
             _logger = logger;
             _createConcernsCase = createConcernsCase;
             _getConcernsCaseByUrn = getConcernsCaseByUrn;
-            _getConcernsCaseByTurstUkprn = getConcernsCaseByTurstUkprn;
+            _getConcernsCaseByTrustUkprn = getConcernsCaseByTrustUkprn;
         }
         
         [HttpPost]
@@ -64,20 +64,15 @@ namespace TramsDataApi.Controllers.V2
         [HttpGet]
         [Route("ukprn/{trustUkprn}")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByTrustUkprn(string trustUkprn)
+        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByTrustUkprn(string trustUkprn, int page = 1, int count = 50)
         {
-            _logger.LogInformation($"Attempting to get Concerns Case by Trust Ukprn {trustUkprn}");
-            var concernsCase = _getConcernsCaseByTurstUkprn.Execute(trustUkprn);
-            
-            if (concernsCase == null)
-            {
-                _logger.LogInformation($"No Concerns case found for Trust Ukprn {trustUkprn}");
-                return NotFound();
-            }
-            
-            _logger.LogInformation($"Returning Concerns case with Trust Ukprn {trustUkprn}");
-            _logger.LogDebug(JsonSerializer.Serialize(concernsCase));
-            var response = new ApiResponseV2<ConcernsCaseResponse>(concernsCase);
+            _logger.LogInformation($"Attempting to get Concerns Cases by Trust Ukprn {trustUkprn}, page {page}, count {count}");
+            var concernsCases = _getConcernsCaseByTrustUkprn.Execute(trustUkprn);
+
+            _logger.LogInformation($"Returning Concerns cases with Trust Ukprn {trustUkprn}, page {page}, count {count}");
+            _logger.LogDebug(JsonSerializer.Serialize(concernsCases));
+            var pagingResponse = PagingResponseFactory.Create(page, count, concernsCases.Count, Request);
+            var response = new ApiResponseV2<ConcernsCaseResponse>(concernsCases, pagingResponse);
             
             return Ok(response);
         }

@@ -16,7 +16,7 @@ namespace TramsDataApi.Test.Factories
             var request = Builder<ConcernCaseRequest>.CreateNew()
                 .With(c => c.CreatedAt = new DateTime(2022,10,13))
                 .With(c => c.UpdatedAt = new DateTime(2022,06,07))
-                .With(c => c.ReviewedAt = new DateTime(2022,07,10))
+                .With(c => c.ReviewAt = new DateTime(2022,07,10))
                 .With(c => c.CreatedBy = "7654")
                 .With(c => c.Description = " Test Description for case")
                 .With(c => c.CrmEnquiry = "3456")
@@ -29,20 +29,20 @@ namespace TramsDataApi.Test.Factories
                 .With(c => c.DeEscalationPoint = "Point of de-escalation")
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
-                .With(c => c.ConcernsStatusId = 1)
+                .With(c => c.StatusUrn = 3)
                 .Build();
 
             var expected = new ConcernsCase
             {
                 CreatedAt = request.CreatedAt,
                 UpdatedAt = request.UpdatedAt,
-                ReviewedAt = request.ReviewedAt,
+                ReviewAt = request.ReviewAt,
                 ClosedAt = request.ClosedAt,
                 CreatedBy = request.CreatedBy,
                 Description = request.Description,
                 CrmEnquiry = request.CrmEnquiry,
                 TrustUkprn = request.TrustUkprn,
-                ReasonForReview = request.ReasonForReview,
+                ReasonAtReview = request.ReasonForReview,
                 DeEscalation = request.DeEscalation,
                 Issue = request.Issue,
                 CurrentStatus = request.CurrentStatus,
@@ -50,7 +50,7 @@ namespace TramsDataApi.Test.Factories
                 DeEscalationPoint = request.DeEscalationPoint,
                 NextSteps = request.NextSteps,
                 DirectionOfTravel = request.DirectionOfTravel,
-                FkConcernsStatusId = request.ConcernsStatusId
+                StatusUrn = request.StatusUrn
             };
 
             var result = ConcernsCaseFactory.Create(request);

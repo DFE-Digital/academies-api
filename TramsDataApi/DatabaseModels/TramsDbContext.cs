@@ -112,16 +112,10 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.HasKey(e => e.Id)
                     .HasName("PK__CCase__C5B214360AF620234");
-                
-                entity.Property(e => e.FkConcernsStatusId).HasColumnName("fk_ConcernsStatusId");
-                
+
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
                 
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.ConcernsCases)
-                    .HasForeignKey(d => d.FkConcernsStatusId)
-                    .HasConstraintName("FK_Case_fk_Status");
             });
 
             modelBuilder.Entity<ConcernsStatus>(entity =>

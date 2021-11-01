@@ -11,13 +11,13 @@ namespace TramsDataApi.Factories
             {
                 CreatedAt = request.CreatedAt,
                 UpdatedAt = request.UpdatedAt,
-                ReviewedAt = request.ReviewedAt,
+                ReviewAt = request.ReviewAt,
                 ClosedAt = request.ClosedAt,
                 CreatedBy = request.CreatedBy,
                 Description = request.Description,
                 CrmEnquiry = request.CrmEnquiry,
                 TrustUkprn = request.TrustUkprn,
-                ReasonForReview = request.ReasonForReview,
+                ReasonAtReview = request.ReasonForReview,
                 DeEscalation = request.DeEscalation,
                 Issue = request.Issue,
                 CurrentStatus = request.CurrentStatus,
@@ -25,7 +25,7 @@ namespace TramsDataApi.Factories
                 DeEscalationPoint = request.DeEscalationPoint,
                 NextSteps = request.NextSteps,
                 DirectionOfTravel = request.DirectionOfTravel,
-                FkConcernsStatusId = request.ConcernsStatusId
+                StatusUrn = request.StatusUrn
             };
         }
     }

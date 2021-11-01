@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 
@@ -20,9 +21,9 @@ namespace TramsDataApi.Gateways
             return concernsCase;
         }
 
-        public ConcernsCase GetConcernsCaseByTrustUkprn(string trustUkprn)
+        public IList<ConcernsCase> GetConcernsCaseByTrustUkprn(string trustUkprn)
         {
-            return _tramsDbContext.ConcernsCase.FirstOrDefault(c => c.TrustUkprn == trustUkprn);
+            return _tramsDbContext.ConcernsCase.Where(c => c.TrustUkprn == trustUkprn).ToList();
         }
 
         public ConcernsCase GetConcernsCaseByUrn(string urn)

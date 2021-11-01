@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -52,7 +53,7 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.DeEscalationPoint = "Point of de-escalation")
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
-                .With(c => c.ConcernsStatusId = 1)
+                .With(c => c.StatusUrn = 1)
                 .Build();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -116,7 +117,8 @@ namespace TramsDataApi.Test.Integration
             var ukprn = "100008";
             SetupTestData(ukprn);
             var concernsCase = _dbContext.ConcernsCase.First();
-            
+
+            var expectedData = new List<ConcernsCase> {concernsCase};
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -128,8 +130,9 @@ namespace TramsDataApi.Test.Integration
             };
             
             var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(concernsCase);
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
             
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(new List<ConcernsCaseResponse>{expectedConcernsCaseResponse}, expectedPaging);
             
             var response = await _client.SendAsync(httpRequestMessage);
             
@@ -137,6 +140,38 @@ namespace TramsDataApi.Test.Integration
             var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
             result.Should().BeEquivalentTo(expected);
             result.Data.First().Urn.Should().BeEquivalentTo(concernsCase.Urn);
+        }
+        
+        [Fact]
+        public async Task CanGetMultipleConcernCasesByTrustUkprn()
+        {
+            var ukprn = "100008";
+            SetupTestData(ukprn);
+            SetupTestData(ukprn);
+            var concernsCases = _dbContext.ConcernsCase;
+            var expectedData = concernsCases.ToList();
+            
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-cases/ukprn/{ukprn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+
+            var expectedConcernsCaseResponse = concernsCases.Select(c => ConcernsCaseResponseFactory.Create(c)).ToList();
+            
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse, expectedPaging);
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Should().BeEquivalentTo(expected);
+            content.Data.Count().Should().Be(2);
         }
 
 
@@ -146,13 +181,13 @@ namespace TramsDataApi.Test.Integration
             {
                 CreatedAt = _randomGenerator.DateTime(),
                 UpdatedAt = _randomGenerator.DateTime(),
-                ReviewedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
                 ClosedAt = _randomGenerator.DateTime(),
                 CreatedBy = _randomGenerator.NextString(3,10),
                 Description = _randomGenerator.NextString(3,10),
                 CrmEnquiry = _randomGenerator.NextString(3,10),
                 TrustUkprn = trustUkprn,
-                ReasonForReview = _randomGenerator.NextString(3,10),
+                ReasonAtReview = _randomGenerator.NextString(3,10),
                 DeEscalation = _randomGenerator.DateTime(),
                 Issue = _randomGenerator.NextString(3,10),
                 CurrentStatus = _randomGenerator.NextString(3,10),
@@ -160,7 +195,7 @@ namespace TramsDataApi.Test.Integration
                 DeEscalationPoint = _randomGenerator.NextString(3,10),
                 NextSteps = _randomGenerator.NextString(3,10),
                 DirectionOfTravel = _randomGenerator.NextString(3,10),
-                FkConcernsStatusId = 1,
+                StatusUrn = 2,
             };
 
             _dbContext.ConcernsCase.Add(concernsCase);
