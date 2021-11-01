@@ -11,13 +11,13 @@ namespace TramsDataApi.Factories
             {
                 CreatedAt = concernsCase.CreatedAt,
                 UpdatedAt = concernsCase.UpdatedAt,
-                ReviewedAt = concernsCase.ReviewedAt,
+                ReviewedAt = concernsCase.ReviewAt,
                 ClosedAt = concernsCase.ClosedAt,
                 CreatedBy = concernsCase.CreatedBy,
                 Description = concernsCase.Description,
                 CrmEnquiry = concernsCase.CrmEnquiry,
                 TrustUkprn = concernsCase.TrustUkprn,
-                ReasonForReview = concernsCase.ReasonForReview,
+                ReasonForReview = concernsCase.ReasonAtReview,
                 DeEscalation = concernsCase.DeEscalation,
                 Issue = concernsCase.Issue,
                 CurrentStatus = concernsCase.CurrentStatus,
@@ -26,7 +26,7 @@ namespace TramsDataApi.Factories
                 NextSteps = concernsCase.NextSteps,
                 DirectionOfTravel = concernsCase.DirectionOfTravel,
                 Urn = concernsCase.Urn,
-                ConcernsStatusId = concernsCase.FkConcernsStatusId
+                Status = concernsCase.ConcernsStatusUrn
             };
         }
     }

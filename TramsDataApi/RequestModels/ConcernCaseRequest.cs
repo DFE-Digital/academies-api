@@ -8,7 +8,7 @@ namespace TramsDataApi.RequestModels
     {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public DateTime ReviewedAt { get; set; }
+        public DateTime ReviewAt { get; set; }
         public DateTime ClosedAt { get; set; }
         public string CreatedBy { get; set; }
         public string Description { get; set; }
@@ -22,6 +22,6 @@ namespace TramsDataApi.RequestModels
         public string DeEscalationPoint { get; set; }
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
-        public int ConcernsStatusId { get; set; }
+        public string Status { get; set; }
     }
 }

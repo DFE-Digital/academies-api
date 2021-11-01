@@ -53,7 +53,7 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.DeEscalationPoint = "Point of de-escalation")
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
-                .With(c => c.ConcernsStatusId = 1)
+                .With(c => c.Status = "987654")
                 .Build();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -181,13 +181,13 @@ namespace TramsDataApi.Test.Integration
             {
                 CreatedAt = _randomGenerator.DateTime(),
                 UpdatedAt = _randomGenerator.DateTime(),
-                ReviewedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
                 ClosedAt = _randomGenerator.DateTime(),
                 CreatedBy = _randomGenerator.NextString(3,10),
                 Description = _randomGenerator.NextString(3,10),
                 CrmEnquiry = _randomGenerator.NextString(3,10),
                 TrustUkprn = trustUkprn,
-                ReasonForReview = _randomGenerator.NextString(3,10),
+                ReasonAtReview = _randomGenerator.NextString(3,10),
                 DeEscalation = _randomGenerator.DateTime(),
                 Issue = _randomGenerator.NextString(3,10),
                 CurrentStatus = _randomGenerator.NextString(3,10),
@@ -195,7 +195,7 @@ namespace TramsDataApi.Test.Integration
                 DeEscalationPoint = _randomGenerator.NextString(3,10),
                 NextSteps = _randomGenerator.NextString(3,10),
                 DirectionOfTravel = _randomGenerator.NextString(3,10),
-                FkConcernsStatusId = 1,
+                ConcernsStatusUrn = "53258",
             };
 
             _dbContext.ConcernsCase.Add(concernsCase);
