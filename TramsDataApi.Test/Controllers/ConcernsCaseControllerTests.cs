@@ -112,9 +112,14 @@ namespace TramsDataApi.Test.Controllers
                 getConcernsCaseByTrustUkprn.Object
             );
             
-            var result = controller.GetByTrustUkprn(trustUkprn);
-            
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(concernsCaseResponse);
+            var result = controller.GetByTrustUkprn(trustUkprn, 1, 10);
+            var expectedPagingResponse = new PagingResponse
+            {
+                Page = 1,
+                RecordCount = 1,
+                NextPageUrl = null
+            };
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(new List<ConcernsCaseResponse>{concernsCaseResponse}, expectedPagingResponse);
             
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }

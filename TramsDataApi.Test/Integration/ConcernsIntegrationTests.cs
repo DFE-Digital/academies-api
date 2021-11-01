@@ -117,7 +117,8 @@ namespace TramsDataApi.Test.Integration
             var ukprn = "100008";
             SetupTestData(ukprn);
             var concernsCase = _dbContext.ConcernsCase.First();
-            
+
+            var expectedData = new List<ConcernsCase> {concernsCase};
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -129,8 +130,9 @@ namespace TramsDataApi.Test.Integration
             };
             
             var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(concernsCase);
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
             
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(new List<ConcernsCaseResponse>{expectedConcernsCaseResponse}, expectedPaging);
             
             var response = await _client.SendAsync(httpRequestMessage);
             
@@ -147,7 +149,7 @@ namespace TramsDataApi.Test.Integration
             SetupTestData(ukprn);
             SetupTestData(ukprn);
             var concernsCases = _dbContext.ConcernsCase;
-            
+            var expectedData = concernsCases.ToList();
             
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -158,10 +160,11 @@ namespace TramsDataApi.Test.Integration
                     {"ApiKey", "testing-api-key"}
                 }
             };
-            
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+
             var expectedConcernsCaseResponse = concernsCases.Select(c => ConcernsCaseResponseFactory.Create(c)).ToList();
             
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse, null);
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse, expectedPaging);
             
             var response = await _client.SendAsync(httpRequestMessage);
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
