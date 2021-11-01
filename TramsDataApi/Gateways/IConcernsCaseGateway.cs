@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -5,7 +6,7 @@ namespace TramsDataApi.Gateways
     public interface IConcernsCaseGateway
     {
         ConcernsCase SaveConcernsCase(ConcernsCase concernsCase);
-        ConcernsCase GetConcernsCaseByTrustUkprn(string trustUkprn);
+        IList<ConcernsCase> GetConcernsCaseByTrustUkprn(string trustUkprn);
         ConcernsCase GetConcernsCaseByUrn(string urn);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -137,6 +138,37 @@ namespace TramsDataApi.Test.Integration
             var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
             result.Should().BeEquivalentTo(expected);
             result.Data.First().Urn.Should().BeEquivalentTo(concernsCase.Urn);
+        }
+        
+        [Fact]
+        public async Task CanGetMultipleConcernCasesByTrustUkprn()
+        {
+            var ukprn = "100008";
+            SetupTestData(ukprn);
+            SetupTestData(ukprn);
+            var concernsCases = _dbContext.ConcernsCase;
+            
+            
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-cases/ukprn/{ukprn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var expectedConcernsCaseResponse = concernsCases.Select(c => ConcernsCaseResponseFactory.Create(c)).ToList();
+            
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse, null);
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Should().BeEquivalentTo(expected);
+            content.Data.Count().Should().Be(2);
         }
 
 

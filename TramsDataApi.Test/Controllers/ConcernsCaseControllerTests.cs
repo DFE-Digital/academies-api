@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
@@ -91,38 +92,18 @@ namespace TramsDataApi.Test.Controllers
             
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
-        
-        [Fact]
-        public void GetConcernsCaseByTrustUkprn_ReturnsNotFound_WhenConcernsCaseIsNotFound()
-        {
-            var getConcernsCaseByTrustUkprn = new Mock<IGetConcernsCaseByTurstUkprn>();
-            var trustUkprn = "100008";
 
-            getConcernsCaseByTrustUkprn.Setup(a => a.Execute(trustUkprn))
-                .Returns(() => null);
-
-            var controller = new ConcernsCaseController(
-                mockLogger.Object,
-                null, 
-                null, 
-                getConcernsCaseByTrustUkprn.Object
-            );
-            
-            var result = controller.GetByTrustUkprn(trustUkprn);
-            result.Result.Should().BeEquivalentTo(new NotFoundResult());
-        }
-        
         [Fact]
         public void GetConcernsCaseByTrustUkprn_Returns200AndTheFoundConcernsCase_WhenSuccessfullyGetsAConcernsCaseByTrustUkprn()
         {
-            var getConcernsCaseByTrustUkprn = new Mock<IGetConcernsCaseByTurstUkprn>();
+            var getConcernsCaseByTrustUkprn = new Mock<IGetConcernsCaseByTrustUkprn>();
             var trustUkprn = "100008";
 
             var concernsCaseResponse = Builder<ConcernsCaseResponse>
                 .CreateNew().Build();
 
             getConcernsCaseByTrustUkprn.Setup(a => a.Execute(trustUkprn))
-                .Returns(concernsCaseResponse);
+                .Returns(new List<ConcernsCaseResponse>{concernsCaseResponse});
 
             var controller = new ConcernsCaseController(
                 mockLogger.Object,

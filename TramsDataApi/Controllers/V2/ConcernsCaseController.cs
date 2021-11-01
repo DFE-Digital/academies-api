@@ -16,18 +16,18 @@ namespace TramsDataApi.Controllers.V2
         private readonly ILogger<ConcernsCaseController> _logger;
         private readonly ICreateConcernsCase _createConcernsCase;
         private readonly IGetConcernsCaseByUrn _getConcernsCaseByUrn;
-        private readonly IGetConcernsCaseByTurstUkprn _getConcernsCaseByTurstUkprn;
+        private readonly IGetConcernsCaseByTrustUkprn _getConcernsCaseByTrustUkprn;
 
         public ConcernsCaseController(
             ILogger<ConcernsCaseController> logger, 
             ICreateConcernsCase createConcernsCase,
             IGetConcernsCaseByUrn getConcernsCaseByUrn,
-            IGetConcernsCaseByTurstUkprn getConcernsCaseByTurstUkprn)
+            IGetConcernsCaseByTrustUkprn getConcernsCaseByTrustUkprn)
         {
             _logger = logger;
             _createConcernsCase = createConcernsCase;
             _getConcernsCaseByUrn = getConcernsCaseByUrn;
-            _getConcernsCaseByTurstUkprn = getConcernsCaseByTurstUkprn;
+            _getConcernsCaseByTrustUkprn = getConcernsCaseByTrustUkprn;
         }
         
         [HttpPost]
@@ -67,17 +67,11 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByTrustUkprn(string trustUkprn)
         {
             _logger.LogInformation($"Attempting to get Concerns Case by Trust Ukprn {trustUkprn}");
-            var concernsCase = _getConcernsCaseByTurstUkprn.Execute(trustUkprn);
-            
-            if (concernsCase == null)
-            {
-                _logger.LogInformation($"No Concerns case found for Trust Ukprn {trustUkprn}");
-                return NotFound();
-            }
-            
+            var concernsCases = _getConcernsCaseByTrustUkprn.Execute(trustUkprn);
+
             _logger.LogInformation($"Returning Concerns case with Trust Ukprn {trustUkprn}");
-            _logger.LogDebug(JsonSerializer.Serialize(concernsCase));
-            var response = new ApiResponseV2<ConcernsCaseResponse>(concernsCase);
+            _logger.LogDebug(JsonSerializer.Serialize(concernsCases));
+            var response = new ApiResponseV2<ConcernsCaseResponse>(concernsCases, null);
             
             return Ok(response);
         }
