@@ -67,7 +67,7 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByTrustUkprn(string trustUkprn, int page = 1, int count = 50)
         {
             _logger.LogInformation($"Attempting to get Concerns Cases by Trust Ukprn {trustUkprn}, page {page}, count {count}");
-            var concernsCases = _getConcernsCaseByTrustUkprn.Execute(trustUkprn);
+            var concernsCases = _getConcernsCaseByTrustUkprn.Execute(trustUkprn, page, count);
 
             _logger.LogInformation($"Returning Concerns cases with Trust Ukprn {trustUkprn}, page {page}, count {count}");
             _logger.LogDebug(JsonSerializer.Serialize(concernsCases));

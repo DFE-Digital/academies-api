@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -21,14 +22,21 @@ namespace TramsDataApi.Gateways
             return concernsCase;
         }
 
-        public IList<ConcernsCase> GetConcernsCaseByTrustUkprn(string trustUkprn)
+        public IList<ConcernsCase> GetConcernsCaseByTrustUkprn(string trustUkPrn, int page, int count)
         {
-            return _tramsDbContext.ConcernsCase.Where(c => c.TrustUkprn == trustUkprn).ToList();
+            return _tramsDbContext.ConcernsCase
+                .Where(c => c.TrustUkprn == trustUkPrn)
+                .Skip((page - 1) * count)
+                .Take(count)
+                .AsNoTracking()
+                .ToList();
         }
 
         public ConcernsCase GetConcernsCaseByUrn(string urn)
         {
-            return _tramsDbContext.ConcernsCase.FirstOrDefault(c => c.Urn == urn);
+            return _tramsDbContext.ConcernsCase
+                .AsNoTracking()
+                .FirstOrDefault(c => c.Urn == urn);
         }
     }
 }

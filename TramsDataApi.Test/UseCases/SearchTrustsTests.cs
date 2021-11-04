@@ -53,12 +53,12 @@ namespace TramsDataApi.Test.UseCases
             
             trustsGateway.Setup(g => g.SearchGroups(1, 10, groupName, null, null))
                 .Returns(expectedTrusts);
-            
+
             establishmentsGateway.Setup(g => g.GetByTrustUid(It.IsAny<string>()))
                 .Returns(new List<Establishment>());
 
             var expected = expectedTrusts.
-                Select(e => TrustSummaryResponseFactory.Create(e, new List<Establishment>()))
+                Select(e => TrustSummaryResponseFactory.Create(e, new List<Establishment>(), null))
                 .ToList();
             
             var searchTrusts = new SearchTrusts(trustsGateway.Object, establishmentsGateway.Object);
@@ -91,7 +91,7 @@ namespace TramsDataApi.Test.UseCases
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(expectedTrust, expectedEstablishments)
+                TrustSummaryResponseFactory.Create(expectedTrust, expectedEstablishments, null)
             };
 
             var searchTrusts = new SearchTrusts(trustGateway.Object, establishmentGateway.Object);

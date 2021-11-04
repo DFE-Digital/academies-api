@@ -5,6 +5,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetConcernsCaseByTrustUkprn
     {
-        public IList<ConcernsCaseResponse> Execute(string trustUkprn);
+        public IList<ConcernsCaseResponse> Execute(string trustUkprn, int page, int count);
     }
 }

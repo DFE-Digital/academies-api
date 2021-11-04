@@ -102,7 +102,7 @@ namespace TramsDataApi.Test.Controllers
             var concernsCaseResponse = Builder<ConcernsCaseResponse>
                 .CreateNew().Build();
 
-            getConcernsCaseByTrustUkprn.Setup(a => a.Execute(trustUkprn))
+            getConcernsCaseByTrustUkprn.Setup(a => a.Execute(trustUkprn, 1, 10))
                 .Returns(new List<ConcernsCaseResponse>{concernsCaseResponse});
 
             var controller = new ConcernsCaseController(

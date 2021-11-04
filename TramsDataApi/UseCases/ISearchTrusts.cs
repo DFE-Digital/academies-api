@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.IO.Compression;
-using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
     public interface ISearchTrusts
     {
-        public IList<TrustSummaryResponse> Execute(int page, int count, string groupName, string urn, string companiesHouseNumber);
+        public IEnumerable<TrustSummaryResponse> Execute(int page, int count, string groupName, string urn, string companiesHouseNumber);
     }
 }

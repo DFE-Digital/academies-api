@@ -14,9 +14,9 @@ namespace TramsDataApi.UseCases
         {
             _concernsCaseGateway = concernsCaseGateway;
         }
-        public IList<ConcernsCaseResponse> Execute(string trustUkprn)
+        public IList<ConcernsCaseResponse> Execute(string trustUkprn, int page, int count)
         {
-            var concernsCases = _concernsCaseGateway.GetConcernsCaseByTrustUkprn(trustUkprn);
+            var concernsCases = _concernsCaseGateway.GetConcernsCaseByTrustUkprn(trustUkprn, page, count);
             return concernsCases.Select(ConcernsCaseResponseFactory.Create).ToList();
         }
     }

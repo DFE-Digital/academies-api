@@ -7,7 +7,7 @@ namespace TramsDataApi.Factories
 {
     public class TrustSummaryResponseFactory
     {
-        public static TrustSummaryResponse Create(GroupLink groupLink, IList<Establishment> establishments)
+        public static TrustSummaryResponse Create(GroupLink groupLink, IEnumerable<Establishment> establishments)
         {
             if (groupLink == null)
             {
@@ -23,7 +23,7 @@ namespace TramsDataApi.Factories
             };
         }
 
-        public static TrustSummaryResponse Create(Group group, IList<Establishment> establishments)
+        public static TrustSummaryResponse Create(Group group, IEnumerable<Establishment> establishments, Trust trust)
         {
             if (group == null)
             {
@@ -35,6 +35,16 @@ namespace TramsDataApi.Factories
                 Ukprn = group.Ukprn,
                 GroupName = group.GroupName,
                 CompaniesHouseNumber = group.CompaniesHouseNumber,
+                TrustType = trust?.TrustsTrustType,
+                TrustAddress = new AddressResponse
+                {
+                    Street = trust?.TrustContactDetailsTrustAddressLine1,
+                    AdditionalLine = trust?.TrustContactDetailsTrustAddressLine2,
+                    Locality = trust?.TrustContactDetailsTrustAddressLine3,
+                    Town = trust?.TrustContactDetailsTrustTown,
+                    County = trust?.TrustContactDetailsTrustCounty,
+                    Postcode = trust?.TrustContactDetailsTrustPostcode
+                },
                 Establishments = establishments.Select(EstablishmentSummaryResponseFactory.Create).ToList()
             };
         }

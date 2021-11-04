@@ -12,7 +12,7 @@ namespace TramsDataApi.ResponseModels
         public string Description { get; set; }
         public string CrmEnquiry { get; set; }
         public string TrustUkprn { get; set; }
-        public string ReasonForReview { get; set; }
+        public string ReasonAtReview { get; set; }
         public DateTime? DeEscalation { get; set; }
         public string Issue { get; set; }
         public string CurrentStatus { get; set; }
