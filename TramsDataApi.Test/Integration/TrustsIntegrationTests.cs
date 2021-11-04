@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
-using FizzWare.NBuilder.PropertyNaming;
 using TramsDataApi.DatabaseModels;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +14,6 @@ using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.Test.Utils;
 using Xunit;
-using System.Text;
 
 namespace TramsDataApi.Test.Integration
 {
@@ -322,7 +320,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = groups
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -376,7 +374,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksWithGroupName
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -431,7 +429,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksThatContainGroupName
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -482,7 +480,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksThatContainCompaniesHouseNumber
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -533,7 +531,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksThatContainUkprn
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -583,7 +581,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksWithCompaniesHouseNumber
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -627,7 +625,7 @@ namespace TramsDataApi.Test.Integration
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>())
+                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>(), null)
             };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -676,9 +674,9 @@ namespace TramsDataApi.Test.Integration
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>()),
-                TrustSummaryResponseFactory.Create(groups[1], new List<Establishment>()),
-                TrustSummaryResponseFactory.Create(groups[3], new List<Establishment>()),
+                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>(), null),
+                TrustSummaryResponseFactory.Create(groups[1], new List<Establishment>(), null),
+                TrustSummaryResponseFactory.Create(groups[3], new List<Establishment>(), null),
             };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -729,9 +727,9 @@ namespace TramsDataApi.Test.Integration
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>()),
-                TrustSummaryResponseFactory.Create(groups[1], new List<Establishment>()),
-                TrustSummaryResponseFactory.Create(groups[3], new List<Establishment>()),
+                TrustSummaryResponseFactory.Create(groups[0], new List<Establishment>(), null),
+                TrustSummaryResponseFactory.Create(groups[1], new List<Establishment>(), null),
+                TrustSummaryResponseFactory.Create(groups[3], new List<Establishment>(), null),
             };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -784,7 +782,7 @@ namespace TramsDataApi.Test.Integration
 
             var expected = new List<TrustSummaryResponse>
             {
-                TrustSummaryResponseFactory.Create(groups[0], establishments)
+                TrustSummaryResponseFactory.Create(groups[0], establishments, null)
             };
 
             var httpRequestMessage = new HttpRequestMessage
@@ -825,7 +823,7 @@ namespace TramsDataApi.Test.Integration
             var expected = groups
                 .OrderBy(group => group.GroupUid)
                 .Take(10)
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -867,7 +865,7 @@ namespace TramsDataApi.Test.Integration
                 .OrderBy(group => group.GroupUid)
                 .Skip(10)
                 .Take(10)
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -956,7 +954,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.SaveChanges();
 
             var expected = groupLinksWithGroupName
-                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>()))
+                .Select(g => TrustSummaryResponseFactory.Create(g, new List<Establishment>(), null))
                 .ToList();
 
             var httpRequestMessage = new HttpRequestMessage
@@ -1030,6 +1028,14 @@ namespace TramsDataApi.Test.Integration
                 TrustPerformanceAndRiskEfficiencyIcfpReviewCompleted = "ICFP Review Completed",
                 TrustPerformanceAndRiskEfficiencyIcfpReviewOther = "ICFP Review other",
                 TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview = "Link to ICFP Review",
+                TrustsTrustType = "TrustType",
+                TrustContactDetailsTrustAddressLine1 = "Address Line 1",
+                TrustContactDetailsTrustAddressLine2 = "Address Line 2",
+                TrustContactDetailsTrustAddressLine3 = "Address Line 3",
+                TrustContactDetailsTrustTown = "Address Town",
+                TrustContactDetailsTrustCounty = "Address County",
+                TrustContactDetailsTrustPostcode = "Address Postcode",
+        
                 NumberInTrust = 1
                 
             }; 
