@@ -11,7 +11,7 @@ namespace TramsDataApi.Controllers.V2
 {
     [ApiVersion("2.0")]
     [ApiController]
-    [Route("v{version:apiVersion}/trusts")]
+    [Route("v{version:apiVersion}/")]
     public class TrustsController : ControllerBase
     {
         private readonly IGetTrustByUkprn _getTrustByUkPrn;
@@ -25,7 +25,7 @@ namespace TramsDataApi.Controllers.V2
             _logger = logger;
         }
         
-        [HttpGet]
+        [HttpGet("trusts")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, int page = 1, int count = 50)
         {
@@ -48,7 +48,8 @@ namespace TramsDataApi.Controllers.V2
             return new OkObjectResult(response);
         }
         
-        [HttpGet("{ukPrn}")]
+        [HttpGet]
+        [Route("trust/{ukprn}")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiResponseV2<TrustResponse>> GetTrustByUkPrn(string ukPrn)
         {
