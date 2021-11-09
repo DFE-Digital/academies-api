@@ -60,6 +60,8 @@ namespace TramsDataApi
             services.AddScoped<IGetConcernsCaseByTrustUkprn, GetConcernsCaseByTrustUkprn>();
             services.AddScoped<IIndexConcernsStatuses, IndexConcernsStatuses>();
             services.AddScoped<IConcernsStatusGateway, ConcernsStatusGateway>();
+            services.AddScoped<IConcernsRecordGateway, ConcernsRecordGateway>();
+            services.AddScoped<ICreateConcernsRecord, CreateConcernsRecord>();
 
 
 

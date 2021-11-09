@@ -21,6 +21,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<AcademyConversionProjectNote> AcademyConversionProjectNotes { get; set; }
         public virtual DbSet<ConcernsCase> ConcernsCase { get; set; }
         public virtual DbSet<ConcernsStatus> ConcernsStatus { get; set; }
+        public virtual DbSet<ConcernsRecord> ConcernsRecord { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -151,6 +152,135 @@ namespace TramsDataApi.DatabaseModels
                         UpdatedAt = DateTime.Now
                     }
                     );
+            });
+
+            modelBuilder.Entity<ConcernsRecord>(entity =>
+            {
+                entity.ToTable("ConcernsRecord", "sdd");
+
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__CRecord");
+
+                entity.Property(e => e.Urn)
+                    .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
+            });
+
+            modelBuilder.Entity<ConcernsType>(entity =>
+            {
+                entity.ToTable("ConcernsType", "sdd");
+                
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__CType");
+                
+                entity.Property(e => e.Urn)
+                    .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
+                
+                entity.HasData(
+                    new ConcernsType
+                    {
+                        Id = 1,
+                        Name = "Compliance",
+                        Description = "Financial reporting",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 2,
+                        Name = "Compliance",
+                        Description = "Financial returns",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 3,
+                        Name = "Financial",
+                        Description = "Deficit",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 4,
+                        Name = "Financial",
+                        Description = "Projected deficit / Low future surplus",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 5,
+                        Name = "Financial",
+                        Description = "Cash flow shortfall",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 6,
+                        Name = "Financial",
+                        Description = "Clawback",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 7,
+                        Name = "Force majeure",
+                        Description = null,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 8,
+                        Name = "Governance",
+                        Description = "Governance",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 9,
+                        Name = "Governance",
+                        Description = "Closure",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 10,
+                        Name = "Governance",
+                        Description = "Executive Pay",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 11,
+                        Name = "Governance",
+                        Description = "Safeguarding",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 12,
+                        Name = "Irregularity",
+                        Description = "Allegations and self reported concerns",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsType
+                    {
+                        Id = 13,
+                        Name = "Irregularity",
+                        Description = "Related party transactions - in year",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    }
+                );
             });
 
             OnModelCreatingPartial(modelBuilder);
