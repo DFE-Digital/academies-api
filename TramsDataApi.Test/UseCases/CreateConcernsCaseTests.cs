@@ -39,6 +39,7 @@ namespace TramsDataApi.Test.UseCases
             
             var createdConcernsCase = ConcernsCaseFactory.Create(createRequest);
             var expected = ConcernsCaseResponseFactory.Create(createdConcernsCase);
+            
             gateway.Setup(g => g.SaveConcernsCase(It.IsAny<ConcernsCase>())).Returns(createdConcernsCase);
             
             var useCase = new CreateConcernsCase(gateway.Object);
