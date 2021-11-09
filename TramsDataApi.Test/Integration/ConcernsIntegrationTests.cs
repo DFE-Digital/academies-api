@@ -45,7 +45,7 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.Description = "Description for case")
                 .With(c => c.CrmEnquiry = "5678")
                 .With(c => c.TrustUkprn = "100223")
-                .With(c => c.ReasonForReview = "We have concerns")
+                .With(c => c.ReasonAtReview = "We have concerns")
                 .With(c => c.DeEscalation = new DateTime(2022,04,01))
                 .With(c => c.Issue = "Here is the issue")
                 .With(c => c.CurrentStatus = "Case status")
@@ -221,6 +221,26 @@ namespace TramsDataApi.Test.Integration
             
             response.StatusCode.Should().Be(200);
             content.Data.Count().Should().Be(count);
+        }
+
+        [Fact]
+        public async Task IndexConcernsStatuses_ShouldReturnAllConcernsStatuses()
+        {
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-statuses/"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsStatusResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Count().Should().Be(3);
+            
         }
 
         private void SetupTestData(string trustUkprn, int count = 1)
