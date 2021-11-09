@@ -26,7 +26,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(c => c.Description = " Test Description for case")
                 .With(c => c.CrmEnquiry = "3456")
                 .With(c => c.TrustUkprn = "17654")
-                .With(c => c.ReasonForReview = "Test concerns")
+                .With(c => c.ReasonAtReview = "Test concerns")
                 .With(c => c.DeEscalation = new DateTime(2022,04,01))
                 .With(c => c.Issue = "Here is the issue")
                 .With(c => c.CurrentStatus = "Case status")

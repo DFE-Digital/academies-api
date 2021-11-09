@@ -45,7 +45,7 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.Description = "Description for case")
                 .With(c => c.CrmEnquiry = "5678")
                 .With(c => c.TrustUkprn = "100223")
-                .With(c => c.ReasonForReview = "We have concerns")
+                .With(c => c.ReasonAtReview = "We have concerns")
                 .With(c => c.DeEscalation = new DateTime(2022,04,01))
                 .With(c => c.Issue = "Here is the issue")
                 .With(c => c.CurrentStatus = "Case status")

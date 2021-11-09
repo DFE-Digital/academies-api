@@ -17,7 +17,7 @@ namespace TramsDataApi.Factories
                 Description = request.Description,
                 CrmEnquiry = request.CrmEnquiry,
                 TrustUkprn = request.TrustUkprn,
-                ReasonAtReview = request.ReasonForReview,
+                ReasonAtReview = request.ReasonAtReview,
                 DeEscalation = request.DeEscalation,
                 Issue = request.Issue,
                 CurrentStatus = request.CurrentStatus,
