@@ -223,6 +223,26 @@ namespace TramsDataApi.Test.Integration
             content.Data.Count().Should().Be(count);
         }
 
+        [Fact]
+        public async Task IndexConcernsStatuses_ShouldReturnAllConcernsStatuses()
+        {
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-statuses/"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsStatusResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Count().Should().Be(3);
+            
+        }
+
         private void SetupTestData(string trustUkprn, int count = 1)
         {
             for (var i = 0; i < count; i++)

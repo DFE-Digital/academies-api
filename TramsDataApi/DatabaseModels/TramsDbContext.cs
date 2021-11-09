@@ -20,6 +20,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<AcademyConversionProject> AcademyConversionProjects { get; set; }
         public virtual DbSet<AcademyConversionProjectNote> AcademyConversionProjectNotes { get; set; }
         public virtual DbSet<ConcernsCase> ConcernsCase { get; set; }
+        public virtual DbSet<ConcernsStatus> ConcernsStatus { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
