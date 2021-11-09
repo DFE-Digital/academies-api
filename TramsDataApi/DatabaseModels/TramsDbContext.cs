@@ -178,6 +178,7 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasData(
                     new ConcernsType
                     {
+                        Id = 1,
                         Name = "Compliance",
                         Description = "Financial reporting",
                         CreatedAt = DateTime.Now,
@@ -185,6 +186,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 2,
                         Name = "Compliance",
                         Description = "Financial returns",
                         CreatedAt = DateTime.Now,
@@ -192,6 +194,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 3,
                         Name = "Financial",
                         Description = "Deficit",
                         CreatedAt = DateTime.Now,
@@ -199,6 +202,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 4,
                         Name = "Financial",
                         Description = "Projected deficit / Low future surplus",
                         CreatedAt = DateTime.Now,
@@ -206,6 +210,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 5,
                         Name = "Financial",
                         Description = "Cash flow shortfall",
                         CreatedAt = DateTime.Now,
@@ -213,6 +218,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 6,
                         Name = "Financial",
                         Description = "Clawback",
                         CreatedAt = DateTime.Now,
@@ -220,6 +226,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 7,
                         Name = "Force majeure",
                         Description = null,
                         CreatedAt = DateTime.Now,
@@ -227,6 +234,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 8,
                         Name = "Governance",
                         Description = "Governance",
                         CreatedAt = DateTime.Now,
@@ -234,6 +242,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 9,
                         Name = "Governance",
                         Description = "Closure",
                         CreatedAt = DateTime.Now,
@@ -241,6 +250,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 10,
                         Name = "Governance",
                         Description = "Executive Pay",
                         CreatedAt = DateTime.Now,
@@ -248,6 +258,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 11,
                         Name = "Governance",
                         Description = "Safeguarding",
                         CreatedAt = DateTime.Now,
@@ -255,6 +266,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 12,
                         Name = "Irregularity",
                         Description = "Allegations and self reported concerns",
                         CreatedAt = DateTime.Now,
@@ -262,6 +274,7 @@ namespace TramsDataApi.DatabaseModels
                     },
                     new ConcernsType
                     {
+                        Id = 13,
                         Name = "Irregularity",
                         Description = "Related party transactions - in year",
                         CreatedAt = DateTime.Now,

@@ -86,7 +86,7 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanGetConcernCaseByUrn()
         {
-            SetupTestData("mockUkprn");
+            SetupConcernsCaseTestData("mockUkprn");
             var concernsCase = _dbContext.ConcernsCase.First();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -115,7 +115,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetConcernCaseByTrustUkprn()
         {
             var ukprn = "100008";
-            SetupTestData(ukprn);
+            SetupConcernsCaseTestData(ukprn);
             var concernsCase = _dbContext.ConcernsCase.First();
 
             var expectedData = new List<ConcernsCase> {concernsCase};
@@ -146,7 +146,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetMultipleConcernCasesByTrustUkprn()
         {
             var ukprn = "100008";
-            SetupTestData(ukprn, 2);
+            SetupConcernsCaseTestData(ukprn, 2);
             var concernsCases = _dbContext.ConcernsCase;
             var expectedData = concernsCases.ToList();
             
@@ -179,7 +179,7 @@ namespace TramsDataApi.Test.Integration
             var ukprn = "100008";
             var count = 20;
             
-            SetupTestData(ukprn, 10);
+            SetupConcernsCaseTestData(ukprn, 10);
             var concernsCases = _dbContext.ConcernsCase;
             var expectedData = concernsCases.ToList();
             
@@ -205,7 +205,7 @@ namespace TramsDataApi.Test.Integration
             var ukprn = "100008";
             var count = 5;
             
-            SetupTestData(ukprn, 10);
+            SetupConcernsCaseTestData(ukprn, 10);
 
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -243,7 +243,38 @@ namespace TramsDataApi.Test.Integration
             
         }
 
-        private void SetupTestData(string trustUkprn, int count = 1)
+        [Fact]
+        public async Task CanCreateNewConcernRecord()
+        {
+            var createRequest = Builder<ConcernsRecordRequest>.CreateNew()
+                .Build();
+            
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-record"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(createRequest)
+            };
+
+            var recordToBeCreated = ConcernsRecordFactory.Create(createRequest);
+            var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(recordToBeCreated);
+            var expected = new ApiResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            response.StatusCode.Should().Be(201);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsRecordResponse>>();
+            
+            var createdRecord = _dbContext.ConcernsRecord.FirstOrDefault(c => c.Urn == result.Data.First().Urn);
+            expected.Data.First().Urn = createdRecord.Urn;
+            
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private void SetupConcernsCaseTestData(string trustUkprn, int count = 1)
         {
             for (var i = 0; i < count; i++)
             {
@@ -272,11 +303,11 @@ namespace TramsDataApi.Test.Integration
                 _dbContext.SaveChanges();
             }
         }
-
-
+        
         public void Dispose()
         {
             _dbContext.ConcernsCase.RemoveRange(_dbContext.ConcernsCase);
+            _dbContext.ConcernsRecord.RemoveRange(_dbContext.ConcernsRecord);
             _dbContext.SaveChanges();
         }
     }
