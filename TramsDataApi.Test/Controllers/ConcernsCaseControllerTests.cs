@@ -40,7 +40,7 @@ namespace TramsDataApi.Test.Controllers
             
             var result = controller.Create(createConcernsCaseRequest);
             
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(concernsCaseResponse);
+            var expected = new ApiSingleResponseV2<ConcernsCaseResponse>(concernsCaseResponse);
             
             result.Result.Should().BeEquivalentTo(new ObjectResult(expected) {StatusCode = StatusCodes.Status201Created});
         }
@@ -88,7 +88,7 @@ namespace TramsDataApi.Test.Controllers
             
             var result = controller.GetByUrn(urn);
             
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(concernsCaseResponse);
+            var expected = new ApiSingleResponseV2<ConcernsCaseResponse>(concernsCaseResponse);
             
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }

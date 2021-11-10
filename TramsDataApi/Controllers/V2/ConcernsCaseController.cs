@@ -35,7 +35,7 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiResponseV2<ConcernsCaseResponse>> Create(ConcernCaseRequest request)
         {
             var createdConcernsCase = _createConcernsCase.Execute(request);
-            var response = new ApiResponseV2<ConcernsCaseResponse>(createdConcernsCase);
+            var response = new ApiSingleResponseV2<ConcernsCaseResponse>(createdConcernsCase);
             
             return new ObjectResult(response) {StatusCode = StatusCodes.Status201Created};
         }
@@ -56,7 +56,7 @@ namespace TramsDataApi.Controllers.V2
             
             _logger.LogInformation($"Returning Concerns case with Urn {urn}");
             _logger.LogDebug(JsonSerializer.Serialize(concernsCase));
-            var response = new ApiResponseV2<ConcernsCaseResponse>(concernsCase);
+            var response = new ApiSingleResponseV2<ConcernsCaseResponse>(concernsCase);
             
             return Ok(response);
         }
