@@ -167,7 +167,6 @@ namespace TramsDataApi.Factories
                 GSSLACode = establishment.GsslacodeName,
                 Easting = establishment.Easting,
                 Northing = establishment.Northing,
-                CensusAreaStatisticWard = establishment.CensusAreaStatisticWardName,
                 MSOA = new NameAndCodeResponse { Name = establishment.MsoaName, Code = establishment.MsoaCode },
                 LSOA = new NameAndCodeResponse { Name = establishment.LsoaName, Code = establishment.LsoaCode },
                 SENStat = establishment.Senstat,

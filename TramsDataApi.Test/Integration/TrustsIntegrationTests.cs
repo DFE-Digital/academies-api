@@ -1160,7 +1160,6 @@ namespace TramsDataApi.Test.Integration
                 GsslacodeName = "E09000001",
                 Easting = "533498",
                 Northing = "181201",
-                CensusAreaStatisticWardName = null,
                 MsoaName = "City of London 001",
                 LsoaName = "City of London 001F",
                 Senstat = "0",
