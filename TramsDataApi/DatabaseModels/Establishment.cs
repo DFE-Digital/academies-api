@@ -117,7 +117,6 @@
         public string GsslacodeName { get; set; }
         public string Easting { get; set; }
         public string Northing { get; set; }
-        public string CensusAreaStatisticWardName { get; set; }
         public string MsoaName { get; set; }
         public string LsoaName { get; set; }
         public string Senstat { get; set; }
