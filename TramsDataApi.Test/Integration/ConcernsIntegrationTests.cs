@@ -70,14 +70,14 @@ namespace TramsDataApi.Test.Integration
             var caseToBeCreated = ConcernsCaseFactory.Create(createRequest);
             var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(caseToBeCreated);
             
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
+            var expected = new ApiSingleResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
             
             var response = await _client.SendAsync(httpRequestMessage);
             response.StatusCode.Should().Be(201);
-            var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsCaseResponse>>();
             
-            var createdCase = _dbContext.ConcernsCase.FirstOrDefault(c => c.Urn == result.Data.First().Urn);
-            expected.Data.First().Urn = createdCase.Urn;
+            var createdCase = _dbContext.ConcernsCase.FirstOrDefault(c => c.Urn == result.Data.Urn);
+            expected.Data.Urn = createdCase.Urn;
             
             result.Should().BeEquivalentTo(expected);
             createdCase.Description.Should().BeEquivalentTo(createRequest.Description);
@@ -101,14 +101,14 @@ namespace TramsDataApi.Test.Integration
             
             var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(concernsCase);
             
-            var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
+            var expected = new ApiSingleResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
             
             var response = await _client.SendAsync(httpRequestMessage);
             
             response.StatusCode.Should().Be(200);
-            var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsCaseResponse>>();
             result.Should().BeEquivalentTo(expected);
-            result.Data.First().Urn.Should().BeEquivalentTo(concernsCase.Urn);
+            result.Data.Urn.Should().BeEquivalentTo(concernsCase.Urn);
         }
         
         [Fact]
@@ -262,14 +262,14 @@ namespace TramsDataApi.Test.Integration
 
             var recordToBeCreated = ConcernsRecordFactory.Create(createRequest);
             var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(recordToBeCreated);
-            var expected = new ApiResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
+            var expected = new ApiSingleResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
             
             var response = await _client.SendAsync(httpRequestMessage);
             response.StatusCode.Should().Be(201);
-            var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsRecordResponse>>();
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsRecordResponse>>();
             
-            var createdRecord = _dbContext.ConcernsRecord.FirstOrDefault(c => c.Urn == result.Data.First().Urn);
-            expected.Data.First().Urn = createdRecord.Urn;
+            var createdRecord = _dbContext.ConcernsRecord.FirstOrDefault(c => c.Urn == result.Data.Urn);
+            expected.Data.Urn = createdRecord.Urn;
             
             result.Should().BeEquivalentTo(expected);
         }
