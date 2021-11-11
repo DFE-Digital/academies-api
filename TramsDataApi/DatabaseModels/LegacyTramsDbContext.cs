@@ -90,10 +90,6 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("CCF (name)")
                     .IsUnicode(false);
 
-                entity.Property(e => e.CensusAreaStatisticWardName)
-                    .HasColumnName("CensusAreaStatisticWard (name)")
-                    .IsUnicode(false);
-
                 entity.Property(e => e.CensusDate).IsUnicode(false);
 
                 entity.Property(e => e.Chnumber)
