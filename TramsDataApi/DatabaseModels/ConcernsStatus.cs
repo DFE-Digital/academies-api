@@ -15,5 +15,6 @@ namespace TramsDataApi.DatabaseModels
         public DateTime UpdatedAt { get; set; }
         public int Urn { get; set; }
         public virtual ICollection<ConcernsCase> ConcernsCases  { get; set; }
+        public virtual ICollection<ConcernsRecord> ConcernsRecords { get; set; }
     }
 }

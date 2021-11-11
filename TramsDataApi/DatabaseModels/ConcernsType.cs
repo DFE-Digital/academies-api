@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -10,5 +11,6 @@ namespace TramsDataApi.DatabaseModels
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int Urn { get; set; }
+        public virtual ICollection<ConcernsRecord> FkConcernsRecord { get; set; }
     }
 }

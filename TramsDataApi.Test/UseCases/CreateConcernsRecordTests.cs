@@ -15,16 +15,19 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void ShouldCreateAndReturnAConcernsRecord_WhenGivenAConcernsRecordRequest()
         {
-            var gateway = new Mock<IConcernsRecordGateway>();
-
-            var createRequest = Builder<ConcernsRecordRequest>.CreateNew().Build();
+            var concernsRecordGateway = new Mock<IConcernsRecordGateway>();
+            var concernsStatusGateway = new Mock<IConcernsStatusGateway>();
             
-            var createdConcernsRecord = ConcernsRecordFactory.Create(createRequest);
+            var createRequest = Builder<ConcernsRecordRequest>.CreateNew().Build();
+            var status = Builder<ConcernsStatus>.CreateNew().Build();
+            
+            var createdConcernsRecord = ConcernsRecordFactory.Create(createRequest, status);
             var expected = ConcernsRecordResponseFactory.Create(createdConcernsRecord);
             
-            gateway.Setup(g => g.SaveConcernsCase(It.IsAny<ConcernsRecord>())).Returns(createdConcernsRecord);
+            concernsRecordGateway.Setup(g => g.SaveConcernsCase(It.IsAny<ConcernsRecord>())).Returns(createdConcernsRecord);
+            concernsStatusGateway.Setup(g => g.GetStatusByUrn(It.IsAny<int>())).Returns(status);
             
-            var useCase = new CreateConcernsRecord(gateway.Object);
+            var useCase = new CreateConcernsRecord(concernsRecordGateway.Object, concernsStatusGateway.Object);
             var result = useCase.Execute(createRequest);
             
             result.Should().BeEquivalentTo(expected);

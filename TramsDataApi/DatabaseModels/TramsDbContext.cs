@@ -118,6 +118,10 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
                 
+                entity.HasOne(c => c.Status)
+                    .WithMany(s => s.ConcernsCases)
+                    .HasForeignKey(c => c.StatusId)
+                    .HasConstraintName("FK__ConcernsCase_ConcernsStatus");
             });
 
             modelBuilder.Entity<ConcernsStatus>(entity =>
@@ -168,6 +172,16 @@ namespace TramsDataApi.DatabaseModels
                     .WithMany(c => c.ConcernsRecords)
                     .HasForeignKey(r => r.CaseId)
                     .HasConstraintName("FK__ConcernsCase_ConcernsRecord");
+                
+                entity.HasOne(r => r.FkConcernsType)
+                    .WithMany(c => c.FkConcernsRecord)
+                    .HasForeignKey(r => r.TypeId)
+                    .HasConstraintName("FK__ConcernsRecord_ConcernsType");
+                
+                entity.HasOne(r => r.Status)
+                    .WithMany(c => c.ConcernsRecords)
+                    .HasForeignKey(r => r.StatusId)
+                    .HasConstraintName("FK__ConcernsRecord_ConcernsStatus");
             });
 
             modelBuilder.Entity<ConcernsType>(entity =>

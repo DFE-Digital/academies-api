@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class ConcernsRecordFactory
     {
-        public static ConcernsRecord Create(ConcernsRecordRequest concernsRecordRequest)
+        public static ConcernsRecord Create(ConcernsRecordRequest concernsRecordRequest, ConcernsStatus status)
         {
             return new ConcernsRecord
             {
@@ -20,7 +20,7 @@ namespace TramsDataApi.Factories
                 TypeId = concernsRecordRequest.TypeId,
                 RatingId = concernsRecordRequest.RatingId,
                 Primary = concernsRecordRequest.Primary,
-                StatusUrn = concernsRecordRequest.StatusUrn
+                Status = status
             };
         }
     }

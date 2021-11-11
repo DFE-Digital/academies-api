@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories
 {
     public class ConcernsCaseFactory
     {
-        public static ConcernsCase Create(ConcernCaseRequest request)
+        public static ConcernsCase Create(ConcernCaseRequest request, ConcernsStatus status)
         {
             return new ConcernsCase
             {
@@ -25,7 +25,7 @@ namespace TramsDataApi.Factories
                 DeEscalationPoint = request.DeEscalationPoint,
                 NextSteps = request.NextSteps,
                 DirectionOfTravel = request.DirectionOfTravel,
-                StatusUrn = request.StatusUrn
+                Status = status
             };
         }
     }

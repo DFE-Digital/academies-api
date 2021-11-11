@@ -21,7 +21,7 @@ namespace TramsDataApi.Factories
                 RatingId = concernsRecord.RatingId,
                 Primary = concernsRecord.Primary,
                 Urn = concernsRecord.Urn,
-                StatusUrn = concernsRecord.StatusUrn
+                StatusUrn = concernsRecord.Status.Urn
             };
         }
     }

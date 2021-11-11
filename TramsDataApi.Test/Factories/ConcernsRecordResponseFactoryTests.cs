@@ -1,4 +1,5 @@
 using System;
+using FizzWare.NBuilder;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
@@ -12,6 +13,8 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsConcernsRecordResponse_WhenGivenAnConcernsRecord()
         {
+            var status = Builder<ConcernsStatus>.CreateNew().Build();
+            
             var concernsRecord = new ConcernsRecord
             {
                 Id = 1,
@@ -27,7 +30,7 @@ namespace TramsDataApi.Test.Factories
                 RatingId = 5,
                 Primary = false,
                 Urn = "4",
-                StatusUrn = 3
+                Status = status
             };
 
             var expected = new ConcernsRecordResponse
@@ -44,7 +47,7 @@ namespace TramsDataApi.Test.Factories
                 RatingId = concernsRecord.RatingId,
                 Primary = concernsRecord.Primary,
                 Urn = concernsRecord.Urn,
-                StatusUrn = concernsRecord.StatusUrn
+                StatusUrn = status.Urn
             };
 
             var result = ConcernsRecordResponseFactory.Create(concernsRecord);

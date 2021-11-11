@@ -13,6 +13,7 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsConcernsCaseResponse_WhenGivenAnConcernsCase()
         {
+            var status = Builder<ConcernsStatus>.CreateNew().Build();
             var concernsCase = new ConcernsCase
             {
                 Id = 123,
@@ -33,7 +34,7 @@ namespace TramsDataApi.Test.Factories
                 NextSteps = "next steps",
                 DirectionOfTravel = "Direction",
                 Urn = "10988",
-                StatusUrn = 1
+                Status = status
             };
 
             var expected = new ConcernsCaseResponse
@@ -55,7 +56,7 @@ namespace TramsDataApi.Test.Factories
                 NextSteps = concernsCase.NextSteps,
                 DirectionOfTravel = concernsCase.DirectionOfTravel,
                 Urn = concernsCase.Urn,
-                StatusUrn = concernsCase.StatusUrn
+                StatusUrn = status.Urn
             };
 
             var result = ConcernsCaseResponseFactory.Create(concernsCase);

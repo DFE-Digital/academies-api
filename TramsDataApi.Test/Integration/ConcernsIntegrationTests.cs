@@ -55,6 +55,8 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.DirectionOfTravel = "Up")
                 .With(c => c.StatusUrn = 1)
                 .Build();
+
+            var status = _dbContext.ConcernsStatus.FirstOrDefault(s => s.Urn == createRequest.StatusUrn);
             
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -67,7 +69,7 @@ namespace TramsDataApi.Test.Integration
                 Content =  JsonContent.Create(createRequest)
             };
 
-            var caseToBeCreated = ConcernsCaseFactory.Create(createRequest);
+            var caseToBeCreated = ConcernsCaseFactory.Create(createRequest, status);
             var expectedConcernsCaseResponse = ConcernsCaseResponseFactory.Create(caseToBeCreated);
             
             var expected = new ApiResponseV2<ConcernsCaseResponse>(expectedConcernsCaseResponse);
@@ -247,6 +249,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanCreateNewConcernRecord()
         {
             var createRequest = Builder<ConcernsRecordRequest>.CreateNew()
+                .With(c => c.StatusUrn = 1)
                 .Build();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -259,8 +262,10 @@ namespace TramsDataApi.Test.Integration
                 },
                 Content =  JsonContent.Create(createRequest)
             };
+            
+            var status = _dbContext.ConcernsStatus.FirstOrDefault(s => s.Urn == createRequest.StatusUrn);
 
-            var recordToBeCreated = ConcernsRecordFactory.Create(createRequest);
+            var recordToBeCreated = ConcernsRecordFactory.Create(createRequest, status);
             var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(recordToBeCreated);
             var expected = new ApiResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
             
@@ -276,6 +281,7 @@ namespace TramsDataApi.Test.Integration
 
         private void SetupConcernsCaseTestData(string trustUkprn, int count = 1)
         {
+            
             for (var i = 0; i < count; i++)
             {
                 var concernsCase = new ConcernsCase
@@ -296,7 +302,7 @@ namespace TramsDataApi.Test.Integration
                     DeEscalationPoint = _randomGenerator.NextString(3, 10),
                     NextSteps = _randomGenerator.NextString(3, 10),
                     DirectionOfTravel = _randomGenerator.NextString(3, 10),
-                    StatusUrn = 2,
+                    StatusId = 2,
                 };
 
                 _dbContext.ConcernsCase.Add(concernsCase);

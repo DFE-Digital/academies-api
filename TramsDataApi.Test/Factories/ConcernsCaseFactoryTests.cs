@@ -32,6 +32,8 @@ namespace TramsDataApi.Test.Factories
                 .With(c => c.StatusUrn = 3)
                 .Build();
 
+            var status = Builder<ConcernsStatus>.CreateNew().Build();
+
             var expected = new ConcernsCase
             {
                 CreatedAt = request.CreatedAt,
@@ -50,10 +52,10 @@ namespace TramsDataApi.Test.Factories
                 DeEscalationPoint = request.DeEscalationPoint,
                 NextSteps = request.NextSteps,
                 DirectionOfTravel = request.DirectionOfTravel,
-                StatusUrn = request.StatusUrn
+                Status = status
             };
 
-            var result = ConcernsCaseFactory.Create(request);
+            var result = ConcernsCaseFactory.Create(request, status);
             result.Should().BeEquivalentTo(expected);
         }
     }
