@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TramsDataApi.UseCases;
 
 namespace TramsDataApi.ResponseModels
 {

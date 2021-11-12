@@ -29,7 +29,7 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiResponseV2<ConcernsRecordResponse>> Create(ConcernsRecordRequest request)
         {
             var createdConcernsRecord = _createConcernsRecord.Execute(request);
-            var response = new ApiResponseV2<ConcernsRecordResponse>(createdConcernsRecord);
+            var response = new ApiSingleResponseV2<ConcernsRecordResponse>(createdConcernsRecord);
             
             return new ObjectResult(response) {StatusCode = StatusCodes.Status201Created};
         }
