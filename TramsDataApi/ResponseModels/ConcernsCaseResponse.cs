@@ -20,7 +20,7 @@ namespace TramsDataApi.ResponseModels
         public string DeEscalationPoint { get; set; }
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
-        public string Urn { get; set; }
+        public int Urn { get; set; }
         public int StatusUrn { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<ConcernsCase> ConcernsCase { get; set; }
         public virtual DbSet<ConcernsStatus> ConcernsStatus { get; set; }
         public virtual DbSet<ConcernsRecord> ConcernsRecord { get; set; }
+        public virtual DbSet<ConcernsType> ConcernsTypes{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -118,10 +119,6 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
                 
-                entity.HasOne(c => c.Status)
-                    .WithMany(s => s.ConcernsCases)
-                    .HasForeignKey(c => c.StatusId)
-                    .HasConstraintName("FK__ConcernsCase_ConcernsStatus");
             });
 
             modelBuilder.Entity<ConcernsStatus>(entity =>
@@ -168,20 +165,15 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
                 
-                entity.HasOne(r => r.FkConcernsCase)
+                entity.HasOne(r => r.ConcernsCase)
                     .WithMany(c => c.ConcernsRecords)
                     .HasForeignKey(r => r.CaseId)
                     .HasConstraintName("FK__ConcernsCase_ConcernsRecord");
                 
-                entity.HasOne(r => r.FkConcernsType)
+                entity.HasOne(r => r.ConcernsType)
                     .WithMany(c => c.FkConcernsRecord)
                     .HasForeignKey(r => r.TypeId)
                     .HasConstraintName("FK__ConcernsRecord_ConcernsType");
-                
-                entity.HasOne(r => r.Status)
-                    .WithMany(c => c.ConcernsRecords)
-                    .HasForeignKey(r => r.StatusId)
-                    .HasConstraintName("FK__ConcernsRecord_ConcernsStatus");
             });
 
             modelBuilder.Entity<ConcernsType>(entity =>

@@ -48,7 +48,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetConcernsCaseByUrn_ReturnsNotFound_WhenConcernsCaseIsNotFound()
         {
-            var urn = "10021231";
+            var urn = 100;
             
             var getConcernsCaseByUrn = new Mock<IGetConcernsCaseByUrn>();
             
@@ -71,7 +71,7 @@ namespace TramsDataApi.Test.Controllers
         public void GetConcernsCaseByUrn_Returns200AndTheFoundConcernsCase_WhenSuccessfullyGetsAConcernsCaseByUrn()
         {
             var getConcernsCaseByUrn = new Mock<IGetConcernsCaseByUrn>();
-            var urn = "12345";
+            var urn = 123;
 
             var concernsCaseResponse = Builder<ConcernsCaseResponse>
                 .CreateNew().Build();

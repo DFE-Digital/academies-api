@@ -4,6 +4,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetConcernsCaseByUrn
     {
-        public ConcernsCaseResponse Execute(string urn);
+        public ConcernsCaseResponse Execute(int urn);
     }
 }

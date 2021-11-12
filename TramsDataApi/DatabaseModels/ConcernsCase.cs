@@ -23,9 +23,8 @@ namespace TramsDataApi.DatabaseModels
         public string DeEscalationPoint { get; set; }
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
-        public string Urn { get; set; }
-        public int StatusId { get; set; }
-        public virtual ConcernsStatus Status { get; set; }
+        public int Urn { get; set; }
+        public int StatusUrn { get; set; }
         public virtual ICollection<ConcernsRecord> ConcernsRecords { get; set; }
     }
 }

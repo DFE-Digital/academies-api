@@ -8,18 +8,15 @@ namespace TramsDataApi.UseCases
     public class CreateConcernsCase : ICreateConcernsCase
     {
         private readonly IConcernsCaseGateway _concernsCaseGateway;
-        private readonly IConcernsStatusGateway _concernsStatusGateway;
 
-        public CreateConcernsCase(IConcernsCaseGateway concernsCaseGateway, IConcernsStatusGateway concernsStatusGateway)
+        public CreateConcernsCase(IConcernsCaseGateway concernsCaseGateway)
         {
             _concernsCaseGateway = concernsCaseGateway;
-            _concernsStatusGateway = concernsStatusGateway;
         }
 
         public ConcernsCaseResponse Execute(ConcernCaseRequest request)
         {
-            var concernsStatus = _concernsStatusGateway.GetStatusByUrn(request.StatusUrn);
-            var concernsCaseToCreate = ConcernsCaseFactory.Create(request, concernsStatus);
+            var concernsCaseToCreate = ConcernsCaseFactory.Create(request);
             var createdConcernsCase = _concernsCaseGateway.SaveConcernsCase(concernsCaseToCreate);
             return ConcernsCaseResponseFactory.Create(createdConcernsCase);
         }

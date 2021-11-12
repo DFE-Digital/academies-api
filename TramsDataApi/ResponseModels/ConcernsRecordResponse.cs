@@ -11,11 +11,11 @@ namespace TramsDataApi.ResponseModels
         public string Name { get; set; }
         public string Description { get; set; }
         public string Reason { get; set; }
-        public int CaseId { get; set; }
-        public int TypeId { get; set; }
         public int RatingId { get; set; }
         public bool Primary { get; set; }
         public string Urn { get; set; }
         public int StatusUrn { get; set; }
+        public int TypeUrn { get; set; }
+        public int CaseUrn { get; set; }
     }
 }
