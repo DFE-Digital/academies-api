@@ -43,7 +43,7 @@ namespace TramsDataApi.Controllers.V2
         [HttpGet]
         [Route("urn/{urn}")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByUrn(string urn)
+        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByUrn(int urn)
         {
             _logger.LogInformation($"Attempting to get Concerns Case by Urn {urn}");
             var concernsCase = _getConcernsCaseByUrn.Execute(urn);

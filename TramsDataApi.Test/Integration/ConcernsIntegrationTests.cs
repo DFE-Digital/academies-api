@@ -55,7 +55,7 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.DirectionOfTravel = "Up")
                 .With(c => c.StatusUrn = 1)
                 .Build();
-            
+
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
@@ -107,8 +107,9 @@ namespace TramsDataApi.Test.Integration
             
             response.StatusCode.Should().Be(200);
             var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsCaseResponse>>();
+            
             result.Should().BeEquivalentTo(expected);
-            result.Data.Urn.Should().BeEquivalentTo(concernsCase.Urn);
+            result.Data.Urn.Should().Be(concernsCase.Urn);
         }
         
         [Fact]
@@ -139,7 +140,7 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(200);
             var result = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
             result.Should().BeEquivalentTo(expected);
-            result.Data.First().Urn.Should().BeEquivalentTo(concernsCase.Urn);
+            result.Data.First().Urn.Should().Be(concernsCase.Urn);
         }
 
         [Fact]
@@ -246,7 +247,36 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanCreateNewConcernRecord()
         {
+            var concernsCase = new ConcernsCase
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                CreatedBy = _randomGenerator.NextString(3, 10),
+                Description = _randomGenerator.NextString(3, 10),
+                CrmEnquiry = _randomGenerator.NextString(3, 10),
+                TrustUkprn = _randomGenerator.NextString(3, 10),
+                ReasonAtReview = _randomGenerator.NextString(3, 10),
+                DeEscalation = _randomGenerator.DateTime(),
+                Issue = _randomGenerator.NextString(3, 10),
+                CurrentStatus = _randomGenerator.NextString(3, 10),
+                CaseAim = _randomGenerator.NextString(3, 10),
+                DeEscalationPoint = _randomGenerator.NextString(3, 10),
+                NextSteps = _randomGenerator.NextString(3, 10),
+                DirectionOfTravel = _randomGenerator.NextString(3, 10),
+                StatusUrn = 2,
+            };
+            
+            _dbContext.ConcernsCase.Add(concernsCase);
+            _dbContext.SaveChanges();
+
+            var linkedCase = _dbContext.ConcernsCase.First();
+            var linkedType = _dbContext.ConcernsTypes.First();
+
             var createRequest = Builder<ConcernsRecordRequest>.CreateNew()
+                .With(c => c.CaseUrn = linkedCase.Urn)
+                .With(c => c.TypeUrn = linkedType.Urn)
                 .Build();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -259,8 +289,8 @@ namespace TramsDataApi.Test.Integration
                 },
                 Content =  JsonContent.Create(createRequest)
             };
-
-            var recordToBeCreated = ConcernsRecordFactory.Create(createRequest);
+            
+            var recordToBeCreated = ConcernsRecordFactory.Create(createRequest, linkedCase, linkedType);
             var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(recordToBeCreated);
             var expected = new ApiSingleResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
             
@@ -276,6 +306,7 @@ namespace TramsDataApi.Test.Integration
 
         private void SetupConcernsCaseTestData(string trustUkprn, int count = 1)
         {
+            
             for (var i = 0; i < count; i++)
             {
                 var concernsCase = new ConcernsCase
@@ -303,6 +334,8 @@ namespace TramsDataApi.Test.Integration
                 _dbContext.SaveChanges();
             }
         }
+        
+        
         
         public void Dispose()
         {

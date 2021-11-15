@@ -17,5 +17,10 @@ namespace TramsDataApi.Gateways
         {
             return _tramsDbContext.ConcernsStatus.ToList();
         }
+
+        public ConcernsStatus GetStatusByUrn(int urn)
+        {
+            return _tramsDbContext.ConcernsStatus.FirstOrDefault(s => s.Urn == urn);
+        }
     }
 }

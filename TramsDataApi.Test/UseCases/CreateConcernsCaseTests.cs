@@ -16,7 +16,7 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void ShouldCreateAndReturnAConcernsCase_WhenGivenAConcernsCaseRequest()
         {
-            var gateway = new Mock<IConcernsCaseGateway>();
+            var concernsCaseGateway = new Mock<IConcernsCaseGateway>();
             
             var createRequest = Builder<ConcernCaseRequest>.CreateNew()
                 .With(c => c.CreatedAt = new DateTime(2022,10,13))
@@ -36,13 +36,13 @@ namespace TramsDataApi.Test.UseCases
                 .With(c => c.DirectionOfTravel = "Up")
                 .With(c => c.StatusUrn = 2)
                 .Build();
-            
+
             var createdConcernsCase = ConcernsCaseFactory.Create(createRequest);
             var expected = ConcernsCaseResponseFactory.Create(createdConcernsCase);
             
-            gateway.Setup(g => g.SaveConcernsCase(It.IsAny<ConcernsCase>())).Returns(createdConcernsCase);
-            
-            var useCase = new CreateConcernsCase(gateway.Object);
+            concernsCaseGateway.Setup(g => g.SaveConcernsCase(It.IsAny<ConcernsCase>())).Returns(createdConcernsCase);
+
+            var useCase = new CreateConcernsCase(concernsCaseGateway.Object);
             var result = useCase.Execute(createRequest);
             
             result.Should().BeEquivalentTo(expected);

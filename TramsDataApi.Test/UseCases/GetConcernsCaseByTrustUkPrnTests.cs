@@ -47,6 +47,7 @@ namespace TramsDataApi.Test.UseCases
         {
             var mockGateway = new Mock<IConcernsCaseGateway>();
             var useCase = new GetConcernsCaseByTrustUkprn(mockGateway.Object);
+            var status = Builder<ConcernsStatus>.CreateNew().Build();
             var concernsCases = Builder<ConcernsCase>.CreateListOfSize(20).Build();
 
             mockGateway

@@ -32,8 +32,8 @@ namespace TramsDataApi.Test.Factories
                 DeEscalationPoint = "20394",
                 NextSteps = "next steps",
                 DirectionOfTravel = "Direction",
-                Urn = "10988",
-                StatusUrn = 1
+                Urn = 109,
+                StatusUrn = 123
             };
 
             var expected = new ConcernsCaseResponse

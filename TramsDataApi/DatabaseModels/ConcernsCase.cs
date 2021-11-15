@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
@@ -22,7 +23,8 @@ namespace TramsDataApi.DatabaseModels
         public string DeEscalationPoint { get; set; }
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
-        public string Urn { get; set; }
+        public int Urn { get; set; }
         public int StatusUrn { get; set; }
+        public virtual ICollection<ConcernsRecord> ConcernsRecords { get; set; }
     }
 }

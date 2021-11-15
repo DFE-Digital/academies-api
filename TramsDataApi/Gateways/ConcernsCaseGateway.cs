@@ -32,7 +32,7 @@ namespace TramsDataApi.Gateways
                 .ToList();
         }
 
-        public ConcernsCase GetConcernsCaseByUrn(string urn)
+        public ConcernsCase GetConcernsCaseByUrn(int urn)
         {
             return _tramsDbContext.ConcernsCase
                 .AsNoTracking()
