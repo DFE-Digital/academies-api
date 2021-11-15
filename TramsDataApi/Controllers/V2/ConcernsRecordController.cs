@@ -26,7 +26,7 @@ namespace TramsDataApi.Controllers.V2
         
         [HttpPost]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<ConcernsRecordResponse>> Create(ConcernsRecordRequest request)
+        public ActionResult<ApiSingleResponseV2<ConcernsRecordResponse>> Create(ConcernsRecordRequest request)
         {
             var createdConcernsRecord = _createConcernsRecord.Execute(request);
             var response = new ApiSingleResponseV2<ConcernsRecordResponse>(createdConcernsRecord);

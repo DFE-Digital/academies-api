@@ -69,7 +69,7 @@ namespace TramsDataApi.Test.Controllers
             var controller = new TrustsController(getTrustByUkPrn.Object, new Mock<ISearchTrusts>().Object, _mockLogger.Object);
             var result = controller.GetTrustByUkPrn(ukprn);
 
-            var expected = new OkObjectResult(new ApiResponseV2<TrustResponse>(trustResponse));
+            var expected = new OkObjectResult(new ApiSingleResponseV2<TrustResponse>(trustResponse));
             result.Result.Should().BeEquivalentTo(expected);
         }
         
