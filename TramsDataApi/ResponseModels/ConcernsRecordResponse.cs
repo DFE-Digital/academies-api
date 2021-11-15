@@ -11,7 +11,7 @@ namespace TramsDataApi.ResponseModels
         public string Name { get; set; }
         public string Description { get; set; }
         public string Reason { get; set; }
-        public int RatingId { get; set; }
+        public int RatingUrn { get; set; }
         public bool Primary { get; set; }
         public string Urn { get; set; }
         public int StatusUrn { get; set; }

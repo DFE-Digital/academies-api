@@ -20,5 +20,7 @@ namespace TramsDataApi.DatabaseModels
         public int StatusUrn { get; set; }
         public virtual ConcernsCase ConcernsCase { get; set; }
         public virtual ConcernsType ConcernsType { get; set; }
+        
+        public virtual ConcernsRating ConcernsRating { get; set; }
     }
 }

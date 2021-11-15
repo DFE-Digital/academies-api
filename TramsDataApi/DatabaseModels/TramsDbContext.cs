@@ -23,6 +23,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<ConcernsStatus> ConcernsStatus { get; set; }
         public virtual DbSet<ConcernsRecord> ConcernsRecord { get; set; }
         public virtual DbSet<ConcernsType> ConcernsTypes{ get; set; }
+        public virtual DbSet<ConcernsRating> ConcernsRatings{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -174,6 +175,11 @@ namespace TramsDataApi.DatabaseModels
                     .WithMany(c => c.FkConcernsRecord)
                     .HasForeignKey(r => r.TypeId)
                     .HasConstraintName("FK__ConcernsRecord_ConcernsType");
+                
+                entity.HasOne(r => r.ConcernsRating)
+                    .WithMany(c => c.FkConcernsRecord)
+                    .HasForeignKey(r => r.RatingId)
+                    .HasConstraintName("FK__ConcernsRecord_ConcernsRating");
             });
 
             modelBuilder.Entity<ConcernsType>(entity =>
@@ -293,7 +299,54 @@ namespace TramsDataApi.DatabaseModels
                     }
                 );
             });
+            
+            modelBuilder.Entity<ConcernsRating>(entity =>
+            {
+                entity.ToTable("ConcernsRating", "sdd");
 
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__CRating");
+
+                entity.Property(e => e.Urn)
+                    .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
+                
+                entity.HasData(
+                    new ConcernsRating
+                    {
+                        Id = 1,
+                        Name = "Red - Plus",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsRating
+                    {
+                        Id = 2,
+                        Name = "Red",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsRating
+                    {
+                        Id = 3,
+                        Name = "Red - Amber",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsRating
+                    {
+                        Id = 4,
+                        Name = "Amber - Green",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    new ConcernsRating
+                    {
+                        Id = 5,
+                        Name = "n/a",
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    });
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 
