@@ -273,10 +273,12 @@ namespace TramsDataApi.Test.Integration
 
             var linkedCase = _dbContext.ConcernsCase.First();
             var linkedType = _dbContext.ConcernsTypes.First();
+            var linkedRating = _dbContext.ConcernsRatings.First();
 
             var createRequest = Builder<ConcernsRecordRequest>.CreateNew()
                 .With(c => c.CaseUrn = linkedCase.Urn)
                 .With(c => c.TypeUrn = linkedType.Urn)
+                .With(c => c.RatingUrn = linkedRating.Urn)
                 .Build();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -290,8 +292,8 @@ namespace TramsDataApi.Test.Integration
                 Content =  JsonContent.Create(createRequest)
             };
             
-            var recordToBeCreated = ConcernsRecordFactory.Create(createRequest, linkedCase, linkedType);
-            var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(recordToBeCreated);
+            var expectedRecordToBeCreated = ConcernsRecordFactory.Create(createRequest, linkedCase, linkedType, linkedRating);
+            var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(expectedRecordToBeCreated);
             var expected = new ApiSingleResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
             
             var response = await _client.SendAsync(httpRequestMessage);
@@ -334,8 +336,6 @@ namespace TramsDataApi.Test.Integration
                 _dbContext.SaveChanges();
             }
         }
-        
-        
         
         public void Dispose()
         {

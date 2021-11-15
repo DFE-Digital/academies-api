@@ -16,12 +16,12 @@ namespace TramsDataApi.Factories
                 Name = concernsRecord.Name,
                 Description = concernsRecord.Description,
                 Reason = concernsRecord.Reason,
-                RatingId = concernsRecord.RatingId,
                 Primary = concernsRecord.Primary,
                 Urn = concernsRecord.Urn,
                 StatusUrn = concernsRecord.StatusUrn,
                 TypeUrn = concernsRecord.ConcernsType.Urn,
-                CaseUrn = concernsRecord.ConcernsCase.Urn
+                CaseUrn = concernsRecord.ConcernsCase.Urn,
+                RatingUrn = concernsRecord.ConcernsRating.Urn,
             };
         }
     }

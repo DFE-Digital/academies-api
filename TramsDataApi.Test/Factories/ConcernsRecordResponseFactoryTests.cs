@@ -15,6 +15,7 @@ namespace TramsDataApi.Test.Factories
         {
             var concernCase = Builder<ConcernsCase>.CreateNew().Build();
             var concernType = Builder<ConcernsType>.CreateNew().Build();
+            var concernRating = Builder<ConcernsRating>.CreateNew().Build();
             var concernsRecord = new ConcernsRecord
             {
                 Id = 1,
@@ -32,7 +33,8 @@ namespace TramsDataApi.Test.Factories
                 Urn = "4",
                 StatusUrn = 23,
                 ConcernsCase = concernCase,
-                ConcernsType = concernType
+                ConcernsType = concernType,
+                ConcernsRating = concernRating
             };
 
             var expected = new ConcernsRecordResponse
@@ -44,12 +46,12 @@ namespace TramsDataApi.Test.Factories
                 Name = concernsRecord.Name,
                 Description = concernsRecord.Description,
                 Reason = concernsRecord.Reason,
-                RatingId = concernsRecord.RatingId,
                 Primary = concernsRecord.Primary,
                 Urn = concernsRecord.Urn,
                 StatusUrn = concernsRecord.StatusUrn,
                 TypeUrn = concernType.Urn,
-                CaseUrn = concernCase.Urn
+                CaseUrn = concernCase.Urn,
+                RatingUrn = concernRating.Urn,
             };
 
             var result = ConcernsRecordResponseFactory.Create(concernsRecord);
