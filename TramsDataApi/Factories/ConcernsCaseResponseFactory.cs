@@ -11,7 +11,7 @@ namespace TramsDataApi.Factories
             {
                 CreatedAt = concernsCase.CreatedAt,
                 UpdatedAt = concernsCase.UpdatedAt,
-                ReviewedAt = concernsCase.ReviewAt,
+                ReviewAt = concernsCase.ReviewAt,
                 ClosedAt = concernsCase.ClosedAt,
                 CreatedBy = concernsCase.CreatedBy,
                 Description = concernsCase.Description,
