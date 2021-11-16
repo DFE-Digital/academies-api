@@ -8,5 +8,6 @@ namespace TramsDataApi.Gateways
         ConcernsCase SaveConcernsCase(ConcernsCase concernsCase);
         IList<ConcernsCase> GetConcernsCaseByTrustUkprn(string trustUkprn, int page, int count);
         ConcernsCase GetConcernsCaseByUrn(int urn);
+        ConcernsCase Update(ConcernsCase concernsCase);
     }
 }

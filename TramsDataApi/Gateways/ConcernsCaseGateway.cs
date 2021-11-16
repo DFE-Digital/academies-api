@@ -38,5 +38,12 @@ namespace TramsDataApi.Gateways
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Urn == urn);
         }
+
+        public ConcernsCase Update(ConcernsCase concernsCase)
+        {
+            var entity = _tramsDbContext.ConcernsCase.Update(concernsCase);
+            _tramsDbContext.SaveChanges();
+            return entity.Entity;
+        }
     }
 }

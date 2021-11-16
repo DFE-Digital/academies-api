@@ -17,17 +17,20 @@ namespace TramsDataApi.Controllers.V2
         private readonly ICreateConcernsCase _createConcernsCase;
         private readonly IGetConcernsCaseByUrn _getConcernsCaseByUrn;
         private readonly IGetConcernsCaseByTrustUkprn _getConcernsCaseByTrustUkprn;
+        private readonly IUpdateConcernsCase _updateConcernsCase;
 
         public ConcernsCaseController(
             ILogger<ConcernsCaseController> logger, 
             ICreateConcernsCase createConcernsCase,
             IGetConcernsCaseByUrn getConcernsCaseByUrn,
-            IGetConcernsCaseByTrustUkprn getConcernsCaseByTrustUkprn)
+            IGetConcernsCaseByTrustUkprn getConcernsCaseByTrustUkprn,
+            IUpdateConcernsCase updateConcernsCase)
         {
             _logger = logger;
             _createConcernsCase = createConcernsCase;
             _getConcernsCaseByUrn = getConcernsCaseByUrn;
             _getConcernsCaseByTrustUkprn = getConcernsCaseByTrustUkprn;
+            _updateConcernsCase = updateConcernsCase;
         }
         
         [HttpPost]
@@ -74,6 +77,25 @@ namespace TramsDataApi.Controllers.V2
             var pagingResponse = PagingResponseFactory.Create(page, count, concernsCases.Count, Request);
             var response = new ApiResponseV2<ConcernsCaseResponse>(concernsCases, pagingResponse);
             
+            return Ok(response);
+        }
+        
+        [HttpPatch("{urn}")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<ConcernsCaseResponse>> Update(int urn, ConcernCaseRequest request)
+        {
+            _logger.LogInformation($"Attempting to update Concerns Case {urn}");
+            var updatedAcademyConcernsCase = _updateConcernsCase.Execute(urn, request);
+            if (updatedAcademyConcernsCase == null)
+            {
+                _logger.LogInformation($"Updating Concerns Case failed: No Concerns Case matching Urn {urn} was found");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Successfully Updated Concerns Case {urn}");
+            _logger.LogDebug(JsonSerializer.Serialize(updatedAcademyConcernsCase));
+			
+            var response = new ApiSingleResponseV2<ConcernsCaseResponse>(updatedAcademyConcernsCase);
             return Ok(response);
         }
     }

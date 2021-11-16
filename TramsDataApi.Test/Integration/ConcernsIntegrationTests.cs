@@ -243,6 +243,58 @@ namespace TramsDataApi.Test.Integration
             content.Data.Count().Should().Be(3);
             
         }
+        
+        [Fact]
+        public async Task UpdateConcernsCase_ShouldReturnTheUpdatedConcernsCase()
+        {
+            var concernsCase = new ConcernsCase
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                CreatedBy = _randomGenerator.NextString(3, 10),
+                Description = _randomGenerator.NextString(3, 10),
+                CrmEnquiry = _randomGenerator.NextString(3, 10),
+                TrustUkprn = _randomGenerator.NextString(3, 10),
+                ReasonAtReview = _randomGenerator.NextString(3, 10),
+                DeEscalation = _randomGenerator.DateTime(),
+                Issue = _randomGenerator.NextString(3, 10),
+                CurrentStatus = _randomGenerator.NextString(3, 10),
+                CaseAim = _randomGenerator.NextString(3, 10),
+                DeEscalationPoint = _randomGenerator.NextString(3, 10),
+                NextSteps = _randomGenerator.NextString(3, 10),
+                DirectionOfTravel = _randomGenerator.NextString(3, 10),
+                StatusUrn = 2,
+            };
+            
+            var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase);
+            _dbContext.SaveChanges();
+            var urn = currentConcernsCase.Entity.Urn;
+
+            var updateRequest = Builder<ConcernCaseRequest>.CreateNew().Build();
+
+            var expectedConcernsCase = ConcernsCaseFactory.Create(updateRequest);
+            expectedConcernsCase.Urn = urn;
+            var expectedContent = ConcernsCaseResponseFactory.Create(expectedConcernsCase);
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-cases/{urn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(updateRequest)
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsCaseResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Should().BeEquivalentTo(expectedContent);
+
+        }
 
         [Fact]
         public async Task CanCreateNewConcernRecord()
