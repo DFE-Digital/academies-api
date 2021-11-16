@@ -32,7 +32,7 @@ namespace TramsDataApi.Controllers.V2
         
         [HttpPost]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> Create(ConcernCaseRequest request)
+        public ActionResult<ApiSingleResponseV2<ConcernsCaseResponse>> Create(ConcernCaseRequest request)
         {
             var createdConcernsCase = _createConcernsCase.Execute(request);
             var response = new ApiSingleResponseV2<ConcernsCaseResponse>(createdConcernsCase);
@@ -43,7 +43,7 @@ namespace TramsDataApi.Controllers.V2
         [HttpGet]
         [Route("urn/{urn}")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByUrn(int urn)
+        public ActionResult<ApiSingleResponseV2<ConcernsCaseResponse>> GetByUrn(int urn)
         {
             _logger.LogInformation($"Attempting to get Concerns Case by Urn {urn}");
             var concernsCase = _getConcernsCaseByUrn.Execute(urn);
