@@ -35,6 +35,7 @@ namespace TramsDataApi.Test.Controllers
                 mockLogger.Object,
                 createConcernsCase.Object, 
                 null, 
+                null, 
                 null
             );
             
@@ -60,6 +61,7 @@ namespace TramsDataApi.Test.Controllers
                 mockLogger.Object,
                 null, 
                 getConcernsCaseByUrn.Object, 
+                null,
                 null
             );
             
@@ -83,6 +85,7 @@ namespace TramsDataApi.Test.Controllers
                 mockLogger.Object,
                 null, 
                 getConcernsCaseByUrn.Object, 
+                null,
                 null
             );
             
@@ -109,7 +112,8 @@ namespace TramsDataApi.Test.Controllers
                 mockLogger.Object,
                 null, 
                 null, 
-                getConcernsCaseByTrustUkprn.Object
+                getConcernsCaseByTrustUkprn.Object,
+                null
             );
             
             var result = controller.GetByTrustUkprn(trustUkprn, 1, 10);
@@ -122,6 +126,58 @@ namespace TramsDataApi.Test.Controllers
             var expected = new ApiResponseV2<ConcernsCaseResponse>(new List<ConcernsCaseResponse>{concernsCaseResponse}, expectedPagingResponse);
             
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+        
+        [Fact]
+        public void UpdateConcernsCase_Returns200AndTheUpdatedConcernsCase_WhenSuccessfullyGetsAConcernsCase()
+        {
+            var updateConcernsCase = new Mock<IUpdateConcernsCase>();
+            var urn = 456;
+            var updateRequest = Builder<ConcernCaseRequest>.CreateNew().Build();
+            
+            var concernsCaseResponse = Builder<ConcernsCaseResponse>
+                .CreateNew().Build();
+
+            updateConcernsCase.Setup(a => a.Execute(urn, updateRequest))
+                .Returns(concernsCaseResponse);
+
+            var controller = new ConcernsCaseController(
+                mockLogger.Object,
+                null, 
+                null, 
+                null,
+                updateConcernsCase.Object
+            );
+            
+            var result = controller.Update(urn, updateRequest);
+           
+            var expected = new ApiSingleResponseV2<ConcernsCaseResponse>(concernsCaseResponse);
+            
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+        
+        [Fact]
+        public void UpdateConcernsCase_Returns2404NotFound_WhenNoConcernsCaseIsFound()
+        {
+            var updateConcernsCase = new Mock<IUpdateConcernsCase>();
+            var urn = 7;
+            var updateRequest = Builder<ConcernCaseRequest>.CreateNew().Build();
+            
+
+            updateConcernsCase.Setup(a => a.Execute(urn, updateRequest))
+                .Returns(() => null);
+
+            var controller = new ConcernsCaseController(
+                mockLogger.Object,
+                null, 
+                null, 
+                null,
+                updateConcernsCase.Object
+            );
+            
+            var result = controller.Update(urn, updateRequest);
+
+            result.Result.Should().BeEquivalentTo(new NotFoundResult());
         }
     }
 }
