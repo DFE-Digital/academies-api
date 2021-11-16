@@ -6,7 +6,7 @@ namespace TramsDataApi.ResponseModels
     {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public DateTime ReviewedAt { get; set; }
+        public DateTime ReviewAt { get; set; }
         public DateTime ClosedAt { get; set; }
         public string CreatedBy { get; set; }
         public string Description { get; set; }
