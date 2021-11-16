@@ -245,6 +245,26 @@ namespace TramsDataApi.Test.Integration
         }
         
         [Fact]
+        public async Task IndexConcernsTypes_ShouldReturnAllConcernsTypes()
+        {
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-types/"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsTypeResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Count().Should().Be(13);
+            
+        }
+        
+        [Fact]
         public async Task UpdateConcernsCase_ShouldReturnTheUpdatedConcernsCase()
         {
             var concernsCase = new ConcernsCase
