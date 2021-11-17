@@ -490,9 +490,9 @@ namespace TramsDataApi.Test.Integration
         
         public void Dispose()
         {
-            // _dbContext.ConcernsCase.RemoveRange(_dbContext.ConcernsCase);
-            // _dbContext.ConcernsRecord.RemoveRange(_dbContext.ConcernsRecord);
-            // _dbContext.SaveChanges();
+            _dbContext.ConcernsCase.RemoveRange(_dbContext.ConcernsCase);
+            _dbContext.ConcernsRecord.RemoveRange(_dbContext.ConcernsRecord);
+            _dbContext.SaveChanges();
         }
     }
 }
