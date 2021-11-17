@@ -35,21 +35,21 @@ namespace TramsDataApi.Factories
             ConcernsType concernsType, 
             ConcernsRating concernsRating)
         {
-            return new ConcernsRecord
-            {
-                CreatedAt = concernsRecordRequest.CreatedAt,
-                UpdatedAt = concernsRecordRequest.UpdatedAt,
-                ReviewAt = concernsRecordRequest.ReviewAt,
-                ClosedAt = concernsRecordRequest.ClosedAt,
-                Name = concernsRecordRequest.Name ?? original.Name,
-                Description = concernsRecordRequest.Description ?? original.Name,
-                Reason = concernsRecordRequest.Reason ?? original.Name,
-                ConcernsCase = concernsCase,
-                ConcernsType = concernsType,
-                ConcernsRating = concernsRating,
-                Primary = concernsRecordRequest.Primary,
-                StatusUrn = concernsRecordRequest.StatusUrn
-            };
+
+            original.CreatedAt = concernsRecordRequest.CreatedAt;
+            original.UpdatedAt = concernsRecordRequest.UpdatedAt;
+            original.ReviewAt = concernsRecordRequest.ReviewAt;
+            original.ClosedAt = concernsRecordRequest.ClosedAt;
+            original.Name = concernsRecordRequest.Name ?? original.Name;
+            original.Description = concernsRecordRequest.Description ?? original.Name;
+            original.Reason = concernsRecordRequest.Reason ?? original.Name;
+            original.ConcernsCase = concernsCase;
+            original.ConcernsType = concernsType;
+            original.ConcernsRating = concernsRating;
+            original.Primary = concernsRecordRequest.Primary;
+            original.StatusUrn = concernsRecordRequest.StatusUrn;
+
+            return original;
         }
     }
 }
