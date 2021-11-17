@@ -18,5 +18,12 @@ namespace TramsDataApi.Gateways
 
             return concernsRecord;
         }
+
+        public ConcernsRecord Update(ConcernsRecord concernsRecord)
+        {
+            var entity = _tramsDbContext.ConcernsRecord.Update(concernsRecord);
+            _tramsDbContext.SaveChanges();
+            return entity.Entity;
+        }
     }
 }
