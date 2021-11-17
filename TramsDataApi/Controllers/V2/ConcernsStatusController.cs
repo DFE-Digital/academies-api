@@ -34,6 +34,5 @@ namespace TramsDataApi.Controllers.V2
             var response = new ApiResponseV2<ConcernsStatusResponse>(statuses, pagingResponse);
             return Ok(response);
         }
-
     }
 }
