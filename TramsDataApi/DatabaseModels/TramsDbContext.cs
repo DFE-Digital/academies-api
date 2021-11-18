@@ -137,21 +137,21 @@ namespace TramsDataApi.DatabaseModels
                     {
                         Id = 1,
                         Name = "Live",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     }, 
                     new ConcernsStatus
                     {
                         Id = 2,
                         Name = "Monitoring",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsStatus
                     {   Id = 3,
                         Name = "Close",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     }
                     );
             });
@@ -198,104 +198,104 @@ namespace TramsDataApi.DatabaseModels
                         Id = 1,
                         Name = "Compliance",
                         Description = "Financial reporting",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 2,
                         Name = "Compliance",
                         Description = "Financial returns",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 3,
                         Name = "Financial",
                         Description = "Deficit",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 4,
                         Name = "Financial",
                         Description = "Projected deficit / Low future surplus",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 5,
                         Name = "Financial",
                         Description = "Cash flow shortfall",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 6,
                         Name = "Financial",
                         Description = "Clawback",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 7,
                         Name = "Force majeure",
                         Description = null,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 8,
                         Name = "Governance",
                         Description = "Governance",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 9,
                         Name = "Governance",
                         Description = "Closure",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 10,
                         Name = "Governance",
                         Description = "Executive Pay",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 11,
                         Name = "Governance",
                         Description = "Safeguarding",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 12,
                         Name = "Irregularity",
                         Description = "Allegations and self reported concerns",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsType
                     {
                         Id = 13,
                         Name = "Irregularity",
                         Description = "Related party transactions - in year",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     }
                 );
             });
@@ -315,36 +315,36 @@ namespace TramsDataApi.DatabaseModels
                     {
                         Id = 1,
                         Name = "Red-Plus",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsRating
                     {
                         Id = 2,
                         Name = "Red",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsRating
                     {
                         Id = 3,
                         Name = "Red-Amber",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsRating
                     {
                         Id = 4,
                         Name = "Amber-Green",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     },
                     new ConcernsRating
                     {
                         Id = 5,
                         Name = "n/a",
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        CreatedAt = new DateTime(2021,11,17),
+                        UpdatedAt = new DateTime(2021,11,17)
                     });
             });
             OnModelCreatingPartial(modelBuilder);
