@@ -1,3 +1,4 @@
+using System.Linq;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -17,6 +18,18 @@ namespace TramsDataApi.Gateways
             _tramsDbContext.SaveChanges();
 
             return concernsRecord;
+        }
+
+        public ConcernsRecord Update(ConcernsRecord concernsRecord)
+        {
+            var entity = _tramsDbContext.ConcernsRecord.Update(concernsRecord);
+            _tramsDbContext.SaveChanges();
+            return entity.Entity;
+        }
+
+        public ConcernsRecord GetConcernsRecordByUrn(int urn)
+        {
+            return _tramsDbContext.ConcernsRecord.FirstOrDefault(r => r.Urn == urn);
         }
     }
 }
