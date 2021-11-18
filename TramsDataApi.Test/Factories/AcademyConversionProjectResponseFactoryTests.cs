@@ -95,6 +95,8 @@ namespace TramsDataApi.Test.Factories
                 PreviousHeadTeacherBoardDateQuestion = academyConversionProject.PreviousHeadTeacherBoardDateQuestion,
                 PreviousHeadTeacherBoardDate = academyConversionProject.PreviousHeadTeacherBoardDate,
                 SchoolAndTrustInformationSectionComplete = academyConversionProject.SchoolAndTrustInformationSectionComplete,
+                MemberOfParliamentName = academyConversionProject.MemberOfParliamentName,
+                MemberOfParliamentParty = academyConversionProject.MemberOfParliamentParty,
                 GeneralInformationSectionComplete = academyConversionProject.GeneralInformationSectionComplete,
                 RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,
                 LocalAuthorityInformationTemplateSentDate = academyConversionProject.LocalAuthorityInformationTemplateSentDate,
