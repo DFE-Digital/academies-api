@@ -356,7 +356,7 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"https://trams-api.com/v2/concerns-record"),
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-records"),
                 Headers =
                 {
                     {"ApiKey", "testing-api-key"}
