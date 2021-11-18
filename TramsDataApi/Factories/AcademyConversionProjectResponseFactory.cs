@@ -47,6 +47,8 @@ namespace TramsDataApi.Factories
 				SchoolAndTrustInformationSectionComplete = academyConversionProject.SchoolAndTrustInformationSectionComplete,
 				DistanceFromSchoolToTrustHeadquarters = academyConversionProject.DistanceFromSchoolToTrustHeadquarters,
 				DistanceFromSchoolToTrustHeadquartersAdditionalInformation = academyConversionProject.DistanceFromSchoolToTrustHeadquartersAdditionalInformation,
+				MemberOfParliamentName = academyConversionProject.MemberOfParliamentName,
+				MemberOfParliamentParty = academyConversionProject.MemberOfParliamentParty,
 				GeneralInformationSectionComplete = academyConversionProject.GeneralInformationSectionComplete,
 				RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete,
 				SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation,

@@ -37,6 +37,8 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
         public bool? IsThisADiocesanTrust { get; set; }
         public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
         public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
+        public string MemberOfParliamentName { get; set; }
+        public string MemberOfParliamentParty { get; set; }
         public bool? GeneralInformationSectionComplete { get; set; }
 
         //school performance ofsted information

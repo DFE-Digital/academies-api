@@ -67,6 +67,8 @@ namespace TramsDataApi.DatabaseModels
         [Column(TypeName = "decimal(38, 3)")] public decimal? DistanceFromSchoolToTrustHeadquarters { get; set; }
         public string DistanceFromSchoolToTrustHeadquartersAdditionalInformation { get; set; }
         public string MemberOfParliamentParty { get; set; }
+        public string MemberOfParliamentName { get; set; }
+
         public bool? GeneralInformationSectionComplete { get; set; }
 
         //school performance ofsted information
