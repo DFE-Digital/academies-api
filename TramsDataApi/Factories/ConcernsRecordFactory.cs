@@ -27,5 +27,29 @@ namespace TramsDataApi.Factories
                 StatusUrn = concernsRecordRequest.StatusUrn
             };
         }
+        
+        public static ConcernsRecord Update( 
+            ConcernsRecord original,
+            ConcernsRecordRequest concernsRecordRequest, 
+            ConcernsCase concernsCase, 
+            ConcernsType concernsType, 
+            ConcernsRating concernsRating)
+        {
+
+            original.CreatedAt = concernsRecordRequest.CreatedAt;
+            original.UpdatedAt = concernsRecordRequest.UpdatedAt;
+            original.ReviewAt = concernsRecordRequest.ReviewAt;
+            original.ClosedAt = concernsRecordRequest.ClosedAt;
+            original.Name = concernsRecordRequest.Name ?? original.Name;
+            original.Description = concernsRecordRequest.Description ?? original.Name;
+            original.Reason = concernsRecordRequest.Reason ?? original.Name;
+            original.ConcernsCase = concernsCase;
+            original.ConcernsType = concernsType;
+            original.ConcernsRating = concernsRating;
+            original.Primary = concernsRecordRequest.Primary;
+            original.StatusUrn = concernsRecordRequest.StatusUrn;
+
+            return original;
+        }
     }
 }

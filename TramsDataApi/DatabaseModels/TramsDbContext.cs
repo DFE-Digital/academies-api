@@ -314,7 +314,7 @@ namespace TramsDataApi.DatabaseModels
                     new ConcernsRating
                     {
                         Id = 1,
-                        Name = "Red - Plus",
+                        Name = "Red-Plus",
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
                     },
@@ -328,14 +328,14 @@ namespace TramsDataApi.DatabaseModels
                     new ConcernsRating
                     {
                         Id = 3,
-                        Name = "Red - Amber",
+                        Name = "Red-Amber",
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
                     },
                     new ConcernsRating
                     {
                         Id = 4,
-                        Name = "Amber - Green",
+                        Name = "Amber-Green",
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
                     },

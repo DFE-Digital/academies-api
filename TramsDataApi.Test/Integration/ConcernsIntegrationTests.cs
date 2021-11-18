@@ -245,6 +245,26 @@ namespace TramsDataApi.Test.Integration
         }
         
         [Fact]
+        public async Task IndexConcernsTypes_ShouldReturnAllConcernsTypes()
+        {
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-types/"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsTypeResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Count().Should().Be(13);
+            
+        }
+        
+        [Fact]
         public async Task UpdateConcernsCase_ShouldReturnTheUpdatedConcernsCase()
         {
             var concernsCase = new ConcernsCase
@@ -336,7 +356,7 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"https://trams-api.com/v2/concerns-record"),
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-records"),
                 Headers =
                 {
                     {"ApiKey", "testing-api-key"}
@@ -356,6 +376,85 @@ namespace TramsDataApi.Test.Integration
             expected.Data.Urn = createdRecord.Urn;
             
             result.Should().BeEquivalentTo(expected);
+        }
+        
+        [Fact]
+        public async Task UpdateConcernsRecord_ShouldReturnTheUpdatedConcernsRecord()
+        {
+            var concernsCase = new ConcernsCase
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                CreatedBy = _randomGenerator.NextString(3, 10),
+                Description = _randomGenerator.NextString(3, 10),
+                CrmEnquiry = _randomGenerator.NextString(3, 10),
+                TrustUkprn = _randomGenerator.NextString(3, 10),
+                ReasonAtReview = _randomGenerator.NextString(3, 10),
+                DeEscalation = _randomGenerator.DateTime(),
+                Issue = _randomGenerator.NextString(3, 10),
+                CurrentStatus = _randomGenerator.NextString(3, 10),
+                CaseAim = _randomGenerator.NextString(3, 10),
+                DeEscalationPoint = _randomGenerator.NextString(3, 10),
+                NextSteps = _randomGenerator.NextString(3, 10),
+                DirectionOfTravel = _randomGenerator.NextString(3, 10),
+                StatusUrn = 2,
+            };
+
+            var concernsType = _dbContext.ConcernsTypes.FirstOrDefault(t => t.Id == 1);
+            var concernsRating = _dbContext.ConcernsRatings.FirstOrDefault(r => r.Id == 1);
+            
+            var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase);
+            _dbContext.SaveChanges();
+
+            var concernsRecord = new ConcernsRecord
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                Name = _randomGenerator.NextString(3, 10),
+                Description = _randomGenerator.NextString(3, 10),
+                Reason = _randomGenerator.NextString(3, 10),
+                Primary = false,
+                StatusUrn = 1,
+                ConcernsCase = currentConcernsCase.Entity,
+                ConcernsType = concernsType,
+                ConcernsRating = concernsRating
+            };
+            
+            var currentConcernsRecord =  _dbContext.ConcernsRecord.Add(concernsRecord);
+            _dbContext.SaveChanges();
+            var currentRecordUrn = currentConcernsRecord.Entity.Urn;
+
+
+
+            var updateRequest = Builder<ConcernsRecordRequest>.CreateNew()
+                .With(r => r.CaseUrn = concernsCase.Urn)
+                .With(r => r.TypeUrn = concernsType.Urn)
+                .With(r => r.RatingUrn = concernsRating.Urn).Build();
+
+            var expectedConcernsRecord = ConcernsRecordFactory.Create(updateRequest, concernsCase, concernsType, concernsRating);
+            expectedConcernsRecord.Urn = currentRecordUrn;
+            var expectedContent = ConcernsRecordResponseFactory.Create(expectedConcernsRecord);
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-records/{currentRecordUrn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(updateRequest)
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsRecordResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Should().BeEquivalentTo(expectedContent);
+
         }
 
         private void SetupConcernsCaseTestData(string trustUkprn, int count = 1)

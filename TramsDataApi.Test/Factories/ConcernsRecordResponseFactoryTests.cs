@@ -30,7 +30,7 @@ namespace TramsDataApi.Test.Factories
                 TypeId = 3,
                 RatingId = 5,
                 Primary = false,
-                Urn = "4",
+                Urn = 4,
                 StatusUrn = 23,
                 ConcernsCase = concernCase,
                 ConcernsType = concernType,

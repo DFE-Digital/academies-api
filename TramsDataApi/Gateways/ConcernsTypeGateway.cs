@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 
@@ -15,6 +16,11 @@ namespace TramsDataApi.Gateways
         public ConcernsType GetConcernsTypeByUrn(int urn)
         {
             return _tramsDbContext.ConcernsTypes.FirstOrDefault(t => t.Urn == urn);
+        }
+
+        public IList<ConcernsType> GetTypes()
+        {
+            return _tramsDbContext.ConcernsTypes.ToList();
         }
     }
 }

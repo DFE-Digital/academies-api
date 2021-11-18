@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211117161151_UpdateConcernsRecordsUrnMigration")]
+    partial class UpdateConcernsRecordsUrnMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,9 +125,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<DateTime?>("LocalAuthorityInformationTemplateSentDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("MemberOfParliamentName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MemberOfParliamentParty")
                         .HasColumnType("nvarchar(max)");
@@ -519,41 +518,41 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 561, DateTimeKind.Local).AddTicks(9490),
-                            Name = "Red-Plus",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 561, DateTimeKind.Local).AddTicks(9900),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(2270),
+                            Name = "Red - Plus",
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(2680),
                             Urn = 0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(300),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3070),
                             Name = "Red",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(310),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3080),
                             Urn = 0
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(320),
-                            Name = "Red-Amber",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(320),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3090),
+                            Name = "Red - Amber",
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3090),
                             Urn = 0
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(330),
-                            Name = "Amber-Green",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(330),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3090),
+                            Name = "Amber - Green",
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3100),
                             Urn = 0
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(330),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3100),
                             Name = "n/a",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 562, DateTimeKind.Local).AddTicks(330),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 664, DateTimeKind.Local).AddTicks(3100),
                             Urn = 0
                         });
                 });
@@ -648,25 +647,25 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 537, DateTimeKind.Local).AddTicks(3100),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 649, DateTimeKind.Local).AddTicks(4020),
                             Name = "Live",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 540, DateTimeKind.Local).AddTicks(7330),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 652, DateTimeKind.Local).AddTicks(4920),
                             Urn = 0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 540, DateTimeKind.Local).AddTicks(7820),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 652, DateTimeKind.Local).AddTicks(5410),
                             Name = "Monitoring",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 540, DateTimeKind.Local).AddTicks(7840),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 652, DateTimeKind.Local).AddTicks(5420),
                             Urn = 0
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 540, DateTimeKind.Local).AddTicks(7840),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 652, DateTimeKind.Local).AddTicks(5430),
                             Name = "Close",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 540, DateTimeKind.Local).AddTicks(7850),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 652, DateTimeKind.Local).AddTicks(5440),
                             Urn = 0
                         });
                 });
@@ -704,117 +703,117 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(4330),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(8240),
                             Description = "Financial reporting",
                             Name = "Compliance",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(4820),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(8650),
                             Urn = 0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5320),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9060),
                             Description = "Financial returns",
                             Name = "Compliance",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5340),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9070),
                             Urn = 0
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5360),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9080),
                             Description = "Deficit",
                             Name = "Financial",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5360),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9080),
                             Urn = 0
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5360),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9080),
                             Description = "Projected deficit / Low future surplus",
                             Name = "Financial",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5360),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9090),
                             Urn = 0
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5370),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9090),
                             Description = "Cash flow shortfall",
                             Name = "Financial",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5370),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9090),
                             Urn = 0
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5370),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9090),
                             Description = "Clawback",
                             Name = "Financial",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5370),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9090),
                             Urn = 0
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5380),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9100),
                             Name = "Force majeure",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5380),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9100),
                             Urn = 0
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5380),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9100),
                             Description = "Governance",
                             Name = "Governance",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5380),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9100),
                             Urn = 0
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5390),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9110),
                             Description = "Closure",
                             Name = "Governance",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5390),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9110),
                             Urn = 0
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5390),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9110),
                             Description = "Executive Pay",
                             Name = "Governance",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5390),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9110),
                             Urn = 0
                         },
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5400),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9110),
                             Description = "Safeguarding",
                             Name = "Governance",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5400),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9120),
                             Urn = 0
                         },
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5400),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9120),
                             Description = "Allegations and self reported concerns",
                             Name = "Irregularity",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5400),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9120),
                             Urn = 0
                         },
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5410),
+                            CreatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9120),
                             Description = "Related party transactions - in year",
                             Name = "Irregularity",
-                            UpdatedAt = new DateTime(2021, 11, 17, 14, 54, 28, 560, DateTimeKind.Local).AddTicks(5410),
+                            UpdatedAt = new DateTime(2021, 11, 17, 16, 11, 50, 662, DateTimeKind.Local).AddTicks(9120),
                             Urn = 0
                         });
                 });
