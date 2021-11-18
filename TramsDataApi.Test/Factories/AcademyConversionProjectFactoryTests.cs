@@ -132,6 +132,8 @@ namespace TramsDataApi.Test.Factories
             expected.SchoolAndTrustInformationSectionComplete = updateRequest.SchoolAndTrustInformationSectionComplete;
             expected.DistanceFromSchoolToTrustHeadquarters = updateRequest.DistanceFromSchoolToTrustHeadquarters;
             expected.DistanceFromSchoolToTrustHeadquartersAdditionalInformation = updateRequest.DistanceFromSchoolToTrustHeadquartersAdditionalInformation;
+            expected.MemberOfParliamentParty = updateRequest.MemberOfParliamentParty;
+            expected.MemberOfParliamentName = updateRequest.MemberOfParliamentName;
             expected.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete;
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
