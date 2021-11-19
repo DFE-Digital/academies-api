@@ -24,7 +24,15 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<ConcernsRecord> ConcernsRecord { get; set; }
         public virtual DbSet<ConcernsType> ConcernsTypes{ get; set; }
         public virtual DbSet<ConcernsRating> ConcernsRatings{ get; set; }
-
+        public virtual DbSet<A2BApplication> A2BApplications { get; set; }
+        public virtual DbSet<A2BApplicationKeyPersons> A2BApplicationKeyPersons { get; set; }
+        public virtual DbSet<A2BApplicationStatus> A2BApplicationStatus { get; set; }
+        public virtual DbSet<A2BApplyingSchool> A2BApplyingSchools { get; set; }
+        public virtual DbSet<A2BContributor> A2BContributors { get; set; }
+        public virtual DbSet<A2BCreateSchoolRequest> A2BCreateSchoolRequests { get; set; }
+        public virtual DbSet<A2BSchoolLease> A2BSchoolLeases { get; set; }
+        public virtual DbSet<A2BSchoolLoan> A2BSchoolLoans { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
