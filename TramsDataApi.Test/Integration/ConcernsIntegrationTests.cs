@@ -487,7 +487,7 @@ namespace TramsDataApi.Test.Integration
             var concernsRating = _dbContext.ConcernsRatings.FirstOrDefault();
             var concernsType = _dbContext.ConcernsTypes.FirstOrDefault();
 
-            var recordCreateRequest = new ConcernsRecordRequest
+            var recordCreateRequest1 = new ConcernsRecordRequest
             {
                 CreatedAt = _randomGenerator.DateTime(),
                 UpdatedAt = _randomGenerator.DateTime(),
@@ -503,7 +503,23 @@ namespace TramsDataApi.Test.Integration
                 StatusUrn = 1
             };
             
-            var httpCreateRequestMessage = new HttpRequestMessage
+            var recordCreateRequest2 = new ConcernsRecordRequest
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                Name = _randomGenerator.NextString(3, 10),
+                Description = _randomGenerator.NextString(3, 10),
+                Reason = _randomGenerator.NextString(3, 10),
+                CaseUrn = currentConcernsCase.Urn,
+                TypeUrn = concernsType.Urn,
+                RatingUrn = concernsRating.Urn,
+                Primary = false,
+                StatusUrn = 1
+            };
+
+            var httpCreateRequestMessage1 = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
                 RequestUri = new Uri($"https://trams-api.com/v2/concerns-records/"),
@@ -511,12 +527,38 @@ namespace TramsDataApi.Test.Integration
                 {
                     {"ApiKey", "testing-api-key"}
                 },
-                Content =  JsonContent.Create(recordCreateRequest)
+                Content =  JsonContent.Create(recordCreateRequest1)
             };
             
-            var createResponse = await _client.SendAsync(httpCreateRequestMessage);
-            createResponse.StatusCode.Should().Be(201);
-
+            var createResponse1 = await _client.SendAsync(httpCreateRequestMessage1);
+            var content1 = await createResponse1.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsRecordResponse>>();
+            createResponse1.StatusCode.Should().Be(201);
+            
+            var httpCreateRequestMessage2 = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-records/"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(recordCreateRequest2)
+            };
+            
+            var createResponse2 = await _client.SendAsync(httpCreateRequestMessage2);
+            var content2 = await createResponse2.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsRecordResponse>>();
+            createResponse2.StatusCode.Should().Be(201);
+            
+            var createdRecord1 = ConcernsRecordFactory
+                .Create(recordCreateRequest1, currentConcernsCase, concernsType, concernsRating);
+            createdRecord1.Urn = content1.Data.Urn;
+            var createdRecord2 = ConcernsRecordFactory
+                .Create(recordCreateRequest2, currentConcernsCase, concernsType, concernsRating);
+            createdRecord2.Urn = content2.Data.Urn;
+            var createdRecords = new List<ConcernsRecord> {createdRecord1, createdRecord2};
+            var expected = createdRecords
+                .Select(ConcernsRecordResponseFactory.Create).ToList();
+            
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -531,7 +573,8 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(200);
             
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsRecordResponse>>();
-            content.Data.Count().Should().Be(1);
+            content.Data.Count().Should().Be(2);
+            content.Data.Should().BeEquivalentTo(expected);
         }
 
         private void SetupConcernsCaseTestData(string trustUkprn, int count = 1)
