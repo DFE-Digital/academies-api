@@ -68,6 +68,7 @@ namespace TramsDataApi
             services.AddScoped<IUpdateConcernsCase, UpdateConcernsCase>();
             services.AddScoped<IIndexConcernsTypes, IndexConcernsTypes>();
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
+            services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
 
             
             // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
