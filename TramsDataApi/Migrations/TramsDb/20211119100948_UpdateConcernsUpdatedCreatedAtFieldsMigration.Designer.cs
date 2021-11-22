@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211119100948_UpdateConcernsUpdatedCreatedAtFieldsMigration")]
+    partial class UpdateConcernsUpdatedCreatedAtFieldsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,10 +25,8 @@ namespace TramsDataApi.Migrations.TramsDb
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplication", b =>
                 {
-                    b.Property<int>("ApplicationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ApplicationId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ApplicationLeadAuthorId")
                         .HasColumnType("nvarchar(max)");
