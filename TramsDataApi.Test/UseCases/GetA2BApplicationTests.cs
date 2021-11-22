@@ -28,14 +28,10 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void GetA2BApplication_ShouldReturnNull_WhenApplicationIdIsNotFound()
         {
+            var applicationId = 10001;
             var mockGateway = new Mock<IA2BApplicationGateway>();
 
-            var request = new A2BApplicationByIdRequest
-            {
-                ApplicationId = "ApplicationId"
-            };
-            
-            mockGateway.Setup(g => g.GetByApplicationId("ApplicationId"));
+            mockGateway.Setup(g => g.GetByApplicationId(applicationId));
            
             var useCase = new GetA2BApplication(mockGateway.Object);
             var result = useCase.Execute(null);
@@ -46,19 +42,20 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void GetA2BApplication_ShouldReturnA2BApplicationResponse_WhenApplicationIdIsFound()
         {
+            var applicationId = 10001;
             var mockGateway = new Mock<IA2BApplicationGateway>();
             var application = Builder<A2BApplication>
                 .CreateNew()
-                .With(a => a.ApplicationId == "ApplicationId")
+                .With(a => a.ApplicationId == applicationId)
                 .Build();
 
             var request = new A2BApplicationByIdRequest
             {
-                ApplicationId = "ApplicationId"
+                ApplicationId = applicationId
             };
             var expected = A2BApplicationResponseFactory.Create(application, null);
 
-            mockGateway.Setup(g => g.GetByApplicationId("ApplicationId")).Returns(application);
+            mockGateway.Setup(g => g.GetByApplicationId(applicationId)).Returns(application);
             
             var useCase = new GetA2BApplication(mockGateway.Object);
             var result = useCase.Execute(request);

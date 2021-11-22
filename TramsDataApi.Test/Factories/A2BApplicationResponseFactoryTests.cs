@@ -42,7 +42,7 @@ namespace TramsDataApi.Test.Factories
 	            ChangesToLaGovernanceExplained = application.ChangesToLaGovernanceExplained,
 	            FormTrustOpeningDate = application.FormTrustOpeningDate,
 	            TrustId = application.TrustId,
-	            TrustApproverName = application.TrustApproverEmail,
+	            TrustApproverName = application.TrustApproverName,
 	            TrustApproverEmail = application.TrustApproverEmail,
 	            FormTrustReasonApprovalToConvertAsSat = application.FormTrustReasonApprovalToConvertAsSat,
 	            FormTrustReasonApprovedPerson = application.FormTrustReasonApprovedPerson,

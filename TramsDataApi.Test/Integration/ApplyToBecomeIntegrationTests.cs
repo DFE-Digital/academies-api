@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 using AutoFixture;
 using FizzWare.NBuilder;
 using FluentAssertions;
+using FluentAssertions.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
 using TramsDataApi.Test.Utils;
@@ -38,8 +40,6 @@ namespace TramsDataApi.Test.Integration
             _randomGenerator = new RandomGenerator();
         }
 
-        
-        
         [Fact]
         public async Task CanGetApplicationByApplicationId()
         {
@@ -57,13 +57,62 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expectedResponse); 
             result.Data.ApplicationId.Should().Be(expectedResponse.Data.ApplicationId);
         }
+
+        [Fact]
+        public async Task CanCreateApplication()
+        {
+            var application = Builder<A2BApplicationCreateRequest>.CreateNew().Build();
+   
+            var response = await _client.PostAsJsonAsync($"/v2/apply-to-become/application/", application);
+
+            response.StatusCode.Should().Be(201);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationResponse>>();
+
+            result.Should().NotBeNull();
+            result.Data.ApplicationId.Should().BeGreaterThan(0);
+            
+            var createdApplication =
+                _dbContext.A2BApplications.FirstOrDefault(a => a.ApplicationId == result.Data.ApplicationId);
+
+            createdApplication.Should().NotBeNull();
+            
+            result.Data.Should().BeEquivalentTo(createdApplication);
+        }
         
         private void SetupA2BApplicationData()
         {
-            var applications = Builder<A2BApplication>
-                .CreateListOfSize(10)
-                .Build()
-                .ToList();
+            var applications = Enumerable.Range(1, 10).Select(a => new A2BApplication
+            {
+                Name = _randomGenerator.NextString(3,10),
+                ApplicationType = _randomGenerator.NextString(3,10),
+                TrustId = _randomGenerator.NextString(3,10),
+                FormTrustProposedNameOfTrust = _randomGenerator.NextString(3,10),
+                ApplicationSubmitted = _randomGenerator.Boolean(),
+                ApplicationLeadAuthorId = _randomGenerator.NextString(3,10),
+                ApplicationVersion = _randomGenerator.NextString(3,10),
+                ApplicationLeadAuthorName = _randomGenerator.NextString(3,10),
+                ApplicationRole = _randomGenerator.NextString(3,10),
+                ApplicationRoleOtherDescription = _randomGenerator.NextString(3,10),
+                ChangesToTrust = _randomGenerator.Int(),
+                ChangesToTrustExplained = _randomGenerator.NextString(3,10),
+                FormTrustOpeningDate = _randomGenerator.DateTime(),
+                TrustApproverName = _randomGenerator.NextString(3,10),
+                TrustApproverEmail = _randomGenerator.NextString(3,10),
+                FormTrustReasonApprovalToConvertAsSat = _randomGenerator.Int(),
+                FormTrustReasonApprovedPerson = _randomGenerator.NextString(3,10),
+                FormTrustReasonForming = _randomGenerator.NextString(3,10),
+                FormTrustReasonVision = _randomGenerator.NextString(3,10),
+                FormTrustReasonGeoAreas = _randomGenerator.NextString(3,10),
+                FormTrustReasonFreedom = _randomGenerator.NextString(3,10),
+                FormTrustReasonImproveTeaching = _randomGenerator.NextString(3,10),
+                FormTrustPlanForGrowth = _randomGenerator.NextString(3,10),
+                FormTrustPlansForNoGrowth = _randomGenerator.NextString(3,10),
+                FormTrustGrowthPlansYesNo = _randomGenerator.Int(),
+                FormTrustImprovementSupport = _randomGenerator.NextString(3,10),
+                FormTrustImprovementStrategy = _randomGenerator.NextString(3,10),
+                FormTrustImprovementApprovedSponsor = _randomGenerator.NextString(3,10),
+            });
 
             _dbContext.A2BApplications.AddRange(applications);
             _dbContext.SaveChanges();

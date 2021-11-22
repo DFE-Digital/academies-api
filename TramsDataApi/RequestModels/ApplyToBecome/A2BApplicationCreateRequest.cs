@@ -1,15 +1,12 @@
 using System;
-using TramsDataApi.DatabaseModels;
 
-namespace TramsDataApi.ResponseModels.ApplyToBecome
+namespace TramsDataApi.RequestModels.ApplyToBecome
 {
-    public class A2BApplicationResponse
+    public class A2BApplicationCreateRequest
     {
         public string Name {get; set;}
-        public int ApplicationId {get; set;}
         public string ApplicationType {get; set;}
         public string TrustId { get; set; }
-        public A2BApplicationAccount Account { get; set; }
         public string FormTrustProposedNameOfTrust {get; set;}
         public bool ApplicationSubmitted {get; set;}
         public string ApplicationLeadAuthorId {get; set;}
@@ -37,17 +34,5 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
         public string FormTrustImprovementSupport {get; set;}
         public string FormTrustImprovementStrategy {get; set;}
         public string FormTrustImprovementApprovedSponsor {get; set;}
-        
-        public string ApplicationStatus {get; set;}
-    }
-
-    public class A2BApplicationAccount
-    {
-        public string Name { get; set; }
-        public string Urn { get; set; }
-        public string AccountId { get; set; }
-        public string Address1Composite { get; set; }
-        public string TrustCompanyNumber { get; set; }
-        public string TrustReferenceNumber { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using TramsDataApi.ResponseModels.ApplyToBecome;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetA2BApplication : IUseCase<A2BApplicationByIdRequest, A2BApplicationResponse>
+    public class GetA2BApplication : IGetA2BApplication
     {
         private readonly IA2BApplicationGateway _applicationGateway;
 

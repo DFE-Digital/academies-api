@@ -25,7 +25,7 @@ namespace TramsDataApi.Factories
 			    ChangesToLaGovernance = application.ChangesToLaGovernance,
 			    ChangesToLaGovernanceExplained = application.ChangesToLaGovernanceExplained,
 			    FormTrustOpeningDate = application.FormTrustOpeningDate,
-			    TrustApproverName = application.TrustApproverEmail,
+			    TrustApproverName = application.TrustApproverName,
 			    TrustApproverEmail = application.TrustApproverEmail,
 			    TrustId = application.TrustId,
 			    FormTrustReasonApprovalToConvertAsSat = application.FormTrustReasonApprovalToConvertAsSat,
