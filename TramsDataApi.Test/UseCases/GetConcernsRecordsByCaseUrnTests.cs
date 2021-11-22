@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.UseCases
             concernsCase.ConcernsRecords = concernsRecords;
             
             var gateway = new Mock<IConcernsCaseGateway>();
-            gateway.Setup(g => g.GetConcernsCaseByUrn(caseUrn))
+            gateway.Setup(g => g.GetConcernsCaseIncludingRecordsByUrn(caseUrn))
                 .Returns(concernsCase);
 
             var useCase = new GetConcernsRecordsByCaseUrn(gateway.Object);

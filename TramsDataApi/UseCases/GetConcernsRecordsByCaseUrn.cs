@@ -17,7 +17,7 @@ namespace TramsDataApi.UseCases
         }
         public IList<ConcernsRecordResponse> Execute(int caseUrn)
         {
-            var concernsCase = _concernsCaseGateway.GetConcernsCaseByUrn(caseUrn);
+            var concernsCase = _concernsCaseGateway.GetConcernsCaseIncludingRecordsByUrn(caseUrn);
             return concernsCase?.ConcernsRecords
                 .Select(ConcernsRecordResponseFactory.Create).ToList();
         }

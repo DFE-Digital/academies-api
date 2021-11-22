@@ -35,6 +35,15 @@ namespace TramsDataApi.Gateways
         public ConcernsCase GetConcernsCaseByUrn(int urn)
         {
             var concernsCase = _tramsDbContext.ConcernsCase
+                .AsNoTracking()
+                .FirstOrDefault(c => c.Urn == urn);
+            
+            return concernsCase;
+        }
+        
+        public ConcernsCase GetConcernsCaseIncludingRecordsByUrn(int urn)
+        {
+            var concernsCase = _tramsDbContext.ConcernsCase
                 .Include(c => c.ConcernsRecords)
                 .ThenInclude(record => record.ConcernsRating)
                 .Include(c => c.ConcernsRecords)
