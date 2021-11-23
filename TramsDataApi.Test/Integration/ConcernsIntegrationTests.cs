@@ -577,6 +577,88 @@ namespace TramsDataApi.Test.Integration
             content.Data.Should().BeEquivalentTo(expected);
         }
 
+        [Fact]
+        public async Task GetConcernsCaseByOwnerId()
+        {
+            var ownerId = "7583";
+
+            var concernsCases = new List<ConcernsCase>();
+            
+            for (var i = 0; i < 5; i++)
+            {
+                var concernsCase = new ConcernsCase
+                {
+                    CreatedAt = _randomGenerator.DateTime(),
+                    UpdatedAt = _randomGenerator.DateTime(),
+                    ReviewAt = _randomGenerator.DateTime(),
+                    ClosedAt = _randomGenerator.DateTime(),
+                    CreatedBy = ownerId,
+                    Description = _randomGenerator.NextString(3, 10),
+                    CrmEnquiry = _randomGenerator.NextString(3, 10),
+                    TrustUkprn = _randomGenerator.NextString(3, 10),
+                    ReasonAtReview = _randomGenerator.NextString(3, 10),
+                    DeEscalation = _randomGenerator.DateTime(),
+                    Issue = _randomGenerator.NextString(3, 10),
+                    CurrentStatus = _randomGenerator.NextString(3, 10),
+                    CaseAim = _randomGenerator.NextString(3, 10),
+                    DeEscalationPoint = _randomGenerator.NextString(3, 10),
+                    NextSteps = _randomGenerator.NextString(3, 10),
+                    DirectionOfTravel = _randomGenerator.NextString(3, 10),
+                    StatusUrn = 2,
+                };
+                var currentCase = _dbContext.ConcernsCase.Add(concernsCase);
+                _dbContext.SaveChanges();
+                
+                concernsCases.Add(currentCase.Entity);
+            }
+
+            for (var i = 0; i < 5; i++)
+            {
+                var concernsCase = new ConcernsCase
+                {
+                    CreatedAt = _randomGenerator.DateTime(),
+                    UpdatedAt = _randomGenerator.DateTime(),
+                    ReviewAt = _randomGenerator.DateTime(),
+                    ClosedAt = _randomGenerator.DateTime(),
+                    CreatedBy = "9876",
+                    Description = _randomGenerator.NextString(3, 10),
+                    CrmEnquiry = _randomGenerator.NextString(3, 10),
+                    TrustUkprn = _randomGenerator.NextString(3, 10),
+                    ReasonAtReview = _randomGenerator.NextString(3, 10),
+                    DeEscalation = _randomGenerator.DateTime(),
+                    Issue = _randomGenerator.NextString(3, 10),
+                    CurrentStatus = _randomGenerator.NextString(3, 10),
+                    CaseAim = _randomGenerator.NextString(3, 10),
+                    DeEscalationPoint = _randomGenerator.NextString(3, 10),
+                    NextSteps = _randomGenerator.NextString(3, 10),
+                    DirectionOfTravel = _randomGenerator.NextString(3, 10),
+                    StatusUrn = 3,
+                };
+                _dbContext.ConcernsCase.Add(concernsCase);
+                _dbContext.SaveChanges();
+            }
+
+            var expected = concernsCases.Select(ConcernsCaseResponseFactory.Create).ToList();
+
+            
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-cases/owner/{ownerId}?status=2"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            
+            var response = await _client.SendAsync(httpRequestMessage);
+            response.StatusCode.Should().Be(200);
+            
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsCaseResponse>>();
+            content.Data.Count().Should().Be(5);
+            content.Data.Should().BeEquivalentTo(expected);
+        }
+
         private void SetupConcernsCaseTestData(string trustUkprn, int count = 1)
         {
             
