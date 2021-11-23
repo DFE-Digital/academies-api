@@ -7,7 +7,8 @@ namespace TramsDataApi.DatabaseModels
     public class A2BApplicationKeyPersons
     {
         [Key]
-        public string KeyPersonId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int KeyPersonId {get; set;}
         
         public string Name {get; set;}
         public string KeyPersonDateOfBirth {get; set;}
