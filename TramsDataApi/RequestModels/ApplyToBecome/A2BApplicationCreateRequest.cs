@@ -1,17 +1,12 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.RequestModels.ApplyToBecome
 {
-    [Table("A2BApplication", Schema="sdd")]
-    public class A2BApplication
+    public class A2BApplicationCreateRequest
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ApplicationId {get; set;}
-        public string Name {get; set;} 
+        public string Name {get; set;}
         public string ApplicationType {get; set;}
+        public string TrustId { get; set; }
         public string FormTrustProposedNameOfTrust {get; set;}
         public bool ApplicationSubmitted {get; set;}
         public string ApplicationLeadAuthorId {get; set;}
@@ -26,7 +21,6 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? FormTrustOpeningDate {get; set;}
         public string TrustApproverName {get; set;}
         public string TrustApproverEmail {get; set;}
-        public string TrustId { get; set; }
         public int? FormTrustReasonApprovalToConvertAsSat {get; set;}
         public string FormTrustReasonApprovedPerson {get; set;}
         public string FormTrustReasonForming {get; set;}

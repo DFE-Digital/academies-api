@@ -1,17 +1,15 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using TramsDataApi.DatabaseModels;
 
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.ResponseModels.ApplyToBecome
 {
-    [Table("A2BApplication", Schema="sdd")]
-    public class A2BApplication
+    public class A2BApplicationResponse
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string Name {get; set;}
         public int ApplicationId {get; set;}
-        public string Name {get; set;} 
         public string ApplicationType {get; set;}
+        public string TrustId { get; set; }
+        public A2BApplicationAccount Account { get; set; }
         public string FormTrustProposedNameOfTrust {get; set;}
         public bool ApplicationSubmitted {get; set;}
         public string ApplicationLeadAuthorId {get; set;}
@@ -26,7 +24,6 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? FormTrustOpeningDate {get; set;}
         public string TrustApproverName {get; set;}
         public string TrustApproverEmail {get; set;}
-        public string TrustId { get; set; }
         public int? FormTrustReasonApprovalToConvertAsSat {get; set;}
         public string FormTrustReasonApprovedPerson {get; set;}
         public string FormTrustReasonForming {get; set;}
@@ -40,5 +37,17 @@ namespace TramsDataApi.DatabaseModels
         public string FormTrustImprovementSupport {get; set;}
         public string FormTrustImprovementStrategy {get; set;}
         public string FormTrustImprovementApprovedSponsor {get; set;}
+        
+        public string ApplicationStatus {get; set;}
+    }
+
+    public class A2BApplicationAccount
+    {
+        public string Name { get; set; }
+        public string Urn { get; set; }
+        public string AccountId { get; set; }
+        public string Address1Composite { get; set; }
+        public string TrustCompanyNumber { get; set; }
+        public string TrustReferenceNumber { get; set; }
     }
 }
