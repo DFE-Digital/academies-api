@@ -26,7 +26,6 @@ namespace TramsDataApi.Test.Factories
 
             var expectedKeyPersons = new A2BApplicationKeyPersons
             {
-                KeyPersonId = 10001,
                 Name = keyPersonsCreateRequest.Name,
                 KeyPersonDateOfBirth = keyPersonsCreateRequest.KeyPersonDateOfBirth,
                 KeyPersonBiography = keyPersonsCreateRequest.KeyPersonBiography,

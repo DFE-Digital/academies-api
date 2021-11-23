@@ -1,5 +1,4 @@
 using System;
-using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.ResponseModels.ApplyToBecome
 {
