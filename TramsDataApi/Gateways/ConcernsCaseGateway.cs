@@ -54,6 +54,24 @@ namespace TramsDataApi.Gateways
             return concernsCase;
         }
 
+        public IList<ConcernsCase> GetConcernsCasesByOwnerId(string ownerId, int? statusUrn, int page, int count)
+        {
+
+            var query = _tramsDbContext.ConcernsCase
+                .Where(c => c.CreatedBy == ownerId);
+
+            if (statusUrn != null)
+            {
+                query = query.Where(c => c.StatusUrn == statusUrn);
+            }
+
+            query = query.Skip((page - 1) * count)
+                .Take(count)
+                .AsNoTracking();
+            
+            return query.ToList();
+        }
+
         public ConcernsCase Update(ConcernsCase concernsCase)
         {
             var entity = _tramsDbContext.ConcernsCase.Update(concernsCase);
