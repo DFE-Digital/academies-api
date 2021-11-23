@@ -49,7 +49,7 @@ namespace TramsDataApi.Test.UseCases
 
             var request = new A2BApplicationKeyPersonsByIdRequest
             {
-                KeyPersonsId = keyPersonsId
+                KeyPersonId = keyPersonsId
             };
             var expected = A2BApplicationKeyPersonsResponseFactory.Create(keyPersons);
 

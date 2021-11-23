@@ -18,7 +18,7 @@ namespace TramsDataApi.UseCases
         {
             if (request == null) return null;
             
-            var keyPersons = _keyPersonsGateway.GetByKeyPersonsId(request.KeyPersonsId);
+            var keyPersons = _keyPersonsGateway.GetByKeyPersonsId(request.KeyPersonId);
 
             return keyPersons != null 
                 ? A2BApplicationKeyPersonsResponseFactory.Create(keyPersons) 
