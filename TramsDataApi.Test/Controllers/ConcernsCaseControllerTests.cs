@@ -36,6 +36,7 @@ namespace TramsDataApi.Test.Controllers
                 createConcernsCase.Object, 
                 null, 
                 null, 
+                null,
                 null
             );
             
@@ -62,6 +63,7 @@ namespace TramsDataApi.Test.Controllers
                 null, 
                 getConcernsCaseByUrn.Object, 
                 null,
+                null,
                 null
             );
             
@@ -86,6 +88,7 @@ namespace TramsDataApi.Test.Controllers
                 null, 
                 getConcernsCaseByUrn.Object, 
                 null,
+                null, 
                 null
             );
             
@@ -113,6 +116,7 @@ namespace TramsDataApi.Test.Controllers
                 null, 
                 null, 
                 getConcernsCaseByTrustUkprn.Object,
+                null,
                 null
             );
             
@@ -146,7 +150,8 @@ namespace TramsDataApi.Test.Controllers
                 null, 
                 null, 
                 null,
-                updateConcernsCase.Object
+                updateConcernsCase.Object,
+                null
             );
             
             var result = controller.Update(urn, updateRequest);
@@ -157,7 +162,7 @@ namespace TramsDataApi.Test.Controllers
         }
         
         [Fact]
-        public void UpdateConcernsCase_Returns2404NotFound_WhenNoConcernsCaseIsFound()
+        public void UpdateConcernsCase_Returns404NotFound_WhenNoConcernsCaseIsFound()
         {
             var updateConcernsCase = new Mock<IUpdateConcernsCase>();
             var urn = 7;
@@ -172,12 +177,46 @@ namespace TramsDataApi.Test.Controllers
                 null, 
                 null, 
                 null,
-                updateConcernsCase.Object
+                updateConcernsCase.Object,
+                null
             );
             
             var result = controller.Update(urn, updateRequest);
 
             result.Result.Should().BeEquivalentTo(new NotFoundResult());
+        }
+        
+        
+         
+        [Fact]
+        public void GetConcernsCaseByOwnerId_ReturnsCaseResponses_WhenConcernsCasesAreFound()
+        {
+            var getConcernsCaseByOwnerId = new Mock<IGetConcernsCasesByOwnerId>();
+            var ownerId = "567";
+            var statusUrn = 567;
+            var response = Builder<ConcernsCaseResponse>.CreateListOfSize(4).Build();
+
+            getConcernsCaseByOwnerId.Setup(a => a.Execute(ownerId, statusUrn, 1, 50))
+                .Returns(response);
+
+            var controller = new ConcernsCaseController(
+                mockLogger.Object,
+                null, 
+                null, 
+                null,
+                null,
+                getConcernsCaseByOwnerId.Object
+            );
+            var result = controller.GetByOwnerId(ownerId, statusUrn, 1, 50);
+            
+            var expectedPagingResponse = new PagingResponse
+            {
+                Page = 1,
+                RecordCount = 4,
+                NextPageUrl = null
+            };
+            var expected = new ApiResponseV2<ConcernsCaseResponse>(response, expectedPagingResponse);
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
     }
 }

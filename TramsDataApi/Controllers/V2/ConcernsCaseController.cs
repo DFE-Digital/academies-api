@@ -18,19 +18,22 @@ namespace TramsDataApi.Controllers.V2
         private readonly IGetConcernsCaseByUrn _getConcernsCaseByUrn;
         private readonly IGetConcernsCaseByTrustUkprn _getConcernsCaseByTrustUkprn;
         private readonly IUpdateConcernsCase _updateConcernsCase;
+        private readonly IGetConcernsCasesByOwnerId _getConcernsCasesByOwnerId;
 
         public ConcernsCaseController(
             ILogger<ConcernsCaseController> logger, 
             ICreateConcernsCase createConcernsCase,
             IGetConcernsCaseByUrn getConcernsCaseByUrn,
             IGetConcernsCaseByTrustUkprn getConcernsCaseByTrustUkprn,
-            IUpdateConcernsCase updateConcernsCase)
+            IUpdateConcernsCase updateConcernsCase,
+            IGetConcernsCasesByOwnerId getConcernsCasesByOwnerId)
         {
             _logger = logger;
             _createConcernsCase = createConcernsCase;
             _getConcernsCaseByUrn = getConcernsCaseByUrn;
             _getConcernsCaseByTrustUkprn = getConcernsCaseByTrustUkprn;
             _updateConcernsCase = updateConcernsCase;
+            _getConcernsCasesByOwnerId = getConcernsCasesByOwnerId;
         }
         
         [HttpPost]
@@ -96,6 +99,22 @@ namespace TramsDataApi.Controllers.V2
             _logger.LogDebug(JsonSerializer.Serialize(updatedAcademyConcernsCase));
 			
             var response = new ApiSingleResponseV2<ConcernsCaseResponse>(updatedAcademyConcernsCase);
+            return Ok(response);
+        }
+        
+        [HttpGet]
+        [Route("owner/{ownerId}")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiResponseV2<ConcernsCaseResponse>> GetByOwnerId(string ownerId, int? status = null, int page = 1, int count = 50)
+        {
+            _logger.LogInformation($"Attempting to get Concerns Cases by Owner Id {ownerId}, page {page}, count {count}");
+            var concernsCases = _getConcernsCasesByOwnerId.Execute(ownerId, status, page, count);
+
+            _logger.LogInformation($"Returning Concerns cases with Owner Id {ownerId}, page {page}, count {count}");
+            _logger.LogDebug(JsonSerializer.Serialize(concernsCases));
+            var pagingResponse = PagingResponseFactory.Create(page, count, concernsCases.Count, Request);
+            var response = new ApiResponseV2<ConcernsCaseResponse>(concernsCases, pagingResponse);
+            
             return Ok(response);
         }
     }
