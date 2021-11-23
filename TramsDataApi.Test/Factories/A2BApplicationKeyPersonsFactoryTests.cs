@@ -26,7 +26,17 @@ namespace TramsDataApi.Test.Factories
 
             var expectedKeyPersons = new A2BApplicationKeyPersons
             {
-	            
+                KeyPersonId = 10001,
+                Name = keyPersonsCreateRequest.Name,
+                KeyPersonDateOfBirth = keyPersonsCreateRequest.KeyPersonDateOfBirth,
+                KeyPersonBiography = keyPersonsCreateRequest.KeyPersonBiography,
+                KeyPersonCeoExecutive = keyPersonsCreateRequest.KeyPersonCeoExecutive,
+                KeyPersonChairOfTrust = keyPersonsCreateRequest.KeyPersonChairOfTrust,
+                KeyPersonFinancialDirector = keyPersonsCreateRequest.KeyPersonFinancialDirector,
+                KeyPersonFinancialDirectorTime = keyPersonsCreateRequest.KeyPersonFinancialDirectorTime,
+                KeyPersonMember = keyPersonsCreateRequest.KeyPersonMember,
+                KeyPersonOther = keyPersonsCreateRequest.KeyPersonOther,
+                KeyPersonTrustee = keyPersonsCreateRequest.KeyPersonTrustee
             };
                 
             var response = A2BApplicationKeyPersonsFactory.Create(keyPersonsCreateRequest);
