@@ -5,7 +5,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TramsDataApi.Controllers.V2;
-using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
@@ -62,7 +61,7 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void xxxx_Returns201_WithCreatedObject_WhenApplicationCreated()
+        public void Create_Returns201_WithCreatedObject_WhenApplicationCreated()
         {
             var request = Builder<A2BApplicationCreateRequest>.CreateNew().Build();
             var expectedApplicationResponse =  new A2BApplicationResponse

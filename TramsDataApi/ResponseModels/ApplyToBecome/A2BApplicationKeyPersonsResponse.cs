@@ -1,15 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using TramsDataApi.DatabaseModels;
 
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.ResponseModels.ApplyToBecome
 {
-    [Table("A2BApplicationKeyPersons", Schema = "sdd")]
-    public class A2BApplicationKeyPersons
+    public class A2BApplicationKeyPersonsResponse
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int KeyPersonId {get; set;}
-        
         public string Name {get; set;}
         public string KeyPersonDateOfBirth {get; set;}
         public string KeyPersonBiography {get; set;}
