@@ -80,6 +80,48 @@ namespace TramsDataApi.Test.Integration
             result.Data.Should().BeEquivalentTo(createdApplication);
         }
         
+        [Fact]
+        public async Task CanGetApplicationKeyPersonsByKeyPersonId()
+        {
+            SetupA2BApplicationKeyPersonsData();
+            
+            var keyPerson = _dbContext.A2BApplicationKeyPersons.First();
+            var expected = A2BApplicationKeyPersonsResponseFactory.Create(keyPerson);
+            var expectedResponse = new ApiSingleResponseV2<A2BApplicationKeyPersonsResponse>(expected);
+            
+            var response = await _client.GetAsync($"/v2/apply-to-become/keyPersons/{keyPerson.KeyPersonId}");
+
+            response.StatusCode.Should().Be(200);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationKeyPersonsResponse>>();
+            result.Should().BeEquivalentTo(expectedResponse); 
+            result.Data.KeyPersonId.Should().Be(expectedResponse.Data.KeyPersonId);
+        }
+
+        [Fact]
+        public async Task CanCreateApplicationKeyPerson()
+        {
+            SetupA2BApplicationKeyPersonsData();
+            
+            var keyPerson = Builder<A2BApplicationKeyPersonsCreateRequest>.CreateNew().Build();
+   
+            var response = await _client.PostAsJsonAsync($"/v2/apply-to-become/keyPersons/", keyPerson);
+
+            response.StatusCode.Should().Be(201);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationKeyPersonsResponse>>();
+
+            result.Should().NotBeNull();
+            result.Data.KeyPersonId.Should().BeGreaterThan(0);
+            
+            var createdKeyPerson =
+                _dbContext.A2BApplicationKeyPersons.FirstOrDefault(a => a.KeyPersonId == result.Data.KeyPersonId);
+
+            createdKeyPerson.Should().NotBeNull();
+            
+            result.Data.Should().BeEquivalentTo(createdKeyPerson);
+        }
+        
         private void SetupA2BApplicationData()
         {
             var applications = Enumerable.Range(1, 10).Select(a => new A2BApplication
@@ -117,10 +159,31 @@ namespace TramsDataApi.Test.Integration
             _dbContext.A2BApplications.AddRange(applications);
             _dbContext.SaveChanges();
         }
-        
+
+
+        private void SetupA2BApplicationKeyPersonsData()
+        {
+            var keyPersons = Enumerable.Range(1, 10).Select(k => new A2BApplicationKeyPersons
+            {
+                Name = _randomGenerator.NextString(3, 10),
+                KeyPersonDateOfBirth = _randomGenerator.NextString(3, 10),
+                KeyPersonBiography = _randomGenerator.NextString(3, 10),
+                KeyPersonCeoExecutive = _randomGenerator.NextString(3, 10),
+                KeyPersonChairOfTrust = _randomGenerator.NextString(3, 10),
+                KeyPersonFinancialDirector = _randomGenerator.NextString(3, 10),
+                KeyPersonFinancialDirectorTime = _randomGenerator.NextString(3, 10),
+                KeyPersonMember = _randomGenerator.NextString(3, 10),
+                KeyPersonOther = _randomGenerator.NextString(3, 10),
+                KeyPersonTrustee = _randomGenerator.NextString(3, 10)
+            });
+            
+            _dbContext.A2BApplicationKeyPersons.AddRange(keyPersons);
+            _dbContext.SaveChanges();
+        }
         public void Dispose()
         {
             _dbContext.A2BApplications.RemoveRange(_dbContext.A2BApplications);
+            _dbContext.A2BApplicationKeyPersons.RemoveRange(_dbContext.A2BApplicationKeyPersons);
             _dbContext.SaveChanges();
         }
     }
