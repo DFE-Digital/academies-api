@@ -36,7 +36,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationKeyPersonsResponse>(response);
 
             mockUseCase
-                .Setup(x => x.Execute(It.IsAny<A2BApplicationKeyPersonsByIdRequest>()))
+                .Setup(x => x.Execute(It.IsAny<int>()))
                 .Returns(response);
 
             var controller = new A2BApplicationKeyPersonsController(_mockLogger.Object, mockUseCase.Object,new Mock<ICreateA2BApplicationKeyPersons>().Object);

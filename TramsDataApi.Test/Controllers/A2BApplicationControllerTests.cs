@@ -25,7 +25,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetApplicationByApplicationId_ReturnsApiSingleResponseWithApplicationWhenApplicationExists()
         {
-            var applicationId = 10001;
+            const int applicationId = 10001;
             var mockUseCase = new Mock<IGetA2BApplication>();
 
             var response = Builder<A2BApplicationResponse>
@@ -36,7 +36,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(response);
 
             mockUseCase
-                .Setup(x => x.Execute(It.IsAny<A2BApplicationByIdRequest>()))
+                .Setup(x => x.Execute(It.IsAny<int>()))
                 .Returns(response);
 
             var controller = new A2BApplicationController(_mockLogger.Object, mockUseCase.Object, new Mock<ICreateA2BApplication>().Object);

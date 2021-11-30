@@ -34,9 +34,8 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiSingleResponseV2<A2BApplicationKeyPersonsResponse>> GetApplicationKeyPersonByKeyPersonId(int keyPersonId)
         {
             _logger.LogInformation("Attempting to get ApplyToBecome ApplicationKeyPerson by KeyPersonId {keyPersonId}", keyPersonId);
-            var request = new A2BApplicationKeyPersonsByIdRequest() {KeyPersonId = keyPersonId};
-            
-            var keyPerson = _getA2BApplicationKeyPersons.Execute(request);
+             
+            var keyPerson = _getA2BApplicationKeyPersons.Execute(keyPersonId);
             
             if (keyPerson == null)
             {
