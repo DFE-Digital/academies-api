@@ -5,6 +5,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetA2BApplicationKeyPersons
     {
-        A2BApplicationKeyPersonsResponse Execute(A2BApplicationKeyPersonsByIdRequest request);
+        A2BApplicationKeyPersonsResponse Execute(int keyPersonsId);
     }
 }

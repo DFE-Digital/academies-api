@@ -5,6 +5,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetA2BApplication
     {
-        A2BApplicationResponse Execute(A2BApplicationByIdRequest request);
+        A2BApplicationResponse Execute(int applicationId);
     }
 }

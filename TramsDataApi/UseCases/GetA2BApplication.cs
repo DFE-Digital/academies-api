@@ -16,11 +16,9 @@ namespace TramsDataApi.UseCases
         }
 
 
-        public A2BApplicationResponse Execute(A2BApplicationByIdRequest request)
+        public A2BApplicationResponse Execute(int applicationId)
         {
-            if (request == null) return null;
-            
-            var application = _applicationGateway.GetByApplicationId(request.ApplicationId);
+            var application = _applicationGateway.GetByApplicationId(applicationId);
             A2BApplicationAccount account = null;
             
             //Need to pass in A2BAccountDetails once we know how to source this data

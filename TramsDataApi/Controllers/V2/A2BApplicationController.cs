@@ -34,8 +34,7 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiSingleResponseV2<A2BApplicationResponse>> GetApplicationByApplicationId(int applicationId)
         {
             _logger.LogInformation("Attempting to get ApplyToBecome Application by ApplicationId {applicationId}", applicationId);
-            var request = new A2BApplicationByIdRequest {ApplicationId = applicationId};
-            var application = _getA2BApplicationById.Execute(request);
+            var application = _getA2BApplicationById.Execute(applicationId);
             
             if (application == null)
             {
