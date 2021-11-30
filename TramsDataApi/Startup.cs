@@ -70,10 +70,13 @@ namespace TramsDataApi
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
             services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
             services.AddScoped<IA2BApplicationKeyPersonsGateway, A2BApplicationKeyPersonsGateway>();
+            services.AddScoped<IA2BApplicationStatusGateway, A2BApplicationStatusGateway>();
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
             services.AddScoped<IGetA2BApplicationKeyPersons, GetA2BApplicationKeyPersons>();
             services.AddScoped<ICreateA2BApplicationKeyPersons, CreateA2BApplicationKeyPersons>();
+            services.AddScoped<IGetA2BApplicationStatus, GetA2BApplicationStatus>();
+            services.AddScoped<ICreateA2BApplicationStatus, CreateA2BApplicationStatus>();
             services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();
             services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
             

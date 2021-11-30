@@ -7,7 +7,8 @@ namespace TramsDataApi.DatabaseModels
     public class A2BApplicationStatus
     {
         [Key]
-        public string ApplicationStatusId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ApplicationStatusId {get; set;}
         
         public string Name {get; set;}
     }
