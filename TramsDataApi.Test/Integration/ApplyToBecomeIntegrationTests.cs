@@ -1,23 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using AutoFixture;
 using FizzWare.NBuilder;
 using FluentAssertions;
-using FluentAssertions.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
-using TramsDataApi.RequestModels;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
-using TramsDataApi.Test.Utils;
 using Xunit;
 
 namespace TramsDataApi.Test.Integration
@@ -61,7 +55,10 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanCreateApplication()
         {
-            var application = Builder<A2BApplicationCreateRequest>.CreateNew().Build();
+            var application = new A2BApplicationCreateRequest
+            {
+                Name = "Test001"
+            };
    
             var response = await _client.PostAsJsonAsync($"/v2/apply-to-become/application/", application);
 
@@ -121,6 +118,63 @@ namespace TramsDataApi.Test.Integration
             
             result.Data.Should().BeEquivalentTo(createdKeyPerson);
         }
+        
+        [Fact]
+        public async Task CanGetApplicationStatusByApplicationStatusId()
+        {
+            SetupA2BApplicationStatusData();
+            
+            var status = _dbContext.A2BApplicationStatus.First();
+            var expected = A2BApplicationStatusResponseFactory.Create(status);
+            var expectedResponse = new ApiSingleResponseV2<A2BApplicationStatusResponse>(expected);
+            
+            var response = await _client.GetAsync($"/v2/apply-to-become/status/{status.ApplicationStatusId}");
+
+            response.StatusCode.Should().Be(200);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationStatusResponse>>();
+            result.Should().BeEquivalentTo(expectedResponse); 
+            result.Data.ApplicationStatusId.Should().Be(expectedResponse.Data.ApplicationStatusId);
+        }
+
+        [Fact]
+        public async Task CanCreateApplicationStatus()
+        {
+            SetupA2BApplicationStatusData();
+
+            var status = new A2BApplicationStatusCreateRequest
+            {
+                Name = "Test001"
+            };
+   
+            var response = await _client.PostAsJsonAsync("/v2/apply-to-become/status/", status);
+
+            response.StatusCode.Should().Be(201);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationStatusResponse>>();
+
+            result.Should().NotBeNull();
+            result.Data.ApplicationStatusId.Should().BeGreaterThan(0);
+            
+            var createdStatus =
+                _dbContext.A2BApplicationStatus.FirstOrDefault(a => a.ApplicationStatusId == result.Data.ApplicationStatusId);
+
+            createdStatus.Should().NotBeNull();
+            
+            result.Data.Should().BeEquivalentTo(createdStatus);
+        }
+
+        private void SetupA2BApplicationStatusData()
+        {
+            var statuses = Enumerable.Range(1, 10).Select(k => new A2BApplicationStatus
+            {
+                Name = _randomGenerator.NextString(3, 10)
+            });
+
+            _dbContext.A2BApplicationStatus.AddRange(statuses);
+            _dbContext.SaveChanges();
+        }
+        
         
         private void SetupA2BApplicationData()
         {
@@ -184,6 +238,7 @@ namespace TramsDataApi.Test.Integration
         {
             _dbContext.A2BApplications.RemoveRange(_dbContext.A2BApplications);
             _dbContext.A2BApplicationKeyPersons.RemoveRange(_dbContext.A2BApplicationKeyPersons);
+            _dbContext.A2BApplicationStatus.RemoveRange(_dbContext.A2BApplicationStatus);
             _dbContext.SaveChanges();
         }
     }
