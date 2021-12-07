@@ -35,8 +35,9 @@ namespace TramsDataApi.Test.UseCases
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
                 .With(c => c.StatusUrn = 2)
+                .With( c => c.RatingUrn = 4)
                 .Build();
-
+            
             var createdConcernsCase = ConcernsCaseFactory.Create(createRequest);
             var expected = ConcernsCaseResponseFactory.Create(createdConcernsCase);
             

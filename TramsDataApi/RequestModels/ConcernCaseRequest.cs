@@ -23,5 +23,6 @@ namespace TramsDataApi.RequestModels
         public string NextSteps { get; set; }
         public string DirectionOfTravel { get; set; }
         public int StatusUrn { get; set; }
+        public int RatingUrn { get; set; }
     }
 }

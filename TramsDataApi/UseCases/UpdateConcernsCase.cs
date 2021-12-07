@@ -8,8 +8,9 @@ namespace TramsDataApi.UseCases
     public class UpdateConcernsCase : IUpdateConcernsCase
     {
         private readonly IConcernsCaseGateway _concernsCaseGateway;
-
-        public UpdateConcernsCase(IConcernsCaseGateway concernsCaseGateway)
+        
+        public UpdateConcernsCase(
+            IConcernsCaseGateway concernsCaseGateway)
         {
             _concernsCaseGateway = concernsCaseGateway;
         }

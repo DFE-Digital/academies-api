@@ -40,6 +40,7 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanCreateNewConcernCase()
         {
+            var linkedRating = _dbContext.ConcernsRatings.First();
             var createRequest = Builder<ConcernCaseRequest>.CreateNew()
                 .With(c => c.CreatedBy = "12345")
                 .With(c => c.Description = "Description for case")
@@ -54,7 +55,10 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
                 .With(c => c.StatusUrn = 1)
+                .With(c => c.RatingUrn = linkedRating.Urn)
                 .Build();
+            
+
 
             var httpRequestMessage = new HttpRequestMessage
             {
@@ -267,6 +271,7 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task UpdateConcernsCase_ShouldReturnTheUpdatedConcernsCase()
         {
+            var linkedRating = _dbContext.ConcernsRatings.First();
             var concernsCase = new ConcernsCase
             {
                 CreatedAt = _randomGenerator.DateTime(),
@@ -286,6 +291,7 @@ namespace TramsDataApi.Test.Integration
                 NextSteps = _randomGenerator.NextString(3, 10),
                 DirectionOfTravel = _randomGenerator.NextString(3, 10),
                 StatusUrn = 2,
+                RatingUrn = linkedRating.Urn 
             };
             
             var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase);

@@ -22,5 +22,6 @@ namespace TramsDataApi.ResponseModels
         public string DirectionOfTravel { get; set; }
         public int Urn { get; set; }
         public int StatusUrn { get; set; }
+        public int RatingUrn { get; set; }
     }
 }
