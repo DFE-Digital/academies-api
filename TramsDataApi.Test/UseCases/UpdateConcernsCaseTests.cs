@@ -24,7 +24,7 @@ namespace TramsDataApi.Test.UseCases
             
             gateway.Setup(g => g.GetConcernsCaseByUrn(urn)).Returns(concernsCase);
             gateway.Setup(g => g.Update(It.IsAny<ConcernsCase>())).Returns(concernsToUpdate);
-            
+
             var expected = ConcernsCaseResponseFactory.Create(concernsToUpdate);
             
             var useCase = new UpdateConcernsCase(gateway.Object);

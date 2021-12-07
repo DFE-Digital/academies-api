@@ -30,6 +30,7 @@ namespace TramsDataApi.Test.Factories
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
                 .With(c => c.StatusUrn = 3)
+                .With(c => c.RatingUrn = 3)
                 .Build();
 
             var expected = new ConcernsCase
@@ -50,7 +51,8 @@ namespace TramsDataApi.Test.Factories
                 DeEscalationPoint = request.DeEscalationPoint,
                 NextSteps = request.NextSteps,
                 DirectionOfTravel = request.DirectionOfTravel,
-                StatusUrn = request.StatusUrn
+                StatusUrn = request.StatusUrn,
+                RatingUrn = request.RatingUrn
             };
 
             var result = ConcernsCaseFactory.Create(request);

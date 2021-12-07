@@ -25,6 +25,7 @@ namespace TramsDataApi.DatabaseModels
         public string DirectionOfTravel { get; set; }
         public int Urn { get; set; }
         public int StatusUrn { get; set; }
+        public int RatingUrn { get; set; }
         public virtual ICollection<ConcernsRecord> ConcernsRecords { get; set; }
     }
 }
