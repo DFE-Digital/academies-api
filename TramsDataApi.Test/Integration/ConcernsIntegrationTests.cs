@@ -423,7 +423,6 @@ namespace TramsDataApi.Test.Integration
                 Name = _randomGenerator.NextString(3, 10),
                 Description = _randomGenerator.NextString(3, 10),
                 Reason = _randomGenerator.NextString(3, 10),
-                Primary = false,
                 StatusUrn = 1,
                 ConcernsCase = currentConcernsCase.Entity,
                 ConcernsType = concernsType,
