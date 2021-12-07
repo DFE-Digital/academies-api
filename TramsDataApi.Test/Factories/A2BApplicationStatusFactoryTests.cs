@@ -26,7 +26,6 @@ namespace TramsDataApi.Test.Factories
 
             var expectedStatus = new A2BApplicationStatus
             {
-                ApplicationStatusId = applicationStatusCreateRequest.ApplicationStatusId,
                 Name = applicationStatusCreateRequest.Name
             };
                 

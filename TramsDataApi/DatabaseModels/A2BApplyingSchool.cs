@@ -8,12 +8,12 @@ namespace TramsDataApi.DatabaseModels
     public class A2BApplyingSchool
     {
         [Key]
-        public string ApplyingSchoolsId {get; set;}
-        
+        public string ApplyingSchoolId {get; set;}
         public string UpdatedTrustFields {get; set;}
         public string SchoolDeclarationSignedById {get; set;}
         public int? SchoolDeclarationBodyAgree {get; set;}
         public int? SchoolDeclarationTeacherChair {get; set;}
+        
         public string SchoolDeclarationSignedByEmail {get; set;}
         public string Name {get; set;}
         public string UpdatedSchoolFields {get; set;}
@@ -80,8 +80,10 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? SchoolNFYEndDate {get; set;}
         public DateTime? SchoolPFYEndDate {get; set;}
         public DateTime? SchoolCFYEndDate {get; set;}
+        
         public int? SchoolLoanExists {get; set;}
         public int? SchoolLeaseExists {get; set;}
+        
         public int? SchoolCapacityYear1 {get; set;}
         public int? SchoolCapacityYear2 {get; set;}
         public int? SchoolCapacityYear3 {get; set;}
@@ -103,5 +105,19 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolConsultationStakeholdersConsult {get; set;}
         public int? SchoolSupportGrantFundsPaidTo {get; set;}
         public string SchoolDeclarationSignedByName {get; set;}
+        
+        [ForeignKey(nameof(SchoolDeclarationBodyAgree))]
+        public virtual A2BSelectOption SchoolDeclarationBodyAgreeOption { get; set; }
+        
+        [ForeignKey(nameof(SchoolDeclarationTeacherChair))]
+        public virtual A2BSelectOption SchoolDeclarationTeacherChairOption { get; set; }
+        
+        [ForeignKey(nameof(SchoolLoanExists))]
+        public A2BSelectOption SchoolLoanExistsOption { get; set; }
+        
+        [ForeignKey(nameof(SchoolLeaseExists))]
+        public A2BSelectOption SchoolLeaseExistsOption { get; set; }
+        
+
     }
 }
