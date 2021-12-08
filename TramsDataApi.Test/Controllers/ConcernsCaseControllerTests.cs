@@ -23,7 +23,9 @@ namespace TramsDataApi.Test.Controllers
         {
             var createConcernsCase = new Mock<ICreateConcernsCase>();
             var createConcernsCaseRequest = Builder<ConcernCaseRequest>
-                .CreateNew().Build();
+                .CreateNew()
+                .With(cr => cr.RatingUrn = 123)
+                .Build();
 
             var concernsCaseResponse = Builder<ConcernsCaseResponse>
                 .CreateNew().Build();
