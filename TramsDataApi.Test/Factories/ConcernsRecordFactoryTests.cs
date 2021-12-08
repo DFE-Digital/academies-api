@@ -30,7 +30,6 @@ namespace TramsDataApi.Test.Factories
                 CaseUrn = 1,
                 TypeUrn = 2,
                 RatingUrn = 3,
-                Primary = true,
                 StatusUrn = 1
             };
 

@@ -503,7 +503,6 @@ namespace TramsDataApi.Test.Integration
                 CaseUrn = currentConcernsCase.Urn,
                 TypeUrn = concernsType.Urn,
                 RatingUrn = concernsRating.Urn,
-                Primary = false,
                 StatusUrn = 1
             };
             
@@ -519,7 +518,6 @@ namespace TramsDataApi.Test.Integration
                 CaseUrn = currentConcernsCase.Urn,
                 TypeUrn = concernsType.Urn,
                 RatingUrn = concernsRating.Urn,
-                Primary = false,
                 StatusUrn = 1
             };
 

@@ -14,7 +14,6 @@ namespace TramsDataApi.RequestModels
         public int CaseUrn { get; set; }
         public int TypeUrn { get; set; }
         public int RatingUrn { get; set; }
-        public bool Primary { get; set; }
         public int StatusUrn { get; set; }
     }
 }
