@@ -32,6 +32,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<A2BCreateSchoolRequest> A2BCreateSchoolRequests { get; set; }
         public virtual DbSet<A2BSchoolLease> A2BSchoolLeases { get; set; }
         public virtual DbSet<A2BSchoolLoan> A2BSchoolLoans { get; set; }
+        public virtual DbSet<A2BSelectOption> A2BSelectOptions { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

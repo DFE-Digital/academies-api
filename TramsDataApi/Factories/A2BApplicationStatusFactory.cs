@@ -11,7 +11,6 @@ namespace TramsDataApi.Factories
                 ? null
                 : new A2BApplicationStatus
                 {
-                    ApplicationStatusId = request.ApplicationStatusId,
                     Name = request.Name
                 };
         }

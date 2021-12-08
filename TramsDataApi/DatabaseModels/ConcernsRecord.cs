@@ -15,7 +15,6 @@ namespace TramsDataApi.DatabaseModels
         public int CaseId { get; set; }
         public int TypeId { get; set; }
         public int RatingId { get; set; }
-        public bool Primary { get; set; }
         public int Urn { get; set; }
         public int StatusUrn { get; set; }
         public virtual ConcernsCase ConcernsCase { get; set; }
