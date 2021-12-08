@@ -19,11 +19,13 @@ namespace TramsDataApi.Test.Controllers
         private Mock<ILogger<ConcernsCaseController>> mockLogger = new Mock<ILogger<ConcernsCaseController>>();
         
         [Fact]
-        public void CreateComcernsCase_Returns201WhenSuccessfullyCreatesAConcernsCase()
+        public void CreateConcernsCase_Returns201WhenSuccessfullyCreatesAConcernsCase()
         {
             var createConcernsCase = new Mock<ICreateConcernsCase>();
             var createConcernsCaseRequest = Builder<ConcernCaseRequest>
-                .CreateNew().Build();
+                .CreateNew()
+                .With(cr => cr.RatingUrn = 123)
+                .Build();
 
             var concernsCaseResponse = Builder<ConcernsCaseResponse>
                 .CreateNew().Build();
@@ -137,7 +139,9 @@ namespace TramsDataApi.Test.Controllers
         {
             var updateConcernsCase = new Mock<IUpdateConcernsCase>();
             var urn = 456;
-            var updateRequest = Builder<ConcernCaseRequest>.CreateNew().Build();
+            var updateRequest = Builder<ConcernCaseRequest>.CreateNew()
+                .With(cr => cr.RatingUrn = 123)
+                .Build();
             
             var concernsCaseResponse = Builder<ConcernsCaseResponse>
                 .CreateNew().Build();
@@ -166,7 +170,9 @@ namespace TramsDataApi.Test.Controllers
         {
             var updateConcernsCase = new Mock<IUpdateConcernsCase>();
             var urn = 7;
-            var updateRequest = Builder<ConcernCaseRequest>.CreateNew().Build();
+            var updateRequest = Builder<ConcernCaseRequest>.CreateNew()
+                .With(cr => cr.RatingUrn = 123)
+                .Build();
             
 
             updateConcernsCase.Setup(a => a.Execute(urn, updateRequest))

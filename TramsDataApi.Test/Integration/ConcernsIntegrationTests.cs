@@ -40,7 +40,6 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanCreateNewConcernCase()
         {
-            var linkedRating = _dbContext.ConcernsRatings.First();
             var createRequest = Builder<ConcernCaseRequest>.CreateNew()
                 .With(c => c.CreatedBy = "12345")
                 .With(c => c.Description = "Description for case")
@@ -55,7 +54,7 @@ namespace TramsDataApi.Test.Integration
                 .With(c => c.NextSteps = "Here are the next steps")
                 .With(c => c.DirectionOfTravel = "Up")
                 .With(c => c.StatusUrn = 1)
-                .With(c => c.RatingUrn = linkedRating.Urn)
+                .With(c => c.RatingUrn = 123)
                 .Build();
             
 
@@ -271,7 +270,6 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task UpdateConcernsCase_ShouldReturnTheUpdatedConcernsCase()
         {
-            var linkedRating = _dbContext.ConcernsRatings.First();
             var concernsCase = new ConcernsCase
             {
                 CreatedAt = _randomGenerator.DateTime(),
@@ -291,14 +289,15 @@ namespace TramsDataApi.Test.Integration
                 NextSteps = _randomGenerator.NextString(3, 10),
                 DirectionOfTravel = _randomGenerator.NextString(3, 10),
                 StatusUrn = 2,
-                RatingUrn = linkedRating.Urn 
+                RatingUrn =  1
             };
             
             var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase);
             _dbContext.SaveChanges();
             var urn = currentConcernsCase.Entity.Urn;
 
-            var updateRequest = Builder<ConcernCaseRequest>.CreateNew().Build();
+            var updateRequest = Builder<ConcernCaseRequest>.CreateNew()
+                .With(cr => cr.RatingUrn = 123).Build();
 
             var expectedConcernsCase = ConcernsCaseFactory.Create(updateRequest);
             expectedConcernsCase.Urn = urn;
