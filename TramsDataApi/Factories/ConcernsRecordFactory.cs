@@ -23,7 +23,6 @@ namespace TramsDataApi.Factories
                 ConcernsCase = concernsCase,
                 ConcernsType = concernsType,
                 ConcernsRating = concernsRating,
-                Primary = concernsRecordRequest.Primary,
                 StatusUrn = concernsRecordRequest.StatusUrn
             };
         }
@@ -46,7 +45,6 @@ namespace TramsDataApi.Factories
             original.ConcernsCase = concernsCase;
             original.ConcernsType = concernsType;
             original.ConcernsRating = concernsRating;
-            original.Primary = concernsRecordRequest.Primary;
             original.StatusUrn = concernsRecordRequest.StatusUrn;
 
             return original;

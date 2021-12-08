@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211207115510_RemovePrimaryBooleanFieldFromRecordsMigration")]
+    partial class RemovePrimaryBooleanFieldFromRecordsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,7 +184,7 @@ namespace TramsDataApi.Migrations.TramsDb
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplyingSchool", b =>
                 {
-                    b.Property<string>("ApplyingSchoolId")
+                    b.Property<string>("ApplyingSchoolsId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -464,15 +466,7 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("UpdatedTrustFields")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ApplyingSchoolId");
-
-                    b.HasIndex("SchoolDeclarationBodyAgree");
-
-                    b.HasIndex("SchoolDeclarationTeacherChair");
-
-                    b.HasIndex("SchoolLeaseExists");
-
-                    b.HasIndex("SchoolLoanExists");
+                    b.HasKey("ApplyingSchoolsId");
 
                     b.ToTable("A2BApplyingSchool","sdd");
                 });
@@ -566,21 +560,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasKey("SchoolLoanId");
 
                     b.ToTable("A2BSchoolLoan","sdd");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BSelectOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("A2BSelectOption","sdd");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyConversionProject", b =>
@@ -1407,25 +1386,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasIndex("FkAcademyTransferProjectId");
 
                     b.ToTable("TransferringAcademies","sdd");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplyingSchool", b =>
-                {
-                    b.HasOne("TramsDataApi.DatabaseModels.A2BSelectOption", "SchoolDeclarationBodyAgreeOption")
-                        .WithMany()
-                        .HasForeignKey("SchoolDeclarationBodyAgree");
-
-                    b.HasOne("TramsDataApi.DatabaseModels.A2BSelectOption", "SchoolDeclarationTeacherChairOption")
-                        .WithMany()
-                        .HasForeignKey("SchoolDeclarationTeacherChair");
-
-                    b.HasOne("TramsDataApi.DatabaseModels.A2BSelectOption", "SchoolLeaseExistsOption")
-                        .WithMany()
-                        .HasForeignKey("SchoolLeaseExists");
-
-                    b.HasOne("TramsDataApi.DatabaseModels.A2BSelectOption", "SchoolLoanExistsOption")
-                        .WithMany()
-                        .HasForeignKey("SchoolLoanExists");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyConversionProjectNote", b =>

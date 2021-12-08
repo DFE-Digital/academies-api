@@ -46,7 +46,6 @@ namespace TramsDataApi.Test.Factories
                 ConcernsCase = concernsCase,
                 ConcernsType = concernsType,
                 ConcernsRating = concernsRating,
-                Primary = recordRequest.Primary,
                 StatusUrn = recordRequest.StatusUrn
             };
 
