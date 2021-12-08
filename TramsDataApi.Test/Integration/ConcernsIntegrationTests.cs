@@ -289,14 +289,15 @@ namespace TramsDataApi.Test.Integration
                 NextSteps = _randomGenerator.NextString(3, 10),
                 DirectionOfTravel = _randomGenerator.NextString(3, 10),
                 StatusUrn = 2,
-                RatingUrn =  123
+                RatingUrn =  1
             };
             
             var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase);
             _dbContext.SaveChanges();
             var urn = currentConcernsCase.Entity.Urn;
 
-            var updateRequest = Builder<ConcernCaseRequest>.CreateNew().Build();
+            var updateRequest = Builder<ConcernCaseRequest>.CreateNew()
+                .With(cr => cr.RatingUrn = 123).Build();
 
             var expectedConcernsCase = ConcernsCaseFactory.Create(updateRequest);
             expectedConcernsCase.Urn = urn;
