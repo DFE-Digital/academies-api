@@ -397,7 +397,67 @@ namespace TramsDataApi.Test.Integration
             
             result.Data.Should().BeEquivalentTo(expectedData);
         }
+        
+        
+        [Fact]
+        public async Task CanGetContributorByContributorId()
+        {
+            SetupA2BContributorData();
+            
+            var contributor = _dbContext.A2BContributors.First();
+            var expected = A2BContributorResponseFactory.Create(contributor);
+            var expectedResponse = new ApiSingleResponseV2<A2BContributorResponse>(expected);
+            
+            var response = await _client.GetAsync($"/v2/apply-to-become/contributor/{contributor.ContributorUserId}");
 
+            response.StatusCode.Should().Be(200);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BContributorResponse>>();
+            result.Should().BeEquivalentTo(expectedResponse); 
+            result.Data.ContributorUserId.Should().Be(expectedResponse.Data.ContributorUserId);
+        }
+
+        [Fact]
+        public async Task CanCreateContributor()
+        {
+            var contributor = new A2BContributorCreateRequest
+            {
+                ContributorUserId = "10001",
+                ContributorUserName = "Username",
+                ContributorAppIdTest = "10001",
+                ApplicationTypeId = "10001"
+            };
+   
+            var response = await _client.PostAsJsonAsync("/v2/apply-to-become/contributor/", contributor);
+
+            response.StatusCode.Should().Be(201);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BContributorResponse>>();
+
+            result.Should().NotBeNull();
+
+            var createdStatus =
+                _dbContext.A2BContributors.FirstOrDefault(a => a.ContributorUserId == result.Data.ContributorUserId);
+
+            createdStatus.Should().NotBeNull();
+            
+            result.Data.Should().BeEquivalentTo(createdStatus);
+        }
+
+        private void SetupA2BContributorData()
+        {
+            var contributors = Enumerable.Range(1, 10).Select(key => new A2BContributor
+            {
+                ContributorUserId = $"1000{key}",
+                ApplicationTypeId = _randomGenerator.NextString(3, 10),
+                ContributorAppIdTest = _randomGenerator.NextString(3, 10),
+                ContributorUserName = _randomGenerator.NextString(3, 10)
+            });
+            
+            _dbContext.A2BContributors.AddRange(contributors);
+            _dbContext.SaveChanges();
+        }
+        
         private void SetupA2BApplyingSchoolData()
         {
             var applyingSchools = Enumerable.Range(1, 10).Select(key => new A2BApplyingSchool
@@ -577,6 +637,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.A2BApplicationKeyPersons.RemoveRange(_dbContext.A2BApplicationKeyPersons);
             _dbContext.A2BApplicationStatus.RemoveRange(_dbContext.A2BApplicationStatus);
             _dbContext.A2BApplyingSchools.RemoveRange(_dbContext.A2BApplyingSchools);
+            _dbContext.A2BContributors.RemoveRange(_dbContext.A2BContributors);
             _dbContext.SaveChanges();
         }
     }

@@ -68,10 +68,13 @@ namespace TramsDataApi
             services.AddScoped<IUpdateConcernsCase, UpdateConcernsCase>();
             services.AddScoped<IIndexConcernsTypes, IndexConcernsTypes>();
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
+            
             services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
             services.AddScoped<IA2BApplicationKeyPersonsGateway, A2BApplicationKeyPersonsGateway>();
             services.AddScoped<IA2BApplicationStatusGateway, A2BApplicationStatusGateway>();
             services.AddScoped<IA2BApplyingSchoolGateway,A2BApplyingSchoolGateway>();
+            services.AddScoped<IA2BContributorGateway, A2BContributorGateway>();
+            
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
             services.AddScoped<IGetA2BApplicationKeyPersons, GetA2BApplicationKeyPersons>();
@@ -80,6 +83,8 @@ namespace TramsDataApi
             services.AddScoped<ICreateA2BApplicationStatus, CreateA2BApplicationStatus>();
             services.AddScoped<IGetA2BApplyingSchool, GetA2BApplyingSchool>();
             services.AddScoped<ICreateA2BApplyingSchool, CreateA2BApplyingSchool>();
+            services.AddScoped<IGetA2BContributor, GetA2BContributor>();
+            services.AddScoped<ICreateA2BContributor, CreateA2BContributor>();
             
             services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();
             services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
