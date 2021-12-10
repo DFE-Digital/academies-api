@@ -443,6 +443,34 @@ namespace TramsDataApi.Test.Integration
             
             result.Data.Should().BeEquivalentTo(createdStatus);
         }
+        
+        [Fact]
+        public async Task CanCreateSchoolLoan()
+        {
+            var schoolLoanRequest = new A2BSchoolLoanCreateRequest
+            {
+                SchoolLoanId = "123",
+                SchoolLoanAmount = "3.50",
+                SchoolLoanPurpose = "Test purpose",
+                SchoolLoanProvider = "Test Provider",
+                SchoolLoanInterestRate = "15.4",
+                SchoolLoanSchedule = "Wednesdays"
+            };
+   
+            var response = await _client.PostAsJsonAsync("/v2/apply-to-become/school-loans/", schoolLoanRequest);
+
+            response.StatusCode.Should().Be(201);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BSchoolLoanResponse>>();
+
+            result.Should().NotBeNull();
+
+            var createdSchoolLoan =
+                _dbContext.A2BSchoolLoans.FirstOrDefault(a => a.SchoolLoanId == result.Data.SchoolLoanId);
+
+            createdSchoolLoan.Should().NotBeNull();
+            result.Data.Should().BeEquivalentTo(createdSchoolLoan);
+        }
 
         private void SetupA2BContributorData()
         {
