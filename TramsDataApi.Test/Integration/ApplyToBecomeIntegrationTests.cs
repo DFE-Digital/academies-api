@@ -471,7 +471,7 @@ namespace TramsDataApi.Test.Integration
             createdSchoolLoan.Should().NotBeNull();
             result.Data.Should().BeEquivalentTo(createdSchoolLoan);
         }
-        
+
         [Fact]
         public async Task CanGetSchoolLoanByLoanId()
         {
@@ -489,6 +489,55 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expectedResponse); 
             result.Data.SchoolLoanId.Should().Be(expectedResponse.Data.SchoolLoanId);
         }
+        
+        [Fact]
+        public async Task CanCreateSchoolLease()
+        {
+            var schoolLeaseRequest = new A2BSchoolLeaseCreateRequest
+            {
+                SchoolLeaseId = "1000",
+                SchoolLeaseTerm = "Test LeaseTerm",
+                SchoolLeaseRepaymentValue = "Test LeaseRepaymentValue",
+                SchoolLeaseInterestRate = "Test LeaseInterestRate",
+                SchoolLeasePaymentToDate = "Test LeasePaymentToDate",
+                SchoolLeasePurpose = "Test LeasePurpose",
+                SchoolLeaseValueOfAssets = "Test LeaseValueOfAssets",
+                SchoolLeaseResponsibleForAssets = "Test LeaseResponsibleForAssets"
+            };
+   
+            var response = await _client.PostAsJsonAsync("/v2/apply-to-become/school-leases/", schoolLeaseRequest);
+
+            response.StatusCode.Should().Be(201);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BSchoolLeaseResponse>>();
+
+            result.Should().NotBeNull();
+
+            var createdSchoolLease =
+                _dbContext.A2BSchoolLeases.FirstOrDefault(a => a.SchoolLeaseId == result.Data.SchoolLeaseId);
+
+            createdSchoolLease.Should().NotBeNull();
+            result.Data.Should().BeEquivalentTo(createdSchoolLease);
+        }
+        
+        [Fact]
+        public async Task CanGetSchoolLeaseByLeaseId()
+        {
+            SetupA2BSchoolLeaseData();
+            
+            var lease = _dbContext.A2BSchoolLeases.First();
+            var expected = A2BSchoolLeaseResponseFactory.Create(lease);
+            var expectedResponse = new ApiSingleResponseV2<A2BSchoolLeaseResponse>(expected);
+            
+            var response = await _client.GetAsync($"/v2/apply-to-become/school-leases/{lease.SchoolLeaseId}");
+
+            response.StatusCode.Should().Be(200);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BSchoolLeaseResponse>>();
+            result.Should().BeEquivalentTo(expectedResponse); 
+            result.Data.SchoolLeaseId.Should().Be(expectedResponse.Data.SchoolLeaseId);
+        }
+
 
         private void SetupA2BContributorData()
         {
@@ -517,6 +566,24 @@ namespace TramsDataApi.Test.Integration
                 });
 
             _dbContext.A2BSchoolLoans.AddRange(loans);
+            _dbContext.SaveChanges();
+        }
+        
+        private void SetupA2BSchoolLeaseData()
+        {
+            var leases = Enumerable.Range(1, 10).Select(key => new A2BSchoolLease
+            {
+                SchoolLeaseId = $"1000{key}",
+                SchoolLeaseTerm = _randomGenerator.NextString(3, 10),
+                SchoolLeaseRepaymentValue = _randomGenerator.NextString(3, 10),
+                SchoolLeaseInterestRate = _randomGenerator.NextString(3, 10),
+                SchoolLeasePaymentToDate = _randomGenerator.NextString(3, 10),
+                SchoolLeasePurpose = _randomGenerator.NextString(3, 10),
+                SchoolLeaseValueOfAssets = _randomGenerator.NextString(3, 10),
+                SchoolLeaseResponsibleForAssets = _randomGenerator.NextString(3, 10)
+            });
+
+            _dbContext.A2BSchoolLeases.AddRange(leases);
             _dbContext.SaveChanges();
         }
         
@@ -701,6 +768,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.A2BApplyingSchools.RemoveRange(_dbContext.A2BApplyingSchools);
             _dbContext.A2BContributors.RemoveRange(_dbContext.A2BContributors);
             _dbContext.A2BSchoolLoans.RemoveRange(_dbContext.A2BSchoolLoans);
+            _dbContext.A2BSchoolLeases.RemoveRange(_dbContext.A2BSchoolLeases);
             _dbContext.SaveChanges();
         }
     }

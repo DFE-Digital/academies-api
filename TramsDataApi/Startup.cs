@@ -75,6 +75,7 @@ namespace TramsDataApi
             services.AddScoped<IA2BApplyingSchoolGateway,A2BApplyingSchoolGateway>();
             services.AddScoped<IA2BContributorGateway, A2BContributorGateway>();
             services.AddScoped<IA2BSchoolLoanGateway, A2BSchoolLoanGateway>();
+            services.AddScoped<IA2BSchoolLeaseGateway, A2BSchoolLeaseGateway>();
             
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
@@ -88,7 +89,8 @@ namespace TramsDataApi
             services.AddScoped<ICreateA2BContributor, CreateA2BContributor>();
             services.AddScoped<ICreateA2BSchoolLoan, CreateA2BSchoolLoan>();
             services.AddScoped<IGetA2BSchoolLoan, GetA2BSchoolLoan>();
-            
+            services.AddScoped<ICreateA2BSchoolLease, CreateA2BSchoolLease>();
+            services.AddScoped<IGetA2BSchoolLease, GetA2BSchoolLease>();
             
             services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();
             services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
