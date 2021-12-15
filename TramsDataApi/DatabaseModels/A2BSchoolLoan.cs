@@ -8,7 +8,7 @@ namespace TramsDataApi.DatabaseModels
     {
         [Key]
         public string SchoolLoanId {get; set;}
-        public string SchoolLoanAmount {get; set;}
+        public decimal? SchoolLoanAmount {get; set;}
         public string SchoolLoanPurpose {get; set;}
         public string SchoolLoanProvider {get; set;}
         public string SchoolLoanInterestRate {get; set;}

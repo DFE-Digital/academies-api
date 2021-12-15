@@ -450,7 +450,7 @@ namespace TramsDataApi.Test.Integration
             var schoolLoanRequest = new A2BSchoolLoanCreateRequest
             {
                 SchoolLoanId = "123",
-                SchoolLoanAmount = "3.50",
+                SchoolLoanAmount = new decimal(3.50),
                 SchoolLoanPurpose = "Test purpose",
                 SchoolLoanProvider = "Test Provider",
                 SchoolLoanInterestRate = "15.4",
@@ -666,6 +666,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.A2BApplicationStatus.RemoveRange(_dbContext.A2BApplicationStatus);
             _dbContext.A2BApplyingSchools.RemoveRange(_dbContext.A2BApplyingSchools);
             _dbContext.A2BContributors.RemoveRange(_dbContext.A2BContributors);
+            _dbContext.A2BSchoolLoans.RemoveRange(_dbContext.A2BSchoolLoans);
             _dbContext.SaveChanges();
         }
     }
