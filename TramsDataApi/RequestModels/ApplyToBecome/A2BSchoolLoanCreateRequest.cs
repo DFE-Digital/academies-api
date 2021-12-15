@@ -1,12 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.RequestModels.ApplyToBecome
 {
-    [Table("A2BSchoolLoan", Schema = "sdd")]
-    public class A2BSchoolLoan
+    public class A2BSchoolLoanCreateRequest
     {
-        [Key]
         public string SchoolLoanId {get; set;}
         public decimal? SchoolLoanAmount {get; set;}
         public string SchoolLoanPurpose {get; set;}
