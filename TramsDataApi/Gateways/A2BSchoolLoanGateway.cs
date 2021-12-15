@@ -1,3 +1,5 @@
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -16,6 +18,13 @@ namespace TramsDataApi.Gateways
             _tramsDbContext.SaveChanges();
 
             return schoolLoan;
+        }
+
+        public A2BSchoolLoan GetByLoanId(string loanId)
+        {
+            return _tramsDbContext.A2BSchoolLoans
+                .AsNoTracking()
+                .FirstOrDefault(k => k.SchoolLoanId == loanId);
         }
     }
 }

@@ -87,6 +87,7 @@ namespace TramsDataApi
             services.AddScoped<IGetA2BContributor, GetA2BContributor>();
             services.AddScoped<ICreateA2BContributor, CreateA2BContributor>();
             services.AddScoped<ICreateA2BSchoolLoan, CreateA2BSchoolLoan>();
+            services.AddScoped<IGetA2BSchoolLoan, GetA2BSchoolLoan>();
             
             
             services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();

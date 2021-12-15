@@ -43,11 +43,35 @@ namespace TramsDataApi.Test.Controllers
             var mockUseCase = new Mock<ICreateA2BSchoolLoan>();
             mockUseCase.Setup(u => u.Execute(It.IsAny<A2BSchoolLoanCreateRequest>())).Returns(expectedSchoolLoanResponse);
             
-            var controller = new A2BSchoolLoanController(_mockLogger.Object, mockUseCase.Object);
+            var controller = new A2BSchoolLoanController(_mockLogger.Object, mockUseCase.Object, new Mock<IGetA2BSchoolLoan>().Object);
 
             var controllerResponse = controller.Create(request);
 
             controllerResponse.Result.Should().BeEquivalentTo(expectedResult);
+        }
+        
+        [Fact]
+        public void GetSchoolLoanByLoanId_ReturnsApiSingleResponseWithA2BSchoolLoanWhenStatusExists()
+        {
+            const string loanId = "9002";
+            var mockUseCase = new Mock<IGetA2BSchoolLoan>();
+
+            var response = Builder<A2BSchoolLoanResponse>
+                .CreateNew()
+                .With(r => r.SchoolLoanId = loanId)
+                .Build();
+
+            var expectedResponse = new ApiSingleResponseV2<A2BSchoolLoanResponse>(response);
+
+            mockUseCase
+                .Setup(x => x.Execute(It.IsAny<string>()))
+                .Returns(response);
+
+            var controller = new A2BSchoolLoanController(_mockLogger.Object, new Mock<ICreateA2BSchoolLoan>().Object, mockUseCase.Object);
+
+            var result = controller.GetLoanByLoanId(loanId);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedResponse));
         }
     }
 }

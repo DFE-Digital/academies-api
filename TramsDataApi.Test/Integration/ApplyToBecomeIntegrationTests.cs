@@ -471,6 +471,24 @@ namespace TramsDataApi.Test.Integration
             createdSchoolLoan.Should().NotBeNull();
             result.Data.Should().BeEquivalentTo(createdSchoolLoan);
         }
+        
+        [Fact]
+        public async Task CanGetSchoolLoanByLoanId()
+        {
+            SetupA2BSchoolLoanData();
+            
+            var loan = _dbContext.A2BSchoolLoans.First();
+            var expected = A2BSchoolLoanResponseFactory.Create(loan);
+            var expectedResponse = new ApiSingleResponseV2<A2BSchoolLoanResponse>(expected);
+            
+            var response = await _client.GetAsync($"/v2/apply-to-become/school-loans/{loan.SchoolLoanId}");
+
+            response.StatusCode.Should().Be(200);
+            
+            var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BSchoolLoanResponse>>();
+            result.Should().BeEquivalentTo(expectedResponse); 
+            result.Data.SchoolLoanId.Should().Be(expectedResponse.Data.SchoolLoanId);
+        }
 
         private void SetupA2BContributorData()
         {
@@ -483,6 +501,22 @@ namespace TramsDataApi.Test.Integration
             });
             
             _dbContext.A2BContributors.AddRange(contributors);
+            _dbContext.SaveChanges();
+        }
+        
+        private void SetupA2BSchoolLoanData()
+        {
+            var loans = Enumerable.Range(1, 10).Select(key => new A2BSchoolLoan
+                {
+                    SchoolLoanId = $"1000{key}",
+                    SchoolLoanAmount = new decimal(2.66),
+                    SchoolLoanPurpose = _randomGenerator.NextString(3, 10),
+                    SchoolLoanProvider = _randomGenerator.NextString(3, 10),
+                    SchoolLoanInterestRate = _randomGenerator.NextString(3, 10),
+                    SchoolLoanSchedule = _randomGenerator.NextString(3, 10),
+                });
+
+            _dbContext.A2BSchoolLoans.AddRange(loans);
             _dbContext.SaveChanges();
         }
         
