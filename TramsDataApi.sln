@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TramsDataApi.Test", "TramsD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TramsDataApi.ApplyToBecome", "TramsDataApi.ApplyToBecome\TramsDataApi.ApplyToBecome.csproj", "{9D49F713-E329-4FDE-87CC-47E01EDD9C80}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F674B382-CA0A-4411-9380-8F43EE573A11}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
