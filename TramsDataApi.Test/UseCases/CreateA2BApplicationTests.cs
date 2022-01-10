@@ -21,7 +21,7 @@ namespace TramsDataApi.Test.UseCases
 
             var expectedApplication = new A2BApplication
             {
-	            ApplicationId = 10001,
+	            ApplicationId = "10001",
 	            Name = applicationCreateRequest.Name,
 	            ApplicationType = applicationCreateRequest.ApplicationType,
 	            FormTrustProposedNameOfTrust = applicationCreateRequest.FormTrustProposedNameOfTrust,
@@ -63,7 +63,6 @@ namespace TramsDataApi.Test.UseCases
             var result = useCase.Execute(applicationCreateRequest);
 
             result.Should().NotBeNull();
-            result.ApplicationId.Should().BeGreaterThan(0);
             result.Should().BeEquivalentTo(expectedApplication);
         }
     }

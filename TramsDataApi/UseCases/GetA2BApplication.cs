@@ -16,7 +16,7 @@ namespace TramsDataApi.UseCases
         }
 
 
-        public A2BApplicationResponse Execute(int applicationId)
+        public A2BApplicationResponse Execute(string applicationId)
         {
             var application = _applicationGateway.GetByApplicationId(applicationId);
             A2BApplicationAccount account = null;

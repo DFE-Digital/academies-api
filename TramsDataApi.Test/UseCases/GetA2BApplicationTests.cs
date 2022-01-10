@@ -17,7 +17,7 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void GetA2BApplication_ShouldReturnNull_WhenApplicationIdIsNotFound()
         {
-            const int applicationId = 10001;
+            const string applicationId = "10001";
             var mockGateway = new Mock<IA2BApplicationGateway>();
 
             mockGateway.Setup(g => g.GetByApplicationId(applicationId));
@@ -31,7 +31,7 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void GetA2BApplication_ShouldReturnA2BApplicationResponse_WhenApplicationIdIsFound()
         {
-            const int applicationId = 10001;
+            const string applicationId = "10001";
             var mockGateway = new Mock<IA2BApplicationGateway>();
             var application = Builder<A2BApplication>
                 .CreateNew()

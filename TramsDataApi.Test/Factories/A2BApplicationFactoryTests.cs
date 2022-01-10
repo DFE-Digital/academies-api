@@ -27,6 +27,7 @@ namespace TramsDataApi.Test.Factories
 
             var expectedApplication = new A2BApplication
             {
+	            ApplicationId = applicationCreateRequest.ApplicationId,
 	            Name = applicationCreateRequest.Name,
 	            ApplicationType = applicationCreateRequest.ApplicationType,
 	            FormTrustProposedNameOfTrust = applicationCreateRequest.FormTrustProposedNameOfTrust,

@@ -58,6 +58,7 @@ namespace TramsDataApi.Test.Integration
         {
             var application = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
+                .With(a => a.ApplicationId = "10001")
                 .Build();
 
             var response = await _client.PostAsJsonAsync($"/v2/apply-to-become/application/", application);
@@ -67,8 +68,7 @@ namespace TramsDataApi.Test.Integration
             var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationResponse>>();
 
             result.Should().NotBeNull();
-            result.Data.ApplicationId.Should().BeGreaterThan(0);
-            
+        
             var createdApplication =
                 _dbContext.A2BApplications.FirstOrDefault(a => a.ApplicationId == result.Data.ApplicationId);
 
@@ -706,8 +706,9 @@ namespace TramsDataApi.Test.Integration
         {
             var applications = Enumerable.Range(1, 10).Select(a => new A2BApplication
             {
+                ApplicationId = $"1000{a}",
                 Name = _randomGenerator.NextString(3,10),
-                ApplicationType = _randomGenerator.NextString(3,10),
+                ApplicationType = 1,
                 TrustId = _randomGenerator.NextString(3,10),
                 FormTrustProposedNameOfTrust = _randomGenerator.NextString(3,10),
                 ApplicationSubmitted = _randomGenerator.Boolean(),

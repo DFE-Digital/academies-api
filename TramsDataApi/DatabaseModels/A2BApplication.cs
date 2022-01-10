@@ -8,12 +8,11 @@ namespace TramsDataApi.DatabaseModels
     public class A2BApplication
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ApplicationId {get; set;}
+        public string ApplicationId {get; set;}
         public string Name {get; set;} 
-        public string ApplicationType {get; set;}
+        public int? ApplicationType {get; set;}
         public string FormTrustProposedNameOfTrust {get; set;}
-        public bool ApplicationSubmitted {get; set;}
+        public bool? ApplicationSubmitted {get; set;}
         public string ApplicationLeadAuthorId {get; set;}
         public string ApplicationVersion {get; set;}
         public string ApplicationLeadAuthorName {get; set;}

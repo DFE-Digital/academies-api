@@ -23,10 +23,8 @@ namespace TramsDataApi.Migrations.TramsDb
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplication", b =>
                 {
-                    b.Property<int>("ApplicationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ApplicationId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ApplicationLeadAuthorId")
                         .HasColumnType("nvarchar(max)");
@@ -40,11 +38,11 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("ApplicationRoleOtherDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("ApplicationSubmitted")
+                    b.Property<bool?>("ApplicationSubmitted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ApplicationType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ApplicationType")
+                        .HasColumnType("int");
 
                     b.Property<string>("ApplicationVersion")
                         .HasColumnType("nvarchar(max)");

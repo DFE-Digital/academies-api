@@ -25,7 +25,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetApplicationByApplicationId_ReturnsApiSingleResponseWithApplicationWhenApplicationExists()
         {
-            const int applicationId = 10001;
+            const string applicationId = "10001";
             var mockUseCase = new Mock<IGetA2BApplication>();
 
             var response = Builder<A2BApplicationResponse>
@@ -36,7 +36,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(response);
 
             mockUseCase
-                .Setup(x => x.Execute(It.IsAny<int>()))
+                .Setup(x => x.Execute(It.IsAny<string>()))
                 .Returns(response);
 
             var controller = new A2BApplicationController(_mockLogger.Object, mockUseCase.Object, new Mock<ICreateA2BApplication>().Object);
@@ -55,7 +55,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new A2BApplicationController(_mockLogger.Object, mockUseCase.Object, new Mock<ICreateA2BApplication>().Object);
 
-            var result = controller.GetApplicationByApplicationId(10001);
+            var result = controller.GetApplicationByApplicationId("10001");
 
             result.Result.Should().BeEquivalentTo(expectedResponse);
         }
@@ -63,10 +63,11 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void Create_Returns201_WithCreatedObject_WhenApplicationCreated()
         {
+            const string applicationId = "10001";
             var request = Builder<A2BApplicationCreateRequest>.CreateNew().Build();
             var expectedApplicationResponse =  new A2BApplicationResponse
             {
-                ApplicationId = 10001,
+                ApplicationId = applicationId,
                 Name = request.Name,
                 ApplicationType = request.ApplicationType,
                 TrustId = request.TrustId,

@@ -5,12 +5,12 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
     public class A2BApplicationResponse
     {
         public string Name {get; set;}
-        public int ApplicationId {get; set;}
-        public string ApplicationType {get; set;}
+        public string ApplicationId {get; set;}
+        public int? ApplicationType {get; set;}
         public string TrustId { get; set; }
         public A2BApplicationAccount Account { get; set; }
         public string FormTrustProposedNameOfTrust {get; set;}
-        public bool ApplicationSubmitted {get; set;}
+        public bool? ApplicationSubmitted {get; set;}
         public string ApplicationLeadAuthorId {get; set;}
         public string ApplicationVersion {get; set;}
         public string ApplicationLeadAuthorName {get; set;}

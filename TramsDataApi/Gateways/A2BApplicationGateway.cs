@@ -13,7 +13,7 @@ namespace TramsDataApi.Gateways
             _tramsDbContext = tramsDbContext;
         }
         
-        public A2BApplication GetByApplicationId(int applicationId)
+        public A2BApplication GetByApplicationId(string applicationId)
         {
             return _tramsDbContext.A2BApplications
                 .AsNoTracking()

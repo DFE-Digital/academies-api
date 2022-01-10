@@ -11,6 +11,7 @@ namespace TramsDataApi.Factories
                 ? null
                 : new A2BApplication
                 {
+                    ApplicationId = request.ApplicationId,
                     Name = request.Name,
                     ApplicationType = request.ApplicationType,
                     TrustId = request.TrustId,
