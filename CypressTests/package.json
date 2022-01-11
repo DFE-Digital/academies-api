@@ -4,7 +4,8 @@
   "description": "API tests for Service Support",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "cy:run" : "cypress run"
   },
   "keywords": [
     "api",
@@ -12,5 +13,8 @@
     "cypress"
   ],
   "author": "Mike Dally",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^9.2.0"
+  }
 }
