@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run" : "cypress run"
+    "cy:run": "cypress run"
   },
   "keywords": [
     "api",
@@ -15,6 +15,6 @@
   "author": "Mike Dally",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^9.2.0"
+    "cypress": "^9.2.1"
   }
 }
