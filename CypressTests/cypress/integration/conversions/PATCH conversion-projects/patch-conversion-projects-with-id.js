@@ -20,16 +20,19 @@ describe("GET conversion-projects", () => {
       })
   });
 
-  it('Should reject PATCH request to URI containing invalid project Id with 415- non-existant ID', () => {
+  it('Should reject PATCH request to URI containing invalid project Id with 404- non-existant ID', () => {
     cy.request({
         method : 'PATCH',
         failOnStatusCode: false,
         url: url+"/conversion-projects/99999999",
         headers: {
           ApiKey: apiKey,
+        },
+        body:{
+
         }
       }).should((response)=>{
-        expect(response.status).to.eq(415)
+        expect(response.status).to.eq(404)
       })
     })    
 
@@ -37,25 +40,15 @@ describe("GET conversion-projects", () => {
       cy.request({
           method : 'PATCH',
           failOnStatusCode: false,
-          url: url+"/conversion-projects/1",
+          url: url+"/conversion-projects/-1",
           headers: {
             ApiKey: apiKey,
+          },
+          body:{
+  
           }
         }).should((response)=>{
-          expect(response.status).to.eq(415)
+          expect(response.status).to.eq(404)
         })
-      }) 
-      
-      it('Should reject PATCH request to URI containing invalid project Id with 415- non-existant ID', () => {
-        cy.request({
-            method : 'PATCH',
-            failOnStatusCode: false,
-            url: url+"/conversion-projects/1",
-            headers: {
-              ApiKey: apiKey,
-            }
-          }).should((response)=>{
-            expect(response.status).to.eq(415)
-          })
-        })  
+      })
 });
