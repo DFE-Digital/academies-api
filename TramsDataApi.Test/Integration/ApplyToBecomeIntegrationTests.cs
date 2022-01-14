@@ -40,15 +40,40 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanGetApplicationByApplicationId()
         {
-            SetupA2BApplicationData();
+            const string applicationId = "100001";
             
-            var application = _dbContext.A2BApplications.First();
+            
+            var keyPerson = new A2BApplicationKeyPersons
+            {
+                Name = "Name",
+                KeyPersonDateOfBirth = DateTime.Now,
+                KeyPersonBiography = "Biography",
+                KeyPersonCeoExecutive = true,
+                KeyPersonChairOfTrust = false,
+                KeyPersonFinancialDirector = false,
+                KeyPersonFinancialDirectorTime = "Time",
+                KeyPersonMember = "Member",
+                KeyPersonOther = "Other",
+                KeyPersonTrustee = "Trustee"
+            };
+            
+            var application = Builder<A2BApplication>
+                .CreateNew()
+                .With(a => a.ApplicationId = applicationId)
+                .With(a => a.TrustApproverEmail = "test@test.com")
+                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormSat)
+                .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
+                .Build();
+
+            _dbContext.A2BApplications.Add(application);
+            await _dbContext.SaveChangesAsync();
+            
             var expected = A2BApplicationFactory.Create(application);
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(expected);
             
-            var response = await _client.GetAsync($"/v2/apply-to-become/application/{application.ApplicationId}");
-
-
+            var response = await _client.GetAsync($"/v2/apply-to-become/application/{applicationId}");
+        
+        
             response.StatusCode.Should().Be(200);
             
             var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationResponse>>();
@@ -670,64 +695,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.A2BApplicationStatus.AddRange(statuses);
             _dbContext.SaveChanges();
         }
-        
-        private void SetupA2BApplicationData()
-        {
-            var keyPersons = Enumerable.Range(0, 10).Select(kp => new A2BApplicationKeyPersons
-            {
-                Name = _randomGenerator.NextString(3, 10),
-                KeyPersonDateOfBirth = _randomGenerator.DateTime(),
-                KeyPersonBiography = _randomGenerator.NextString(3, 10),
-                KeyPersonCeoExecutive = _randomGenerator.Boolean(),
-                KeyPersonChairOfTrust = _randomGenerator.Boolean(),
-                KeyPersonFinancialDirector = _randomGenerator.Boolean(),
-                KeyPersonFinancialDirectorTime = _randomGenerator.NextString(3, 10),
-                KeyPersonMember = _randomGenerator.NextString(3, 10),
-                KeyPersonOther = _randomGenerator.NextString(3, 10),
-                KeyPersonTrustee = _randomGenerator.NextString(3, 10)
-            }).ToArray();
-            
-            var applications = Enumerable.Range(0, 10).Select(index => new A2BApplication
-            {
-                ApplicationId = $"1000{index}",
-                Name = _randomGenerator.NextString(3,10),
-                ApplicationType = (int?) A2BApplicationTypeEnum.JoinMat,
-                TrustId = _randomGenerator.NextString(3,10),
-                FormTrustProposedNameOfTrust = _randomGenerator.NextString(3,10),
-                ApplicationSubmitted = _randomGenerator.Boolean(),
-                ApplicationLeadAuthorId = _randomGenerator.NextString(3,10),
-                ApplicationLeadEmail = "test@test.com",
-                ApplicationVersion = _randomGenerator.NextString(3,10),
-                ApplicationLeadAuthorName = _randomGenerator.NextString(3,10),
-                ApplicationRole = _randomGenerator.NextString(3,10),
-                ApplicationRoleOtherDescription = _randomGenerator.NextString(3,10),
-                ChangesToTrust = _randomGenerator.Boolean(),
-                ChangesToTrustExplained = _randomGenerator.NextString(3,10),
-                FormTrustOpeningDate = _randomGenerator.DateTime(),
-                TrustApproverName = _randomGenerator.NextString(3,10),
-                TrustApproverEmail = _randomGenerator.NextString(3,10),
-                FormTrustReasonApprovalToConvertAsSat = _randomGenerator.Boolean(),
-                FormTrustReasonApprovedPerson = _randomGenerator.NextString(3,10),
-                FormTrustReasonForming = _randomGenerator.NextString(3,10),
-                FormTrustReasonVision = _randomGenerator.NextString(3,10),
-                FormTrustReasonGeoAreas = _randomGenerator.NextString(3,10),
-                FormTrustReasonFreedom = _randomGenerator.NextString(3,10),
-                FormTrustReasonImproveTeaching = _randomGenerator.NextString(3,10),
-                FormTrustPlanForGrowth = _randomGenerator.NextString(3,10),
-                FormTrustPlansForNoGrowth = _randomGenerator.NextString(3,10),
-                FormTrustGrowthPlansYesNo = _randomGenerator.Boolean(),
-                FormTrustImprovementSupport = _randomGenerator.NextString(3,10),
-                FormTrustImprovementStrategy = _randomGenerator.NextString(3,10),
-                FormTrustImprovementApprovedSponsor = _randomGenerator.NextString(3,10),
-                ApplicationStatusId = _randomGenerator.NextString(3, 10),
-                KeyPersons = new List<A2BApplicationKeyPersons> { keyPersons[index] }
-                
-            });
 
-            _dbContext.A2BApplications.AddRange(applications);
-            _dbContext.SaveChanges();
-        }
-        
         public void Dispose()
         {
             _dbContext.A2BApplicationKeyPersons.RemoveRange(_dbContext.A2BApplicationKeyPersons);
