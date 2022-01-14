@@ -1,0 +1,20 @@
+{
+  "name": "cypresstests",
+  "version": "1.0.0",
+  "description": "API tests for Service Support",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "keywords": [
+    "api",
+    "testing",
+    "cypress"
+  ],
+  "author": "Mike Dally",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^9.2.1"
+  }
+}
