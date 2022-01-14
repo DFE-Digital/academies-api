@@ -67,7 +67,7 @@ namespace TramsDataApi.Test.Factories
             response.Should().BeEquivalentTo(expectedApplication);
         }
         
-                [Fact]
+	    [Fact]
         public void Create_ReturnsExpectedA2BApplicationResponse_WhenA2BApplicationIsProvided()
         {
 	        var keyPerson = Builder<A2BApplicationKeyPersons>.CreateNew().Build();
