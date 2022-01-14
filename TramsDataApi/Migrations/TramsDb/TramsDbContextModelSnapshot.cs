@@ -32,10 +32,16 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("ApplicationLeadAuthorName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ApplicationLeadEmail")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ApplicationRole")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApplicationRoleOtherDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApplicationStatusId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("ApplicationSubmitted")
@@ -47,20 +53,20 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("ApplicationVersion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ChangesToLaGovernance")
-                        .HasColumnType("int");
+                    b.Property<bool?>("ChangesToLaGovernance")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ChangesToLaGovernanceExplained")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ChangesToTrust")
-                        .HasColumnType("int");
+                    b.Property<bool?>("ChangesToTrust")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ChangesToTrustExplained")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FormTrustGrowthPlansYesNo")
-                        .HasColumnType("int");
+                    b.Property<bool?>("FormTrustGrowthPlansYesNo")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FormTrustImprovementApprovedSponsor")
                         .HasColumnType("nvarchar(max)");
@@ -83,8 +89,8 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("FormTrustProposedNameOfTrust")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FormTrustReasonApprovalToConvertAsSat")
-                        .HasColumnType("int");
+                    b.Property<bool?>("FormTrustReasonApprovalToConvertAsSat")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FormTrustReasonApprovedPerson")
                         .HasColumnType("nvarchar(max)");
@@ -118,6 +124,8 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasKey("ApplicationId");
 
+                    b.HasIndex("ApplicationType");
+
                     b.ToTable("A2BApplication","sdd");
                 });
 
@@ -128,20 +136,23 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("KeyPersonBiography")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("KeyPersonCeoExecutive")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("KeyPersonCeoExecutive")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("KeyPersonChairOfTrust")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("KeyPersonChairOfTrust")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("KeyPersonDateOfBirth")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("KeyPersonDateOfBirth")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("KeyPersonFinancialDirector")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("KeyPersonFinancialDirector")
+                        .HasColumnType("bit");
 
                     b.Property<string>("KeyPersonFinancialDirectorTime")
                         .HasColumnType("nvarchar(max)");
@@ -160,6 +171,8 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasKey("KeyPersonId");
 
+                    b.HasIndex("ApplicationId");
+
                     b.ToTable("A2BApplicationKeyPersons","sdd");
                 });
 
@@ -176,6 +189,21 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasKey("ApplicationStatusId");
 
                     b.ToTable("A2BApplicationStatus","sdd");
+                });
+
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplicationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("A2BApplicationType","sdd");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplyingSchool", b =>
@@ -1405,6 +1433,20 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasIndex("FkAcademyTransferProjectId");
 
                     b.ToTable("TransferringAcademies","sdd");
+                });
+
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplication", b =>
+                {
+                    b.HasOne("TramsDataApi.DatabaseModels.A2BApplicationType", "ApplicationTypeOption")
+                        .WithMany()
+                        .HasForeignKey("ApplicationType");
+                });
+
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplicationKeyPersons", b =>
+                {
+                    b.HasOne("TramsDataApi.DatabaseModels.A2BApplication", "Application")
+                        .WithMany("KeyPersons")
+                        .HasForeignKey("ApplicationId");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BApplyingSchool", b =>

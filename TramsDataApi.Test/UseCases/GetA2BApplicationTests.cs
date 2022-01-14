@@ -1,12 +1,11 @@
-using System;
+using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Enums;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels;
-using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.UseCases;
 using Xunit;
 
@@ -33,12 +32,15 @@ namespace TramsDataApi.Test.UseCases
         {
             const string applicationId = "10001";
             var mockGateway = new Mock<IA2BApplicationGateway>();
+            var keyPersons = Builder<A2BApplicationKeyPersons>.CreateListOfSize(1).Build().ToList();
             var application = Builder<A2BApplication>
                 .CreateNew()
                 .With(a => a.ApplicationId == applicationId)
+                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
+                .With(a => a.KeyPersons = keyPersons)
                 .Build();
 
-            var expected = A2BApplicationResponseFactory.Create(application, null);
+            var expected = A2BApplicationFactory.Create(application);
 
             mockGateway.Setup(g => g.GetByApplicationId(applicationId)).Returns(application);
             

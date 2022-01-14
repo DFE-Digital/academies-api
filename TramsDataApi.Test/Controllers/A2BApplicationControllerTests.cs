@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using FizzWare.NBuilder;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -5,6 +7,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TramsDataApi.Controllers.V2;
+using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
@@ -64,12 +67,21 @@ namespace TramsDataApi.Test.Controllers
         public void Create_Returns201_WithCreatedObject_WhenApplicationCreated()
         {
             const string applicationId = "10001";
-            var request = Builder<A2BApplicationCreateRequest>.CreateNew().Build();
+
+            var keyPerson = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
+          
+            var request = Builder<A2BApplicationCreateRequest>
+                .CreateNew()
+                .With(r => r.ApplicationId = applicationId)
+                .With(r => r.ApplicationType = 100000001)
+                .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> {keyPerson})
+                .Build();
+            
             var expectedApplicationResponse =  new A2BApplicationResponse
             {
                 ApplicationId = applicationId,
                 Name = request.Name,
-                ApplicationType = request.ApplicationType,
+                ApplicationType = Enum.GetName(typeof(A2BApplicationTypeEnum), request.ApplicationType!),
                 TrustId = request.TrustId,
                 FormTrustProposedNameOfTrust = request.FormTrustProposedNameOfTrust,
                 ApplicationSubmitted = request.ApplicationSubmitted,
@@ -95,7 +107,8 @@ namespace TramsDataApi.Test.Controllers
                 FormTrustGrowthPlansYesNo = request.FormTrustGrowthPlansYesNo,
                 FormTrustImprovementSupport = request.FormTrustImprovementSupport,
                 FormTrustImprovementStrategy = request.FormTrustImprovementStrategy,
-                FormTrustImprovementApprovedSponsor = request.FormTrustImprovementApprovedSponsor
+                FormTrustImprovementApprovedSponsor = request.FormTrustImprovementApprovedSponsor,
+                KeyPersons = request.KeyPersons
             };
 
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(expectedApplicationResponse);
