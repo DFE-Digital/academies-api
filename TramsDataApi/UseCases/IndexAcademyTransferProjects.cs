@@ -9,19 +9,19 @@ namespace TramsDataApi.UseCases
 {
     public class IndexAcademyTransferProjects : IIndexAcademyTransferProjects
     {
-        private readonly IAcademyTransferProjectGateway _academyTranferProjectGateway;
+        private readonly IAcademyTransferProjectGateway _academyTransferProjectGateway;
         private readonly ITrustGateway _trustGateway;
 
         public IndexAcademyTransferProjects(IAcademyTransferProjectGateway academyTransferProjectGateway,
             ITrustGateway trustGateway)
         {
-            _academyTranferProjectGateway = academyTransferProjectGateway;
+            _academyTransferProjectGateway = academyTransferProjectGateway;
             _trustGateway = trustGateway;
         }
 
         public IList<AcademyTransferProjectSummaryResponse> Execute(int page)
         {
-            var listOfAcademyTransferProjects = _academyTranferProjectGateway.IndexAcademyTransferProjects(page);
+            var listOfAcademyTransferProjects = _academyTransferProjectGateway.IndexAcademyTransferProjects(page);
 
             return listOfAcademyTransferProjects.ToList().Select(atp => new AcademyTransferProjectSummaryResponse
             {
