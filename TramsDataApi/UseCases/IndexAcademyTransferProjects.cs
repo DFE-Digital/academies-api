@@ -23,22 +23,29 @@ namespace TramsDataApi.UseCases
         {
             var listOfAcademyTransferProjects = _academyTransferProjectGateway.IndexAcademyTransferProjects(page);
 
-            return listOfAcademyTransferProjects.ToList().Select(atp => new AcademyTransferProjectSummaryResponse
+            return listOfAcademyTransferProjects.ToList().Select(atp =>
             {
-                ProjectUrn = atp.Urn.ToString(),
-                OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
-                OutgoingTrustName = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn).GroupName,
-                TransferringAcademies = atp.TransferringAcademies.Select(ta =>
+                var outgoingGroup = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn);
+                return new AcademyTransferProjectSummaryResponse()
                 {
-                    var group = _trustGateway.GetGroupByUkPrn(ta.IncomingTrustUkprn);
-                    return new TransferringAcademiesResponse
+                    ProjectUrn = atp.Urn.ToString(),
+                    ProjectReference = atp.ProjectReference,
+                    OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
+                    OutgoingTrustName = outgoingGroup.GroupName,
+                    OutgoingTrustLeadRscRegion =
+                        _trustGateway.GetIfdTrustByGroupId(outgoingGroup.GroupId).LeadRscRegion,
+                    TransferringAcademies = atp.TransferringAcademies.Select(ta =>
                     {
-                        OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                        IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                        IncomingTrustName = group.GroupName,
-                        IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion
-                    };
-                }).ToList()
+                        var group = _trustGateway.GetGroupByUkPrn(ta.IncomingTrustUkprn);
+                        return new TransferringAcademiesResponse
+                        {
+                            OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
+                            IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                            IncomingTrustName = group.GroupName,
+                            IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion
+                        };
+                    }).ToList()
+                };
             }).ToList();
         }
     }

@@ -16,8 +16,9 @@ namespace TramsDataApi.DatabaseModels
         }
         
         public int Id { get; set; }
-        
         public int Urn { get; set; }
+        
+        public string ProjectReference { get; set; }
         public string OutgoingTrustUkprn { get; set; }
         public string WhoInitiatedTheTransfer { get; set; }
         public bool? RddOrEsfaIntervention { get; set; }
