@@ -4,15 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
 {
-    [Table("A2BApplyingSchool", Schema = "sdd")]
-    public class A2BApplyingSchool
+    [Table("A2BApplicationApplyingSchool", Schema = "sdd")]
+    public class A2BApplicationApplyingSchool
     {
         [Key]
-        public string ApplyingSchoolId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int KeyPersonId {get; set;}
+        
         public string UpdatedTrustFields {get; set;}
         public string SchoolDeclarationSignedById {get; set;}
-        public int? SchoolDeclarationBodyAgree {get; set;}
-        public int? SchoolDeclarationTeacherChair {get; set;}
+        public bool? SchoolDeclarationBodyAgree {get; set;}
+        public bool? SchoolDeclarationTeacherChair {get; set;}
         
         public string SchoolDeclarationSignedByEmail {get; set;}
         public string Name {get; set;}
@@ -81,8 +83,8 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? SchoolPFYEndDate {get; set;}
         public DateTime? SchoolCFYEndDate {get; set;}
         
-        public int? SchoolLoanExists {get; set;}
-        public int? SchoolLeaseExists {get; set;}
+        public bool? SchoolLoanExists {get; set;}
+        public bool? SchoolLeaseExists {get; set;}
         
         public int? SchoolCapacityYear1 {get; set;}
         public int? SchoolCapacityYear2 {get; set;}
@@ -106,18 +108,7 @@ namespace TramsDataApi.DatabaseModels
         public int? SchoolSupportGrantFundsPaidTo {get; set;}
         public string SchoolDeclarationSignedByName {get; set;}
         
-        [ForeignKey(nameof(SchoolDeclarationBodyAgree))]
-        public virtual A2BSelectOption SchoolDeclarationBodyAgreeOption { get; set; }
-        
-        [ForeignKey(nameof(SchoolDeclarationTeacherChair))]
-        public virtual A2BSelectOption SchoolDeclarationTeacherChairOption { get; set; }
-        
-        [ForeignKey(nameof(SchoolLoanExists))]
-        public A2BSelectOption SchoolLoanExistsOption { get; set; }
-        
-        [ForeignKey(nameof(SchoolLeaseExists))]
-        public A2BSelectOption SchoolLeaseExistsOption { get; set; }
-        
-
+        public string ApplicationId { get; set; }
+        public A2BApplication Application { get; set; }
     }
 }
