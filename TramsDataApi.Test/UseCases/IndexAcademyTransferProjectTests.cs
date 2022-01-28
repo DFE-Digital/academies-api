@@ -24,6 +24,7 @@ namespace TramsDataApi.Test.UseCases
                 .Build();
             
             var expectedOutgoingGroup = Builder<Group>.CreateNew().Build();
+            var expectedOutgoingTrust = Builder<Trust>.CreateNew().Build();
             var expectedIncomingGroup = Builder<Group>.CreateNew().Build();
             var expectedIncomingTrust = Builder<Trust>.CreateNew().Build();
             
@@ -35,14 +36,17 @@ namespace TramsDataApi.Test.UseCases
             var trustGateway = new Mock<ITrustGateway>();
             trustGateway.Setup(tg => tg.GetGroupByUkPrn(outgoingTrust)).Returns(expectedOutgoingGroup);
             trustGateway.Setup(tg => tg.GetGroupByUkPrn(incomingTrust)).Returns(expectedIncomingGroup);
+            trustGateway.Setup(tg => tg.GetIfdTrustByGroupId(expectedOutgoingGroup.GroupId)).Returns(expectedOutgoingTrust);
             trustGateway.Setup(tg => tg.GetIfdTrustByGroupId(expectedIncomingGroup.GroupId)).Returns(expectedIncomingTrust);
-            
+
             var expectedIndexResponse = expectedAcademyTransferProjects
                 .Select(atp => new AcademyTransferProjectSummaryResponse
                 {
                     ProjectUrn = atp.Urn.ToString(),
+                    ProjectReference = atp.ProjectReference,
                     OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
                     OutgoingTrustName = expectedOutgoingGroup.GroupName,
+                    OutgoingTrustLeadRscRegion = expectedOutgoingTrust.LeadRscRegion,
                     TransferringAcademies = atp.TransferringAcademies.Select(ta => new TransferringAcademiesResponse
                     {
                         OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
