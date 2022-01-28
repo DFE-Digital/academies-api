@@ -539,6 +539,7 @@ namespace TramsDataApi.Test.Integration
             
             _legacyTramsDbContext.Trust.RemoveRange(trusts);
             _legacyTramsDbContext.Group.RemoveRange(groups);
+            _legacyTramsDbContext.SaveChanges();
         }
 
 
@@ -651,6 +652,7 @@ namespace TramsDataApi.Test.Integration
             
             _legacyTramsDbContext.Trust.RemoveRange(trusts);
             _legacyTramsDbContext.Group.RemoveRange(groups);
+            _legacyTramsDbContext.SaveChanges();
         }
 
 
