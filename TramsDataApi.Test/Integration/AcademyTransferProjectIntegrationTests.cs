@@ -435,12 +435,12 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetTheFirstPageOfAllAcademyTransferProjects()
         {
             var randomGenerator = new RandomGenerator();
-            var outgoingTrustUkprn = "out12345";
-            var outgoingTrustName = "outgoingTrust";
-            var incomingTrustUkprn ="in123456";
-            var incomingTrustName = "incomingTrust";
-            var outgoingGroupId = "outgid";
-            var incomingGroupId = "ingid";
+            var outgoingTrustUkprn = randomGenerator.NextString(8,8);
+            var outgoingTrustName =  randomGenerator.NextString(8,8);
+            var incomingTrustUkprn = randomGenerator.NextString(8,8);
+            var incomingTrustName =  randomGenerator.NextString(8,8);
+            var outgoingGroupId =  randomGenerator.NextString(7,7);
+            var incomingGroupId =  randomGenerator.NextString(7,7);
 
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
                 .CreateListOfSize(20)
@@ -546,12 +546,12 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetTheSecondPageOfAllAcademyTransferProjects()
         {
             var randomGenerator = new RandomGenerator();
-            var outgoingTrustUkprn = "out12345";
-            var outgoingTrustName = "outgoingTrust";
-            var incomingTrustUkprn ="in123456";
-            var incomingTrustName = "incomingTrust";
-            var outgoingGroupId = "outgid";
-            var incomingGroupId = "ingid";
+            var outgoingTrustUkprn = randomGenerator.NextString(8,8);
+            var outgoingTrustName =  randomGenerator.NextString(8,8);
+            var incomingTrustUkprn = randomGenerator.NextString(8,8);
+            var incomingTrustName =  randomGenerator.NextString(8,8);
+            var outgoingGroupId =  randomGenerator.NextString(7,7);
+            var incomingGroupId =  randomGenerator.NextString(7,7);
             
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
                 .CreateListOfSize(20)
