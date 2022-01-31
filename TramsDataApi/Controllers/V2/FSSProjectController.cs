@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using TramsDataApi.ResponseModels;
 
@@ -32,7 +33,7 @@ namespace TramsDataApi.Controllers.V2
             _logger.LogDebug(JsonSerializer.Serialize(projects));
 
             var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
-            var response = new ApiResponseV2<TrustSummaryResponse>(projects, pagingResponse);
+            var response = new ApiResponseV2<FssProjectResponse>(projects.ToList(), pagingResponse);
             return new OkObjectResult(response);
         }
     }
