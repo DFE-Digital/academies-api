@@ -18,7 +18,7 @@ namespace TramsDataApi.Controllers.V2
             _logger = logger;
         }
 
-        [HttpGet("trusts")]
+        [HttpGet("projects")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiResponseV2<FssProjectResponse>> GetAll(int page = 1, int count = 50)
         {
