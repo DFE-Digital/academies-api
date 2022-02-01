@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using FizzWare.NBuilder;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -5,6 +7,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TramsDataApi.Controllers.V2;
+using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
@@ -25,7 +28,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetApplicationByApplicationId_ReturnsApiSingleResponseWithApplicationWhenApplicationExists()
         {
-            const int applicationId = 10001;
+            const string applicationId = "10001";
             var mockUseCase = new Mock<IGetA2BApplication>();
 
             var response = Builder<A2BApplicationResponse>
@@ -36,7 +39,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(response);
 
             mockUseCase
-                .Setup(x => x.Execute(It.IsAny<int>()))
+                .Setup(x => x.Execute(It.IsAny<string>()))
                 .Returns(response);
 
             var controller = new A2BApplicationController(_mockLogger.Object, mockUseCase.Object, new Mock<ICreateA2BApplication>().Object);
@@ -55,7 +58,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new A2BApplicationController(_mockLogger.Object, mockUseCase.Object, new Mock<ICreateA2BApplication>().Object);
 
-            var result = controller.GetApplicationByApplicationId(10001);
+            var result = controller.GetApplicationByApplicationId("10001");
 
             result.Result.Should().BeEquivalentTo(expectedResponse);
         }
@@ -63,12 +66,22 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void Create_Returns201_WithCreatedObject_WhenApplicationCreated()
         {
-            var request = Builder<A2BApplicationCreateRequest>.CreateNew().Build();
+            const string applicationId = "10001";
+
+            var keyPerson = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
+          
+            var request = Builder<A2BApplicationCreateRequest>
+                .CreateNew()
+                .With(r => r.ApplicationId = applicationId)
+                .With(r => r.ApplicationType = 100000001)
+                .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> {keyPerson})
+                .Build();
+            
             var expectedApplicationResponse =  new A2BApplicationResponse
             {
-                ApplicationId = 10001,
+                ApplicationId = applicationId,
                 Name = request.Name,
-                ApplicationType = request.ApplicationType,
+                ApplicationType = Enum.GetName(typeof(A2BApplicationTypeEnum), request.ApplicationType!),
                 TrustId = request.TrustId,
                 FormTrustProposedNameOfTrust = request.FormTrustProposedNameOfTrust,
                 ApplicationSubmitted = request.ApplicationSubmitted,
@@ -94,7 +107,8 @@ namespace TramsDataApi.Test.Controllers
                 FormTrustGrowthPlansYesNo = request.FormTrustGrowthPlansYesNo,
                 FormTrustImprovementSupport = request.FormTrustImprovementSupport,
                 FormTrustImprovementStrategy = request.FormTrustImprovementStrategy,
-                FormTrustImprovementApprovedSponsor = request.FormTrustImprovementApprovedSponsor
+                FormTrustImprovementApprovedSponsor = request.FormTrustImprovementApprovedSponsor,
+                KeyPersons = request.KeyPersons
             };
 
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(expectedApplicationResponse);

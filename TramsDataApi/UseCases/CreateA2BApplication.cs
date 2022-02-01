@@ -1,8 +1,6 @@
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels;
 using TramsDataApi.RequestModels.ApplyToBecome;
-using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
 
 namespace TramsDataApi.UseCases
@@ -20,7 +18,7 @@ namespace TramsDataApi.UseCases
         {
             var applicationToCreate = A2BApplicationFactory.Create(request);
             var createdApplication = _gateway.CreateA2BApplication(applicationToCreate);
-            return A2BApplicationResponseFactory.Create(createdApplication, null);
+            return A2BApplicationFactory.Create(createdApplication);
         }
         
     }

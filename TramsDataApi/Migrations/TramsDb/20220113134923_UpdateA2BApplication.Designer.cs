@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220113134923_UpdateA2BApplication")]
+    partial class UpdateA2BApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -959,9 +961,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasMaxLength(8);
 
                     b.Property<string>("ProjectRationale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProjectReference")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PupilNumbersAdditionalInformation")
