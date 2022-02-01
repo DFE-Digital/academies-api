@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 
 namespace TramsDataApi.RequestModels.ApplyToBecome
@@ -47,5 +48,6 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
 		public string ApplicationStatusId { get; set; }
 		
         public List<A2BApplicationKeyPersonsModel> KeyPersons { get; set; }
+        public List<A2BApplicationApplyingSchoolModel> ApplyingSchools { get; set; }
     }
 }

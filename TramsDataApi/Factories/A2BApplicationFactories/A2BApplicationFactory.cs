@@ -1,12 +1,12 @@
-
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.A2BApplicationFactories
 {
     public static class A2BApplicationFactory
     {
@@ -47,6 +47,9 @@ namespace TramsDataApi.Factories
 		    FormTrustImprovementApprovedSponsor = request.FormTrustImprovementApprovedSponsor,
 		    KeyPersons = request.KeyPersons
 			    .Select(A2BApplicationKeyPersonsFactory.Create)
+			    .ToList(),
+		    ApplyingSchools = request.ApplyingSchools
+			    .Select(A2BApplicationApplyingSchoolFactory.Create)
 			    .ToList()
 	    };
 
@@ -87,9 +90,16 @@ namespace TramsDataApi.Factories
 		    FormTrustImprovementStrategy = application.FormTrustImprovementStrategy,
 		    FormTrustImprovementApprovedSponsor = application.FormTrustImprovementApprovedSponsor,
 		    ApplicationStatusId = application.ApplicationStatusId,
-		    KeyPersons = application.KeyPersons
-			    .Select(A2BApplicationKeyPersonsFactory.Create)
-			    .ToList()
+		    KeyPersons = application.KeyPersons == null 
+			    ? new List<A2BApplicationKeyPersonsModel>()
+			    : application.KeyPersons
+					.Select(A2BApplicationKeyPersonsFactory.Create)
+					.ToList(),
+		    ApplyingSchools = application.ApplyingSchools == null 
+			    ? new List<A2BApplicationApplyingSchoolModel>()
+			    : application.ApplyingSchools
+					.Select(A2BApplicationApplyingSchoolFactory.Create)
+					.ToList()
 	    };
     }
 }

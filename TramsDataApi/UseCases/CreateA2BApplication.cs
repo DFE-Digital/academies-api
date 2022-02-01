@@ -1,4 +1,5 @@
 using TramsDataApi.Factories;
+using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;

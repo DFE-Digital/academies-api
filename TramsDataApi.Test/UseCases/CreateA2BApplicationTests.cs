@@ -7,6 +7,7 @@ using Moq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 using TramsDataApi.Factories;
+using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
@@ -21,10 +22,12 @@ namespace TramsDataApi.Test.UseCases
         public void CreateA2BApplication_ShouldCreateAndReturnA2BApplicationResponse_WhenGivenA2BApplication()
         {
 	        var keyPersons = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
+	        var applyingSchools = Builder<A2BApplicationApplyingSchoolModel>.CreateNew().Build();
 	        var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
 	            .CreateNew()
 	            .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
 	            .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> {keyPersons})
+	            .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolModel> {applyingSchools})
 	            .Build();
 
             var application = new A2BApplication
@@ -62,7 +65,13 @@ namespace TramsDataApi.Test.UseCases
 	            FormTrustImprovementStrategy = applicationCreateRequest.FormTrustImprovementStrategy,
 	            FormTrustImprovementApprovedSponsor = applicationCreateRequest.FormTrustImprovementApprovedSponsor,
 	            ApplicationStatusId = applicationCreateRequest.ApplicationStatusId,
-	            KeyPersons = applicationCreateRequest.KeyPersons.Select(A2BApplicationKeyPersonsFactory.Create).ToList()
+	            KeyPersons = applicationCreateRequest.KeyPersons
+		            .Select(A2BApplicationKeyPersonsFactory.Create)
+		            .ToList(),
+	            ApplyingSchools = applicationCreateRequest.ApplyingSchools
+		            .Select(A2BApplicationApplyingSchoolFactory.Create)
+		            .ToList()
+	            
             };
 
             var expectedResult = new A2BApplicationResponse
@@ -100,7 +109,8 @@ namespace TramsDataApi.Test.UseCases
 	            FormTrustImprovementStrategy = applicationCreateRequest.FormTrustImprovementStrategy,
 	            FormTrustImprovementApprovedSponsor = applicationCreateRequest.FormTrustImprovementApprovedSponsor,
 	            ApplicationStatusId = applicationCreateRequest.ApplicationStatusId,
-	            KeyPersons = applicationCreateRequest.KeyPersons
+	            KeyPersons = applicationCreateRequest.KeyPersons,
+	            ApplyingSchools = applicationCreateRequest.ApplyingSchools
             };
             
             var mockGateway = new Mock<IA2BApplicationGateway>();

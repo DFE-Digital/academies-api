@@ -9,7 +9,7 @@ namespace TramsDataApi.DatabaseModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int KeyPersonId {get; set;}
+        public int ApplyingSchoolId {get; set;}
         
         public string UpdatedTrustFields {get; set;}
         public string SchoolDeclarationSignedById {get; set;}

@@ -4,7 +4,6 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
 {
     public class A2BApplicationApplyingSchoolModel
     {
-        public string ApplyingSchoolId { get; set; }
         public string UpdatedTrustFields { get; set; }
         public string SchoolDeclarationSignedById { get; set; }
         public bool? SchoolDeclarationBodyAgree { get; set; }

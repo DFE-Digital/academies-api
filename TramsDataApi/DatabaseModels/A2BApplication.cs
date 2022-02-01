@@ -46,6 +46,8 @@ namespace TramsDataApi.DatabaseModels
 		
         public ICollection<A2BApplicationKeyPersons> KeyPersons { get; set; }
         
+        public ICollection<A2BApplicationApplyingSchool> ApplyingSchools { get; set; }
+        
         [ForeignKey(nameof(ApplicationType))]
         public virtual A2BApplicationType ApplicationTypeOption { get; set; }
     }
