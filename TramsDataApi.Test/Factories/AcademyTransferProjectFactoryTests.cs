@@ -42,6 +42,7 @@ namespace TramsDataApi.Test.Factories
             
             var expected = new AcademyTransferProjects
             {
+                ProjectReference = createRequest.ProjectReference,
                 OutgoingTrustUkprn = createRequest.OutgoingTrustUkprn,
                 WhoInitiatedTheTransfer = null,
                 RddOrEsfaIntervention = null,
@@ -119,6 +120,7 @@ namespace TramsDataApi.Test.Factories
 
             var expected = new AcademyTransferProjects
             {
+                ProjectReference = createRequest.ProjectReference,
                 OutgoingTrustUkprn = createRequest.OutgoingTrustUkprn,
                 WhoInitiatedTheTransfer = createRequest.Features.WhoInitiatedTheTransfer,
                 RddOrEsfaIntervention = createRequest.Features.RddOrEsfaIntervention,
@@ -187,7 +189,8 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,   
+                Urn = academyTransferProject.Urn, 
+                ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = updateRequest.OutgoingTrustUkprn,
                 ProjectRationale = updateRequest.Rationale.ProjectRationale,
                 TransferringAcademies = academyTransferProject.TransferringAcademies,
@@ -258,7 +261,8 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,   
+                Urn = academyTransferProject.Urn,  
+                ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = updateRequest.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
                 TransferringAcademies = expectedTransferringAcademies,
@@ -332,7 +336,8 @@ namespace TramsDataApi.Test.Factories
              var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,   
+                Urn = academyTransferProject.Urn, 
+                ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
                 TransferringAcademies = academyTransferProject.TransferringAcademies,
@@ -393,7 +398,8 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,   
+                Urn = academyTransferProject.Urn,  
+                ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
                 TransferringAcademies = academyTransferProject.TransferringAcademies,
@@ -459,7 +465,8 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,   
+                Urn = academyTransferProject.Urn, 
+                ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
                 TransferringAcademies = academyTransferProject.TransferringAcademies,
