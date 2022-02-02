@@ -37,7 +37,7 @@ steps:
   - task: Npm@1
     inputs:
       command: 'install'
-      workingDir: '/CypressTests' 
+      workingDir: 'CypressTests' 
 
   - task: DotNetCoreCLI@2
     displayName: 'Restore project dependencies'
