@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.ApplyToBecome;
 
 namespace TramsDataApi.ResponseModels.ApplyToBecome
@@ -40,5 +41,6 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
         public string FormTrustImprovementApprovedSponsor {get; set;}
         public string ApplicationStatusId {get; set;}
         public ICollection<A2BApplicationKeyPersonsModel> KeyPersons { get; set; }
+        public ICollection<A2BApplicationApplyingSchoolModel> ApplyingSchools { get; set; }
     }
 }

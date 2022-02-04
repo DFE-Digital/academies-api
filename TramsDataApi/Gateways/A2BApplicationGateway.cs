@@ -22,6 +22,7 @@ namespace TramsDataApi.Gateways
             return _tramsDbContext.A2BApplications
                 .AsNoTracking()
                 .Include(a => a.KeyPersons)
+                .Include(a => a.ApplyingSchools)
                 .FirstOrDefault(a => a.ApplicationId == applicationId);
         }
 

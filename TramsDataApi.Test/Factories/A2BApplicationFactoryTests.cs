@@ -6,6 +6,7 @@ using FizzWare.NBuilder;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 using TramsDataApi.Factories;
+using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
 using Xunit;
@@ -18,10 +19,12 @@ namespace TramsDataApi.Test.Factories
         public void Create_ReturnsExpectedA2BApplication_WhenA2BApplicationCreateRequestIsProvided()
         {
 	        var keyPerson = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
+	        var applyingSchool = Builder<A2BApplicationApplyingSchoolModel>.CreateNew().Build();
             var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
                 .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> { keyPerson })
+                .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolModel> { applyingSchool })
                 .Build();
 
             var expectedApplication = new A2BApplication
@@ -59,7 +62,8 @@ namespace TramsDataApi.Test.Factories
 	            FormTrustImprovementStrategy = applicationCreateRequest.FormTrustImprovementStrategy,
 	            FormTrustImprovementApprovedSponsor = applicationCreateRequest.FormTrustImprovementApprovedSponsor,
 	            ApplicationStatusId = applicationCreateRequest.ApplicationStatusId,
-	            KeyPersons = applicationCreateRequest.KeyPersons.Select(A2BApplicationKeyPersonsFactory.Create).ToList()
+	            KeyPersons = applicationCreateRequest.KeyPersons.Select(A2BApplicationKeyPersonsFactory.Create).ToList(),
+	            ApplyingSchools = applicationCreateRequest.ApplyingSchools.Select(A2BApplicationApplyingSchoolFactory.Create).ToList()
             };
                 
             var response = A2BApplicationFactory.Create(applicationCreateRequest);
@@ -71,10 +75,13 @@ namespace TramsDataApi.Test.Factories
         public void Create_ReturnsExpectedA2BApplicationResponse_WhenA2BApplicationIsProvided()
         {
 	        var keyPerson = Builder<A2BApplicationKeyPersons>.CreateNew().Build();
+	        var applyingSchool = Builder<A2BApplicationApplyingSchool>.CreateNew().Build();
+	        
             var application = Builder<A2BApplication>
                 .CreateNew()
                 .With(a => a.ApplicationType = 100000001)
                 .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
+                .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> { applyingSchool })
                 .Build();
 
             var expectedResponse = new A2BApplicationResponse
@@ -114,6 +121,9 @@ namespace TramsDataApi.Test.Factories
 	            ApplicationStatusId = application.ApplicationStatusId,
 	            KeyPersons = application.KeyPersons
 		            .Select(A2BApplicationKeyPersonsFactory.Create)
+		            .ToList(),
+	            ApplyingSchools = application.ApplyingSchools
+		            .Select(A2BApplicationApplyingSchoolFactory.Create)
 		            .ToList()
             };
                 

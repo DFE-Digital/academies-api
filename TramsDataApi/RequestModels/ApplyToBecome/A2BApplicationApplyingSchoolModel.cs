@@ -1,15 +1,13 @@
 using System;
-using TramsDataApi.DatabaseModels;
 
-namespace TramsDataApi.ResponseModels.ApplyToBecome
+namespace TramsDataApi.RequestModels.ApplyToBecome
 {
-    public class A2BApplyingSchoolResponse
+    public class A2BApplicationApplyingSchoolModel
     {
-        public string ApplyingSchoolId { get; set; }
         public string UpdatedTrustFields { get; set; }
         public string SchoolDeclarationSignedById { get; set; }
-        public A2BSelectOption SchoolDeclarationBodyAgree { get; set; }
-        public A2BSelectOption SchoolDeclarationTeacherChair { get; set; }
+        public bool? SchoolDeclarationBodyAgree { get; set; }
+        public bool? SchoolDeclarationTeacherChair { get; set; }
         public string SchoolDeclarationSignedByEmail { get; set; }
         public string Name { get; set; }
         public string UpdatedSchoolFields { get; set; }
@@ -76,8 +74,8 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
         public DateTime? SchoolNFYEndDate { get; set; }
         public DateTime? SchoolPFYEndDate { get; set; }
         public DateTime? SchoolCFYEndDate { get; set; }
-        public A2BSelectOption SchoolLoanExists { get; set; }
-        public A2BSelectOption  SchoolLeaseExists { get; set; }
+        public bool? SchoolLoanExists { get; set; }
+        public bool? SchoolLeaseExists { get; set; }
         public int? SchoolCapacityYear1 { get; set; }
         public int? SchoolCapacityYear2 { get; set; }
         public int? SchoolCapacityYear3 { get; set; }

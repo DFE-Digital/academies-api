@@ -7,6 +7,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TramsDataApi.Controllers.V2;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
@@ -69,12 +70,14 @@ namespace TramsDataApi.Test.Controllers
             const string applicationId = "10001";
 
             var keyPerson = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
+            var applyingSchool = Builder<A2BApplicationApplyingSchoolModel>.CreateNew().Build();
           
             var request = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
                 .With(r => r.ApplicationId = applicationId)
                 .With(r => r.ApplicationType = 100000001)
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> {keyPerson})
+                .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolModel> {applyingSchool})
                 .Build();
             
             var expectedApplicationResponse =  new A2BApplicationResponse
@@ -108,7 +111,8 @@ namespace TramsDataApi.Test.Controllers
                 FormTrustImprovementSupport = request.FormTrustImprovementSupport,
                 FormTrustImprovementStrategy = request.FormTrustImprovementStrategy,
                 FormTrustImprovementApprovedSponsor = request.FormTrustImprovementApprovedSponsor,
-                KeyPersons = request.KeyPersons
+                KeyPersons = request.KeyPersons,
+                ApplyingSchools = request.ApplyingSchools
             };
 
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(expectedApplicationResponse);

@@ -1,7 +1,7 @@
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.ApplyToBecome;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.A2BApplicationFactories
 {
     public static class A2BApplicationKeyPersonsFactory
     {
