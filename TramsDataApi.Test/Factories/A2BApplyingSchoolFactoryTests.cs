@@ -120,7 +120,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void Create_ReturnsExpectedA2BApplyingModel_WhenA2BApplicationApplyingSchoolIsProvided()
+        public void Create_ReturnsExpectedA2BApplyingSchoolModel_WhenA2BApplicationApplyingSchoolIsProvided()
         {
              var request = Builder<A2BApplicationApplyingSchool>
                 .CreateNew()
