@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers.V2
 {
@@ -13,10 +14,12 @@ namespace TramsDataApi.Controllers.V2
     public class FssProjectController : Controller
     {
         private readonly ILogger<FssProjectController> _logger;
+        private readonly IGetAllFssProject _getAllFssProject;
 
-        public FssProjectController(ILogger<FssProjectController> logger)
+        public FssProjectController(ILogger<FssProjectController> logger, IGetAllFssProject getAllFssProject)
         {
             _logger = logger;
+            _getAllFssProject = getAllFssProject;
         }
 
         [HttpGet("projects")]
@@ -25,8 +28,7 @@ namespace TramsDataApi.Controllers.V2
         {
             _logger.LogInformation($"Retreiving FSS Projects , page {page}, count {count}");
 
-            // TODO: get projects by pagination
-            var projects = new List<FssProjectResponse>();
+            var projects = _getAllFssProject.Execute(page, count).ToList();
 
             _logger.LogInformation( $"Found {count} projects, page {page}");
 
