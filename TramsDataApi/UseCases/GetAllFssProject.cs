@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
 
@@ -14,7 +16,7 @@ namespace TramsDataApi.UseCases
 
         public IEnumerable<FssProjectResponse> Execute(int page, int count)
         {
-            throw new System.NotImplementedException();
+            return _fssProjectGateway.GetAll(page, count).Select(fssProject => FssProjectResponseFactory.Create(fssProject)).ToList();
         }
     }
 }
