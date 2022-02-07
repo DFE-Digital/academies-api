@@ -11,14 +11,11 @@ namespace TramsDataApi.ResponseModels
         public string CurrentFreeSchoolName { get; set; }
         public DateTime?  DateOfEntryIntoPreOpening { get; set; }
         public DateTime? DateSchoolClosed { get; set; }
-        public string DetailsOfResidentialBoardingProvision { get; set; }
         public string FaithStatus { get; set; }
         public string FaithType { get; set; }
-        public string FaithTypeOther { get; set; }
         public string FreeSchoolPenPortrait { get; set; }
         public string FSGLeadContact { get; set; }
         public string Gender { get; set; }
-        public string LaestabWhenGivenOne { get; set; }
         public string LocalAuthority { get; set; }
         public string NumberOfFormsOfEntry { get; set; }
         public string Nursery { get; set; }
@@ -39,7 +36,6 @@ namespace TramsDataApi.ResponseModels
         public string TrustId { get; set; }
         public string TrustName { get; set; }
         public string URN { get; set; }
-        public DateTime? FAActualDateOfCompletion { get; set; }
         public DateTime? FAForecastDate { get; set; }
         //(actual date)
         public DateTime? KickOfMeetingHeldDate { get; set; }
