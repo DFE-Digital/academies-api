@@ -15,6 +15,6 @@ namespace TramsDataApi.Gateways
         public IList<FssProject> GetAll(int page, int count)
         {
             return _tramsDbContext.FssProjects.ToList();               
-        }      
+        }
     }
 }

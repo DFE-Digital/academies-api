@@ -76,7 +76,9 @@ namespace TramsDataApi
             services.AddScoped<IA2BContributorGateway, A2BContributorGateway>();
             services.AddScoped<IA2BSchoolLoanGateway, A2BSchoolLoanGateway>();
             services.AddScoped<IA2BSchoolLeaseGateway, A2BSchoolLeaseGateway>();
-            
+            services.AddScoped<IFssProjectGateway, FssProjectGateway>();
+            services.AddScoped<IGetAllFssProject, GetAllFssProject>();
+
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
             services.AddScoped<IGetA2BApplicationKeyPersons, GetA2BApplicationKeyPersons>();

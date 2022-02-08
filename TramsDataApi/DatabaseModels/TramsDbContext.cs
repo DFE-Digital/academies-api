@@ -359,9 +359,10 @@ namespace TramsDataApi.DatabaseModels
                     });
             });
 
-            modelBuilder.Entity<ConcernsCase>(entity =>
+            modelBuilder.Entity<FssProject>(entity =>
             {
-                entity.ToView("vw_Fss_ProjectData", "fsg");              
+                entity.ToView("vw_Fss_ProjectData", "fsg");
+                entity.HasNoKey();
             });
             OnModelCreatingPartial(modelBuilder);
         }
