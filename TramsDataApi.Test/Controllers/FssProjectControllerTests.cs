@@ -25,10 +25,10 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void GetProjects_ReturnsEmptySetOfProjects_WhenNoTrustsFound()
+        public void GetProjects_ReturnsEmptySetOfProjects_WhenNoProjectFound()
         {
             var projects = new Mock<IGetAllFssProject>();
-            projects.Setup(s => s.Execute(1, 10))
+            projects.Setup(s => s.Execute())
                 .Returns(new List<FssProjectResponse>());
 
             var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProject>().Object);
@@ -38,12 +38,12 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void GetProjects_ReturnsAllProjects_WithPagination()
+        public void GetProjects_ReturnsAllProjects_WhenProjectFound()
         {
             var expectedProjectss = Builder<FssProjectResponse>.CreateListOfSize(5).Build();
 
             var projects = new Mock<IGetAllFssProject>();
-            projects.Setup(s => s.Execute(1, 10))
+            projects.Setup(s => s.Execute())
                 .Returns(expectedProjectss);
 
             var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProject>().Object);

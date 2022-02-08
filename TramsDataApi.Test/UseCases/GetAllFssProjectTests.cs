@@ -14,14 +14,14 @@ namespace TramsDataApi.Test.UseCases
     public class GetAllFssProjectTests
     {
         [Fact]
-        public void GetAll_ReturnsEmptyList_WhenNoTrustsFound()
+        public void GetAll_ReturnsEmptyList_WhenNoProjectFound()
         {
             var gateway = new Mock<IFssProjectGateway>();
-            gateway.Setup(g => g.GetAll(1, 10))
+            gateway.Setup(g => g.GetAll())
                 .Returns(new List<FssProject>());
 
             var useCase = new GetAllFssProject(gateway.Object);
-            var result = useCase.Execute(1, 10);
+            var result = useCase.Execute();
 
             result.Should().BeEquivalentTo(new List<FssProjectResponse>());
         }
@@ -35,7 +35,7 @@ namespace TramsDataApi.Test.UseCases
 
             var gateway = new Mock<IFssProjectGateway>();
 
-            gateway.Setup(g => g.GetAll(1, 10))
+            gateway.Setup(g => g.GetAll())
                 .Returns(new List<FssProject> { expectedProjects });
 
             var expected = new List<FssProjectResponse>
@@ -44,7 +44,7 @@ namespace TramsDataApi.Test.UseCases
             };
 
             var searchTrusts = new GetAllFssProject(gateway.Object);
-            var result = searchTrusts.Execute(1, 10);
+            var result = searchTrusts.Execute();
             result.Should().BeEquivalentTo(expected);
         }
     }

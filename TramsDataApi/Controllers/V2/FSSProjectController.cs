@@ -21,20 +21,37 @@ namespace TramsDataApi.Controllers.V2
             _getAllFssProject = getAllFssProject;
         }
 
+        //[HttpGet("projects")]
+        //[MapToApiVersion("2.0")]
+        //public ActionResult<ApiResponseV2<FssProjectResponse>> GetAll(int page = 1, int count = 50)
+        //{
+        //    _logger.LogInformation($"Retreiving FSS Projects , page {page}, count {count}");
+
+        //    var projects = _getAllFssProject.Execute(page, count).ToList();
+
+        //    _logger.LogInformation( $"Found {count} projects, page {page}");
+
+        //    _logger.LogDebug(JsonSerializer.Serialize(projects));
+
+        //    var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
+        //    var response = new ApiResponseV2<FssProjectResponse>(projects.ToList(), pagingResponse);
+        //    return new OkObjectResult(response);
+        //}
+
         [HttpGet("projects")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<FssProjectResponse>> GetAll(int page = 1, int count = 50)
+        public ActionResult<ApiResponseV2<FssProjectResponse>> GetAll()
         {
-            _logger.LogInformation($"Retreiving FSS Projects , page {page}, count {count}");
+            _logger.LogInformation($"Retreiving all FSS Projects ");
 
-            var projects = _getAllFssProject.Execute(page, count).ToList();
+            var projects = _getAllFssProject.Execute().ToList();
 
-            _logger.LogInformation( $"Found {count} projects, page {page}");
+            _logger.LogInformation($"Found {0} projects, " , projects.Count);
 
             _logger.LogDebug(JsonSerializer.Serialize(projects));
 
-            var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
-            var response = new ApiResponseV2<FssProjectResponse>(projects.ToList(), pagingResponse);
+           
+            var response = new ApiResponseV2<FssProjectResponse>(projects.ToList());
             return new OkObjectResult(response);
         }
     }

@@ -14,9 +14,9 @@ namespace TramsDataApi.UseCases
             _fssProjectGateway = fssProjectGateway;
         }
 
-        public IEnumerable<FssProjectResponse> Execute(int page, int count)
+        public IEnumerable<FssProjectResponse> Execute()
         {
-            return _fssProjectGateway.GetAll(page, count).Select(fssProject => FssProjectResponseFactory.Create(fssProject)).ToList();
+            return _fssProjectGateway.GetAll().Select(fssProject => FssProjectResponseFactory.Create(fssProject)).ToList();
         }
     }
 }

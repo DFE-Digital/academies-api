@@ -12,9 +12,10 @@ namespace TramsDataApi.Gateways
         {
             _tramsDbContext = tramsDbContext;
         }
-        public IList<FssProject> GetAll(int page, int count)
+       
+        public IList<FssProject> GetAll()
         {
-            return _tramsDbContext.FssProjects.ToList();               
+            return _tramsDbContext.FssProjects.ToList();
         }
     }
 }

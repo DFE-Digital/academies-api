@@ -5,6 +5,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetAllFssProject
     {
-        public IEnumerable<FssProjectResponse> Execute(int page, int count);
+         public IEnumerable<FssProjectResponse> Execute();
     }
 }
