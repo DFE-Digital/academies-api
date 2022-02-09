@@ -13,8 +13,7 @@ namespace TramsDataApi.Factories
             }
 
             return new FssProjectResponse
-            {
-                RId = fssProject.RId,
+            {               
                 ActualOpeningDate = fssProject.ActualOpeningDate,
                 AgeRange = fssProject.AgeRange,
                 ApplicationWave = fssProject.ApplicationWave,
