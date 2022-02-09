@@ -37,6 +37,7 @@ namespace TramsDataApi.ResponseModels
         public string URN { get; set; }
         public DateTime? FAForecastDate { get; set; }
         //(actual date)
+        public DateTime? FAActualCompletionDate { get; set; }
         public DateTime? KickOfMeetingHeldDate { get; set; }
     }
 }

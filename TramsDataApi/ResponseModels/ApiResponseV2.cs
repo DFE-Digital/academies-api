@@ -17,16 +17,5 @@ namespace TramsDataApi.ResponseModels
         
         public ApiResponseV2(TResponse data) => Data = new List<TResponse>{ data };
 
-        /// <summary>
-        /// Added this to get a list when pagination not required as in case of Construct API
-        /// where all project data is returned
-        /// </summary>
-        /// <param name="data"></param>
-        public ApiResponseV2(IEnumerable<TResponse> data)
-        {
-            Data = data;
-           
-        }
-
     }
 }

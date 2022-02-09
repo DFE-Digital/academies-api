@@ -44,6 +44,7 @@ namespace TramsDataApi.Factories
                 TrustName = fssProject.TrustName,
                 URN = fssProject.URN,
                 FAForecastDate = fssProject.FAForecastDate,
+                FAActualCompletionDate = fssProject.FAActualCompletionDate,
                 KickOfMeetingHeldDate = fssProject.KickOfMeetingHeldDate,
             };
         }
