@@ -5,7 +5,7 @@ describe("GET fss-projects", () => {
   it("Should return a valid 200 response", () => {
     cy.request({
       failOnStatusCode: false,
-      url: url+"/fss/projects",
+      url: url+"/v2/fss/projects",
       headers: {
         ApiKey: apiKey,
       }
@@ -15,7 +15,7 @@ describe("GET fss-projects", () => {
   it("Should return a valid 401 response when omitting API key", () => {
     cy.request({
       failOnStatusCode: false,
-      url: url+"/fss/projects",
+      url: url+"/v2/fss/projects",
       headers: {
         ApiKey: '',
       }
