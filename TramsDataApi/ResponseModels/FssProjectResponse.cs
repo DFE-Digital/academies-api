@@ -3,8 +3,7 @@
 namespace TramsDataApi.ResponseModels
 {
     public class FssProjectResponse
-    {
-        public string RId { get; set; }
+    {        
         public DateTime? ActualOpeningDate { get; set; }
         public string AgeRange { get; set; }
         public string ApplicationWave { get; set; }
