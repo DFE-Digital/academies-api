@@ -9,7 +9,7 @@ namespace TramsDataApi.Controllers.V2
 {
     [ApiVersion("2.0")]
     [ApiController]
-    [Route("v{version:apiVersion}/")]
+    [Route("v{version:apiVersion}/fss/projects")]
     public class FssProjectController : Controller
     {
         private readonly ILogger<FssProjectController> _logger;
@@ -21,7 +21,6 @@ namespace TramsDataApi.Controllers.V2
             _getAllFssProject = getAllFssProject;
         }
 
-        [HttpGet("projects")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiResponseV2<FssProjectResponse>> GetAll()
         {
