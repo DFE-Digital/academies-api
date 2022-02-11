@@ -6,10 +6,11 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetAllFssProject : IGetAllFssProject
+    public class GetAllFssProjects : IGetAllFssProjects
     {
         private readonly IFssProjectGateway _fssProjectGateway;
-        public GetAllFssProject(IFssProjectGateway fssProjectGateway)
+
+        public GetAllFssProjects(IFssProjectGateway fssProjectGateway)
         {
             _fssProjectGateway = fssProjectGateway;
         }

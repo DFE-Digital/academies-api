@@ -27,11 +27,11 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetProjects_ReturnsEmptySetOfProjects_WhenNoProjectFound()
         {
-            var projects = new Mock<IGetAllFssProject>();
+            var projects = new Mock<IGetAllFssProjects>();
             projects.Setup(s => s.Execute())
                 .Returns(new List<FssProjectResponse>());
 
-            var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProject>().Object);
+            var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProjects>().Object);
             var result = controller.GetAll();
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<FssProjectResponse>()));
@@ -42,11 +42,11 @@ namespace TramsDataApi.Test.Controllers
         {
             var expectedProjectss = Builder<FssProjectResponse>.CreateListOfSize(5).Build();
 
-            var projects = new Mock<IGetAllFssProject>();
+            var projects = new Mock<IGetAllFssProjects>();
             projects.Setup(s => s.Execute())
                 .Returns(expectedProjectss);
 
-            var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProject>().Object);
+            var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProjects>().Object);
             var result = controller.GetAll();
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedProjectss));

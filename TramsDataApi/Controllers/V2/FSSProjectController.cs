@@ -13,12 +13,12 @@ namespace TramsDataApi.Controllers.V2
     public class FssProjectController : Controller
     {
         private readonly ILogger<FssProjectController> _logger;
-        private readonly IGetAllFssProject _getAllFssProject;
+        private readonly IGetAllFssProjects _getAllFssProjects;
 
-        public FssProjectController(ILogger<FssProjectController> logger, IGetAllFssProject getAllFssProject)
+        public FssProjectController(ILogger<FssProjectController> logger, IGetAllFssProjects getAllFssProjects)
         {
             _logger = logger;
-            _getAllFssProject = getAllFssProject;
+            _getAllFssProjects = getAllFssProjects;
         }
 
         [HttpGet("projects")]
@@ -27,7 +27,7 @@ namespace TramsDataApi.Controllers.V2
         {
             _logger.LogInformation($"Retreiving all FSS Projects ");
 
-            var projects = _getAllFssProject.Execute().ToList();
+            var projects = _getAllFssProjects.Execute().ToList();
 
             _logger.LogInformation($"Found {0} projects, " , projects.Count);
 

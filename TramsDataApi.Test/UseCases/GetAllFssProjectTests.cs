@@ -20,7 +20,7 @@ namespace TramsDataApi.Test.UseCases
             gateway.Setup(g => g.GetAll())
                 .Returns(new List<FssProject>());
 
-            var useCase = new GetAllFssProject(gateway.Object);
+            var useCase = new GetAllFssProjects(gateway.Object);
             var result = useCase.Execute();
 
             result.Should().BeEquivalentTo(new List<FssProjectResponse>());
@@ -43,7 +43,7 @@ namespace TramsDataApi.Test.UseCases
                 FssProjectResponseFactory.Create(expectedProjects)
             };
 
-            var searchTrusts = new GetAllFssProject(gateway.Object);
+            var searchTrusts = new GetAllFssProjects(gateway.Object);
             var result = searchTrusts.Execute();
             result.Should().BeEquivalentTo(expected);
         }

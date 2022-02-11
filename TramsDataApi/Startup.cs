@@ -77,7 +77,7 @@ namespace TramsDataApi
             services.AddScoped<IA2BSchoolLoanGateway, A2BSchoolLoanGateway>();
             services.AddScoped<IA2BSchoolLeaseGateway, A2BSchoolLeaseGateway>();
             services.AddScoped<IFssProjectGateway, FssProjectGateway>();
-            services.AddScoped<IGetAllFssProject, GetAllFssProject>();
+            services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
 
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
@@ -96,7 +96,7 @@ namespace TramsDataApi
             
             services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();
             services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
-            services.AddScoped < IGetAllFssProject, GetAllFssProject>();
+            services.AddScoped < IGetAllFssProjects, GetAllFssProjects>();
             // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
             // once the a2b external service can write directly to trams this should be removed
             services.AddDbContext<ApplyToBecomeDbContext>(options =>
