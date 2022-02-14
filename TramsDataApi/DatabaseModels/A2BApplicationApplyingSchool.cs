@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TramsDataApi.Enums;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -20,10 +21,10 @@ namespace TramsDataApi.DatabaseModels
         public string Name {get; set;}
         public string UpdatedSchoolFields {get; set;}
         public string SchoolConversionReasonsForJoining {get; set;}
-        public int? SchoolConversionTargetDateDifferent {get; set;}
+        public bool? SchoolConversionTargetDateDifferent {get; set;} // CML was int?
         public DateTime? SchoolConversionTargetDateDate {get; set;}
         public string SchoolConversionTargetDateExplained {get; set;}
-        public int? SchoolConversionChangeName {get; set;}
+        public bool? SchoolConversionChangeName {get; set;} // CML was int?
         public string SchoolConversionChangeNameValue {get; set;}
         public string SchoolConversionContactHeadName {get; set;}
         public string SchoolConversionContactHeadEmail {get; set;}
@@ -38,47 +39,47 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolConversionMainContactOtherRole {get; set;}
         public string SchoolConversionApproverContactName {get; set;}
         public string SchoolConversionApproverContactEmail {get; set;}
-        public int? SchoolAdInspectedButReportNotPublished {get; set;}
+        public bool? SchoolAdInspectedButReportNotPublished {get; set;} // CML was int?
         public string SchoolAdInspectedReportNotPublishedExplain {get; set;}
-        public int? SchoolLaReorganization {get; set;}
+        public bool? SchoolLaReorganization {get; set;} //CML was int?
         public string SchoolLaReorganizationExplain {get; set;}
-        public int? SchoolLaClosurePlans {get; set;}
+        public bool? SchoolLaClosurePlans {get; set;} // CML was int?
         public string SchoolLaClosurePlansExplain {get; set;}
-        public int? SchoolPartOfFederation {get; set;}
-        public int? SchoolAddFurtherInformation {get; set;}
+        public bool? SchoolPartOfFederation {get; set;} // CML was int?
+        public bool? SchoolAddFurtherInformation {get; set;} // CML was int? do we need this? it looks more like something used to drive the view in external
         public string SchoolFurtherInformation {get; set;}
         public string SchoolAdSchoolContributionToTrust {get; set;}
-        public int? SchoolAdSafeguarding {get; set;}
+        public bool? SchoolAdSafeguarding {get; set;} // was int?
         public string SchoolAdSafeguardingExplained {get; set;}
-        public int? SchoolSACREExemption {get; set;}
+        public bool? SchoolSACREExemption {get; set;} // int?
         public DateTime? SchoolSACREExemptionEndDate {get; set;}
-        public int? SchoolFaithSchool {get; set;}
+        public bool? SchoolFaithSchool {get; set;} // int?
         public string SchoolFaithSchoolDioceseName {get; set;}
-        public int? SchoolSupportedFoundation {get; set;}
+        public bool? SchoolSupportedFoundation {get; set;} // int?
         public string SchoolSupportedFoundationBodyName {get; set;}
         public string SchoolAdFeederSchools {get; set;}
-        public int? SchoolAdEqualitiesImpactAssessment {get; set;}
+        public bool? SchoolAdEqualitiesImpactAssessment {get; set;} // int?
         public double? SchoolPFYRevenue {get; set;}
-        public int? SchoolPFYRevenueStatus {get; set;}
+        public A2BSurplusDeficitEnum? SchoolPFYRevenueStatus {get; set;}
         public string SchoolPFYRevenueStatusExplained {get; set;}
         public double? SchoolPFYCapitalForward {get; set;}
-        public int? SchoolPFYCapitalForwardStatus {get; set;}
+        public A2BSurplusDeficitEnum? SchoolPFYCapitalForwardStatus {get; set;}
         public string SchoolPFYCapitalForwardStatusExplained {get; set;}
         public double? SchoolCFYRevenue {get; set;}
-        public int? SchoolCFYRevenueStatus {get; set;}
+        public A2BSurplusDeficitEnum? SchoolCFYRevenueStatus {get; set;}
         public string SchoolCFYRevenueStatusExplained {get; set;}
         public double? SchoolCFYCapitalForward {get; set;}
-        public int? SchoolCFYCapitalForwardStatus {get; set;}
+        public A2BSurplusDeficitEnum? SchoolCFYCapitalForwardStatus {get; set;}
         public string SchoolCFYCapitalForwardStatusExplained {get; set;}
         public double? SchoolNFYRevenue {get; set;}
-        public int? SchoolNFYRevenueStatus {get; set;}
+        public A2BSurplusDeficitEnum? SchoolNFYRevenueStatus {get; set;}
         public string SchoolNFYRevenueStatusExplained {get; set;}
         public double? SchoolNFYCapitalForward {get; set;}
-        public int? SchoolNFYCapitalForwardStatus {get; set;}
+        public A2BSurplusDeficitEnum? SchoolNFYCapitalForwardStatus {get; set;}
         public string SchoolNFYCapitalForwardStatusExplained {get; set;}
-        public int? SchoolFinancialInvestigations {get; set;}
+        public bool? SchoolFinancialInvestigations {get; set;} // int?
         public string SchoolFinancialInvestigationsExplain {get; set;}
-        public int? SchoolFinancialInvestigationsTrustAware {get; set;}
+        public bool? SchoolFinancialInvestigationsTrustAware {get; set;} // int?
         public DateTime? SchoolNFYEndDate {get; set;}
         public DateTime? SchoolPFYEndDate {get; set;}
         public DateTime? SchoolCFYEndDate {get; set;}
@@ -90,20 +91,20 @@ namespace TramsDataApi.DatabaseModels
         public int? SchoolCapacityYear2 {get; set;}
         public int? SchoolCapacityYear3 {get; set;}
         public string SchoolCapacityAssumptions {get; set;}
-        public string SchoolCapacityPublishedAdmissionsNumber {get; set;}
+        public int? SchoolCapacityPublishedAdmissionsNumber {get; set;} // was a string
         public string SchoolBuildLandOwnerExplained {get; set;}
-        public int? SchoolBuildLandSharedFacilities {get; set;}
+        public bool? SchoolBuildLandSharedFacilities {get; set;} // int?
         public string SchoolBuildLandSharedFacilitiesExplained {get; set;}
-        public int? SchoolBuildLandWorksPlanned {get; set;}
+        public bool? SchoolBuildLandWorksPlanned {get; set;} // int?
         public string SchoolBuildLandWorksPlannedExplained {get; set;}
         public DateTime? SchoolBuildLandWorksPlannedDate {get; set;}
-        public int? SchoolBuildLandGrants {get; set;}
+        public bool? SchoolBuildLandGrants {get; set;} // int?
         public string SchoolBuildLandGrantsBody {get; set;}
-        public int? SchoolBuildLandPriorityBuildingProgramme {get; set;}
-        public int? SchoolBuildLandFutureProgramme {get; set;}
-        public int? SchoolBuildLandPFIScheme {get; set;}
+        public bool? SchoolBuildLandPriorityBuildingProgramme {get; set;} // int?
+        public bool? SchoolBuildLandFutureProgramme {get; set;} // int?
+        public bool? SchoolBuildLandPFIScheme {get; set;} // int?
         public string SchoolBuildLandPFISchemeType {get; set;}
-        public int? SchoolConsultationStakeholders {get; set;}
+        public bool? SchoolConsultationStakeholders {get; set;} // int?
         public string SchoolConsultationStakeholdersConsult {get; set;}
         public int? SchoolSupportGrantFundsPaidTo {get; set;}
         public string SchoolDeclarationSignedByName {get; set;}
