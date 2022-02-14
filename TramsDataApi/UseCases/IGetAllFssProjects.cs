@@ -3,7 +3,7 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public interface IGetAllFssProject
+    public interface IGetAllFssProjects
     {
          public IEnumerable<FssProjectResponse> Execute();
     }
