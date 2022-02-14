@@ -5,6 +5,7 @@ using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.Factories.A2BApplicationFactories
 {
@@ -91,12 +92,12 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 		    FormTrustImprovementApprovedSponsor = application.FormTrustImprovementApprovedSponsor,
 		    ApplicationStatusId = application.ApplicationStatusId,
 		    KeyPersons = application.KeyPersons == null 
-			    ? new List<A2BApplicationKeyPersonsModel>()
+			    ? new List<A2BApplicationKeyPersonsServiceModel>()
 			    : application.KeyPersons
 					.Select(A2BApplicationKeyPersonsFactory.Create)
 					.ToList(),
 		    ApplyingSchools = application.ApplyingSchools == null 
-			    ? new List<A2BApplyingSchoolResponse>()
+			    ? new List<A2BApplyingSchoolServiceModel>()
 			    : application.ApplyingSchools
 					.Select(A2BApplicationApplyingSchoolFactory.Create)
 					.ToList()

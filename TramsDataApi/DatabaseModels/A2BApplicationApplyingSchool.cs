@@ -32,7 +32,7 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolConversionContactChairName {get; set;}
         public string SchoolConversionContactChairEmail {get; set;}
         public string SchoolConversionContactChairTel {get; set;}
-        public int? SchoolConversionMainContact {get; set;}
+        public string SchoolConversionMainContactRole {get; set;}
         public string SchoolConversionMainContactOtherName {get; set;}
         public string SchoolConversionMainContactOtherEmail {get; set;}
         public string SchoolConversionMainContactOtherTelephone {get; set;}
@@ -46,7 +46,7 @@ namespace TramsDataApi.DatabaseModels
         public bool? SchoolLaClosurePlans {get; set;} // CML was int?
         public string SchoolLaClosurePlansExplain {get; set;}
         public bool? SchoolPartOfFederation {get; set;} // CML was int?
-        public bool? SchoolAddFurtherInformation {get; set;} // CML was int? do we need this? it looks more like something used to drive the view in external
+        public bool? SchoolAddFurtherInformation {get; set;} // CML was int?
         public string SchoolFurtherInformation {get; set;}
         public string SchoolAdSchoolContributionToTrust {get; set;}
         public bool? SchoolAdSafeguarding {get; set;} // was int?
@@ -59,23 +59,23 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolSupportedFoundationBodyName {get; set;}
         public string SchoolAdFeederSchools {get; set;}
         public bool? SchoolAdEqualitiesImpactAssessment {get; set;} // int?
-        public double? SchoolPFYRevenue {get; set;}
-        public A2BSurplusDeficitEnum? SchoolPFYRevenueStatus {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SchoolPFYRevenue {get; set;}
         public string SchoolPFYRevenueStatusExplained {get; set;}
-        public double? SchoolPFYCapitalForward {get; set;}
-        public A2BSurplusDeficitEnum? SchoolPFYCapitalForwardStatus {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SchoolPFYCapitalForward {get; set;}
         public string SchoolPFYCapitalForwardStatusExplained {get; set;}
-        public double? SchoolCFYRevenue {get; set;}
-        public A2BSurplusDeficitEnum? SchoolCFYRevenueStatus {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SchoolCFYRevenue {get; set;}
         public string SchoolCFYRevenueStatusExplained {get; set;}
-        public double? SchoolCFYCapitalForward {get; set;}
-        public A2BSurplusDeficitEnum? SchoolCFYCapitalForwardStatus {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SchoolCFYCapitalForward {get; set;}
         public string SchoolCFYCapitalForwardStatusExplained {get; set;}
-        public double? SchoolNFYRevenue {get; set;}
-        public A2BSurplusDeficitEnum? SchoolNFYRevenueStatus {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SchoolNFYRevenue {get; set;}
         public string SchoolNFYRevenueStatusExplained {get; set;}
-        public double? SchoolNFYCapitalForward {get; set;}
-        public A2BSurplusDeficitEnum? SchoolNFYCapitalForwardStatus {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SchoolNFYCapitalForward {get; set;}
         public string SchoolNFYCapitalForwardStatusExplained {get; set;}
         public bool? SchoolFinancialInvestigations {get; set;} // int?
         public string SchoolFinancialInvestigationsExplain {get; set;}
@@ -106,7 +106,7 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolBuildLandPFISchemeType {get; set;}
         public bool? SchoolConsultationStakeholders {get; set;} // int?
         public string SchoolConsultationStakeholdersConsult {get; set;}
-        public int? SchoolSupportGrantFundsPaidTo {get; set;}
+        public string SchoolSupportGrantFundsPaidTo {get; set;}
         public string SchoolDeclarationSignedByName {get; set;}
         
         public string ApplicationId { get; set; }

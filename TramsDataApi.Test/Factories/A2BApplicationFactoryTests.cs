@@ -10,6 +10,7 @@ using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
 using Xunit;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.Test.Factories
 {
@@ -18,13 +19,13 @@ namespace TramsDataApi.Test.Factories
 	    [Fact]
         public void Create_ReturnsExpectedA2BApplication_WhenA2BApplicationCreateRequestIsProvided()
         {
-	        var keyPerson = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
-	        var applyingSchool = Builder<A2BApplicationApplyingSchoolModel>.CreateNew().Build();
+	        var keyPerson = Builder<A2BApplicationKeyPersonsServiceModel>.CreateNew().Build();
+	        var applyingSchool = Builder<A2BApplyingSchoolServiceModel>.CreateNew().Build();
             var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
-                .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
-                .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> { keyPerson })
-                .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolModel> { applyingSchool })
+                .With(r => r.ApplicationType = A2BApplicationTypeEnum.FormMat)
+                .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> { keyPerson })
+                .With(r => r.ApplyingSchools = new List<A2BApplyingSchoolServiceModel> { applyingSchool })
                 .Build();
 
             var expectedApplication = new A2BApplication
@@ -79,7 +80,7 @@ namespace TramsDataApi.Test.Factories
 	        
             var application = Builder<A2BApplication>
                 .CreateNew()
-                .With(a => a.ApplicationType = 100000001)
+                .With(a => a.ApplicationType = A2BApplicationTypeEnum.FormMat)
                 .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
                 .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> { applyingSchool })
                 .Build();

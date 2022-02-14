@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.ApplyToBecome;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.ResponseModels.ApplyToBecome
 {
@@ -40,7 +41,7 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
         public string FormTrustImprovementStrategy {get; set;}
         public string FormTrustImprovementApprovedSponsor {get; set;}
         public string ApplicationStatusId {get; set;}
-        public ICollection<A2BApplicationKeyPersonsModel> KeyPersons { get; set; }
-        public ICollection<A2BApplyingSchoolResponse> ApplyingSchools { get; set; }
+        public ICollection<A2BApplicationKeyPersonsServiceModel> KeyPersons { get; set; }
+        public ICollection<A2BApplyingSchoolServiceModel> ApplyingSchools { get; set; }
     }
 }

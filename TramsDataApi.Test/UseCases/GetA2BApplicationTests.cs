@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.UseCases
             var application = Builder<A2BApplication>
                 .CreateNew()
                 .With(a => a.ApplicationId == applicationId)
-                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
+                .With(a => a.ApplicationType = A2BApplicationTypeEnum.FormMat)
                 .With(a => a.KeyPersons = keyPersons)
                 .With(a => a.ApplyingSchools = applyingSchools)
                 .Build();

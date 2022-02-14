@@ -5,30 +5,13 @@ using System.Threading.Tasks;
 using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 
-namespace TramsDataApi.ResponseModels.ApplyToBecome
+namespace TramsDataApi.ServiceModels.ApplyToBecome
 {
 	/// <remarks>
 	/// should correspond to TramsDataApi.ResponseModels.ApplyToBecome.A2BApplyingSchoolResponse
 	/// </remarks>
-	public class FinancialYear
-	{
-		public DateTime? FYEndDate { get; set; }
-		[Obsolete("pipeline will merge into ActualRevenueCarryForward")]
-		public decimal RevenueCarryForward { get; set; }
-		[Obsolete("pipeline will merge into RevenueStatus")]
-		public string RevenueStatus { get; set; } // CML enum - "Surplus" / "Deficit"
-		public decimal ActualRevenueCarryForward { get; set; } // his should ne negative or positive based on deficit / surplus
-		public string RevenueStatusExplained { get; set; }
-		//		public Link RevenueRecoveryPlanEvidenceDocument { get; set; }
-		[Obsolete("pipeline will merge into ActualCapitalCarryForward")]
-		public decimal CapitalCarryForward { get; set; }
-		[Obsolete("pipeline will merge into ActualCapitalCarryForward")]
-		public string CapitalStatus { get; set; } // CML enum - "Surplus" / "Deficit"
-		public string CapitalStatusExplained { get; set; }
-//		public Link CapitalRecoveryPlanEvidenceDocument { get; set; } // CML might be the same as the revenue document link?
-	}
 
-	public class A2BApplyingSchoolResponse
+	public class A2BApplyingSchoolServiceModel
 		{
 			public string SchoolName { get; set; }
 			// contact details
@@ -38,7 +21,7 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
 			public string SchoolConversionContactChairName { get; set; }
 			public string SchoolConversionContactChairEmail { get; set; }
 			public string SchoolConversionContactChairTel { get; set; }
-			public string MainContactForApplication { get; set; } // enum "headteacher", "chair of governing body", "someone else"
+			public string MainContactForApplicationRole { get; set; } // "headteacher", "chair of governing body", "someone else"
 			public string SchoolConversionMainContactOtherName { get; set; }
 			public string SchoolConversionMainContactOtherEmail { get; set; }
 			public string SchoolConversionMainContactOtherTelephone { get; set; }
@@ -76,12 +59,13 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
 			public bool? SchoolAdEqualitiesImpactAssessmentCompleted { get; set; } //SchoolAdEqualitiesImpactAssessment
 			public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long proforma string answers here
 			public bool? SchoolAdInspectedButReportNotPublished { get; set; }
+			public string SchoolAdInspectedButReportNotPublishedExplain { get; set; }
 			public bool? SchoolAdditionalInformationAdded { get; set; }
 			public string SchoolAdditionalInformation { get; set; }
 			// Finances
-			public FinancialYear PreviousFinancialYear { get; set; }
-			public FinancialYear CurrentFinancialYear { get; set; }
-			public FinancialYear NextFinancialYear { get; set; }
+			public FinancialYearServiceModel PreviousFinancialYear { get; set; }
+			public FinancialYearServiceModel CurrentFinancialYear { get; set; }
+			public FinancialYearServiceModel NextFinancialYear { get; set; }
 			//public List<Loan> ExistingLoans { get; set; }
 			//public List<Lease> ExistingLeases { get; set; }
 			public bool? FinanceOngoingInvestigations { get; set; } // SchoolFinancialInvestigations
