@@ -1,13 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
 {
-   
+
     public class FssProject
     {
-        
         public DateTime? ActualOpeningDate { get; set; }
         public string AgeRange { get; set; }
         public string ApplicationWave { get; set; }
@@ -32,9 +29,7 @@ namespace TramsDataApi.DatabaseModels
         public string ResidentialOrBoardingProvision { get; set; }
         public string RSCRegion { get; set; }
         public string SchoolAddress { get; set; }
-        // (primary, secondary) 
         public string SchoolPhase { get; set; }
-        // School type(mainstream, AP etc)
         public string SchoolType { get; set; }
         public string SixthForm { get; set; }
         public string SixthFormType { get; set; }
@@ -46,6 +41,4 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? FAForecastDate { get; set; }        
         public DateTime? KickOfMeetingHeldDate { get; set; }
     }
-   
-
 }

@@ -33,7 +33,6 @@ namespace TramsDataApi.Controllers.V2
 
             _logger.LogDebug(JsonSerializer.Serialize(projects));
 
-            // Since the data sent is not being paginated passing null in the pagingResponse parameter
             var response = new ApiResponseV2<FssProjectResponse>(projects.ToList(), null);
             return new OkObjectResult(response);
         }

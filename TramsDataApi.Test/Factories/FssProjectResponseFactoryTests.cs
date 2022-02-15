@@ -20,11 +20,9 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void FssProjectResponseFactory_ReturnsFssProjectResponse()
         {
-            var project = Builder<FssProject>.CreateNew().Build();
+            var expected = Builder<FssProject>.CreateNew().Build();
 
-            var expected = new FssProjectResponse();
-
-            var result = FssProjectResponseFactory.Create(project);
+            var result = FssProjectResponseFactory.Create(expected);
             result.Should().BeEquivalentTo(expected);
         }
     }

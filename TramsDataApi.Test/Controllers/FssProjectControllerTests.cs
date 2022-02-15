@@ -34,7 +34,8 @@ namespace TramsDataApi.Test.Controllers
             var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProjects>().Object);
             var result = controller.GetAll();
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<FssProjectResponse>()));
+            var expected = new OkObjectResult(new ApiResponseV2<FssProjectResponse>(new List<FssProjectResponse>(), null));
+            result.Result.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -46,10 +47,11 @@ namespace TramsDataApi.Test.Controllers
             projects.Setup(s => s.Execute())
                 .Returns(expectedProjectss);
 
-            var controller = new FssProjectController(mockLogger.Object, new Mock<IGetAllFssProjects>().Object);
+            var controller = new FssProjectController(mockLogger.Object, projects.Object);
             var result = controller.GetAll();
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedProjectss));
+            var expected = new OkObjectResult(new ApiResponseV2<FssProjectResponse>(expectedProjectss, null));
+            result.Result.Should().BeEquivalentTo(expected);
         }
     }
 }
