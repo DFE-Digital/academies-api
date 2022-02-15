@@ -23,7 +23,13 @@ namespace TramsDataApi.Test.UseCases
         public void CreateA2BApplication_ShouldCreateAndReturnA2BApplicationResponse_WhenGivenA2BApplication()
         {
 	        var keyPersons = Builder<A2BApplicationKeyPersonsServiceModel>.CreateNew().Build();
-	        var applyingSchools = Builder<A2BApplyingSchoolServiceModel>.CreateNew().Build();
+			var financialYear = Builder<FinancialYearServiceModel>.CreateNew().Build();
+	        var applyingSchools = Builder<A2BApplyingSchoolServiceModel>
+				.CreateNew()
+				.With(r => r.PreviousFinancialYear = financialYear)
+				.With(r => r.CurrentFinancialYear = financialYear)
+				.With(r => r.NextFinancialYear = financialYear)
+				.Build();
 	        var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
 	            .CreateNew()
 	            .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
