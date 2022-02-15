@@ -14,8 +14,14 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void Create_ReturnsExpectedA2BApplicationApplyingSchool_WhenA2BApplicationApplyingSchoolModelIsProvided()
         {
+            var financialYear = Builder<FinancialYearServiceModel>
+                .CreateNew()
+                .Build();
             var request = Builder<A2BApplyingSchoolServiceModel>
                 .CreateNew()
+                .With(r => r.PreviousFinancialYear = financialYear)
+                .With(r => r.CurrentFinancialYear = financialYear)
+                .With(r => r.NextFinancialYear = financialYear)
                 .Build();
 
             var expectedStatus = new A2BApplicationApplyingSchool
