@@ -18,6 +18,7 @@ namespace TramsDataApi.Factories
 
             return new AcademyTransferProjects
             {
+                ProjectReference = request?.ProjectReference,
                 OutgoingTrustUkprn = request.OutgoingTrustUkprn,
                 WhoInitiatedTheTransfer = request.Features?.WhoInitiatedTheTransfer,
                 RddOrEsfaIntervention = request.Features?.RddOrEsfaIntervention,
@@ -91,6 +92,7 @@ namespace TramsDataApi.Factories
 
             var toMerge = Create(updateRequest);
 
+            original.ProjectReference = toMerge.ProjectReference ?? original.ProjectReference;
             original.OutgoingTrustUkprn = toMerge.OutgoingTrustUkprn ?? original.OutgoingTrustUkprn;
             original.WhoInitiatedTheTransfer = toMerge?.WhoInitiatedTheTransfer ?? original.WhoInitiatedTheTransfer;
             original.RddOrEsfaIntervention = toMerge?.RddOrEsfaIntervention == null

@@ -1,17 +1,10 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TramsDataApi.DatabaseModels
+namespace TramsDataApi.RequestModels.ApplyToBecome
 {
-    [Table("A2BApplicationKeyPersons", Schema = "sdd")]
-    public class A2BApplicationKeyPersons
-    {
+    public class A2BApplicationKeyPersonsModel
+    { 
         public string Name {get; set;}
-        
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int KeyPersonId {get; set;}
         public DateTime? KeyPersonDateOfBirth {get; set;}
         public string KeyPersonBiography {get; set;}
         public bool? KeyPersonCeoExecutive {get; set;}
@@ -21,8 +14,5 @@ namespace TramsDataApi.DatabaseModels
         public string KeyPersonMember {get; set;}
         public string KeyPersonOther {get; set;}
         public string KeyPersonTrustee {get; set;}
-        
-        public string ApplicationId { get; set; }
-        public A2BApplication Application { get; set; }
     }
 }

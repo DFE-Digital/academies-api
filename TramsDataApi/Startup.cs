@@ -70,9 +70,7 @@ namespace TramsDataApi
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
             
             services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
-            services.AddScoped<IA2BApplicationKeyPersonsGateway, A2BApplicationKeyPersonsGateway>();
             services.AddScoped<IA2BApplicationStatusGateway, A2BApplicationStatusGateway>();
-            services.AddScoped<IA2BApplyingSchoolGateway,A2BApplyingSchoolGateway>();
             services.AddScoped<IA2BContributorGateway, A2BContributorGateway>();
             services.AddScoped<IA2BSchoolLoanGateway, A2BSchoolLoanGateway>();
             services.AddScoped<IA2BSchoolLeaseGateway, A2BSchoolLeaseGateway>();
@@ -81,12 +79,8 @@ namespace TramsDataApi
 
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
-            services.AddScoped<IGetA2BApplicationKeyPersons, GetA2BApplicationKeyPersons>();
-            services.AddScoped<ICreateA2BApplicationKeyPersons, CreateA2BApplicationKeyPersons>();
             services.AddScoped<IGetA2BApplicationStatus, GetA2BApplicationStatus>();
             services.AddScoped<ICreateA2BApplicationStatus, CreateA2BApplicationStatus>();
-            services.AddScoped<IGetA2BApplyingSchool, GetA2BApplyingSchool>();
-            services.AddScoped<ICreateA2BApplyingSchool, CreateA2BApplyingSchool>();
             services.AddScoped<IGetA2BContributor, GetA2BContributor>();
             services.AddScoped<ICreateA2BContributor, CreateA2BContributor>();
             services.AddScoped<ICreateA2BSchoolLoan, CreateA2BSchoolLoan>();
@@ -102,7 +96,7 @@ namespace TramsDataApi
             services.AddDbContext<ApplyToBecomeDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddHostedService<SyncAcademyConversionProjectsService>();
-            
+
             services.AddApiVersioning(config => 
             {
                 config.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
