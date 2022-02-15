@@ -31,7 +31,9 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<A2BContributor> A2BContributors { get; set; }
         public virtual DbSet<A2BSchoolLease> A2BSchoolLeases { get; set; }
         public virtual DbSet<A2BSchoolLoan> A2BSchoolLoans { get; set; }
+        public virtual DbSet<A2BSelectOption> A2BSelectOptions { get; set; }
 
+        public virtual DbSet<FssProject> FssProjects { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -354,6 +356,12 @@ namespace TramsDataApi.DatabaseModels
                         CreatedAt = new DateTime(2021,11,17),
                         UpdatedAt = new DateTime(2021,11,17)
                     });
+            });
+
+            modelBuilder.Entity<FssProject>(entity =>
+            {
+                entity.ToView("vw_Fss_ProjectData", "fsg");
+                entity.HasNoKey();
             });
             OnModelCreatingPartial(modelBuilder);
         }
