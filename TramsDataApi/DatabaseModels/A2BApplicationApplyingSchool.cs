@@ -32,7 +32,7 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolConversionContactChairName {get; set;}
         public string SchoolConversionContactChairEmail {get; set;}
         public string SchoolConversionContactChairTel {get; set;}
-        public string SchoolConversionMainContactRole {get; set;}
+        public string SchoolConversionContactRole {get; set;}
         public string SchoolConversionMainContactOtherName {get; set;}
         public string SchoolConversionMainContactOtherEmail {get; set;}
         public string SchoolConversionMainContactOtherTelephone {get; set;}

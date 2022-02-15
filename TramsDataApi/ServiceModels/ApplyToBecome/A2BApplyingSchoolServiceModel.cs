@@ -21,7 +21,7 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public string SchoolConversionContactChairName { get; set; }
 			public string SchoolConversionContactChairEmail { get; set; }
 			public string SchoolConversionContactChairTel { get; set; }
-			public string MainContactForApplicationRole { get; set; } // "headteacher", "chair of governing body", "someone else"
+			public string SchoolConversionContactRole { get; set; } // "headteacher", "chair of governing body", "someone else"
 			public string SchoolConversionMainContactOtherName { get; set; }
 			public string SchoolConversionMainContactOtherEmail { get; set; }
 			public string SchoolConversionMainContactOtherTelephone { get; set; }
@@ -91,7 +91,7 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public bool? SchoolBuildLandPriorityBuildingProgramme { get; set; }
 			public bool? SchoolBuildLandFutureProgramme { get; set; }
 			// pre-opening support grant
-			public string SchoolSupportGrantFundsPaidTo { get; set; } // int? - actually an enum "To the school" / "To the trust the school is joining"
+			public string SchoolSupportGrantFundsPaidTo { get; set; } // int? - either "To the school" or "To the trust the school is joining"
 			// consultation details
 			public bool? SchoolHasConsultedStakeholders { get; set; } // SchoolConsultationStakeholdersConsult
 			public string SchoolPlanToConsultStakeholders { get; set; }
@@ -102,6 +102,7 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			// public bool? IAmTheChairOrHeadteacher
 			// public bool? InfoIsTrueToBestOfMyKnowledge
 			public string SchoolDeclarationSignedByName { get; set; } // this signed by has to be headteacher or chair of governors
-		}
+		 public string SchoolAdInspectedReportNotPublishedExplain { get; set; }
+    }
 
 }
