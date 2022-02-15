@@ -76,7 +76,7 @@ namespace TramsDataApi.Test.Controllers
             var request = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
                 .With(r => r.ApplicationId = applicationId)
-                .With(r => r.ApplicationType = A2BApplicationTypeEnum.FormMat)
+                .With(r => r.ApplicationType = 907660000)
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson})
                 .With(r => r.ApplyingSchools = new List<A2BApplyingSchoolServiceModel> {applyingSchool})
                 .Build();

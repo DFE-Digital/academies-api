@@ -14,7 +14,7 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
 		[Required]
 	    public string ApplicationId { get; set; }
 
-		public A2BApplicationTypeEnum? ApplicationType { get; set; }
+		public int? ApplicationType { get; set; }
 		public string FormTrustProposedNameOfTrust { get; set; }
 		public bool? ApplicationSubmitted { get; set; }
 		public string ApplicationLeadAuthorId { get; set; }

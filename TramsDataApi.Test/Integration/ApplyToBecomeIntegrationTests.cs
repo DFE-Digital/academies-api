@@ -152,7 +152,7 @@ namespace TramsDataApi.Test.Integration
                 .CreateNew()
                 .With(a => a.ApplicationId = applicationId)
                 .With(a => a.TrustApproverEmail = "test@test.com")
-                .With(a => a.ApplicationType = A2BApplicationTypeEnum.FormSat)
+                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormSat)
                 .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
                 .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> {applyingSchool})
                 .Build();
@@ -324,7 +324,7 @@ namespace TramsDataApi.Test.Integration
                 TrustId = _randomGenerator.NextString(2, 10),
                 ApplicationStatusId = _randomGenerator.NextString(2, 10),
                 TrustApproverEmail = "test@test.com",
-                ApplicationType = A2BApplicationTypeEnum.FormSat,
+                ApplicationType = (int?) A2BApplicationTypeEnum.FormSat,
                 KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson},
                 ApplyingSchools = new List<A2BApplyingSchoolServiceModel> {applyingSchool}
             };

@@ -26,7 +26,7 @@ namespace TramsDataApi.Test.UseCases
 	        var applyingSchools = Builder<A2BApplyingSchoolServiceModel>.CreateNew().Build();
 	        var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
 	            .CreateNew()
-	            .With(r => r.ApplicationType = A2BApplicationTypeEnum.FormMat)
+	            .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
 	            .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPersons})
 	            .With(r => r.ApplyingSchools = new List<A2BApplyingSchoolServiceModel> {applyingSchools})
 	            .Build();

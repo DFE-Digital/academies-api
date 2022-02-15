@@ -23,7 +23,7 @@ namespace TramsDataApi.Test.Factories
 	        var applyingSchool = Builder<A2BApplyingSchoolServiceModel>.CreateNew().Build();
             var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
-                .With(r => r.ApplicationType = A2BApplicationTypeEnum.FormMat)
+                .With(r => r.ApplicationType = (int?)A2BApplicationTypeEnum.FormMat)
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> { keyPerson })
                 .With(r => r.ApplyingSchools = new List<A2BApplyingSchoolServiceModel> { applyingSchool })
                 .Build();
@@ -80,7 +80,7 @@ namespace TramsDataApi.Test.Factories
 	        
             var application = Builder<A2BApplication>
                 .CreateNew()
-                .With(a => a.ApplicationType = A2BApplicationTypeEnum.FormMat)
+                .With(a => a.ApplicationType = (int?)A2BApplicationTypeEnum.FormMat)
                 .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
                 .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> { applyingSchool })
                 .Build();
