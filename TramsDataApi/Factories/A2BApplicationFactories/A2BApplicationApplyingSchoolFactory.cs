@@ -18,8 +18,9 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 	                Name = request.SchoolName,
                     //UpdatedTrustFields = request.UpdatedTrustFields,
                     //SchoolDeclarationSignedById = request.SchoolDeclarationSignedById,
-                    SchoolDeclarationBodyAgree = request.SchoolApplicantDeclarationIsApplicationCorrect,
-                    //SchoolDeclarationTeacherChair = request.SchoolDeclarationTeacherChair,
+                    SchoolDeclarationBodyAgree = request.DeclarationBodyAgree, // or should be 
+                    SchoolDeclarationTeacherChair = request.DeclarationIAmTheChairOrHeadteacher,
+                    SchoolDeclarationSignedByName = request.DeclarationSignedByName,
                     //SchoolDeclarationSignedByEmail = request.SchoolDeclarationSignedByEmail,
                     //UpdatedSchoolFields = request.UpdatedSchoolFields,
                     SchoolConversionReasonsForJoining = request.SchoolConversionReasonsForJoining,
@@ -61,18 +62,25 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolSupportedFoundationBodyName = request.SchoolSupportedFoundationBodyName,
                     SchoolAdFeederSchools = request.SchoolAdFeederSchools,
                     SchoolAdEqualitiesImpactAssessment = request.SchoolAdEqualitiesImpactAssessmentCompleted,
-                    SchoolPFYRevenue = request.PreviousFinancialYear.ActualRevenueCarryForward,
-                    SchoolPFYCapitalForward = request.PreviousFinancialYear.ActualCapitalCarryForward,
+                    SchoolAdEqualitiesImpactAssessmentDetails = request.SchoolAdEqualitiesImpactAssessmentDetails,
+                    SchoolPFYRevenue = request.PreviousFinancialYear.RevenueCarryForward,
+                    SchoolPFYRevenueIsDeficit = request.PreviousFinancialYear.RevenueIsDeficit,
+                    SchoolPFYCapitalForward = request.PreviousFinancialYear.CapitalCarryForward,
+                    SchoolPFYCapitalIsDeficit = request.PreviousFinancialYear.CapitalIsDeficit,
                     SchoolPFYEndDate = request.PreviousFinancialYear.FYEndDate,
                     SchoolPFYCapitalForwardStatusExplained = request.PreviousFinancialYear.CapitalStatusExplained,
                     SchoolPFYRevenueStatusExplained = request.PreviousFinancialYear.RevenueStatusExplained,
-                    SchoolCFYRevenue = request.CurrentFinancialYear.ActualRevenueCarryForward,
-                    SchoolCFYCapitalForward = request. CurrentFinancialYear.ActualCapitalCarryForward,
+                    SchoolCFYRevenue = request.CurrentFinancialYear.RevenueCarryForward,
+                    SchoolCFYRevenueIsDeficit = request.CurrentFinancialYear.RevenueIsDeficit,
+                    SchoolCFYCapitalForward = request. CurrentFinancialYear.CapitalCarryForward,
+                    SchoolCFYCapitalIsDeficit = request.CurrentFinancialYear.CapitalIsDeficit,
                     SchoolCFYCapitalForwardStatusExplained = request.CurrentFinancialYear.CapitalStatusExplained,
                     SchoolCFYRevenueStatusExplained = request.CurrentFinancialYear.RevenueStatusExplained,
                     SchoolCFYEndDate = request.CurrentFinancialYear.FYEndDate,
-                    SchoolNFYRevenue = request.NextFinancialYear.ActualRevenueCarryForward,
-                    SchoolNFYCapitalForward = request.NextFinancialYear.ActualRevenueCarryForward,
+                    SchoolNFYRevenue = request.NextFinancialYear.RevenueCarryForward,
+                    SchoolNFYRevenueIsDeficit = request.NextFinancialYear.RevenueIsDeficit,
+                    SchoolNFYCapitalForward = request.NextFinancialYear.RevenueCarryForward,
+                    SchoolNFYCapitalIsDeficit = request.NextFinancialYear.CapitalIsDeficit,
                     SchoolNFYEndDate = request.NextFinancialYear.FYEndDate,
                     SchoolNFYCapitalForwardStatusExplained = request.NextFinancialYear.CapitalStatusExplained,
                     SchoolNFYRevenueStatusExplained = request.NextFinancialYear.RevenueStatusExplained,
@@ -100,8 +108,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolBuildLandPFISchemeType = request.SchoolBuildLandPFISchemeType,
                     SchoolConsultationStakeholders = request.SchoolHasConsultedStakeholders,
                     SchoolConsultationStakeholdersConsult = request.SchoolPlanToConsultStakeholders,
-                    SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
-                    SchoolDeclarationSignedByName = request.SchoolDeclarationSignedByName
+                    SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo
                 };
         }
 
@@ -113,12 +120,14 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 		    {	
 					SchoolName = request.Name,
                 //UpdatedTrustFields = request.UpdatedTrustFields,
-                //SchoolDeclarationSignedById = request.SchoolDeclarationSignedById,
-                SchoolApplicantDeclarationIsApplicationCorrect = request.SchoolDeclarationBodyAgree,
-                //SchoolDeclarationTeacherChair = request.SchoolDeclarationTeacherChair,
-                //SchoolDeclarationSignedByEmail = request.SchoolDeclarationSignedByEmail,
                 //UpdatedSchoolFields = request.UpdatedSchoolFields,
-                //SchoolConversionReasonsForJoining = request.SchoolConversionReasonsForJoining,
+                DeclarationBodyAgree = request.SchoolDeclarationBodyAgree,
+                DeclarationIAmTheChairOrHeadteacher = request.SchoolDeclarationTeacherChair,
+                DeclarationSignedByName = request.SchoolDeclarationSignedByName,
+                // DeclarationApplicationIsCorrect
+                // request.SchoolDeclarationSignedById,
+                // request.SchoolDeclarationSignedByEmail
+                SchoolConversionReasonsForJoining = request.SchoolConversionReasonsForJoining,
                     SchoolConversionTargetDateSpecified = request.SchoolConversionTargetDateDifferent,
                     SchoolConversionTargetDate = request.SchoolConversionTargetDateDate,
                     SchoolConversionTargetDateExplained = request.SchoolConversionTargetDateExplained,
@@ -138,7 +147,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolConversionApproverContactName = request.SchoolConversionApproverContactName,
                     SchoolConversionApproverContactEmail = request.SchoolConversionApproverContactEmail,
                     SchoolAdInspectedButReportNotPublished = request.SchoolAdInspectedButReportNotPublished,
-                SchoolAdInspectedReportNotPublishedExplain = request.SchoolAdInspectedReportNotPublishedExplain,
+                SchoolAdInspectedButReportNotPublishedExplain = request.SchoolAdInspectedReportNotPublishedExplain,
                 SchoolPartOfLaReorganizationPlan = request.SchoolLaReorganization,
                 SchoolLaReorganizationDetails = request.SchoolLaReorganizationExplain,
                 SchoolPartOfLaClosurePlan = request.SchoolLaClosurePlans,
@@ -157,28 +166,35 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolSupportedFoundationBodyName = request.SchoolSupportedFoundationBodyName,
                     SchoolAdFeederSchools = request.SchoolAdFeederSchools,
                 SchoolAdEqualitiesImpactAssessmentCompleted = request.SchoolAdEqualitiesImpactAssessment,
+                SchoolAdEqualitiesImpactAssessmentDetails = request.SchoolAdEqualitiesImpactAssessmentDetails,
                     PreviousFinancialYear = new FinancialYearServiceModel
                     {
-                        ActualRevenueCarryForward = request.SchoolPFYRevenue.Value,
-                         RevenueStatusExplained = request.SchoolPFYRevenueStatusExplained,
-                        ActualCapitalCarryForward = request.SchoolPFYCapitalForward.Value,
+                        RevenueCarryForward = request.SchoolPFYRevenue.Value,
+                        RevenueIsDeficit = request.SchoolPFYRevenueIsDeficit,
+                        RevenueStatusExplained = request.SchoolPFYRevenueStatusExplained,
+                        CapitalCarryForward = request.SchoolPFYCapitalForward.Value,
+                        CapitalIsDeficit = request.SchoolPFYCapitalIsDeficit,
                         CapitalStatusExplained = request.SchoolPFYCapitalForwardStatusExplained,
                         FYEndDate = request.SchoolPFYEndDate
                     },
                     CurrentFinancialYear = new FinancialYearServiceModel
                     {
-                        ActualRevenueCarryForward = request.SchoolCFYRevenue.Value,
-                         RevenueStatusExplained = request.SchoolCFYRevenueStatusExplained,
-                        ActualCapitalCarryForward = request.SchoolCFYCapitalForward.Value,
+                        RevenueCarryForward = request.SchoolCFYRevenue.Value,
+                        RevenueIsDeficit = request.SchoolCFYRevenueIsDeficit,
+                        RevenueStatusExplained = request.SchoolCFYRevenueStatusExplained,
+                        CapitalCarryForward = request.SchoolCFYCapitalForward.Value,
+                        CapitalIsDeficit = request.SchoolCFYCapitalIsDeficit,
                         CapitalStatusExplained = request.SchoolCFYCapitalForwardStatusExplained,
                         FYEndDate = request.SchoolCFYEndDate
                     },
                 NextFinancialYear = new FinancialYearServiceModel
                 {
-                    ActualRevenueCarryForward = request.SchoolNFYRevenue.Value,
+                    RevenueCarryForward = request.SchoolNFYRevenue.Value,
+                    RevenueIsDeficit = request.SchoolNFYRevenueIsDeficit,
                     RevenueStatusExplained = request.SchoolNFYRevenueStatusExplained,
-                    ActualCapitalCarryForward = request.SchoolNFYCapitalForward.Value,
-                   CapitalStatusExplained = request.SchoolNFYCapitalForwardStatusExplained,
+                    CapitalCarryForward = request.SchoolNFYCapitalForward.Value,
+                    CapitalIsDeficit = request.SchoolNFYCapitalIsDeficit,
+                    CapitalStatusExplained = request.SchoolNFYCapitalForwardStatusExplained,
                     FYEndDate = request.SchoolNFYEndDate
                 },
                 FinanceOngoingInvestigations = request.SchoolFinancialInvestigations,
@@ -206,7 +222,6 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 SchoolHasConsultedStakeholders = request.SchoolConsultationStakeholders,
                 SchoolPlanToConsultStakeholders = request.SchoolConsultationStakeholdersConsult,
                 SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
-                SchoolDeclarationSignedByName = request.SchoolDeclarationSignedByName
 		    };
 	    }
     }

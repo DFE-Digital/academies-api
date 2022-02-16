@@ -193,13 +193,12 @@ namespace TramsDataApi.Test.Integration
             var applyingSchool = new A2BApplyingSchoolServiceModel
             {
                 //UpdatedTrustFields = _randomGenerator.NextString(2, 10),
-                //SchoolDeclarationSignedById = true,
-                SchoolApplicantDeclarationIsApplicationCorrect = _randomGenerator.Boolean(),
-               //SchoolDeclarationTeacherChair = _randomGenerator.Boolean(),
-                //SchoolDeclarationSignedByEmail = _randomGenerator.NextString(2, 10),
-                SchoolName = _randomGenerator.NextString(2, 10),
                 //UpdatedSchoolFields = _randomGenerator.NextString(2, 10),
-                SchoolConversionReasonsForJoining = _randomGenerator.NextString(2, 10),
+                DeclarationBodyAgree = _randomGenerator.Boolean(),
+                DeclarationSignedByName = _randomGenerator.NextString(2, 10),
+                DeclarationIAmTheChairOrHeadteacher = _randomGenerator.Boolean(),
+                SchoolName = _randomGenerator.NextString(2, 10),
+                 SchoolConversionReasonsForJoining = _randomGenerator.NextString(2, 10),
                 SchoolConversionTargetDateSpecified = true,
                 SchoolConversionTargetDate = _randomGenerator.DateTime(),
                 SchoolConversionTargetDateExplained = _randomGenerator.NextString(2, 10),
@@ -240,25 +239,31 @@ namespace TramsDataApi.Test.Integration
                 SchoolAdEqualitiesImpactAssessmentCompleted = true,
                 PreviousFinancialYear = new FinancialYearServiceModel
                 {
-                    ActualRevenueCarryForward = 1000,
+                    RevenueCarryForward = 1000,
+                    RevenueIsDeficit = false,
                     RevenueStatusExplained = _randomGenerator.NextString(2, 10),
-                    ActualCapitalCarryForward = 1000,
+                    CapitalCarryForward = 1000,
+                    CapitalIsDeficit = false,
                     CapitalStatusExplained = _randomGenerator.NextString(2, 10),
                     FYEndDate = _randomGenerator.DateTime()
                 },
                 CurrentFinancialYear = new FinancialYearServiceModel
                 {
-                    ActualRevenueCarryForward = 1000,
+                    RevenueCarryForward = 1000,
+                    RevenueIsDeficit = false,
                     RevenueStatusExplained = _randomGenerator.NextString(2, 10),
-                    ActualCapitalCarryForward = 1000,
+                    CapitalCarryForward = 1000,
+                    CapitalIsDeficit = false,
                     CapitalStatusExplained = _randomGenerator.NextString(2, 10),
                     FYEndDate = _randomGenerator.DateTime()
                 },
                 NextFinancialYear = new FinancialYearServiceModel
                 {
-                    ActualRevenueCarryForward = 1000,
+                    RevenueCarryForward = 1000,
+                    RevenueIsDeficit = false,
                     RevenueStatusExplained = _randomGenerator.NextString(2, 10),
-                    ActualCapitalCarryForward = 1000,
+                    CapitalCarryForward = 1000,
+                    CapitalIsDeficit = false,
                     CapitalStatusExplained = _randomGenerator.NextString(2, 10),
                     FYEndDate = _randomGenerator.DateTime()
                 },
@@ -287,7 +292,6 @@ namespace TramsDataApi.Test.Integration
                 SchoolHasConsultedStakeholders = true,
                 SchoolPlanToConsultStakeholders = _randomGenerator.NextString(2, 10),
                 SchoolSupportGrantFundsPaidTo = _randomGenerator.NextString(2, 10),
-                SchoolDeclarationSignedByName = _randomGenerator.NextString(2, 10)
             };
 
             var application = new A2BApplicationCreateRequest

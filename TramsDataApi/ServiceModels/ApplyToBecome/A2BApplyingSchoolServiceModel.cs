@@ -96,13 +96,13 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public bool? SchoolHasConsultedStakeholders { get; set; } // SchoolConsultationStakeholdersConsult
 			public string SchoolPlanToConsultStakeholders { get; set; }
 			// declaration
-			// ! make sure we get this data mapping correct and don't mix it up with the other declarations !
-			public bool? SchoolApplicantDeclarationIsApplicationCorrect { get; set; }
-			// there are two more fields about the declarations here that aren't needed?
-			// public bool? IAmTheChairOrHeadteacher
-			// public bool? InfoIsTrueToBestOfMyKnowledge
-			public string SchoolDeclarationSignedByName { get; set; } // this signed by has to be headteacher or chair of governors
-		 public string SchoolAdInspectedReportNotPublishedExplain { get; set; }
+			// two questions from the application form would be easy to mix up here
+			// 1. I agree with all of these statements, and belive that the facts stated in this application are true (summary page)
+			// 2. The information in this application is true to the best of my kowledge (actual question)
+			public bool? DeclarationBodyAgree { get; set; }
+//			public bool? DeclarationApplicationIsCorrect { get; set; }
+			public bool? DeclarationIAmTheChairOrHeadteacher { get; set; }
+			public string DeclarationSignedByName { get; set; }
     }
 
 }

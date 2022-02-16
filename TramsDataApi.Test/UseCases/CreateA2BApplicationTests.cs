@@ -77,8 +77,7 @@ namespace TramsDataApi.Test.UseCases
 		            .ToList(),
 	            ApplyingSchools = applicationCreateRequest.ApplyingSchools
 		            .Select(A2BApplicationApplyingSchoolFactory.Create)
-		            .ToList()
-	            
+		            .ToList()	            
             };
 
             var expectedResult = new A2BApplicationResponse
