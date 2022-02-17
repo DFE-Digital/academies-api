@@ -59,7 +59,7 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolSupportedFoundationBodyName {get; set;}
         public string SchoolAdFeederSchools {get; set;}
         public bool? SchoolAdEqualitiesImpactAssessment {get; set;}
-        public string SchoolAdEqualitiesImpactAssessmentDetails { get; internal set; }
+        public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolPFYRevenue {get; set;}
         public bool? SchoolPFYRevenueIsDeficit { get; set; }

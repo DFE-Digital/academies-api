@@ -72,6 +72,7 @@ namespace TramsDataApi.Test.Factories
                 SchoolSupportedFoundationBodyName = request.SchoolSupportedFoundationBodyName,
                 SchoolAdFeederSchools = request.SchoolAdFeederSchools,
                 SchoolAdEqualitiesImpactAssessment = request.SchoolAdEqualitiesImpactAssessmentCompleted,
+                SchoolAdEqualitiesImpactAssessmentDetails = request.SchoolAdEqualitiesImpactAssessmentDetails,
                 SchoolPFYRevenue = request.PreviousFinancialYear.RevenueCarryForward,
                 SchoolPFYRevenueIsDeficit = request.PreviousFinancialYear.RevenueIsDeficit,
                 SchoolPFYCapitalForward = request.PreviousFinancialYear.CapitalCarryForward,
@@ -88,7 +89,7 @@ namespace TramsDataApi.Test.Factories
                 SchoolCFYEndDate = request.CurrentFinancialYear.FYEndDate,
                 SchoolNFYRevenue = request.NextFinancialYear.RevenueCarryForward,
                 SchoolNFYRevenueIsDeficit = request.NextFinancialYear.RevenueIsDeficit,
-                SchoolNFYCapitalForward = request.NextFinancialYear.RevenueCarryForward,
+                SchoolNFYCapitalForward = request.NextFinancialYear.CapitalCarryForward,
                 SchoolNFYCapitalIsDeficit = request.NextFinancialYear.CapitalIsDeficit,
                 SchoolNFYEndDate = request.NextFinancialYear.FYEndDate,
                 SchoolNFYCapitalForwardStatusExplained = request.NextFinancialYear.CapitalStatusExplained,
@@ -182,6 +183,7 @@ namespace TramsDataApi.Test.Factories
                 SchoolSupportedFoundationBodyName = request.SchoolSupportedFoundationBodyName,
                 SchoolAdFeederSchools = request.SchoolAdFeederSchools,
                 SchoolAdEqualitiesImpactAssessmentCompleted = request.SchoolAdEqualitiesImpactAssessment,
+                SchoolAdEqualitiesImpactAssessmentDetails = request.SchoolAdEqualitiesImpactAssessmentDetails,
                 PreviousFinancialYear = new FinancialYearServiceModel
                 {
                     RevenueCarryForward = request.SchoolPFYRevenue.Value,

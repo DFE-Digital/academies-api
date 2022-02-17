@@ -79,7 +79,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolCFYEndDate = request.CurrentFinancialYear.FYEndDate,
                     SchoolNFYRevenue = request.NextFinancialYear.RevenueCarryForward,
                     SchoolNFYRevenueIsDeficit = request.NextFinancialYear.RevenueIsDeficit,
-                    SchoolNFYCapitalForward = request.NextFinancialYear.RevenueCarryForward,
+                    SchoolNFYCapitalForward = request.NextFinancialYear.CapitalCarryForward,
                     SchoolNFYCapitalIsDeficit = request.NextFinancialYear.CapitalIsDeficit,
                     SchoolNFYEndDate = request.NextFinancialYear.FYEndDate,
                     SchoolNFYCapitalForwardStatusExplained = request.NextFinancialYear.CapitalStatusExplained,
