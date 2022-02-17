@@ -9,20 +9,16 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 {
     public static class A2BApplicationApplyingSchoolFactory
     {
-        public static A2BApplicationApplyingSchool Create(A2BApplyingSchoolServiceModel request)
+        public static A2BApplicationApplyingSchool Create(A2BApplicationApplyingSchoolServiceModel request)
         {
             return request == null
                 ? null
                 : new A2BApplicationApplyingSchool
                 {
 	                Name = request.SchoolName,
-                    //UpdatedTrustFields = request.UpdatedTrustFields,
-                    //SchoolDeclarationSignedById = request.SchoolDeclarationSignedById,
-                    SchoolDeclarationBodyAgree = request.DeclarationBodyAgree, // or should be 
+                    SchoolDeclarationBodyAgree = request.DeclarationBodyAgree,
                     SchoolDeclarationTeacherChair = request.DeclarationIAmTheChairOrHeadteacher,
                     SchoolDeclarationSignedByName = request.DeclarationSignedByName,
-                    //SchoolDeclarationSignedByEmail = request.SchoolDeclarationSignedByEmail,
-                    //UpdatedSchoolFields = request.UpdatedSchoolFields,
                     SchoolConversionReasonsForJoining = request.SchoolConversionReasonsForJoining,
                     SchoolConversionTargetDateDifferent = request.SchoolConversionTargetDateSpecified,
                     SchoolConversionTargetDateDate = request.SchoolConversionTargetDate,
@@ -87,8 +83,6 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolFinancialInvestigations = request.FinanceOngoingInvestigations,
                     SchoolFinancialInvestigationsExplain = request.SchoolFinancialInvestigationsExplain,
                     SchoolFinancialInvestigationsTrustAware = request.SchoolFinancialInvestigationsTrustAware,
-                    //SchoolLoanExists = request.SchoolLoanExists,
-                    //SchoolLeaseExists = request.SchoolLeaseExists,
                     SchoolCapacityYear1 = request.SchoolCapacityYear1,
                     SchoolCapacityYear2 = request.SchoolCapacityYear2,
                     SchoolCapacityYear3 = request.SchoolCapacityYear3,
@@ -108,45 +102,44 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolBuildLandPFISchemeType = request.SchoolBuildLandPFISchemeType,
                     SchoolConsultationStakeholders = request.SchoolHasConsultedStakeholders,
                     SchoolConsultationStakeholdersConsult = request.SchoolPlanToConsultStakeholders,
-                    SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo
+                    SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
+                    DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
+                    GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink,
+                    FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink
                 };
         }
 
-        // CML - converting nullables into non-nullables in the code below for now
+        // converting nullables into non-nullables in the code below for now
         // will throw InvalidOperationException if value is null
-        public static A2BApplyingSchoolServiceModel Create(A2BApplicationApplyingSchool request)
+        // validation to come 
+        public static A2BApplicationApplyingSchoolServiceModel Create(A2BApplicationApplyingSchool request)
 	    { 
-		    return request is null ? null : new A2BApplyingSchoolServiceModel
-		    {	
-					SchoolName = request.Name,
-                //UpdatedTrustFields = request.UpdatedTrustFields,
-                //UpdatedSchoolFields = request.UpdatedSchoolFields,
+		    return request is null ? null : new A2BApplicationApplyingSchoolServiceModel
+		    {
+                SchoolName = request.Name,
                 DeclarationBodyAgree = request.SchoolDeclarationBodyAgree,
                 DeclarationIAmTheChairOrHeadteacher = request.SchoolDeclarationTeacherChair,
                 DeclarationSignedByName = request.SchoolDeclarationSignedByName,
-                // DeclarationApplicationIsCorrect
-                // request.SchoolDeclarationSignedById,
-                // request.SchoolDeclarationSignedByEmail
                 SchoolConversionReasonsForJoining = request.SchoolConversionReasonsForJoining,
-                    SchoolConversionTargetDateSpecified = request.SchoolConversionTargetDateDifferent,
-                    SchoolConversionTargetDate = request.SchoolConversionTargetDateDate,
-                    SchoolConversionTargetDateExplained = request.SchoolConversionTargetDateExplained,
-                    SchoolConversionChangeNamePlanned = request.SchoolConversionChangeName,
-                    SchoolConversionProposedNewSchoolName = request.SchoolConversionChangeNameValue,
-                    SchoolConversionContactHeadName = request.SchoolConversionContactHeadName,
-                    SchoolConversionContactHeadEmail = request.SchoolConversionContactHeadEmail,
-                    SchoolConversionContactHeadTel = request.SchoolConversionContactHeadTel,
-                    SchoolConversionContactChairName = request.SchoolConversionContactChairName,
-                    SchoolConversionContactChairEmail = request.SchoolConversionContactChairEmail,
-                    SchoolConversionContactChairTel = request.SchoolConversionContactChairTel,
-                    SchoolConversionContactRole = request.SchoolConversionContactRole, // "headteacher", "chair of governing body", "someone else"
-                    SchoolConversionMainContactOtherName = request.SchoolConversionMainContactOtherName,
-                    SchoolConversionMainContactOtherEmail = request.SchoolConversionMainContactOtherEmail,
-                    SchoolConversionMainContactOtherTelephone = request.SchoolConversionMainContactOtherTelephone,
-                    SchoolConversionMainContactOtherRole = request.SchoolConversionMainContactOtherRole,
-                    SchoolConversionApproverContactName = request.SchoolConversionApproverContactName,
-                    SchoolConversionApproverContactEmail = request.SchoolConversionApproverContactEmail,
-                    SchoolAdInspectedButReportNotPublished = request.SchoolAdInspectedButReportNotPublished,
+                SchoolConversionTargetDateSpecified = request.SchoolConversionTargetDateDifferent,
+                SchoolConversionTargetDate = request.SchoolConversionTargetDateDate,
+                SchoolConversionTargetDateExplained = request.SchoolConversionTargetDateExplained,
+                SchoolConversionChangeNamePlanned = request.SchoolConversionChangeName,
+                SchoolConversionProposedNewSchoolName = request.SchoolConversionChangeNameValue,
+                SchoolConversionContactHeadName = request.SchoolConversionContactHeadName,
+                SchoolConversionContactHeadEmail = request.SchoolConversionContactHeadEmail,
+                SchoolConversionContactHeadTel = request.SchoolConversionContactHeadTel,
+                SchoolConversionContactChairName = request.SchoolConversionContactChairName,
+                SchoolConversionContactChairEmail = request.SchoolConversionContactChairEmail,
+                SchoolConversionContactChairTel = request.SchoolConversionContactChairTel,
+                SchoolConversionContactRole = request.SchoolConversionContactRole, // "headteacher", "chair of governing body", "someone else"
+                SchoolConversionMainContactOtherName = request.SchoolConversionMainContactOtherName,
+                SchoolConversionMainContactOtherEmail = request.SchoolConversionMainContactOtherEmail,
+                SchoolConversionMainContactOtherTelephone = request.SchoolConversionMainContactOtherTelephone,
+                SchoolConversionMainContactOtherRole = request.SchoolConversionMainContactOtherRole,
+                SchoolConversionApproverContactName = request.SchoolConversionApproverContactName,
+                SchoolConversionApproverContactEmail = request.SchoolConversionApproverContactEmail,
+                SchoolAdInspectedButReportNotPublished = request.SchoolAdInspectedButReportNotPublished,
                 SchoolAdInspectedButReportNotPublishedExplain = request.SchoolAdInspectedReportNotPublishedExplain,
                 SchoolPartOfLaReorganizationPlan = request.SchoolLaReorganization,
                 SchoolLaReorganizationDetails = request.SchoolLaReorganizationExplain,
@@ -159,40 +152,40 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 SchoolOngoingSafeguardingInvestigations = request.SchoolAdSafeguarding,
                 SchoolOngoingSafeguardingDetails = request.SchoolAdSafeguardingExplained,
                 SchoolHasSACREException = request.SchoolSACREExemption,
-                    SchoolSACREExemptionEndDate = request.SchoolSACREExemptionEndDate,
-                    SchoolFaithSchool = request.SchoolFaithSchool,
-                    SchoolFaithSchoolDioceseName = request.SchoolFaithSchoolDioceseName,
+                SchoolSACREExemptionEndDate = request.SchoolSACREExemptionEndDate,
+                SchoolFaithSchool = request.SchoolFaithSchool,
+                SchoolFaithSchoolDioceseName = request.SchoolFaithSchoolDioceseName,
                 SchoolIsSupportedByFoundation = request.SchoolSupportedFoundation,
-                    SchoolSupportedFoundationBodyName = request.SchoolSupportedFoundationBodyName,
-                    SchoolAdFeederSchools = request.SchoolAdFeederSchools,
+                SchoolSupportedFoundationBodyName = request.SchoolSupportedFoundationBodyName,
+                SchoolAdFeederSchools = request.SchoolAdFeederSchools,
                 SchoolAdEqualitiesImpactAssessmentCompleted = request.SchoolAdEqualitiesImpactAssessment,
                 SchoolAdEqualitiesImpactAssessmentDetails = request.SchoolAdEqualitiesImpactAssessmentDetails,
-                    PreviousFinancialYear = new FinancialYearServiceModel
-                    {
-                        RevenueCarryForward = request.SchoolPFYRevenue.Value,
-                        RevenueIsDeficit = request.SchoolPFYRevenueIsDeficit,
-                        RevenueStatusExplained = request.SchoolPFYRevenueStatusExplained,
-                        CapitalCarryForward = request.SchoolPFYCapitalForward.Value,
-                        CapitalIsDeficit = request.SchoolPFYCapitalIsDeficit,
-                        CapitalStatusExplained = request.SchoolPFYCapitalForwardStatusExplained,
-                        FYEndDate = request.SchoolPFYEndDate
-                    },
-                    CurrentFinancialYear = new FinancialYearServiceModel
-                    {
-                        RevenueCarryForward = request.SchoolCFYRevenue.Value,
-                        RevenueIsDeficit = request.SchoolCFYRevenueIsDeficit,
-                        RevenueStatusExplained = request.SchoolCFYRevenueStatusExplained,
-                        CapitalCarryForward = request.SchoolCFYCapitalForward.Value,
-                        CapitalIsDeficit = request.SchoolCFYCapitalIsDeficit,
-                        CapitalStatusExplained = request.SchoolCFYCapitalForwardStatusExplained,
-                        FYEndDate = request.SchoolCFYEndDate
-                    },
+                PreviousFinancialYear = new FinancialYearServiceModel
+                {
+                    RevenueCarryForward = request.SchoolPFYRevenue,
+                    RevenueIsDeficit = request.SchoolPFYRevenueIsDeficit,
+                    RevenueStatusExplained = request.SchoolPFYRevenueStatusExplained,
+                    CapitalCarryForward = request.SchoolPFYCapitalForward,
+                    CapitalIsDeficit = request.SchoolPFYCapitalIsDeficit,
+                    CapitalStatusExplained = request.SchoolPFYCapitalForwardStatusExplained,
+                    FYEndDate = request.SchoolPFYEndDate
+                },
+                CurrentFinancialYear = new FinancialYearServiceModel
+                {
+                    RevenueCarryForward = request.SchoolCFYRevenue,
+                    RevenueIsDeficit = request.SchoolCFYRevenueIsDeficit,
+                    RevenueStatusExplained = request.SchoolCFYRevenueStatusExplained,
+                    CapitalCarryForward = request.SchoolCFYCapitalForward,
+                    CapitalIsDeficit = request.SchoolCFYCapitalIsDeficit,
+                    CapitalStatusExplained = request.SchoolCFYCapitalForwardStatusExplained,
+                    FYEndDate = request.SchoolCFYEndDate
+                },
                 NextFinancialYear = new FinancialYearServiceModel
                 {
-                    RevenueCarryForward = request.SchoolNFYRevenue.Value,
+                    RevenueCarryForward = request.SchoolNFYRevenue,
                     RevenueIsDeficit = request.SchoolNFYRevenueIsDeficit,
                     RevenueStatusExplained = request.SchoolNFYRevenueStatusExplained,
-                    CapitalCarryForward = request.SchoolNFYCapitalForward.Value,
+                    CapitalCarryForward = request.SchoolNFYCapitalForward,
                     CapitalIsDeficit = request.SchoolNFYCapitalIsDeficit,
                     CapitalStatusExplained = request.SchoolNFYCapitalForwardStatusExplained,
                     FYEndDate = request.SchoolNFYEndDate
@@ -200,13 +193,11 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 FinanceOngoingInvestigations = request.SchoolFinancialInvestigations,
                 SchoolFinancialInvestigationsExplain = request.SchoolFinancialInvestigationsExplain,
                 SchoolFinancialInvestigationsTrustAware = request.SchoolFinancialInvestigationsTrustAware,
-                //SchoolLoanExists = request.SchoolLoanExists, // remove? just use whether it's an empty list?
-                //SchoolLeaseExists = request.SchoolLeaseExists, // remove? just use whether it's an empty list?
-                SchoolCapacityYear1 = (int)request.SchoolCapacityYear1,
-                SchoolCapacityYear2 = (int)request.SchoolCapacityYear2,
-                SchoolCapacityYear3 = (int)request.SchoolCapacityYear3,
+                SchoolCapacityYear1 = request.SchoolCapacityYear1,
+                SchoolCapacityYear2 = request.SchoolCapacityYear2,
+                SchoolCapacityYear3 = request.SchoolCapacityYear3,
                 SchoolCapacityAssumptions = request.SchoolCapacityAssumptions,
-                SchoolCapacityPublishedAdmissionsNumber = (int)request.SchoolCapacityPublishedAdmissionsNumber,
+                SchoolCapacityPublishedAdmissionsNumber = request.SchoolCapacityPublishedAdmissionsNumber,
                 SchoolBuildLandOwnerExplained = request.SchoolBuildLandOwnerExplained,
                 SchoolBuildLandSharedFacilities = request.SchoolBuildLandSharedFacilities,
                 SchoolBuildLandSharedFacilitiesExplained = request.SchoolBuildLandSharedFacilitiesExplained,
@@ -222,7 +213,10 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 SchoolHasConsultedStakeholders = request.SchoolConsultationStakeholders,
                 SchoolPlanToConsultStakeholders = request.SchoolConsultationStakeholdersConsult,
                 SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
-		    };
+                DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
+                FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink,
+                GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink
+             };
 	    }
     }
 }

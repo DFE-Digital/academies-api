@@ -12,14 +12,12 @@ namespace TramsDataApi.DatabaseModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ApplyingSchoolId {get; set;}
         
-        public string UpdatedTrustFields {get; set;}
         public string SchoolDeclarationSignedById {get; set;}
         public string SchoolDeclarationSignedByName { get; set; }
         public bool? SchoolDeclarationBodyAgree {get; set;} // the information is true to the best of my knowledge
         public bool? SchoolDeclarationTeacherChair {get; set;} // I declare I am the teacher or chair of governors
         public string SchoolDeclarationSignedByEmail {get; set;}
         public string Name {get; set;}
-        public string UpdatedSchoolFields {get; set;}
         public string SchoolConversionReasonsForJoining {get; set;}
         public bool? SchoolConversionTargetDateDifferent {get; set;}
         public DateTime? SchoolConversionTargetDateDate {get; set;}
@@ -114,5 +112,8 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolSupportGrantFundsPaidTo {get; set;}
         public string ApplicationId { get; set; }
         public A2BApplication Application { get; set; }
-   }
+        public string DiocesePermissionEvidenceDocumentLink { get; set; }
+        public string FoundationEvidenceDocumentLink { get; set; }
+        public string GoverningBodyConsentEvidenceDocumentLink { get; set; }
+    }
 }

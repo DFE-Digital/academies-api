@@ -71,14 +71,14 @@ namespace TramsDataApi.Test.Controllers
             const string applicationId = "10001";
 
             var keyPerson = Builder<A2BApplicationKeyPersonsServiceModel>.CreateNew().Build();
-            var applyingSchool = Builder<A2BApplyingSchoolServiceModel>.CreateNew().Build();
+            var applyingSchool = Builder<A2BApplicationApplyingSchoolServiceModel>.CreateNew().Build();
           
             var request = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
                 .With(r => r.ApplicationId = applicationId)
                 .With(r => r.ApplicationType = 907660000)
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson})
-                .With(r => r.ApplyingSchools = new List<A2BApplyingSchoolServiceModel> {applyingSchool})
+                .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchool})
                 .Build();
             
             var expectedApplicationResponse =  new A2BApplicationResponse

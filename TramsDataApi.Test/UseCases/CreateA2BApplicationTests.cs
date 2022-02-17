@@ -24,7 +24,7 @@ namespace TramsDataApi.Test.UseCases
         {
 	        var keyPersons = Builder<A2BApplicationKeyPersonsServiceModel>.CreateNew().Build();
 			var financialYear = Builder<FinancialYearServiceModel>.CreateNew().Build();
-	        var applyingSchools = Builder<A2BApplyingSchoolServiceModel>
+	        var applyingSchools = Builder<A2BApplicationApplyingSchoolServiceModel>
 				.CreateNew()
 				.With(r => r.PreviousFinancialYear = financialYear)
 				.With(r => r.CurrentFinancialYear = financialYear)
@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.UseCases
 	            .CreateNew()
 	            .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
 	            .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPersons})
-	            .With(r => r.ApplyingSchools = new List<A2BApplyingSchoolServiceModel> {applyingSchools})
+	            .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchools})
 	            .Build();
 
             var application = new A2BApplication

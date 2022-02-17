@@ -42,6 +42,6 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
         public string FormTrustImprovementApprovedSponsor {get; set;}
         public string ApplicationStatusId {get; set;}
         public ICollection<A2BApplicationKeyPersonsServiceModel> KeyPersons { get; set; }
-        public ICollection<A2BApplyingSchoolServiceModel> ApplyingSchools { get; set; }
+        public ICollection<A2BApplicationApplyingSchoolServiceModel> ApplyingSchools { get; set; }
     }
 }

@@ -7,11 +7,7 @@ using TramsDataApi.RequestModels.ApplyToBecome;
 
 namespace TramsDataApi.ServiceModels.ApplyToBecome
 {
-	/// <remarks>
-	/// should correspond to TramsDataApi.ResponseModels.ApplyToBecome.A2BApplyingSchoolResponse
-	/// </remarks>
-
-	public class A2BApplyingSchoolServiceModel
+	public class A2BApplicationApplyingSchoolServiceModel
 		{
 			public string SchoolName { get; set; }
 			// contact details
@@ -29,35 +25,35 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public string SchoolConversionApproverContactName { get; set; }
 			public string SchoolConversionApproverContactEmail { get; set; }
 			// conversion dates
-			public bool? SchoolConversionTargetDateSpecified { get; set; } // int? SchoolConversionTargetDateDifferent 
-			public DateTime? SchoolConversionTargetDate { get; set; } // SchoolConversionTargetDateDate
+			public bool? SchoolConversionTargetDateSpecified { get; set; }
+			public DateTime? SchoolConversionTargetDate { get; set; }
 			public string SchoolConversionTargetDateExplained { get; set; }
 			// reasons for joining
 			public string SchoolConversionReasonsForJoining { get; set; }
 			// name changes
-			public bool? SchoolConversionChangeNamePlanned { get; set; } // int? schoolConversionChangeName
-			public string SchoolConversionProposedNewSchoolName { get; set; } // schoolConversionChangeNameValue
+			public bool? SchoolConversionChangeNamePlanned { get; set; }
+			public string SchoolConversionProposedNewSchoolName { get; set; }
 			// additional information
 			public string SchoolAdSchoolContributionToTrust { get; set; }
-			public bool? SchoolOngoingSafeguardingInvestigations { get; set; } // int? SchoolAdSafeguarding
-			public string SchoolOngoingSafeguardingDetails { get; set; } // SchoolAdSafeguardingExplained
-			public bool? SchoolPartOfLaReorganizationPlan { get; set; } // int? SchoolLaReorganization
+			public bool? SchoolOngoingSafeguardingInvestigations { get; set; }
+			public string SchoolOngoingSafeguardingDetails { get; set; }
+			public bool? SchoolPartOfLaReorganizationPlan { get; set; }
 			public string SchoolLaReorganizationDetails { get; set; }
-			public bool? SchoolPartOfLaClosurePlan { get; set; } //int? SchoolLaClosurePlans
+			public bool? SchoolPartOfLaClosurePlan { get; set; }
 			public string SchoolLaClosurePlanDetails { get; set; }
-			public bool? SchoolFaithSchool { get; set; } // int? SchoolFaithSchool
+			public bool? SchoolFaithSchool { get; set; }
 			public string SchoolFaithSchoolDioceseName { get; set; }
-//			public Link DiocesePermissionEvidenceDocument { get; set; }
-			public bool? SchoolIsPartOfFederation { get; set; } // SchoolPartOfFederation
-			public bool? SchoolIsSupportedByFoundation { get; set; } // SchoolSupportedFoundation
+			public string DiocesePermissionEvidenceDocumentLink { get; set; }
+			public bool? SchoolIsPartOfFederation { get; set; }
+			public bool? SchoolIsSupportedByFoundation { get; set; }
 			public string SchoolSupportedFoundationBodyName { get; set; }
-//			public Link FoundationEvidenceDocument { get; set; }
-			public bool? SchoolHasSACREException { get; set; } // SchoolSACREExemption
+			public string FoundationEvidenceDocumentLink { get; set; }
+			public bool? SchoolHasSACREException { get; set; }
 			public DateTime? SchoolSACREExemptionEndDate { get; set; }
 			public string SchoolAdFeederSchools { get; set; }
-//			public Link GoverningBodyConsentEvidenceDocument { get; set; }
-			public bool? SchoolAdEqualitiesImpactAssessmentCompleted { get; set; } //SchoolAdEqualitiesImpactAssessment
-			public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long proforma string answers here
+			public string GoverningBodyConsentEvidenceDocumentLink { get; set; }
+			public bool? SchoolAdEqualitiesImpactAssessmentCompleted { get; set; }
+			public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; } // two possible very long proforma string answers here - maybe this should be a bool
 			public bool? SchoolAdInspectedButReportNotPublished { get; set; }
 			public string SchoolAdInspectedButReportNotPublishedExplain { get; set; }
 			public bool? SchoolAdditionalInformationAdded { get; set; }
@@ -68,15 +64,15 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public FinancialYearServiceModel NextFinancialYear { get; set; }
 			//public List<Loan> ExistingLoans { get; set; }
 			//public List<Lease> ExistingLeases { get; set; }
-			public bool? FinanceOngoingInvestigations { get; set; } // SchoolFinancialInvestigations
+			public bool? FinanceOngoingInvestigations { get; set; }
 			public string SchoolFinancialInvestigationsExplain { get; set; }
 			public bool? SchoolFinancialInvestigationsTrustAware { get; set; }
 			// future pupil numbers
-			public int SchoolCapacityYear1 { get; set; }
-			public int SchoolCapacityYear2 { get; set; }
-			public int SchoolCapacityYear3 { get; set; }
+			public int? SchoolCapacityYear1 { get; set; }
+			public int? SchoolCapacityYear2 { get; set; }
+			public int? SchoolCapacityYear3 { get; set; }
 			public string SchoolCapacityAssumptions { get; set; }
-			public int SchoolCapacityPublishedAdmissionsNumber { get; set; }
+			public int? SchoolCapacityPublishedAdmissionsNumber { get; set; }
 			// land and buildings
 			public string SchoolBuildLandOwnerExplained { get; set; }
 			public bool? SchoolBuildLandWorksPlanned { get; set; }
@@ -91,16 +87,15 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public bool? SchoolBuildLandPriorityBuildingProgramme { get; set; }
 			public bool? SchoolBuildLandFutureProgramme { get; set; }
 			// pre-opening support grant
-			public string SchoolSupportGrantFundsPaidTo { get; set; } // int? - either "To the school" or "To the trust the school is joining"
+			public string SchoolSupportGrantFundsPaidTo { get; set; } // either "To the school" or "To the trust the school is joining"
 			// consultation details
-			public bool? SchoolHasConsultedStakeholders { get; set; } // SchoolConsultationStakeholdersConsult
+			public bool? SchoolHasConsultedStakeholders { get; set; }
 			public string SchoolPlanToConsultStakeholders { get; set; }
 			// declaration
 			// two questions from the application form would be easy to mix up here
 			// 1. I agree with all of these statements, and belive that the facts stated in this application are true (summary page)
 			// 2. The information in this application is true to the best of my kowledge (actual question)
 			public bool? DeclarationBodyAgree { get; set; }
-//			public bool? DeclarationApplicationIsCorrect { get; set; }
 			public bool? DeclarationIAmTheChairOrHeadteacher { get; set; }
 			public string DeclarationSignedByName { get; set; }
     }

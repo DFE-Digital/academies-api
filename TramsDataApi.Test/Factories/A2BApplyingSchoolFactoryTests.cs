@@ -17,7 +17,7 @@ namespace TramsDataApi.Test.Factories
             var financialYear = Builder<FinancialYearServiceModel>
                 .CreateNew()
                 .Build();
-            var request = Builder<A2BApplyingSchoolServiceModel>
+            var request = Builder<A2BApplicationApplyingSchoolServiceModel>
                 .CreateNew()
                 .With(r => r.PreviousFinancialYear = financialYear)
                 .With(r => r.CurrentFinancialYear = financialYear)
@@ -27,10 +27,6 @@ namespace TramsDataApi.Test.Factories
             var expectedStatus = new A2BApplicationApplyingSchool
             {
                 Name = request.SchoolName,
-                //UpdatedTrustFields = request.UpdatedTrustFields,
-                //UpdatedSchoolFields = request.UpdatedSchoolFields,
-                //SchoolDeclarationSignedById
-                //SchoolDeclarationSignedByEmail 
                 SchoolDeclarationBodyAgree = request.DeclarationBodyAgree,
                 SchoolDeclarationTeacherChair = request.DeclarationIAmTheChairOrHeadteacher,
                 SchoolConversionReasonsForJoining = request.SchoolConversionReasonsForJoining,
@@ -97,8 +93,6 @@ namespace TramsDataApi.Test.Factories
                 SchoolFinancialInvestigations = request.FinanceOngoingInvestigations,
                 SchoolFinancialInvestigationsExplain = request.SchoolFinancialInvestigationsExplain,
                 SchoolFinancialInvestigationsTrustAware = request.SchoolFinancialInvestigationsTrustAware,
-                //SchoolLoanExists = request.SchoolLoanExists,
-                //SchoolLeaseExists = request.SchoolLeaseExists,
                 SchoolCapacityYear1 = request.SchoolCapacityYear1,
                 SchoolCapacityYear2 = request.SchoolCapacityYear2,
                 SchoolCapacityYear3 = request.SchoolCapacityYear3,
@@ -119,7 +113,10 @@ namespace TramsDataApi.Test.Factories
                 SchoolConsultationStakeholders = request.SchoolHasConsultedStakeholders,
                 SchoolConsultationStakeholdersConsult = request.SchoolPlanToConsultStakeholders,
                 SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
-                SchoolDeclarationSignedByName = request.DeclarationSignedByName
+                SchoolDeclarationSignedByName = request.DeclarationSignedByName,
+                DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
+                GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink,
+                FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink
             };
                 
             var response = A2BApplicationApplyingSchoolFactory.Create(request);
@@ -134,16 +131,12 @@ namespace TramsDataApi.Test.Factories
                 .CreateNew()
                 .Build();
 
-            var expectedResponse = new A2BApplyingSchoolServiceModel
+            var expectedResponse = new A2BApplicationApplyingSchoolServiceModel
             {
                 SchoolName = request.Name,
-                //UpdatedTrustFields = request.UpdatedTrustFields,
-                //SchoolDeclarationSignedById = request.SchoolDeclarationSignedById,
                 DeclarationBodyAgree = request.SchoolDeclarationBodyAgree,
                 DeclarationIAmTheChairOrHeadteacher = request.SchoolDeclarationTeacherChair,
                 DeclarationSignedByName = request.SchoolDeclarationSignedByName,
-                //SchoolDeclarationSignedByEmail = request.SchoolDeclarationSignedByEmail,
-                //UpdatedSchoolFields = request.UpdatedSchoolFields,
                 SchoolConversionReasonsForJoining = request.SchoolConversionReasonsForJoining,
                 SchoolConversionTargetDateSpecified = request.SchoolConversionTargetDateDifferent,
                 SchoolConversionTargetDate = request.SchoolConversionTargetDateDate,
@@ -217,8 +210,6 @@ namespace TramsDataApi.Test.Factories
                 FinanceOngoingInvestigations = request.SchoolFinancialInvestigations,
                 SchoolFinancialInvestigationsExplain = request.SchoolFinancialInvestigationsExplain,
                 SchoolFinancialInvestigationsTrustAware = request.SchoolFinancialInvestigationsTrustAware,
-                //SchoolLoanExists = request.SchoolLoanExists, // remove? just use whether it's an empty list?
-                //SchoolLeaseExists = request.SchoolLeaseExists, // remove? just use whether it's an empty list?
                 SchoolCapacityYear1 = (int)request.SchoolCapacityYear1,
                 SchoolCapacityYear2 = (int)request.SchoolCapacityYear2,
                 SchoolCapacityYear3 = (int)request.SchoolCapacityYear3,
@@ -238,7 +229,10 @@ namespace TramsDataApi.Test.Factories
                 SchoolBuildLandPFISchemeType = request.SchoolBuildLandPFISchemeType,
                 SchoolHasConsultedStakeholders = request.SchoolConsultationStakeholders,
                 SchoolPlanToConsultStakeholders = request.SchoolConsultationStakeholdersConsult,
-                SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo
+                SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
+                DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
+                FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink,
+                GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink
             };
                 
             var response = A2BApplicationApplyingSchoolFactory.Create(request);

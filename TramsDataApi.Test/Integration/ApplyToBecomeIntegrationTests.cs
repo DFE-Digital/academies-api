@@ -58,13 +58,11 @@ namespace TramsDataApi.Test.Integration
             
            var applyingSchool = new A2BApplicationApplyingSchool
             {
-                UpdatedTrustFields = _randomGenerator.NextString(2, 10),
                 SchoolDeclarationSignedById = _randomGenerator.NextString(2, 10),
                 SchoolDeclarationBodyAgree = _randomGenerator.Boolean(),
                 SchoolDeclarationTeacherChair = _randomGenerator.Boolean(),
                 SchoolDeclarationSignedByEmail = _randomGenerator.NextString(2, 10),
                 Name = _randomGenerator.NextString(2, 10),
-                UpdatedSchoolFields = _randomGenerator.NextString(2, 10),
                 SchoolConversionReasonsForJoining = _randomGenerator.NextString(2, 10),
                 SchoolConversionTargetDateDifferent = true,
                 SchoolConversionTargetDateDate = _randomGenerator.DateTime(),
@@ -190,15 +188,13 @@ namespace TramsDataApi.Test.Integration
                 KeyPersonTrustee = _randomGenerator.NextString(2, 10)
             };
 
-            var applyingSchool = new A2BApplyingSchoolServiceModel
+            var applyingSchool = new A2BApplicationApplyingSchoolServiceModel
             {
-                //UpdatedTrustFields = _randomGenerator.NextString(2, 10),
-                //UpdatedSchoolFields = _randomGenerator.NextString(2, 10),
                 DeclarationBodyAgree = _randomGenerator.Boolean(),
                 DeclarationSignedByName = _randomGenerator.NextString(2, 10),
                 DeclarationIAmTheChairOrHeadteacher = _randomGenerator.Boolean(),
                 SchoolName = _randomGenerator.NextString(2, 10),
-                 SchoolConversionReasonsForJoining = _randomGenerator.NextString(2, 10),
+                SchoolConversionReasonsForJoining = _randomGenerator.NextString(2, 10),
                 SchoolConversionTargetDateSpecified = true,
                 SchoolConversionTargetDate = _randomGenerator.DateTime(),
                 SchoolConversionTargetDateExplained = _randomGenerator.NextString(2, 10),
@@ -330,7 +326,7 @@ namespace TramsDataApi.Test.Integration
                 TrustApproverEmail = "test@test.com",
                 ApplicationType = (int?) A2BApplicationTypeEnum.FormSat,
                 KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson},
-                ApplyingSchools = new List<A2BApplyingSchoolServiceModel> {applyingSchool}
+                ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchool}
             };
             
             var response = await _client.PostAsJsonAsync("/v2/apply-to-become/application/", application);

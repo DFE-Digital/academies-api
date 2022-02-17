@@ -21,7 +21,7 @@ namespace TramsDataApi.Test.Factories
         {
 	        var keyPerson = Builder<A2BApplicationKeyPersonsServiceModel>.CreateNew().Build();
 			var financialYear = Builder<FinancialYearServiceModel>.CreateNew().Build();
-	        var applyingSchool = Builder<A2BApplyingSchoolServiceModel>
+	        var applyingSchool = Builder<A2BApplicationApplyingSchoolServiceModel>
 				.CreateNew()
 				.With(r => r.PreviousFinancialYear = financialYear)
 				.With(r => r.CurrentFinancialYear = financialYear)
@@ -31,7 +31,7 @@ namespace TramsDataApi.Test.Factories
                 .CreateNew()
                 .With(r => r.ApplicationType = (int?)A2BApplicationTypeEnum.FormMat)
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> { keyPerson })
-                .With(r => r.ApplyingSchools = new List<A2BApplyingSchoolServiceModel> { applyingSchool })
+                .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> { applyingSchool })
                 .Build();
 
             var expectedApplication = new A2BApplication

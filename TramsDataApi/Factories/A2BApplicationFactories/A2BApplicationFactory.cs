@@ -97,7 +97,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 					.Select(A2BApplicationKeyPersonsFactory.Create)
 					.ToList(),
 		    ApplyingSchools = application.ApplyingSchools == null 
-			    ? new List<A2BApplyingSchoolServiceModel>()
+			    ? new List<A2BApplicationApplyingSchoolServiceModel>()
 			    : application.ApplyingSchools
 					.Select(A2BApplicationApplyingSchoolFactory.Create)
 					.ToList()
