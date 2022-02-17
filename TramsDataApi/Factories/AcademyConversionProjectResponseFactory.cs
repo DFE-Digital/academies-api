@@ -67,7 +67,13 @@ namespace TramsDataApi.Factories
 				KeyStage4PerformanceAdditionalInformation = academyConversionProject.KeyStage4PerformanceAdditionalInformation,
 				KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation,
 				ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
-				ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason
+				ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
+				NewURN = academyConversionProject.NewURN,
+				NewLEAEstab = academyConversionProject.NewLEAEstab,
+				NewAcademyUKPRN = academyConversionProject.NewAcademyUKPRN,
+				NewUPIN = academyConversionProject.NewUPIN,
+				TrustUKPRN = academyConversionProject.TrustUKPRN,
+				NewAcademyName = academyConversionProject.NewAcademyName,
 			};
 
 			if (trust != null)

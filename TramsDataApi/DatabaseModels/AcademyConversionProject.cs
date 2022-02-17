@@ -105,5 +105,13 @@ namespace TramsDataApi.DatabaseModels
         public string KeyStage2PerformanceAdditionalInformation { get; set; }
         public string KeyStage4PerformanceAdditionalInformation { get; set; }
         public string KeyStage5PerformanceAdditionalInformation { get; set; }
+
+        // additional data items for Business Central
+        public string NewURN { get; set; }
+        public string NewLEAEstab { get; set; }
+        public string NewAcademyUKPRN { get; set; }
+        public string NewUPIN { get; set; }
+        public string TrustUKPRN { get; set; }
+        public string NewAcademyName { get; set; }
     }
 }
