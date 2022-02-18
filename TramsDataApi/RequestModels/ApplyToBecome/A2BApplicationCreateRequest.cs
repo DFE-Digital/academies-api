@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.RequestModels.ApplyToBecome
 {
@@ -47,7 +48,7 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
 		public string TrustId { get; set; }
 		public string ApplicationStatusId { get; set; }
 		
-        public List<A2BApplicationKeyPersonsModel> KeyPersons { get; set; }
-        public List<A2BApplicationApplyingSchoolModel> ApplyingSchools { get; set; }
+        public List<A2BApplicationKeyPersonsServiceModel> KeyPersons { get; set; }
+        public List<A2BApplicationApplyingSchoolServiceModel> ApplyingSchools { get; set; }
     }
 }

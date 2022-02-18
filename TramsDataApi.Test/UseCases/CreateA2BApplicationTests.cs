@@ -11,6 +11,7 @@ using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 using TramsDataApi.UseCases;
 using Xunit;
 
@@ -21,13 +22,19 @@ namespace TramsDataApi.Test.UseCases
 	    [Fact]
         public void CreateA2BApplication_ShouldCreateAndReturnA2BApplicationResponse_WhenGivenA2BApplication()
         {
-	        var keyPersons = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
-	        var applyingSchools = Builder<A2BApplicationApplyingSchoolModel>.CreateNew().Build();
+	        var keyPersons = Builder<A2BApplicationKeyPersonsServiceModel>.CreateNew().Build();
+			var financialYear = Builder<FinancialYearServiceModel>.CreateNew().Build();
+	        var applyingSchools = Builder<A2BApplicationApplyingSchoolServiceModel>
+				.CreateNew()
+				.With(r => r.PreviousFinancialYear = financialYear)
+				.With(r => r.CurrentFinancialYear = financialYear)
+				.With(r => r.NextFinancialYear = financialYear)
+				.Build();
 	        var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
 	            .CreateNew()
 	            .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
-	            .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> {keyPersons})
-	            .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolModel> {applyingSchools})
+	            .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPersons})
+	            .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchools})
 	            .Build();
 
             var application = new A2BApplication
@@ -70,8 +77,7 @@ namespace TramsDataApi.Test.UseCases
 		            .ToList(),
 	            ApplyingSchools = applicationCreateRequest.ApplyingSchools
 		            .Select(A2BApplicationApplyingSchoolFactory.Create)
-		            .ToList()
-	            
+		            .ToList()	            
             };
 
             var expectedResult = new A2BApplicationResponse

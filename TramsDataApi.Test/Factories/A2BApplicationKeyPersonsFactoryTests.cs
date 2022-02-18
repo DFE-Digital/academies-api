@@ -13,7 +13,7 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void Create_ReturnsExpectedA2BApplicationKeyPerson_WhenA2BApplicationKeyPersonsModelIsProvided()
         {
-            var keyPersonsModel = Builder<A2BApplicationKeyPersonsModel>
+            var keyPersonsModel = Builder<A2BApplicationKeyPersonsServiceModel>
                 .CreateNew()
                 .Build();
 
@@ -43,7 +43,7 @@ namespace TramsDataApi.Test.Factories
                 .CreateNew()
                 .Build();
 
-            var expectedKeyPersonsModel = new A2BApplicationKeyPersonsModel
+            var expectedKeyPersonsModel = new A2BApplicationKeyPersonsServiceModel
             {
                 Name = keyPersons.Name,
                 KeyPersonDateOfBirth = keyPersons.KeyPersonDateOfBirth,

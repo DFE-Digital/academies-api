@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220216173723_A2BApplicationSchoolChangeIntToBool")]
+    partial class A2BApplicationSchoolChangeIntToBool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,23 +141,11 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("ApplicationId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DiocesePermissionEvidenceDocumentLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FoundationEvidenceDocumentLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GoverningBodyConsentEvidenceDocumentLink")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("SchoolAdEqualitiesImpactAssessment")
                         .HasColumnType("bit");
-
-                    b.Property<string>("SchoolAdEqualitiesImpactAssessmentDetails")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SchoolAdFeederSchools")
                         .HasColumnType("nvarchar(max)");
@@ -220,17 +210,11 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("SchoolCFYCapitalForwardStatusExplained")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("SchoolCFYCapitalIsDeficit")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("SchoolCFYEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("SchoolCFYRevenue")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool?>("SchoolCFYRevenueIsDeficit")
-                        .HasColumnType("bit");
 
                     b.Property<string>("SchoolCFYRevenueStatusExplained")
                         .HasColumnType("nvarchar(max)");
@@ -370,17 +354,11 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("SchoolNFYCapitalForwardStatusExplained")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("SchoolNFYCapitalIsDeficit")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("SchoolNFYEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("SchoolNFYRevenue")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool?>("SchoolNFYRevenueIsDeficit")
-                        .HasColumnType("bit");
 
                     b.Property<string>("SchoolNFYRevenueStatusExplained")
                         .HasColumnType("nvarchar(max)");
@@ -391,17 +369,11 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("SchoolPFYCapitalForwardStatusExplained")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("SchoolPFYCapitalIsDeficit")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("SchoolPFYEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("SchoolPFYRevenue")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool?>("SchoolPFYRevenueIsDeficit")
-                        .HasColumnType("bit");
 
                     b.Property<string>("SchoolPFYRevenueStatusExplained")
                         .HasColumnType("nvarchar(max)");
@@ -422,6 +394,12 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("bit");
 
                     b.Property<string>("SchoolSupportedFoundationBodyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedSchoolFields")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedTrustFields")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ApplyingSchoolId");

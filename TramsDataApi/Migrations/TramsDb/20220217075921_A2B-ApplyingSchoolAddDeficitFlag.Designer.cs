@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217075921_A2B-ApplyingSchoolAddDeficitFlag")]
+    partial class A2BApplyingSchoolAddDeficitFlag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,15 +140,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<string>("ApplicationId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DiocesePermissionEvidenceDocumentLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FoundationEvidenceDocumentLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GoverningBodyConsentEvidenceDocumentLink")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -422,6 +415,12 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("bit");
 
                     b.Property<string>("SchoolSupportedFoundationBodyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedSchoolFields")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedTrustFields")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ApplyingSchoolId");
