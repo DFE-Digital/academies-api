@@ -362,7 +362,8 @@ namespace TramsDataApi.Test.Integration
                     (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
                         .CreateListOfSize(2).All()
                         .With(ta => ta.IncomingTrustUkprn = randomGenerator.NextString(8, 8))
-                        .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8)).Build())
+                        .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
+                        .Build())
                 .Build();
 
             _tramsDbContext.TransferringAcademies.Count().Should().Be(0);
@@ -455,6 +456,11 @@ namespace TramsDataApi.Test.Integration
                     .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
                     .With(ta => ta.IncomingTrustUkprn = incomingTrustUkprn)
                     .With(ta => ta.FkAcademyTransferProjectId = null)
+                    .With(ta => ta.PupilNumbersAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.LatestOfstedReportAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.KeyStage2PerformanceAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.KeyStage4PerformanceAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.KeyStage5PerformanceAdditionalInformation = randomGenerator.NextString(0,1000))
                     .Build()
                 )
                 .With(atp => atp.AcademyTransferProjectIntendedTransferBenefits =
@@ -525,7 +531,12 @@ namespace TramsDataApi.Test.Integration
                     {
                         OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                         IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                        IncomingTrustName = incomingTrustName
+                        IncomingTrustName = incomingTrustName,
+                        PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                        LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                        KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                        KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                        KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
                     }).ToList()
                 }).ToList();
             indexProjectResponse.Count().Should().Be(10);
@@ -567,6 +578,11 @@ namespace TramsDataApi.Test.Integration
                     .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
                     .With(ta => ta.IncomingTrustUkprn = incomingTrustUkprn)
                     .With(ta => ta.FkAcademyTransferProjectId = null)
+                    .With(ta => ta.PupilNumbersAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.LatestOfstedReportAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.KeyStage2PerformanceAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.KeyStage4PerformanceAdditionalInformation = randomGenerator.NextString(0,1000))
+                    .With(ta => ta.KeyStage5PerformanceAdditionalInformation = randomGenerator.NextString(0,1000))
                     .Build()
                 )
                 .With(atp => atp.AcademyTransferProjectIntendedTransferBenefits =
@@ -638,7 +654,12 @@ namespace TramsDataApi.Test.Integration
                         {
                             OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                             IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                            IncomingTrustName = incomingTrustName
+                            IncomingTrustName = incomingTrustName,
+                            PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                            LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                            KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                            KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                            KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
                         }).ToList()
                     }).ToList();
             indexProjectResponse.Count().Should().Be(10);
