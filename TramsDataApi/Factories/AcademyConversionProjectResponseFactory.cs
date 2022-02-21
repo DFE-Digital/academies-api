@@ -68,12 +68,12 @@ namespace TramsDataApi.Factories
 				KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation,
 				ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
 				ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
-				NewURN = academyConversionProject.NewURN,
-				NewLEAEstab = academyConversionProject.NewLEAEstab,
-				NewAcademyUKPRN = academyConversionProject.NewAcademyUKPRN,
-				NewUPIN = academyConversionProject.NewUPIN,
-				TrustUKPRN = academyConversionProject.TrustUKPRN,
-				NewAcademyName = academyConversionProject.NewAcademyName,
+				NewURN = ifd.ProposedAcademyDetailsNewAcademyName,
+				NewLEAEstab = string.Empty,
+				NewAcademyUKPRN = ifd.GeneralDetailsAcademyLaestab,
+				NewUPIN = string.Empty,
+				TrustUKPRN = string.Empty,
+				NewAcademyName = ifd.ProposedAcademyDetailsNewAcademyName,
 			};
 
 			if (trust != null)
