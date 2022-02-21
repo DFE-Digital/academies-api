@@ -11,30 +11,33 @@ namespace TramsDataApi.Migrations.TramsDb
                 schema: "sdd",
                 table: "TransferringAcademies",
                 nullable: true);
-
+            
             migrationBuilder.AddColumn<string>(
                 name: "KeyStage4PerformanceAdditionalInformation",
                 schema: "sdd",
                 table: "TransferringAcademies",
                 nullable: true);
-
+            
             migrationBuilder.AddColumn<string>(
                 name: "KeyStage5PerformanceAdditionalInformation",
                 schema: "sdd",
                 table: "TransferringAcademies",
                 nullable: true);
-
+            
             migrationBuilder.AddColumn<string>(
                 name: "LatestOfstedReportAdditionalInformation",
                 schema: "sdd",
                 table: "TransferringAcademies",
                 nullable: true);
-
+            
             migrationBuilder.AddColumn<string>(
                 name: "PupilNumbersAdditionalInformation",
                 schema: "sdd",
                 table: "TransferringAcademies",
                 nullable: true);
+
+            migrationBuilder.Sql(
+                @"Update a set  a.PupilNumbersAdditionalInformation = p.PupilNumbersAdditionalInformation, a.LatestOfstedReportAdditionalInformation = p.LatestOfstedJudgementAdditionalInformation, a.KeyStage2PerformanceAdditionalInformation = p.KeyStage2PerformanceAdditionalInformation, a.KeyStage4PerformanceAdditionalInformation = p.KeyStage4PerformanceAdditionalInformation, a.KeyStage5PerformanceAdditionalInformation = p.KeyStage5PerformanceAdditionalInformation from sdd.AcademyTransferProjects p inner join [sip].[sdd].[TransferringAcademies] a on a.fk_AcademyTransferProjectId = p.id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -63,6 +66,9 @@ namespace TramsDataApi.Migrations.TramsDb
                 name: "PupilNumbersAdditionalInformation",
                 schema: "sdd",
                 table: "TransferringAcademies");
+            
+            migrationBuilder.Sql(
+                @"Update p set p.PupilNumbersAdditionalInformation = a.PupilNumbersAdditionalInformation, p.LatestOfstedReportAdditionalInformation = a.LatestOfstedJudgementAdditionalInformation, p.KeyStage2PerformanceAdditionalInformation = a.KeyStage2PerformanceAdditionalInformation, p.KeyStage4PerformanceAdditionalInformation = a.KeyStage4PerformanceAdditionalInformation, p.KeyStage5PerformanceAdditionalInformation = a.KeyStage5PerformanceAdditionalInformation from sdd.AcademyTransferProjects p inner join [sip].[sdd].[TransferringAcademies] a on a.fk_AcademyTransferProjectId = p.id");
         }
     }
 }
