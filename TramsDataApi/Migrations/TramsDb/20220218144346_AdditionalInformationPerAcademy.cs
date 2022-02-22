@@ -42,6 +42,9 @@ namespace TramsDataApi.Migrations.TramsDb
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(
+                @"Update [sip].[sdd].[TransferringAcademies]  set PupilNumbersAdditionalInformation = null, LatestOfstedReportAdditionalInformation = null, KeyStage2PerformanceAdditionalInformation = null, KeyStage4PerformanceAdditionalInformation = null, KeyStage5PerformanceAdditionalInformation = null");
+            
             migrationBuilder.DropColumn(
                 name: "KeyStage2PerformanceAdditionalInformation",
                 schema: "sdd",
@@ -66,9 +69,6 @@ namespace TramsDataApi.Migrations.TramsDb
                 name: "PupilNumbersAdditionalInformation",
                 schema: "sdd",
                 table: "TransferringAcademies");
-            
-            migrationBuilder.Sql(
-                @"Update p set p.PupilNumbersAdditionalInformation = a.PupilNumbersAdditionalInformation, p.LatestOfstedReportAdditionalInformation = a.LatestOfstedJudgementAdditionalInformation, p.KeyStage2PerformanceAdditionalInformation = a.KeyStage2PerformanceAdditionalInformation, p.KeyStage4PerformanceAdditionalInformation = a.KeyStage4PerformanceAdditionalInformation, p.KeyStage5PerformanceAdditionalInformation = a.KeyStage5PerformanceAdditionalInformation from sdd.AcademyTransferProjects p inner join [sip].[sdd].[TransferringAcademies] a on a.fk_AcademyTransferProjectId = p.id");
         }
     }
 }
