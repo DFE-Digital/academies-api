@@ -19,15 +19,21 @@ namespace TramsDataApi.Test.UseCases
             var incomingTrust = "incomingTrust";
             var expectedAcademyTransferProjects = Builder<AcademyTransferProjects>.CreateListOfSize(5).All()
                 .With(p => p.OutgoingTrustUkprn = outgoingTrust)
-                .With(p => p.TransferringAcademies =  Builder<TransferringAcademies>.CreateListOfSize(5).All()
-                    .With(a => a.IncomingTrustUkprn = incomingTrust).Build())
+                .With(p => p.TransferringAcademies = Builder<TransferringAcademies>.CreateListOfSize(5).All()
+                    .With(a => a.IncomingTrustUkprn = incomingTrust)
+                    .With(a => a.PupilNumbersAdditionalInformation = "pupil numbers")
+                    .With(a => a.LatestOfstedReportAdditionalInformation = "ofsted")
+                    .With(a => a.KeyStage2PerformanceAdditionalInformation = "ks2")
+                    .With(a => a.KeyStage4PerformanceAdditionalInformation = "ks4")
+                    .With(a => a.KeyStage5PerformanceAdditionalInformation = "ks5")
+                    .Build())
                 .Build();
-            
+
             var expectedOutgoingGroup = Builder<Group>.CreateNew().Build();
             var expectedOutgoingTrust = Builder<Trust>.CreateNew().Build();
             var expectedIncomingGroup = Builder<Group>.CreateNew().Build();
             var expectedIncomingTrust = Builder<Trust>.CreateNew().Build();
-            
+
             var academyTransferProjectsGateway = new Mock<IAcademyTransferProjectGateway>();
 
             academyTransferProjectsGateway.Setup(atGateway => atGateway.IndexAcademyTransferProjects(1))
@@ -36,8 +42,10 @@ namespace TramsDataApi.Test.UseCases
             var trustGateway = new Mock<ITrustGateway>();
             trustGateway.Setup(tg => tg.GetGroupByUkPrn(outgoingTrust)).Returns(expectedOutgoingGroup);
             trustGateway.Setup(tg => tg.GetGroupByUkPrn(incomingTrust)).Returns(expectedIncomingGroup);
-            trustGateway.Setup(tg => tg.GetIfdTrustByGroupId(expectedOutgoingGroup.GroupId)).Returns(expectedOutgoingTrust);
-            trustGateway.Setup(tg => tg.GetIfdTrustByGroupId(expectedIncomingGroup.GroupId)).Returns(expectedIncomingTrust);
+            trustGateway.Setup(tg => tg.GetIfdTrustByGroupId(expectedOutgoingGroup.GroupId))
+                .Returns(expectedOutgoingTrust);
+            trustGateway.Setup(tg => tg.GetIfdTrustByGroupId(expectedIncomingGroup.GroupId))
+                .Returns(expectedIncomingTrust);
 
             var expectedIndexResponse = expectedAcademyTransferProjects
                 .Select(atp => new AcademyTransferProjectSummaryResponse
@@ -52,15 +60,19 @@ namespace TramsDataApi.Test.UseCases
                         OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                         IncomingTrustUkprn = ta.IncomingTrustUkprn,
                         IncomingTrustName = expectedIncomingGroup.GroupName,
-                        IncomingTrustLeadRscRegion = expectedIncomingTrust.LeadRscRegion
+                        IncomingTrustLeadRscRegion = expectedIncomingTrust.LeadRscRegion,
+                        PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                        LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                        KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                        KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                        KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
                     }).ToList()
                 }).ToList();
 
-            
+
             var useCase = new IndexAcademyTransferProjects(academyTransferProjectsGateway.Object, trustGateway.Object);
             var result = useCase.Execute(1);
-
-
+            
             result.Count.Should().Be(5);
             result.Should().BeEquivalentTo(expectedIndexResponse);
         }

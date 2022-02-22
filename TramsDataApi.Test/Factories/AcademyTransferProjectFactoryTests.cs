@@ -13,13 +13,12 @@ namespace TramsDataApi.Test.Factories
 {
     public class AcademyTransferProjectFactoryTests
     {
-
         [Fact]
         public void ReturnsAnAcademyTransferProject_WhenGivenAnInitialAcademyTransferProjectRequest()
         {
             var randomGenerator = new RandomGenerator();
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
-                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
+                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8, 8))
                 .With(c => c.Status = null)
                 .With(c => c.State = null)
                 .With(c => c.GeneralInformation = null)
@@ -33,13 +32,19 @@ namespace TramsDataApi.Test.Factories
                 .With(c => c.KeyStage2PerformanceAdditionalInformation = null)
                 .With(c => c.KeyStage4PerformanceAdditionalInformation = null)
                 .With(c => c.KeyStage5PerformanceAdditionalInformation = null)
-                .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
-                    .CreateListOfSize(5)
-                    .All()
-                    .With(t => t.OutgoingAcademyUkprn = randomGenerator.NextString(8,8))
-                    .With(t => t.IncomingTrustUkprn = null).Build())
+                .With(c => c.TransferringAcademies =
+                    (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
+                        .CreateListOfSize(5)
+                        .All()
+                        .With(t => t.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
+                        .With(t => t.IncomingTrustUkprn = null)
+                        .With(t => t.PupilNumbersAdditionalInformation = null)
+                        .With(t => t.LatestOfstedReportAdditionalInformation = null)
+                        .With(t => t.KeyStage2PerformanceAdditionalInformation = null)
+                        .With(t => t.KeyStage4PerformanceAdditionalInformation = null)
+                        .With(t => t.KeyStage5PerformanceAdditionalInformation = null).Build())
                 .Build();
-            
+
             var expected = new AcademyTransferProjects
             {
                 ProjectReference = createRequest.ProjectReference,
@@ -73,10 +78,19 @@ namespace TramsDataApi.Test.Factories
                 KeyStage4PerformanceAdditionalInformation = null,
                 KeyStage5PerformanceAdditionalInformation = null,
                 TransferringAcademies = createRequest.TransferringAcademies
-                    .Select(t => new TransferringAcademies { OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = null })
+                    .Select(t => new TransferringAcademies
+                    {
+                        OutgoingAcademyUkprn = t.OutgoingAcademyUkprn,
+                        IncomingTrustUkprn = null,
+                        LatestOfstedReportAdditionalInformation = null,
+                        PupilNumbersAdditionalInformation = null,
+                        KeyStage2PerformanceAdditionalInformation = null,
+                        KeyStage4PerformanceAdditionalInformation = null,
+                        KeyStage5PerformanceAdditionalInformation = null
+                    })
                     .ToList()
             };
-            
+
             var result = AcademyTransferProjectFactory.Create(createRequest);
 
             result.Should().BeEquivalentTo(expected);
@@ -89,13 +103,13 @@ namespace TramsDataApi.Test.Factories
 
             var benefitsRequest = Builder<AcademyTransferProjectBenefitsRequest>.CreateNew()
                 .With(b => b.IntendedTransferBenefits = Builder<IntendedTransferBenefitRequest>.CreateNew()
-                    .With(i => i.SelectedBenefits =  new List<string>()).Build())
+                    .With(i => i.SelectedBenefits = new List<string>()).Build())
                 .With(b => b.OtherFactorsToConsider = Builder<OtherFactorsToConsiderRequest>.CreateNew()
                     .With(o => o.ComplexLandAndBuilding = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
                     .With(o => o.FinanceAndDebt = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
                     .With(o => o.HighProfile = Builder<BenefitConsideredFactorRequest>.CreateNew().Build()).Build())
                 .Build();
-            
+
             var datesRequest = Builder<AcademyTransferProjectDatesRequest>.CreateNew()
                 .With(d => d.TransferFirstDiscussed =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
@@ -106,16 +120,18 @@ namespace TramsDataApi.Test.Factories
                 .With(d => d.HasHtbDate = true)
                 .With(d => d.HasTargetDateForTransfer = true)
                 .Build();
-            
+
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
-                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8,8))
+                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8, 8))
                 .With(c => c.Benefits = benefitsRequest)
                 .With(c => c.Dates = datesRequest)
                 .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
-                .With(c => c.GeneralInformation = Builder<AcademyTransferProjectGeneralInformationRequest>.CreateNew().Build())
+                .With(c => c.GeneralInformation =
+                    Builder<AcademyTransferProjectGeneralInformationRequest>.CreateNew().Build())
                 .With(c => c.Features = Builder<AcademyTransferProjectFeaturesRequest>.CreateNew().Build())
-                .With(c => c.TransferringAcademies = (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
-                    .CreateListOfSize(5).Build())
+                .With(c => c.TransferringAcademies =
+                    (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
+                        .CreateListOfSize(5).Build())
                 .Build();
 
             var expected = new AcademyTransferProjects
@@ -127,8 +143,10 @@ namespace TramsDataApi.Test.Factories
                 RddOrEsfaInterventionDetail = createRequest.Features.RddOrEsfaInterventionDetail,
                 TypeOfTransfer = createRequest.Features.TypeOfTransfer,
                 OtherTransferTypeDescription = createRequest.Features.OtherTransferTypeDescription,
-                TransferFirstDiscussed = DateTime.ParseExact(createRequest.Dates.TransferFirstDiscussed, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                TargetDateForTransfer = DateTime.ParseExact(createRequest.Dates.TargetDateForTransfer, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                TransferFirstDiscussed = DateTime.ParseExact(createRequest.Dates.TransferFirstDiscussed, "dd/MM/yyyy",
+                    CultureInfo.InvariantCulture),
+                TargetDateForTransfer = DateTime.ParseExact(createRequest.Dates.TargetDateForTransfer, "dd/MM/yyyy",
+                    CultureInfo.InvariantCulture),
                 HtbDate = DateTime.ParseExact(createRequest.Dates.HtbDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HasHtbDate = createRequest.Dates.HasHtbDate,
                 HasTransferFirstDiscussedDate = createRequest.Dates.HasTransferFirstDiscussedDate,
@@ -139,12 +157,18 @@ namespace TramsDataApi.Test.Factories
                 Status = createRequest.Status,
                 Author = createRequest.GeneralInformation.Author,
                 Recommendation = createRequest.GeneralInformation.Recommendation,
-                HighProfileShouldBeConsidered = createRequest.Benefits.OtherFactorsToConsider.HighProfile.ShouldBeConsidered,
-                HighProfileFurtherSpecification = createRequest.Benefits.OtherFactorsToConsider.HighProfile.FurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = createRequest.Benefits.OtherFactorsToConsider.ComplexLandAndBuilding.ShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = createRequest.Benefits.OtherFactorsToConsider.ComplexLandAndBuilding.FurtherSpecification,
-                FinanceAndDebtShouldBeConsidered = createRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
-                FinanceAndDebtFurtherSpecification = createRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.FurtherSpecification,
+                HighProfileShouldBeConsidered =
+                    createRequest.Benefits.OtherFactorsToConsider.HighProfile.ShouldBeConsidered,
+                HighProfileFurtherSpecification =
+                    createRequest.Benefits.OtherFactorsToConsider.HighProfile.FurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered = createRequest.Benefits.OtherFactorsToConsider
+                    .ComplexLandAndBuilding.ShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification = createRequest.Benefits.OtherFactorsToConsider
+                    .ComplexLandAndBuilding.FurtherSpecification,
+                FinanceAndDebtShouldBeConsidered =
+                    createRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
+                FinanceAndDebtFurtherSpecification =
+                    createRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.FurtherSpecification,
                 OtherBenefitValue = createRequest.Benefits.IntendedTransferBenefits.OtherBenefitValue,
                 AcademyPerformanceAdditionalInformation = createRequest.AcademyPerformanceAdditionalInformation,
                 PupilNumbersAdditionalInformation = createRequest.PupilNumbersAdditionalInformation,
@@ -152,10 +176,20 @@ namespace TramsDataApi.Test.Factories
                 KeyStage2PerformanceAdditionalInformation = createRequest.KeyStage2PerformanceAdditionalInformation,
                 KeyStage4PerformanceAdditionalInformation = createRequest.KeyStage4PerformanceAdditionalInformation,
                 KeyStage5PerformanceAdditionalInformation = createRequest.KeyStage5PerformanceAdditionalInformation,
-                AcademyTransferProjectIntendedTransferBenefits = createRequest.Benefits.IntendedTransferBenefits.SelectedBenefits
-                    .Select(b => new AcademyTransferProjectIntendedTransferBenefits { SelectedBenefit = b }).ToList(),
+                AcademyTransferProjectIntendedTransferBenefits = createRequest.Benefits.IntendedTransferBenefits
+                    .SelectedBenefits
+                    .Select(b => new AcademyTransferProjectIntendedTransferBenefits {SelectedBenefit = b}).ToList(),
                 TransferringAcademies = createRequest.TransferringAcademies
-                    .Select(t => new TransferringAcademies { OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = t.IncomingTrustUkprn })
+                    .Select(t => new TransferringAcademies
+                    {
+                        OutgoingAcademyUkprn = t.OutgoingAcademyUkprn,
+                        IncomingTrustUkprn = t.IncomingTrustUkprn,
+                        PupilNumbersAdditionalInformation = t.PupilNumbersAdditionalInformation,
+                        LatestOfstedReportAdditionalInformation = t.LatestOfstedReportAdditionalInformation,
+                        KeyStage2PerformanceAdditionalInformation = t.KeyStage2PerformanceAdditionalInformation,
+                        KeyStage4PerformanceAdditionalInformation = t.KeyStage4PerformanceAdditionalInformation,
+                        KeyStage5PerformanceAdditionalInformation = t.KeyStage5PerformanceAdditionalInformation
+                    })
                     .ToList()
             };
 
@@ -181,7 +215,8 @@ namespace TramsDataApi.Test.Factories
             var updateRequest = new AcademyTransferProjectRequest
             {
                 OutgoingTrustUkprn = "12312354",
-                Rationale = new AcademyTransferProjectRationaleRequest {
+                Rationale = new AcademyTransferProjectRationaleRequest
+                {
                     ProjectRationale = "A new rationale for the project"
                 }
             };
@@ -189,7 +224,7 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn, 
+                Urn = academyTransferProject.Urn,
                 ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = updateRequest.OutgoingTrustUkprn,
                 ProjectRationale = updateRequest.Rationale.ProjectRationale,
@@ -209,25 +244,33 @@ namespace TramsDataApi.Test.Factories
                 Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered =
+                    academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification =
+                    academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
-                AcademyPerformanceAdditionalInformation = academyTransferProject.AcademyPerformanceAdditionalInformation,
+                AcademyPerformanceAdditionalInformation =
+                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 PupilNumbersAdditionalInformation = academyTransferProject.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation = academyTransferProject.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation = academyTransferProject.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
-                AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                LatestOfstedJudgementAdditionalInformation =
+                    academyTransferProject.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage5PerformanceAdditionalInformation,
+                AcademyTransferProjectIntendedTransferBenefits =
+                    academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
                 HasHtbDate = academyTransferProject.HasHtbDate,
                 HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
-            
+
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -239,13 +282,20 @@ namespace TramsDataApi.Test.Factories
                 .With(atp => atp.TransferringAcademies = Builder<TransferringAcademies>.CreateListOfSize(5).Build())
                 .Build();
 
-            var transferringAcademiesRequests = academyTransferProject.TransferringAcademies.Select(ta => new TransferringAcademiesRequest
-            {
-                OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                IncomingTrustUkprn = ta.IncomingTrustUkprn
-            }).ToList();
+            var transferringAcademiesRequests = academyTransferProject.TransferringAcademies.Select(ta =>
+                new TransferringAcademiesRequest
+                {
+                    OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
+                    IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                    LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                    PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                    KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                    KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                    KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
+                    
+                }).ToList();
             transferringAcademiesRequests.ElementAt(0).OutgoingAcademyUkprn = "12385731";
-            
+
             var updateRequest = new AcademyTransferProjectRequest
             {
                 OutgoingTrustUkprn = "12387123",
@@ -255,13 +305,18 @@ namespace TramsDataApi.Test.Factories
             var expectedTransferringAcademies = transferringAcademiesRequests.Select(ta => new TransferringAcademies
             {
                 OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                IncomingTrustUkprn = ta.IncomingTrustUkprn
+                IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
             }).ToList();
 
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,  
+                Urn = academyTransferProject.Urn,
                 ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = updateRequest.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
@@ -281,18 +336,26 @@ namespace TramsDataApi.Test.Factories
                 Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered =
+                    academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification =
+                    academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
-                AcademyPerformanceAdditionalInformation = academyTransferProject.AcademyPerformanceAdditionalInformation,
+                AcademyPerformanceAdditionalInformation =
+                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 PupilNumbersAdditionalInformation = academyTransferProject.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation = academyTransferProject.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation = academyTransferProject.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
-                AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                LatestOfstedJudgementAdditionalInformation =
+                    academyTransferProject.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage5PerformanceAdditionalInformation,
+                AcademyTransferProjectIntendedTransferBenefits =
+                    academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasHtbDate = academyTransferProject.HasHtbDate,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
                 HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
@@ -309,12 +372,13 @@ namespace TramsDataApi.Test.Factories
             var academyTransferProject = Builder<AcademyTransferProjects>
                 .CreateNew()
                 .With(atp =>
-                    atp.AcademyTransferProjectIntendedTransferBenefits = Builder<AcademyTransferProjectIntendedTransferBenefits>.CreateListOfSize(5).Build())
+                    atp.AcademyTransferProjectIntendedTransferBenefits =
+                        Builder<AcademyTransferProjectIntendedTransferBenefits>.CreateListOfSize(5).Build())
                 .Build();
 
             var updatedBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits
-                            .Select(benefit => benefit.SelectedBenefit)
-                            .ToList();
+                .Select(benefit => benefit.SelectedBenefit)
+                .ToList();
             updatedBenefits.Insert(0, "A completely new benefit");
 
             var updateRequest = new AcademyTransferProjectRequest
@@ -330,13 +394,14 @@ namespace TramsDataApi.Test.Factories
             };
 
             var expectedBenefits = updateRequest.Benefits.IntendedTransferBenefits.SelectedBenefits
-                .Select(selectedBenefit => new AcademyTransferProjectIntendedTransferBenefits { SelectedBenefit = selectedBenefit })
+                .Select(selectedBenefit => new AcademyTransferProjectIntendedTransferBenefits
+                    {SelectedBenefit = selectedBenefit})
                 .ToList();
 
-             var expected = new AcademyTransferProjects
+            var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn, 
+                Urn = academyTransferProject.Urn,
                 ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
@@ -356,17 +421,24 @@ namespace TramsDataApi.Test.Factories
                 Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered =
+                    academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification =
+                    academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
-                AcademyPerformanceAdditionalInformation = academyTransferProject.AcademyPerformanceAdditionalInformation,
+                AcademyPerformanceAdditionalInformation =
+                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 PupilNumbersAdditionalInformation = academyTransferProject.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation = academyTransferProject.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation = academyTransferProject.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
+                LatestOfstedJudgementAdditionalInformation =
+                    academyTransferProject.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage5PerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = expectedBenefits,
                 HasHtbDate = academyTransferProject.HasHtbDate,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
@@ -377,7 +449,7 @@ namespace TramsDataApi.Test.Factories
 
             result.Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void ReturnsUpdatedAcademyTransferProject_WhenUpdating_IfRequestIsToSetDatesBackToNull()
         {
@@ -398,7 +470,7 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,  
+                Urn = academyTransferProject.Urn,
                 ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
@@ -418,18 +490,26 @@ namespace TramsDataApi.Test.Factories
                 Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered =
+                    academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification =
+                    academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
-                AcademyPerformanceAdditionalInformation = academyTransferProject.AcademyPerformanceAdditionalInformation,
+                AcademyPerformanceAdditionalInformation =
+                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 PupilNumbersAdditionalInformation = academyTransferProject.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation = academyTransferProject.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation = academyTransferProject.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
-                AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                LatestOfstedJudgementAdditionalInformation =
+                    academyTransferProject.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage5PerformanceAdditionalInformation,
+                AcademyTransferProjectIntendedTransferBenefits =
+                    academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = false,
                 HasHtbDate = false,
                 HasTargetDateForTransfer = false
@@ -439,12 +519,12 @@ namespace TramsDataApi.Test.Factories
 
             result.Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void ReturnsOriginalAcademyTransferProjectWithDatesSetToNull_WhenUpdating_IfHasDateFieldsAreFalse()
         {
             var randomGenerator = new RandomGenerator();
-            
+
             var academyTransferProject = Builder<AcademyTransferProjects>
                 .CreateNew()
                 .Build();
@@ -453,8 +533,10 @@ namespace TramsDataApi.Test.Factories
             {
                 Dates = new AcademyTransferProjectDatesRequest
                 {
-                    TargetDateForTransfer = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
-                    TransferFirstDiscussed = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    TargetDateForTransfer =
+                        randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    TransferFirstDiscussed =
+                        randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     HasHtbDate = false,
                     HasTargetDateForTransfer = false,
@@ -465,7 +547,7 @@ namespace TramsDataApi.Test.Factories
             var expected = new AcademyTransferProjects
             {
                 Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn, 
+                Urn = academyTransferProject.Urn,
                 ProjectReference = academyTransferProject.ProjectReference,
                 OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
                 ProjectRationale = academyTransferProject.ProjectRationale,
@@ -485,18 +567,26 @@ namespace TramsDataApi.Test.Factories
                 Recommendation = academyTransferProject.Recommendation,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered =
+                    academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification =
+                    academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
-                AcademyPerformanceAdditionalInformation = academyTransferProject.AcademyPerformanceAdditionalInformation,
+                AcademyPerformanceAdditionalInformation =
+                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 PupilNumbersAdditionalInformation = academyTransferProject.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation = academyTransferProject.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation = academyTransferProject.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation = academyTransferProject.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation = academyTransferProject.KeyStage5PerformanceAdditionalInformation,
-                AcademyTransferProjectIntendedTransferBenefits = academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
+                LatestOfstedJudgementAdditionalInformation =
+                    academyTransferProject.LatestOfstedJudgementAdditionalInformation,
+                KeyStage2PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage2PerformanceAdditionalInformation,
+                KeyStage4PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage4PerformanceAdditionalInformation,
+                KeyStage5PerformanceAdditionalInformation =
+                    academyTransferProject.KeyStage5PerformanceAdditionalInformation,
+                AcademyTransferProjectIntendedTransferBenefits =
+                    academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = false,
                 HasHtbDate = false,
                 HasTargetDateForTransfer = false

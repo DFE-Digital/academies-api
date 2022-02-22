@@ -63,7 +63,16 @@ namespace TramsDataApi.Factories
             }
 
             return transferringAcademiesRequests
-                    .Select(t => new TransferringAcademies {OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, IncomingTrustUkprn = t.IncomingTrustUkprn})
+                    .Select(t => new TransferringAcademies
+                    {
+                        OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, 
+                        IncomingTrustUkprn = t.IncomingTrustUkprn,
+                        PupilNumbersAdditionalInformation = t.PupilNumbersAdditionalInformation,
+                        LatestOfstedReportAdditionalInformation = t.LatestOfstedReportAdditionalInformation,
+                        KeyStage2PerformanceAdditionalInformation = t.KeyStage2PerformanceAdditionalInformation,
+                        KeyStage4PerformanceAdditionalInformation = t.KeyStage4PerformanceAdditionalInformation,
+                        KeyStage5PerformanceAdditionalInformation = t.KeyStage5PerformanceAdditionalInformation
+                    })
                     .ToList();
         }
 
