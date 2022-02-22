@@ -112,7 +112,15 @@ namespace TramsDataApi.Test.Factories
 
             var expectedTransferringAcademies = academyTransferProjectModel.TransferringAcademies
                 .Select(a => new TransferringAcademiesResponse
-                    {IncomingTrustUkprn = a.IncomingTrustUkprn, OutgoingAcademyUkprn = a.OutgoingAcademyUkprn})
+                {
+                    IncomingTrustUkprn = a.IncomingTrustUkprn,
+                    OutgoingAcademyUkprn = a.OutgoingAcademyUkprn,
+                    PupilNumbersAdditionalInformation = a.PupilNumbersAdditionalInformation,
+                    LatestOfstedReportAdditionalInformation = a.LatestOfstedReportAdditionalInformation,
+                    KeyStage2PerformanceAdditionalInformation = a.KeyStage2PerformanceAdditionalInformation,
+                    KeyStage4PerformanceAdditionalInformation = a.KeyStage4PerformanceAdditionalInformation,
+                    KeyStage5PerformanceAdditionalInformation = a.KeyStage5PerformanceAdditionalInformation
+                })
                 .ToList();
 
             var expectedFeatures = new AcademyTransferProjectFeaturesResponse

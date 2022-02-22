@@ -20,7 +20,13 @@ namespace TramsDataApi.Test.UseCases
             var expectedAcademyTransferProjects = Builder<AcademyTransferProjects>.CreateListOfSize(5).All()
                 .With(p => p.OutgoingTrustUkprn = outgoingTrust)
                 .With(p => p.TransferringAcademies = Builder<TransferringAcademies>.CreateListOfSize(5).All()
-                    .With(a => a.IncomingTrustUkprn = incomingTrust).Build())
+                    .With(a => a.IncomingTrustUkprn = incomingTrust)
+                    .With(a => a.PupilNumbersAdditionalInformation = "pupil numbers")
+                    .With(a => a.LatestOfstedReportAdditionalInformation = "ofsted")
+                    .With(a => a.KeyStage2PerformanceAdditionalInformation = "ks2")
+                    .With(a => a.KeyStage4PerformanceAdditionalInformation = "ks4")
+                    .With(a => a.KeyStage5PerformanceAdditionalInformation = "ks5")
+                    .Build())
                 .Build();
 
             var expectedOutgoingGroup = Builder<Group>.CreateNew().Build();
@@ -66,8 +72,7 @@ namespace TramsDataApi.Test.UseCases
 
             var useCase = new IndexAcademyTransferProjects(academyTransferProjectsGateway.Object, trustGateway.Object);
             var result = useCase.Execute(1);
-
-
+            
             result.Count.Should().Be(5);
             result.Should().BeEquivalentTo(expectedIndexResponse);
         }

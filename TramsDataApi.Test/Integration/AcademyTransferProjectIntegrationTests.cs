@@ -389,12 +389,22 @@ namespace TramsDataApi.Test.Integration
                 new TransferringAcademiesRequest
                 {
                     OutgoingAcademyUkprn = "12345678",
-                    IncomingTrustUkprn = "12345678"
+                    IncomingTrustUkprn = "12345678",
+                    PupilNumbersAdditionalInformation = "pupil info",
+                    LatestOfstedReportAdditionalInformation = "ofsted info",
+                    KeyStage2PerformanceAdditionalInformation = "ks2",
+                    KeyStage4PerformanceAdditionalInformation = "ks4",
+                    KeyStage5PerformanceAdditionalInformation = "ks5"
                 },
                 new TransferringAcademiesRequest
                 {
                     OutgoingAcademyUkprn = "87654321",
-                    IncomingTrustUkprn = "87654321"
+                    IncomingTrustUkprn = "87654321",
+                    PupilNumbersAdditionalInformation = "pupil info 2",
+                    LatestOfstedReportAdditionalInformation = "ofsted info 2",
+                    KeyStage2PerformanceAdditionalInformation = "ks2 2",
+                    KeyStage4PerformanceAdditionalInformation = "ks4 2",
+                    KeyStage5PerformanceAdditionalInformation = "ks5 2"
                 }
             };
 
@@ -421,12 +431,25 @@ namespace TramsDataApi.Test.Integration
             updatedProject?.TransferringAcademies.Count.Should().Be(2);
             _tramsDbContext.TransferringAcademies.Count().Should().Be(2);
 
-            updatedProject?.TransferringAcademies.ElementAt(0).IncomingTrustUkprn.Should().Be("12345678");
-            updatedProject?.TransferringAcademies.ElementAt(0).OutgoingAcademyUkprn.Should().Be("12345678");
+            var firstCreateAcademy = createRequest.TransferringAcademies.ElementAt(0);
+            var secondCreateAcademy = createRequest.TransferringAcademies.ElementAt(1);
+           
+            updatedProject?.TransferringAcademies.ElementAt(0).IncomingTrustUkprn.Should().Be(firstCreateAcademy.IncomingTrustUkprn);
+            updatedProject?.TransferringAcademies.ElementAt(0).OutgoingAcademyUkprn.Should().Be(firstCreateAcademy.OutgoingAcademyUkprn);
+            updatedProject?.TransferringAcademies.ElementAt(0).LatestOfstedReportAdditionalInformation.Should().Be(firstCreateAcademy.LatestOfstedReportAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(0).PupilNumbersAdditionalInformation.Should().Be(firstCreateAcademy.PupilNumbersAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(0).KeyStage2PerformanceAdditionalInformation.Should().Be(firstCreateAcademy.KeyStage2PerformanceAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(0).KeyStage4PerformanceAdditionalInformation.Should().Be(firstCreateAcademy.KeyStage4PerformanceAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(0).KeyStage5PerformanceAdditionalInformation.Should().Be(firstCreateAcademy.KeyStage5PerformanceAdditionalInformation);
 
-            updatedProject?.TransferringAcademies.ElementAt(1).IncomingTrustUkprn.Should().Be("87654321");
-            updatedProject?.TransferringAcademies.ElementAt(1).OutgoingAcademyUkprn.Should().Be("87654321");
-
+            updatedProject?.TransferringAcademies.ElementAt(1).IncomingTrustUkprn.Should().Be(secondCreateAcademy.IncomingTrustUkprn);
+            updatedProject?.TransferringAcademies.ElementAt(1).OutgoingAcademyUkprn.Should().Be(secondCreateAcademy.OutgoingAcademyUkprn);
+            updatedProject?.TransferringAcademies.ElementAt(1).LatestOfstedReportAdditionalInformation.Should().Be(secondCreateAcademy.LatestOfstedReportAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(1).PupilNumbersAdditionalInformation.Should().Be(secondCreateAcademy.PupilNumbersAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(1).KeyStage2PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage2PerformanceAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(1).KeyStage4PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage4PerformanceAdditionalInformation);
+            updatedProject?.TransferringAcademies.ElementAt(1).KeyStage5PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage5PerformanceAdditionalInformation);
+            
             _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
             _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
             _tramsDbContext.SaveChanges();

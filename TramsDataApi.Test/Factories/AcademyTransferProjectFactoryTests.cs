@@ -81,7 +81,12 @@ namespace TramsDataApi.Test.Factories
                     .Select(t => new TransferringAcademies
                     {
                         OutgoingAcademyUkprn = t.OutgoingAcademyUkprn,
-                        IncomingTrustUkprn = null
+                        IncomingTrustUkprn = null,
+                        LatestOfstedReportAdditionalInformation = null,
+                        PupilNumbersAdditionalInformation = null,
+                        KeyStage2PerformanceAdditionalInformation = null,
+                        KeyStage4PerformanceAdditionalInformation = null,
+                        KeyStage5PerformanceAdditionalInformation = null
                     })
                     .ToList()
             };
@@ -281,7 +286,13 @@ namespace TramsDataApi.Test.Factories
                 new TransferringAcademiesRequest
                 {
                     OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                    IncomingTrustUkprn = ta.IncomingTrustUkprn
+                    IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                    LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                    PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                    KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                    KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                    KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
+                    
                 }).ToList();
             transferringAcademiesRequests.ElementAt(0).OutgoingAcademyUkprn = "12385731";
 
