@@ -37,13 +37,13 @@ namespace TramsDataApi.Migrations.TramsDb
                 nullable: true);
 
             migrationBuilder.Sql(
-                @"Update a set  a.PupilNumbersAdditionalInformation = p.PupilNumbersAdditionalInformation, a.LatestOfstedReportAdditionalInformation = p.LatestOfstedJudgementAdditionalInformation, a.KeyStage2PerformanceAdditionalInformation = p.KeyStage2PerformanceAdditionalInformation, a.KeyStage4PerformanceAdditionalInformation = p.KeyStage4PerformanceAdditionalInformation, a.KeyStage5PerformanceAdditionalInformation = p.KeyStage5PerformanceAdditionalInformation from sdd.AcademyTransferProjects p inner join [sip].[sdd].[TransferringAcademies] a on a.fk_AcademyTransferProjectId = p.id");
+                @"Update a set a.PupilNumbersAdditionalInformation = p.PupilNumbersAdditionalInformation, a.LatestOfstedReportAdditionalInformation = p.LatestOfstedJudgementAdditionalInformation, a.KeyStage2PerformanceAdditionalInformation = p.KeyStage2PerformanceAdditionalInformation, a.KeyStage4PerformanceAdditionalInformation = p.KeyStage4PerformanceAdditionalInformation, a.KeyStage5PerformanceAdditionalInformation = p.KeyStage5PerformanceAdditionalInformation from sdd.AcademyTransferProjects p inner join sdd.TransferringAcademies a on a.fk_AcademyTransferProjectId = p.id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(
-                @"Update [sip].[sdd].[TransferringAcademies]  set PupilNumbersAdditionalInformation = null, LatestOfstedReportAdditionalInformation = null, KeyStage2PerformanceAdditionalInformation = null, KeyStage4PerformanceAdditionalInformation = null, KeyStage5PerformanceAdditionalInformation = null");
+                @"Update sdd.TransferringAcademies set PupilNumbersAdditionalInformation = null, LatestOfstedReportAdditionalInformation = null, KeyStage2PerformanceAdditionalInformation = null, KeyStage4PerformanceAdditionalInformation = null, KeyStage5PerformanceAdditionalInformation = null");
             
             migrationBuilder.DropColumn(
                 name: "KeyStage2PerformanceAdditionalInformation",
