@@ -1,4 +1,4 @@
-describe("E2E Academy Transfers", () => {
+describe("Health Check and Database Check", () => {
     let apiKey = Cypress.env('apiKey');
     let url = Cypress.env('url')
     let urn;
