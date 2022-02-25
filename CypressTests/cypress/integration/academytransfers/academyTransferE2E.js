@@ -15,7 +15,6 @@ describe("E2E Academy Transfers", () => {
             }
         })
         .then((response) =>{
-            cy.log("Number of Projects found: "+response.body.length);
             expect(response.status).to.eq(200);
             savedURN = response.body[0].projectUrn;
             cy.log("1st Project URN = "+savedURN);
@@ -35,7 +34,6 @@ describe("E2E Academy Transfers", () => {
         .then((response) =>{
             savedOutgoingTrustUkprn = response.body.outgoingTrustUkprn;
             cy.log("savedOutgoingTrustUkprn = "+savedOutgoingTrustUkprn);
-            cy.log("1 - "+JSON.stringify(response.body));
             expect(response.status).to.eq(200);
             expect("Project URN = "+response.body.projectUrn).to.eq("Project URN = "+savedURN)
             expect(response.body.academyPerformanceAdditionalInformation)
@@ -56,7 +54,6 @@ describe("E2E Academy Transfers", () => {
             }
         })
         .then((response) =>{
-            cy.log("2 - "+JSON.stringify(response.body));
             expect(response.status).to.eq(200);
             expect(response.body.academyPerformanceAdditionalInformation)
             .to.eq("Offstead Report - UPDATE TEST")
@@ -76,7 +73,6 @@ describe("E2E Academy Transfers", () => {
             }
         })
         .then((response) =>{
-            cy.log("3 - "+JSON.stringify(response.body));
             expect(response.status).to.eq(200);
             expect(response.body.academyPerformanceAdditionalInformation)
             .to.eq("Offstead Report")
