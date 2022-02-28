@@ -97,7 +97,7 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
 
         // additional data items for Business Central
         public string NewURN { get; set; }
-        public string NewLEAEstab { get; set; }
+        public string NewLAEstab { get; set; }
         public string NewAcademyUKPRN { get; set; }
         public string NewUPIN { get; set; }
         public string TrustUKPRN { get; set; }

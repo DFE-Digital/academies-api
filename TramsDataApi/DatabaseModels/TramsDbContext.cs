@@ -363,6 +363,12 @@ namespace TramsDataApi.DatabaseModels
                 entity.ToView("vw_Fss_ProjectData", "fsg");
                 entity.HasNoKey();
             });
+
+            modelBuilder.Entity<ProposedAcademyAdditionalFields>(entity =>
+            {
+                entity.ToView("vw_proposed_academy_additional_fields", "sdd");
+                entity.HasNoKey();
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 

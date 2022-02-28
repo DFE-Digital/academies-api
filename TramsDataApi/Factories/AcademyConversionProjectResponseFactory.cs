@@ -69,7 +69,7 @@ namespace TramsDataApi.Factories
 				ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
 				ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
 				NewURN = ifd.ProposedAcademyDetailsNewAcademyName,
-				NewLEAEstab = string.Empty,
+				NewLAEstab = string.Empty,
 				NewAcademyUKPRN = ifd.GeneralDetailsAcademyLaestab,
 				NewUPIN = string.Empty,
 				TrustUKPRN = string.Empty,
