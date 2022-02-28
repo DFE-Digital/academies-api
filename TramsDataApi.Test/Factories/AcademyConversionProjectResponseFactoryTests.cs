@@ -21,10 +21,11 @@ namespace TramsDataApi.Test.Factories
         {
             var academyConversionProject = _fixture.Create<AcademyConversionProject>();
             var trust = _fixture.Create<Trust>();
+            var additional = _fixture.Create<ProposedAcademyAdditionalFields>();
 
-            var expectedResponse = CreateExpected(academyConversionProject, trust);
+            var expectedResponse = CreateExpected(academyConversionProject, trust, additional);
 
-            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust);
+            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, additional);
 
             academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
         }
@@ -61,7 +62,7 @@ namespace TramsDataApi.Test.Factories
             academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
         }
 
-        private AcademyConversionProjectResponse CreateExpected(AcademyConversionProject academyConversionProject, Trust trust = null)
+        private AcademyConversionProjectResponse CreateExpected(AcademyConversionProject academyConversionProject, Trust trust = null, ProposedAcademyAdditionalFields additionalFields = null)
         {
             var expected = new AcademyConversionProjectResponse
             {
@@ -123,12 +124,24 @@ namespace TramsDataApi.Test.Factories
                 ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
                 ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
             };
+
             if (trust != null)
             {
                 expected.NameOfTrust = trust.TrustsTrustName;
                 expected.SponsorReferenceNumber = trust.LeadSponsor;
                 expected.SponsorName = trust.TrustsLeadSponsorName;
             }
+
+            if (additionalFields != null)
+            {
+                expected.NewURN = additionalFields.NewURN;
+                expected.NewLAEstab = additionalFields.NewLAEstab;
+                expected.NewAcademyUKPRN = additionalFields.NewAcademyUKPRN;
+                expected.NewUPIN = additionalFields.NewUPIN;
+                expected.TrustUKPRN = additionalFields.TrustUKPRN;
+                expected.NewAcademyName = additionalFields.NewAcademyName;
+            }
+
             return expected;
         }
     }

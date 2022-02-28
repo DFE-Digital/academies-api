@@ -8,7 +8,7 @@ namespace TramsDataApi.Factories
 	/// </remarks>
 	public class AcademyConversionProjectResponseFactory
     {
-	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject, Trust trust = null, IfdPipeline ifd = null)
+	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject, Trust trust = null, IfdPipeline ifd = null, ProposedAcademyAdditionalFields additionalFields = null)
         {
 			var response = new AcademyConversionProjectResponse
 			{
@@ -68,12 +68,6 @@ namespace TramsDataApi.Factories
 				KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation,
 				ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
 				ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
-				NewURN = ifd.ProposedAcademyDetailsNewAcademyName,
-				NewLAEstab = string.Empty,
-				NewAcademyUKPRN = ifd.GeneralDetailsAcademyLaestab,
-				NewUPIN = string.Empty,
-				TrustUKPRN = string.Empty,
-				NewAcademyName = ifd.ProposedAcademyDetailsNewAcademyName,
 			};
 
 			if (trust != null)
@@ -89,6 +83,16 @@ namespace TramsDataApi.Factories
 				response.NewAcademyUrn = ifd.ProposedAcademyDetailsNewAcademyUrn;
 				response.ProjectStatus = ifd.GeneralDetailsProjectStatus;
 			}
+
+			if (additionalFields != null)
+            {
+				response.NewURN = additionalFields.NewURN;
+				response.NewLAEstab = additionalFields.NewLAEstab;
+				response.NewAcademyUKPRN = additionalFields.NewAcademyUKPRN;
+				response.NewUPIN = additionalFields.NewUPIN;
+				response.TrustUKPRN = additionalFields.TrustUKPRN;
+				response.NewAcademyName = additionalFields.NewAcademyName;
+            }
 
 			return response;
 		}
