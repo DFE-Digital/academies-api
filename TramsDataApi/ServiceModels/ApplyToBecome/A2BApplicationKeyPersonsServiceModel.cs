@@ -2,7 +2,7 @@ using System;
 
 namespace TramsDataApi.RequestModels.ApplyToBecome
 {
-    public class A2BApplicationKeyPersonsModel
+    public class A2BApplicationKeyPersonsServiceModel
     { 
         public string Name {get; set;}
         public DateTime? KeyPersonDateOfBirth {get; set;}

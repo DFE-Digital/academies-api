@@ -5,7 +5,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 {
     public static class A2BApplicationKeyPersonsFactory
     {
-        public static A2BApplicationKeyPersons Create(A2BApplicationKeyPersonsModel request)
+        public static A2BApplicationKeyPersons Create(A2BApplicationKeyPersonsServiceModel request)
         {
             return new A2BApplicationKeyPersons
                 {
@@ -22,9 +22,9 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 };
         }
         
-        public static A2BApplicationKeyPersonsModel Create(A2BApplicationKeyPersons request)
+        public static A2BApplicationKeyPersonsServiceModel Create(A2BApplicationKeyPersons request)
         { 
-            return new A2BApplicationKeyPersonsModel
+            return new A2BApplicationKeyPersonsServiceModel
             {
                 Name = request.Name,
                 KeyPersonDateOfBirth = request.KeyPersonDateOfBirth,

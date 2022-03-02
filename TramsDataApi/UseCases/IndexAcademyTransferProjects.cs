@@ -42,7 +42,12 @@ namespace TramsDataApi.UseCases
                             OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                             IncomingTrustUkprn = ta.IncomingTrustUkprn,
                             IncomingTrustName = group.GroupName,
-                            IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion
+                            IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion,
+                            PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                            LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                            KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                            KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                            KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
                         };
                     }).ToList()
                 };

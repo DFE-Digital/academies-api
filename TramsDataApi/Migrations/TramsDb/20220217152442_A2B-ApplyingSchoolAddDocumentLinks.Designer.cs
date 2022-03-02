@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217152442_A2B-ApplyingSchoolAddDocumentLinks")]
+    partial class A2BApplyingSchoolAddDocumentLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -581,21 +583,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasKey("SchoolLoanId");
 
                     b.ToTable("A2BSchoolLoan","sdd");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BSelectOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("A2BSelectOption","sdd");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.AcademyConversionProject", b =>
@@ -1415,25 +1402,10 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("nvarchar(8)")
                         .HasMaxLength(8);
 
-                    b.Property<string>("KeyStage2PerformanceAdditionalInformation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KeyStage4PerformanceAdditionalInformation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KeyStage5PerformanceAdditionalInformation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LatestOfstedReportAdditionalInformation")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("OutgoingAcademyUkprn")
                         .IsRequired()
                         .HasColumnType("nvarchar(8)")
                         .HasMaxLength(8);
-
-                    b.Property<string>("PupilNumbersAdditionalInformation")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

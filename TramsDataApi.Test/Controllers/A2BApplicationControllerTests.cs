@@ -14,6 +14,7 @@ using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
 using TramsDataApi.UseCases;
 using Xunit;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.Test.Controllers
 {
@@ -69,15 +70,15 @@ namespace TramsDataApi.Test.Controllers
         {
             const string applicationId = "10001";
 
-            var keyPerson = Builder<A2BApplicationKeyPersonsModel>.CreateNew().Build();
-            var applyingSchool = Builder<A2BApplicationApplyingSchoolModel>.CreateNew().Build();
+            var keyPerson = Builder<A2BApplicationKeyPersonsServiceModel>.CreateNew().Build();
+            var applyingSchool = Builder<A2BApplicationApplyingSchoolServiceModel>.CreateNew().Build();
           
             var request = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
                 .With(r => r.ApplicationId = applicationId)
-                .With(r => r.ApplicationType = 100000001)
-                .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsModel> {keyPerson})
-                .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolModel> {applyingSchool})
+                .With(r => r.ApplicationType = 907660000)
+                .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson})
+                .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchool})
                 .Build();
             
             var expectedApplicationResponse =  new A2BApplicationResponse
