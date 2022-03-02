@@ -367,7 +367,7 @@ namespace TramsDataApi.DatabaseModels
             modelBuilder.Entity<ProposedAcademyAdditionalFields>(entity =>
             {
                 entity.ToView("vw_proposed_academy_additional_fields", "sdd");
-                entity.HasNoKey();
+                entity.HasNoKey();            
             });
             OnModelCreatingPartial(modelBuilder);
         }

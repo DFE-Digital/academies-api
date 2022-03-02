@@ -88,7 +88,7 @@ namespace TramsDataApi.Factories
             {
 				response.NewURN = additionalFields.NewURN;
 				response.NewLAEstab = additionalFields.NewLAEstab;
-				response.NewAcademyUKPRN = additionalFields.NewAcademyUKPRN;
+				response.NewAcademyUKPRN = additionalFields.AcademyUKPRN;
 				response.NewUPIN = additionalFields.NewUPIN;
 				response.TrustUKPRN = additionalFields.TrustUKPRN;
 				response.NewAcademyName = additionalFields.NewAcademyName;

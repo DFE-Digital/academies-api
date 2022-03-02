@@ -30,10 +30,15 @@ namespace TramsDataApi.UseCases
             var trust = string.IsNullOrEmpty(academyConversionProject.TrustReferenceNumber)
                 ? null
                 : _trustGateway.GetIfdTrustByGroupId(academyConversionProject.TrustReferenceNumber);
+            
+            if (academyConversionProject.Urn != null)
+            { 
+                var addtionalFields = _additionalFieldsGateway.GetByUrn((int)academyConversionProject.Urn);
+                return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, addtionalFields);
+            }
 
-            var addtionalFields = _additionalFieldsGateway.GetByUrn(academyConversionProject.Urn.Value);
+            return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, null);
 
-            return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, addtionalFields);
         }
     }
 }

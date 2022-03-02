@@ -136,7 +136,7 @@ namespace TramsDataApi.Test.Factories
             {
                 expected.NewURN = additionalFields.NewURN;
                 expected.NewLAEstab = additionalFields.NewLAEstab;
-                expected.NewAcademyUKPRN = additionalFields.NewAcademyUKPRN;
+                expected.NewAcademyUKPRN = additionalFields.AcademyUKPRN;
                 expected.NewUPIN = additionalFields.NewUPIN;
                 expected.TrustUKPRN = additionalFields.TrustUKPRN;
                 expected.NewAcademyName = additionalFields.NewAcademyName;
