@@ -89,12 +89,3 @@ steps:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'tramsApiBuild'
       publishLocation: 'Container'
-  
-  - task: PowerShell@2
-    displayName: Run Cypress Tests
-    inputs:
-      targetType: 'inline'
-      script: "npm run cy:open -- --env apiKey=$(API_KEY),url=$(BASE_URL)"
-      errorActionPreference: 'continue'
-      workingDirectory: 'CypressTests'
-      
