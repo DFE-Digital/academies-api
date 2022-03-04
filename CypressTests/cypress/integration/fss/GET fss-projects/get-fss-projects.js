@@ -1,4 +1,4 @@
-// <reference types="Cypress"/>
+/// <reference types="Cypress"/>
 describe("GET fss-projects", () => {
  let apiKey = Cypress.env('apiKey');
  let url = Cypress.env('url')
