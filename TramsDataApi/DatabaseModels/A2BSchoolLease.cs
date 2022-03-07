@@ -16,5 +16,6 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolLeasePurpose {get; set;}
         public string SchoolLeaseValueOfAssets {get; set;}
         public string SchoolLeaseResponsibleForAssets {get; set;}
+        public int ApplyingSchoolId { get; set; }
     }
 }
