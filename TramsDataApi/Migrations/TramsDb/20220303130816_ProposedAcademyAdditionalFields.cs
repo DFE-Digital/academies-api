@@ -9,13 +9,10 @@ namespace TramsDataApi.Migrations.TramsDb
             _ = migrationBuilder.Sql(@"CREATE  VIEW sdd.vw_proposed_academy_additional_fields
                                         AS 
                                     SELECT 
-                                    /* Academy data */
                                     a.[URN] 
                                     ,NewLAEstab = CONCAT(la.[Code],'/',e.[EstablishmentNumber])
-                                    /* Trust data */
                                     ,NewUPIN = t.[UPIN]
                                     ,TrustUKPRN = t.[UKPRN]
-                                    /* Pipeline data */
                                     ,NewURN = p.[Proposed Academy Details.New Academy URN]
                                     ,NewAcademyName =p.[Proposed Academy Details.New Academy Name] 
                                     ,AcademyUKPRN = p.[General Details.Academy UKPRN]
