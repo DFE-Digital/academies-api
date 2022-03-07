@@ -65,7 +65,8 @@ namespace TramsDataApi.Test.Factories
         {
             var expected = new AcademyConversionProjectResponse
             {
-                Id = academyConversionProject.Id,
+                Id = academyConversionProject.Id,                
+                ApplicationReferenceNumber = academyConversionProject.ApplicationReferenceNumber,
                 Urn = academyConversionProject.Urn ?? 0,
                 SchoolName = academyConversionProject.SchoolName,
                 LocalAuthority = academyConversionProject.LocalAuthority,
