@@ -26,6 +26,8 @@ namespace TramsDataApi.Test.Factories
 				.With(r => r.PreviousFinancialYear = financialYear)
 				.With(r => r.CurrentFinancialYear = financialYear)
 				.With(r => r.NextFinancialYear = financialYear)
+				//.With(r => r.SchoolLeases = new List<A2BSchoolLeaseServiceModel>() )
+				//.With(r => r.SchoolLoans = new List<A2BSchoolLoanServiceModel>() )
 				.Build();
             var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
                 .CreateNew()

@@ -1,6 +1,6 @@
-namespace TramsDataApi.RequestModels.ApplyToBecome
+namespace TramsDataApi.ServiceModels.ApplyToBecome
 {
-    public class A2BSchoolLeaseCreateRequest
+    public class A2BSchoolLeaseServiceModel
     {
         public string SchoolLeaseId {get; set;}
         public string SchoolLeaseTerm {get; set;}

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 using TramsDataApi.Extensions;
@@ -105,7 +107,13 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
                     DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
                     GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink,
-                    FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink
+                    FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink,
+                    SchoolLoans = request.SchoolLoans?
+                        .Select(A2BSchoolLoanFactory.Create)
+                        .ToList(),
+                    SchoolLeases = request.SchoolLeases?
+                        .Select(A2BSchoolLeaseFactory.Create)
+                        .ToList()
                 };
         }
 
@@ -215,7 +223,15 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
                 DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
                 FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink,
-                GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink
+                GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink,
+                SchoolLeases = request.SchoolLeases == null
+                    ? new List<A2BSchoolLeaseServiceModel>()
+                    : request.SchoolLeases.Select(A2BSchoolLeaseServiceModelFactory.Create)
+                    .ToList(),
+                SchoolLoans = request.SchoolLoans == null
+                    ? new List<A2BSchoolLoanServiceModel>()
+                    : request.SchoolLoans.Select(A2BSchoolLoanServiceModelFactory.Create)
+                    .ToList()
              };
 	    }
     }

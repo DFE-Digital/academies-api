@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TramsDataApi.Enums;
@@ -88,8 +89,8 @@ namespace TramsDataApi.DatabaseModels
         public bool? SchoolFinancialInvestigations {get; set;} // int?
         public string SchoolFinancialInvestigationsExplain {get; set;}
         public bool? SchoolFinancialInvestigationsTrustAware {get; set;}
-        public bool? SchoolLoanExists {get; set;}
-        public bool? SchoolLeaseExists {get; set;}        
+        public ICollection<A2BSchoolLease> SchoolLeases { get; set; }
+        public ICollection<A2BSchoolLoan> SchoolLoans { get; set; }
         public int? SchoolCapacityYear1 {get; set;}
         public int? SchoolCapacityYear2 {get; set;}
         public int? SchoolCapacityYear3 {get; set;}

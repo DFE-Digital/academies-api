@@ -3,6 +3,7 @@ using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.ApplyToBecome;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
@@ -20,7 +21,7 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void Create_ReturnsExpectedA2BSchoolLoanWhenA2BSchoolLoanResponseIsProvided()
         {
-            var schoolLoanCreateRequest = Builder<A2BSchoolLoanCreateRequest>
+            var schoolLoanCreateRequest = Builder<A2BSchoolLoanServiceModel>
                 .CreateNew()
                 .Build();
 

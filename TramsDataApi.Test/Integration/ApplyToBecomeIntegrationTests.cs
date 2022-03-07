@@ -120,8 +120,6 @@ namespace TramsDataApi.Test.Integration
                 SchoolNFYEndDate = _randomGenerator.DateTime(),
                 SchoolPFYEndDate = _randomGenerator.DateTime(),
                 SchoolCFYEndDate = _randomGenerator.DateTime(),
-                SchoolLoanExists = _randomGenerator.Boolean(),
-                SchoolLeaseExists = _randomGenerator.Boolean(),
                 SchoolCapacityYear1 = 1,
                 SchoolCapacityYear2 = 1,
                 SchoolCapacityYear3 = 1,

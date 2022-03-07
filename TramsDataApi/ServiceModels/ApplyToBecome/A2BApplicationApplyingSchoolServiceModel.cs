@@ -62,8 +62,8 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public FinancialYearServiceModel PreviousFinancialYear { get; set; }
 			public FinancialYearServiceModel CurrentFinancialYear { get; set; }
 			public FinancialYearServiceModel NextFinancialYear { get; set; }
-			//public List<Loan> ExistingLoans { get; set; }
-			//public List<Lease> ExistingLeases { get; set; }
+			public ICollection<A2BSchoolLoanServiceModel> SchoolLoans { get; set; }
+			public ICollection<A2BSchoolLeaseServiceModel> SchoolLeases { get; set; }
 			public bool? FinanceOngoingInvestigations { get; set; }
 			public string SchoolFinancialInvestigationsExplain { get; set; }
 			public bool? SchoolFinancialInvestigationsTrustAware { get; set; }

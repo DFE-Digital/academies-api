@@ -117,9 +117,11 @@ namespace TramsDataApi.Test.UseCases
 	            ApplicationStatusId = applicationCreateRequest.ApplicationStatusId,
 	            KeyPersons = applicationCreateRequest.KeyPersons,
 	            ApplyingSchools = applicationCreateRequest.ApplyingSchools
-            };
-            
-            var mockGateway = new Mock<IA2BApplicationGateway>();
+			};
+			expectedResult.ApplyingSchools.ToList().ForEach(x => x.SchoolLeases = new List<A2BSchoolLeaseServiceModel>());
+			expectedResult.ApplyingSchools.ToList().ForEach(x => x.SchoolLoans = new List<A2BSchoolLoanServiceModel>());
+
+			var mockGateway = new Mock<IA2BApplicationGateway>();
             
             mockGateway.Setup(g => g.CreateA2BApplication(It.IsAny<A2BApplication>())).Returns(application);
             
