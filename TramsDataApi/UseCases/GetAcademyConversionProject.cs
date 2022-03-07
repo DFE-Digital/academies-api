@@ -10,13 +10,16 @@ namespace TramsDataApi.UseCases
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
+        private readonly IProposedAcademyAdditionalFieldsGateway _additionalFieldsGateway;
 
         public GetAcademyConversionProject(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
-            ITrustGateway trustGateway)
+            ITrustGateway trustGateway,
+            IProposedAcademyAdditionalFieldsGateway additionalFieldsGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
             _trustGateway = trustGateway;
+            _additionalFieldsGateway = additionalFieldsGateway;
         }
 
         public AcademyConversionProjectResponse Execute(GetAcademyConversionProjectByIdRequest request)
@@ -27,8 +30,15 @@ namespace TramsDataApi.UseCases
             var trust = string.IsNullOrEmpty(academyConversionProject.TrustReferenceNumber)
                 ? null
                 : _trustGateway.GetIfdTrustByGroupId(academyConversionProject.TrustReferenceNumber);
-         
-            return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust);
+            
+            if (academyConversionProject.Urn != null)
+            { 
+                var addtionalFields = _additionalFieldsGateway.GetByUrn((int)academyConversionProject.Urn);
+                return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, addtionalFields);
+            }
+
+            return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, null);
+
         }
     }
 }

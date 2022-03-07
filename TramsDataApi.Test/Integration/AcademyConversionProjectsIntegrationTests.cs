@@ -101,13 +101,14 @@ namespace TramsDataApi.Test.Integration
                 .Without(x => x.Id)
                 .Create();
             var trust = CreateTrust(academyConversionProject);
+            var additionalFields = new ProposedAcademyAdditionalFields();
 
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
             _legacyDbContext.Trust.Add(trust);
             _legacyDbContext.SaveChanges();
 
-            var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust);
+            var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, additionalFields);
             expected.ProjectStatus = PreHtb;
 
             var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
@@ -477,6 +478,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
             _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
             _dbContext.AcademyConversionProjects.RemoveRange(_dbContext.AcademyConversionProjects);
+            _dbContext.ProposedAcademyAdditionalFields.RemoveRange(_dbContext.ProposedAcademyAdditionalFields);
 
             _legacyDbContext.SaveChanges();
             _dbContext.SaveChanges();
