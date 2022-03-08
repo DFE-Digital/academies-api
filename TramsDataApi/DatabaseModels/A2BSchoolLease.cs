@@ -7,8 +7,8 @@ namespace TramsDataApi.DatabaseModels
     public class A2BSchoolLease
     {
         [Key]
-        public string SchoolLeaseId {get; set;}
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string SchoolLeaseId {get; set;}        
         public string SchoolLeaseTerm {get; set;}
         public string SchoolLeaseRepaymentValue {get; set;}
         public string SchoolLeaseInterestRate {get; set;}

@@ -7,6 +7,7 @@ namespace TramsDataApi.DatabaseModels
     public class A2BSchoolLoan
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string SchoolLoanId {get; set;}
         public decimal? SchoolLoanAmount {get; set;}
         public string SchoolLoanPurpose {get; set;}
