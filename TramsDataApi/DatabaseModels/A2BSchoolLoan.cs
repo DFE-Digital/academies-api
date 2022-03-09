@@ -8,7 +8,9 @@ namespace TramsDataApi.DatabaseModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string SchoolLoanId {get; set;}
+        public int SchoolLoanId {get; set;}
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolLoanAmount {get; set;}
         public string SchoolLoanPurpose {get; set;}
         public string SchoolLoanProvider {get; set;}

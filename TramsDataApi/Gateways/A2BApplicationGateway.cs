@@ -24,8 +24,8 @@ namespace TramsDataApi.Gateways
                 .Include(a => a.KeyPersons)
                 .Include(a => a.ApplyingSchools)
                     .ThenInclude(asc => asc.SchoolLoans)
-                .Include(a => a.ApplyingSchools)
-                    .ThenInclude(asc => asc.SchoolLeases)
+                //.Include(a => a.ApplyingSchools)
+                //    .ThenInclude(asc => asc.SchoolLeases)
                 .FirstOrDefault(a => a.ApplicationId == applicationId);
         }
 

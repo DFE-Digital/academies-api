@@ -66,10 +66,10 @@ namespace TramsDataApi.Test.Integration
             };
             var lease = new A2BSchoolLease
             {
-                SchoolLeaseInterestRate = _randomGenerator.NextString(2, 4),
-                SchoolLeasePaymentToDate = _randomGenerator.NextString(2, 10),
+                SchoolLeaseInterestRate = 10,
+                SchoolLeasePaymentToDate = 100,
                 SchoolLeasePurpose = _randomGenerator.NextString(2, 10),
-                SchoolLeaseRepaymentValue = _randomGenerator.NextString(2, 10),
+                SchoolLeaseRepaymentValue = 1000,
                 SchoolLeaseResponsibleForAssets = _randomGenerator.NextString(2, 10),
                 SchoolLeaseTerm = _randomGenerator.NextString(2, 10),
                 SchoolLeaseValueOfAssets = _randomGenerator.NextString(2, 10)
@@ -167,16 +167,9 @@ namespace TramsDataApi.Test.Integration
                 SchoolSupportGrantFundsPaidTo = _randomGenerator.NextString(2, 10),
                 SchoolDeclarationSignedByName = _randomGenerator.NextString(2, 10),
                 SchoolAdEqualitiesImpactAssessmentDetails = _randomGenerator.NextString(2,10),
-                SchoolLeases = new List<A2BSchoolLease>() { lease },
+//                SchoolLeases = new List<A2BSchoolLease>() { lease },
                 SchoolLoans = new List<A2BSchoolLoan>() { loan }
            };
-
-            //var applyingSchool = Builder<A2BApplicationApplyingSchool>
-            //    .CreateNew()
-            //    .With(a => a.ApplicationId = applicationId)
-            //    .With(a => a.SchoolLoans = new List<A2BSchoolLoan>() { Builder<A2BSchoolLoan>.CreateNew().Build() })
-            //    .With(a => a.SchoolLeases = new List<A2BSchoolLease>() { Builder<A2BSchoolLease>.CreateNew().Build() })
-            //   .Build();
 
             var application = Builder<A2BApplication>
                 .CreateNew()
@@ -230,10 +223,10 @@ namespace TramsDataApi.Test.Integration
             };
             var lease = new A2BSchoolLeaseServiceModel
             {
-                SchoolLeaseInterestRate = "20%",
-                SchoolLeasePaymentToDate = "300",
+                SchoolLeaseInterestRate = 20,
+                SchoolLeasePaymentToDate = 300,
                 SchoolLeasePurpose = "purpose",
-                SchoolLeaseRepaymentValue = "1100",
+                SchoolLeaseRepaymentValue = 1100,
                 SchoolLeaseResponsibleForAssets = "who is responsible",
                 SchoolLeaseTerm = " 18  months",
                 SchoolLeaseValueOfAssets = "500"
@@ -410,7 +403,7 @@ namespace TramsDataApi.Test.Integration
             
             _dbContext.A2BContributors.RemoveRange(_dbContext.A2BContributors);
             _dbContext.A2BSchoolLoans.RemoveRange(_dbContext.A2BSchoolLoans);
-            _dbContext.A2BSchoolLeases.RemoveRange(_dbContext.A2BSchoolLeases);
+//            _dbContext.A2BSchoolLeases.RemoveRange(_dbContext.A2BSchoolLeases);
             _dbContext.SaveChanges();
         }
     }
