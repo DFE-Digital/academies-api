@@ -167,8 +167,8 @@ namespace TramsDataApi.Test.Integration
                 SchoolSupportGrantFundsPaidTo = _randomGenerator.NextString(2, 10),
                 SchoolDeclarationSignedByName = _randomGenerator.NextString(2, 10),
                 SchoolAdEqualitiesImpactAssessmentDetails = _randomGenerator.NextString(2,10),
-//                SchoolLeases = new List<A2BSchoolLease>() { lease },
-                SchoolLoans = new List<A2BSchoolLoan>() { loan }
+               SchoolLeases = new List<A2BSchoolLease>() { lease },
+               SchoolLoans = new List<A2BSchoolLoan>() { loan }
            };
 
             var application = Builder<A2BApplication>
@@ -403,7 +403,7 @@ namespace TramsDataApi.Test.Integration
             
             _dbContext.A2BContributors.RemoveRange(_dbContext.A2BContributors);
             _dbContext.A2BSchoolLoans.RemoveRange(_dbContext.A2BSchoolLoans);
-//            _dbContext.A2BSchoolLeases.RemoveRange(_dbContext.A2BSchoolLeases);
+            _dbContext.A2BSchoolLeases.RemoveRange(_dbContext.A2BSchoolLeases);
             _dbContext.SaveChanges();
         }
     }
