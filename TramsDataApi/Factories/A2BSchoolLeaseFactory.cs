@@ -12,7 +12,6 @@ namespace TramsDataApi.Factories
                 ? null
                 : new A2BSchoolLease
                 {
-                    SchoolLeaseId = request.SchoolLeaseId,
                     SchoolLeaseTerm = request.SchoolLeaseTerm,
                     SchoolLeaseRepaymentValue = request.SchoolLeaseRepaymentValue,
                     SchoolLeaseInterestRate = request.SchoolLeaseInterestRate,

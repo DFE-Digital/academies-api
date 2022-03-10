@@ -62,8 +62,6 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public FinancialYearServiceModel PreviousFinancialYear { get; set; }
 			public FinancialYearServiceModel CurrentFinancialYear { get; set; }
 			public FinancialYearServiceModel NextFinancialYear { get; set; }
-			public ICollection<A2BSchoolLoanServiceModel> SchoolLoans { get; set; }
-			public ICollection<A2BSchoolLeaseServiceModel> SchoolLeases { get; set; }
 			public bool? FinanceOngoingInvestigations { get; set; }
 			public string SchoolFinancialInvestigationsExplain { get; set; }
 			public bool? SchoolFinancialInvestigationsTrustAware { get; set; }
@@ -98,6 +96,7 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public bool? DeclarationBodyAgree { get; set; }
 			public bool? DeclarationIAmTheChairOrHeadteacher { get; set; }
 			public string DeclarationSignedByName { get; set; }
-    }
-
+ 			public ICollection<A2BSchoolLoanServiceModel> SchoolLoans { get; set; }
+			public ICollection<A2BSchoolLeaseServiceModel> SchoolLeases { get; set; }
+   }
 }

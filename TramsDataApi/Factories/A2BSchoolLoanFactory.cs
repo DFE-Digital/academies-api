@@ -12,7 +12,6 @@ namespace TramsDataApi.Factories
                 ? null
                 : new A2BSchoolLoan
                 {
-                    SchoolLoanId = request.SchoolLoanId,
                     SchoolLoanAmount = request.SchoolLoanAmount,
                     SchoolLoanPurpose = request.SchoolLoanPurpose,
                     SchoolLoanProvider = request.SchoolLoanProvider,

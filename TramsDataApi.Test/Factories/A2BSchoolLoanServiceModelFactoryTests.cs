@@ -27,7 +27,6 @@ namespace TramsDataApi.Test.Factories
 
             var expectedSchoolLoanResponse = new A2BSchoolLoanServiceModel
             {
-                SchoolLoanId = schoolLoan.SchoolLoanId,
                 SchoolLoanAmount = schoolLoan.SchoolLoanAmount,
                 SchoolLoanPurpose = schoolLoan.SchoolLoanPurpose,
                 SchoolLoanProvider = schoolLoan.SchoolLoanProvider,

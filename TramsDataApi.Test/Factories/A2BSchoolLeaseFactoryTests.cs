@@ -27,7 +27,6 @@ namespace TramsDataApi.Test.Factories
 
             var expectedSchoolLease = new A2BSchoolLease
             {
-                SchoolLeaseId = schoolLeaseCreateRequest.SchoolLeaseId,
                 SchoolLeaseTerm = schoolLeaseCreateRequest.SchoolLeaseTerm,
                 SchoolLeaseRepaymentValue = schoolLeaseCreateRequest.SchoolLeaseRepaymentValue,
                 SchoolLeaseInterestRate = schoolLeaseCreateRequest.SchoolLeaseInterestRate,

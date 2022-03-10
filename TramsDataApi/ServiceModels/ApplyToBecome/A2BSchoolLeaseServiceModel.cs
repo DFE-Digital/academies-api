@@ -2,7 +2,6 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 {
     public class A2BSchoolLeaseServiceModel
     {
-        public int SchoolLeaseId {get; set;}
         public string SchoolLeaseTerm {get; set;}
         public decimal SchoolLeaseRepaymentValue {get; set;}
         public decimal SchoolLeaseInterestRate {get; set;}
