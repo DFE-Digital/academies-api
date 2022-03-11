@@ -7,14 +7,19 @@ namespace TramsDataApi.DatabaseModels
     public class A2BSchoolLease
     {
         [Key]
-        public string SchoolLeaseId {get; set;}
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SchoolLeaseId {get; set;}        
         public string SchoolLeaseTerm {get; set;}
-        public string SchoolLeaseRepaymentValue {get; set;}
-        public string SchoolLeaseInterestRate {get; set;}
-        public string SchoolLeasePaymentToDate {get; set;}
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal SchoolLeaseRepaymentValue {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal SchoolLeaseInterestRate {get; set;}
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal SchoolLeasePaymentToDate {get; set;}
         public string SchoolLeasePurpose {get; set;}
         public string SchoolLeaseValueOfAssets {get; set;}
         public string SchoolLeaseResponsibleForAssets {get; set;}
+        public int ApplyingSchoolId { get; set; }
     }
 }

@@ -3,16 +3,17 @@ using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels.ApplyToBecome;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
 {
-    public class A2BSchoolLoanResponseFactoryTests
+    public class A2BSchoolLoanServiceModelFactoryTests
     {
         [Fact]
         public void Create_ReturnsNull_WhenA2BSchoolLoanIsNull()
         {
-            var response = A2BSchoolLoanResponseFactory.Create(null);
+            var response = A2BSchoolLoanServiceModelFactory.Create(null);
 
             response.Should().BeNull();
         }
@@ -24,9 +25,8 @@ namespace TramsDataApi.Test.Factories
                 .CreateNew()
                 .Build();
 
-            var expectedSchoolLoanResponse = new A2BSchoolLoanResponse
+            var expectedSchoolLoanResponse = new A2BSchoolLoanServiceModel
             {
-                SchoolLoanId = schoolLoan.SchoolLoanId,
                 SchoolLoanAmount = schoolLoan.SchoolLoanAmount,
                 SchoolLoanPurpose = schoolLoan.SchoolLoanPurpose,
                 SchoolLoanProvider = schoolLoan.SchoolLoanProvider,
@@ -34,7 +34,7 @@ namespace TramsDataApi.Test.Factories
                 SchoolLoanSchedule = schoolLoan.SchoolLoanSchedule
             };
                 
-            var response = A2BSchoolLoanResponseFactory.Create(schoolLoan);
+            var response = A2BSchoolLoanServiceModelFactory.Create(schoolLoan);
 
             response.Should().BeEquivalentTo(expectedSchoolLoanResponse);
         }

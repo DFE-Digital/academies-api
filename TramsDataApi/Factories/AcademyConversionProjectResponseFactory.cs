@@ -13,6 +13,7 @@ namespace TramsDataApi.Factories
 			var response = new AcademyConversionProjectResponse
 			{
 				Id = academyConversionProject.Id,
+				ApplicationReferenceNumber = academyConversionProject.ApplicationReferenceNumber,
 				Urn = academyConversionProject.Urn ?? 0,
 				SchoolName = academyConversionProject.SchoolName,
 				LocalAuthority = academyConversionProject.LocalAuthority,

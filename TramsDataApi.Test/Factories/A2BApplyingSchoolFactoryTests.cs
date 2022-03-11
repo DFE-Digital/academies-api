@@ -6,6 +6,8 @@ using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using Xunit;
 using TramsDataApi.ServiceModels.ApplyToBecome;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TramsDataApi.Test.Factories
 {
@@ -17,11 +19,19 @@ namespace TramsDataApi.Test.Factories
             var financialYear = Builder<FinancialYearServiceModel>
                 .CreateNew()
                 .Build();
+            var loans = Builder<A2BSchoolLoanServiceModel>
+                .CreateNew()
+                .Build();
+            var leases = Builder<A2BSchoolLeaseServiceModel>
+                .CreateNew()
+                .Build();
             var request = Builder<A2BApplicationApplyingSchoolServiceModel>
                 .CreateNew()
                 .With(r => r.PreviousFinancialYear = financialYear)
                 .With(r => r.CurrentFinancialYear = financialYear)
                 .With(r => r.NextFinancialYear = financialYear)
+                .With(r => r.SchoolLoans = new List<A2BSchoolLoanServiceModel>() { loans })
+                .With(r => r.SchoolLeases = new List<A2BSchoolLeaseServiceModel>() { leases })
                 .Build();
 
             var expectedStatus = new A2BApplicationApplyingSchool
@@ -116,7 +126,9 @@ namespace TramsDataApi.Test.Factories
                 SchoolDeclarationSignedByName = request.DeclarationSignedByName,
                 DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
                 GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink,
-                FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink
+                FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink,
+                SchoolLeases = request.SchoolLeases.Select(A2BSchoolLeaseFactory.Create).ToList(),
+                SchoolLoans = request.SchoolLoans.Select(A2BSchoolLoanFactory.Create).ToList()
             };
                 
             var response = A2BApplicationApplyingSchoolFactory.Create(request);
@@ -127,8 +139,16 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void Create_ReturnsExpectedA2BApplyingSchoolServiceModel_WhenA2BApplicationApplyingSchoolIsProvided()
         {
-             var request = Builder<A2BApplicationApplyingSchool>
+            var loans = Builder<A2BSchoolLoan>
                 .CreateNew()
+                .Build();
+            var leases = Builder<A2BSchoolLease>
+                .CreateNew()
+                .Build();
+            var request = Builder<A2BApplicationApplyingSchool>
+                .CreateNew()
+                .With(r => r.SchoolLoans = new List<A2BSchoolLoan>() { loans })
+                .With(r => r.SchoolLeases = new List<A2BSchoolLease>() { leases })
                 .Build();
 
             var expectedResponse = new A2BApplicationApplyingSchoolServiceModel
@@ -232,7 +252,13 @@ namespace TramsDataApi.Test.Factories
                 SchoolSupportGrantFundsPaidTo = request.SchoolSupportGrantFundsPaidTo,
                 DiocesePermissionEvidenceDocumentLink = request.DiocesePermissionEvidenceDocumentLink,
                 FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink,
-                GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink
+                GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink,
+                SchoolLoans = request.SchoolLoans
+                    .Select(A2BSchoolLoanServiceModelFactory.Create)
+                    .ToList(),
+                SchoolLeases = request.SchoolLeases
+                    .Select(A2BSchoolLeaseServiceModelFactory.Create)
+                    .ToList()
             };
                 
             var response = A2BApplicationApplyingSchoolFactory.Create(request);

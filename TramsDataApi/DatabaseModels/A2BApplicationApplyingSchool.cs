@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TramsDataApi.Enums;
@@ -88,8 +89,6 @@ namespace TramsDataApi.DatabaseModels
         public bool? SchoolFinancialInvestigations {get; set;} // int?
         public string SchoolFinancialInvestigationsExplain {get; set;}
         public bool? SchoolFinancialInvestigationsTrustAware {get; set;}
-        public bool? SchoolLoanExists {get; set;}
-        public bool? SchoolLeaseExists {get; set;}        
         public int? SchoolCapacityYear1 {get; set;}
         public int? SchoolCapacityYear2 {get; set;}
         public int? SchoolCapacityYear3 {get; set;}
@@ -111,9 +110,10 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolConsultationStakeholdersConsult {get; set;}
         public string SchoolSupportGrantFundsPaidTo {get; set;}
         public string ApplicationId { get; set; }
-        public A2BApplication Application { get; set; }
         public string DiocesePermissionEvidenceDocumentLink { get; set; }
         public string FoundationEvidenceDocumentLink { get; set; }
         public string GoverningBodyConsentEvidenceDocumentLink { get; set; }
+        public ICollection<A2BSchoolLease> SchoolLeases { get; set; }
+        public ICollection<A2BSchoolLoan> SchoolLoans { get; set; }
     }
 }

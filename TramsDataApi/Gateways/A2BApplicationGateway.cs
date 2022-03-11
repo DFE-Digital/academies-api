@@ -23,6 +23,9 @@ namespace TramsDataApi.Gateways
                 .AsNoTracking()
                 .Include(a => a.KeyPersons)
                 .Include(a => a.ApplyingSchools)
+                    .ThenInclude(asc => asc.SchoolLoans)
+                .Include(a => a.ApplyingSchools)
+                    .ThenInclude(asc => asc.SchoolLeases)
                 .FirstOrDefault(a => a.ApplicationId == applicationId);
         }
 

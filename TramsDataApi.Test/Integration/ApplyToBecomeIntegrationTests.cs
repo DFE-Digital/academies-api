@@ -41,7 +41,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetApplicationByApplicationId()
         {
             const string applicationId = "100001";
-
+ 
             var keyPerson = new A2BApplicationKeyPersons
             {
                 Name = _randomGenerator.NextString(2, 10),
@@ -55,7 +55,26 @@ namespace TramsDataApi.Test.Integration
                 KeyPersonOther = _randomGenerator.NextString(2, 10),
                 KeyPersonTrustee = _randomGenerator.NextString(2, 10)
             };
-            
+
+            var loan = new A2BSchoolLoan
+            {
+                SchoolLoanAmount = 1000,
+                SchoolLoanInterestRate = _randomGenerator.NextString(2, 4),
+                SchoolLoanProvider = _randomGenerator.NextString(2, 10),
+                SchoolLoanPurpose = _randomGenerator.NextString(2, 10),
+                SchoolLoanSchedule = _randomGenerator.NextString(2, 10)
+            };
+            var lease = new A2BSchoolLease
+            {
+                SchoolLeaseInterestRate = 10,
+                SchoolLeasePaymentToDate = 100,
+                SchoolLeasePurpose = _randomGenerator.NextString(2, 10),
+                SchoolLeaseRepaymentValue = 1000,
+                SchoolLeaseResponsibleForAssets = _randomGenerator.NextString(2, 10),
+                SchoolLeaseTerm = _randomGenerator.NextString(2, 10),
+                SchoolLeaseValueOfAssets = _randomGenerator.NextString(2, 10)
+            };
+
            var applyingSchool = new A2BApplicationApplyingSchool
             {
                 SchoolDeclarationSignedById = _randomGenerator.NextString(2, 10),
@@ -103,25 +122,29 @@ namespace TramsDataApi.Test.Integration
                 SchoolAdFeederSchools = _randomGenerator.NextString(2, 10),
                 SchoolAdEqualitiesImpactAssessment = true,
                 SchoolPFYRevenue = 1000,
-               SchoolPFYRevenueStatusExplained = _randomGenerator.NextString(2, 10),
+                SchoolPFYRevenueStatusExplained = _randomGenerator.NextString(2, 10),
                 SchoolPFYCapitalForward = 1000,
                 SchoolPFYCapitalForwardStatusExplained = _randomGenerator.NextString(2, 10),
+                SchoolPFYCapitalIsDeficit = _randomGenerator.Boolean(),
+                SchoolPFYRevenueIsDeficit = _randomGenerator.Boolean(),
                 SchoolCFYRevenue = 1000,
                 SchoolCFYRevenueStatusExplained = _randomGenerator.NextString(2, 10),
                 SchoolCFYCapitalForward = 1000,
                 SchoolCFYCapitalForwardStatusExplained = _randomGenerator.NextString(2, 10),
-                SchoolNFYRevenue = 1000,
+               SchoolCFYCapitalIsDeficit = _randomGenerator.Boolean(),
+               SchoolCFYRevenueIsDeficit = _randomGenerator.Boolean(),
+               SchoolNFYRevenue = 1000,
                 SchoolNFYRevenueStatusExplained = _randomGenerator.NextString(2, 10),
                 SchoolNFYCapitalForward = 1000,
                 SchoolNFYCapitalForwardStatusExplained = _randomGenerator.NextString(2, 10),
-                SchoolFinancialInvestigations = true,
+               SchoolNFYCapitalIsDeficit = _randomGenerator.Boolean(),
+               SchoolNFYRevenueIsDeficit = _randomGenerator.Boolean(),
+               SchoolFinancialInvestigations = true,
                 SchoolFinancialInvestigationsExplain = _randomGenerator.NextString(2, 10),
                 SchoolFinancialInvestigationsTrustAware = true,
                 SchoolNFYEndDate = _randomGenerator.DateTime(),
                 SchoolPFYEndDate = _randomGenerator.DateTime(),
                 SchoolCFYEndDate = _randomGenerator.DateTime(),
-                SchoolLoanExists = _randomGenerator.Boolean(),
-                SchoolLeaseExists = _randomGenerator.Boolean(),
                 SchoolCapacityYear1 = 1,
                 SchoolCapacityYear2 = 1,
                 SchoolCapacityYear3 = 1,
@@ -142,17 +165,19 @@ namespace TramsDataApi.Test.Integration
                 SchoolConsultationStakeholders = true,
                 SchoolConsultationStakeholdersConsult = _randomGenerator.NextString(2, 10),
                 SchoolSupportGrantFundsPaidTo = _randomGenerator.NextString(2, 10),
-                SchoolDeclarationSignedByName = _randomGenerator.NextString(2, 10)
-            };
+                SchoolDeclarationSignedByName = _randomGenerator.NextString(2, 10),
+                SchoolAdEqualitiesImpactAssessmentDetails = _randomGenerator.NextString(2,10),
+               SchoolLeases = new List<A2BSchoolLease>() { lease },
+               SchoolLoans = new List<A2BSchoolLoan>() { loan }
+           };
 
-            
             var application = Builder<A2BApplication>
                 .CreateNew()
                 .With(a => a.ApplicationId = applicationId)
                 .With(a => a.TrustApproverEmail = "test@test.com")
-                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormSat)
+                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
                 .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
-                .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> {applyingSchool})
+                .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> {applyingSchool})                
                 .Build();
 
             _dbContext.A2BApplications.Add(application);
@@ -162,7 +187,7 @@ namespace TramsDataApi.Test.Integration
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(expected);
             
             var response = await _client.GetAsync($"/v2/apply-to-become/application/{applicationId}");
-        
+     
         
             response.StatusCode.Should().Be(200);
             
@@ -186,6 +211,25 @@ namespace TramsDataApi.Test.Integration
                 KeyPersonMember = _randomGenerator.NextString(2, 10),
                 KeyPersonOther = _randomGenerator.NextString(2, 10),
                 KeyPersonTrustee = _randomGenerator.NextString(2, 10)
+            };
+
+            var loan = new A2BSchoolLoanServiceModel
+            {
+                SchoolLoanAmount = 1000,
+                SchoolLoanInterestRate = "15%",
+                SchoolLoanProvider = "Provider",
+                SchoolLoanPurpose = "Purpose",
+                SchoolLoanSchedule = "£100 monthly for two years"
+            };
+            var lease = new A2BSchoolLeaseServiceModel
+            {
+                SchoolLeaseInterestRate = 20,
+                SchoolLeasePaymentToDate = 300,
+                SchoolLeasePurpose = "purpose",
+                SchoolLeaseRepaymentValue = 1100,
+                SchoolLeaseResponsibleForAssets = "who is responsible",
+                SchoolLeaseTerm = " 18  months",
+                SchoolLeaseValueOfAssets = "500"
             };
 
             var applyingSchool = new A2BApplicationApplyingSchoolServiceModel
@@ -266,8 +310,6 @@ namespace TramsDataApi.Test.Integration
 
                 SchoolFinancialInvestigationsExplain = _randomGenerator.NextString(2, 10),
                 SchoolFinancialInvestigationsTrustAware =true,
-                //SchoolLoanExists = _randomGenerator.Boolean(),
-                //SchoolLeaseExists = _randomGenerator.Boolean(),
                 SchoolCapacityYear1 = 1,
                 SchoolCapacityYear2 = 1,
                 SchoolCapacityYear3 = 1,
@@ -288,6 +330,8 @@ namespace TramsDataApi.Test.Integration
                 SchoolHasConsultedStakeholders = true,
                 SchoolPlanToConsultStakeholders = _randomGenerator.NextString(2, 10),
                 SchoolSupportGrantFundsPaidTo = _randomGenerator.NextString(2, 10),
+                SchoolLoans = new List<A2BSchoolLoanServiceModel>() { loan },
+                SchoolLeases = new List<A2BSchoolLeaseServiceModel>() { lease }
             };
 
             var application = new A2BApplicationCreateRequest
@@ -338,6 +382,9 @@ namespace TramsDataApi.Test.Integration
                 _dbContext.A2BApplications
                     .Include(a => a.KeyPersons)
                     .Include(a => a.ApplyingSchools)
+                    .ThenInclude(b => b.SchoolLoans)
+                    .Include(a => a.ApplyingSchools)
+                    .ThenInclude(b => b.SchoolLeases)
                     .FirstOrDefault(a => a.ApplicationId == result.Data.ApplicationId);
 
             createdApplication.Should().NotBeNull();

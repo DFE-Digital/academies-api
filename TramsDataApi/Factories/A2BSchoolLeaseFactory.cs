@@ -1,17 +1,17 @@
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.ApplyToBecome;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.Factories
 {
     public class A2BSchoolLeaseFactory
     {
-        public static A2BSchoolLease Create(A2BSchoolLeaseCreateRequest request)
+        public static A2BSchoolLease Create(A2BSchoolLeaseServiceModel request)
         {
             return request == null
                 ? null
                 : new A2BSchoolLease
                 {
-                    SchoolLeaseId = request.SchoolLeaseId,
                     SchoolLeaseTerm = request.SchoolLeaseTerm,
                     SchoolLeaseRepaymentValue = request.SchoolLeaseRepaymentValue,
                     SchoolLeaseInterestRate = request.SchoolLeaseInterestRate,

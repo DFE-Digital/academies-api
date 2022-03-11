@@ -3,6 +3,7 @@ using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels.ApplyToBecome;
+using TramsDataApi.ServiceModels.ApplyToBecome;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
@@ -18,15 +19,14 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void Create_ReturnsExpectedA2BSchoolLeaseWhenA2BSchoolLeaseResponseIsProvided()
+        public void Create_ReturnsExpectedA2BSchoolLeaseWhenA2BSchoolLeaseServiceModelProvided()
         {
-            var schoolLeaseCreateRequest = Builder<A2BSchoolLeaseCreateRequest>
+            var schoolLeaseCreateRequest = Builder<A2BSchoolLeaseServiceModel>
                 .CreateNew()
                 .Build();
 
             var expectedSchoolLease = new A2BSchoolLease
             {
-                SchoolLeaseId = schoolLeaseCreateRequest.SchoolLeaseId,
                 SchoolLeaseTerm = schoolLeaseCreateRequest.SchoolLeaseTerm,
                 SchoolLeaseRepaymentValue = schoolLeaseCreateRequest.SchoolLeaseRepaymentValue,
                 SchoolLeaseInterestRate = schoolLeaseCreateRequest.SchoolLeaseInterestRate,

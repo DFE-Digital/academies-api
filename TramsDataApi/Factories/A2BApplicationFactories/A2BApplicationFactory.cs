@@ -52,6 +52,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 		    ApplyingSchools = request.ApplyingSchools
 			    .Select(A2BApplicationApplyingSchoolFactory.Create)
 			    .ToList()
+			
 	    };
 
 	    public static A2BApplicationResponse Create(A2BApplication application) => new A2BApplicationResponse

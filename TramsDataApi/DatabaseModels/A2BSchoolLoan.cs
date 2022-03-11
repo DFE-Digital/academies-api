@@ -7,11 +7,15 @@ namespace TramsDataApi.DatabaseModels
     public class A2BSchoolLoan
     {
         [Key]
-        public string SchoolLoanId {get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SchoolLoanId {get; set;}
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolLoanAmount {get; set;}
         public string SchoolLoanPurpose {get; set;}
         public string SchoolLoanProvider {get; set;}
         public string SchoolLoanInterestRate {get; set;}
         public string SchoolLoanSchedule {get; set;}
+        public int ApplyingSchoolId { get; set; }
     }
 }

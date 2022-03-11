@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220307165956_A2B-loans-and-leases")]
+    partial class A2Bloansandleases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -526,10 +528,8 @@ namespace TramsDataApi.Migrations.TramsDb
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BSchoolLease", b =>
                 {
-                    b.Property<int>("SchoolLeaseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("SchoolLeaseId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("A2BApplicationApplyingSchoolApplyingSchoolId")
                         .HasColumnType("int");
@@ -537,17 +537,17 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<int>("ApplyingSchoolId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("SchoolLeaseInterestRate")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("SchoolLeaseInterestRate")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SchoolLeasePaymentToDate")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("SchoolLeasePaymentToDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SchoolLeasePurpose")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SchoolLeaseRepaymentValue")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("SchoolLeaseRepaymentValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SchoolLeaseResponsibleForAssets")
                         .HasColumnType("nvarchar(max)");
@@ -567,10 +567,8 @@ namespace TramsDataApi.Migrations.TramsDb
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.A2BSchoolLoan", b =>
                 {
-                    b.Property<int>("SchoolLoanId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("SchoolLoanId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("A2BApplicationApplyingSchoolApplyingSchoolId")
                         .HasColumnType("int");

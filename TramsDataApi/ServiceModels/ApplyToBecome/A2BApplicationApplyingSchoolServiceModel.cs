@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using TramsDataApi.Enums;
@@ -59,11 +60,12 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public bool? SchoolAdditionalInformationAdded { get; set; }
 			public string SchoolAdditionalInformation { get; set; }
 			// Finances
+			[Required]
 			public FinancialYearServiceModel PreviousFinancialYear { get; set; }
+			[Required]
 			public FinancialYearServiceModel CurrentFinancialYear { get; set; }
+			[Required]
 			public FinancialYearServiceModel NextFinancialYear { get; set; }
-			//public List<Loan> ExistingLoans { get; set; }
-			//public List<Lease> ExistingLeases { get; set; }
 			public bool? FinanceOngoingInvestigations { get; set; }
 			public string SchoolFinancialInvestigationsExplain { get; set; }
 			public bool? SchoolFinancialInvestigationsTrustAware { get; set; }
@@ -98,6 +100,7 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public bool? DeclarationBodyAgree { get; set; }
 			public bool? DeclarationIAmTheChairOrHeadteacher { get; set; }
 			public string DeclarationSignedByName { get; set; }
-    }
-
+ 			public ICollection<A2BSchoolLoanServiceModel> SchoolLoans { get; set; }
+			public ICollection<A2BSchoolLeaseServiceModel> SchoolLeases { get; set; }
+   }
 }
