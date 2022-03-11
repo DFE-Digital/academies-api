@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using TramsDataApi.Enums;
@@ -59,8 +60,11 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public bool? SchoolAdditionalInformationAdded { get; set; }
 			public string SchoolAdditionalInformation { get; set; }
 			// Finances
+			[Required]
 			public FinancialYearServiceModel PreviousFinancialYear { get; set; }
+			[Required]
 			public FinancialYearServiceModel CurrentFinancialYear { get; set; }
+			[Required]
 			public FinancialYearServiceModel NextFinancialYear { get; set; }
 			public bool? FinanceOngoingInvestigations { get; set; }
 			public string SchoolFinancialInvestigationsExplain { get; set; }
