@@ -3,6 +3,7 @@ describe("E2E Academy Transfers", () => {
     let url = Cypress.env('url');
     var savedURN;
     var savedOutgoingTrustUkprn;
+    var originalAcademyPerformanceAdditionalInformation;
 
     it('GET All Academy Transfer Projects', () => {
         cy.request({
@@ -18,6 +19,8 @@ describe("E2E Academy Transfers", () => {
             expect(response.status).to.eq(200);
             savedURN = response.body[0].projectUrn;
             cy.log("1st Project URN = "+savedURN);
+            savedOutgoingTrustUkprn = response.body[0].outgoingTrustUkprn;
+            cy.log("1st Project outgoingTrustUkprn = "+savedOutgoingTrustUkprn);
         })
     });
 
@@ -35,16 +38,16 @@ describe("E2E Academy Transfers", () => {
             savedOutgoingTrustUkprn = response.body.outgoingTrustUkprn;
             cy.log("savedOutgoingTrustUkprn = "+savedOutgoingTrustUkprn);
             expect(response.status).to.eq(200);
-            expect("Project URN = "+response.body.projectUrn).to.eq("Project URN = "+savedURN)
-            expect(response.body.academyPerformanceAdditionalInformation)
-            .to.eq("Offstead Report")
+            expect("Project URN = "+response.body.projectUrn).to.eq("Project URN = "+savedURN);
+            originalAcademyPerformanceAdditionalInformation = response.body.academyPerformanceAdditionalInformation;
+            cy.log("originalAcademyPerformanceAdditionalInformation = "+originalAcademyPerformanceAdditionalInformation);
         })
         
         cy.request({
             method : 'PATCH',
             failOnStatusCode: false,
             body:{
-                "outgoingTrustUkprn": "10060936",
+                "outgoingTrustUkprn": `${savedOutgoingTrustUkprn}`,
                 "academyPerformanceAdditionalInformation": "Offstead Report - UPDATE TEST"            
             },
             url: url+"academyTransferProject/"+savedURN,
@@ -56,15 +59,15 @@ describe("E2E Academy Transfers", () => {
         .then((response) =>{
             expect(response.status).to.eq(200);
             expect(response.body.academyPerformanceAdditionalInformation)
-            .to.eq("Offstead Report - UPDATE TEST")
+            .to.eq("Offstead Report - UPDATE TEST");
         })
 
         cy.request({
             method : 'PATCH',
             failOnStatusCode: false,
             body:{
-                "outgoingTrustUkprn": "10060936",
-                "academyPerformanceAdditionalInformation": "Offstead Report"            
+                "outgoingTrustUkprn": `${savedOutgoingTrustUkprn}`,
+                "academyPerformanceAdditionalInformation": `${originalAcademyPerformanceAdditionalInformation}`           
             },
             url: url+"academyTransferProject/"+savedURN,
             headers: {
@@ -75,8 +78,7 @@ describe("E2E Academy Transfers", () => {
         .then((response) =>{
             expect(response.status).to.eq(200);
             expect(response.body.academyPerformanceAdditionalInformation)
-            .to.eq("Offstead Report")
+            .to.eq(originalAcademyPerformanceAdditionalInformation);
         })
     });
-       
 });
