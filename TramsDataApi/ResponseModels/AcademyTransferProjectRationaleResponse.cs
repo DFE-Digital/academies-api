@@ -4,5 +4,6 @@ namespace TramsDataApi.ResponseModels
     {
         public string ProjectRationale { get; set; }
         public string TrustSponsorRationale { get; set; }
+        public bool? IsCompleted { get; set; }
     }
 }

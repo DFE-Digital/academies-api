@@ -4,5 +4,6 @@ namespace TramsDataApi.RequestModels
     {
         public IntendedTransferBenefitRequest IntendedTransferBenefits { get; set; }
         public OtherFactorsToConsiderRequest OtherFactorsToConsider { get; set; }
+        public bool? IsCompleted { get; set; }
     }
 }
