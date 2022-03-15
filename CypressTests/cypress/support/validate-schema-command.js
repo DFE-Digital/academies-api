@@ -1,7 +1,6 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats"
 
-
 // error message
 const getSchemaError = (getAjvError) => {
   return cy.wrap(
