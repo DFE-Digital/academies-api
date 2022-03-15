@@ -33,7 +33,8 @@ namespace TramsDataApi.Factories
                 RddOrEsfaIntervention = model.RddOrEsfaIntervention,
                 RddOrEsfaInterventionDetail = model.RddOrEsfaInterventionDetail,
                 TypeOfTransfer = model.TypeOfTransfer,
-                OtherTransferTypeDescription = model.OtherTransferTypeDescription
+                OtherTransferTypeDescription = model.OtherTransferTypeDescription,
+                IsCompleted = model.FeatureSectionIsCompleted
             };
 
             var dates = new AcademyTransferProjectDatesResponse
@@ -85,12 +86,14 @@ namespace TramsDataApi.Factories
                 Benefits = new AcademyTransferProjectBenefitsResponse
                 {
                     IntendedTransferBenefits = intendedTransferBenefits,
-                    OtherFactorsToConsider = otherFactorsToConsider
+                    OtherFactorsToConsider = otherFactorsToConsider,
+                    IsCompleted = model.BenefitsSectionIsCompleted
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
                 {
                     ProjectRationale = model.ProjectRationale,
-                    TrustSponsorRationale = model.TrustSponsorRationale
+                    TrustSponsorRationale = model.TrustSponsorRationale,
+                    IsCompleted = model.RationaleSectionIsCompleted
                 },
                 GeneralInformation = new AcademyTransferProjectGeneralInformationResponse
                 {
