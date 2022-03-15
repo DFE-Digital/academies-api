@@ -2,7 +2,6 @@
 describe("GET conversion-projects", () => {
  let apiKey = Cypress.env('apiKey');
  let url = Cypress.env('url')
- var projectid; 
 
   it('Should reject invalid \'?count\' parameters - alphabetical chars', () => {
     cy.request({
@@ -55,7 +54,7 @@ describe("GET conversion-projects", () => {
           expect(response.body.data[0]).to.have.property('newLAEstab', '935/3028')
           expect(response.body.data[0]).to.have.property('newAcademyUKPRN', null)
           expect(response.body.data[0]).to.have.property('newUPIN', null)
-          expect(response.body[0]).to.have.property('trustUKPRN', null)
+          expect(response.body.data[0]).to.have.property('trustUKPRN', null)
         })
     })
 });
