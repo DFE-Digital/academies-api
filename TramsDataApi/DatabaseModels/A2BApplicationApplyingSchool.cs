@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TramsDataApi.Enums;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -12,7 +11,7 @@ namespace TramsDataApi.DatabaseModels
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ApplyingSchoolId {get; set;}
-        
+
         public string SchoolDeclarationSignedById {get; set;}
         public string SchoolDeclarationSignedByName { get; set; }
         public bool? SchoolDeclarationBodyAgree {get; set;} // the information is true to the best of my knowledge
@@ -59,28 +58,34 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolAdFeederSchools {get; set;}
         public bool? SchoolAdEqualitiesImpactAssessment {get; set;}
         public string SchoolAdEqualitiesImpactAssessmentDetails { get; set; }
+        
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolPFYRevenue {get; set;}
         public bool? SchoolPFYRevenueIsDeficit { get; set; }
         public string SchoolPFYRevenueStatusExplained {get; set;}
+        
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolPFYCapitalForward {get; set;}
         public bool? SchoolPFYCapitalIsDeficit { get; set; }
         public string SchoolPFYCapitalForwardStatusExplained {get; set;}
         public DateTime? SchoolPFYEndDate { get; set; }
+        
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolCFYRevenue {get; set;}
         public bool? SchoolCFYRevenueIsDeficit { get; set; }
         public string SchoolCFYRevenueStatusExplained {get; set;}
+        
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolCFYCapitalForward {get; set;}
         public bool? SchoolCFYCapitalIsDeficit { get; set; }
         public string SchoolCFYCapitalForwardStatusExplained {get; set;}
         public DateTime? SchoolCFYEndDate { get; set; }
+        
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolNFYRevenue {get; set;}
         public bool? SchoolNFYRevenueIsDeficit { get; set; }
         public string SchoolNFYRevenueStatusExplained {get; set;}
+        
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SchoolNFYCapitalForward {get; set;}
         public bool? SchoolNFYCapitalIsDeficit { get; set; }
@@ -109,11 +114,18 @@ namespace TramsDataApi.DatabaseModels
         public bool? SchoolConsultationStakeholders {get; set;}
         public string SchoolConsultationStakeholdersConsult {get; set;}
         public string SchoolSupportGrantFundsPaidTo {get; set;}
-        public string ApplicationId { get; set; }
+
         public string DiocesePermissionEvidenceDocumentLink { get; set; }
         public string FoundationEvidenceDocumentLink { get; set; }
         public string GoverningBodyConsentEvidenceDocumentLink { get; set; }
-        public ICollection<A2BSchoolLease> SchoolLeases { get; set; }
-        public ICollection<A2BSchoolLoan> SchoolLoans { get; set; }
+        
+        [ForeignKey(nameof(ApplyingSchoolId))]
+        public virtual ICollection<A2BSchoolLease> SchoolLeases { get; set; }
+        
+        [ForeignKey(nameof(ApplyingSchoolId))]
+        public virtual ICollection<A2BSchoolLoan> SchoolLoans { get; set; }
+        
+        public string ApplicationId { get; set; }
+        public virtual A2BApplication A2BApplication { get; set; }
     }
 }

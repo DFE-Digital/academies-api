@@ -1,8 +1,7 @@
 using FizzWare.NBuilder;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
-using TramsDataApi.RequestModels.ApplyToBecome;
+using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.ServiceModels.ApplyToBecome;
 using Xunit;
 

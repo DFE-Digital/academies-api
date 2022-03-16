@@ -26,12 +26,10 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<ConcernsRating> ConcernsRatings{ get; set; }
         public virtual DbSet<A2BApplication> A2BApplications { get; set; }
         public virtual DbSet<A2BApplicationKeyPersons> A2BApplicationKeyPersons { get; set; }
-        public virtual DbSet<A2BApplicationStatus> A2BApplicationStatus { get; set; }
         public virtual DbSet<A2BApplicationApplyingSchool> A2BApplicationApplyingSchools { get; set; }
-        public virtual DbSet<A2BContributor> A2BContributors { get; set; }
         public virtual DbSet<A2BSchoolLease> A2BSchoolLeases { get; set; }
         public virtual DbSet<A2BSchoolLoan> A2BSchoolLoans { get; set; }
-        public virtual DbSet<A2BSelectOption> A2BSelectOptions { get; set; }
+        
         public virtual DbSet<FssProject> FssProjects { get; set; }
         public virtual DbSet<ProposedAcademyAdditionalFields> ProposedAcademyAdditionalFields { get; set; }
 

@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
-using TramsDataApi.Factories;
 using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.Gateways;
 using TramsDataApi.UseCases;
@@ -39,7 +36,7 @@ namespace TramsDataApi.Test.UseCases
             var application = Builder<A2BApplication>
                 .CreateNew()
                 .With(a => a.ApplicationId == applicationId)
-                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
+                .With(a => a.ApplicationType = "FormMat")
                 .With(a => a.KeyPersons = keyPersons)
                 .With(a => a.ApplyingSchools = applyingSchools)
                 .Build();

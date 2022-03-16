@@ -69,20 +69,14 @@ namespace TramsDataApi
             services.AddScoped<IIndexConcernsTypes, IndexConcernsTypes>();
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
             
-            services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
-            services.AddScoped<IA2BApplicationStatusGateway, A2BApplicationStatusGateway>();
-            services.AddScoped<IA2BContributorGateway, A2BContributorGateway>();
             services.AddScoped<IFssProjectGateway, FssProjectGateway>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
 
+            services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
-            services.AddScoped<IGetA2BApplicationStatus, GetA2BApplicationStatus>();
-            services.AddScoped<ICreateA2BApplicationStatus, CreateA2BApplicationStatus>();
-            services.AddScoped<IGetA2BContributor, GetA2BContributor>();
-            services.AddScoped<ICreateA2BContributor, CreateA2BContributor>();
-          
+
             services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();
             services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
             services.AddScoped < IGetAllFssProjects, GetAllFssProjects>();

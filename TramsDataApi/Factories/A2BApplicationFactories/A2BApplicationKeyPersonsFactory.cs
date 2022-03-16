@@ -15,7 +15,6 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     KeyPersonCeoExecutive = request.KeyPersonCeoExecutive,
                     KeyPersonChairOfTrust = request.KeyPersonChairOfTrust,
                     KeyPersonFinancialDirector = request.KeyPersonFinancialDirector,
-                    KeyPersonFinancialDirectorTime = request.KeyPersonFinancialDirectorTime,
                     KeyPersonMember = request.KeyPersonMember,
                     KeyPersonOther = request.KeyPersonOther,
                     KeyPersonTrustee = request.KeyPersonTrustee
@@ -32,7 +31,6 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 KeyPersonCeoExecutive = request.KeyPersonCeoExecutive,
                 KeyPersonChairOfTrust = request.KeyPersonChairOfTrust,
                 KeyPersonFinancialDirector = request.KeyPersonFinancialDirector,
-                KeyPersonFinancialDirectorTime = request.KeyPersonFinancialDirectorTime,
                 KeyPersonMember = request.KeyPersonMember,
                 KeyPersonOther = request.KeyPersonOther,
                 KeyPersonTrustee = request.KeyPersonTrustee

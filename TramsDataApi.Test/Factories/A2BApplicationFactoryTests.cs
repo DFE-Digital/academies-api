@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using FizzWare.NBuilder;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
-using TramsDataApi.Factories;
 using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
@@ -29,7 +26,7 @@ namespace TramsDataApi.Test.Factories
 				.Build();
             var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
-                .With(r => r.ApplicationType = (int?)A2BApplicationTypeEnum.FormMat)
+                .With(r => r.ApplicationType = "JoinMat")
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> { keyPerson })
                 .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> { applyingSchool })
                 .Build();
@@ -86,7 +83,7 @@ namespace TramsDataApi.Test.Factories
 	        
             var application = Builder<A2BApplication>
                 .CreateNew()
-                .With(a => a.ApplicationType = (int?)A2BApplicationTypeEnum.FormMat)
+                .With(a => a.ApplicationType = "JoinMat")
                 .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
                 .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> { applyingSchool })
                 .Build();
@@ -95,7 +92,7 @@ namespace TramsDataApi.Test.Factories
             {
 	            Name = application.Name,
 	            ApplicationId = application.ApplicationId,
-	            ApplicationType = Enum.GetName(typeof(A2BApplicationTypeEnum), application.ApplicationType!),
+	            ApplicationType = application.ApplicationType,
 	            FormTrustProposedNameOfTrust = application.FormTrustProposedNameOfTrust,
 	            ApplicationSubmitted = application.ApplicationSubmitted,
 	            ApplicationLeadAuthorId = application.ApplicationLeadAuthorId,

@@ -7,8 +7,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TramsDataApi.Controllers.V2;
-using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.ApplyToBecome;
@@ -76,7 +74,7 @@ namespace TramsDataApi.Test.Controllers
             var request = Builder<A2BApplicationCreateRequest>
                 .CreateNew()
                 .With(r => r.ApplicationId = applicationId)
-                .With(r => r.ApplicationType = 907660000)
+                .With(r => r.ApplicationType = "JoinMat")
                 .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson})
                 .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchool})
                 .Build();
@@ -85,7 +83,7 @@ namespace TramsDataApi.Test.Controllers
             {
                 ApplicationId = applicationId,
                 Name = request.Name,
-                ApplicationType = Enum.GetName(typeof(A2BApplicationTypeEnum), request.ApplicationType!),
+                ApplicationType = request.ApplicationType,
                 TrustId = request.TrustId,
                 FormTrustProposedNameOfTrust = request.FormTrustProposedNameOfTrust,
                 ApplicationSubmitted = request.ApplicationSubmitted,

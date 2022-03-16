@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.RequestModels.ApplyToBecome;
 
 namespace TramsDataApi.Gateways
 {

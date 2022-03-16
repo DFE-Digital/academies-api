@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels.ApplyToBecome;
 using TramsDataApi.ServiceModels.ApplyToBecome;
@@ -59,9 +57,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 	    {
 		    Name = application.Name,
 		    ApplicationId = application.ApplicationId,
-		    ApplicationType = application.ApplicationType.HasValue
-			    ? Enum.GetName(typeof(A2BApplicationTypeEnum), application.ApplicationType.Value)
-			    : null,
+		    ApplicationType = application.ApplicationType,
 		    FormTrustProposedNameOfTrust = application.FormTrustProposedNameOfTrust,
 		    ApplicationSubmitted = application.ApplicationSubmitted,
 		    ApplicationLeadAuthorId = application.ApplicationLeadAuthorId,
