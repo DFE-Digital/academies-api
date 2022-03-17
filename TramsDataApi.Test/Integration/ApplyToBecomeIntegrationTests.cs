@@ -214,7 +214,7 @@ namespace TramsDataApi.Test.Integration
                 SchoolLoanInterestRate = "15%",
                 SchoolLoanProvider = "Provider",
                 SchoolLoanPurpose = "Purpose",
-                SchoolLoanSchedule = "�100 monthly for two years"
+                SchoolLoanSchedule = "£100 monthly for two years"
             };
             var lease = new A2BSchoolLeaseServiceModel
             {
