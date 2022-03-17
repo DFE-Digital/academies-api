@@ -4,14 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using AutoFixture;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
-using TramsDataApi.Factories;
 using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using TramsDataApi.ResponseModels;
@@ -50,10 +47,9 @@ namespace TramsDataApi.Test.Integration
                 KeyPersonCeoExecutive = _randomGenerator.Boolean(),
                 KeyPersonChairOfTrust = _randomGenerator.Boolean(),
                 KeyPersonFinancialDirector = _randomGenerator.Boolean(),
-                KeyPersonFinancialDirectorTime = _randomGenerator.NextString(2, 10),
-                KeyPersonMember = _randomGenerator.NextString(2, 10),
-                KeyPersonOther = _randomGenerator.NextString(2, 10),
-                KeyPersonTrustee = _randomGenerator.NextString(2, 10)
+                KeyPersonMember = _randomGenerator.Boolean(),
+                KeyPersonOther = _randomGenerator.Boolean(),
+                KeyPersonTrustee = _randomGenerator.Boolean()
             };
 
             var loan = new A2BSchoolLoan
@@ -175,7 +171,7 @@ namespace TramsDataApi.Test.Integration
                 .CreateNew()
                 .With(a => a.ApplicationId = applicationId)
                 .With(a => a.TrustApproverEmail = "test@test.com")
-                .With(a => a.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
+                .With(a => a.ApplicationType = "JoinMat")
                 .With(a => a.KeyPersons = new List<A2BApplicationKeyPersons> {keyPerson})
                 .With(a => a.ApplyingSchools = new List<A2BApplicationApplyingSchool> {applyingSchool})                
                 .Build();
@@ -207,10 +203,9 @@ namespace TramsDataApi.Test.Integration
                 KeyPersonCeoExecutive = _randomGenerator.Boolean(),
                 KeyPersonChairOfTrust = _randomGenerator.Boolean(),
                 KeyPersonFinancialDirector = _randomGenerator.Boolean(),
-                KeyPersonFinancialDirectorTime = _randomGenerator.NextString(2, 10),
-                KeyPersonMember = _randomGenerator.NextString(2, 10),
-                KeyPersonOther = _randomGenerator.NextString(2, 10),
-                KeyPersonTrustee = _randomGenerator.NextString(2, 10)
+                KeyPersonMember = _randomGenerator.Boolean(),
+                KeyPersonOther = _randomGenerator.Boolean(),
+                KeyPersonTrustee = _randomGenerator.Boolean()
             };
 
             var loan = new A2BSchoolLoanServiceModel
@@ -219,7 +214,7 @@ namespace TramsDataApi.Test.Integration
                 SchoolLoanInterestRate = "15%",
                 SchoolLoanProvider = "Provider",
                 SchoolLoanPurpose = "Purpose",
-                SchoolLoanSchedule = "£100 monthly for two years"
+                SchoolLoanSchedule = "Â£100 monthly for two years"
             };
             var lease = new A2BSchoolLeaseServiceModel
             {
@@ -368,7 +363,7 @@ namespace TramsDataApi.Test.Integration
                 TrustId = _randomGenerator.NextString(2, 10),
                 ApplicationStatusId = _randomGenerator.NextString(2, 10),
                 TrustApproverEmail = "test@test.com",
-                ApplicationType = (int?) A2BApplicationTypeEnum.FormSat,
+                ApplicationType = "JoinMat",
                 KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson},
                 ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchool}
             };
@@ -399,9 +394,6 @@ namespace TramsDataApi.Test.Integration
             _dbContext.A2BApplicationKeyPersons.RemoveRange(_dbContext.A2BApplicationKeyPersons);
             _dbContext.A2BApplicationApplyingSchools.RemoveRange(_dbContext.A2BApplicationApplyingSchools);
             _dbContext.A2BApplications.RemoveRange(_dbContext.A2BApplications);
-            _dbContext.A2BApplicationStatus.RemoveRange(_dbContext.A2BApplicationStatus);
-            
-            _dbContext.A2BContributors.RemoveRange(_dbContext.A2BContributors);
             _dbContext.A2BSchoolLoans.RemoveRange(_dbContext.A2BSchoolLoans);
             _dbContext.A2BSchoolLeases.RemoveRange(_dbContext.A2BSchoolLeases);
             _dbContext.SaveChanges();

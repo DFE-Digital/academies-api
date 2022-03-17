@@ -5,8 +5,6 @@ using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
-using TramsDataApi.Factories;
 using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.ApplyToBecome;
@@ -32,7 +30,7 @@ namespace TramsDataApi.Test.UseCases
 				.Build();
 	        var applicationCreateRequest = Builder<A2BApplicationCreateRequest>
 	            .CreateNew()
-	            .With(r => r.ApplicationType = (int?) A2BApplicationTypeEnum.FormMat)
+	            .With(r => r.ApplicationType = "FormMat")
 	            .With(r => r.KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPersons})
 	            .With(r => r.ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchools})
 	            .Build();
@@ -84,7 +82,7 @@ namespace TramsDataApi.Test.UseCases
             {
 	            ApplicationId = "10001",
 	            Name = applicationCreateRequest.Name,
-	            ApplicationType = Enum.GetName(typeof(A2BApplicationTypeEnum), applicationCreateRequest.ApplicationType!),
+	            ApplicationType = applicationCreateRequest.ApplicationType,
 	            FormTrustProposedNameOfTrust = applicationCreateRequest.FormTrustProposedNameOfTrust,
 	            ApplicationSubmitted = applicationCreateRequest.ApplicationSubmitted,
 	            ApplicationLeadAuthorId = applicationCreateRequest.ApplicationLeadAuthorId,

@@ -25,7 +25,6 @@ namespace TramsDataApi.Test.Factories
                 KeyPersonCeoExecutive = keyPersonsModel.KeyPersonCeoExecutive,
                 KeyPersonChairOfTrust = keyPersonsModel.KeyPersonChairOfTrust,
                 KeyPersonFinancialDirector = keyPersonsModel.KeyPersonFinancialDirector,
-                KeyPersonFinancialDirectorTime = keyPersonsModel.KeyPersonFinancialDirectorTime,
                 KeyPersonMember = keyPersonsModel.KeyPersonMember,
                 KeyPersonOther = keyPersonsModel.KeyPersonOther,
                 KeyPersonTrustee = keyPersonsModel.KeyPersonTrustee
@@ -51,7 +50,6 @@ namespace TramsDataApi.Test.Factories
                 KeyPersonCeoExecutive = keyPersons.KeyPersonCeoExecutive,
                 KeyPersonChairOfTrust = keyPersons.KeyPersonChairOfTrust,
                 KeyPersonFinancialDirector = keyPersons.KeyPersonFinancialDirector,
-                KeyPersonFinancialDirectorTime = keyPersons.KeyPersonFinancialDirectorTime,
                 KeyPersonMember = keyPersons.KeyPersonMember,
                 KeyPersonOther = keyPersons.KeyPersonOther,
                 KeyPersonTrustee = keyPersons.KeyPersonTrustee

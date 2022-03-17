@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
-using TramsDataApi.Extensions;
-using TramsDataApi.RequestModels.ApplyToBecome;
-using TramsDataApi.ResponseModels.ApplyToBecome;
 using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.Factories.A2BApplicationFactories

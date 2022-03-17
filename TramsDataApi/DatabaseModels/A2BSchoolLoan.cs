@@ -16,6 +16,8 @@ namespace TramsDataApi.DatabaseModels
         public string SchoolLoanProvider {get; set;}
         public string SchoolLoanInterestRate {get; set;}
         public string SchoolLoanSchedule {get; set;}
+        
         public int ApplyingSchoolId { get; set; }
+        public virtual A2BApplicationApplyingSchool A2BApplicationApplyingSchool { get; set; }
     }
 }

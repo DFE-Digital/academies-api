@@ -1,8 +1,7 @@
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.ResponseModels.ApplyToBecome;
 using TramsDataApi.ServiceModels.ApplyToBecome;
 
-namespace TramsDataApi.Factories
+namespace TramsDataApi.Factories.A2BApplicationFactories
 {
     public class A2BSchoolLoanServiceModelFactory
     {

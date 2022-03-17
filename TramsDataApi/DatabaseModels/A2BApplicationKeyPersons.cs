@@ -12,17 +12,17 @@ namespace TramsDataApi.DatabaseModels
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int KeyPersonId {get; set;}
+        
         public DateTime? KeyPersonDateOfBirth {get; set;}
         public string KeyPersonBiography {get; set;}
         public bool? KeyPersonCeoExecutive {get; set;}
         public bool? KeyPersonChairOfTrust {get; set;}
         public bool? KeyPersonFinancialDirector {get; set;}
-        public string KeyPersonFinancialDirectorTime {get; set;}
-        public string KeyPersonMember {get; set;}
-        public string KeyPersonOther {get; set;}
-        public string KeyPersonTrustee {get; set;}
+        public bool? KeyPersonMember {get; set;}
+        public bool? KeyPersonOther {get; set;}
+        public bool? KeyPersonTrustee {get; set;}
         
         public string ApplicationId { get; set; }
-        public A2BApplication Application { get; set; }
+        public virtual A2BApplication A2BApplication { get; set; }
     }
 }

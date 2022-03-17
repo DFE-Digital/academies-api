@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using TramsDataApi.DatabaseModels;
-using TramsDataApi.Enums;
 using TramsDataApi.ServiceModels.ApplyToBecome;
 
 namespace TramsDataApi.RequestModels.ApplyToBecome
@@ -14,7 +12,7 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
 		[Required]
 	    public string ApplicationId { get; set; }
 
-		public int? ApplicationType { get; set; }
+		public string ApplicationType { get; set; }
 		public string FormTrustProposedNameOfTrust { get; set; }
 		public bool? ApplicationSubmitted { get; set; }
 		public string ApplicationLeadAuthorId { get; set; }

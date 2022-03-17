@@ -8,11 +8,11 @@ namespace TramsDataApi.DatabaseModels
     [Table("A2BApplication", Schema="sdd")]
     public class A2BApplication
     {
-	    public string Name { get; set; }
-	    
-	    [Key]
+	    [Key] 
 	    public string ApplicationId { get; set; }
-	    public int? ApplicationType { get; set; }
+	    
+	    public string Name { get; set; }
+	    public string ApplicationType { get; set; }
 	    public string FormTrustProposedNameOfTrust { get; set; }
 	    public bool? ApplicationSubmitted { get; set; }
 		public string ApplicationLeadAuthorId { get; set; }
@@ -44,11 +44,10 @@ namespace TramsDataApi.DatabaseModels
 		public string TrustId { get; set; }
 		public string ApplicationStatusId { get; set; }
 		
-        public ICollection<A2BApplicationKeyPersons> KeyPersons { get; set; }
+		[ForeignKey(nameof(ApplicationId))]
+        public virtual ICollection<A2BApplicationKeyPersons> KeyPersons { get; set; }
         
-        public ICollection<A2BApplicationApplyingSchool> ApplyingSchools { get; set; }
-        
-        [ForeignKey(nameof(ApplicationType))]
-        public virtual A2BApplicationType ApplicationTypeOption { get; set; }
+        [ForeignKey(nameof(ApplicationId))]
+        public virtual ICollection<A2BApplicationApplyingSchool> ApplyingSchools { get; set; }
     }
 }

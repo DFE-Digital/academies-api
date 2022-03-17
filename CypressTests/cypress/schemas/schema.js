@@ -128,17 +128,14 @@ export const applyToBecomeAcademySchema = {
                   keyPersonFinancialDirector: {
                     type: "boolean"
                   },
-                  keyPersonFinancialDirectorTime: {
-                    type: "string"
-                  },
                   keyPersonMember: {
-                    type: "string"
+                    type: "boolean"
                   },
                   keyPersonOther: {
-                    type: "string"
+                    type: "boolean"
                   },
                   keyPersonTrustee: {
-                    type: "string"
+                    type: "boolean"
                   }
                 },
                 required: [
@@ -148,7 +145,6 @@ export const applyToBecomeAcademySchema = {
                   "keyPersonCeoExecutive",
                   "keyPersonChairOfTrust",
                   "keyPersonFinancialDirector",
-                  "keyPersonFinancialDirectorTime",
                   "keyPersonMember",
                   "keyPersonOther",
                   "keyPersonTrustee"

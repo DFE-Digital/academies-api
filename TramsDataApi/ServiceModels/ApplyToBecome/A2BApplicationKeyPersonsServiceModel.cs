@@ -10,9 +10,8 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
         public bool? KeyPersonCeoExecutive {get; set;}
         public bool? KeyPersonChairOfTrust {get; set;}
         public bool? KeyPersonFinancialDirector {get; set;}
-        public string KeyPersonFinancialDirectorTime {get; set;}
-        public string KeyPersonMember {get; set;}
-        public string KeyPersonOther {get; set;}
-        public string KeyPersonTrustee {get; set;}
+        public bool? KeyPersonMember {get; set;}
+        public bool? KeyPersonOther {get; set;}
+        public bool? KeyPersonTrustee {get; set;}
     }
 }
