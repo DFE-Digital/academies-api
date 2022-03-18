@@ -7,9 +7,9 @@ let url = Cypress.env('url')
 
 describe('Test Against Json Schema API V2 School application', () => {
 
-    it('GET faker_data.json', () => {
+    it.skip('GET faker_data.json', () => {
         cy.request({
-            url: url + '/v2/apply-to-become/application/0x546c7D999B',
+            url: url + '/v2/apply-to-become/application/A2B_1357',
             headers: {
                 ApiKey: apiKey,
               }
