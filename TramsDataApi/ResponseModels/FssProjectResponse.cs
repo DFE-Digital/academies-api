@@ -39,5 +39,7 @@ namespace TramsDataApi.ResponseModels
         public DateTime? FAActualCompletionDate { get; set; }
         public DateTime? FAForecastDate { get; set; }
         public DateTime? KickOfMeetingHeldDate { get; set; }
+        public string RealisticYearofOpening { get; set; }
+        public string MemberOfParliament { get; set; }
     }
 }
