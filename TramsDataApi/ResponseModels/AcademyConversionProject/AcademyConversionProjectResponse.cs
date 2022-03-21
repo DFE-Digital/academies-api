@@ -93,14 +93,6 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
         public string KeyStage4PerformanceAdditionalInformation { get; set; }
         public string KeyStage5PerformanceAdditionalInformation { get; set; }
         public string Upin { get; set; }
-        public string NewAcademyUrn { get; set; }
-
-        // additional data items for Business Central
-        public string NewURN { get; set; }
-        public string NewLAEstab { get; set; }
-        public string NewAcademyUKPRN { get; set; }
-        public string NewUPIN { get; set; }
-        public string TrustUKPRN { get; set; }
-        public string NewAcademyName { get; set; }
+        public string NewAcademyUrn { get; set; }       
     }
 }

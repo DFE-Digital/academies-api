@@ -101,15 +101,13 @@ namespace TramsDataApi.Test.Integration
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.Id)
                 .Create();
-            var trust = CreateTrust(academyConversionProject);
-            var additionalFields = new ProposedAcademyAdditionalFields();
-
+            var trust = CreateTrust(academyConversionProject);           
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
             _legacyDbContext.Trust.Add(trust);
             _legacyDbContext.SaveChanges();
 
-            var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null, additionalFields);
+            var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null);
             expected.ProjectStatus = PreHtb;
 
             var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
