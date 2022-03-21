@@ -43,6 +43,9 @@ namespace TramsDataApi.Factories
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
                 AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
+                FeatureSectionIsCompleted = request.Features?.IsCompleted,
+                BenefitsSectionIsCompleted = request.Benefits?.IsCompleted,
+                RationaleSectionIsCompleted = request.Rationale?.IsCompleted,
                 AcademyPerformanceAdditionalInformation = request.AcademyPerformanceAdditionalInformation,
                 PupilNumbersAdditionalInformation = request.PupilNumbersAdditionalInformation,
                 LatestOfstedJudgementAdditionalInformation = request.LatestOfstedJudgementAdditionalInformation,
@@ -143,6 +146,10 @@ namespace TramsDataApi.Factories
             original.OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue;
             
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
+
+            original.FeatureSectionIsCompleted = toMerge.FeatureSectionIsCompleted ?? original.FeatureSectionIsCompleted;
+            original.BenefitsSectionIsCompleted = toMerge.BenefitsSectionIsCompleted ?? original.BenefitsSectionIsCompleted;
+            original.RationaleSectionIsCompleted = toMerge.RationaleSectionIsCompleted ?? original.RationaleSectionIsCompleted;
 
             original.AcademyPerformanceAdditionalInformation = toMerge.AcademyPerformanceAdditionalInformation ?? 
                                                          original.AcademyPerformanceAdditionalInformation;

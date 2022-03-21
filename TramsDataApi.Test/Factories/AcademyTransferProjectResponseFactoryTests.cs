@@ -43,6 +43,9 @@ namespace TramsDataApi.Test.Factories
                 FinanceAndDebtShouldBeConsidered = null,
                 FinanceAndDebtFurtherSpecification = null,
                 OtherBenefitValue = null,
+                FeatureSectionIsCompleted = null,
+                BenefitsSectionIsCompleted = null,
+                RationaleSectionIsCompleted = null,
                 AcademyPerformanceAdditionalInformation = null,
                 PupilNumbersAdditionalInformation = null,
                 LatestOfstedJudgementAdditionalInformation = null,
@@ -129,7 +132,8 @@ namespace TramsDataApi.Test.Factories
                 RddOrEsfaIntervention = academyTransferProjectModel.RddOrEsfaIntervention,
                 RddOrEsfaInterventionDetail = academyTransferProjectModel.RddOrEsfaInterventionDetail,
                 TypeOfTransfer = academyTransferProjectModel.TypeOfTransfer,
-                OtherTransferTypeDescription = academyTransferProjectModel.OtherTransferTypeDescription
+                OtherTransferTypeDescription = academyTransferProjectModel.OtherTransferTypeDescription,
+                IsCompleted = academyTransferProjectModel.FeatureSectionIsCompleted
             };
 
             var expectedDates = new AcademyTransferProjectDatesResponse
@@ -183,12 +187,14 @@ namespace TramsDataApi.Test.Factories
                 Benefits = new AcademyTransferProjectBenefitsResponse
                 {
                     IntendedTransferBenefits = expectedIntendedTransferBenefits,
-                    OtherFactorsToConsider = expectedOtherFactorsToConsider
+                    OtherFactorsToConsider = expectedOtherFactorsToConsider,
+                    IsCompleted = academyTransferProjectModel.BenefitsSectionIsCompleted
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
                 {
                     ProjectRationale = academyTransferProjectModel.ProjectRationale,
-                    TrustSponsorRationale = academyTransferProjectModel.TrustSponsorRationale
+                    TrustSponsorRationale = academyTransferProjectModel.TrustSponsorRationale,
+                    IsCompleted = academyTransferProjectModel.RationaleSectionIsCompleted
                 },
                 GeneralInformation = new AcademyTransferProjectGeneralInformationResponse
                 {
