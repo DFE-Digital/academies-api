@@ -49,6 +49,8 @@ namespace TramsDataApi.Factories
                 FAForecastDate = fssProject.FAForecastDate,
                 FAActualCompletionDate = fssProject.FAActualCompletionDate,
                 KickOfMeetingHeldDate = fssProject.KickOfMeetingHeldDate,
+                RealisticYearofOpening = fssProject.RealisticYearofOpening,
+                MemberOfParliament = fssProject.MemberOfParliament,
             };
         }
     }
