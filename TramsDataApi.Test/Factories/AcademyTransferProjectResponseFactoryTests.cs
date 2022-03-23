@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels;
@@ -36,12 +37,15 @@ namespace TramsDataApi.Test.Factories
                 Status = null,
                 Author = null,
                 Recommendation = null,
+                AnyRisks = null,
                 HighProfileShouldBeConsidered = null,
                 HighProfileFurtherSpecification = null,
                 ComplexLandAndBuildingShouldBeConsidered = null,
                 ComplexLandAndBuildingFurtherSpecification = null,
                 FinanceAndDebtShouldBeConsidered = null,
                 FinanceAndDebtFurtherSpecification = null,
+                OtherRisksShouldBeConsidered = null,
+                OtherRisksFurtherSpecification = null,
                 OtherBenefitValue = null,
                 FeatureSectionIsCompleted = null,
                 BenefitsSectionIsCompleted = null,
@@ -83,8 +87,11 @@ namespace TramsDataApi.Test.Factories
                     {
                         HighProfile = new BenefitConsideredFactorResponse(),
                         ComplexLandAndBuilding = new BenefitConsideredFactorResponse(),
-                        FinanceAndDebt = new BenefitConsideredFactorResponse()
-                    }
+                        FinanceAndDebt = new BenefitConsideredFactorResponse(),
+                        OtherRisks = new BenefitConsideredFactorResponse()
+                    },
+                    IsCompleted = null,
+                    AnyRisks = null
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse(),
                 GeneralInformation = new AcademyTransferProjectGeneralInformationResponse(),
@@ -173,6 +180,11 @@ namespace TramsDataApi.Test.Factories
                 {
                     ShouldBeConsidered = academyTransferProjectModel.FinanceAndDebtShouldBeConsidered,
                     FurtherSpecification = academyTransferProjectModel.FinanceAndDebtFurtherSpecification
+                },
+                OtherRisks = new BenefitConsideredFactorResponse
+                {
+                    ShouldBeConsidered = academyTransferProjectModel.OtherRisksShouldBeConsidered,
+                    FurtherSpecification = academyTransferProjectModel.OtherRisksFurtherSpecification
                 }
             };
 
@@ -188,7 +200,8 @@ namespace TramsDataApi.Test.Factories
                 {
                     IntendedTransferBenefits = expectedIntendedTransferBenefits,
                     OtherFactorsToConsider = expectedOtherFactorsToConsider,
-                    IsCompleted = academyTransferProjectModel.BenefitsSectionIsCompleted
+                    IsCompleted = academyTransferProjectModel.BenefitsSectionIsCompleted,
+                    AnyRisks = academyTransferProjectModel.AnyRisks
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
                 {
