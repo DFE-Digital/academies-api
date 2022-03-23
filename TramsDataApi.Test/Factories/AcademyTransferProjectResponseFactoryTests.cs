@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels;
