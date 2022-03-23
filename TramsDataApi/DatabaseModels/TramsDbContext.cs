@@ -31,8 +31,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<A2BSchoolLoan> A2BSchoolLoans { get; set; }
         
         public virtual DbSet<FssProject> FssProjects { get; set; }
-        public virtual DbSet<ProposedAcademyAdditionalFields> ProposedAcademyAdditionalFields { get; set; }
-
+      
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -361,12 +360,7 @@ namespace TramsDataApi.DatabaseModels
                 entity.ToView("vw_Fss_ProjectData", "fsg");
                 entity.HasNoKey();
             });
-
-            modelBuilder.Entity<ProposedAcademyAdditionalFields>(entity =>
-            {
-                entity.ToView("vw_proposed_academy_additional_fields", "sdd");
-                entity.HasNoKey();            
-            });
+          
             OnModelCreatingPartial(modelBuilder);
         }
 
