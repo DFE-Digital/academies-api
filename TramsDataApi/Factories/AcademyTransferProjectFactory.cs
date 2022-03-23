@@ -131,6 +131,7 @@ namespace TramsDataApi.Factories
             original.Status = toMerge.Status ?? original.Status;
             original.Author = toMerge.Author ?? original.Author;
             original.Recommendation = toMerge.Recommendation ?? original.Recommendation;
+            original.AnyRisks = toMerge.AnyRisks ?? original.AnyRisks;
             original.HighProfileShouldBeConsidered = toMerge.HighProfileShouldBeConsidered == null
                 ? original.HighProfileShouldBeConsidered
                 : toMerge.HighProfileShouldBeConsidered;
