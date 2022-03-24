@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -11,13 +12,14 @@ namespace TramsDataApi.DatabaseModels
     {
         public AcademyTransferProjects()
         {
-            AcademyTransferProjectIntendedTransferBenefits = new HashSet<AcademyTransferProjectIntendedTransferBenefits>();
+            AcademyTransferProjectIntendedTransferBenefits =
+                new HashSet<AcademyTransferProjectIntendedTransferBenefits>();
             TransferringAcademies = new HashSet<TransferringAcademies>();
         }
-        
+
         public int Id { get; set; }
         public int Urn { get; set; }
-        
+
         public string ProjectReference { get; set; }
         public string OutgoingTrustUkprn { get; set; }
         public string WhoInitiatedTheTransfer { get; set; }
@@ -35,12 +37,19 @@ namespace TramsDataApi.DatabaseModels
         public string TrustSponsorRationale { get; set; }
         public string State { get; set; }
         public string Status { get; set; }
+
+        public bool? AnyRisks { get; set; }
         public bool? HighProfileShouldBeConsidered { get; set; }
         public string HighProfileFurtherSpecification { get; set; }
         public bool? ComplexLandAndBuildingShouldBeConsidered { get; set; }
         public string ComplexLandAndBuildingFurtherSpecification { get; set; }
         public bool? FinanceAndDebtShouldBeConsidered { get; set; }
         public string FinanceAndDebtFurtherSpecification { get; set; }
+
+        public bool? OtherRisksShouldBeConsidered { get; set; }
+        
+        [MaxLength(20000)]
+        public string OtherRisksFurtherSpecification { get; set; }
         public string OtherBenefitValue { get; set; }
         public string Author { get; set; }
         public string Recommendation { get; set; }
@@ -54,7 +63,9 @@ namespace TramsDataApi.DatabaseModels
         public string KeyStage4PerformanceAdditionalInformation { get; set; }
         public string KeyStage5PerformanceAdditionalInformation { get; set; }
 
-        public virtual ICollection<AcademyTransferProjectIntendedTransferBenefits> AcademyTransferProjectIntendedTransferBenefits { get; set; }
+        public virtual ICollection<AcademyTransferProjectIntendedTransferBenefits>
+            AcademyTransferProjectIntendedTransferBenefits { get; set; }
+
         public virtual ICollection<TransferringAcademies> TransferringAcademies { get; set; }
     }
 }

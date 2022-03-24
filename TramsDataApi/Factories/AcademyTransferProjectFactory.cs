@@ -34,12 +34,15 @@ namespace TramsDataApi.Factories
                 Status = request.Status,
                 Author = request.GeneralInformation?.Author,
                 Recommendation = request.GeneralInformation?.Recommendation,
+                AnyRisks = request.Benefits?.AnyRisks,
                 HighProfileShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.HighProfile?.ShouldBeConsidered,
                 HighProfileFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.HighProfile?.FurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.ShouldBeConsidered,
                 ComplexLandAndBuildingFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.FurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.ShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.FurtherSpecification,
+                OtherRisksShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.OtherRisks?.ShouldBeConsidered,
+                OtherRisksFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.OtherRisks?.FurtherSpecification,
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
                 AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
@@ -128,6 +131,7 @@ namespace TramsDataApi.Factories
             original.Status = toMerge.Status ?? original.Status;
             original.Author = toMerge.Author ?? original.Author;
             original.Recommendation = toMerge.Recommendation ?? original.Recommendation;
+            original.AnyRisks = toMerge.AnyRisks ?? original.AnyRisks;
             original.HighProfileShouldBeConsidered = toMerge.HighProfileShouldBeConsidered == null
                 ? original.HighProfileShouldBeConsidered
                 : toMerge.HighProfileShouldBeConsidered;
@@ -143,6 +147,11 @@ namespace TramsDataApi.Factories
                 : toMerge.FinanceAndDebtShouldBeConsidered;
             original.FinanceAndDebtFurtherSpecification = toMerge.FinanceAndDebtFurtherSpecification ?? 
                                                           original.FinanceAndDebtFurtherSpecification;
+            original.OtherRisksShouldBeConsidered = toMerge.OtherRisksShouldBeConsidered == null
+                ? original.OtherRisksShouldBeConsidered
+                : toMerge.OtherRisksShouldBeConsidered;
+            original.OtherRisksFurtherSpecification = toMerge.OtherRisksFurtherSpecification ?? 
+                                                          original.OtherRisksFurtherSpecification;
             original.OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue;
             
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;

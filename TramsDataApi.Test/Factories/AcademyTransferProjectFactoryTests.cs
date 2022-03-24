@@ -110,7 +110,10 @@ namespace TramsDataApi.Test.Factories
                 .With(b => b.OtherFactorsToConsider = Builder<OtherFactorsToConsiderRequest>.CreateNew()
                     .With(o => o.ComplexLandAndBuilding = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
                     .With(o => o.FinanceAndDebt = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
-                    .With(o => o.HighProfile = Builder<BenefitConsideredFactorRequest>.CreateNew().Build()).Build())
+                    .With(o => o.HighProfile = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .With(o => o.OtherRisks = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
+                    .Build()
+                )
                 .Build();
 
             var datesRequest = Builder<AcademyTransferProjectDatesRequest>.CreateNew()
@@ -160,6 +163,7 @@ namespace TramsDataApi.Test.Factories
                 Status = createRequest.Status,
                 Author = createRequest.GeneralInformation.Author,
                 Recommendation = createRequest.GeneralInformation.Recommendation,
+                AnyRisks = createRequest.Benefits.AnyRisks,
                 HighProfileShouldBeConsidered =
                     createRequest.Benefits.OtherFactorsToConsider.HighProfile.ShouldBeConsidered,
                 HighProfileFurtherSpecification =
@@ -172,6 +176,10 @@ namespace TramsDataApi.Test.Factories
                     createRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.ShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification =
                     createRequest.Benefits.OtherFactorsToConsider.FinanceAndDebt.FurtherSpecification,
+                OtherRisksShouldBeConsidered = 
+                    createRequest.Benefits.OtherFactorsToConsider.OtherRisks.ShouldBeConsidered,
+                OtherRisksFurtherSpecification = 
+                    createRequest.Benefits.OtherFactorsToConsider.OtherRisks.FurtherSpecification,
                 OtherBenefitValue = createRequest.Benefits.IntendedTransferBenefits.OtherBenefitValue,
                 FeatureSectionIsCompleted = createRequest.Features?.IsCompleted,
                 BenefitsSectionIsCompleted = createRequest.Benefits?.IsCompleted,
@@ -248,6 +256,7 @@ namespace TramsDataApi.Test.Factories
                 Status = academyTransferProject.Status,
                 Author = academyTransferProject.Author,
                 Recommendation = academyTransferProject.Recommendation,
+                AnyRisks = academyTransferProject.AnyRisks,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered =
@@ -256,6 +265,8 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+                OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
+                OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
@@ -343,6 +354,7 @@ namespace TramsDataApi.Test.Factories
                 Status = academyTransferProject.Status,
                 Author = academyTransferProject.Author,
                 Recommendation = academyTransferProject.Recommendation,
+                AnyRisks = academyTransferProject.AnyRisks,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered =
@@ -351,6 +363,8 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+                OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
+                OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
@@ -431,6 +445,7 @@ namespace TramsDataApi.Test.Factories
                 Status = academyTransferProject.Status,
                 Author = academyTransferProject.Author,
                 Recommendation = academyTransferProject.Recommendation,
+                AnyRisks = academyTransferProject.AnyRisks,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered =
@@ -439,6 +454,8 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+                OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
+                OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
@@ -503,6 +520,7 @@ namespace TramsDataApi.Test.Factories
                 Status = academyTransferProject.Status,
                 Author = academyTransferProject.Author,
                 Recommendation = academyTransferProject.Recommendation,
+                AnyRisks = academyTransferProject.AnyRisks,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered =
@@ -511,6 +529,8 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+                OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
+                OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
@@ -583,6 +603,7 @@ namespace TramsDataApi.Test.Factories
                 Status = academyTransferProject.Status,
                 Author = academyTransferProject.Author,
                 Recommendation = academyTransferProject.Recommendation,
+                AnyRisks = academyTransferProject.AnyRisks,
                 HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
                 HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
                 ComplexLandAndBuildingShouldBeConsidered =
@@ -591,6 +612,8 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
                 FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
                 FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+                OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
+                OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,

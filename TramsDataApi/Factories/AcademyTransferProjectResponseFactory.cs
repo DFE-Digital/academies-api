@@ -72,6 +72,11 @@ namespace TramsDataApi.Factories
                 {
                     ShouldBeConsidered = model.FinanceAndDebtShouldBeConsidered,
                     FurtherSpecification = model.FinanceAndDebtFurtherSpecification
+                },
+                OtherRisks = new BenefitConsideredFactorResponse
+                {
+                    ShouldBeConsidered = model.OtherRisksShouldBeConsidered,
+                    FurtherSpecification = model.OtherRisksFurtherSpecification
                 }
             };
 
@@ -87,7 +92,8 @@ namespace TramsDataApi.Factories
                 {
                     IntendedTransferBenefits = intendedTransferBenefits,
                     OtherFactorsToConsider = otherFactorsToConsider,
-                    IsCompleted = model.BenefitsSectionIsCompleted
+                    IsCompleted = model.BenefitsSectionIsCompleted,
+                    AnyRisks = model.AnyRisks
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
                 {
