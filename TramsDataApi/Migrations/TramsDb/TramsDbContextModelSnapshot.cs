@@ -888,7 +888,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OtherRisksFurtherSpecification")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(20000);
 
                     b.Property<bool?>("OtherRisksShouldBeConsidered")
                         .HasColumnType("bit");

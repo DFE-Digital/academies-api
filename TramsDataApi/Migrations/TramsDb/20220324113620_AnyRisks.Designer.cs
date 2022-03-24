@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220322153928_AnyRisks")]
+    [Migration("20220324113620_AnyRisks")]
     partial class AnyRisks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -890,7 +890,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OtherRisksFurtherSpecification")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(20000);
 
                     b.Property<bool?>("OtherRisksShouldBeConsidered")
                         .HasColumnType("bit");

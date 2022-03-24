@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -46,6 +47,8 @@ namespace TramsDataApi.DatabaseModels
         public string FinanceAndDebtFurtherSpecification { get; set; }
 
         public bool? OtherRisksShouldBeConsidered { get; set; }
+        
+        [MaxLength(20000)]
         public string OtherRisksFurtherSpecification { get; set; }
         public string OtherBenefitValue { get; set; }
         public string Author { get; set; }

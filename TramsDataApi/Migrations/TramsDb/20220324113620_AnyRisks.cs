@@ -16,6 +16,7 @@ namespace TramsDataApi.Migrations.TramsDb
                 name: "OtherRisksFurtherSpecification",
                 schema: "sdd",
                 table: "AcademyTransferProjects",
+                maxLength: 20000,
                 nullable: true);
 
             migrationBuilder.AddColumn<bool>(
