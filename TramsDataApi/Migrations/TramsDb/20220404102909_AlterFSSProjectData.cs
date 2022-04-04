@@ -6,6 +6,8 @@ namespace TramsDataApi.Migrations.TramsDb
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+//            SQL View below is commented out due to release pipeline failure, the view is modified manually
+
 //             ALTER VIEW [fsg].[vw_Fss_ProjectData]
 //                   AS
 //                   SELECT
@@ -54,7 +56,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }
