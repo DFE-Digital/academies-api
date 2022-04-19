@@ -14,7 +14,7 @@ namespace TramsDataApi.DatabaseModels
         public string LocalAuthority { get; set; }
         public string ApplicationReferenceNumber { get; set; }
         public string ProjectStatus { get; set; }
-        public DateTime? ApplicationReceivedDate { get; set; }
+        public DateTime? n { get; set; }
         public DateTime? AssignedDate { get; set; }
         public DateTime? HeadTeacherBoardDate { get; set; }
         public DateTime? OpeningDate { get; set; }

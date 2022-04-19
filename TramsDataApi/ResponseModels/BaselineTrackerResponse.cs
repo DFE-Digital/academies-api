@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TramsDataApi.ResponseModels
 {
@@ -9,8 +6,12 @@ namespace TramsDataApi.ResponseModels
     {
         public int Id { get; set; }
         public int Urn { get; set; }
+        public string ApplicationReferenceNumber { get; set; }
+        public DateTime? AcademyOrderApprovedDate { get; set; }
+        public DateTime? CurrentConverionDate { get; set; }
         public int Laestab { get; set; }
-        public string NewURN { get; set; }
+        public string NewAcademyUrn { get; set; }
+        public string ProjectStatus { get; set; }
         public string NewLAEstab { get; set; }
         public string NewAcademyUKPRN { get; set; }
         public string UkPrn { get; set; }
@@ -48,7 +49,5 @@ namespace TramsDataApi.ResponseModels
         public string DfeTeamLeder { get; set; }
         public string ProjectLeadEmail { get; set; }
         public string Upin { get; set; }
-        public string NewAcademyUrn { get; set; }
-        public string ProjectStatus { get; set; }
     }
 }
