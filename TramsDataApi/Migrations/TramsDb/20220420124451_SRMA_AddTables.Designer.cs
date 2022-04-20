@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220414084000_SRMA_AddTables")]
+    [Migration("20220420124451_SRMA_AddTables")]
     partial class SRMA_AddTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1391,7 +1391,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<int?>("ReasonId")
                         .HasColumnType("int");

@@ -61,7 +61,7 @@ namespace TramsDataApi.Migrations.TramsDb
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     ClosedAt = table.Column<DateTime>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
-                    Notes = table.Column<string>(nullable: true)
+                    Notes = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {

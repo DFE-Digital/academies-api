@@ -1389,7 +1389,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<int?>("ReasonId")
                         .HasColumnType("int");
