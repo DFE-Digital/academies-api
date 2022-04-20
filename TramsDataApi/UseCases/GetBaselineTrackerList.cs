@@ -51,8 +51,12 @@ namespace TramsDataApi.UseCases
 
             responses.ForEach(r =>
             {
-                r.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == r.TrustReferenceNumber)?.TrustName;
-                r.UkPrn = _establishmentGateway.GetByUrn(r.Urn)?.Ukprn;
+                var estab = _establishmentGateway.GetByUrn(r.Urn);
+
+                r.UkPrn = estab?.Ukprn;
+                r.TrustUID = estab?.TrustsCode;
+                r.LA = estab?.LaCode;
+
                 r.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(r.Urn)?.Laestab ?? 0;
             });
 

@@ -4,9 +4,10 @@ namespace TramsDataApi.ResponseModels
 {
     public class BaselineTrackerResponse
     {
-        public int Id { get; set; }
-        public int Urn { get; set; }
-        public string ApplicationReferenceNumber { get; set; }
+        public string Urn { get; set; }
+        public string RouteOfProject { get; set; }
+        public string PupilNumberMethodology { get; set; }
+        public string AcademyFundingTypeCategory { get; set; }
         public DateTime? AcademyOrderApprovedDate { get; set; }
         public DateTime? CurrentConverionDate { get; set; }
         public int Laestab { get; set; }
@@ -28,9 +29,8 @@ namespace TramsDataApi.ResponseModels
         public string SponsorReferenceNumber { get; set; }
         public string LeadSponsorId { get; set; }
         public string SponsorEmail { get; set; }
-        public string TrustReferenceNumber { get; set; }
         public string NameOfTrust { get; set; }
-        public string TrustRef { get; set; }
+        public string GroupId { get; set; }
         public string GroupType { get; set; }
         public string TrustUID { get; set; }
         public string TrustUKPRN { get; set; }
@@ -49,5 +49,6 @@ namespace TramsDataApi.ResponseModels
         public string DfeTeamLeder { get; set; }
         public string ProjectLeadEmail { get; set; }
         public string Upin { get; set; }
+        public DateTime? RPA { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace TramsDataApi.DatabaseModels
         public string PreviousHeadTeacherBoardDateQuestion { get; set; }
         public string PreviousHeadTeacherBoardLink { get; set; }
         public string TrustReferenceNumber { get; set; }
+        public DateTime? ApplicationReceivedDate { get; set; }
         public string NameOfTrust { get; set; }
         public string SponsorReferenceNumber { get; set; }
         public string SponsorName { get; set; }
