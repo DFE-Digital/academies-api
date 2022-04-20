@@ -29,9 +29,12 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<A2BApplicationApplyingSchool> A2BApplicationApplyingSchools { get; set; }
         public virtual DbSet<A2BSchoolLease> A2BSchoolLeases { get; set; }
         public virtual DbSet<A2BSchoolLoan> A2BSchoolLoans { get; set; }
-        
         public virtual DbSet<FssProject> FssProjects { get; set; }
-      
+        public virtual DbSet<SRMAStatus> SRMAStatuses { get; set; }
+        public virtual DbSet<SRMAReason> SRMAReasons { get; set; }
+        public virtual DbSet<SRMACase> SRMACases { get; set; }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
