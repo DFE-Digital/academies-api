@@ -9,17 +9,14 @@ namespace TramsDataApi.UseCases
 {
     public class GetBaselineTrackerList : IUseCase<GetAllBaselineTrackerRequest, IEnumerable<BaselineTrackerResponse>>
     {
-        private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly ITrustGateway _trustGateway;
         private readonly IEstablishmentGateway _establishmentGateway;
         private readonly IIfdPipelineGateway _ifdPipelineGateway;
 
-        public GetBaselineTrackerList(IAcademyConversionProjectGateway academyConversionProjectGateway,
-            ITrustGateway trustGateway,
+        public GetBaselineTrackerList(ITrustGateway trustGateway,
             IEstablishmentGateway establishmentGateway,
             IIfdPipelineGateway ifdPipelineGateway)
         {
-            _academyConversionProjectGateway = academyConversionProjectGateway;
             _trustGateway = trustGateway;
             _establishmentGateway = establishmentGateway;
             _ifdPipelineGateway = ifdPipelineGateway;
@@ -27,37 +24,38 @@ namespace TramsDataApi.UseCases
 
         public IEnumerable<BaselineTrackerResponse> Execute(GetAllBaselineTrackerRequest request)
         {
-            var ifdProjects = _ifdPipelineGateway.GetPipelineProjects(request.Page, request.Count)
-                .ToList();
+            var responses = new List<BaselineTrackerResponse>();
+            
+            var ifdProjects = _ifdPipelineGateway.GetPipelineProjects(request.Page, request.Count).ToList();
 
-            var academyConversionProjects = _academyConversionProjectGateway
-                .GetByIfdPipelineIds(ifdProjects.Select(i => i.Sk).ToList()).ToList();
-
-            var trustRefs = academyConversionProjects
-                .Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber))
-                .Select(acp => acp.TrustReferenceNumber)
-                .ToArray();
-
-            var trusts = _trustGateway
-                .GetIfdTrustsByTrustRef(trustRefs)
-                .Select(t => new { t.TrustRef, TrustName = t.TrustsTrustName })
-                .ToArray();
-
-            var responses = academyConversionProjects
-                .Where(p => !string.IsNullOrEmpty(p.SchoolName))
-                .Select(p => BaselineTrackerResponseFactory
-                    .Create(p, null, ifdProjects.FirstOrDefault(ifd => ifd.Sk == p.IfdPipelineId)))
-                .ToList();
-
-            responses.ForEach(r =>
+            foreach (var ifd in ifdProjects)
             {
-                var estab = _establishmentGateway.GetByUrn(r.Urn);
+                var baseline = BaselineTrackerResponseFactory.Create(ifd);
 
-                r.UkPrn = estab?.Ukprn;
-                r.TrustUID = estab?.TrustsCode;
-                r.LA = estab?.LaCode;
+                responses.Add(baseline);
+            }
 
-                r.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(r.Urn)?.Laestab ?? 0;
+            responses.ForEach(response =>
+            {
+                var estab = _establishmentGateway.GetByUrn(response.Urn);
+
+                response.UkPrn = estab?.Ukprn;
+                response.TrustUID = estab?.TrustsCode;
+                response.LA = estab?.LaCode;
+                response.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(response.Urn)?.Laestab ?? 0;
+
+                var group = _trustGateway.GetGroupByUkPrn(estab?.Ukprn);
+                var trust = _trustGateway.GetIfdTrustByGroupId(group.GroupId);
+
+                // GIAS
+                response.NameOfTrust = trust.TrustsTrustName;
+                response.SponsorReferenceNumber = trust.LeadSponsor;
+                response.SponsorName = trust.TrustsLeadSponsorName;
+                response.LeadSponsorId = trust.TrustsLeadSponsorId;
+                response.SponsorEmail = trust.TrustContactDetailsTrustContactEmail;
+                response.GroupId = group.GroupId;
+                response.GroupType = group.GroupType;
+                response.TrustCompaniesHouseRef = group.CompaniesHouseNumber;
             });
 
             return responses;

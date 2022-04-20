@@ -4,7 +4,7 @@ namespace TramsDataApi.ResponseModels
 {
     public class BaselineTrackerResponse
     {
-        public string Urn { get; set; }
+        public int Urn { get; set; }
         public string RouteOfProject { get; set; }
         public string PupilNumberMethodology { get; set; }
         public string AcademyFundingTypeCategory { get; set; }

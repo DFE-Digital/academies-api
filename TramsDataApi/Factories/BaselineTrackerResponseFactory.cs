@@ -1,30 +1,19 @@
-﻿using TramsDataApi.DatabaseModels;
+﻿using System;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Factories
 {
     public class BaselineTrackerResponseFactory
     {
-		public static BaselineTrackerResponse Create(Trust trust = null, IfdPipeline ifd = null)
+		public static BaselineTrackerResponse Create(IfdPipeline ifd = null)
 		{
 			var response = new BaselineTrackerResponse();
-
-			// GIAS
-			if (trust != null)
-			{
-				response.NameOfTrust = trust.TrustsTrustName;
-				response.SponsorReferenceNumber = trust.LeadSponsor;
-				response.SponsorName = trust.TrustsLeadSponsorName;
-				response.LeadSponsorId = trust.TrustsLeadSponsorId;
-				response.SponsorEmail = trust.TrustContactDetailsTrustContactEmail;
-				response.GroupId = trust.TrustRef;
-				response.TrustCompaniesHouseRef = trust.TrustsCompaniesHouseNumber;
-			}
 
 			// KIM
 			if (ifd != null)
 			{
-				response.Urn = ifd.GeneralDetailsUrn;
+				response.Urn = Convert.ToInt32(ifd.GeneralDetailsUrn);
 				response.RouteOfProject = ifd.GeneralDetailsRouteOfProject;
 
 				response.PupilNumberMethodology = ifd.ProposedAcademyDetailsPost16;
