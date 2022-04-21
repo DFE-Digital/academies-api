@@ -35,11 +35,14 @@ namespace TramsDataApi.Test.Controllers
                 .Setup(x => x.Execute(It.IsAny<GetAllBaselineTrackerRequest>()))
                 .Returns(response);
 
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 10 };
+            var expected = new ApiResponseV2<BaselineTrackerResponse>(response, expectedPaging);
+
             var controller = new BaselineTrackerController(_mockLogger.Object, mockUseCase.Object);
 
             var result = controller.Get();
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(response));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
 
         [Fact]
@@ -52,11 +55,14 @@ namespace TramsDataApi.Test.Controllers
                 .Setup(x => x.Execute(It.IsAny<GetAllBaselineTrackerRequest>()))
                 .Returns(new List<BaselineTrackerResponse>());
 
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 0 };
+            var expected = new ApiResponseV2<BaselineTrackerResponse> { Paging = expectedPaging };
+
             var controller = new BaselineTrackerController(_mockLogger.Object, mockUseCase.Object);
 
             var result = controller.Get();
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<BaselineTrackerResponse>()));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
     }
 }
