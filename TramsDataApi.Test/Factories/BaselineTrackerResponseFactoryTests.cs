@@ -2,6 +2,7 @@
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.ResponseModels;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
@@ -13,13 +14,14 @@ namespace TramsDataApi.Test.Factories
         {
             var result = BaselineTrackerResponseFactory.Create();
 
-            result.Should().BeNull();
+            result.Should().BeEquivalentTo(new BaselineTrackerResponse());
         }
 
         [Fact]
         public void BaselineTrackerResponseFactory_ReturnsBaselineTrackerResponse()
         {
             var ifd = Builder<IfdPipeline>.CreateNew().Build();
+            ifd.GeneralDetailsUrn = "12";
 
             var result = BaselineTrackerResponseFactory.Create(ifd);
 

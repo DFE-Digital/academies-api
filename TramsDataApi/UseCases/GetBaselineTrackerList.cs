@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
@@ -30,33 +31,17 @@ namespace TramsDataApi.UseCases
 
             foreach (var ifd in ifdProjects)
             {
-                var baseline = BaselineTrackerResponseFactory.Create(ifd);
+                int urn = Convert.ToInt32(ifd.GeneralDetailsUrn);
+
+                var trust = _trustGateway.GetIfdTrustByRID(ifd.Rid);
+                var establishment = _establishmentGateway.GetByUrn(urn);
+                var group = _trustGateway.GetGroupByUkPrn(establishment?.Ukprn);
+                var misEstablishment = _establishmentGateway.GetMisEstablishmentByUrn(establishment?.Urn ?? 0);
+
+                var baseline = BaselineTrackerResponseFactory.Create(ifd, trust, establishment, group, misEstablishment);
 
                 responses.Add(baseline);
             }
-
-            responses.ForEach(response =>
-            {
-                var estab = _establishmentGateway.GetByUrn(response.Urn);
-
-                response.UkPrn = estab?.Ukprn;
-                response.TrustUID = estab?.TrustsCode;
-                response.LA = estab?.LaCode;
-                response.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(response.Urn)?.Laestab ?? 0;
-
-                var group = _trustGateway.GetGroupByUkPrn(estab?.Ukprn);
-                var trust = _trustGateway.GetIfdTrustByGroupId(group.GroupId);
-
-                // GIAS
-                response.NameOfTrust = trust.TrustsTrustName;
-                response.SponsorReferenceNumber = trust.LeadSponsor;
-                response.SponsorName = trust.TrustsLeadSponsorName;
-                response.LeadSponsorId = trust.TrustsLeadSponsorId;
-                response.SponsorEmail = trust.TrustContactDetailsTrustContactEmail;
-                response.GroupId = group.GroupId;
-                response.GroupType = group.GroupType;
-                response.TrustCompaniesHouseRef = group.CompaniesHouseNumber;
-            });
 
             return responses;
         }

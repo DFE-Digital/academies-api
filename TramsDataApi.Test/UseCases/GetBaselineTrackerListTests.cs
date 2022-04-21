@@ -43,13 +43,17 @@ namespace TramsDataApi.Test.UseCases
             var request = new GetAllBaselineTrackerRequest { Page = 1, Count = 50 };
 
             var project = _fixture.Build<IfdPipeline>().Create();
+            project.GeneralDetailsUrn = "12";
 
             var expectedProject = BaselineTrackerResponseFactory.Create(project);
+
+            var mockGateway = new Mock<IIfdPipelineGateway>();
+            mockGateway.Setup(x => x.GetPipelineProjects(1, 50)).Returns(new List<IfdPipeline> { project });
 
             var useCase = new GetBaselineTrackerList(
                 new Mock<ITrustGateway>().Object,
                 new Mock<IEstablishmentGateway>().Object,
-                new Mock<IIfdPipelineGateway>().Object);
+                mockGateway.Object);
 
             var result = useCase.Execute(request).ToList();
 

@@ -1,19 +1,18 @@
-﻿using System;
-using TramsDataApi.DatabaseModels;
+﻿using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Factories
 {
     public class BaselineTrackerResponseFactory
     {
-		public static BaselineTrackerResponse Create(IfdPipeline ifd = null)
+		public static BaselineTrackerResponse Create(IfdPipeline ifd = null, Trust trust = null, Establishment establishment = null, Group group = null, MisEstablishments misEstablishment = null)
 		{
 			var response = new BaselineTrackerResponse();
 
 			// KIM
 			if (ifd != null)
 			{
-				response.Urn = Convert.ToInt32(ifd.GeneralDetailsUrn);
+				response.Urn = ifd.GeneralDetailsUrn;
 				response.RouteOfProject = ifd.GeneralDetailsRouteOfProject;
 
 				response.PupilNumberMethodology = ifd.ProposedAcademyDetailsPost16;
@@ -50,6 +49,27 @@ namespace TramsDataApi.Factories
 				response.DfeTeamLeder = ifd.GeneralDetailsTeamLeader;
 				response.ProjectLeadEmail = string.Empty; // No mapping found
 				response.RPA = ifd.DeliveryProcessBaselineDate;
+			}
+
+			if (trust != null)
+            {
+				response.NameOfTrust = trust.TrustsTrustName;
+				response.SponsorReferenceNumber = trust.LeadSponsor;
+				response.SponsorName = trust.TrustsLeadSponsorName;
+				response.LeadSponsorId = trust.TrustsLeadSponsorId;
+				response.SponsorEmail = trust.TrustContactDetailsTrustContactEmail;
+				response.GroupId = group?.GroupId;
+				response.GroupType = group?.GroupType;
+				response.TrustCompaniesHouseRef = group?.CompaniesHouseNumber;
+			}
+
+			// GIAS
+			if (establishment != null)
+            {
+				response.UkPrn = establishment.Ukprn;
+				response.TrustUID = establishment.TrustsCode;
+				response.LA = establishment.LaCode;
+				response.Laestab = misEstablishment?.Laestab ?? 0;
 			}
 
 			return response;
