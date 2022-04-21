@@ -4,7 +4,6 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels;
-using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
