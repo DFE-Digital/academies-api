@@ -31,7 +31,7 @@ namespace TramsDataApi.UseCases
 
             foreach (var ifd in ifdProjects)
             {
-                int urn = Convert.ToInt32(ifd.GeneralDetailsUrn);
+                int.TryParse(ifd.GeneralDetailsUrn, out int urn);
 
                 var trust = _trustGateway.GetIfdTrustByRID(ifd.Rid);
                 var establishment = _establishmentGateway.GetByUrn(urn);
