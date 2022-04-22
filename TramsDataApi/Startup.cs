@@ -84,8 +84,6 @@ namespace TramsDataApi
             services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
 
-            //services.AddScoped<IUseCaseAsync<CreateSRMARequest, CreateSRMAResponse>, CreateSRMA>();
-            //services.AddScoped<IUseCase<CreateSRMARequest, CreateSRMAResponse>, CreateSRMA>();
             services.AddScoped<ISRMAGateway, SRMAGateway>();
 
             // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
