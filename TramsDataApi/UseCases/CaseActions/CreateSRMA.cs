@@ -6,7 +6,7 @@ using TramsDataApi.ResponseModels.CaseActions.SRMA;
 
 namespace TramsDataApi.UseCases.CaseActions
 {
-    public class CreateSRMA : IUseCase<CreateSRMARequest, CreateSRMAResponse>
+    public class CreateSRMA : IUseCase<CreateSRMARequest, SRMAResponse>
     {
         private readonly ISRMAGateway _gateway;
 
@@ -15,12 +15,12 @@ namespace TramsDataApi.UseCases.CaseActions
             _gateway = gateway;
         }
 
-        public CreateSRMAResponse Execute(CreateSRMARequest request)
+        public SRMAResponse Execute(CreateSRMARequest request)
         {
             return ExecuteAsync(request).Result;
         }
 
-        public async Task<CreateSRMAResponse> ExecuteAsync(CreateSRMARequest request)
+        public async Task<SRMAResponse> ExecuteAsync(CreateSRMARequest request)
         {
             var dbModel = SRMAFactory.CreateDBModel(request);
             var createdSRMA = await _gateway.CreateSRMA(dbModel);

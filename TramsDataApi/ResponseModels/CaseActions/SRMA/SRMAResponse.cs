@@ -3,11 +3,11 @@ using TramsDataApi.Enums;
 
 namespace TramsDataApi.ResponseModels.CaseActions.SRMA
 {
-    public class CreateSRMAResponse
+    public class SRMAResponse
     {
 		public int Id { get; set; }
-        public int CaseId { get; set; }
-        public DateTime DateOffered { get; set; }
+		public int CaseId { get; set; }
+		public DateTime DateOffered { get; set; }
 		public DateTime? DateAccepted { get; set; }
 		public DateTime? DateReportSentToTrust { get; set; }
 		public DateTime? DateVisitStart { get; set; }
