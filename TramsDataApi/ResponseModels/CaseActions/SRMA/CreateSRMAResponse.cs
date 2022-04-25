@@ -13,6 +13,6 @@ namespace TramsDataApi.ResponseModels.CaseActions.SRMA
 		public DateTime? DateVisitEnd { get; set; }
 		public SRMAStatus Status { get; set; }
 		public string Notes { get; set; }
-		public SRMAReasonOffered Reason { get; set; }
+		public SRMAReasonOffered? Reason { get; set; }
 	}
 }

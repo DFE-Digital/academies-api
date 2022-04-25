@@ -33,7 +33,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 DateVisitEnd = model.EndDateOfVisit,
                 DateAccepted = model.DateAccepted,
                 Status = (Enums.SRMAStatus)model.StatusId,
-                Reason = (Enums.SRMAReasonOffered)model.ReasonId,
+                Reason = (Enums.SRMAReasonOffered?)model.ReasonId,
                 Notes = model.Notes,
             };
         }
