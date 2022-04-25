@@ -26,6 +26,11 @@ namespace TramsDataApi.Gateways
             return _dbContext.Trust.FirstOrDefault(t => t.TrustRef == groupId);
         }
 
+        public Trust GetIfdTrustByRID(string RID)
+        {
+            return _dbContext.Trust.FirstOrDefault(x => x.Rid.Equals(RID));
+        }
+
         public IQueryable<Trust> GetIfdTrustsByTrustRef(string[] trustRefs)
         {
             var predicate = PredicateBuilder.False<Trust>();
