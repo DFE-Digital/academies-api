@@ -21,6 +21,7 @@ namespace TramsDataApi.Test.Factories
             var details = new
             {
                 Id = 123,
+                CaseId = 567,
                 DateOffered = dtNow.AddDays(29),
                 DateReportSentToTrust = dtNow.AddDays(28),
                 DateVisitStart = dtNow.AddDays(27),
@@ -33,6 +34,7 @@ namespace TramsDataApi.Test.Factories
 
             var createSRMARequest = Builder<CreateSRMARequest>.CreateNew()
                 .With(r => r.Id = details.Id)
+                .With(r => r.CaseId = details.CaseId)
                 .With(r => r.DateOffered = details.DateOffered)
                 .With(r => r.DateReportSentToTrust = details.DateReportSentToTrust)
                 .With(r => r.DateVisitStart = details.DateVisitStart)
@@ -46,6 +48,7 @@ namespace TramsDataApi.Test.Factories
             var expectedSRMAModel = new SRMACase
             {
                 Id = details.Id,
+                CaseId = details.CaseId,
                 DateOffered = details.DateOffered,
                 DateReportSentToTrust = details.DateReportSentToTrust,
                 StartDateOfVisit = details.DateVisitStart,
@@ -69,6 +72,7 @@ namespace TramsDataApi.Test.Factories
             var details = new
             {
                 Id = 123,
+                CaseId = 988,
                 DateOffered = dtNow.AddDays(29),
                 DateReportSentToTrust = dtNow.AddDays(28),
                 DateVisitStart = dtNow.AddDays(27),
@@ -81,6 +85,7 @@ namespace TramsDataApi.Test.Factories
 
             var srmaModel = Builder<SRMACase>.CreateNew()
                 .With(r => r.Id = details.Id)
+                .With(r => r.CaseId = details.CaseId)
                 .With(r => r.DateOffered = details.DateOffered)
                 .With(r => r.DateReportSentToTrust = details.DateReportSentToTrust)
                 .With(r => r.StartDateOfVisit = details.DateVisitStart)
@@ -94,6 +99,7 @@ namespace TramsDataApi.Test.Factories
             var expectedCreateSRMAResponse = new CreateSRMAResponse
             {
                 Id = details.Id,
+                CaseId = details.CaseId,
                 DateOffered = details.DateOffered,
                 DateReportSentToTrust = details.DateReportSentToTrust,
                 DateVisitStart = details.DateVisitStart,
