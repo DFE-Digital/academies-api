@@ -17,6 +17,7 @@ namespace TramsDataApi.DatabaseModels
         public int? ReasonId { get; set; }
         public DateTime DateOffered { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime? DateReportSentToTrust { get; set; }
         public DateTime? DateAccepted { get; set; }
         public DateTime? StartDateOfVisit { get; set; }
         public DateTime? EndDateOfVisit { get; set; }

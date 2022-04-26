@@ -10,8 +10,11 @@ using TramsDataApi.ApplyToBecome;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
+using TramsDataApi.RequestModels.CaseActions.SRMA;
+using TramsDataApi.ResponseModels.CaseActions.SRMA;
 using TramsDataApi.Swagger;
 using TramsDataApi.UseCases;
+using TramsDataApi.UseCases.CaseActions;
 
 namespace TramsDataApi
 {
@@ -79,8 +82,10 @@ namespace TramsDataApi
 
             services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();
             services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
-            services.AddScoped < IGetAllFssProjects, GetAllFssProjects>();
-          
+            services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
+
+            services.AddScoped<ISRMAGateway, SRMAGateway>();
+
             // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
             // once the a2b external service can write directly to trams this should be removed
             services.AddDbContext<ApplyToBecomeDbContext>(options =>
@@ -101,6 +106,7 @@ namespace TramsDataApi
             services.AddSwaggerGen();
             services.ConfigureOptions<SwaggerOptions>();
             services.AddUseCases();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
