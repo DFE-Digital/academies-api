@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace TramsDataApi.Gateways
 {
@@ -26,19 +28,25 @@ namespace TramsDataApi.Gateways
                 _tramsDbContext.SRMACases.Add(request);
                 await _tramsDbContext.SaveChangesAsync();
 
-                _logger.LogInformation("Successfully created SRMA with Id {id}", request.Id);
+                _logger.LogInformation("Successfully created SRMA with Id {Id}", request.Id);
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Failed to create SRMA with Id {id}, {ex}", request.Id, ex);
+                _logger.LogError("Failed to create SRMA with Id {Id}, {ex}", request.Id, ex);
             }
             catch (Exception ex)
             {
                 _logger.LogError(
-                    "An application exception has occurred whilst creating SRMA with Id {id}, {e}", request.Id, ex);
+                    "An application exception has occurred whilst creating SRMA with Id {Id}, {ex}", request.Id, ex);
+                throw;
             }
 
             return response;
+        }
+
+        public async Task<ICollection<SRMACase>> GetSRMAsByCaseId(int caseId)
+        {
+            return await _tramsDbContext.SRMACases.Where(s => s.CaseId == caseId).ToListAsync();
         }
     }
 }

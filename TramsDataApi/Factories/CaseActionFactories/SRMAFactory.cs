@@ -23,9 +23,9 @@ namespace TramsDataApi.Factories.CaseActionFactories
             };
         }
 
-        public static CreateSRMAResponse CreateResponse(SRMACase model)
+        public static SRMAResponse CreateResponse(SRMACase model)
         {
-            return new CreateSRMAResponse
+            return new SRMAResponse
             {
                 Id = model.Id,
                 CaseId = model.CaseId,
@@ -39,5 +39,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 Notes = model.Notes,
             };
         }
+
+ 
     }
 }

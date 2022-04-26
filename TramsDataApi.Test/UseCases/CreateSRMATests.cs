@@ -15,7 +15,7 @@ namespace TramsDataApi.Test.UseCases
     public class CreateSRMATests
 	{
 	    [Fact]
-        public void CreateSRMA_ShouldCreateAndReturnCreateSRMAResponse_WhenGivenCreateSRMARequest()
+        public void CreateSRMA_ShouldCreateAndReturnSRMAResponse_WhenGivenCreateSRMARequest()
         {
 			var status = Enums.SRMAStatus.Deployed;
 			var datetOffered = DateTime.Now.AddDays(-5);
@@ -32,7 +32,7 @@ namespace TramsDataApi.Test.UseCases
 				DateOffered = datetOffered
             };
 
-            var expectedResult = new CreateSRMAResponse
+            var expectedResult = new SRMAResponse
             {
 				DateOffered = datetOffered,
 				Status = status

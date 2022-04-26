@@ -65,7 +65,7 @@ namespace TramsDataApi.Test.Factories
         }
 
         [Fact]
-        public void CreateResponse_ExpectedCreateSRMAResponse_WhenSRMACaseProvided()
+        public void CreateResponse_ExpectedSRMAResponse_WhenSRMACaseProvided()
         {
             var dtNow = DateTime.Now;
 
@@ -96,7 +96,7 @@ namespace TramsDataApi.Test.Factories
                 .With(r => r.Notes = details.Notes)
                 .Build();
 
-            var expectedCreateSRMAResponse = new CreateSRMAResponse
+            var expectedCreateSRMAResponse = new SRMAResponse
             {
                 Id = details.Id,
                 CaseId = details.CaseId,
