@@ -404,13 +404,13 @@ export const applyToBecomeAcademySchema = {
                   schoolFinancialInvestigationsTrustAware: {
                     type: "boolean"
                   },
-                  schoolCapacityYear1: {
+                  projectedPupilNumbersYear1: {
                     type: "integer"
                   },
-                  schoolCapacityYear2: {
+                  projectedPupilNumbersYear2: {
                     type: "integer"
                   },
-                  schoolCapacityYear3: {
+                  projectedPupilNumbersYear3: {
                     type: "integer"
                   },
                   schoolCapacityAssumptions: {
