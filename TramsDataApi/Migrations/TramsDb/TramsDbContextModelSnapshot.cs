@@ -1385,9 +1385,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime>("DateOffered")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateReportSentToTrust")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("EndDateOfVisit")
                         .HasColumnType("datetime2");
 
