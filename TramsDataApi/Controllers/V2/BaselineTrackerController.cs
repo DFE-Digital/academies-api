@@ -16,23 +16,41 @@ namespace TramsDataApi.Controllers.V2
     {
         private readonly ILogger<BaselineTrackerController> _logger;
         private readonly IUseCase<GetAllBaselineTrackerRequest, IEnumerable<BaselineTrackerResponse>> _getAllBBaselineTrackerRequest;
+        private readonly IUseCase<GetAllBaselineTrackerRequestByStatusesRequest, IEnumerable<BaselineTrackerResponse>> _getAllBBaselineTrackerRequestByStatus;
+
 
         public BaselineTrackerController(ILogger<BaselineTrackerController> logger, 
-            IUseCase<GetAllBaselineTrackerRequest, IEnumerable<BaselineTrackerResponse>> getAllBBaselineTrackerRequest)
+            IUseCase<GetAllBaselineTrackerRequest, IEnumerable<BaselineTrackerResponse>> getAllBBaselineTrackerRequest,
+            IUseCase<GetAllBaselineTrackerRequestByStatusesRequest, IEnumerable<BaselineTrackerResponse>> getAllBBaselineTrackerRequestByStatus)
         {
             _logger = logger;
             _getAllBBaselineTrackerRequest = getAllBBaselineTrackerRequest;
+            _getAllBBaselineTrackerRequestByStatus = getAllBBaselineTrackerRequestByStatus;
         }
 
 		[HttpGet]
 		[MapToApiVersion("2.0")]
-		public ActionResult<ApiResponseV2<BaselineTrackerResponse>> Get([FromQuery] int page = 1, [FromQuery] int count = 50)
+		public ActionResult<ApiResponseV2<BaselineTrackerResponse>> Get(
+            [FromQuery] string states = null,
+            [FromQuery] int page = 1, 
+            [FromQuery] int count = 50)
 		{
-            _logger.LogInformation($"Attempting to retrieve {count} Baseline Tracker List.");
+            var statusList = string.IsNullOrWhiteSpace(states) ? null : states.Split(',').ToList();
 
-            var list = _getAllBBaselineTrackerRequest.Execute(new GetAllBaselineTrackerRequest { Page = page, Count = count }).ToList();
+            _logger.LogInformation(statusList == null || !statusList.Any()
+                ? $"Attempting to retrieve {count} Baseline Tracker List."
+                : $"Attempting to retrieve {count} Baseline Tracker List filtered by {states}");
 
-			_logger.LogInformation($"Returning {list.Count} Baseline Tracker List");
+            var list = statusList == null || !statusList.Any()
+                    ? _getAllBBaselineTrackerRequest
+                        .Execute(new GetAllBaselineTrackerRequest { Page = page, Count = count })
+                        .ToList()
+                    : _getAllBBaselineTrackerRequestByStatus
+                        .Execute(new GetAllBaselineTrackerRequestByStatusesRequest { Page = page, Count = count, Statuses = statusList })
+                        .ToList();
+
+
+            _logger.LogInformation($"Returning {list.Count} Baseline Tracker List");
 			_logger.LogDebug(JsonSerializer.Serialize<IEnumerable<BaselineTrackerResponse>>(list));
 
 			var pagingResponse = PagingResponseFactory.Create(page, count, list.Count, Request);
