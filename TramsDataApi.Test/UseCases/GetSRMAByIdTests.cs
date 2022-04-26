@@ -9,29 +9,30 @@ using TramsDataApi.Gateways;
 using TramsDataApi.UseCases.CaseActions;
 using Xunit;
 
+
 namespace TramsDataApi.Test.UseCases
 {
-    public class GetSRMAsByCaseIdTests
+    public class GetSRMAByIdTests
     {
         [Fact]
-        public void GetSRMAByCaseId_ShouldReturnSRMAResponse_WhenGivenCaseId()
+        public void GetSRMAById_ShouldReturnSRMAResponse_WhenGivenSRMAId()
         {
-            var caseId = 123;
+            var srmaId = 123;
 
             var matchingSRMA = new SRMACase
             {
-                CaseId = caseId,
+                Id = srmaId,
                 Notes = "match"
             };
 
             var srmas = new List<SRMACase> {
                 matchingSRMA,
                 new SRMACase {
-                    CaseId = 222,
+                    Id = 222,
                     Notes = "SRMA 1"
                 },
                 new SRMACase {
-                    CaseId = 456,
+                    Id = 456,
                     Notes = "SRMA 2"
                 }
             };
@@ -39,15 +40,15 @@ namespace TramsDataApi.Test.UseCases
             var expectedResult = SRMAFactory.CreateResponse(matchingSRMA);
 
             var mockSRMAGateway = new Mock<ISRMAGateway>();
-            mockSRMAGateway.Setup(g => g.GetSRMAsByCaseId(caseId)).Returns(Task.FromResult((ICollection<SRMACase>)srmas.Where(s => s.CaseId == caseId).ToList()));
+            mockSRMAGateway.Setup(g => g.GetSRMAById(srmaId)).Returns(Task.FromResult(srmas.Single(s => s.Id == srmaId)));
 
-            var useCase = new GetSRMAsByCaseId(mockSRMAGateway.Object);
+            var useCase = new GetSRMAById(mockSRMAGateway.Object);
 
-            var result = useCase.Execute(caseId);
+            var result = useCase.Execute(srmaId);
 
             result.Should().NotBeNull();
-            result.Count.Should().Be(1);
-            result.First().Should().BeEquivalentTo(expectedResult);
+            result.Should().BeEquivalentTo(expectedResult);
         }
+
     }
 }
