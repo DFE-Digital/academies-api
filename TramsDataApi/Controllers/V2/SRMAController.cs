@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.CaseActions.SRMA;
@@ -18,15 +17,18 @@ namespace TramsDataApi.Controllers.V2
         private readonly ILogger<SRMAController> _logger;
         private readonly IUseCase<CreateSRMARequest, SRMAResponse> _createSRMAUseCase;
         private readonly IUseCase<int, ICollection<SRMAResponse>> _getSRMAsByCaseIdUseCase;
+        private readonly IUseCase<int, SRMAResponse> _getSRMAByIdUseCase;
 
         public SRMAController(
             ILogger<SRMAController> logger,
             IUseCase<CreateSRMARequest, SRMAResponse> createSRMAUseCase,
-            IUseCase<int, ICollection<SRMAResponse>> getSRMAsByCaseIdUseCase)
+            IUseCase<int, ICollection<SRMAResponse>> getSRMAsByCaseIdUseCase,
+            IUseCase<int, SRMAResponse> getSRMAByIdUseCase)
         {
             _logger = logger;
             _createSRMAUseCase = createSRMAUseCase;
             _getSRMAsByCaseIdUseCase = getSRMAsByCaseIdUseCase;
+            _getSRMAByIdUseCase = getSRMAByIdUseCase;
         }
 
         [HttpPost]
@@ -41,12 +43,23 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAByCaseId(int caseId)
+        public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCaseId(int caseId)
         {
             var srmas = _getSRMAsByCaseIdUseCase.Execute(caseId);
             var response = new ApiSingleResponseV2<ICollection<SRMAResponse>>(srmas);
 
             return Ok(response);
         }
+
+        [HttpGet]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> GetSRMAById(int srmaId)
+        {
+            var srma = _getSRMAByIdUseCase.Execute(srmaId);
+            var response = new ApiSingleResponseV2<SRMAResponse>(srma);
+
+            return Ok(response);
+        }
+
     }
 }

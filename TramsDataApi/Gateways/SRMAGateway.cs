@@ -21,32 +21,41 @@ namespace TramsDataApi.Gateways
 
         public async Task<SRMACase> CreateSRMA(SRMACase request)
         {
-            SRMACase response = null;
-
             try
             {
                 _tramsDbContext.SRMACases.Add(request);
                 await _tramsDbContext.SaveChangesAsync();
-
-                _logger.LogInformation("Successfully created SRMA with Id {Id}", request.Id);
+                return request;
             }
             catch (DbUpdateException ex)
             {
                 _logger.LogError("Failed to create SRMA with Id {Id}, {ex}", request.Id, ex);
+                throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    "An application exception has occurred whilst creating SRMA with Id {Id}, {ex}", request.Id, ex);
+                _logger.LogError("An application exception has occurred whilst creating SRMA with Id {Id}, {ex}", request.Id, ex);
                 throw;
             }
-
-            return response;
         }
 
         public async Task<ICollection<SRMACase>> GetSRMAsByCaseId(int caseId)
         {
             return await _tramsDbContext.SRMACases.Where(s => s.CaseId == caseId).ToListAsync();
         }
+
+        public async Task<SRMACase> GetSRMAById(int srmaId)
+        {
+            try
+            {
+                return await _tramsDbContext.SRMACases.SingleOrDefaultAsync(s => s.Id == srmaId);
+            }
+            catch (InvalidOperationException iox)
+            {
+                _logger.LogError(iox, "Multiple SRMA records found with Id: {Id}", srmaId);
+                throw;
+            }
+        }
+
     }
 }
