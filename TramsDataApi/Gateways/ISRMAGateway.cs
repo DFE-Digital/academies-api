@@ -8,5 +8,6 @@ namespace TramsDataApi.Gateways
     {
         Task<SRMACase> CreateSRMA(SRMACase request);
         Task<ICollection<SRMACase>> GetSRMAsByCaseId(int caseId);
+        Task<SRMACase> GetSRMAById(int srmaId);
     }
 }
