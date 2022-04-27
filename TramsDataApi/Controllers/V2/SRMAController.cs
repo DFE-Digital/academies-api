@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.CaseActions.SRMA;
@@ -61,5 +62,24 @@ namespace TramsDataApi.Controllers.V2
             return Ok(response);
         }
 
+        [HttpPatch]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateStatus(int srmaId, SRMAStatus status)
+        {
+            var srma = _getSRMAByIdUseCase.Execute(srmaId);
+            var response = new ApiSingleResponseV2<SRMAResponse>(srma);
+
+            return Ok(response);
+        }
+
+        [HttpPatch]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateReason(int srmaId, SRMAReasonOffered reason)
+        {
+            var srma = _getSRMAByIdUseCase.Execute(srmaId);
+            var response = new ApiSingleResponseV2<SRMAResponse>(srma);
+
+            return Ok(response);
+        }
     }
 }
