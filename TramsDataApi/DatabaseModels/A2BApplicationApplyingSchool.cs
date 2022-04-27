@@ -94,9 +94,9 @@ namespace TramsDataApi.DatabaseModels
         public bool? SchoolFinancialInvestigations {get; set;} // int?
         public string SchoolFinancialInvestigationsExplain {get; set;}
         public bool? SchoolFinancialInvestigationsTrustAware {get; set;}
-        public int? SchoolCapacityYear1 {get; set;}
-        public int? SchoolCapacityYear2 {get; set;}
-        public int? SchoolCapacityYear3 {get; set;}
+        public int? ProjectedPupilNumbersYear1 {get; set;}
+        public int? ProjectedPupilNumbersYear2 {get; set;}
+        public int? ProjectedPupilNumbersYear3 {get; set;}
         public string SchoolCapacityAssumptions {get; set;}
         public int? SchoolCapacityPublishedAdmissionsNumber {get; set;}
         public string SchoolBuildLandOwnerExplained {get; set;}
