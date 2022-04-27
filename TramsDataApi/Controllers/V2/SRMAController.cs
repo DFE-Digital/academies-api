@@ -51,15 +51,15 @@ namespace TramsDataApi.Controllers.V2
             return Ok(response);
         }
 
-        [HttpGet]
-        [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> GetSRMAById(int srmaId)
-        {
-            var srma = _getSRMAByIdUseCase.Execute(srmaId);
-            var response = new ApiSingleResponseV2<SRMAResponse>(srma);
+        //[HttpGet]
+        //[MapToApiVersion("2.0")]
+        //public ActionResult<ApiSingleResponseV2<SRMAResponse>> GetSRMAById(int srmaId)
+        //{
+        //    var srma = _getSRMAByIdUseCase.Execute(srmaId);
+        //    var response = new ApiSingleResponseV2<SRMAResponse>(srma);
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
     }
 }
