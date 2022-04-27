@@ -14,6 +14,8 @@ namespace TramsDataApi.Factories
 			{
 				response.Urn = ifd.GeneralDetailsUrn;
 				response.RouteOfProject = ifd.GeneralDetailsRouteOfProject;
+				response.NewLAEstab = ifd.GeneralDetailsAcademyLaestab;
+				response.NewAcademyUKPRN = ifd.GeneralDetailsAcademyUkprn;
 
 				response.PupilNumberMethodology = ifd.ProposedAcademyDetailsPost16;
 				response.AcademyFundingTypeCategory = ifd.ProposedAcademyDetailsGagFundingPupilNumbersType;
@@ -49,6 +51,7 @@ namespace TramsDataApi.Factories
 				response.DfeTeamLeder = ifd.GeneralDetailsTeamLeader;
 				response.ProjectLeadEmail = string.Empty; // No mapping found
 				response.RPA = ifd.DeliveryProcessBaselineDate;
+				response.Region = ifd.GeneralDetailsRscRegion;
 			}
 
 			if (trust != null)
@@ -61,6 +64,7 @@ namespace TramsDataApi.Factories
 				response.GroupId = group?.GroupId;
 				response.GroupType = group?.GroupType;
 				response.TrustCompaniesHouseRef = group?.CompaniesHouseNumber;
+				response.TrustUKPRN = group.Ukprn;
 			}
 
 			// GIAS

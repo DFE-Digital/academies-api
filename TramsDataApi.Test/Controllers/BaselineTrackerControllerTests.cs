@@ -38,7 +38,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedPaging = new PagingResponse { Page = 1, RecordCount = 10 };
             var expected = new ApiResponseV2<BaselineTrackerResponse>(response, expectedPaging);
 
-            var controller = new BaselineTrackerController(_mockLogger.Object, mockUseCase.Object);
+            var controller = new BaselineTrackerController(_mockLogger.Object, mockUseCase.Object, new Mock<IUseCase<GetAllBaselineTrackerRequestByStatusesRequest, IEnumerable<BaselineTrackerResponse>>>().Object);
 
             var result = controller.Get();
 
@@ -58,7 +58,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedPaging = new PagingResponse { Page = 1, RecordCount = 0 };
             var expected = new ApiResponseV2<BaselineTrackerResponse> { Paging = expectedPaging };
 
-            var controller = new BaselineTrackerController(_mockLogger.Object, mockUseCase.Object);
+            var controller = new BaselineTrackerController(_mockLogger.Object, mockUseCase.Object, new Mock<IUseCase<GetAllBaselineTrackerRequestByStatusesRequest, IEnumerable<BaselineTrackerResponse>>>().Object);
 
             var result = controller.Get();
 
