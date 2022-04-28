@@ -43,6 +43,17 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet]
         [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> GetSRMAById(int srmaId)
+        {
+            var srma = _getSRMAByIdUseCase.Execute(srmaId);
+            var response = new ApiSingleResponseV2<SRMAResponse>(srma);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("case/{caseId}")]
+        [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCaseId(int caseId)
         {
             var srmas = _getSRMAsByCaseIdUseCase.Execute(caseId);
@@ -50,16 +61,6 @@ namespace TramsDataApi.Controllers.V2
 
             return Ok(response);
         }
-
-        //[HttpGet]
-        //[MapToApiVersion("2.0")]
-        //public ActionResult<ApiSingleResponseV2<SRMAResponse>> GetSRMAById(int srmaId)
-        //{
-        //    var srma = _getSRMAByIdUseCase.Execute(srmaId);
-        //    var response = new ApiSingleResponseV2<SRMAResponse>(srma);
-
-        //    return Ok(response);
-        //}
 
     }
 }
