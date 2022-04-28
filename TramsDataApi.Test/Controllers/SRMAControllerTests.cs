@@ -106,45 +106,45 @@ namespace TramsDataApi.Test.Controllers
             actualResult.Data.First().CaseId.Should().Be(caseId);
         }
 
-        [Fact]
-        public void GetSRMAsById_ReturnsMatchingSRMA_WhenGivenSRMAId()
-        {
-            var srmaId = 123;
+        //[Fact]
+        //public void GetSRMAsById_ReturnsMatchingSRMA_WhenGivenSRMAId()
+        //{
+        //    var srmaId = 123;
 
-            var matchingSRMA = new SRMACase
-            {
-                Id = srmaId,
-                Notes = "match"
-            };
+        //    var matchingSRMA = new SRMACase
+        //    {
+        //        Id = srmaId,
+        //        Notes = "match"
+        //    };
 
-            var srmas = new List<SRMACase> {
-                matchingSRMA,
-                new SRMACase {
-                    Id = 222,
-                    Notes = "SRMA 1"
-                },
-                new SRMACase {
-                    Id = 456,
-                    Notes = "SRMA 2"
-                }
-            };
+        //    var srmas = new List<SRMACase> {
+        //        matchingSRMA,
+        //        new SRMACase {
+        //            Id = 222,
+        //            Notes = "SRMA 1"
+        //        },
+        //        new SRMACase {
+        //            Id = 456,
+        //            Notes = "SRMA 2"
+        //        }
+        //    };
 
-            var srmaResponse = Builder<SRMAResponse>
-                .CreateNew()
-                .With(r => r.Id = matchingSRMA.Id)
-                .With(r => r.Notes = matchingSRMA.Notes)
-                .Build();
+        //    var srmaResponse = Builder<SRMAResponse>
+        //        .CreateNew()
+        //        .With(r => r.Id = matchingSRMA.Id)
+        //        .With(r => r.Notes = matchingSRMA.Notes)
+        //        .Build();
 
-            _mockGetSRMAById
-                .Setup(x => x.Execute(srmaId))
-                .Returns(srmaResponse);
+        //    _mockGetSRMAById
+        //        .Setup(x => x.Execute(srmaId))
+        //        .Returns(srmaResponse);
 
-            OkObjectResult controllerResponse = controllerSUT.GetSRMAById(srmaId).Result as OkObjectResult;
+        //    OkObjectResult controllerResponse = controllerSUT.GetSRMAById(srmaId).Result as OkObjectResult;
 
-            var actualResult = controllerResponse.Value as ApiSingleResponseV2<SRMAResponse>;
+        //    var actualResult = controllerResponse.Value as ApiSingleResponseV2<SRMAResponse>;
 
-            actualResult.Data.Should().NotBeNull();
-            actualResult.Data.Id.Should().Be(srmaId);
-        }
+        //    actualResult.Data.Should().NotBeNull();
+        //    actualResult.Data.Id.Should().Be(srmaId);
+        //}
     }
 }
