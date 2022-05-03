@@ -51,6 +51,7 @@ namespace TramsDataApi.Factories
                 KickOfMeetingHeldDate = fssProject.KickOfMeetingHeldDate,
                 RealisticYearofOpening = fssProject.RealisticYearofOpening,
                 MemberOfParliament = fssProject.MemberOfParliament,
+                NumberOfPupil = fssProject.NumberOfPupil
             };
         }
     }
