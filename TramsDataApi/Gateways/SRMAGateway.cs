@@ -70,7 +70,7 @@ namespace TramsDataApi.Gateways
 
                 if (srma == null)
                 {
-                    throw new InvalidOperationException($"SRMA with Id{srmaId} not found.");
+                    throw new InvalidOperationException($"SRMA with Id:{srmaId} not found.");
                 }
 
                 var patchedSRMA = patchDelegate(srma);
