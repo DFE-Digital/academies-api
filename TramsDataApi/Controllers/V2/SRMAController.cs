@@ -19,17 +19,20 @@ namespace TramsDataApi.Controllers.V2
         private readonly IUseCase<CreateSRMARequest, SRMAResponse> _createSRMAUseCase;
         private readonly IUseCase<int, ICollection<SRMAResponse>> _getSRMAsByCaseIdUseCase;
         private readonly IUseCase<int, SRMAResponse> _getSRMAByIdUseCase;
+        private readonly IUseCase<PatchSRMARequest, SRMAResponse> _patchSRMAUseCase;
 
         public SRMAController(
             ILogger<SRMAController> logger,
             IUseCase<CreateSRMARequest, SRMAResponse> createSRMAUseCase,
             IUseCase<int, ICollection<SRMAResponse>> getSRMAsByCaseIdUseCase,
-            IUseCase<int, SRMAResponse> getSRMAByIdUseCase)
+            IUseCase<int, SRMAResponse> getSRMAByIdUseCase,
+            IUseCase<PatchSRMARequest, SRMAResponse> patchSRMAUseCase)
         {
             _logger = logger;
             _createSRMAUseCase = createSRMAUseCase;
             _getSRMAsByCaseIdUseCase = getSRMAsByCaseIdUseCase;
             _getSRMAByIdUseCase = getSRMAByIdUseCase;
+            _patchSRMAUseCase = patchSRMAUseCase;
         }
 
         [HttpPost]
@@ -56,7 +59,8 @@ namespace TramsDataApi.Controllers.V2
         [Route("case/{caseId}")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCaseId(int caseId)
-        {
+        { 
+
             var srmas = _getSRMAsByCaseIdUseCase.Execute(caseId);
             var response = new ApiSingleResponseV2<ICollection<SRMAResponse>>(srmas);
 
@@ -64,21 +68,41 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
+        [Route("{id}/update-status")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateStatus(int srmaId, SRMAStatus status)
         {
-            var srma = _getSRMAByIdUseCase.Execute(srmaId);
-            var response = new ApiSingleResponseV2<SRMAResponse>(srma);
+            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            {
+                SRMAId = srmaId,
+                Delegate = (srma) =>
+                {
+                    srma.StatusId = (int)status;
+                    return srma;
+                }
+            });
+
+            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
             return Ok(response);
         }
 
         [HttpPatch]
+        [Route("{id}/update-reason")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateReason(int srmaId, SRMAReasonOffered reason)
         {
-            var srma = _getSRMAByIdUseCase.Execute(srmaId);
-            var response = new ApiSingleResponseV2<SRMAResponse>(srma);
+            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            {
+                SRMAId = srmaId,
+                Delegate = (srma) =>
+                {
+                    srma.ReasonId = (int)reason;
+                    return srma;
+                }
+            });
+
+            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
             return Ok(response);
         }

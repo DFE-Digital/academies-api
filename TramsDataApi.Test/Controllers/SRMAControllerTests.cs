@@ -23,6 +23,7 @@ namespace TramsDataApi.Test.Controllers
         private readonly Mock<IUseCase<CreateSRMARequest, SRMAResponse>> _mockCreateSRMAUseCase;
         private readonly Mock<IUseCase<int, ICollection<SRMAResponse>>> _mockGetSRMAsByCaseId;
         private readonly Mock<IUseCase<int, SRMAResponse>> _mockGetSRMAById;
+        private readonly Mock<IUseCase<PatchSRMARequest, SRMAResponse>> _mockPatchSRMAUseCase;
         private readonly SRMAController controllerSUT;
 
         public SRMAControllerTests()
@@ -31,8 +32,10 @@ namespace TramsDataApi.Test.Controllers
             _mockCreateSRMAUseCase = new Mock<IUseCase<CreateSRMARequest, SRMAResponse>>();
             _mockGetSRMAsByCaseId = new Mock<IUseCase<int, ICollection<SRMAResponse>>>();
             _mockGetSRMAById = new Mock<IUseCase<int, SRMAResponse>>();
+            _mockPatchSRMAUseCase = new Mock<IUseCase<PatchSRMARequest, SRMAResponse>>();
 
-            controllerSUT = new SRMAController(_mockLogger.Object, _mockCreateSRMAUseCase.Object, _mockGetSRMAsByCaseId.Object, _mockGetSRMAById.Object);
+            controllerSUT = new SRMAController(_mockLogger.Object, _mockCreateSRMAUseCase.Object, _mockGetSRMAsByCaseId.Object, 
+                                               _mockGetSRMAById.Object, _mockPatchSRMAUseCase.Object);
         }
 
         [Fact]
