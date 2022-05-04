@@ -57,5 +57,38 @@ namespace TramsDataApi.Gateways
             }
         }
 
+        public async Task<SRMACase> PatchSRMAAsync(int srmaId, Func<SRMACase, SRMACase> patchDelegate)
+        {
+            if (patchDelegate == null)
+            {
+                throw new ArgumentNullException("Delegate not provided");
+            }
+
+            try
+            {
+                var srma = await _tramsDbContext.SRMACases.FindAsync(srmaId);
+
+                if (srma == null)
+                {
+                    throw new InvalidOperationException($"SRMA with Id:{srmaId} not found.");
+                }
+
+                var patchedSRMA = patchDelegate(srma);
+                if (patchedSRMA == null || patchedSRMA.Id != srma.Id)
+                {
+                    throw new InvalidOperationException("Patched SRMA is invalid.");
+                }
+
+                var tracked = _tramsDbContext.Update<SRMACase>(patchedSRMA);
+                await _tramsDbContext.SaveChangesAsync();
+
+                return tracked.Entity;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occured while trying to patch the SRMA. SRMA Id:", srmaId);
+                throw;
+            }
+        }
     }
 }
