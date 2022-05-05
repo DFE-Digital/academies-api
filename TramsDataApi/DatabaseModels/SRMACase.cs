@@ -24,6 +24,7 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? UpdatedAt { get; set; }
         public DateTime? ClosedAt { get; set; }
         public string CreatedBy { get; set; }
+
         [StringLength(500)]
         public string Notes { get; set; }
 
