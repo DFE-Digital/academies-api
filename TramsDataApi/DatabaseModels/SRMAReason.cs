@@ -8,7 +8,6 @@ namespace TramsDataApi.DatabaseModels
     public class SRMAReason
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public long? Urn { get; set; }
         public string Name { get; set; }
