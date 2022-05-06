@@ -69,7 +69,7 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
-        [Route("{id}/update-status")]
+        [Route("{srmaId}/update-status")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateStatus(int srmaId, SRMAStatus status)
         {
@@ -89,7 +89,7 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
-        [Route("{id}/update-reason")]
+        [Route("{srmaId}/update-reason")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateReason(int srmaId, SRMAReasonOffered reason)
         {
@@ -109,7 +109,7 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
-        [Route("{id}/update-offered-date")]
+        [Route("{srmaId}/update-offered-date")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateOfferedDate(int srmaId, DateTime offeredDate)
         {
@@ -129,7 +129,7 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
-        [Route("{id}/update-notes")]
+        [Route("{srmaId}/update-notes")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateNotes(int srmaId, string notes)
         {
@@ -149,7 +149,7 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
-        [Route("{id}/update-visit-dates")]
+        [Route("{srmaId}/update-visit-dates")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateVisitDates(int srmaId, DateTime startDate, DateTime? endDate)
         {
@@ -170,7 +170,7 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
-        [Route("{id}/update-date-accepted")]
+        [Route("{srmaId}/update-date-accepted")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateAccepted(int srmaId, DateTime? acceptedDate)
         {
@@ -190,7 +190,7 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpPatch]
-        [Route("{id}/update-date-report-sent")]
+        [Route("{srmaId}/update-date-report-sent")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateReportSent(int srmaId, DateTime? dateReportSent)
         {

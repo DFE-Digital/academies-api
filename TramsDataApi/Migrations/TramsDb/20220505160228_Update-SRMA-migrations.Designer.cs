@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220505160228_Update-SRMA-migrations")]
+    partial class UpdateSRMAmigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1441,29 +1443,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasKey("Id");
 
                     b.ToTable("SRMAReason","sdd");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "OfferLinked",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "AMSDIntervention",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "RDDIntervention",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.SRMAStatus", b =>
@@ -1488,50 +1467,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasKey("Id");
 
                     b.ToTable("SRMAStatus","sdd");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "TrustConsidering",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "PreparingForDeployment",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Deployed",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Declined",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Canceled",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Complete",
-                            UpdatedAt = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.TransferringAcademies", b =>
