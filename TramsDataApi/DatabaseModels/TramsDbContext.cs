@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace TramsDataApi.DatabaseModels
@@ -363,7 +364,39 @@ namespace TramsDataApi.DatabaseModels
                 entity.ToView("vw_Fss_ProjectData", "fsg");
                 entity.HasNoKey();
             });
-          
+
+            modelBuilder.Entity<SRMAStatus>(entity =>
+            {
+                entity.ToTable("SRMAStatus", "sdd");
+
+                entity.HasData(
+                    Enum.GetValues(typeof(Enums.SRMAStatus)).Cast<Enums.SRMAStatus>()
+                    .Where(enm => enm != Enums.SRMAStatus.Unknown)
+                    .Select(enm => new SRMAStatus
+                    {
+                        Id = (int)enm,
+                        Name = enm.ToString(),
+                        CreatedAt = new DateTime(2022, 05, 06),
+                        UpdatedAt = new DateTime(2022, 05, 06)
+                    }));
+            });
+
+            modelBuilder.Entity<SRMAReason>(entity =>
+            {
+                entity.ToTable("SRMAReason", "sdd");
+
+                entity.HasData(
+                    Enum.GetValues(typeof(Enums.SRMAReasonOffered)).Cast<Enums.SRMAReasonOffered>()
+                    .Where(enm => enm != Enums.SRMAReasonOffered.Unknown)
+                    .Select(enm => new SRMAStatus
+                    {
+                        Id = (int)enm,
+                        Name = enm.ToString(),
+                        CreatedAt = new DateTime(2022, 05, 06),
+                        UpdatedAt = new DateTime(2022, 05, 06)
+                    }));
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
