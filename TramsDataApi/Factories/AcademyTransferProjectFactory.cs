@@ -49,7 +49,6 @@ namespace TramsDataApi.Factories
                 FeatureSectionIsCompleted = request.Features?.IsCompleted,
                 BenefitsSectionIsCompleted = request.Benefits?.IsCompleted,
                 RationaleSectionIsCompleted = request.Rationale?.IsCompleted,
-                AcademyPerformanceAdditionalInformation = request.AcademyPerformanceAdditionalInformation,
                 HasHtbDate = request.Dates?.HasHtbDate,
                 HasTransferFirstDiscussedDate = request.Dates?.HasTransferFirstDiscussedDate,
                 HasTargetDateForTransfer = request.Dates?.HasTargetDateForTransfer
@@ -154,9 +153,6 @@ namespace TramsDataApi.Factories
             original.FeatureSectionIsCompleted = toMerge.FeatureSectionIsCompleted ?? original.FeatureSectionIsCompleted;
             original.BenefitsSectionIsCompleted = toMerge.BenefitsSectionIsCompleted ?? original.BenefitsSectionIsCompleted;
             original.RationaleSectionIsCompleted = toMerge.RationaleSectionIsCompleted ?? original.RationaleSectionIsCompleted;
-
-            original.AcademyPerformanceAdditionalInformation = toMerge.AcademyPerformanceAdditionalInformation ?? 
-                                                         original.AcademyPerformanceAdditionalInformation;
 
             original.AcademyTransferProjectIntendedTransferBenefits =
                 toMerge.AcademyTransferProjectIntendedTransferBenefits ??
