@@ -50,11 +50,6 @@ namespace TramsDataApi.Factories
                 BenefitsSectionIsCompleted = request.Benefits?.IsCompleted,
                 RationaleSectionIsCompleted = request.Rationale?.IsCompleted,
                 AcademyPerformanceAdditionalInformation = request.AcademyPerformanceAdditionalInformation,
-                PupilNumbersAdditionalInformation = request.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation = request.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation = request.KeyStage2PerformanceAdditionalInformation, 
-                KeyStage4PerformanceAdditionalInformation = request.KeyStage4PerformanceAdditionalInformation, 
-                KeyStage5PerformanceAdditionalInformation = request.KeyStage5PerformanceAdditionalInformation,
                 HasHtbDate = request.Dates?.HasHtbDate,
                 HasTransferFirstDiscussedDate = request.Dates?.HasTransferFirstDiscussedDate,
                 HasTargetDateForTransfer = request.Dates?.HasTargetDateForTransfer
@@ -162,17 +157,7 @@ namespace TramsDataApi.Factories
 
             original.AcademyPerformanceAdditionalInformation = toMerge.AcademyPerformanceAdditionalInformation ?? 
                                                          original.AcademyPerformanceAdditionalInformation;
-            original.PupilNumbersAdditionalInformation = toMerge.PupilNumbersAdditionalInformation ?? 
-                                                         original.PupilNumbersAdditionalInformation;
-            original.LatestOfstedJudgementAdditionalInformation = toMerge.LatestOfstedJudgementAdditionalInformation ??
-                                                                  original.LatestOfstedJudgementAdditionalInformation;
-            original.KeyStage2PerformanceAdditionalInformation = toMerge.KeyStage2PerformanceAdditionalInformation ?? 
-                                                                 original.KeyStage2PerformanceAdditionalInformation;
-            original.KeyStage4PerformanceAdditionalInformation = toMerge.KeyStage4PerformanceAdditionalInformation ?? 
-                                                                 original.KeyStage4PerformanceAdditionalInformation;
-            original.KeyStage5PerformanceAdditionalInformation = toMerge.KeyStage5PerformanceAdditionalInformation ??
-                                                                 original.KeyStage5PerformanceAdditionalInformation;
-            
+
             original.AcademyTransferProjectIntendedTransferBenefits =
                 toMerge.AcademyTransferProjectIntendedTransferBenefits ??
                 original.AcademyTransferProjectIntendedTransferBenefits;
