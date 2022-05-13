@@ -74,7 +74,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = null,
                 BenefitsSectionIsCompleted = null,
                 RationaleSectionIsCompleted = null,
-                AcademyPerformanceAdditionalInformation = null,
                 TransferringAcademies = createRequest.TransferringAcademies
                     .Select(t => new TransferringAcademies
                     {
@@ -179,7 +178,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = createRequest.Features?.IsCompleted,
                 BenefitsSectionIsCompleted = createRequest.Benefits?.IsCompleted,
                 RationaleSectionIsCompleted = createRequest.Rationale?.IsCompleted,
-                AcademyPerformanceAdditionalInformation = createRequest.AcademyPerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = createRequest.Benefits.IntendedTransferBenefits
                     .SelectedBenefits
                     .Select(b => new AcademyTransferProjectIntendedTransferBenefits {SelectedBenefit = b}).ToList(),
@@ -261,8 +259,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
-                AcademyPerformanceAdditionalInformation =
-                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
@@ -350,8 +346,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
-                AcademyPerformanceAdditionalInformation =
-                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasHtbDate = academyTransferProject.HasHtbDate,
@@ -432,8 +426,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
-                AcademyPerformanceAdditionalInformation =
-                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits = expectedBenefits,
                 HasHtbDate = academyTransferProject.HasHtbDate,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
@@ -498,8 +490,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
-                AcademyPerformanceAdditionalInformation =
-                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = false,
@@ -572,8 +562,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
-                AcademyPerformanceAdditionalInformation =
-                    academyTransferProject.AcademyPerformanceAdditionalInformation,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = false,

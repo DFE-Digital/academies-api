@@ -107,8 +107,7 @@ namespace TramsDataApi.Factories
                     Recommendation = model.Recommendation
                 },
                 State = model.State,
-                Status = model.Status,
-                AcademyPerformanceAdditionalInformation = model.AcademyPerformanceAdditionalInformation
+                Status = model.Status
             };
         }
     }
