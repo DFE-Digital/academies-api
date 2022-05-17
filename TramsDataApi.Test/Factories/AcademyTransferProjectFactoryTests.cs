@@ -26,12 +26,6 @@ namespace TramsDataApi.Test.Factories
                 .With(c => c.Dates = null)
                 .With(c => c.Rationale = null)
                 .With(c => c.Features = null)
-                .With(c => c.AcademyPerformanceAdditionalInformation = null)
-                .With(c => c.PupilNumbersAdditionalInformation = null)
-                .With(c => c.LatestOfstedJudgementAdditionalInformation = null)
-                .With(c => c.KeyStage2PerformanceAdditionalInformation = null)
-                .With(c => c.KeyStage4PerformanceAdditionalInformation = null)
-                .With(c => c.KeyStage5PerformanceAdditionalInformation = null)
                 .With(c => c.TransferringAcademies =
                     (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
                         .CreateListOfSize(5)
