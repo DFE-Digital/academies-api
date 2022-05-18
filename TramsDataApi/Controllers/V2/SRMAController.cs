@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels;
@@ -40,6 +41,8 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> Create(CreateSRMARequest request)
         {
+            request.CaseId = 6235;
+
             var createdSRMA = _createSRMAUseCase.Execute(request);
             var response = new ApiSingleResponseV2<SRMAResponse>(createdSRMA);
 
@@ -60,8 +63,8 @@ namespace TramsDataApi.Controllers.V2
         [Route("case/{caseId}")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCaseId(int caseId)
-        { 
-
+        {
+            caseId = 6235;
             var srmas = _getSRMAsByCaseIdUseCase.Execute(caseId);
             var response = new ApiSingleResponseV2<ICollection<SRMAResponse>>(srmas);
 
@@ -172,21 +175,29 @@ namespace TramsDataApi.Controllers.V2
         [HttpPatch]
         [Route("{srmaId}/update-date-accepted")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateAccepted(int srmaId, DateTime? acceptedDate)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateAccepted(int srmaId, string acceptedDate)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.DateAccepted = acceptedDate;
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.DateAccepted = DeserialiseDateTime(acceptedDate);
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
         }
 
         [HttpPatch]
@@ -207,6 +218,12 @@ namespace TramsDataApi.Controllers.V2
             var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
             return Ok(response);
+        }
+
+        private DateTime? DeserialiseDateTime(string value)
+        {
+            var dateTimeFormatInfo = CultureInfo.InvariantCulture.DateTimeFormat;
+            return string.IsNullOrWhiteSpace(value) ? null : (DateTime?)DateTime.ParseExact(value, "dd-MM-yyyy", dateTimeFormatInfo, DateTimeStyles.None);
         }
     }
 }
