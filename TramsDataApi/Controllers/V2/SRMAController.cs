@@ -154,15 +154,15 @@ namespace TramsDataApi.Controllers.V2
         [HttpPatch]
         [Route("{srmaId}/update-visit-dates")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateVisitDates(int srmaId, DateTime startDate, DateTime? endDate)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateVisitDates(int srmaId, string startDate, string endDate)
         {
             var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
             {
                 SRMAId = srmaId,
                 Delegate = (srma) =>
                 {
-                    srma.StartDateOfVisit = startDate;
-                    srma.EndDateOfVisit = endDate;
+                    srma.StartDateOfVisit = DeserialiseDateTime(startDate);
+                    srma.EndDateOfVisit = DeserialiseDateTime(endDate); 
                     return srma;
                 }
             });
