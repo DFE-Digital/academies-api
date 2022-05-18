@@ -203,14 +203,14 @@ namespace TramsDataApi.Controllers.V2
         [HttpPatch]
         [Route("{srmaId}/update-date-report-sent")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateReportSent(int srmaId, DateTime? dateReportSent)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateReportSent(int srmaId, string dateReportSent)
         {
             var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
             {
                 SRMAId = srmaId,
                 Delegate = (srma) =>
                 {
-                    srma.DateReportSentToTrust = dateReportSent;
+                    srma.DateReportSentToTrust = DeserialiseDateTime(dateReportSent);
                     return srma;
                 }
             });
