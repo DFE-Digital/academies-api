@@ -1,4 +1,5 @@
 ﻿using TramsDataApi.DatabaseModels;
+using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels.CaseActions.SRMA;
 
@@ -18,7 +19,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 EndDateOfVisit = createSRMARequest.DateVisitEnd,
                 DateAccepted = createSRMARequest.DateAccepted,
                 StatusId = (int)createSRMARequest.Status,
-                ReasonId = (int)createSRMARequest.Reason,
+                ReasonId = (int?)(createSRMARequest.Reason == SRMAReasonOffered.Unknown ? null : createSRMARequest.Reason),
                 Notes = createSRMARequest.Notes,
             };
         }
