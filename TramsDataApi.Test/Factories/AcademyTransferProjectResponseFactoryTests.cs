@@ -48,12 +48,6 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = null,
                 BenefitsSectionIsCompleted = null,
                 RationaleSectionIsCompleted = null,
-                AcademyPerformanceAdditionalInformation = null,
-                PupilNumbersAdditionalInformation = null,
-                LatestOfstedJudgementAdditionalInformation = null,
-                KeyStage2PerformanceAdditionalInformation = null,
-                KeyStage4PerformanceAdditionalInformation = null,
-                KeyStage5PerformanceAdditionalInformation = null,
                 AcademyTransferProjectIntendedTransferBenefits = null,
                 TransferringAcademies = Builder<TransferringAcademies>
                     .CreateListOfSize(1).All()
@@ -94,18 +88,7 @@ namespace TramsDataApi.Test.Factories
                 Rationale = new AcademyTransferProjectRationaleResponse(),
                 GeneralInformation = new AcademyTransferProjectGeneralInformationResponse(),
                 State = null,
-                Status = null,
-                AcademyPerformanceAdditionalInformation =
-                    academyTransferProjectModel.AcademyPerformanceAdditionalInformation,
-                PupilNumbersAdditionalInformation = academyTransferProjectModel.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation =
-                    academyTransferProjectModel.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation =
-                    academyTransferProjectModel.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation =
-                    academyTransferProjectModel.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation =
-                    academyTransferProjectModel.KeyStage5PerformanceAdditionalInformation,
+                Status = null
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);
@@ -213,18 +196,7 @@ namespace TramsDataApi.Test.Factories
                     Recommendation = academyTransferProjectModel.Recommendation
                 },
                 State = academyTransferProjectModel.State,
-                Status = academyTransferProjectModel.Status,
-                AcademyPerformanceAdditionalInformation =
-                    academyTransferProjectModel.AcademyPerformanceAdditionalInformation,
-                PupilNumbersAdditionalInformation = academyTransferProjectModel.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation =
-                    academyTransferProjectModel.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation =
-                    academyTransferProjectModel.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation =
-                    academyTransferProjectModel.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation =
-                    academyTransferProjectModel.KeyStage5PerformanceAdditionalInformation
+                Status = academyTransferProjectModel.Status
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);
