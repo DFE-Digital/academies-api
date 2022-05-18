@@ -222,7 +222,7 @@ namespace TramsDataApi.Controllers.V2
 
 
         [HttpPatch]
-        [Route("{id}/update-closed-date")]
+        [Route("{srmaId}/update-closed-date")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateClosed(int srmaId, DateTime? dateClosed)
         {
