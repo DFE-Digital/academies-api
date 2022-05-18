@@ -220,6 +220,27 @@ namespace TramsDataApi.Controllers.V2
             return Ok(response);
         }
 
+
+        [HttpPatch]
+        [Route("{id}/update-closed-date")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateClosed(int srmaId, DateTime? dateClosed)
+        {
+            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            {
+                SRMAId = srmaId,
+                Delegate = (srma) =>
+                {
+                    srma.ClosedAt = dateClosed;
+                    return srma;
+                }
+            });
+
+            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+
+            return Ok(response);
+        }
+
         private DateTime? DeserialiseDateTime(string value)
         {
             var dateTimeFormatInfo = CultureInfo.InvariantCulture.DateTimeFormat;

@@ -348,7 +348,31 @@ namespace TramsDataApi.Test.Controllers
             updatedByDelegate.Should().NotBeNull();
             updatedByDelegate.DateReportSentToTrust.Should().Be(targetDateReportSent);
         }
+
+        [Fact]
+        public void UpdateDateClosed_ReturnsUpdatedSRMA_WhenGivenNewDate()
+        {
+            var srmaId = 123;
+            var targetDateClosed = DateTime.Now.AddDays(-10);
+
+            var srmaModel = new SRMACase
+            {
+                Id = srmaId,
+                ClosedAt = null
+            };
+
+            SRMACase updatedByDelegate = null;
+
+            _mockPatchSRMAUseCase.Setup(m => m.Execute(It.IsAny<PatchSRMARequest>()))
+                 .Callback<PatchSRMARequest>(req =>
+                 {
+                     updatedByDelegate = req.Delegate(srmaModel);
+                 });
+
+            controllerSUT.UpdateDateClosed(srmaId, targetDateClosed);
+
+            updatedByDelegate.Should().NotBeNull();
+            updatedByDelegate.ClosedAt.Should().Be(targetDateClosed);
+        }
     }
-
-
 }
