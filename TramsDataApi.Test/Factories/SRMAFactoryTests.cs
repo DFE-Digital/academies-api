@@ -22,6 +22,7 @@ namespace TramsDataApi.Test.Factories
             {
                 Id = 123,
                 CaseId = 567,
+                CreatedAt = dtNow,
                 DateOffered = dtNow.AddDays(29),
                 DateReportSentToTrust = dtNow.AddDays(28),
                 DateVisitStart = dtNow.AddDays(27),
@@ -43,6 +44,7 @@ namespace TramsDataApi.Test.Factories
                 .With(r => r.Status = details.Status)
                 .With(r => r.Reason = details.Reason)
                 .With(r => r.Notes = details.Notes)
+                .With(r => r.CreatedAt = details.CreatedAt)
                 .Build();
 
             var expectedSRMAModel = new SRMACase
@@ -57,6 +59,7 @@ namespace TramsDataApi.Test.Factories
                 StatusId = (int)details.Status,
                 ReasonId = (int)details.Reason,
                 Notes = details.Notes,
+                CreatedAt = details.CreatedAt
             };
 
             var response = SRMAFactory.CreateDBModel(createSRMARequest);
@@ -73,6 +76,7 @@ namespace TramsDataApi.Test.Factories
             {
                 Id = 123,
                 CaseId = 988,
+                CreatedAt = dtNow,
                 DateOffered = dtNow.AddDays(29),
                 DateReportSentToTrust = dtNow.AddDays(28),
                 DateVisitStart = dtNow.AddDays(27),
@@ -94,6 +98,7 @@ namespace TramsDataApi.Test.Factories
                 .With(r => r.StatusId = (int)details.Status)
                 .With(r => r.ReasonId = (int)details.Reason)
                 .With(r => r.Notes = details.Notes)
+                .With(r => r.CreatedAt = details.CreatedAt)
                 .Build();
 
             var expectedCreateSRMAResponse = new SRMAResponse
@@ -108,6 +113,7 @@ namespace TramsDataApi.Test.Factories
                 Status = details.Status,
                 Reason = details.Reason,
                 Notes = details.Notes,
+                CreatedAt = details.CreatedAt
             };
 
             var response = SRMAFactory.CreateResponse(srmaModel);
