@@ -107,13 +107,7 @@ namespace TramsDataApi.Factories
                     Recommendation = model.Recommendation
                 },
                 State = model.State,
-                Status = model.Status,
-                AcademyPerformanceAdditionalInformation = model.AcademyPerformanceAdditionalInformation,
-                PupilNumbersAdditionalInformation = model.PupilNumbersAdditionalInformation,
-                LatestOfstedJudgementAdditionalInformation = model.LatestOfstedJudgementAdditionalInformation,
-                KeyStage2PerformanceAdditionalInformation = model.KeyStage2PerformanceAdditionalInformation,
-                KeyStage4PerformanceAdditionalInformation = model.KeyStage4PerformanceAdditionalInformation,
-                KeyStage5PerformanceAdditionalInformation = model.KeyStage5PerformanceAdditionalInformation
+                Status = model.Status
             };
         }
     }
