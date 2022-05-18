@@ -7,6 +7,7 @@ namespace TramsDataApi.ResponseModels.CaseActions.SRMA
     {
 		public int Id { get; set; }
 		public int CaseId { get; set; }
+		public DateTime CreatedAt { get; set; }
 		public DateTime DateOffered { get; set; }
 		public DateTime? DateAccepted { get; set; }
 		public DateTime? DateReportSentToTrust { get; set; }
