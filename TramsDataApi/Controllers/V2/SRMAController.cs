@@ -41,8 +41,6 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> Create(CreateSRMARequest request)
         {
-            request.CaseId = 6235;
-
             var createdSRMA = _createSRMAUseCase.Execute(request);
             var response = new ApiSingleResponseV2<SRMAResponse>(createdSRMA);
 
@@ -64,7 +62,6 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCaseId(int caseId)
         {
-            caseId = 6235;
             var srmas = _getSRMAsByCaseIdUseCase.Execute(caseId);
             var response = new ApiSingleResponseV2<ICollection<SRMAResponse>>(srmas);
 
@@ -114,21 +111,30 @@ namespace TramsDataApi.Controllers.V2
         [HttpPatch]
         [Route("{srmaId}/update-offered-date")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateOfferedDate(int srmaId, DateTime offeredDate)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateOfferedDate(int srmaId, string offeredDate)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            DateTime? dateOffered = DeserialiseDateTime(offeredDate);
+
+            if (dateOffered == null)
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                return BadRequest("Offered Date Cannot Be Null");
+            }
+            else
+            {
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.DateOffered = offeredDate;
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.DateOffered = dateOffered.Value;
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
         }
 
         [HttpPatch]
@@ -224,14 +230,14 @@ namespace TramsDataApi.Controllers.V2
         [HttpPatch]
         [Route("{srmaId}/update-closed-date")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateClosed(int srmaId, DateTime? dateClosed)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateClosed(int srmaId, string dateClosed)
         {
             var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
             {
                 SRMAId = srmaId,
                 Delegate = (srma) =>
                 {
-                    srma.ClosedAt = dateClosed;
+                    srma.ClosedAt = DeserialiseDateTime(dateClosed);
                     return srma;
                 }
             });

@@ -13,6 +13,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
             {
                 Id = createSRMARequest.Id,
                 CaseId = createSRMARequest.CaseId,
+                CreatedAt = createSRMARequest.CreatedAt,
                 DateOffered = createSRMARequest.DateOffered,
                 DateReportSentToTrust = createSRMARequest.DateReportSentToTrust,
                 StartDateOfVisit = createSRMARequest.DateVisitStart,
@@ -30,6 +31,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
             {
                 Id = model.Id,
                 CaseId = model.CaseId,
+                CreatedAt = model.CreatedAt,
                 DateOffered = model.DateOffered,
                 DateReportSentToTrust = model.DateReportSentToTrust,
                 DateVisitStart = model.StartDateOfVisit,
