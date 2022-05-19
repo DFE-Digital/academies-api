@@ -123,7 +123,6 @@ namespace TramsDataApi.Test.Factories
                 KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation,
                 ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
                 ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
-                EqualitiesImpactAssessmentConsidered = academyConversionProject.EqualitiesImpactAssessmentConsidered
             };
 
             if (trust != null)
