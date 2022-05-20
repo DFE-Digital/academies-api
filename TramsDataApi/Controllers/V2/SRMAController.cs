@@ -113,27 +113,35 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateOfferedDate(int srmaId, string offeredDate)
         {
-            DateTime? dateOffered = DeserialiseDateTime(offeredDate);
+            try
+            {
+                DateTime? dateOffered = DeserialiseDateTime(offeredDate);
 
-            if (dateOffered == null)
-            {
-                return BadRequest("Offered Date Cannot Be Null");
-            }
-            else
-            {
-                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+                if (dateOffered == null)
                 {
-                    SRMAId = srmaId,
-                    Delegate = (srma) =>
+                    return BadRequest("Offered Date Cannot Be Null");
+                }
+                else
+                {
+                    var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                     {
-                        srma.DateOffered = dateOffered.Value;
-                        return srma;
-                    }
-                });
+                        SRMAId = srmaId,
+                        Delegate = (srma) =>
+                        {
+                            srma.DateOffered = dateOffered.Value;
+                            return srma;
+                        }
+                    });
 
-                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                    var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-                return Ok(response);
+                    return Ok(response);
+                }
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
             }
         }
 
@@ -162,20 +170,28 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateVisitDates(int srmaId, string startDate, string endDate)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.StartDateOfVisit = DeserialiseDateTime(startDate);
-                    srma.EndDateOfVisit = DeserialiseDateTime(endDate); 
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.StartDateOfVisit = DeserialiseDateTime(startDate);
+                        srma.EndDateOfVisit = DeserialiseDateTime(endDate);
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
         }
 
         [HttpPatch]
@@ -211,19 +227,27 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateReportSent(int srmaId, string dateReportSent)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.DateReportSentToTrust = DeserialiseDateTime(dateReportSent);
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.DateReportSentToTrust = DeserialiseDateTime(dateReportSent);
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
         }
 
 
@@ -232,19 +256,27 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateClosed(int srmaId, string dateClosed)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.ClosedAt = DeserialiseDateTime(dateClosed);
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.ClosedAt = DeserialiseDateTime(dateClosed);
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
         }
 
         private DateTime? DeserialiseDateTime(string value)
