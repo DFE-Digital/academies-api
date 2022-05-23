@@ -27,6 +27,7 @@ namespace TramsDataApi.Test.Controllers
         private readonly Mock<IUseCase<int, SRMAResponse>> _mockGetSRMAById;
         private readonly Mock<IUseCase<PatchSRMARequest, SRMAResponse>> _mockPatchSRMAUseCase;
         private readonly SRMAController controllerSUT;
+        private string dtSerialisationFormat = "dd-MM-yyyy";
 
         public SRMAControllerTests()
         {
@@ -211,8 +212,8 @@ namespace TramsDataApi.Test.Controllers
         public void UpdateDateOffered_ReturnsUpdatedSRMA_WhenGivenNewOfferedDate()
         {
             var srmaId = 123;
-            var startingOfferedDate = DateTime.Now.AddDays(-10);
-            var targetOfferedDate = DateTime.Now.AddDays(-5);
+            var startingOfferedDate = DateTime.Now.AddDays(-10).Date;
+            var targetOfferedDate = DateTime.Now.AddDays(-5).Date;
 
             var srmaModel = new SRMACase
             {
@@ -228,7 +229,7 @@ namespace TramsDataApi.Test.Controllers
                      updatedByDelegate = req.Delegate(srmaModel);
                  });
 
-            controllerSUT.UpdateOfferedDate(srmaId, targetOfferedDate);
+            controllerSUT.UpdateOfferedDate(srmaId, targetOfferedDate.ToString(dtSerialisationFormat));
 
             updatedByDelegate.Should().NotBeNull();
             updatedByDelegate.DateOffered.Should().Be(targetOfferedDate);
@@ -265,10 +266,10 @@ namespace TramsDataApi.Test.Controllers
         public void UpdateVisitDates_ReturnsUpdatedSRMA_WhenGivenNewDates()
         {
             var srmaId = 123;
-            var startingVisitStartDate = DateTime.Now.AddDays(-20);
+            var startingVisitStartDate = DateTime.Now.AddDays(-20).Date;
             
-            var targetVisitStartDate = DateTime.Now.AddDays(-10);
-            var targetVisitEndDate = DateTime.Now.AddDays(-5);
+            var targetVisitStartDate = DateTime.Now.AddDays(-10).Date;
+            var targetVisitEndDate = DateTime.Now.AddDays(-5).Date;
 
             var srmaModel = new SRMACase
             {
@@ -285,7 +286,7 @@ namespace TramsDataApi.Test.Controllers
                      updatedByDelegate = req.Delegate(srmaModel);
                  });
 
-            controllerSUT.UpdateVisitDates(srmaId, targetVisitStartDate, targetVisitEndDate);
+            controllerSUT.UpdateVisitDates(srmaId, targetVisitStartDate.ToString(dtSerialisationFormat), targetVisitEndDate.ToString(dtSerialisationFormat));
 
             updatedByDelegate.Should().NotBeNull();
             updatedByDelegate.StartDateOfVisit.Should().Be(targetVisitStartDate);
@@ -296,9 +297,9 @@ namespace TramsDataApi.Test.Controllers
         public void UpdateDateAccepted_ReturnsUpdatedSRMA_WhenGivenNewDate()
         {
             var srmaId = 123;
-            var startingDateAccepted = DateTime.Now.AddDays(-20);
+            var startingDateAccepted = DateTime.Now.AddDays(-20).Date;
 
-            var targetDateAccepted = DateTime.Now.AddDays(-10);
+            var targetDateAccepted = DateTime.Now.AddDays(-10).Date;
 
             var srmaModel = new SRMACase
             {
@@ -314,7 +315,7 @@ namespace TramsDataApi.Test.Controllers
                      updatedByDelegate = req.Delegate(srmaModel);
                  });
 
-            controllerSUT.UpdateDateAccepted(srmaId, targetDateAccepted);
+            controllerSUT.UpdateDateAccepted(srmaId, targetDateAccepted.ToString(dtSerialisationFormat));
 
             updatedByDelegate.Should().NotBeNull();
             updatedByDelegate.DateAccepted.Should().Be(targetDateAccepted);
@@ -325,9 +326,9 @@ namespace TramsDataApi.Test.Controllers
         public void UpdateDateDateReportSent_ReturnsUpdatedSRMA_WhenGivenNewDate()
         {
             var srmaId = 123;
-            var startingDateReportSent = DateTime.Now.AddDays(-20);
+            var startingDateReportSent = DateTime.Now.AddDays(-20).Date;
 
-            var targetDateReportSent = DateTime.Now.AddDays(-10);
+            var targetDateReportSent = DateTime.Now.AddDays(-10).Date;
 
             var srmaModel = new SRMACase
             {
@@ -343,12 +344,36 @@ namespace TramsDataApi.Test.Controllers
                      updatedByDelegate = req.Delegate(srmaModel);
                  });
 
-            controllerSUT.UpdateDateReportSent(srmaId, targetDateReportSent);
+            controllerSUT.UpdateDateReportSent(srmaId, targetDateReportSent.ToString(dtSerialisationFormat));
 
             updatedByDelegate.Should().NotBeNull();
             updatedByDelegate.DateReportSentToTrust.Should().Be(targetDateReportSent);
         }
+
+        [Fact]
+        public void UpdateDateClosed_ReturnsUpdatedSRMA_WhenGivenNewDate()
+        {
+            var srmaId = 123;
+            var targetDateClosed = DateTime.Now.AddDays(-10).Date;
+
+            var srmaModel = new SRMACase
+            {
+                Id = srmaId,
+                ClosedAt = null
+            };
+
+            SRMACase updatedByDelegate = null;
+
+            _mockPatchSRMAUseCase.Setup(m => m.Execute(It.IsAny<PatchSRMARequest>()))
+                 .Callback<PatchSRMARequest>(req =>
+                 {
+                     updatedByDelegate = req.Delegate(srmaModel);
+                 });
+
+            controllerSUT.UpdateDateClosed(srmaId, targetDateClosed.ToString(dtSerialisationFormat));
+
+            updatedByDelegate.Should().NotBeNull();
+            updatedByDelegate.ClosedAt.Should().Be(targetDateClosed);
+        }
     }
-
-
 }
