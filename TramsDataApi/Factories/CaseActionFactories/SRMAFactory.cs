@@ -1,4 +1,5 @@
 ﻿using TramsDataApi.DatabaseModels;
+using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels.CaseActions.SRMA;
 
@@ -12,13 +13,14 @@ namespace TramsDataApi.Factories.CaseActionFactories
             {
                 Id = createSRMARequest.Id,
                 CaseId = createSRMARequest.CaseId,
+                CreatedAt = createSRMARequest.CreatedAt,
                 DateOffered = createSRMARequest.DateOffered,
                 DateReportSentToTrust = createSRMARequest.DateReportSentToTrust,
                 StartDateOfVisit = createSRMARequest.DateVisitStart,
                 EndDateOfVisit = createSRMARequest.DateVisitEnd,
                 DateAccepted = createSRMARequest.DateAccepted,
                 StatusId = (int)createSRMARequest.Status,
-                ReasonId = (int)createSRMARequest.Reason,
+                ReasonId = (int?)(createSRMARequest.Reason == SRMAReasonOffered.Unknown ? null : createSRMARequest.Reason),
                 Notes = createSRMARequest.Notes,
             };
         }
@@ -29,6 +31,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
             {
                 Id = model.Id,
                 CaseId = model.CaseId,
+                CreatedAt = model.CreatedAt,
                 DateOffered = model.DateOffered,
                 DateReportSentToTrust = model.DateReportSentToTrust,
                 DateVisitStart = model.StartDateOfVisit,

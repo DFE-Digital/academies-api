@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels;
@@ -60,8 +61,7 @@ namespace TramsDataApi.Controllers.V2
         [Route("case/{caseId}")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCaseId(int caseId)
-        { 
-
+        {
             var srmas = _getSRMAsByCaseIdUseCase.Execute(caseId);
             var response = new ApiSingleResponseV2<ICollection<SRMAResponse>>(srmas);
 
@@ -111,21 +111,38 @@ namespace TramsDataApi.Controllers.V2
         [HttpPatch]
         [Route("{srmaId}/update-offered-date")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateOfferedDate(int srmaId, DateTime offeredDate)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateOfferedDate(int srmaId, string offeredDate)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                DateTime? dateOffered = DeserialiseDateTime(offeredDate);
+
+                if (dateOffered == null)
                 {
-                    srma.DateOffered = offeredDate;
-                    return srma;
+                    return BadRequest("Offered Date Cannot Be Null");
                 }
-            });
+                else
+                {
+                    var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+                    {
+                        SRMAId = srmaId,
+                        Delegate = (srma) =>
+                        {
+                            srma.DateOffered = dateOffered.Value;
+                            return srma;
+                        }
+                    });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                    var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                    return Ok(response);
+                }
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
         }
 
         [HttpPatch]
@@ -151,62 +168,121 @@ namespace TramsDataApi.Controllers.V2
         [HttpPatch]
         [Route("{srmaId}/update-visit-dates")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateVisitDates(int srmaId, DateTime startDate, DateTime? endDate)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateVisitDates(int srmaId, string startDate, string endDate)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.StartDateOfVisit = startDate;
-                    srma.EndDateOfVisit = endDate;
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.StartDateOfVisit = DeserialiseDateTime(startDate);
+                        srma.EndDateOfVisit = DeserialiseDateTime(endDate);
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
         }
 
         [HttpPatch]
         [Route("{srmaId}/update-date-accepted")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateAccepted(int srmaId, DateTime? acceptedDate)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateAccepted(int srmaId, string acceptedDate)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.DateAccepted = acceptedDate;
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.DateAccepted = DeserialiseDateTime(acceptedDate);
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
         }
 
         [HttpPatch]
         [Route("{srmaId}/update-date-report-sent")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateReportSent(int srmaId, DateTime? dateReportSent)
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateReportSent(int srmaId, string dateReportSent)
         {
-            var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+            try
             {
-                SRMAId = srmaId,
-                Delegate = (srma) =>
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
                 {
-                    srma.DateReportSentToTrust = dateReportSent;
-                    return srma;
-                }
-            });
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.DateReportSentToTrust = DeserialiseDateTime(dateReportSent);
+                        return srma;
+                    }
+                });
 
-            var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
+        }
+
+
+        [HttpPatch]
+        [Route("{srmaId}/update-closed-date")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<SRMAResponse>> UpdateDateClosed(int srmaId, string dateClosed)
+        {
+            try
+            {
+                var patched = _patchSRMAUseCase.Execute(new PatchSRMARequest
+                {
+                    SRMAId = srmaId,
+                    Delegate = (srma) =>
+                    {
+                        srma.ClosedAt = DeserialiseDateTime(dateClosed);
+                        return srma;
+                    }
+                });
+
+                var response = new ApiSingleResponseV2<SRMAResponse>(patched);
+
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "DateTime received doesn't conform to format");
+                throw;
+            }
+        }
+
+        private DateTime? DeserialiseDateTime(string value)
+        {
+            var dateTimeFormatInfo = CultureInfo.InvariantCulture.DateTimeFormat;
+            return string.IsNullOrWhiteSpace(value) ? null : (DateTime?)DateTime.ParseExact(value, "dd-MM-yyyy", dateTimeFormatInfo, DateTimeStyles.None);
         }
     }
 }
