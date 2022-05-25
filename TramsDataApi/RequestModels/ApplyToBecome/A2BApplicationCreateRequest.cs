@@ -8,8 +8,9 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
     public class A2BApplicationCreateRequest
     {
 		public string Name { get; set; }
-		
-		[Required]
+        public string TrustName { get; set; }
+
+        [Required]
 	    public string ApplicationId { get; set; }
 
 		public string ApplicationType { get; set; }
