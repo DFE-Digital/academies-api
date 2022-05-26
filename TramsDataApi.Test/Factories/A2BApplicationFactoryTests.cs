@@ -35,6 +35,7 @@ namespace TramsDataApi.Test.Factories
             {
 	            ApplicationId = applicationCreateRequest.ApplicationId,
 	            Name = applicationCreateRequest.Name,
+				TrustName = applicationCreateRequest.TrustName,
 	            ApplicationType = applicationCreateRequest.ApplicationType,
 	            FormTrustProposedNameOfTrust = applicationCreateRequest.FormTrustProposedNameOfTrust,
 	            ApplicationSubmitted = applicationCreateRequest.ApplicationSubmitted,
@@ -91,7 +92,8 @@ namespace TramsDataApi.Test.Factories
             var expectedResponse = new A2BApplicationResponse
             {
 	            Name = application.Name,
-	            ApplicationId = application.ApplicationId,
+				TrustName = application.TrustName,
+				ApplicationId = application.ApplicationId,
 	            ApplicationType = application.ApplicationType,
 	            FormTrustProposedNameOfTrust = application.FormTrustProposedNameOfTrust,
 	            ApplicationSubmitted = application.ApplicationSubmitted,

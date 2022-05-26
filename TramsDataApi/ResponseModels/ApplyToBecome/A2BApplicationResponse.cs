@@ -9,6 +9,7 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
     public class A2BApplicationResponse
     {
         public string Name {get; set;}
+        public string TrustName { get; set; }
         public string ApplicationId {get; set;}
         public string ApplicationType {get; set;}
         public string TrustId { get; set; }

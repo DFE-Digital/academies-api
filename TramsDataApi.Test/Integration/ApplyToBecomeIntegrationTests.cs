@@ -333,6 +333,7 @@ namespace TramsDataApi.Test.Integration
             {                
                 ApplicationId = "10001",
                 Name = _randomGenerator.NextString(2, 10),
+                TrustName = _randomGenerator.NextString(2, 10),
                 FormTrustProposedNameOfTrust = _randomGenerator.NextString(2, 10),
                 ApplicationSubmitted = _randomGenerator.Boolean(),
                 ApplicationLeadAuthorId = _randomGenerator.NextString(2, 10),
