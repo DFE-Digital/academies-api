@@ -12,6 +12,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 	    public static A2BApplication Create(A2BApplicationCreateRequest request) => new A2BApplication
 	    {
 		    ApplicationId = request.ApplicationId,
+			TrustName  = request.TrustName,
 		    ApplicationStatusId = request.ApplicationStatusId,
 		    ApplicationType = request.ApplicationType,
 		    Name = request.Name,
@@ -56,6 +57,7 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 	    public static A2BApplicationResponse Create(A2BApplication application) => new A2BApplicationResponse
 	    {
 		    Name = application.Name,
+			TrustName = application.TrustName,
 		    ApplicationId = application.ApplicationId,
 		    ApplicationType = application.ApplicationType,
 		    FormTrustProposedNameOfTrust = application.FormTrustProposedNameOfTrust,

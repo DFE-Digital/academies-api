@@ -7,7 +7,10 @@ export const applyToBecomeAcademySchema = {
         properties: {
           name: {
             type: "string"
-          },
+           },
+          trustName: {
+                type: "string"
+           },
           applicationId: {
             type: "string"
           },
