@@ -12,7 +12,8 @@ namespace TramsDataApi.DatabaseModels
 	    public string ApplicationId { get; set; }
 	    
 	    public string Name { get; set; }
-	    public string ApplicationType { get; set; }
+        public string TrustName { get; set; }
+        public string ApplicationType { get; set; }
 	    public string FormTrustProposedNameOfTrust { get; set; }
 	    public bool? ApplicationSubmitted { get; set; }
 		public string ApplicationLeadAuthorId { get; set; }
