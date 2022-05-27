@@ -22,6 +22,7 @@ namespace TramsDataApi.Gateways
         public IEnumerable<AcademyConversionProject> GetProjects(int page, int count)
         {
             return _tramsDbContext.AcademyConversionProjects
+                .OrderByDescending(p => p.Id)
                 .Skip((page - 1) * count)
                 .Take(count)
                 .AsNoTracking()
