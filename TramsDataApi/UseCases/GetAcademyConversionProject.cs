@@ -24,11 +24,7 @@ namespace TramsDataApi.UseCases
             var academyConversionProject = _academyConversionProjectGateway.GetById(request.Id);
             if (academyConversionProject == null) return null;
 
-            var trust = string.IsNullOrEmpty(academyConversionProject.TrustReferenceNumber)
-                ? null
-                : _trustGateway.GetIfdTrustByGroupId(academyConversionProject.TrustReferenceNumber);
-
-            return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null);
+            return AcademyConversionProjectResponseFactory.Create(academyConversionProject);
 
         }
     }

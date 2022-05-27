@@ -27,7 +27,7 @@ namespace TramsDataApi.Test.Integration
         private readonly TramsDbContext _dbContext;
         private readonly Fixture _fixture;
 
-        private const string PreHtb = "Pre HTB";
+        private const string PreAO = "Converter Pre-AO (C)";
 
         public AcademyConversionProjectsIntegrationTests(TramsDataApiFactory fixture)
         {
@@ -47,46 +47,16 @@ namespace TramsDataApi.Test.Integration
             {
                 _fixture.Build<AcademyConversionProject>()
                     .Without(x => x.Id)
-                    .With(x => x.IfdPipelineId, 100002).Create(),
+                    .Create(),
                 _fixture.Build<AcademyConversionProject>()
                     .Without(x => x.Id)
-                    .With(x => x.IfdPipelineId, 100056).Create()
-            };
-            
-            var academyConversionProjectWithoutName = _fixture.Build<AcademyConversionProject>()
-                .Without(x => x.Id)
-                .Without(x => x.SchoolName)
-                .With(x => x.IfdPipelineId, 100120)
-                .Create();
-
-            var ifdPipelineProjects = new List<IfdPipeline>
-            {
-                _fixture.Build<IfdPipeline>()
-                    .With(i => i.Sk, 100002)
-                    .Without(i => i.EfaFundingUpin)
-                    .Without(i => i.ProposedAcademyDetailsNewAcademyUrn)
-                    .With(i => i.GeneralDetailsProjectStatus, "Approved for AO").Create(),
-                _fixture.Build<IfdPipeline>()
-                    .With(i => i.Sk, 100056)
-                    .Without(i => i.EfaFundingUpin)
-                    .Without(i => i.ProposedAcademyDetailsNewAcademyUrn)
-                    .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create(),
-                _fixture.Build<IfdPipeline>()
-                    .With(i => i.Sk, 100120)
-                    .Without(i => i.EfaFundingUpin)
-                    .Without(i => i.ProposedAcademyDetailsNewAcademyUrn)
-                    .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create()
-            };
+                    .Create()
+            };            
          
             _dbContext.AcademyConversionProjects.AddRange(expectedProjects);
-            _dbContext.AcademyConversionProjects.Add(academyConversionProjectWithoutName);
-            _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
-
-            _legacyDbContext.SaveChanges();
             _dbContext.SaveChanges();
             
-            var expected = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
-            expected.ForEach(p => p.ProjectStatus = PreHtb);
+            var expected = expectedProjects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
             
             var response = await _client.GetAsync("/conversion-projects");
             var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectResponse>>();
@@ -95,21 +65,18 @@ namespace TramsDataApi.Test.Integration
             content.Should().BeEquivalentTo(expected);
         }
 
-        [Fact(Skip ="Database View creation via EF migration to be fixed before enabling this test ")]
+        [Fact]
         public async Task Get_request_should_get_an_academy_conversion_project_by_id()
         {
             var academyConversionProject = _fixture.Build<AcademyConversionProject>()
                 .Without(x => x.Id)
                 .Create();
-            var trust = CreateTrust(academyConversionProject);           
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
-            _legacyDbContext.Trust.Add(trust);
-            _legacyDbContext.SaveChanges();
 
-            var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null);
-            expected.ProjectStatus = PreHtb;
 
+            var expected = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
+ 
             var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
             var content = await response.Content.ReadFromJsonAsync<AcademyConversionProjectResponse>();
 
@@ -187,7 +154,7 @@ namespace TramsDataApi.Test.Integration
                     .Without(x => x.Id)
                     .With(x => x.IfdPipelineId, 100056).Create()
             };
-            
+
             var ifdPipelineProjects1 = _fixture.Build<IfdPipeline>()
                 .With(i => i.Sk, 100002)
                 .Without(i => i.EfaFundingUpin)
@@ -198,29 +165,30 @@ namespace TramsDataApi.Test.Integration
                 .Without(i => i.EfaFundingUpin)
                 .Without(i => i.ProposedAcademyDetailsNewAcademyUrn)
                 .With(i => i.GeneralDetailsProjectStatus, "Converter Pre-AO").Create();
-            var ifdPipelineProjects = new List<IfdPipeline> {ifdPipelineProjects1, ifdPipelineProjects2};
-            
+            var ifdPipelineProjects = new List<IfdPipeline> { ifdPipelineProjects1, ifdPipelineProjects2 };
+
             expectedProjects.First().ProjectStatus = "Approved for AO";
             expectedProjects.Last().ProjectStatus = "Converter Pre-AO";
             academyConversionProjects.AddRange(expectedProjects);
 
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
             _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
-            
+
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
 
             var expectedData = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
-            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = expectedData.Count };
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
 
-            var states = new []{"Approved for AO", "Converter Pre-AO"};
-            
+            var states = new[] { "Approved for AO", "Converter Pre-AO" };
+
             var response = await _client.GetAsync($"v2/conversion-projects/?states={string.Join(",", states)}");
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
-            
+
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
+
         }
 
         [Fact]
@@ -232,18 +200,9 @@ namespace TramsDataApi.Test.Integration
                 .Select(u => _fixture.Build<AcademyConversionProject>()
                     .Without(f => f.Id)
                     .With(f => f.Urn, u)
-                    .With(f => f.IfdPipelineId, u)
                     .Create())
                 .ToList();
-
-            var ifdPipelineProjects = urns
-                .Select(u => _fixture.Build<IfdPipeline>()
-                    .With(i => i.Sk, u)
-                    .Without(i => i.EfaFundingUpin)
-                    .Without(i => i.ProposedAcademyDetailsNewAcademyUrn)
-                    .With(i => i.GeneralDetailsProjectStatus, "Approved for AO").Create()
-                ).ToList();
-            
+          
             var establishments = urns
                 .Select(u => _fixture.Build<Establishment>().With(e => e.Urn, u).With(e => e.Ukprn, $"est{u}").Create())
                 .ToList();
@@ -254,8 +213,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.AcademyConversionProjects.AddRange(projects);
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.MisEstablishments.AddRange(misEstablishments);
-            _legacyDbContext.IfdPipeline.AddRange(ifdPipelineProjects);
-            
+           
             _dbContext.SaveChanges();
             _legacyDbContext.SaveChanges();
             
@@ -264,13 +222,11 @@ namespace TramsDataApi.Test.Integration
                 var acpResponse = AcademyConversionProjectResponseFactory.Create(p);
                 acpResponse.UkPrn = $"est{p.Urn}";
                 acpResponse.Laestab = 1000 + p.Urn ?? 0;
-                acpResponse.ProjectStatus = "Approved for AO";
                 return acpResponse;
             }).ToList();
             
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
-            
             
             var response = await _client.GetAsync("v2/conversion-projects/");
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
@@ -393,7 +349,7 @@ namespace TramsDataApi.Test.Integration
             var expectedData = projects.Select(p =>
             {
                 var ifdProject = ifdPipelineProjects.FirstOrDefault(i => i.Sk == p.IfdPipelineId);
-                var ifdResponse = AcademyConversionProjectResponseFactory.Create(p, null, ifdProject);
+                var ifdResponse = AcademyConversionProjectResponseFactory.Create(p);
                 return ifdResponse;
             }).ToList();
 
@@ -454,7 +410,7 @@ namespace TramsDataApi.Test.Integration
         private AcademyConversionProjectResponse CreateExpectedApiResponse(Trust trust, AcademyConversionProject academyConversionProject, UpdateAcademyConversionProjectRequest updateRequest)
         {
             var updatedAcademyConversionProject = AcademyConversionProjectFactory.Update(academyConversionProject ?? new AcademyConversionProject(), updateRequest);
-            return AcademyConversionProjectResponseFactory.Create(updatedAcademyConversionProject, trust);
+            return AcademyConversionProjectResponseFactory.Create(updatedAcademyConversionProject);
         }
 
         private Trust CreateTrust(AcademyConversionProject academyConversionProject)

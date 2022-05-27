@@ -19,8 +19,6 @@ namespace TramsDataApi.Controllers
 		private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
 		private readonly ILogger<AcademyConversionProjectController> _logger;
 
-		private const string PreHtb = "Pre HTB";
-
 		public AcademyConversionProjectController(
 			IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> getAcademyConversionProjectById,
 			IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> getAllAcademyConversionProjects,
@@ -40,7 +38,6 @@ namespace TramsDataApi.Controllers
 			
 			// temporarily limiting count until we know rules around which to return as there's hundreds in db
 			var projects = _getAllAcademyConversionProjects.Execute(new GetAllAcademyConversionProjectsRequest { Page = 1, Count = count }).ToList();
-			projects.ForEach(p => p.ProjectStatus = PreHtb);
 			
 			_logger.LogInformation($"Returning {projects.Count()} Academy Conversion Projects");
 			_logger.LogDebug(JsonSerializer.Serialize<IEnumerable<AcademyConversionProjectResponse>>(projects));
@@ -58,7 +55,6 @@ namespace TramsDataApi.Controllers
 				_logger.LogInformation($"No Academy Conversion Project found for ID {id}");
 				return NotFound();
 			}
-			project.ProjectStatus = PreHtb;
 
 			_logger.LogInformation($"Returning Academy Conversion Project with ID {id}");
 			_logger.LogDebug(JsonSerializer.Serialize(project));

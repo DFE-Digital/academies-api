@@ -172,7 +172,7 @@ namespace TramsDataApi.Test.UseCases
                 .With(i => i.Sk, ifdPipelineId)
                 .Create();
             
-            var expected = AcademyConversionProjectResponseFactory.Create(project, null, ifdProject);
+            var expected = AcademyConversionProjectResponseFactory.Create(project);
             expected.UkPrn = ukPrn;
             expected.Laestab = laestab;
             
