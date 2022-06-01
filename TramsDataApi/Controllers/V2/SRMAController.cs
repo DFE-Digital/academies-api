@@ -58,11 +58,11 @@ namespace TramsDataApi.Controllers.V2
         }
 
         [HttpGet]
-        [Route("case/{caseId}")]
+        [Route("case/{caseUrn}")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCaseId(int caseId)
+        public ActionResult<ApiSingleResponseV2<ICollection<SRMAResponse>>> GetSRMAsByCase(int caseUrn)
         {
-            var srmas = _getSRMAsByCaseIdUseCase.Execute(caseId);
+            var srmas = _getSRMAsByCaseIdUseCase.Execute(caseUrn);
             var response = new ApiSingleResponseV2<ICollection<SRMAResponse>>(srmas);
 
             return Ok(response);

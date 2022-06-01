@@ -11,7 +11,7 @@ namespace TramsDataApi.DatabaseModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public long? Urn { get; set; }
-        public int CaseId { get; set; }
+        public int CaseUrn { get; set; }
         public int StatusId { get; set; }
         public int? CloseStatusId { get; set; }
         public int? ReasonId { get; set; }
@@ -27,9 +27,6 @@ namespace TramsDataApi.DatabaseModels
 
         [StringLength(500)]
         public string Notes { get; set; }
-
-        [ForeignKey(nameof(CaseId))]
-        public virtual ConcernsCase ConcernsCase { get; set; }
 
         [ForeignKey(nameof(ReasonId))]
         public virtual SRMAReason Reason { get; set; }
