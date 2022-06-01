@@ -9,7 +9,7 @@ namespace TramsDataApi.RequestModels.CaseActions.SRMA
 		[Required]
 		public int Id { get; set; }
 		[Required]
-        public int CaseId { get; set; }
+        public int CaseUrn { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public DateTime DateOffered { get; set; }
 		public DateTime? DateAccepted { get; set; }
