@@ -71,45 +71,45 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetSRMAsByCaseId_ReturnsMatchingSRMA_WhenGivenCaseId()
         {
-            var caseId = 123;
+            var caseUrn = 123;
 
             var matchingSRMA = new SRMACase
             {
-                CaseId = caseId,
+                CaseUrn = caseUrn,
                 Notes = "match"
             };
 
             var srmas = new List<SRMACase> {
                 matchingSRMA,
                 new SRMACase {
-                    CaseId = 222,
+                    CaseUrn = 222,
                     Notes = "SRMA 1"
                 },
                 new SRMACase {
-                    CaseId = 456,
+                    CaseUrn = 456,
                     Notes = "SRMA 2"
                 }
             };
 
             var srmaResponse = Builder<SRMAResponse>
                 .CreateNew()
-                .With(r => r.CaseId = matchingSRMA.CaseId)
+                .With(r => r.CaseUrn = matchingSRMA.CaseUrn)
                 .With(r => r.Notes = matchingSRMA.Notes)
                 .Build();
 
             var collection = new List<SRMAResponse> { srmaResponse };
 
             _mockGetSRMAsByCaseId
-                .Setup(x => x.Execute(caseId))
+                .Setup(x => x.Execute(caseUrn))
                 .Returns(collection);
 
-            OkObjectResult controllerResponse = controllerSUT.GetSRMAsByCaseId(caseId).Result as OkObjectResult;
+            OkObjectResult controllerResponse = controllerSUT.GetSRMAsByCase(caseUrn).Result as OkObjectResult;
 
             var  actualResult = controllerResponse.Value as ApiSingleResponseV2<ICollection<SRMAResponse>>;
 
             actualResult.Data.Should().NotBeNull();
             actualResult.Data.Count.Should().Be(1);
-            actualResult.Data.First().CaseId.Should().Be(caseId);
+            actualResult.Data.First().CaseUrn.Should().Be(caseUrn);
         }
 
         [Fact]
