@@ -41,7 +41,7 @@ namespace TramsDataApi.Gateways
 
         public async Task<ICollection<SRMACase>> GetSRMAsByCaseId(int caseId)
         {
-            return await _tramsDbContext.SRMACases.Where(s => s.CaseId == caseId).ToListAsync();
+            return await _tramsDbContext.SRMACases.Where(s => s.CaseUrn == caseId).ToListAsync();
         }
 
         public async Task<SRMACase> GetSRMAById(int srmaId)
