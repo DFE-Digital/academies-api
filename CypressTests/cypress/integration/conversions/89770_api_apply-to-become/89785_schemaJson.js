@@ -9,7 +9,7 @@ describe('Test Against Json Schema API V2 School application', () => {
 
     it('GET Application Data by ID', () => {
         cy.request({
-            url: url + '/v2/apply-to-become/application/Cath121',
+            url: url + 'v2/apply-to-become/application/A2B_1645',
             headers: {
                 ApiKey: apiKey,
               }
