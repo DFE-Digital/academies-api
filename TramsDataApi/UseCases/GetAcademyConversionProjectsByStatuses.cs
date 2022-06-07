@@ -29,20 +29,23 @@ namespace TramsDataApi.UseCases
         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAcademyConversionProjectsByStatusesRequest request)
         {
 
-            var ifdProjects = _ifdPipelineGateway.GetPipelineProjectsByStatus(request.Page, request.Count, request.Statuses)
-                .ToList();
+            //var ifdProjects = _ifdPipelineGateway.GetPipelineProjectsByStatus(request.Page, request.Count, request.Statuses)
+            //    .ToList();
 
+            //var academyConversionProjects = _academyConversionProjectGateway
+            //    .GetByIfdPipelineIds(ifdProjects.Select(i => i.Sk).ToList()).ToList;
             var academyConversionProjects = _academyConversionProjectGateway
-                .GetByIfdPipelineIds(ifdProjects.Select(i => i.Sk).ToList()).ToList();
+                .GetProjects(request.Page, request.Count)
+                .ToList() ;
 
-            var trustRefs = academyConversionProjects
-                .Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber))
-                .Select(acp => acp.TrustReferenceNumber)
-                .ToArray();
+            //var trustRefs = academyConversionProjects
+            //    .Where(acp => !string.IsNullOrEmpty(acp.TrustReferenceNumber))
+            //    .Select(acp => acp.TrustReferenceNumber)
+            //    .ToArray();
 
-            var trusts = _trustGateway.GetIfdTrustsByTrustRef(trustRefs)
-                .Select(t => new {t.TrustRef, TrustName = t.TrustsTrustName})
-                .ToArray();
+            //var trusts = _trustGateway.GetIfdTrustsByTrustRef(trustRefs)
+            //    .Select(t => new {t.TrustRef, TrustName = t.TrustsTrustName})
+            //    .ToArray();
 
             var responses = academyConversionProjects
                 .Where(p => !string.IsNullOrEmpty(p.SchoolName))
@@ -52,7 +55,7 @@ namespace TramsDataApi.UseCases
             
             responses.ForEach(r =>
             {
-                r.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == r.TrustReferenceNumber)?.TrustName;
+                //r.NameOfTrust = trusts.FirstOrDefault(t => t.TrustRef == r.TrustReferenceNumber)?.TrustName;
                 r.UkPrn = _establishmentGateway.GetByUrn(r.Urn)?.Ukprn;
                 r.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(r.Urn)?.Laestab ?? 0;
             });

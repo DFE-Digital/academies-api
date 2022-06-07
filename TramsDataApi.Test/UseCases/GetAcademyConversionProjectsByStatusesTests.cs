@@ -23,7 +23,7 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAcademyConversionProjectProjectByStatuses_ReturnsEmptyList_WhenAcademyTransferProjectIsNotFound()
+        public void GetAcademyConversionProjectProjectByStatuses_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
         {
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var request = new GetAcademyConversionProjectsByStatusesRequest
@@ -54,7 +54,7 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAcademyConversionProjectProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyTransferProjectsAreFound()
+        public void GetAcademyConversionProjectProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
             var statuses = new List<string> {"Status_One", "Status_Two"};
             var ifdPipelineId = 19876524;
@@ -101,10 +101,10 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyTransferProjectsAreFound()
+        public void GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
             var statuses = new List<string> {"Status_One", "Status_Two"};
-            var ifdPipelineId = 145678;
+            //var ifdPipelineId = 145678;
             var request = new GetAcademyConversionProjectsByStatusesRequest
             {
                 Page = 1,
@@ -112,9 +112,9 @@ namespace TramsDataApi.Test.UseCases
                 Statuses = statuses
             };
             
-            var ifdProject = _fixture.Build<IfdPipeline>()
-                .With(i => i.Sk, ifdPipelineId)
-                .Create();
+            //var ifdProject = _fixture.Build<IfdPipeline>()
+            //    .With(i => i.Sk, ifdPipelineId)
+            //    .Create();
             
             var project = _fixture.Build<AcademyConversionProject>().With(f => f.SchoolName, "school").Create();
             var expected = AcademyConversionProjectResponseFactory.Create(project);
@@ -123,13 +123,13 @@ namespace TramsDataApi.Test.UseCases
             var mockTrustGateway = new Mock<ITrustGateway>();
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
             var mockIfdPipelineGateway = new Mock<IIfdPipelineGateway>();
-            
-            mockIfdPipelineGateway
-                .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
-                .Returns(() => new List<IfdPipeline> {ifdProject});
+
+            //mockIfdPipelineGateway
+            //    .Setup(ifd => ifd.GetPipelineProjectsByStatus(1, 50, statuses))
+            //    .Returns(() => new List<IfdPipeline> {ifdProject});
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>{ifdPipelineId}))
+                .Setup(acg => acg.GetProjects(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(() => new List<AcademyConversionProject> { project });
 
             mockEstablishmentsGateway
@@ -148,7 +148,7 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponsesWithUkPrnAndLaestab_WhenAcademyTransferProjectsAndEstablishmentsAreFound()
+        public void GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponsesWithUkPrnAndLaestab_WhenAcademyConversionProjectsAndEstablishmentsAreFound()
         {
             var urn = 1000;
             var ukPrn = "12345";
