@@ -23,7 +23,7 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAllAcademyConversionProjects_ReturnsEmptyList_WhenAcademyTransferProjectIsNotFound()
+        public void GetAllAcademyConversionProjects_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
         {
             var request = new GetAllAcademyConversionProjectsRequest { Count = 50 };
             
@@ -45,7 +45,7 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyTransferProjectsAreFound()
+        public void GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
             var request = new GetAllAcademyConversionProjectsRequest { Page = 1, Count = 50 };
 
