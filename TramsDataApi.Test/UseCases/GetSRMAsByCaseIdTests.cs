@@ -20,18 +20,18 @@ namespace TramsDataApi.Test.UseCases
 
             var matchingSRMA = new SRMACase
             {
-                CaseId = caseId,
+                CaseUrn = caseId,
                 Notes = "match"
             };
 
             var srmas = new List<SRMACase> {
                 matchingSRMA,
                 new SRMACase {
-                    CaseId = 222,
+                    CaseUrn = 222,
                     Notes = "SRMA 1"
                 },
                 new SRMACase {
-                    CaseId = 456,
+                    CaseUrn = 456,
                     Notes = "SRMA 2"
                 }
             };
@@ -39,7 +39,7 @@ namespace TramsDataApi.Test.UseCases
             var expectedResult = SRMAFactory.CreateResponse(matchingSRMA);
 
             var mockSRMAGateway = new Mock<ISRMAGateway>();
-            mockSRMAGateway.Setup(g => g.GetSRMAsByCaseId(caseId)).Returns(Task.FromResult((ICollection<SRMACase>)srmas.Where(s => s.CaseId == caseId).ToList()));
+            mockSRMAGateway.Setup(g => g.GetSRMAsByCaseId(caseId)).Returns(Task.FromResult((ICollection<SRMACase>)srmas.Where(s => s.CaseUrn == caseId).ToList()));
 
             var useCase = new GetSRMAsByCaseId(mockSRMAGateway.Object);
 

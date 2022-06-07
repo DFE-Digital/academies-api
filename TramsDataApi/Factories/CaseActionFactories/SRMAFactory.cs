@@ -12,7 +12,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
             return new SRMACase
             {
                 Id = createSRMARequest.Id,
-                CaseId = createSRMARequest.CaseId,
+                CaseUrn = createSRMARequest.CaseUrn,
                 CreatedAt = createSRMARequest.CreatedAt,
                 DateOffered = createSRMARequest.DateOffered,
                 DateReportSentToTrust = createSRMARequest.DateReportSentToTrust,
@@ -30,7 +30,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
             return new SRMAResponse
             {
                 Id = model.Id,
-                CaseId = model.CaseId,
+                CaseUrn = model.CaseUrn,
                 CreatedAt = model.CreatedAt,
                 DateOffered = model.DateOffered,
                 DateReportSentToTrust = model.DateReportSentToTrust,
