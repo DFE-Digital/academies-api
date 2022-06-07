@@ -2,36 +2,30 @@
 using System.Linq;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetAcademyConversionProjects : IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>
+    public class GetAcademyConversionProjects : IGetAcademyConversionProjects
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
-        private readonly ITrustGateway _trustGateway;
         private readonly IEstablishmentGateway _establishmentGateway;
-        private readonly IIfdPipelineGateway _ifdPipelineGateway;
 
         public GetAcademyConversionProjects(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
-            ITrustGateway trustGateway, 
-            IEstablishmentGateway establishmentGateway,
-            IIfdPipelineGateway ifdPipelineGateway)
+            IEstablishmentGateway establishmentGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
-            _trustGateway = trustGateway;
             _establishmentGateway = establishmentGateway;
-            _ifdPipelineGateway = ifdPipelineGateway;
         }
 
-         public IEnumerable<AcademyConversionProjectResponse> Execute(GetAllAcademyConversionProjectsRequest request)
+         public IEnumerable<AcademyConversionProjectResponse> Execute(int page, int count)
         {
-            var conversionProjects = _academyConversionProjectGateway
-                .GetProjects(request.Page, request.Count);
+            var conversionProjects = _academyConversionProjectGateway.GetProjects(page, count);
                       
-            var responses = conversionProjects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
+            var responses = conversionProjects
+                .Where(acp => acp.SchoolName != null)
+                .Select(AcademyConversionProjectResponseFactory.Create).ToList();
             responses.ForEach(r =>
             {
                 r.UkPrn = _establishmentGateway.GetByUrn(r.Urn)?.Ukprn;

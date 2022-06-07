@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
@@ -29,7 +30,7 @@ namespace TramsDataApi.Test.Controllers
         {
             const string projectStatus = "AStatus";
             
-            var mockUseCase = new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>();
+            var mockUseCase = new Mock<IGetAcademyConversionProjectsByStatuses>();
             
             var data = new List<AcademyConversionProjectResponse> { new AcademyConversionProjectResponse { ProjectStatus = projectStatus } };
             
@@ -37,13 +38,13 @@ namespace TramsDataApi.Test.Controllers
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
 
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<GetAcademyConversionProjectsByStatusesRequest>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>()))
                 .Returns(data);
             
             var controller = new AcademyConversionProjectController(
                 mockUseCase.Object,
-                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IGetAcademyConversionProjects>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object);
             
@@ -56,9 +57,9 @@ namespace TramsDataApi.Test.Controllers
         public void GetConversionProjectsByStatuses_ReturnsResponseWithEmptyList_WhenNoStatusProvidedAndNoResultsFound()
         {
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
-                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<IGetAcademyConversionProjects>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object);
 
@@ -76,7 +77,8 @@ namespace TramsDataApi.Test.Controllers
         {
             const string expectedNextPageUrl = "?page=2&count=1";
             
-            var mockUseCase = new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>();
+            var mockUseCase = new Mock<IGetAcademyConversionProjects>();
+            
             var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
             
             var data = new List<AcademyConversionProjectResponse>
@@ -86,14 +88,13 @@ namespace TramsDataApi.Test.Controllers
             };
             
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<GetAllAcademyConversionProjectsRequest>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(data.Take(1));
 
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest,
-                    IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
                 mockUseCase.Object,
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object)
             {
@@ -112,7 +113,7 @@ namespace TramsDataApi.Test.Controllers
         {
             const string expectedNextPageUrl = null;
             
-            var mockUseCase = new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>();
+            var mockUseCase = new Mock<IGetAcademyConversionProjects>();
             var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
             
             var data = new List<AcademyConversionProjectResponse>
@@ -122,13 +123,13 @@ namespace TramsDataApi.Test.Controllers
             };
             
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<GetAllAcademyConversionProjectsRequest>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(data);
 
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
                 mockUseCase.Object,
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object)
             {
@@ -146,19 +147,17 @@ namespace TramsDataApi.Test.Controllers
          [Fact]
         public void GetConversionProjectById_ReturnsAcademyConversionProject_WhenIdExists()
         {
-            var mockUseCase =
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>();
-            
+            var mockUseCase = new Mock<IGetAcademyConversionProject>();
             
             var academyConversionProjectResponse = Builder<AcademyConversionProjectResponse>.CreateNew().Build();
 
             mockUseCase
-                .Setup(x => x.Execute(It.IsAny<GetAcademyConversionProjectByIdRequest>()))
+                .Setup(x => x.Execute(It.IsAny<int>()))
                 .Returns(academyConversionProjectResponse);
             
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
-                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
+                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<IGetAcademyConversionProjects>().Object,
                 mockUseCase.Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object
@@ -176,9 +175,9 @@ namespace TramsDataApi.Test.Controllers
         public void GetConversionProjectById_ReturnsNotFound_WhenNoConversionProjectExists()
         {
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
-                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object, 
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<IGetAcademyConversionProjects>().Object, 
+                new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object
             );
@@ -200,9 +199,9 @@ namespace TramsDataApi.Test.Controllers
                 .Returns(updatedAcademyConversionProjectResponse);
             
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
-                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object, 
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<IGetAcademyConversionProjects>().Object, 
+                new Mock<IGetAcademyConversionProject>().Object,
                 mockUseCase.Object,
                 _mockLogger.Object
             );
@@ -219,9 +218,9 @@ namespace TramsDataApi.Test.Controllers
         public void UpdateConversionProject_ReturnsNotFound_WhenConversionProjectExists()
         {
             var controller = new AcademyConversionProjectController(
-                new Mock<IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object,
-                new Mock<IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>>>().Object, 
-                new Mock<IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>>().Object,
+                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<IGetAcademyConversionProjects>().Object, 
+                new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object
             );
