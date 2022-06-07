@@ -1,31 +1,32 @@
-﻿using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
+﻿using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetAcademyConversionProject : IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>
+    public class GetAcademyConversionProject : IGetAcademyConversionProject
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
-        private readonly ITrustGateway _trustGateway;
+        private readonly IEstablishmentGateway _establishmentGateway;
        
         public GetAcademyConversionProject(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
-            ITrustGateway trustGateway)
+            IEstablishmentGateway establishmentGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
-            _trustGateway = trustGateway;           
+            _establishmentGateway = establishmentGateway;
         }
 
-        public AcademyConversionProjectResponse Execute(GetAcademyConversionProjectByIdRequest request)
+        public AcademyConversionProjectResponse Execute(int id)
         {
-            var academyConversionProject = _academyConversionProjectGateway.GetById(request.Id);
-            if (academyConversionProject == null) return null;
+            var academyConversionProject = _academyConversionProjectGateway.GetById(id);
+            if (academyConversionProject?.SchoolName == null) return null;
+            
+            var response = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
+            response.UkPrn = _establishmentGateway.GetByUrn(response.Urn)?.Ukprn;
+            response.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(response.Urn)?.Laestab ?? 0;
 
-            return AcademyConversionProjectResponseFactory.Create(academyConversionProject);
-
+            return response;
         }
     }
 }
