@@ -21,7 +21,7 @@ export const applyToBecomeAcademySchema = {
             type: "string"
           },
           formTrustProposedNameOfTrust: {
-            type: ["string", "null"]
+            type: "string"
           },
           applicationSubmitted: {
             type: "boolean"
@@ -42,119 +42,119 @@ export const applyToBecomeAcademySchema = {
             type: "string"
           },
           applicationRoleOtherDescription: {
-            type: ["string", "null"]
+            type: "string"
           },
           changesToTrust: {
             type: "boolean"
           },
           changesToTrustExplained: {
-            type: ["string", "null"]
+            type: "string"
           },
           changesToLaGovernance: {
             type: "boolean"
           },
           changesToLaGovernanceExplained: {
-            type: ["string", "null"]
+            type: "string"
           },
           formTrustOpeningDate: {
-            type: ["string", "null"]
+            type: "string"
           },
           trustApproverName: {
-            type: ["string", "null"]
+            type: "string"
           },
           trustApproverEmail: {
-            type: ["string", "null"]
+            type: "string"
           },
-          formTrustReasonApprovalToConvertAsSat: { // This is not in use
-            type : ["boolean", "null"] 
+          formTrustReasonApprovalToConvertAsSat: {
+            type : "boolean"
           },
-          formTrustReasonApprovedPerson: { // This is not in use
-            type: ["string", "null"] 
+          formTrustReasonApprovedPerson: {
+            type: "string"
           },
-          formTrustReasonForming: { // This is not in use
-            type: ["string", "null"] 
+          formTrustReasonForming: {
+            type: "string"
           },
-          formTrustReasonVision: { // This is not in use
-            type: ["string", "null"] 
+          formTrustReasonVision: {
+            type: "string"
           },
-          formTrustReasonGeoAreas: { // This is not in use
-            type: ["string", "null"] 
+          formTrustReasonGeoAreas: {
+            type: "string"
           },
-          formTrustReasonFreedom: { // This is not in use
-            type: ["string", "null"]
+          formTrustReasonFreedom: {
+            type: "string"
           },
-          formTrustReasonImproveTeaching: { // This is not in use
-            type: ["string", "null"] 
+          formTrustReasonImproveTeaching: {
+            type: "string"
           },
-          formTrustPlanForGrowth: { // This is not in use
-            type: ["string", "null"]
+          formTrustPlanForGrowth: {
+            type: "string"
           },
-          formTrustPlansForNoGrowth: { // This is not in use
-            type:["string", "null"]
+          formTrustPlansForNoGrowth: {
+            type: "string"
           },
-          formTrustGrowthPlansYesNo: { // This is not in use
-            type: ["boolean", "null"]
+          formTrustGrowthPlansYesNo: {
+            type: "boolean"
           },
-          formTrustImprovementSupport: { // This is not in use
-            type: ["string", "null"]
+          formTrustImprovementSupport: {
+            type: "string"
           },
-          formTrustImprovementStrategy: { // This is not in use
-            type: ["string", "null"]
+          formTrustImprovementStrategy: {
+            type: "string"
           },
           formTrustImprovementApprovedSponsor: {
-            type: ["string", "null"]
+            type: "string"
           },
           applicationStatusId: {
-            type: ["string", "null"]
+            type: "string"
           },
-          // keyPersons: { // This is not in use
-          //   type: "array",
-          //   items: [
-          //     {
-          //       type: "object",
-          //       properties: {
-          //         name: {
-          //           type: "string"
-          //         },
-          //         keyPersonDateOfBirth: {
-          //           type: "string"
-          //         },
-          //         keyPersonBiography: {
-          //           type: "string"
-          //         },
-          //         keyPersonCeoExecutive: {
-          //           type: "boolean"
-          //         },
-          //         keyPersonChairOfTrust: {
-          //           type: "boolean"
-          //         },
-          //         keyPersonFinancialDirector: {
-          //           type: "boolean"
-          //         },
-          //         keyPersonMember: {
-          //           type: "boolean"
-          //         },
-          //         keyPersonOther: {
-          //           type: "boolean"
-          //         },
-          //         keyPersonTrustee: {
-          //           type: "boolean"
-          //         }
-          //       },
-          //       required: [
-          //         "name",
-          //         "keyPersonDateOfBirth",
-          //         "keyPersonBiography",
-          //         "keyPersonCeoExecutive",
-          //         "keyPersonChairOfTrust",
-          //         "keyPersonFinancialDirector",
-          //         "keyPersonMember",
-          //         "keyPersonOther",
-          //         "keyPersonTrustee"
-          //       ]
-          //     }
-          //   ]
-          // },
+          keyPersons: {
+            type: "array",
+            items: [
+              {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string"
+                  },
+                  keyPersonDateOfBirth: {
+                    type: "string"
+                  },
+                  keyPersonBiography: {
+                    type: "string"
+                  },
+                  keyPersonCeoExecutive: {
+                    type: "boolean"
+                  },
+                  keyPersonChairOfTrust: {
+                    type: "boolean"
+                  },
+                  keyPersonFinancialDirector: {
+                    type: "boolean"
+                  },
+                  keyPersonMember: {
+                    type: "boolean"
+                  },
+                  keyPersonOther: {
+                    type: "boolean"
+                  },
+                  keyPersonTrustee: {
+                    type: "boolean"
+                  }
+                },
+                required: [
+                  "name",
+                  "keyPersonDateOfBirth",
+                  "keyPersonBiography",
+                  "keyPersonCeoExecutive",
+                  "keyPersonChairOfTrust",
+                  "keyPersonFinancialDirector",
+                  "keyPersonMember",
+                  "keyPersonOther",
+                  "keyPersonTrustee"
+                ]
+              }
+            ]
+          },
           applyingSchools: {
             type: "array",
             items: [
@@ -185,17 +185,17 @@ export const applyToBecomeAcademySchema = {
                   schoolConversionContactRole: {
                     type: "string"
                   },
-                  schoolConversionMainContactOtherName: { // This is not in use
-                    type: ["string",  "null"]
+                  schoolConversionMainContactOtherName: {
+                    type: "string"
                   },
-                  schoolConversionMainContactOtherEmail: { // This is not in use
-                    type: ["string", "null"]
+                  schoolConversionMainContactOtherEmail: {
+                    type: "string"
                   },
-                  schoolConversionMainContactOtherTelephone: { // This is not in use
-                    type: ["string", "null"]
+                  schoolConversionMainContactOtherTelephone: {
+                    type: "string"
                   },
-                  schoolConversionMainContactOtherRole: { // This is not in use
-                    type: ["string", "null"]
+                  schoolConversionMainContactOtherRole: {
+                    type: "string"
                   },
                   schoolConversionApproverContactName: {
                     type: "string"
@@ -207,10 +207,10 @@ export const applyToBecomeAcademySchema = {
                     type: "boolean"
                   },
                   schoolConversionTargetDate: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolConversionTargetDateExplained: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolConversionReasonsForJoining: {
                     type: "string"
@@ -218,8 +218,8 @@ export const applyToBecomeAcademySchema = {
                   schoolConversionChangeNamePlanned: {
                     type: "boolean"
                   },
-                  schoolConversionProposedNewSchoolName: { // This is not in use
-                    type: ["string", "null"]
+                  schoolConversionProposedNewSchoolName: {
+                    type: "string"
                   },
                   schoolAdSchoolContributionToTrust: {
                     type: "string"
@@ -227,29 +227,29 @@ export const applyToBecomeAcademySchema = {
                   schoolOngoingSafeguardingInvestigations: {
                     type: "boolean"
                   },
-                  schoolOngoingSafeguardingDetails: { // This is not in use
-                    type: ["string", "null"]
+                  schoolOngoingSafeguardingDetails: {
+                    type: "string"
                   },
                   schoolPartOfLaReorganizationPlan: {
                     type: "boolean"
                   },
-                  schoolLaReorganizationDetails: { // This is not in use
-                    type: ["string", "null"]
+                  schoolLaReorganizationDetails: {
+                    type: "string"
                   },
                   schoolPartOfLaClosurePlan: {
                     type: "boolean"
                   },
-                  schoolLaClosurePlanDetails: { // This is not in use
-                    type: ["string", "null"]
+                  schoolLaClosurePlanDetails: {
+                    type: "string"
                   },
                   schoolFaithSchool: {
                     type: "boolean"
                   },
-                  schoolFaithSchoolDioceseName: { // This is not in use
-                    type: ["string", "null"]
+                  schoolFaithSchoolDioceseName: {
+                    type: "string"
                   },
-                  diocesePermissionEvidenceDocumentLink: { // This is not in use
-                    type: ["string", "null"]
+                  diocesePermissionEvidenceDocumentLink: {
+                    type: "string"
                   },
                   schoolIsPartOfFederation: {
                     type: "boolean"
@@ -257,41 +257,41 @@ export const applyToBecomeAcademySchema = {
                   schoolIsSupportedByFoundation: {
                     type: "boolean"
                   },
-                  schoolSupportedFoundationBodyName: { // This is not in use
-                    type: ["string", "null"]
+                  schoolSupportedFoundationBodyName: {
+                    type: "string"
                   },
-                  foundationEvidenceDocumentLink: { // This is not in use
-                    type: ["string", "null"]
+                  foundationEvidenceDocumentLink: {
+                    type: "string"
                   },
                   schoolHasSACREException: {
                     type: "boolean"
                   },
-                  schoolSACREExemptionEndDate: { // This is not in use
-                    type: ["string", "null"]
+                  schoolSACREExemptionEndDate: {
+                    type: "string"
                   },
                   schoolAdFeederSchools: {
                     type: "string"
                   },
-                  governingBodyConsentEvidenceDocumentLink: { // This is not in use
-                    type: ["string", "null"]
+                  governingBodyConsentEvidenceDocumentLink: {
+                    type: "string"
                   },
                   schoolAdEqualitiesImpactAssessmentCompleted: {
                     type: "boolean"
                   },
-                  schoolAdEqualitiesImpactAssessmentDetails: { // This is not in use
-                    type: ["string", "null"]
+                  schoolAdEqualitiesImpactAssessmentDetails: {
+                    type: "string"
                   },
                   schoolAdInspectedButReportNotPublished: {
                     type: "boolean"
                   },
-                  schoolAdInspectedButReportNotPublishedExplain: { // This is not in use
-                    type: ["string", "null"]
+                  schoolAdInspectedButReportNotPublishedExplain: {
+                    type: "string"
                   },
                   schoolAdditionalInformationAdded: {
                     type: "boolean"
                   },
                   schoolAdditionalInformation: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   previousFinancialYear: {
                     type: "object",
@@ -300,22 +300,22 @@ export const applyToBecomeAcademySchema = {
                         type: "string"
                       },
                       revenueCarryForward: {
-                        type: "number"
+                        type: "integer"
                       },
                       revenueIsDeficit: {
                         type: "boolean"
                       },
                       revenueStatusExplained: {
-                        type: ["string", "null"]
+                        type: "string"
                       },
                       capitalCarryForward: {
-                        type: "number"
+                        type: "integer"
                       },
                       capitalIsDeficit: {
                         type: "boolean"
                       },
                       capitalStatusExplained: {
-                        type: ["string", "null"]
+                        type: "string"
                       }
                     },
                     required: [
@@ -335,13 +335,13 @@ export const applyToBecomeAcademySchema = {
                         type: "string"
                       },
                       revenueCarryForward: {
-                        type: "number"
+                        type: "integer"
                       },
                       revenueIsDeficit: {
                         type: "boolean"
                       },
                       revenueStatusExplained: {
-                        type: ["string", "null"]
+                        type: "string"
                       },
                       capitalCarryForward: {
                         type: "integer"
@@ -350,7 +350,7 @@ export const applyToBecomeAcademySchema = {
                         type: "boolean"
                       },
                       capitalStatusExplained: {
-                        type: ["string", "null"]
+                        type: "string"
                       }
                     },
                     required: [
@@ -370,22 +370,22 @@ export const applyToBecomeAcademySchema = {
                         type: "string"
                       },
                       revenueCarryForward: {
-                        type: "number"
+                        type: "integer"
                       },
                       revenueIsDeficit: {
                         type: "boolean"
                       },
                       revenueStatusExplained: {
-                        type: ["string", "null"]
+                        type: "string"
                       },
                       capitalCarryForward: {
-                        type: "number"
+                        type: "integer"
                       },
                       capitalIsDeficit: {
                         type: "boolean"
                       },
                       capitalStatusExplained: {
-                        type: ["string", "null"]
+                        type: "string"
                       }
                     },
                     required: [
@@ -402,10 +402,10 @@ export const applyToBecomeAcademySchema = {
                     type: "boolean"
                   },
                   schoolFinancialInvestigationsExplain: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolFinancialInvestigationsTrustAware: {
-                    type: ["boolean", "null"]
+                    type: "boolean"
                   },
                   projectedPupilNumbersYear1: {
                     type: "integer"
@@ -429,28 +429,28 @@ export const applyToBecomeAcademySchema = {
                     type: "boolean"
                   },
                   schoolBuildLandWorksPlannedExplained: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolBuildLandWorksPlannedCompletionDate: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolBuildLandSharedFacilities: {
                     type: "boolean"
                   },
                   schoolBuildLandSharedFacilitiesExplained: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolBuildLandGrants: {
                     type: "boolean"
                   },
                   schoolBuildLandGrantsExplained: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolBuildLandPFIScheme: {
                     type: "boolean"
                   },
                   schoolBuildLandPFISchemeType: {
-                    type: ["string", "null"]
+                    type: "string"
                   },
                   schoolBuildLandPriorityBuildingProgramme: {
                     type: "boolean"
@@ -464,8 +464,8 @@ export const applyToBecomeAcademySchema = {
                   schoolHasConsultedStakeholders: {
                     type: "boolean"
                   },
-                  schoolPlanToConsultStakeholders: { // This is not in use
-                    type: ["string", "null"]
+                  schoolPlanToConsultStakeholders: {
+                    type: "string"
                   },
                   declarationBodyAgree: {
                     type: "boolean"
@@ -474,7 +474,7 @@ export const applyToBecomeAcademySchema = {
                     type: "boolean"
                   },
                   declarationSignedByName: {
-                    type: ["string", "null"]
+                    type: "string"
                   }
                 },
                 required: [
@@ -528,9 +528,9 @@ export const applyToBecomeAcademySchema = {
                   "financeOngoingInvestigations",
                   "schoolFinancialInvestigationsExplain",
                   "schoolFinancialInvestigationsTrustAware",
-                  "projectedPupilNumbersYear1",
-                  "projectedPupilNumbersYear2",
-                  "projectedPupilNumbersYear3",
+                  "schoolCapacityYear1",
+                  "schoolCapacityYear2",
+                  "schoolCapacityYear3",
                   "schoolCapacityAssumptions",
                   "schoolCapacityPublishedAdmissionsNumber",
                   "schoolBuildLandOwnerExplained",
