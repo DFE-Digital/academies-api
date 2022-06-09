@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TramsDataApi", "TramsDataAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TramsDataApi.Test", "TramsDataApi.Test\TramsDataApi.Test.csproj", "{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TramsDataApi.ApplyToBecome", "TramsDataApi.ApplyToBecome\TramsDataApi.ApplyToBecome.csproj", "{9D49F713-E329-4FDE-87CC-47E01EDD9C80}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F674B382-CA0A-4411-9380-8F43EE573A11}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -28,10 +26,6 @@ Global
 		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D49F713-E329-4FDE-87CC-47E01EDD9C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D49F713-E329-4FDE-87CC-47E01EDD9C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D49F713-E329-4FDE-87CC-47E01EDD9C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D49F713-E329-4FDE-87CC-47E01EDD9C80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

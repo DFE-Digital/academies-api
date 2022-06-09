@@ -3,9 +3,6 @@ using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.Factories
 {
-	/// <remarks>
-	/// NB: any changes here may need replicating in TramsDataApi.ApplyToBecome.SyncAcademyConversionProjectFactory
-	/// </remarks>
 	public class AcademyConversionProjectResponseFactory
     {
 	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject) =>
