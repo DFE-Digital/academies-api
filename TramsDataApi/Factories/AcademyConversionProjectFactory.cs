@@ -4,9 +4,6 @@ using TramsDataApi.RequestModels.AcademyConversionProject;
 
 namespace TramsDataApi.Factories
 {
-    /// <remarks>
-    /// NB: any changes here may need replicating in TramsDataApi.ApplyToBecome.SyncAcademyConversionProjectFactory
-    /// </remarks>
     public class AcademyConversionProjectFactory
     {
         public static AcademyConversionProject Update(AcademyConversionProject project, UpdateAcademyConversionProjectRequest updateRequest)
