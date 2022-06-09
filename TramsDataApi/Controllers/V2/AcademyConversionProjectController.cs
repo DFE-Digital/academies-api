@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -22,6 +20,13 @@ namespace TramsDataApi.Controllers.V2
 		private readonly IGetAcademyConversionProjectsByStatuses
 			_getConversionProjectsByStatus;
 
+		private const string RetrieveProjectsLog = "Attempting to retrieve {Count} Academy Conversion Projects";
+		private const string RetrieveProjectsStatesLog = "Attempting to retrieve {Count} Academy Conversion Projects filtered by {States}";
+		private const string ProjectByIdNotFound = "No Academy Conversion Project found with Id: {id}";
+		private const string ReturnProjectsLog = "Returning {count} Academy Conversion Projects with Id(s): {ids}";
+		private const string UpdateProjectById = "Attempting to update Academy Conversion Project with Id: {id}";
+		private const string UpdatedProjectById = "Successfully Updated Academy Conversion Project with Id: {id}";
+		
 		public AcademyConversionProjectController(
 			IGetAcademyConversionProjectsByStatuses getConversionProjectsByStatus,
 			IGetAcademyConversionProjects getAllAcademyConversionProjects,
@@ -50,11 +55,11 @@ namespace TramsDataApi.Controllers.V2
 
 			if (areStatesProvided)
 			{
-				_logger.LogInformation("Attempting to retrieve {Count} Academy Conversion Projects",count);
+				_logger.LogInformation(RetrieveProjectsStatesLog, count, states);
 			}
 			else
 			{
-				_logger.LogInformation("Attempting to retrieve {Count} Academy Conversion Projects filtered by {States}", count, states);
+				_logger.LogInformation(RetrieveProjectsLog,count);
 			}
 
 			var projects = areStatesProvided
@@ -65,7 +70,8 @@ namespace TramsDataApi.Controllers.V2
 					.Execute(page, count, statusList)
 					.ToList();
 			
-			_logger.LogInformation($"Returning {projects.Count} Academy Conversion Projects");
+			var projectIds = projects.Select(p => p.Id);
+			_logger.LogInformation(ReturnProjectsLog, projects.Count, string.Join(',', projectIds));
 
 			var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
 			
@@ -77,17 +83,16 @@ namespace TramsDataApi.Controllers.V2
 		[MapToApiVersion("2.0")]
 		public ActionResult<AcademyConversionProjectResponse> GetConversionProjectById(int id)
 		{
-			_logger.LogInformation($"Attempting to get Academy Conversion Project by ID {id}");
+			_logger.LogInformation(RetrieveProjectsLog, 1);
 			var project = _getAcademyConversionProjectById.Execute(id);
 			if (project == null)
 			{
-				_logger.LogInformation($"No Academy Conversion Project found for ID {id}");
+				_logger.LogInformation(ProjectByIdNotFound, id);
 				return NotFound();
 			}
 
-			_logger.LogInformation($"Returning Academy Conversion Project with ID {id}");
-			_logger.LogDebug(JsonSerializer.Serialize(project));
-			
+			_logger.LogInformation(ReturnProjectsLog, 1, id);
+
 			var response = new ApiResponseV2<AcademyConversionProjectResponse>(project);
 			return Ok(response);
 		}
@@ -96,17 +101,16 @@ namespace TramsDataApi.Controllers.V2
 		[MapToApiVersion("2.0")]
 		public ActionResult<AcademyConversionProjectResponse> UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
-			_logger.LogInformation($"Attempting to update Academy Conversion Project {id}");
+			_logger.LogInformation(UpdateProjectById, id);
 			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(id, request);
 			if (updatedAcademyConversionProject == null)
 			{
-				_logger.LogInformation($"Updating Academy Conversion Project failed: No Academy Conversion Project matching ID {id} was found");
+				_logger.LogInformation(ProjectByIdNotFound, id);
 				return NotFound();
 			}
 
-			_logger.LogInformation($"Successfully Updated Academy Conversion Project {id}");
-			_logger.LogDebug(JsonSerializer.Serialize(updatedAcademyConversionProject));
-			
+			_logger.LogInformation(UpdatedProjectById, id);
+
 			var response = new ApiResponseV2<AcademyConversionProjectResponse>(updatedAcademyConversionProject);
 			return Ok(response);
 		}
