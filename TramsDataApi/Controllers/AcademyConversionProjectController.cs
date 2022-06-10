@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.UseCases;
@@ -38,11 +39,11 @@ namespace TramsDataApi.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<IEnumerable<AcademyConversionProjectResponse>> GetConversionProjects([FromQuery] int count = 50)
+		public async Task<ActionResult<IEnumerable<AcademyConversionProjectResponse>>> GetConversionProjects([FromQuery] int count = 50)
 		{
 			_logger.LogInformation(RetrieveProjectsLog, count);
-			
-			var projects = _getAllAcademyConversionProjects.Execute(1, count).ToList();
+
+			var projects = await _getAllAcademyConversionProjects.Execute(1, count);
 
 			var projectIds = projects.Select(p => p.Id);
 			_logger.LogInformation(ReturnProjectsLog, projects.Count, string.Join(',', projectIds));
@@ -51,10 +52,10 @@ namespace TramsDataApi.Controllers
 		}
 
 		[HttpGet("{id:int}")]
-		public ActionResult<AcademyConversionProjectResponse> GetConversionProjectById(int id)
+		public async Task<ActionResult<AcademyConversionProjectResponse>> GetConversionProjectById(int id)
 		{
 			_logger.LogInformation(RetrieveProjectsByIdLog, id);
-			var project = _getAcademyConversionProjectById.Execute(id);
+			var project = await _getAcademyConversionProjectById.Execute(id);
 			if (project == null)
 			{
 				_logger.LogInformation(ProjectByIdNotFound, id);
@@ -67,10 +68,10 @@ namespace TramsDataApi.Controllers
 		}
 
 		[HttpPatch("{id:int}")]
-		public ActionResult<AcademyConversionProjectResponse> UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
+		public async Task<ActionResult<AcademyConversionProjectResponse>> UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
 			_logger.LogInformation(UpdateProjectById, id);
-			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(id, request);
+			var updatedAcademyConversionProject = await _updateAcademyConversionProject.Execute(id, request);
 			if (updatedAcademyConversionProject == null)
 			{
 				_logger.LogInformation(ProjectByIdNotFound, id);
