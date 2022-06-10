@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -14,40 +15,42 @@ namespace TramsDataApi.Gateways
             _tramsDbContext = tramsDbContext;
         }
 
-        public AcademyConversionProject GetById(int id)
+        public async Task<AcademyConversionProject> GetById(int id)
         {
-            return _tramsDbContext.AcademyConversionProjects
+            return await _tramsDbContext.AcademyConversionProjects
                 .AsNoTracking()
-                .SingleOrDefault(p => p.Id == id);
+                .SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        public IEnumerable<AcademyConversionProject> GetProjects(int page, int count)
+        public async Task<List<AcademyConversionProject>> GetProjects(int page, int count)
         {
-            return _tramsDbContext.AcademyConversionProjects
+            return await _tramsDbContext.AcademyConversionProjects
                 .OrderByDescending(p => p.Id)
                 .Skip((page - 1) * count)
                 .Take(count)
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
         }
 
-        public AcademyConversionProject Update(AcademyConversionProject academyConversionProject)
+        public async Task<AcademyConversionProject> Update(AcademyConversionProject academyConversionProject)
         {
-            var entity = _tramsDbContext.AcademyConversionProjects.Update(academyConversionProject);
-            _tramsDbContext.SaveChanges();
+            var entity = _tramsDbContext.AcademyConversionProjects
+                .Update(academyConversionProject);
+            
+            await _tramsDbContext.SaveChangesAsync();
             return entity.Entity;
         }
 
-        public IEnumerable<AcademyConversionProject> GetByStatuses(int page, int count, IEnumerable<string> statuses)
+        public async Task<List<AcademyConversionProject>> GetByStatuses(int page, int count, IEnumerable<string> statuses)
         {
             var lowerStatuses = statuses.Select(s => s.ToLower());
-            var results = _tramsDbContext.AcademyConversionProjects
+            var results = await _tramsDbContext.AcademyConversionProjects
                 .Where(acp => lowerStatuses.Contains(acp.ProjectStatus.ToLower()))
                 .OrderByDescending(acp => acp.Id)
                 .Skip((page - 1) * count)
                 .Take(count)
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
 
             return results;
         }

@@ -1,4 +1,5 @@
-﻿using TramsDataApi.Factories;
+﻿using System.Threading.Tasks;
+using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
@@ -17,9 +18,9 @@ namespace TramsDataApi.UseCases
             _establishmentGateway = establishmentGateway;
         }
 
-        public AcademyConversionProjectResponse Execute(int id)
+        public async Task<AcademyConversionProjectResponse> Execute(int id)
         {
-            var academyConversionProject = _academyConversionProjectGateway.GetById(id);
+            var academyConversionProject = await _academyConversionProjectGateway.GetById(id);
             if (academyConversionProject?.SchoolName == null) return null;
             
             var response = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
