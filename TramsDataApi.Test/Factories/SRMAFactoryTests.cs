@@ -84,7 +84,12 @@ namespace TramsDataApi.Test.Factories
                 DateAccepted = dtNow.AddDays(25),
                 Status = Enums.SRMAStatus.TrustConsidering,
                 Reason = Enums.SRMAReasonOffered.RDDIntervention,
-                Notes = "notes notes notes"
+                Notes = "notes notes notes",
+                Urn = 963L,
+                CloseStatusId = (int?)null,
+                UpdatedAt = dtNow,
+                ClosedAt = (DateTime?)null,
+                CreatedBy = "TestUser"
             };
 
             var srmaModel = Builder<SRMACase>.CreateNew()
@@ -99,6 +104,11 @@ namespace TramsDataApi.Test.Factories
                 .With(r => r.ReasonId = (int)details.Reason)
                 .With(r => r.Notes = details.Notes)
                 .With(r => r.CreatedAt = details.CreatedAt)
+                .With(r => r.Urn = details.Urn)
+                .With(r => r.CloseStatusId = details.CloseStatusId)
+                .With(r => r.UpdatedAt = details.UpdatedAt)
+                .With(r => r.ClosedAt = details.ClosedAt)
+                .With(r => r.CreatedBy= details.CreatedBy)
                 .Build();
 
             var expectedCreateSRMAResponse = new SRMAResponse
@@ -113,7 +123,12 @@ namespace TramsDataApi.Test.Factories
                 Status = details.Status,
                 Reason = details.Reason,
                 Notes = details.Notes,
-                CreatedAt = details.CreatedAt
+                CreatedAt = details.CreatedAt,
+                Urn = details.Urn,
+                CloseStatus = (Enums.SRMAStatus)(details.CloseStatusId ?? 0),
+                UpdatedAt = details.UpdatedAt,
+                ClosedAt = details.ClosedAt,
+                CreatedBy = details.CreatedBy
             };
 
             var response = SRMAFactory.CreateResponse(srmaModel);
