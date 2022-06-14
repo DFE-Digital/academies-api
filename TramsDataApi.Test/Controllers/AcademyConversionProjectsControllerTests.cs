@@ -119,7 +119,8 @@ namespace TramsDataApi.Test.Controllers
             
             var controller = new AcademyConversionProjectController(
                 new Mock<IGetAcademyConversionProject>().Object,
-                new Mock<IGetAcademyConversionProjects>().Object,mockUseCase.Object,
+                new Mock<IGetAcademyConversionProjects>().Object,
+                mockUseCase.Object,
                 _mockLogger.Object
             );
 
@@ -129,7 +130,7 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void UpdateConversionProject_ReturnsNotFound_WhenConversionProjectExists()
+        public void UpdateConversionProject_ReturnsNotFound_WhenConversionProjectDoesNotExist()
         {
             var controller = new AcademyConversionProjectController(
                 new Mock<IGetAcademyConversionProject>().Object,
