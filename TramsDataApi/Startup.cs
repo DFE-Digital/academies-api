@@ -85,6 +85,7 @@ namespace TramsDataApi
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
 
             services.AddScoped<ISRMAGateway, SRMAGateway>();
+            services.AddScoped<IFinancialPlanGateway, FinancialPlanGateway>();
 
             // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
             // once the a2b external service can write directly to trams this should be removed
