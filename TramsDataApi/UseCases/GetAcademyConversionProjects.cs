@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
@@ -27,7 +26,6 @@ namespace TramsDataApi.UseCases
             if (!conversionProjects.Any()) return new List<AcademyConversionProjectResponse>();
 
             var responses = conversionProjects
-                .Where(acp => acp.SchoolName != null)
                 .Select(AcademyConversionProjectResponseFactory.Create)
                 .ToList();
             

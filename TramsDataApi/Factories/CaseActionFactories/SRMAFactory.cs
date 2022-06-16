@@ -21,7 +21,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 DateAccepted = createSRMARequest.DateAccepted,
                 StatusId = (int)createSRMARequest.Status,
                 ReasonId = (int?)(createSRMARequest.Reason == SRMAReasonOffered.Unknown ? null : createSRMARequest.Reason),
-                Notes = createSRMARequest.Notes,
+                Notes = createSRMARequest.Notes
             };
         }
 
@@ -40,6 +40,11 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 Status = (Enums.SRMAStatus)model.StatusId,
                 Reason = (Enums.SRMAReasonOffered?)model.ReasonId,
                 Notes = model.Notes,
+                Urn = model.Urn,
+                CloseStatus = (Enums.SRMAStatus)(model.CloseStatusId ?? 0),
+                UpdatedAt = model.UpdatedAt,
+                ClosedAt = model.ClosedAt,
+                CreatedBy = model.CreatedBy
             };
         }
 
