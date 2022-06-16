@@ -23,8 +23,8 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<ConcernsCase> ConcernsCase { get; set; }
         public virtual DbSet<ConcernsStatus> ConcernsStatus { get; set; }
         public virtual DbSet<ConcernsRecord> ConcernsRecord { get; set; }
-        public virtual DbSet<ConcernsType> ConcernsTypes{ get; set; }
-        public virtual DbSet<ConcernsRating> ConcernsRatings{ get; set; }
+        public virtual DbSet<ConcernsType> ConcernsTypes { get; set; }
+        public virtual DbSet<ConcernsRating> ConcernsRatings { get; set; }
         public virtual DbSet<A2BApplication> A2BApplications { get; set; }
         public virtual DbSet<A2BApplicationKeyPersons> A2BApplicationKeyPersons { get; set; }
         public virtual DbSet<A2BApplicationApplyingSchool> A2BApplicationApplyingSchools { get; set; }
@@ -34,6 +34,8 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<SRMAStatus> SRMAStatuses { get; set; }
         public virtual DbSet<SRMAReason> SRMAReasons { get; set; }
         public virtual DbSet<SRMACase> SRMACases { get; set; }
+        public virtual DbSet<FinancialPlanStatus> FinancialPlanStatuses { get; set; }
+        public virtual DbSet<FinancialPlanCase> FinancialPlanCases { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -117,10 +119,10 @@ namespace TramsDataApi.DatabaseModels
             {
                 entity.ToTable("AcademyConversionProjectNote", "sdd");
             });
-            
+
             modelBuilder.HasSequence<int>("ConcernsGlobalSequence").HasMin(1).StartsAt(1);
 
-            
+
             modelBuilder.Entity<ConcernsCase>(entity =>
             {
                 entity.ToTable("ConcernsCase", "sdd");
@@ -130,16 +132,16 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
-                
+
             });
 
             modelBuilder.Entity<ConcernsStatus>(entity =>
             {
                 entity.ToTable("ConcernsStatus", "sdd");
-                
+
                 entity.HasKey(e => e.Id)
                     .HasName("PK__CStatus__C5B214360AF620234");
-                
+
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
 
@@ -148,21 +150,22 @@ namespace TramsDataApi.DatabaseModels
                     {
                         Id = 1,
                         Name = "Live",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
-                    }, 
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
+                    },
                     new ConcernsStatus
                     {
                         Id = 2,
                         Name = "Monitoring",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsStatus
-                    {   Id = 3,
+                    {
+                        Id = 3,
                         Name = "Close",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     }
                     );
             });
@@ -176,17 +179,17 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
-                
+
                 entity.HasOne(r => r.ConcernsCase)
                     .WithMany(c => c.ConcernsRecords)
                     .HasForeignKey(r => r.CaseId)
                     .HasConstraintName("FK__ConcernsCase_ConcernsRecord");
-                
+
                 entity.HasOne(r => r.ConcernsType)
                     .WithMany(c => c.FkConcernsRecord)
                     .HasForeignKey(r => r.TypeId)
                     .HasConstraintName("FK__ConcernsRecord_ConcernsType");
-                
+
                 entity.HasOne(r => r.ConcernsRating)
                     .WithMany(c => c.FkConcernsRecord)
                     .HasForeignKey(r => r.RatingId)
@@ -196,121 +199,121 @@ namespace TramsDataApi.DatabaseModels
             modelBuilder.Entity<ConcernsType>(entity =>
             {
                 entity.ToTable("ConcernsType", "sdd");
-                
+
                 entity.HasKey(e => e.Id)
                     .HasName("PK__CType");
-                
+
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
-                
+
                 entity.HasData(
                     new ConcernsType
                     {
                         Id = 1,
                         Name = "Compliance",
                         Description = "Financial reporting",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 2,
                         Name = "Compliance",
                         Description = "Financial returns",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 3,
                         Name = "Financial",
                         Description = "Deficit",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 4,
                         Name = "Financial",
                         Description = "Projected deficit / Low future surplus",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 5,
                         Name = "Financial",
                         Description = "Cash flow shortfall",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 6,
                         Name = "Financial",
                         Description = "Clawback",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 7,
                         Name = "Force majeure",
                         Description = null,
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 8,
                         Name = "Governance",
                         Description = "Governance",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 9,
                         Name = "Governance",
                         Description = "Closure",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 10,
                         Name = "Governance",
                         Description = "Executive Pay",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 11,
                         Name = "Governance",
                         Description = "Safeguarding",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 12,
                         Name = "Irregularity",
                         Description = "Allegations and self reported concerns",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsType
                     {
                         Id = 13,
                         Name = "Irregularity",
                         Description = "Related party transactions - in year",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     }
                 );
             });
-            
+
             modelBuilder.Entity<ConcernsRating>(entity =>
             {
                 entity.ToTable("ConcernsRating", "sdd");
@@ -320,42 +323,42 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
-                
+
                 entity.HasData(
                     new ConcernsRating
                     {
                         Id = 1,
                         Name = "Red-Plus",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsRating
                     {
                         Id = 2,
                         Name = "Red",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsRating
                     {
                         Id = 3,
                         Name = "Red-Amber",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsRating
                     {
                         Id = 4,
                         Name = "Amber-Green",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     },
                     new ConcernsRating
                     {
                         Id = 5,
                         Name = "n/a",
-                        CreatedAt = new DateTime(2021,11,17),
-                        UpdatedAt = new DateTime(2021,11,17)
+                        CreatedAt = new DateTime(2021, 11, 17),
+                        UpdatedAt = new DateTime(2021, 11, 17)
                     });
             });
 
@@ -395,6 +398,21 @@ namespace TramsDataApi.DatabaseModels
                         CreatedAt = new DateTime(2022, 05, 06),
                         UpdatedAt = new DateTime(2022, 05, 06)
                     }));
+            });
+
+            modelBuilder.Entity<FinancialPlanStatus>(entity =>
+            {
+                var createdAt = new DateTime(2022, 06, 15);
+                entity.ToTable("FinancialPlanStatus", "sdd");
+
+                entity.HasData(
+                     new FinancialPlanStatus[]
+                    {
+                        new FinancialPlanStatus{ Id = 1, Name = "AwaitingPlan", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new FinancialPlanStatus{ Id = 2, Name = "ReturnToTrust", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new FinancialPlanStatus{ Id = 3, Name = "ViablePlanReceived", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new FinancialPlanStatus{ Id = 4, Name = "Abandoned", CreatedAt = createdAt, UpdatedAt = createdAt },
+                    });
             });
 
             OnModelCreatingPartial(modelBuilder);
