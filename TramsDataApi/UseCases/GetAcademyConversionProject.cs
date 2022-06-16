@@ -20,8 +20,7 @@ namespace TramsDataApi.UseCases
         public AcademyConversionProjectResponse Execute(int id)
         {
             var academyConversionProject = _academyConversionProjectGateway.GetById(id);
-            if (academyConversionProject?.SchoolName == null) return null;
-            
+
             var response = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
             response.UkPrn = _establishmentGateway.GetByUrn(response.Urn)?.Ukprn;
             response.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(response.Urn)?.Laestab ?? 0;

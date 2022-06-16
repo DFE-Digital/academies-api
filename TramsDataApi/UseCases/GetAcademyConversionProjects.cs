@@ -24,8 +24,9 @@ namespace TramsDataApi.UseCases
             var conversionProjects = _academyConversionProjectGateway.GetProjects(page, count);
                       
             var responses = conversionProjects
-                .Where(acp => acp.SchoolName != null)
-                .Select(AcademyConversionProjectResponseFactory.Create).ToList();
+                .Select(AcademyConversionProjectResponseFactory.Create)
+                .ToList();
+            
             responses.ForEach(r =>
             {
                 r.UkPrn = _establishmentGateway.GetByUrn(r.Urn)?.Ukprn;
