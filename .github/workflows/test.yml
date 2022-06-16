@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: '3.1.301'
     - name: Install EF for tests
-      run: dotnet tool install --global dotnet-ef
+      run: dotnet tool install --global dotnet-ef --version 6.0.5
     - name: Restore tools for tests
       run: dotnet tool restore
     - name: Restore dependencies
