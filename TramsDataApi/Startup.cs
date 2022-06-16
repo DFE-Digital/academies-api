@@ -10,6 +10,7 @@ using TramsDataApi.ApplyToBecome;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
+using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels.CaseActions.SRMA;
 using TramsDataApi.Swagger;
@@ -85,6 +86,10 @@ namespace TramsDataApi
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
 
             services.AddScoped<ISRMAGateway, SRMAGateway>();
+
+            services.AddScoped<IGetAcademyConversionProject, GetAcademyConversionProject>();
+            services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();
+            services.AddScoped<IGetAcademyConversionProjectsByStatuses, GetAcademyConversionProjectsByStatuses>();
 
             // this is a temporary solution to move academy conversion projects from mstr.IfdPipeline to sdd.AcademyConversionProject
             // once the a2b external service can write directly to trams this should be removed

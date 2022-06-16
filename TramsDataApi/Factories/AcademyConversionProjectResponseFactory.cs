@@ -8,12 +8,14 @@ namespace TramsDataApi.Factories
 	/// </remarks>
 	public class AcademyConversionProjectResponseFactory
     {
-	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject, Trust trust = null, IfdPipeline ifd = null)
-        {
-			var response = new AcademyConversionProjectResponse
+	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject) =>
+			new AcademyConversionProjectResponse
 			{
 				Id = academyConversionProject.Id,
 				ApplicationReferenceNumber = academyConversionProject.ApplicationReferenceNumber,
+				NameOfTrust = academyConversionProject.NameOfTrust,
+				SponsorName = academyConversionProject.SponsorName,
+				SponsorReferenceNumber = academyConversionProject.SponsorReferenceNumber,
 				Urn = academyConversionProject.Urn ?? 0,
 				SchoolName = academyConversionProject.SchoolName,
 				LocalAuthority = academyConversionProject.LocalAuthority,
@@ -71,22 +73,5 @@ namespace TramsDataApi.Factories
 				ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
 				EqualitiesImpactAssessmentConsidered = academyConversionProject.EqualitiesImpactAssessmentConsidered
 			};
-
-			if (trust != null)
-            {
-				response.NameOfTrust = trust.TrustsTrustName;
-				response.SponsorReferenceNumber = trust.LeadSponsor;
-				response.SponsorName = trust.TrustsLeadSponsorName;
-            }
-
-			if (ifd != null)
-			{
-				response.Upin = ifd.EfaFundingUpin;
-				response.NewAcademyUrn = ifd.ProposedAcademyDetailsNewAcademyUrn;
-				response.ProjectStatus = ifd.GeneralDetailsProjectStatus;
-			}
-						
-			return response;
-		}
     }
 }

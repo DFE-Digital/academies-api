@@ -16,12 +16,15 @@ namespace TramsDataApi.Gateways
 
         public AcademyConversionProject GetById(int id)
         {
-            return _tramsDbContext.AcademyConversionProjects.AsNoTracking().SingleOrDefault(p => p.Id == id);
+            return _tramsDbContext.AcademyConversionProjects
+                .AsNoTracking()
+                .SingleOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<AcademyConversionProject> GetProjects(int page, int count)
         {
             return _tramsDbContext.AcademyConversionProjects
+                .OrderByDescending(p => p.Id)
                 .Skip((page - 1) * count)
                 .Take(count)
                 .AsNoTracking()
@@ -30,27 +33,19 @@ namespace TramsDataApi.Gateways
 
         public AcademyConversionProject Update(AcademyConversionProject academyConversionProject)
         {
-            var entity =_tramsDbContext.AcademyConversionProjects.Update(academyConversionProject);
+            var entity = _tramsDbContext.AcademyConversionProjects.Update(academyConversionProject);
             _tramsDbContext.SaveChanges();
             return entity.Entity;
         }
-        public IEnumerable<AcademyConversionProject> GetByStatuses(int page, int count, List<string> statues)
-        {
-            var lowerStatuses = statues.Select(s => s.ToLower());
-            var results = _tramsDbContext.AcademyConversionProjects
-            .Where(acp => lowerStatuses.Contains(acp.ProjectStatus.ToLower()))
-            .Skip((page - 1) * count)
-            .Take(count)
-            .AsNoTracking()
-            .ToList();
 
-            return results;
-        }
-
-        public IEnumerable<AcademyConversionProject> GetByIfdPipelineIds(List<long> ids)
+        public IEnumerable<AcademyConversionProject> GetByStatuses(int page, int count, IEnumerable<string> statuses)
         {
+            var lowerStatuses = statuses.Select(s => s.ToLower());
             var results = _tramsDbContext.AcademyConversionProjects
-                .Where(acp => ids.Contains(acp.IfdPipelineId))
+                .Where(acp => lowerStatuses.Contains(acp.ProjectStatus.ToLower()))
+                .OrderByDescending(acp => acp.Id)
+                .Skip((page - 1) * count)
+                .Take(count)
                 .AsNoTracking()
                 .ToList();
 

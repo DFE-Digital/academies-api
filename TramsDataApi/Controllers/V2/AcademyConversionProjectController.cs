@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -16,16 +14,23 @@ namespace TramsDataApi.Controllers.V2
     public class AcademyConversionProjectController : ControllerBase
 	{
 		private readonly ILogger<AcademyConversionProjectController> _logger;
-		private readonly IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> _getAcademyConversionProjectById;
-		private readonly IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> _getAllAcademyConversionProjects;
+		private readonly IGetAcademyConversionProject _getAcademyConversionProjectById;
+		private readonly IGetAcademyConversionProjects _getAllAcademyConversionProjects;
 		private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
-		private readonly IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>>
+		private readonly IGetAcademyConversionProjectsByStatuses
 			_getConversionProjectsByStatus;
 
+		private const string RetrieveProjectsLog = "Attempting to retrieve {Count} Academy Conversion Projects";
+		private const string RetrieveProjectsStatesLog = "Attempting to retrieve {Count} Academy Conversion Projects filtered by {States}";
+		private const string ProjectByIdNotFound = "No Academy Conversion Project found with Id: {id}";
+		private const string ReturnProjectsLog = "Returning {count} Academy Conversion Projects with Id(s): {ids}";
+		private const string UpdateProjectById = "Attempting to update Academy Conversion Project with Id: {id}";
+		private const string UpdatedProjectById = "Successfully Updated Academy Conversion Project with Id: {id}";
+		
 		public AcademyConversionProjectController(
-			IUseCase<GetAcademyConversionProjectsByStatusesRequest, IEnumerable<AcademyConversionProjectResponse>> getConversionProjectsByStatus,
-			IUseCase<GetAllAcademyConversionProjectsRequest, IEnumerable<AcademyConversionProjectResponse>> getAllAcademyConversionProjects,
-			IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse> getAcademyConversionProjectById,
+			IGetAcademyConversionProjectsByStatuses getConversionProjectsByStatus,
+			IGetAcademyConversionProjects getAllAcademyConversionProjects,
+			IGetAcademyConversionProject getAcademyConversionProjectById,
 			IUpdateAcademyConversionProject updateAcademyConversionProject,
 			ILogger<AcademyConversionProjectController> logger)
 		{
@@ -43,63 +48,69 @@ namespace TramsDataApi.Controllers.V2
 			[FromQuery] int page = 1,
 			[FromQuery] int count = 50)
 		{
-			var statusList = string.IsNullOrWhiteSpace(states) ? null : states.Split(',').ToList();
+			var areStatesProvided = string.IsNullOrWhiteSpace(states);
+			var statusList = areStatesProvided 
+				? null 
+				: states.Split(',').ToList();
 
-			_logger.LogInformation(statusList == null || !statusList.Any()
-				? $"Attempting to retrieve {count} Academy Conversion Projects."
-				: $"Attempting to retrieve {count} Academy Conversion Projects filtered by {states}");
-			
-			var projects = statusList == null || !statusList.Any()
+			if (areStatesProvided)
+			{
+				_logger.LogInformation(RetrieveProjectsStatesLog, count, states);
+			}
+			else
+			{
+				_logger.LogInformation(RetrieveProjectsLog,count);
+			}
+
+			var projects = areStatesProvided
 				? _getAllAcademyConversionProjects
-					.Execute(new GetAllAcademyConversionProjectsRequest { Page = page, Count = count})
+					.Execute(page, count)
 					.ToList()
 				: _getConversionProjectsByStatus
-					.Execute(new GetAcademyConversionProjectsByStatusesRequest { Page = page, Count = count, Statuses = statusList})
+					.Execute(page, count, statusList)
 					.ToList();
 			
-			_logger.LogInformation($"Returning {projects.Count} Academy Conversion Projects");
-			_logger.LogDebug(JsonSerializer.Serialize<IEnumerable<AcademyConversionProjectResponse>>(projects));
-			
+			var projectIds = projects.Select(p => p.Id);
+			_logger.LogInformation(ReturnProjectsLog, projects.Count, string.Join(',', projectIds));
+
 			var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
 			
 			var response = new ApiResponseV2<AcademyConversionProjectResponse>(projects, pagingResponse);
 			return Ok(response);
 		}
 		
-		[HttpGet("{id}")]
+		[HttpGet("{id:int}")]
 		[MapToApiVersion("2.0")]
 		public ActionResult<AcademyConversionProjectResponse> GetConversionProjectById(int id)
 		{
-			_logger.LogInformation($"Attempting to get Academy Conversion Project by ID {id}");
-			var project = _getAcademyConversionProjectById.Execute(new GetAcademyConversionProjectByIdRequest { Id = id });
+			_logger.LogInformation(RetrieveProjectsLog, 1);
+			var project = _getAcademyConversionProjectById.Execute(id);
 			if (project == null)
 			{
-				_logger.LogInformation($"No Academy Conversion Project found for ID {id}");
+				_logger.LogInformation(ProjectByIdNotFound, id);
 				return NotFound();
 			}
 
-			_logger.LogInformation($"Returning Academy Conversion Project with ID {id}");
-			_logger.LogDebug(JsonSerializer.Serialize(project));
-			
+			_logger.LogInformation(ReturnProjectsLog, 1, id);
+
 			var response = new ApiResponseV2<AcademyConversionProjectResponse>(project);
 			return Ok(response);
 		}
 
-		[HttpPatch("{id}")]
+		[HttpPatch("{id:int}")]
 		[MapToApiVersion("2.0")]
 		public ActionResult<AcademyConversionProjectResponse> UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
-			_logger.LogInformation($"Attempting to update Academy Conversion Project {id}");
+			_logger.LogInformation(UpdateProjectById, id);
 			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(id, request);
 			if (updatedAcademyConversionProject == null)
 			{
-				_logger.LogInformation($"Updating Academy Conversion Project failed: No Academy Conversion Project matching ID {id} was found");
+				_logger.LogInformation(ProjectByIdNotFound, id);
 				return NotFound();
 			}
 
-			_logger.LogInformation($"Successfully Updated Academy Conversion Project {id}");
-			_logger.LogDebug(JsonSerializer.Serialize(updatedAcademyConversionProject));
-			
+			_logger.LogInformation(UpdatedProjectById, id);
+
 			var response = new ApiResponseV2<AcademyConversionProjectResponse>(updatedAcademyConversionProject);
 			return Ok(response);
 		}
