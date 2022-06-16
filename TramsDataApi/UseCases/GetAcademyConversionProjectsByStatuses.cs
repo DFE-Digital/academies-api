@@ -27,7 +27,6 @@ namespace TramsDataApi.UseCases
                 .ToList() ;
 
             var responses = academyConversionProjects
-                .Where(p => !string.IsNullOrEmpty(p.SchoolName))
                 .Select(AcademyConversionProjectResponseFactory.Create)
                 .ToList();
             
