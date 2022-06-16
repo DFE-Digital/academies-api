@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
 using Microsoft.Extensions.Logging;
@@ -131,7 +130,7 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public async Task UpdateConversionProject_ReturnsNotFound_WhenConversionProjectExists()
+        public async Task UpdateConversionProject_ReturnsNotFound_WhenConversionProjectDoesNotExist()
         {
             var controller = new AcademyConversionProjectController(
                 new Mock<IGetAcademyConversionProject>().Object,

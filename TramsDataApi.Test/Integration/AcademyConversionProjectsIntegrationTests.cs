@@ -85,13 +85,12 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_be_a_not_found_response_when_id_does_not_match()
         {
-            var academyConversionProject = _fixture.Build<AcademyConversionProject>()
-                .Without(x => x.Id)
-                .Create();
+            const HttpStatusCode expected = HttpStatusCode.NotFound;
+            const int id = 0;
 
-            var response = await _client.GetAsync($"/conversion-projects/{academyConversionProject.Id}");
+            var response = await _client.GetAsync($"/conversion-projects/{id}");
 
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(expected);
         }
 
         [Fact]
@@ -233,17 +232,9 @@ namespace TramsDataApi.Test.Integration
                 .CreateMany()
                 .ToList();
 
-            var academyConversionProjectWithoutName = _fixture.Build<AcademyConversionProject>()
-                .With(acp => acp.ProjectStatus, "Approved for AO")
-                .Without(x => x.Id)
-                .Without(x => x.SchoolName)
-                .Create();
-
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
-            _dbContext.AcademyConversionProjects.Add(academyConversionProjectWithoutName);
 
             await _dbContext.SaveChangesAsync();
-            await _legacyDbContext.SaveChangesAsync();
 
             var expectedData = academyConversionProjects
                 .Select(AcademyConversionProjectResponseFactory.Create)

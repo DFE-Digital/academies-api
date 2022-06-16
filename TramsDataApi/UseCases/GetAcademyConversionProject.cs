@@ -21,7 +21,7 @@ namespace TramsDataApi.UseCases
         public async Task<AcademyConversionProjectResponse> Execute(int id)
         {
             var academyConversionProject = await _academyConversionProjectGateway.GetById(id);
-            if (academyConversionProject?.SchoolName == null) return null;
+            if (academyConversionProject == null) return null;
             
             var response = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
             response.UkPrn = _establishmentGateway.GetByUrn(response.Urn)?.Ukprn;
