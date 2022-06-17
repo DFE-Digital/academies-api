@@ -459,7 +459,7 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanGetTheFirstPageOfAllAcademyTransferProjects()
         {
-            int numberOfProjects = 20;
+            const int numberOfProjects = 20;
             var randomGenerator = new RandomGenerator();
             var outgoingTrustUkprn = randomGenerator.NextString(8,8);
             var outgoingTrustName =  randomGenerator.NextString(8,8);
@@ -582,8 +582,8 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanGetTheSecondPageOfAllAcademyTransferProjects()
         {
-            int numberOfProjects = 20;
-            int pageNumberRequested = 2;
+            const int numberOfProjects = 20;
+            const int pageNumberRequested = 2;
 
             var randomGenerator = new RandomGenerator();
             var outgoingTrustUkprn = randomGenerator.NextString(8,8);
