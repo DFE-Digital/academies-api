@@ -17,17 +17,17 @@ namespace TramsDataApi.Controllers.V2
     public class FinancialPlanController : Controller
     {
         private readonly ILogger<FinancialPlanController> _logger;
-        private readonly IUseCase<FinancialPlanRequest, FinancialPlanResponse> _createFinancialPlanUseCase;
+        private readonly IUseCase<CreateFinancialPlanRequest, FinancialPlanResponse> _createFinancialPlanUseCase;
         private readonly IUseCase<long, FinancialPlanResponse> _getFinancialPlanByIdUseCase;
         private readonly IUseCase<int, List<FinancialPlanResponse>> _getFinancialPlansByCaseUseCase;
-        private readonly IUseCase<FinancialPlanRequest, FinancialPlanResponse> _patchFinancialPlanUseCase;
+        private readonly IUseCase<PatchFinancialPlanRequest, FinancialPlanResponse> _patchFinancialPlanUseCase;
         private readonly IUseCase<object, List<FinancialPlanStatus>> _getAllStatuses;
 
         public FinancialPlanController(ILogger<FinancialPlanController> logger,
-            IUseCase<FinancialPlanRequest, FinancialPlanResponse> createSRMAUseCase,
+            IUseCase<CreateFinancialPlanRequest, FinancialPlanResponse> createSRMAUseCase,
             IUseCase<long, FinancialPlanResponse> getFinancialPlanByIdUseCase,
             IUseCase<int, List<FinancialPlanResponse>> getFinancialPlansByCase,
-            IUseCase<FinancialPlanRequest, FinancialPlanResponse> patchFinancialPlan,
+            IUseCase<PatchFinancialPlanRequest, FinancialPlanResponse> patchFinancialPlan,
             IUseCase<Object, List<FinancialPlanStatus>> getAllStatuses)
         {
             _logger = logger;
@@ -40,7 +40,7 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpPost]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<FinancialPlanResponse>> Create(FinancialPlanRequest request)
+        public ActionResult<ApiSingleResponseV2<FinancialPlanResponse>> Create(CreateFinancialPlanRequest request)
         {
             var createdFP = _createFinancialPlanUseCase.Execute(request);
             var response = new ApiSingleResponseV2<FinancialPlanResponse>(createdFP);
@@ -83,7 +83,7 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpPatch]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<FinancialPlanResponse>> Patch(FinancialPlanRequest request)
+        public ActionResult<ApiSingleResponseV2<FinancialPlanResponse>> Patch(PatchFinancialPlanRequest request)
         {
             var createdFP = _patchFinancialPlanUseCase.Execute(request);
             var response = new ApiSingleResponseV2<FinancialPlanResponse>(createdFP);

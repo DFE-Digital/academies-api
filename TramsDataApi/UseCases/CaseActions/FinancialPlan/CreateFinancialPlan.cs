@@ -6,7 +6,7 @@ using TramsDataApi.ResponseModels.CaseActions.FinancialPlan;
 
 namespace TramsDataApi.UseCases.CaseActions
 {
-    public class CreateFinancialPlan : IUseCase<FinancialPlanRequest, FinancialPlanResponse>
+    public class CreateFinancialPlan : IUseCase<CreateFinancialPlanRequest, FinancialPlanResponse>
     {
         private readonly IFinancialPlanGateway _gateway;
 
@@ -15,12 +15,12 @@ namespace TramsDataApi.UseCases.CaseActions
             _gateway = financialPlanGateway;
         }
 
-        public FinancialPlanResponse Execute(FinancialPlanRequest request)
+        public FinancialPlanResponse Execute(CreateFinancialPlanRequest request)
         {
             return ExecuteAsync(request).Result;
         }
 
-        public async Task<FinancialPlanResponse> ExecuteAsync(FinancialPlanRequest request)
+        public async Task<FinancialPlanResponse> ExecuteAsync(CreateFinancialPlanRequest request)
         {
             var dbModel = FinancialPlanFactory.CreateDBModel(request);
             var createdSRMA = await _gateway.CreateFinancialPlan(dbModel);

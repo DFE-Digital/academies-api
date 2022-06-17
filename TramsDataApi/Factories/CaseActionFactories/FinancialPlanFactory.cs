@@ -7,11 +7,10 @@ namespace TramsDataApi.Factories.CaseActionFactories
 {
     public static class FinancialPlanFactory
     {
-        public static FinancialPlanCase CreateDBModel(FinancialPlanRequest createSRMARequest)
+        public static FinancialPlanCase CreateDBModel(CreateFinancialPlanRequest createSRMARequest)
         {
             return new FinancialPlanCase
             {
-                Id = createSRMARequest.Id,
                 CaseUrn = createSRMARequest.CaseUrn,
                 Name = createSRMARequest.Name,
                 ClosedAt = createSRMARequest.ClosedAt,
@@ -22,6 +21,24 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 Notes = createSRMARequest.Notes,
                 StatusId = createSRMARequest.StatusId,
                 UpdatedAt = createSRMARequest.UpdatedAt,
+            };
+        } 
+        
+        public static FinancialPlanCase CreateDBModel(PatchFinancialPlanRequest patchSRMARequest)
+        {
+            return new FinancialPlanCase
+            {
+                Id = patchSRMARequest.Id,
+                CaseUrn = patchSRMARequest.CaseUrn,
+                Name = patchSRMARequest.Name,
+                ClosedAt = patchSRMARequest.ClosedAt,
+                CreatedAt = patchSRMARequest.CreatedAt,
+                CreatedBy = patchSRMARequest.CreatedBy,    
+                DatePlanRequested = patchSRMARequest.DatePlanRequested,
+                DateViablePlanReceived =  patchSRMARequest.DateViablePlanReceived,
+                Notes = patchSRMARequest.Notes,
+                StatusId = patchSRMARequest.StatusId,
+                UpdatedAt = patchSRMARequest.UpdatedAt,
             };
         }
 
