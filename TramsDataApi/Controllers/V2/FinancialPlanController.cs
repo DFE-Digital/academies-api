@@ -24,14 +24,14 @@ namespace TramsDataApi.Controllers.V2
         private readonly IUseCase<object, List<FinancialPlanStatus>> _getAllStatuses;
 
         public FinancialPlanController(ILogger<FinancialPlanController> logger,
-            IUseCase<CreateFinancialPlanRequest, FinancialPlanResponse> createSRMAUseCase,
+            IUseCase<CreateFinancialPlanRequest, FinancialPlanResponse> createFinancialPlanUseCase,
             IUseCase<long, FinancialPlanResponse> getFinancialPlanByIdUseCase,
             IUseCase<int, List<FinancialPlanResponse>> getFinancialPlansByCase,
             IUseCase<PatchFinancialPlanRequest, FinancialPlanResponse> patchFinancialPlan,
             IUseCase<Object, List<FinancialPlanStatus>> getAllStatuses)
         {
             _logger = logger;
-            _createFinancialPlanUseCase = createSRMAUseCase;
+            _createFinancialPlanUseCase = createFinancialPlanUseCase;
             _getFinancialPlanByIdUseCase = getFinancialPlanByIdUseCase;
             _getFinancialPlansByCaseUseCase = getFinancialPlansByCase;
             _patchFinancialPlanUseCase = patchFinancialPlan;
@@ -88,7 +88,7 @@ namespace TramsDataApi.Controllers.V2
             var createdFP = _patchFinancialPlanUseCase.Execute(request);
             var response = new ApiSingleResponseV2<FinancialPlanResponse>(createdFP);
 
-            return CreatedAtAction(nameof(GetFinancialPlanById), new { financialPlanId = createdFP.Id}, response);
+            return Ok(response);
         }
     }
 }
