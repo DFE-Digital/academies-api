@@ -52,7 +52,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             _dbContext.AcademyConversionProjects.AddRange(expectedProjects);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             var expected = expectedProjects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
 
@@ -61,6 +61,24 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task Get_request_should_get_all_academy_conversion_projects_ordered_by_newest_first()
+        {
+            var expectedProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .CreateMany(3);
+            
+            _dbContext.AcademyConversionProjects.AddRange(expectedProjects);
+            await _dbContext.SaveChangesAsync();
+
+            var response = await _client.GetAsync("/conversion-projects");
+            var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectResponse>>();
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            content.Should().BeInDescendingOrder(c => c.Id);
         }
 
         [Fact]
@@ -104,9 +122,11 @@ namespace TramsDataApi.Test.Integration
             var trust = CreateTrust(academyConversionProject);
 
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
-            _dbContext.SaveChanges();
+
+            var x = _dbContext.AcademyConversionProjects.Local;
+            await _dbContext.SaveChangesAsync();
             _legacyDbContext.Trust.Add(trust);
-            _legacyDbContext.SaveChanges();
+            await _legacyDbContext.SaveChangesAsync();
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
@@ -119,7 +139,7 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             content.Should().BeEquivalentTo(expected);
 
-            _dbContext.Entry(academyConversionProject).Reload();
+            await _dbContext.Entry(academyConversionProject).ReloadAsync();
 
             AssertDatabaseUpdated(academyConversionProject, updateRequest);
         }

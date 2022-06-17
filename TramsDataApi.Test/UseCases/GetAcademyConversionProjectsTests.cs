@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -23,7 +24,7 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAllAcademyConversionProjects_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
+        public async Task GetAllAcademyConversionProjects_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
         {
             const int page = 1;
             const int count = 50;
@@ -31,18 +32,18 @@ namespace TramsDataApi.Test.UseCases
             
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(1, 50))
-                .Returns(() => new List<AcademyConversionProject>());
+                .Returns(Task.FromResult(new List<AcademyConversionProject>()));
 
             var useCase = new GetAcademyConversionProjects(
                 mockProjectsGateway.Object, new Mock<IEstablishmentGateway>().Object);
 
-            var result = useCase.Execute(page, count).ToList();
+            var result = await useCase.Execute(page, count);
 
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse>());
         }
         
         [Fact]
-        public void GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
+        public async Task GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
             const int page = 1;
             const int count = 50;
@@ -55,12 +56,12 @@ namespace TramsDataApi.Test.UseCases
             
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
             
             var useCase = new GetAcademyConversionProjects(
                 mockProjectsGateway.Object, new Mock<IEstablishmentGateway>().Object);
 
-            var result = useCase.Execute(page, count).ToList();
+            var result = await useCase.Execute(page, count);
             
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expectedProject });
         }
