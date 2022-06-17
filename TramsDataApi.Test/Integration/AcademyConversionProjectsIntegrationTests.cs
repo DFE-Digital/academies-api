@@ -66,18 +66,9 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task Get_request_should_get_all_academy_conversion_projects_ordered_by_newest_first()
         {
-            var expectedProjects = new List<AcademyConversionProject>
-            {
-                _fixture.Build<AcademyConversionProject>()
-                    .Without(x => x.Id)
-                    .Create(),
-                _fixture.Build<AcademyConversionProject>()
-                    .Without(x => x.Id)
-                    .Create(),
-                _fixture.Build<AcademyConversionProject>()
-                    .Without(x => x.Id)
-                    .Create()
-            };
+            var expectedProjects = _fixture.Build<AcademyConversionProject>()
+                .Without(x => x.Id)
+                .CreateMany(3);
             
             _dbContext.AcademyConversionProjects.AddRange(expectedProjects);
             await _dbContext.SaveChangesAsync();
