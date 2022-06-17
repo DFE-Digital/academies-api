@@ -23,9 +23,9 @@ namespace TramsDataApi.Gateways
         {
             try
             {
-                _tramsDbContext.FinancialPlanCases.Add(request);
+                var tracked = _tramsDbContext.FinancialPlanCases.Add(request);
                 await _tramsDbContext.SaveChangesAsync();
-                return request;
+                return tracked.Entity;
             }
             catch (DbUpdateException ex)
             {
@@ -46,7 +46,7 @@ namespace TramsDataApi.Gateways
 
         public async Task<ICollection<FinancialPlanCase>> GetFinancialPlansByCaseUrn(int caseUrn)
         {
-            return await _tramsDbContext.FinancialPlanCases.Where(s => s.CaseUrn == caseUrn).ToListAsync();
+            return await _tramsDbContext.FinancialPlanCases.Include(fp => fp.Status).Where(s => s.CaseUrn == caseUrn).ToListAsync();
         }
 
         public async Task<FinancialPlanCase> PatchFinancialPlan(FinancialPlanCase patchedFinancialPlan)

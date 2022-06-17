@@ -10,7 +10,7 @@ using TramsDataApi.ResponseModels.CaseActions.FinancialPlan;
 
 namespace TramsDataApi.UseCases.CaseActions
 {
-    public class PatchFinancialPlan : IUseCase<FinancialPlanRequest, FinancialPlanResponse>
+    public class PatchFinancialPlan : IUseCase<PatchFinancialPlanRequest, FinancialPlanResponse>
     {
         private readonly IFinancialPlanGateway _gateway;
 
@@ -19,12 +19,12 @@ namespace TramsDataApi.UseCases.CaseActions
             _gateway = gateway;
         }
 
-        public FinancialPlanResponse Execute(FinancialPlanRequest request)
+        public FinancialPlanResponse Execute(PatchFinancialPlanRequest request)
         {
             return ExecuteAsync(request).Result;
         }
 
-        public async Task<FinancialPlanResponse> ExecuteAsync(FinancialPlanRequest request)
+        public async Task<FinancialPlanResponse> ExecuteAsync(PatchFinancialPlanRequest request)
         {
             var patchedSRMA = await _gateway.PatchFinancialPlan(FinancialPlanFactory.CreateDBModel(request));
             return FinancialPlanFactory.CreateResponse(patchedSRMA);
