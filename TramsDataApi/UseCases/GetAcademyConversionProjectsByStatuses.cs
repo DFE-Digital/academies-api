@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -20,11 +21,12 @@ namespace TramsDataApi.UseCases
             _establishmentGateway = establishmentGateway;
         }
 
-        public IEnumerable<AcademyConversionProjectResponse> Execute(int page, int count, IEnumerable<string> statuses)
+        public async Task<List<AcademyConversionProjectResponse>> Execute(int page, int count, IEnumerable<string> statuses)
         {
-            var academyConversionProjects = _academyConversionProjectGateway
-                .GetByStatuses(page, count, statuses)
-                .ToList() ;
+            var academyConversionProjects = await _academyConversionProjectGateway
+                .GetByStatuses(page, count, statuses);
+
+            if (academyConversionProjects == null) return new List<AcademyConversionProjectResponse>();
 
             var responses = academyConversionProjects
                 .Select(AcademyConversionProjectResponseFactory.Create)
