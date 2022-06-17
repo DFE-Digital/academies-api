@@ -16,6 +16,6 @@ namespace TramsDataApi.RequestModels.CaseActions.FinancialPlan
         public string CreatedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime? ClosedAt { get; set; }
-        public string Notes { get; }
+        public string Notes { get; set; }
     }
 }
