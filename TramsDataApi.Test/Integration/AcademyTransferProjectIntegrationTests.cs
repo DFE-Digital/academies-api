@@ -34,6 +34,11 @@ namespace TramsDataApi.Test.Integration
             _tramsDbContext = fixture.Services.GetRequiredService<TramsDbContext>();
         }
 
+        public void Dispose()
+        {
+            _legacyTramsDbContext.
+        }
+
         [Fact]
         public async Task CanCreateAnInitialAcademyTransferProject()
         {
