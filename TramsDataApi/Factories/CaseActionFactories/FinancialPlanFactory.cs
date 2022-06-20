@@ -7,38 +7,38 @@ namespace TramsDataApi.Factories.CaseActionFactories
 {
     public static class FinancialPlanFactory
     {
-        public static FinancialPlanCase CreateDBModel(CreateFinancialPlanRequest createSRMARequest)
+        public static FinancialPlanCase CreateDBModel(CreateFinancialPlanRequest createFinancialPlanRequest)
         {
             return new FinancialPlanCase
             {
-                CaseUrn = createSRMARequest.CaseUrn,
-                Name = createSRMARequest.Name,
-                ClosedAt = createSRMARequest.ClosedAt,
-                CreatedAt = createSRMARequest.CreatedAt,
-                CreatedBy = createSRMARequest.CreatedBy,    
-                DatePlanRequested = createSRMARequest.DatePlanRequested,
-                DateViablePlanReceived =  createSRMARequest.DateViablePlanReceived,
-                Notes = createSRMARequest.Notes,
-                StatusId = createSRMARequest.StatusId,
-                UpdatedAt = createSRMARequest.UpdatedAt,
+                CaseUrn = createFinancialPlanRequest.CaseUrn,
+                Name = createFinancialPlanRequest.Name,
+                ClosedAt = createFinancialPlanRequest.ClosedAt,
+                CreatedAt = createFinancialPlanRequest.CreatedAt,
+                CreatedBy = createFinancialPlanRequest.CreatedBy,    
+                DatePlanRequested = createFinancialPlanRequest.DatePlanRequested,
+                DateViablePlanReceived =  createFinancialPlanRequest.DateViablePlanReceived,
+                Notes = createFinancialPlanRequest.Notes,
+                StatusId = createFinancialPlanRequest.StatusId,
+                UpdatedAt = createFinancialPlanRequest.UpdatedAt,
             };
         } 
         
-        public static FinancialPlanCase CreateDBModel(PatchFinancialPlanRequest patchSRMARequest)
+        public static FinancialPlanCase CreateDBModel(PatchFinancialPlanRequest patchFinancialPlanRequest)
         {
             return new FinancialPlanCase
             {
-                Id = patchSRMARequest.Id,
-                CaseUrn = patchSRMARequest.CaseUrn,
-                Name = patchSRMARequest.Name,
-                ClosedAt = patchSRMARequest.ClosedAt,
-                CreatedAt = patchSRMARequest.CreatedAt,
-                CreatedBy = patchSRMARequest.CreatedBy,    
-                DatePlanRequested = patchSRMARequest.DatePlanRequested,
-                DateViablePlanReceived =  patchSRMARequest.DateViablePlanReceived,
-                Notes = patchSRMARequest.Notes,
-                StatusId = patchSRMARequest.StatusId,
-                UpdatedAt = patchSRMARequest.UpdatedAt,
+                Id = patchFinancialPlanRequest.Id,
+                CaseUrn = patchFinancialPlanRequest.CaseUrn,
+                Name = patchFinancialPlanRequest.Name,
+                ClosedAt = patchFinancialPlanRequest.ClosedAt,
+                CreatedAt = patchFinancialPlanRequest.CreatedAt,
+                CreatedBy = patchFinancialPlanRequest.CreatedBy,    
+                DatePlanRequested = patchFinancialPlanRequest.DatePlanRequested,
+                DateViablePlanReceived =  patchFinancialPlanRequest.DateViablePlanReceived,
+                Notes = patchFinancialPlanRequest.Notes,
+                StatusId = patchFinancialPlanRequest.StatusId,
+                UpdatedAt = patchFinancialPlanRequest.UpdatedAt,
             };
         }
 
