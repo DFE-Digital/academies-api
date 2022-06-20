@@ -1,35 +1,33 @@
-﻿using TramsDataApi.DatabaseModels;
+﻿using System.Threading.Tasks;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetAcademyConversionProject : IUseCase<GetAcademyConversionProjectByIdRequest, AcademyConversionProjectResponse>
+    public class GetAcademyConversionProject : IGetAcademyConversionProject
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
-        private readonly ITrustGateway _trustGateway;
+        private readonly IEstablishmentGateway _establishmentGateway;
        
         public GetAcademyConversionProject(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
-            ITrustGateway trustGateway)
+            IEstablishmentGateway establishmentGateway)
         {
             _academyConversionProjectGateway = academyConversionProjectGateway;
-            _trustGateway = trustGateway;           
+            _establishmentGateway = establishmentGateway;
         }
 
-        public AcademyConversionProjectResponse Execute(GetAcademyConversionProjectByIdRequest request)
+        public async Task<AcademyConversionProjectResponse> Execute(int id)
         {
-            var academyConversionProject = _academyConversionProjectGateway.GetById(request.Id);
+            var academyConversionProject = await _academyConversionProjectGateway.GetById(id);
             if (academyConversionProject == null) return null;
+            
+            var response = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
+            response.UkPrn = _establishmentGateway.GetByUrn(response.Urn)?.Ukprn;
+            response.Laestab = _establishmentGateway.GetMisEstablishmentByUrn(response.Urn)?.Laestab ?? 0;
 
-            var trust = string.IsNullOrEmpty(academyConversionProject.TrustReferenceNumber)
-                ? null
-                : _trustGateway.GetIfdTrustByGroupId(academyConversionProject.TrustReferenceNumber);
-
-            return AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null);
-
+            return response;
         }
     }
 }

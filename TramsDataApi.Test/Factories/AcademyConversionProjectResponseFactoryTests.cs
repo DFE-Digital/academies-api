@@ -22,9 +22,9 @@ namespace TramsDataApi.Test.Factories
             var academyConversionProject = _fixture.Create<AcademyConversionProject>();
             var trust = _fixture.Create<Trust>();
          
-            var expectedResponse = CreateExpected(academyConversionProject, trust);
+            var expectedResponse = CreateExpected(academyConversionProject);
 
-            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject, trust, null);
+            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
 
             academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
         }
@@ -33,9 +33,9 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsAnAcademyConversionProjectResponse_WhenGivenAcademyConversionProject()
         {
             var academyConversionProject = _fixture.Create<AcademyConversionProject>();
-            var expectedResponse = CreateExpected(academyConversionProject, null);
+            var expectedResponse = CreateExpected(academyConversionProject);
 
-            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject, null);
+            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
 
             academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
         }
@@ -54,18 +54,21 @@ namespace TramsDataApi.Test.Factories
                 .Without(x => x.YearThreeProjectedPupilNumbers)
                 .Create();
 
-            var expectedResponse = CreateExpected(academyConversionProject, null);
+            var expectedResponse = CreateExpected(academyConversionProject);
 
-            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject, null);
+            var academyConversionProjectResponse = AcademyConversionProjectResponseFactory.Create(academyConversionProject);
 
             academyConversionProjectResponse.Should().BeEquivalentTo(expectedResponse);
         }
 
-        private AcademyConversionProjectResponse CreateExpected(AcademyConversionProject academyConversionProject, Trust trust = null)
+        private AcademyConversionProjectResponse CreateExpected(AcademyConversionProject academyConversionProject)
         {
             var expected = new AcademyConversionProjectResponse
             {
-                Id = academyConversionProject.Id,                
+                Id = academyConversionProject.Id,         
+                NameOfTrust = academyConversionProject.NameOfTrust,
+                SponsorName = academyConversionProject.SponsorName,
+                SponsorReferenceNumber = academyConversionProject.SponsorReferenceNumber,
                 ApplicationReferenceNumber = academyConversionProject.ApplicationReferenceNumber,
                 Urn = academyConversionProject.Urn ?? 0,
                 SchoolName = academyConversionProject.SchoolName,
@@ -126,12 +129,6 @@ namespace TramsDataApi.Test.Factories
                 EqualitiesImpactAssessmentConsidered = academyConversionProject.EqualitiesImpactAssessmentConsidered
             };
 
-            if (trust != null)
-            {
-                expected.NameOfTrust = trust.TrustsTrustName;
-                expected.SponsorReferenceNumber = trust.LeadSponsor;
-                expected.SponsorName = trust.TrustsLeadSponsorName;
-            }
             return expected;
         }
     }
