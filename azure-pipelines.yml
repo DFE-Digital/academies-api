@@ -32,7 +32,7 @@ steps:
     inputs:
       command: custom
       custom: 'tool'
-      arguments: install dotnet-ef
+      arguments: install dotnet-ef --version 6.0.5
 
   - task: Npm@1
     inputs:

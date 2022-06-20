@@ -49,6 +49,7 @@ namespace TramsDataApi.Gateways
             return _tramsDbContext.AcademyTransferProjects
                 .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
                 .Include(atp => atp.TransferringAcademies)
+                .OrderByDescending(atp => atp.Id)
                 .Skip((page - 1) * 10).Take(10).ToList();
         }
 
