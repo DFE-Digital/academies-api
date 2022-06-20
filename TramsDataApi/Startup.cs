@@ -82,6 +82,7 @@ namespace TramsDataApi
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
 
             services.AddScoped<ISRMAGateway, SRMAGateway>();
+            services.AddScoped<IFinancialPlanGateway, FinancialPlanGateway>();
 
             services.AddScoped<IGetAcademyConversionProject, GetAcademyConversionProject>();
             services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();
