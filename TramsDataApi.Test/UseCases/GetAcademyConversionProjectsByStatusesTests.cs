@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -23,7 +24,7 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAcademyConversionProjectProjectByStatuses_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
+        public async Task GetAcademyConversionProjectProjectByStatuses_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
         {
             const int page = 1;
             const int count = 50;
@@ -35,14 +36,14 @@ namespace TramsDataApi.Test.UseCases
             var useCase = new GetAcademyConversionProjectsByStatuses(
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
-            
-            var result = useCase.Execute(page, count, statuses).ToList();
+
+            var result = await useCase.Execute(page, count, statuses);
 
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse>());
         }
         
         [Fact]
-        public void GetAcademyConversionProjectProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
+        public async Task GetAcademyConversionProjectProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
             const int page = 1;
             const int count = 1;
@@ -59,7 +60,7 @@ namespace TramsDataApi.Test.UseCases
             
             mockProjectsGateway
                 .Setup(acg => acg.GetByStatuses(It.IsAny<int>(), It.IsAny<int>(), statuses))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
             
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
@@ -68,14 +69,14 @@ namespace TramsDataApi.Test.UseCases
             var useCase = new GetAcademyConversionProjectsByStatuses(
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
-            
-            var result = useCase.Execute(page, count, statuses).ToList();
+
+            var result = await useCase.Execute(page, count, statuses);
             
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
         
         [Fact]
-        public void GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
+        public async Task GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
             const int page = 1;
             const int count = 50;
@@ -92,7 +93,7 @@ namespace TramsDataApi.Test.UseCases
             
             mockProjectsGateway
                 .Setup(acg => acg.GetByStatuses(It.IsAny<int>(), It.IsAny<int>(), statuses))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
 
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
@@ -101,14 +102,14 @@ namespace TramsDataApi.Test.UseCases
             var useCase = new GetAcademyConversionProjectsByStatuses(
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
-            
-            var result = useCase.Execute(page, count, statuses).ToList();
+
+            var result = await useCase.Execute(page, count, statuses);
             
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
         
         [Fact]
-        public void GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponsesWithUkPrnAndLaestab_WhenAcademyConversionProjectsAndEstablishmentsAreFound()
+        public async Task GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponsesWithUkPrnAndLaestab_WhenAcademyConversionProjectsAndEstablishmentsAreFound()
         {
             const int page = 1;
             const int count = 50;
@@ -132,7 +133,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockProjectsGateway
                 .Setup(acg => acg.GetByStatuses(It.IsAny<int>(), It.IsAny<int>(), statuses))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
             
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(urn))
@@ -145,8 +146,8 @@ namespace TramsDataApi.Test.UseCases
             var useCase = new GetAcademyConversionProjectsByStatuses(
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
-            
-            var result = useCase.Execute(page, count, statuses).ToList();
+
+            var result = await useCase.Execute(page, count, statuses);
 
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }

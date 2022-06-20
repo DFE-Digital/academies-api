@@ -24,7 +24,8 @@ namespace TramsDataApi.Test.Integration
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
         private readonly TramsDbContext _tramsDbContext;
- 
+
+        private const int numberOfProjectsPerPage = 10;
 
         public AcademyTransferProjectIntegrationTests(TramsDataApiFactory fixture)
         {
@@ -436,6 +437,7 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanGetTheFirstPageOfAllAcademyTransferProjects()
         {
+            const int numberOfProjects = 20;
             var randomGenerator = new RandomGenerator();
  
             var groups = AddGroups(2);
@@ -445,7 +447,7 @@ namespace TramsDataApi.Test.Integration
             var trusts = AddTrustsFromGroups(groups);
 
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
-                .CreateListOfSize(20)
+                .CreateListOfSize(numberOfProjects)
                 .All()
                 .With(atp => atp.OutgoingTrustUkprn = outgoingTrustGroup.Ukprn)
                 .With(atp => atp.Urn = 0)
@@ -492,7 +494,7 @@ namespace TramsDataApi.Test.Integration
             var indexProjectResponse =
                 JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
 
-            var expectedResponse = academyTransferProjectsToCreate.OrderBy(atp => atp.Urn).Take(10).Select(atp =>
+            var expectedResponse = academyTransferProjectsToCreate.OrderByDescending(atp => atp.Id).Take(numberOfProjectsPerPage).Select(atp =>
                 new AcademyTransferProjectSummaryResponse
                 {
                     ProjectUrn = atp.Urn.ToString(),
@@ -511,7 +513,7 @@ namespace TramsDataApi.Test.Integration
                         KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
                     }).ToList()
                 }).ToList();
-            indexProjectResponse.Count().Should().Be(10);
+            indexProjectResponse.Count().Should().Be(numberOfProjectsPerPage);
             indexProjectResponse.Should().BeEquivalentTo(expectedResponse);
          }
 
@@ -519,6 +521,9 @@ namespace TramsDataApi.Test.Integration
         [Fact]
         public async Task CanGetTheSecondPageOfAllAcademyTransferProjects()
         {
+            const int numberOfProjects = 20;
+            const int pageNumberRequested = 2;
+
             var randomGenerator = new RandomGenerator();
  
             var groups = AddGroups(2);
@@ -527,7 +532,7 @@ namespace TramsDataApi.Test.Integration
             var trusts = AddTrustsFromGroups(groups);
 
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
-                .CreateListOfSize(20)
+                .CreateListOfSize(numberOfProjects)
                 .All()
                 .With(atp => atp.OutgoingTrustUkprn = outgoingTrustGroup.Ukprn)
                 .With(atp => atp.Urn = 0)
@@ -562,7 +567,7 @@ namespace TramsDataApi.Test.Integration
             var indexAcademyTransferProjectRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://trams-api.com/academyTransferProject?page=2"),
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProject?page={pageNumberRequested}"),
                 Headers =
                 {
                     {"ApiKey", "testing-api-key"}
@@ -575,7 +580,7 @@ namespace TramsDataApi.Test.Integration
             var indexProjectResponse =
                 JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
 
-            var expectedResponse = academyTransferProjectsToCreate.OrderBy(atp => atp.Urn).Skip(10).Take(10).Select(
+            var expectedResponse = academyTransferProjectsToCreate.OrderByDescending(atp => atp.Id).Skip(numberOfProjectsPerPage).Take(numberOfProjectsPerPage).Select(
                 atp =>
                     new AcademyTransferProjectSummaryResponse
                     {
@@ -595,7 +600,7 @@ namespace TramsDataApi.Test.Integration
                             KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
                         }).ToList()
                     }).ToList();
-            indexProjectResponse.Count().Should().Be(10);
+            indexProjectResponse.Count().Should().Be(numberOfProjectsPerPage);
             indexProjectResponse.Should().BeEquivalentTo(expectedResponse);
         }
 

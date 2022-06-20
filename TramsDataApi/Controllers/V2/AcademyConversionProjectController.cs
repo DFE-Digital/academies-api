@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -43,35 +45,36 @@ namespace TramsDataApi.Controllers.V2
 		
 		[HttpGet]
 		[MapToApiVersion("2.0")]
-		public ActionResult<ApiResponseV2<AcademyConversionProjectResponse>> GetConversionProjects(
+		public async Task<ActionResult<ApiResponseV2<AcademyConversionProjectResponse>>> GetConversionProjects(
 			[FromQuery] string states,
 			[FromQuery] int page = 1,
 			[FromQuery] int count = 50)
 		{
-			var areStatesProvided = string.IsNullOrWhiteSpace(states);
-			var statusList = areStatesProvided 
-				? null 
-				: states.Split(',').ToList();
+			var areStatesProvided = !string.IsNullOrWhiteSpace(states);
 
+			var statusList = areStatesProvided
+				? states.Split(',').ToList()
+				: null;
+
+			List<AcademyConversionProjectResponse> projects;
+			
 			if (areStatesProvided)
 			{
 				_logger.LogInformation(RetrieveProjectsStatesLog, count, states);
+				projects = await _getConversionProjectsByStatus.Execute(page, count, statusList);
 			}
 			else
 			{
 				_logger.LogInformation(RetrieveProjectsLog,count);
+				projects = await _getAllAcademyConversionProjects.Execute(page, count);
+				
 			}
 
-			var projects = areStatesProvided
-				? _getAllAcademyConversionProjects
-					.Execute(page, count)
-					.ToList()
-				: _getConversionProjectsByStatus
-					.Execute(page, count, statusList)
-					.ToList();
-			
-			var projectIds = projects.Select(p => p.Id);
-			_logger.LogInformation(ReturnProjectsLog, projects.Count, string.Join(',', projectIds));
+			if (!projects.Any())
+			{
+				var projectIds = projects.Select(p => p.Id);
+				_logger.LogInformation(ReturnProjectsLog, projects.Count, string.Join(',', projectIds));
+			}
 
 			var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
 			
@@ -81,10 +84,10 @@ namespace TramsDataApi.Controllers.V2
 		
 		[HttpGet("{id:int}")]
 		[MapToApiVersion("2.0")]
-		public ActionResult<AcademyConversionProjectResponse> GetConversionProjectById(int id)
+		public async Task<ActionResult<AcademyConversionProjectResponse>> GetConversionProjectById(int id)
 		{
 			_logger.LogInformation(RetrieveProjectsLog, 1);
-			var project = _getAcademyConversionProjectById.Execute(id);
+			var project = await _getAcademyConversionProjectById.Execute(id);
 			if (project == null)
 			{
 				_logger.LogInformation(ProjectByIdNotFound, id);
@@ -99,10 +102,10 @@ namespace TramsDataApi.Controllers.V2
 
 		[HttpPatch("{id:int}")]
 		[MapToApiVersion("2.0")]
-		public ActionResult<AcademyConversionProjectResponse> UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
+		public async Task<ActionResult<AcademyConversionProjectResponse>> UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
 		{
 			_logger.LogInformation(UpdateProjectById, id);
-			var updatedAcademyConversionProject = _updateAcademyConversionProject.Execute(id, request);
+			var updatedAcademyConversionProject = await _updateAcademyConversionProject.Execute(id, request);
 			if (updatedAcademyConversionProject == null)
 			{
 				_logger.LogInformation(ProjectByIdNotFound, id);
