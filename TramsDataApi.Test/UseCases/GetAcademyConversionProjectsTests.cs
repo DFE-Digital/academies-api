@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
@@ -23,49 +24,44 @@ namespace TramsDataApi.Test.UseCases
         }
         
         [Fact]
-        public void GetAllAcademyConversionProjects_ReturnsEmptyList_WhenAcademyTransferProjectIsNotFound()
+        public async Task GetAllAcademyConversionProjects_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
         {
-            var request = new GetAllAcademyConversionProjectsRequest { Count = 50 };
-            
+            const int page = 1;
+            const int count = 50;
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
             
             mockProjectsGateway
                 .Setup(acg => acg.GetProjects(1, 50))
-                .Returns(() => new List<AcademyConversionProject>());
+                .Returns(Task.FromResult(new List<AcademyConversionProject>()));
 
             var useCase = new GetAcademyConversionProjects(
-                mockProjectsGateway.Object, 
-                new Mock<ITrustGateway>().Object,
-                new Mock<IEstablishmentGateway>().Object,
-                new Mock<IIfdPipelineGateway>().Object);
-            
-            var result = useCase.Execute(request).ToList();
+                mockProjectsGateway.Object, new Mock<IEstablishmentGateway>().Object);
+
+            var result = await useCase.Execute(page, count);
 
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse>());
         }
         
         [Fact]
-        public void GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyTransferProjectsAreFound()
+        public async Task GetAllAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
-            var request = new GetAllAcademyConversionProjectsRequest { Page = 1, Count = 50 };
-
+            const int page = 1;
+            const int count = 50;
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
- 
-            var project = _fixture.Build<AcademyConversionProject>().Create();
-
+            var project = _fixture.Build<AcademyConversionProject>()
+                .With(f => f.SchoolName, "School")
+                .Create();
+            
             var expectedProject = AcademyConversionProjectResponseFactory.Create(project);
             
             mockProjectsGateway
-                .Setup(acg => acg.GetByIfdPipelineIds(new List<long>()))
-                .Returns(() => new List<AcademyConversionProject> { project });
+                .Setup(acg => acg.GetProjects(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
             
             var useCase = new GetAcademyConversionProjects(
-                mockProjectsGateway.Object,
-                new Mock<ITrustGateway>().Object,
-                new Mock<IEstablishmentGateway>().Object,
-                new Mock<IIfdPipelineGateway>().Object);
+                mockProjectsGateway.Object, new Mock<IEstablishmentGateway>().Object);
 
-            var result = useCase.Execute(request).ToList();
+            var result = await useCase.Execute(page, count);
             
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expectedProject });
         }
