@@ -105,8 +105,6 @@ namespace TramsDataApi.Test.Integration
 
             _dbContext.AcademyConversionProjects.Add(academyConversionProject);
             _dbContext.SaveChanges();
-            _legacyDbContext.Trust.Add(trust);
-            _legacyDbContext.SaveChanges();
 
             var updateRequest = _fixture.Create<UpdateAcademyConversionProjectRequest>();
 
@@ -162,7 +160,6 @@ namespace TramsDataApi.Test.Integration
             _dbContext.AcademyConversionProjects.AddRange(academyConversionProjects);
 
             _dbContext.SaveChanges();
-            _legacyDbContext.SaveChanges();
 
             var expectedData = expectedProjects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
@@ -304,7 +301,6 @@ namespace TramsDataApi.Test.Integration
             _dbContext.AcademyConversionProjects.AddRange(projects);
             
             await _dbContext.SaveChangesAsync();
-            await _legacyDbContext.SaveChangesAsync();
 
             var expectedData = projects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
 

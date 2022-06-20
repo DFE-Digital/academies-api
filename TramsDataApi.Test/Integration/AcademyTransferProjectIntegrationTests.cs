@@ -24,8 +24,7 @@ namespace TramsDataApi.Test.Integration
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
         private readonly TramsDbContext _tramsDbContext;
-        private readonly LegacyTramsDb _legacyDatabase;
-
+ 
 
         public AcademyTransferProjectIntegrationTests(TramsDataApiFactory fixture)
         {
@@ -33,7 +32,6 @@ namespace TramsDataApi.Test.Integration
             _client.BaseAddress = new Uri("https://trams-api.com/");
             _legacyTramsDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _tramsDbContext = fixture.Services.GetRequiredService<TramsDbContext>();
-            _legacyDatabase = new LegacyTramsDb(_legacyTramsDbContext);
         }
 
         [Fact]
@@ -440,11 +438,11 @@ namespace TramsDataApi.Test.Integration
         {
             var randomGenerator = new RandomGenerator();
  
-            var groups = _legacyDatabase.AddGroups(2);
+            var groups = AddGroups(2);
             var outgoingTrustGroup = groups[0];
             var incomingTrustGroup = groups[1];
 
-            var trusts = _legacyDatabase.AddTrustsFromGroups(groups);
+            var trusts = AddTrustsFromGroups(groups);
 
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
                 .CreateListOfSize(20)
@@ -523,10 +521,10 @@ namespace TramsDataApi.Test.Integration
         {
             var randomGenerator = new RandomGenerator();
  
-            var groups = _legacyDatabase.AddGroups(2);
+            var groups = AddGroups(2);
             var outgoingTrustGroup = groups[0];
             var incomingTrustGroup = groups[1];
-            var trusts = _legacyDatabase.AddTrustsFromGroups(groups);
+            var trusts = AddTrustsFromGroups(groups);
 
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
                 .CreateListOfSize(20)
@@ -761,6 +759,36 @@ namespace TramsDataApi.Test.Integration
                         .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8)).Build())
                 .Build();
         }
+        private IList<Group> AddGroups(int numberOfGroups)
+        {
+            var randomGenerator = new RandomGenerator();
+            var groups = Builder<Group>.CreateListOfSize(numberOfGroups)
+               .All()
+               .With(g => g.Ukprn = randomGenerator.NextString(8, 8))
+               .With(g => g.GroupId = randomGenerator.NextString(7, 7))
+               .With(g => g.GroupName = randomGenerator.NextString(8, 8))
+               .With(g => g.GroupUid = randomGenerator.Int().ToString())
+               .Build();
+
+            _legacyTramsDbContext.Group.AddRange(groups);
+            _legacyTramsDbContext.SaveChanges();
+
+            return groups;
+        }
+
+        private IList<Trust> AddTrustsFromGroups(IList<Group> groups)
+        {
+            var randomGenerator = new RandomGenerator();
+            var trusts = groups.Select((group, index) => new Trust { Rid = index.ToString(), TrustRef = group.GroupId }).ToList();
+            AddTrusts(trusts);
+            return trusts;
+        }
+
+        private void AddTrusts(IList<Trust> trusts)
+        {
+            _legacyTramsDbContext.Trust.AddRange(trusts);
+            _legacyTramsDbContext.SaveChanges();
+        }
 
         public void Dispose()
         {
@@ -770,7 +798,9 @@ namespace TramsDataApi.Test.Integration
             _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
             _tramsDbContext.SaveChanges();
 
-            _legacyDatabase.Dispose();        
+            _legacyTramsDbContext.Group.RemoveRange(_legacyTramsDbContext.Group);
+            _legacyTramsDbContext.Trust.RemoveRange(_legacyTramsDbContext.Trust);
+            _legacyTramsDbContext.SaveChanges();
         }
     }
 }
