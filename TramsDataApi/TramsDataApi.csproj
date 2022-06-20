@@ -26,6 +26,10 @@
 
     <ItemGroup>
       <Folder Include="Migrations" />
+      <Folder Include="RequestModels\CaseActions\NTI\" />
+      <Folder Include="RequestModels\CaseActions\NTI\UnderConsideration\" />
+      <Folder Include="ResponseModels\CaseActions\NTI\" />
+      <Folder Include="ResponseModels\CaseActions\NTI\UnderConsideration\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -38,4 +42,10 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="RequestModels\CaseActions\NTI\" />
+      <None Remove="RequestModels\CaseActions\NTI\UnderConsideration\" />
+      <None Remove="ResponseModels\CaseActions\NTI\" />
+      <None Remove="ResponseModels\CaseActions\NTI\UnderConsideration\" />
+    </ItemGroup>
 </Project>
