@@ -5,9 +5,12 @@ using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.RequestModels.CaseActions.NTI.UnderConsideration
 {
-    public class CreateNTIUnderConsiderationRequest
-	{
-		[Required]
+    public class PatchNTIUnderConsiderationRequest
+    {
+        [Required]
+        public long Id { get; set; }
+
+        [Required]
         public int CaseUrn { get; set; }
         public string Notes { get; set; }
 

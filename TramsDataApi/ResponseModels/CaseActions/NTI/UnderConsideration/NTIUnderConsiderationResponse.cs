@@ -15,11 +15,7 @@ namespace TramsDataApi.ResponseModels.CaseActions.NTI.UnderConsideration
 		public DateTime? ClosedAt { get; set; }
 		public string CreatedBy { get; set; }
 
-		public ICollection<NTIUnderConsiderationReasonMapping> UnderConsiderationReasonsMapping { get; set; }
-
-
-		public Enums.NTIUnderConsiderationStatus? ClosedStatus { get; set; }
-
-
+		public ICollection<int> UnderConsiderationReasonsMapping { get; set; }
+		public int? ClosedStatusId { get; set; }
 	}
 }
