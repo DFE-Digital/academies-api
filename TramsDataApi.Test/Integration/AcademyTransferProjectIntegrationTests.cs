@@ -19,7 +19,7 @@ using TramsDataApi.Factories;
 namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class AcademyTransferProjectIntegrationTests : IClassFixture<TramsDataApiFactory>
+    public class AcademyTransferProjectIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
@@ -74,10 +74,6 @@ namespace TramsDataApi.Test.Integration
                 _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn.ToString() == result.ProjectUrn);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
         }
 
         [Fact]
@@ -140,10 +136,6 @@ namespace TramsDataApi.Test.Integration
                 _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp => atp.Urn.ToString() == result.ProjectUrn);
             createdProject.Should().NotBe(null);
             createdProject.OutgoingTrustUkprn.Should().BeEquivalentTo(createRequest.OutgoingTrustUkprn);
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
         }
 
         [Fact]
@@ -224,10 +216,6 @@ namespace TramsDataApi.Test.Integration
                 _tramsDbContext.AcademyTransferProjects.FirstOrDefault(atp =>
                     atp.Urn.ToString() == updatedProjectResponse.ProjectUrn);
             updatedProject.OutgoingTrustUkprn.Should().Be(createRequest.OutgoingTrustUkprn);
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
         }
 
         [Fact]
@@ -318,12 +306,6 @@ namespace TramsDataApi.Test.Integration
                 .ElementAt(0).SelectedBenefit.Should().Be("new initial benefit");
             updatedProject?.AcademyTransferProjectIntendedTransferBenefits
                 .ElementAt(1).SelectedBenefit.Should().Be("new other benefit");
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits.RemoveRange(_tramsDbContext
-                .AcademyTransferProjectIntendedTransferBenefits);
-            _tramsDbContext.SaveChanges();
         }
 
         [Fact]
@@ -449,11 +431,7 @@ namespace TramsDataApi.Test.Integration
             updatedProject?.TransferringAcademies.ElementAt(1).PupilNumbersAdditionalInformation.Should().Be(secondCreateAcademy.PupilNumbersAdditionalInformation);
             updatedProject?.TransferringAcademies.ElementAt(1).KeyStage2PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage2PerformanceAdditionalInformation);
             updatedProject?.TransferringAcademies.ElementAt(1).KeyStage4PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage4PerformanceAdditionalInformation);
-            updatedProject?.TransferringAcademies.ElementAt(1).KeyStage5PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage5PerformanceAdditionalInformation);
-            
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
+            updatedProject?.TransferringAcademies.ElementAt(1).KeyStage5PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage5PerformanceAdditionalInformation);            
         }
 
         [Fact]
@@ -461,17 +439,17 @@ namespace TramsDataApi.Test.Integration
         {
             const int numberOfProjects = 20;
             var randomGenerator = new RandomGenerator();
-            var outgoingTrustUkprn = randomGenerator.NextString(8,8);
-            var outgoingTrustName =  randomGenerator.NextString(8,8);
-            var incomingTrustUkprn = randomGenerator.NextString(8,8);
-            var incomingTrustName =  randomGenerator.NextString(8,8);
-            var outgoingGroupId =  randomGenerator.NextString(7,7);
-            var incomingGroupId =  randomGenerator.NextString(7,7);
+ 
+            var groups = AddGroups(2);
+            var outgoingTrustGroup = groups[0];
+            var incomingTrustGroup = groups[1];
+
+            var trusts = AddTrustsFromGroups(groups);
 
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
                 .CreateListOfSize(numberOfProjects)
                 .All()
-                .With(atp => atp.OutgoingTrustUkprn = outgoingTrustUkprn)
+                .With(atp => atp.OutgoingTrustUkprn = outgoingTrustGroup.Ukprn)
                 .With(atp => atp.Urn = 0)
                 .With(atp => atp.Id = 0)
                 .With(atp => atp.TransferringAcademies = Builder<TransferringAcademies>
@@ -479,7 +457,7 @@ namespace TramsDataApi.Test.Integration
                     .All()
                     .With(ta => ta.Id = 0)
                     .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
-                    .With(ta => ta.IncomingTrustUkprn = incomingTrustUkprn)
+                    .With(ta => ta.IncomingTrustUkprn = incomingTrustGroup.Ukprn)
                     .With(ta => ta.FkAcademyTransferProjectId = null)
                     .With(ta => ta.PupilNumbersAdditionalInformation = randomGenerator.NextString(0,1000))
                     .With(ta => ta.LatestOfstedReportAdditionalInformation = randomGenerator.NextString(0,1000))
@@ -496,35 +474,6 @@ namespace TramsDataApi.Test.Integration
                         .Build()
                 )
                 .Build().ToList();
-
-            var groups = Builder<Group>.CreateListOfSize(2)
-                .IndexOf(0)
-                .With(g => g.Ukprn = outgoingTrustUkprn)
-                .With(g => g.GroupId = outgoingGroupId)
-                .With(g => g.GroupName = outgoingTrustName)
-                .IndexOf(1)
-                .With(g => g.Ukprn = incomingTrustUkprn)
-                .With(g => g.GroupId = incomingGroupId)
-                .With(g => g.GroupName = incomingTrustName)
-                .Build();
-            _legacyTramsDbContext.Group.AddRange(groups);
-
-            var trusts = new List<Trust>
-            {
-                new Trust
-                {
-                    Rid = "1",
-                    TrustRef = outgoingGroupId
-                },
-                new Trust
-                {
-                    Rid = "2",
-                    TrustRef = incomingGroupId,
-                }
-            };
-
-            _legacyTramsDbContext.Trust.AddRange(trusts);
-            _legacyTramsDbContext.SaveChanges();
 
             _tramsDbContext.AcademyTransferProjects.AddRange(academyTransferProjectsToCreate);
             _tramsDbContext.SaveChanges();
@@ -549,14 +498,14 @@ namespace TramsDataApi.Test.Integration
                 new AcademyTransferProjectSummaryResponse
                 {
                     ProjectUrn = atp.Urn.ToString(),
-                    OutgoingTrustUkprn = outgoingTrustUkprn,
-                    OutgoingTrustName = outgoingTrustName,
+                    OutgoingTrustUkprn = outgoingTrustGroup.Ukprn,
+                    OutgoingTrustName = outgoingTrustGroup.GroupName,
                     ProjectReference = atp.ProjectReference,                    
                     TransferringAcademies = atp.TransferringAcademies.Select(ta => new TransferringAcademiesResponse
                     {
                         OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                         IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                        IncomingTrustName = incomingTrustName,
+                        IncomingTrustName = incomingTrustGroup.GroupName,
                         PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
                         LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
                         KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
@@ -566,17 +515,7 @@ namespace TramsDataApi.Test.Integration
                 }).ToList();
             indexProjectResponse.Count().Should().Be(numberOfProjectsPerPage);
             indexProjectResponse.Should().BeEquivalentTo(expectedResponse);
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits
-                .RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
-            
-            _legacyTramsDbContext.Trust.RemoveRange(trusts);
-            _legacyTramsDbContext.Group.RemoveRange(groups);
-            _legacyTramsDbContext.SaveChanges();
-        }
+         }
 
 
         [Fact]
@@ -586,17 +525,16 @@ namespace TramsDataApi.Test.Integration
             const int pageNumberRequested = 2;
 
             var randomGenerator = new RandomGenerator();
-            var outgoingTrustUkprn = randomGenerator.NextString(8,8);
-            var outgoingTrustName =  randomGenerator.NextString(8,8);
-            var incomingTrustUkprn = randomGenerator.NextString(8,8);
-            var incomingTrustName =  randomGenerator.NextString(8,8);
-            var outgoingGroupId =  randomGenerator.NextString(7,7);
-            var incomingGroupId =  randomGenerator.NextString(7,7);
-            
+ 
+            var groups = AddGroups(2);
+            var outgoingTrustGroup = groups[0];
+            var incomingTrustGroup = groups[1];
+            var trusts = AddTrustsFromGroups(groups);
+
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
                 .CreateListOfSize(numberOfProjects)
                 .All()
-                .With(atp => atp.OutgoingTrustUkprn = outgoingTrustUkprn)
+                .With(atp => atp.OutgoingTrustUkprn = outgoingTrustGroup.Ukprn)
                 .With(atp => atp.Urn = 0)
                 .With(atp => atp.Id = 0)
                 .With(atp => atp.TransferringAcademies = Builder<TransferringAcademies>
@@ -604,7 +542,7 @@ namespace TramsDataApi.Test.Integration
                     .All()
                     .With(ta => ta.Id = 0)
                     .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
-                    .With(ta => ta.IncomingTrustUkprn = incomingTrustUkprn)
+                    .With(ta => ta.IncomingTrustUkprn = incomingTrustGroup.Ukprn)
                     .With(ta => ta.FkAcademyTransferProjectId = null)
                     .With(ta => ta.PupilNumbersAdditionalInformation = randomGenerator.NextString(0,1000))
                     .With(ta => ta.LatestOfstedReportAdditionalInformation = randomGenerator.NextString(0,1000))
@@ -625,34 +563,6 @@ namespace TramsDataApi.Test.Integration
             _tramsDbContext.AcademyTransferProjects.AddRange(academyTransferProjectsToCreate);
             _tramsDbContext.SaveChanges();
 
-            var groups = Builder<Group>.CreateListOfSize(2)
-                .IndexOf(0)
-                .With(g => g.Ukprn = outgoingTrustUkprn)
-                .With(g => g.GroupId = outgoingGroupId)
-                .With(g => g.GroupName = outgoingTrustName)
-                .IndexOf(1)
-                .With(g => g.Ukprn = incomingTrustUkprn)
-                .With(g => g.GroupId = incomingGroupId)
-                .With(g => g.GroupName = incomingTrustName)
-                .Build();
-            _legacyTramsDbContext.Group.AddRange(groups);
-
-            var trusts = new List<Trust>
-            {
-                new Trust
-                {
-                    Rid = "1",
-                    TrustRef = outgoingGroupId
-                },
-                new Trust
-                {
-                    Rid = "2",
-                    TrustRef = incomingGroupId,
-                }
-            };
-
-            _legacyTramsDbContext.Trust.AddRange(trusts);
-            _legacyTramsDbContext.SaveChanges();
             
             var indexAcademyTransferProjectRequest = new HttpRequestMessage
             {
@@ -677,12 +587,12 @@ namespace TramsDataApi.Test.Integration
                         ProjectUrn = atp.Urn.ToString(),
                         ProjectReference = atp.ProjectReference,
                         OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
-                        OutgoingTrustName = outgoingTrustName,
+                        OutgoingTrustName = outgoingTrustGroup.GroupName,
                         TransferringAcademies = atp.TransferringAcademies.Select(ta => new TransferringAcademiesResponse
                         {
                             OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                             IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                            IncomingTrustName = incomingTrustName,
+                            IncomingTrustName = incomingTrustGroup.GroupName,
                             PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
                             LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
                             KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
@@ -692,16 +602,6 @@ namespace TramsDataApi.Test.Integration
                     }).ToList();
             indexProjectResponse.Count().Should().Be(numberOfProjectsPerPage);
             indexProjectResponse.Should().BeEquivalentTo(expectedResponse);
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits
-                .RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
-            
-            _legacyTramsDbContext.Trust.RemoveRange(trusts);
-            _legacyTramsDbContext.Group.RemoveRange(groups);
-            _legacyTramsDbContext.SaveChanges();
         }
 
 
@@ -754,12 +654,6 @@ namespace TramsDataApi.Test.Integration
 
             indexProjectResponse.Count().Should().Be(0);
             indexProjectResponse.Should().BeEquivalentTo(new List<AcademyTransferProjectSummaryResponse>());
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits
-                .RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
         }
 
         [Fact]
@@ -829,12 +723,6 @@ namespace TramsDataApi.Test.Integration
             var expected = AcademyTransferProjectResponseFactory.Create(academyTransferProject);
 
             responseModel.Should().BeEquivalentTo(expected);
-
-            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
-            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits
-                .RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits);
-            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
-            _tramsDbContext.SaveChanges();
         }
 
         private AcademyTransferProjectRequest GenerateCreateRequest()
@@ -875,6 +763,49 @@ namespace TramsDataApi.Test.Integration
                         .With(ta => ta.IncomingTrustUkprn = randomGenerator.NextString(8, 8))
                         .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8)).Build())
                 .Build();
+        }
+        private IList<Group> AddGroups(int numberOfGroups)
+        {
+            var randomGenerator = new RandomGenerator();
+            var groups = Builder<Group>.CreateListOfSize(numberOfGroups)
+               .All()
+               .With(g => g.Ukprn = randomGenerator.NextString(8, 8))
+               .With(g => g.GroupId = randomGenerator.NextString(7, 7))
+               .With(g => g.GroupName = randomGenerator.NextString(8, 8))
+               .With(g => g.GroupUid = randomGenerator.Int().ToString())
+               .Build();
+
+            _legacyTramsDbContext.Group.AddRange(groups);
+            _legacyTramsDbContext.SaveChanges();
+
+            return groups;
+        }
+
+        private IList<Trust> AddTrustsFromGroups(IList<Group> groups)
+        {
+            var randomGenerator = new RandomGenerator();
+            var trusts = groups.Select((group, index) => new Trust { Rid = index.ToString(), TrustRef = group.GroupId }).ToList();
+            AddTrusts(trusts);
+            return trusts;
+        }
+
+        private void AddTrusts(IList<Trust> trusts)
+        {
+            _legacyTramsDbContext.Trust.AddRange(trusts);
+            _legacyTramsDbContext.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _tramsDbContext.TransferringAcademies.RemoveRange(_tramsDbContext.TransferringAcademies);
+            _tramsDbContext.AcademyTransferProjectIntendedTransferBenefits
+                .RemoveRange(_tramsDbContext.AcademyTransferProjectIntendedTransferBenefits);
+            _tramsDbContext.AcademyTransferProjects.RemoveRange(_tramsDbContext.AcademyTransferProjects);
+            _tramsDbContext.SaveChanges();
+
+            _legacyTramsDbContext.Group.RemoveRange(_legacyTramsDbContext.Group);
+            _legacyTramsDbContext.Trust.RemoveRange(_legacyTramsDbContext.Trust);
+            _legacyTramsDbContext.SaveChanges();
         }
     }
 }
