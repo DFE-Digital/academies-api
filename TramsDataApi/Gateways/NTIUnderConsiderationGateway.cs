@@ -41,14 +41,27 @@ namespace TramsDataApi.Gateways
 
         public async Task<ICollection<NTIUnderConsideration>> GetNTIUnderConsiderationByCaseUrn(int caseUrn)
         {
-            return await _tramsDbContext.NTIUnderConsiderations.Where(n => n.CaseUrn == caseUrn).ToListAsync();
+            var considerations = await _tramsDbContext.NTIUnderConsiderations.Where(n => n.CaseUrn == caseUrn).ToListAsync();
+            var reasonMappings = await _tramsDbContext.NTIUnderConsiderationReasonMappings.ToListAsync();
+
+            considerations = considerations.Select(consideration =>
+            {
+                consideration.UnderConsiderationReasonsMapping = reasonMappings.Where(r => r.NTIUnderConsiderationId == consideration.Id).ToList();
+                return consideration;
+            }).ToList();
+
+            return considerations;
         }
 
         public async Task<NTIUnderConsideration> GetNTIUnderConsiderationById(long ntiUnderConsiderationId)
         {
             try
             {
-                return await _tramsDbContext.NTIUnderConsiderations.SingleOrDefaultAsync(n => n.Id == ntiUnderConsiderationId);
+                var consideration = await _tramsDbContext.NTIUnderConsiderations.SingleOrDefaultAsync(n => n.Id == ntiUnderConsiderationId);
+                var reasonMappings = await  _tramsDbContext.NTIUnderConsiderationReasonMappings.Where(r => r.NTIUnderConsiderationId == ntiUnderConsiderationId).ToListAsync();
+                consideration.UnderConsiderationReasonsMapping = reasonMappings;
+
+                return consideration;
             }
             catch (InvalidOperationException iox)
             {
@@ -57,38 +70,33 @@ namespace TramsDataApi.Gateways
             }
         }
 
-        public async Task<NTIUnderConsideration> PatchNTIUnderConsiderationAsync(long ntiUnderConsiderationId, Func<NTIUnderConsideration, NTIUnderConsideration> patchDelegate)
+        public async Task<NTIUnderConsideration> PatchNTIUnderConsideration(NTIUnderConsideration patchNTIUnderConsideration)
         {
-            if (patchDelegate == null)
-            {
-                throw new ArgumentNullException("Delegate not provided");
-            }
-
             try
             {
-                var ntiUnderConsideration = await _tramsDbContext.NTIUnderConsiderations.FindAsync(ntiUnderConsiderationId);
+                var reasonsToRemove = await _tramsDbContext.NTIUnderConsiderationReasonMappings.Where(r => r.NTIUnderConsiderationId == patchNTIUnderConsideration.Id).ToListAsync();
+                _tramsDbContext.NTIUnderConsiderationReasonMappings.RemoveRange(reasonsToRemove);
 
-                if (ntiUnderConsideration == null)
-                {
-                    throw new InvalidOperationException($"NTIUnderConsideration with Id:{ntiUnderConsiderationId} not found.");
-                }
-
-                var patchedNTIUnderConsideration = patchDelegate(ntiUnderConsideration);
-                if (patchedNTIUnderConsideration == null || patchedNTIUnderConsideration.Id != ntiUnderConsideration.Id)
-                {
-                    throw new InvalidOperationException("Patched NTIUnderConsideration is invalid.");
-                }
-
-                var tracked = _tramsDbContext.Update<NTIUnderConsideration>(ntiUnderConsideration);
+                var tracked = _tramsDbContext.Update<NTIUnderConsideration>(patchNTIUnderConsideration);
                 await _tramsDbContext.SaveChangesAsync();
 
                 return tracked.Entity;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occured while trying to patch the NTIUnderConsideration. NTIUnderConsideration Id:", ntiUnderConsiderationId);
+                _logger.LogError(ex, "Error occured while trying to patch the NTI underconsideration with Id:", patchNTIUnderConsideration.Id);
                 throw;
             }
+        }
+
+        public async Task<List<NTIUnderConsiderationStatus>> GetAllStatuses()
+        {
+            return await _tramsDbContext.NTIUnderConsiderationStatuses.ToListAsync();
+        }
+
+        public async Task<List<NTIUnderConsiderationReason>> GetAllReasons()
+        {
+            return await _tramsDbContext.NTIUnderConsiderationReasons.ToListAsync();
         }
     }
 }
