@@ -41,27 +41,14 @@ namespace TramsDataApi.Gateways
 
         public async Task<ICollection<NTIUnderConsideration>> GetNTIUnderConsiderationByCaseUrn(int caseUrn)
         {
-            var considerations = await _tramsDbContext.NTIUnderConsiderations.Where(n => n.CaseUrn == caseUrn).ToListAsync();
-            var reasonMappings = await _tramsDbContext.NTIUnderConsiderationReasonMappings.ToListAsync();
-
-            considerations = considerations.Select(consideration =>
-            {
-                consideration.UnderConsiderationReasonsMapping = reasonMappings.Where(r => r.NTIUnderConsiderationId == consideration.Id).ToList();
-                return consideration;
-            }).ToList();
-
-            return considerations;
+            return await _tramsDbContext.NTIUnderConsiderations.Include(r => r.UnderConsiderationReasonsMapping).Where(n => n.CaseUrn == caseUrn).ToListAsync();
         }
 
         public async Task<NTIUnderConsideration> GetNTIUnderConsiderationById(long ntiUnderConsiderationId)
         {
             try
             {
-                var consideration = await _tramsDbContext.NTIUnderConsiderations.SingleOrDefaultAsync(n => n.Id == ntiUnderConsiderationId);
-                var reasonMappings = await  _tramsDbContext.NTIUnderConsiderationReasonMappings.Where(r => r.NTIUnderConsiderationId == ntiUnderConsiderationId).ToListAsync();
-                consideration.UnderConsiderationReasonsMapping = reasonMappings;
-
-                return consideration;
+                return await _tramsDbContext.NTIUnderConsiderations.Include(r => r.UnderConsiderationReasonsMapping).SingleOrDefaultAsync(n => n.Id == ntiUnderConsiderationId);
             }
             catch (InvalidOperationException iox)
             {
