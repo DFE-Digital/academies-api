@@ -36,6 +36,10 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<SRMACase> SRMACases { get; set; }
         public virtual DbSet<FinancialPlanStatus> FinancialPlanStatuses { get; set; }
         public virtual DbSet<FinancialPlanCase> FinancialPlanCases { get; set; }
+        public virtual DbSet<NTIUnderConsiderationStatus> NTIUnderConsiderationStatuses { get; set; }
+        public virtual DbSet<NTIUnderConsiderationReason> NTIUnderConsiderationReasons { get; set; }
+        public virtual DbSet<NTIUnderConsideration> NTIUnderConsiderations { get; set; }
+        public virtual DbSet<NTIUnderConsiderationReasonMapping> NTIUnderConsiderationReasonMappings { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -400,6 +404,7 @@ namespace TramsDataApi.DatabaseModels
                     }));
             });
 
+
             modelBuilder.Entity<FinancialPlanStatus>(entity =>
             {
                 var createdAt = new DateTime(2022, 06, 15);
@@ -414,6 +419,48 @@ namespace TramsDataApi.DatabaseModels
                         new FinancialPlanStatus{ Id = 4, Name = "Abandoned", CreatedAt = createdAt, UpdatedAt = createdAt },
                     });
             });
+
+            modelBuilder.Entity<NTIUnderConsiderationStatus>(entity =>
+            {
+                entity.ToTable("NTIUnderConsiderationStatus", "sdd");
+
+                entity.HasData(
+                    Enum.GetValues(typeof(Enums.NTIUnderConsiderationStatus)).Cast<Enums.NTIUnderConsiderationStatus>()
+                    .Where(enm => enm != Enums.NTIUnderConsiderationStatus.Unknown)
+                    .Select(enm => new NTIUnderConsiderationStatus
+                    {
+                        Id = (int)enm,
+                        Name = enm.ToString(),
+                        CreatedAt = new DateTime(2022, 06, 14),
+                        UpdatedAt = new DateTime(2022, 06, 14)
+                    }));
+            });
+
+            modelBuilder.Entity<NTIUnderConsiderationReason>(entity =>
+            {
+                entity.ToTable("NTIUnderConsiderationReason", "sdd");
+
+                entity.HasData(
+                    Enum.GetValues(typeof(Enums.NTIUnderConsiderationReason)).Cast<Enums.NTIUnderConsiderationReason>()
+                    .Where(enm => enm != Enums.NTIUnderConsiderationReason.Unknown)
+                    .Select(enm => new NTIUnderConsiderationReason
+                    {
+                        Id = (int)enm,
+                        Name = enm.ToString(),
+                        CreatedAt = new DateTime(2022, 06, 14),
+                        UpdatedAt = new DateTime(2022, 06, 14)
+                    }));
+            });
+
+            modelBuilder.Entity<NTIUnderConsiderationReasonMapping>()
+                .HasOne(n => n.NTIUnderConsideration)
+                .WithMany(n => n.UnderConsiderationReasonsMapping)
+                .HasForeignKey(n => n.NTIUnderConsiderationId);
+
+            modelBuilder.Entity<NTIUnderConsiderationReasonMapping>()
+                .HasOne(n => n.NTIUnderConsiderationReason)
+                .WithMany(n => n.UnderConsiderationReasonsMapping)
+                .HasForeignKey(n => n.NTIUnderConsiderationReasonId);
 
             OnModelCreatingPartial(modelBuilder);
         }
