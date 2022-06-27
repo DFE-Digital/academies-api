@@ -21,7 +21,10 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 }).ToList(),
                 Notes = createNTIUnderConsiderationRequest.Notes,
                 CreatedAt = createNTIUnderConsiderationRequest.CreatedAt,
-                CreatedBy = createNTIUnderConsiderationRequest.CreatedBy
+                CreatedBy = createNTIUnderConsiderationRequest.CreatedBy,
+                UpdatedAt = createNTIUnderConsiderationRequest.UpdatedAt,
+                ClosedAt = createNTIUnderConsiderationRequest.ClosedAt,
+                ClosedStatusId = createNTIUnderConsiderationRequest.ClosedStatusId
             };
         }
 
@@ -39,7 +42,11 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 }).ToList(),
                 Notes = patchNTIUnderConsiderationRequest.Notes,
                 CreatedAt = patchNTIUnderConsiderationRequest.CreatedAt,
-                CreatedBy = patchNTIUnderConsiderationRequest.CreatedBy
+                CreatedBy = patchNTIUnderConsiderationRequest.CreatedBy,
+                UpdatedAt = patchNTIUnderConsiderationRequest.UpdatedAt,
+                ClosedAt = patchNTIUnderConsiderationRequest.ClosedAt,
+                ClosedStatusId = patchNTIUnderConsiderationRequest.ClosedStatusId
+              
             };
         }
 
@@ -55,7 +62,7 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 CreatedBy = model.CreatedBy,
                 UpdatedAt = model.UpdatedAt,
                 ClosedAt = model.ClosedAt,
-                ClosedStatusId = model.CloseStatusId
+                ClosedStatusId = model.ClosedStatusId
             };
         }
     }

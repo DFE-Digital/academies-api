@@ -16,9 +16,9 @@ namespace TramsDataApi.DatabaseModels
         [StringLength(2000)]
         public string Notes { get; set; }
 
-        public int? CloseStatusId { get; set; }
-        [ForeignKey(nameof(CloseStatusId))]
-        public virtual NTIUnderConsiderationStatus CloseStatus { get; set; }
+        public int? ClosedStatusId { get; set; }
+        [ForeignKey(nameof(ClosedStatusId))]
+        public virtual NTIUnderConsiderationStatus ClosedStatus { get; set; }
 
         public string CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }

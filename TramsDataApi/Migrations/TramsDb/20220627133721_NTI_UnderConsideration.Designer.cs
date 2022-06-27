@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220620152135_NTI_UnderConsideration")]
+    [Migration("20220627133721_NTI_UnderConsideration")]
     partial class NTI_UnderConsideration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1450,11 +1450,11 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<int>("CaseUrn")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CloseStatusId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ClosedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("ClosedStatusId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1471,7 +1471,7 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CloseStatusId");
+                    b.HasIndex("ClosedStatusId");
 
                     b.ToTable("NTIUnderConsideration","sdd");
                 });
@@ -1914,9 +1914,9 @@ namespace TramsDataApi.Migrations.TramsDb
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.NTIUnderConsideration", b =>
                 {
-                    b.HasOne("TramsDataApi.DatabaseModels.NTIUnderConsiderationStatus", "CloseStatus")
+                    b.HasOne("TramsDataApi.DatabaseModels.NTIUnderConsiderationStatus", "ClosedStatus")
                         .WithMany()
-                        .HasForeignKey("CloseStatusId");
+                        .HasForeignKey("ClosedStatusId");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.NTIUnderConsiderationReasonMapping", b =>

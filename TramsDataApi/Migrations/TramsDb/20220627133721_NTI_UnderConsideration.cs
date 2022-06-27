@@ -48,7 +48,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CaseUrn = table.Column<int>(nullable: false),
                     Notes = table.Column<string>(maxLength: 2000, nullable: true),
-                    CloseStatusId = table.Column<int>(nullable: true),
+                    ClosedStatusId = table.Column<int>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
@@ -58,8 +58,8 @@ namespace TramsDataApi.Migrations.TramsDb
                 {
                     table.PrimaryKey("PK_NTIUnderConsideration", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NTIUnderConsideration_NTIUnderConsiderationStatus_CloseStatusId",
-                        column: x => x.CloseStatusId,
+                        name: "FK_NTIUnderConsideration_NTIUnderConsiderationStatus_ClosedStatusId",
+                        column: x => x.ClosedStatusId,
                         principalSchema: "sdd",
                         principalTable: "NTIUnderConsiderationStatus",
                         principalColumn: "Id",
@@ -122,10 +122,10 @@ namespace TramsDataApi.Migrations.TramsDb
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_NTIUnderConsideration_CloseStatusId",
+                name: "IX_NTIUnderConsideration_ClosedStatusId",
                 schema: "sdd",
                 table: "NTIUnderConsideration",
-                column: "CloseStatusId");
+                column: "ClosedStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NTIUnderConsiderationReasonMapping_NTIUnderConsiderationId",
