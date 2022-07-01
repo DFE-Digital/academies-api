@@ -27,19 +27,20 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public async Task GetConversionProjectsByStatuses_ReturnsResponseWithListOfAcademyConversionProjects_WhenProjectsExist()
+        public async Task GetConversionProjects_ReturnsResponseWithListOfAcademyConversionProjects_WhenFiltersAppliedAndProjectsExist()
         {
             const string projectStatus = "AStatus";
+            const int urn = 10001;
             
-            var mockUseCase = new Mock<IGetAcademyConversionProjectsByStatuses>();
+            var mockUseCase = new Mock<ISearchAcademyConversionProjects>();
             
-            var data = new List<AcademyConversionProjectResponse> { new AcademyConversionProjectResponse { ProjectStatus = projectStatus } };
+            var data = new List<AcademyConversionProjectResponse> { new AcademyConversionProjectResponse { ProjectStatus = projectStatus, Urn = urn } };
             
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = 1};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
 
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), urn))
                 .Returns(Task.FromResult(data));
             
             var controller = new AcademyConversionProjectController(
@@ -49,13 +50,13 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object);
             
-            var result = await controller.GetConversionProjects(projectStatus);
+            var result = await controller.GetConversionProjects(projectStatus, urn: urn);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
         
         [Fact]
-        public async Task GetConversionProjectsByStatuses_ReturnsResponseWithEmptyList_WhenNoStatusProvidedAndNoResultsFound()
+        public async Task GetConversionProjects_ReturnsResponseWithEmptyList_WhenNoFiltersAndNoResultsFound()
         {
             var mockUseCase = new Mock<IGetAcademyConversionProjects>();
             
@@ -64,7 +65,7 @@ namespace TramsDataApi.Test.Controllers
                 .Returns(Task.FromResult(new List<AcademyConversionProjectResponse>()));
             
             var controller = new AcademyConversionProjectController(
-                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<ISearchAcademyConversionProjects>().Object,
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
@@ -99,7 +100,7 @@ namespace TramsDataApi.Test.Controllers
                 .Returns(Task.FromResult(data.Take(1).ToList()));
 
             var controller = new AcademyConversionProjectController(
-                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<ISearchAcademyConversionProjects>().Object,
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
@@ -135,7 +136,7 @@ namespace TramsDataApi.Test.Controllers
                 .Returns(Task.FromResult(data));
 
             var controller = new AcademyConversionProjectController(
-                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<ISearchAcademyConversionProjects>().Object,
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
@@ -164,7 +165,7 @@ namespace TramsDataApi.Test.Controllers
                 .Returns(Task.FromResult(academyConversionProjectResponse));
             
             var controller = new AcademyConversionProjectController(
-                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProjects>().Object,
                 mockUseCase.Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
@@ -183,7 +184,7 @@ namespace TramsDataApi.Test.Controllers
         public async Task GetConversionProjectById_ReturnsNotFound_WhenNoConversionProjectExists()
         {
             var controller = new AcademyConversionProjectController(
-                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProjects>().Object, 
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
@@ -207,7 +208,7 @@ namespace TramsDataApi.Test.Controllers
                 .Returns(Task.FromResult(updatedAcademyConversionProjectResponse));
             
             var controller = new AcademyConversionProjectController(
-                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProjects>().Object, 
                 new Mock<IGetAcademyConversionProject>().Object,
                 mockUseCase.Object,
@@ -226,7 +227,7 @@ namespace TramsDataApi.Test.Controllers
         public async Task UpdateConversionProject_ReturnsNotFound_WhenConversionProjectExists()
         {
             var controller = new AcademyConversionProjectController(
-                new Mock<IGetAcademyConversionProjectsByStatuses>().Object,
+                new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProjects>().Object, 
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,

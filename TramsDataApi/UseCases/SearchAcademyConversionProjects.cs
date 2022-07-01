@@ -3,17 +3,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetAcademyConversionProjectsByStatuses : IGetAcademyConversionProjectsByStatuses
+    public class SearchAcademyConversionProjects : ISearchAcademyConversionProjects
     {
         private readonly IAcademyConversionProjectGateway _academyConversionProjectGateway;
         private readonly IEstablishmentGateway _establishmentGateway;
 
-        public GetAcademyConversionProjectsByStatuses(
+        public SearchAcademyConversionProjects(
             IAcademyConversionProjectGateway academyConversionProjectGateway,
             IEstablishmentGateway establishmentGateway)
         {
@@ -21,10 +20,10 @@ namespace TramsDataApi.UseCases
             _establishmentGateway = establishmentGateway;
         }
 
-        public async Task<List<AcademyConversionProjectResponse>> Execute(int page, int count, IEnumerable<string> statuses)
+        public async Task<List<AcademyConversionProjectResponse>> Execute(int page, int count, IEnumerable<string> statuses, int? urn)
         {
             var academyConversionProjects = await _academyConversionProjectGateway
-                .GetByStatuses(page, count, statuses);
+                .SearchProjects(page, count, statuses, urn);
 
             if (academyConversionProjects == null) return new List<AcademyConversionProjectResponse>();
 
