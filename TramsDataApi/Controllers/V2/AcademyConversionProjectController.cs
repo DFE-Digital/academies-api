@@ -10,27 +10,29 @@ using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers.V2
 {
-    [ApiVersion("2.0")]
-    [ApiController]
+	[ApiVersion("2.0")]
+	[ApiController]
 	[Route("v{version:apiVersion}/conversion-projects")]
-    public class AcademyConversionProjectController : ControllerBase
+	public class AcademyConversionProjectController : ControllerBase
 	{
 		private readonly ILogger<AcademyConversionProjectController> _logger;
 		private readonly IGetAcademyConversionProject _getAcademyConversionProjectById;
 		private readonly IGetAcademyConversionProjects _getAllAcademyConversionProjects;
 		private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
-		private readonly IGetAcademyConversionProjectsByStatuses
-			_getConversionProjectsByStatus;
+		private readonly ISearchAcademyConversionProjects _searchAcademyConversionProjects;
 
 		private const string RetrieveProjectsLog = "Attempting to retrieve {Count} Academy Conversion Projects";
-		private const string RetrieveProjectsStatesLog = "Attempting to retrieve {Count} Academy Conversion Projects filtered by {States}";
+
+		private const string SearchProjectsLog =
+			"Attempting to retrieve {Count} Academy Conversion Projects filtered by: states: {States} urn: {Urn}";
+
 		private const string ProjectByIdNotFound = "No Academy Conversion Project found with Id: {id}";
 		private const string ReturnProjectsLog = "Returning {count} Academy Conversion Projects with Id(s): {ids}";
 		private const string UpdateProjectById = "Attempting to update Academy Conversion Project with Id: {id}";
 		private const string UpdatedProjectById = "Successfully Updated Academy Conversion Project with Id: {id}";
-		
+
 		public AcademyConversionProjectController(
-			IGetAcademyConversionProjectsByStatuses getConversionProjectsByStatus,
+			ISearchAcademyConversionProjects searchAcademyConversionProjects,
 			IGetAcademyConversionProjects getAllAcademyConversionProjects,
 			IGetAcademyConversionProject getAcademyConversionProjectById,
 			IUpdateAcademyConversionProject updateAcademyConversionProject,
@@ -40,15 +42,16 @@ namespace TramsDataApi.Controllers.V2
 			_getAcademyConversionProjectById = getAcademyConversionProjectById;
 			_getAllAcademyConversionProjects = getAllAcademyConversionProjects;
 			_updateAcademyConversionProject = updateAcademyConversionProject;
-			_getConversionProjectsByStatus = getConversionProjectsByStatus;
+			_searchAcademyConversionProjects = searchAcademyConversionProjects;
 		}
-		
+
 		[HttpGet]
 		[MapToApiVersion("2.0")]
 		public async Task<ActionResult<ApiResponseV2<AcademyConversionProjectResponse>>> GetConversionProjects(
 			[FromQuery] string states,
 			[FromQuery] int page = 1,
-			[FromQuery] int count = 50)
+			[FromQuery] int count = 50,
+			[FromQuery] int? urn = null)
 		{
 			var areStatesProvided = !string.IsNullOrWhiteSpace(states);
 
@@ -57,17 +60,16 @@ namespace TramsDataApi.Controllers.V2
 				: null;
 
 			List<AcademyConversionProjectResponse> projects;
-			
-			if (areStatesProvided)
+
+			if (areStatesProvided || urn.HasValue)
 			{
-				_logger.LogInformation(RetrieveProjectsStatesLog, count, states);
-				projects = await _getConversionProjectsByStatus.Execute(page, count, statusList);
+				_logger.LogInformation(SearchProjectsLog, count, states, urn);
+				projects = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn);
 			}
 			else
 			{
-				_logger.LogInformation(RetrieveProjectsLog,count);
+				_logger.LogInformation(RetrieveProjectsLog, count);
 				projects = await _getAllAcademyConversionProjects.Execute(page, count);
-				
 			}
 
 			if (!projects.Any())
@@ -77,11 +79,11 @@ namespace TramsDataApi.Controllers.V2
 			}
 
 			var pagingResponse = PagingResponseFactory.Create(page, count, projects.Count, Request);
-			
+
 			var response = new ApiResponseV2<AcademyConversionProjectResponse>(projects, pagingResponse);
 			return Ok(response);
 		}
-		
+
 		[HttpGet("{id:int}")]
 		[MapToApiVersion("2.0")]
 		public async Task<ActionResult<AcademyConversionProjectResponse>> GetConversionProjectById(int id)
@@ -102,7 +104,8 @@ namespace TramsDataApi.Controllers.V2
 
 		[HttpPatch("{id:int}")]
 		[MapToApiVersion("2.0")]
-		public async Task<ActionResult<AcademyConversionProjectResponse>> UpdateConversionProject(int id, UpdateAcademyConversionProjectRequest request)
+		public async Task<ActionResult<AcademyConversionProjectResponse>> UpdateConversionProject(int id,
+			UpdateAcademyConversionProjectRequest request)
 		{
 			_logger.LogInformation(UpdateProjectById, id);
 			var updatedAcademyConversionProject = await _updateAcademyConversionProject.Execute(id, request);
