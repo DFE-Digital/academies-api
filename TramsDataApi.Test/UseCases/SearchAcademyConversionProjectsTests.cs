@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
@@ -7,24 +6,23 @@ using Moq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.UseCases;
 using Xunit;
 
 namespace TramsDataApi.Test.UseCases
 {
-    public class GetAcademyConversionProjectsByStatusesTests
+    public class SearchAcademyConversionProjectsTests
     {
         private readonly Fixture _fixture;
 
-        public GetAcademyConversionProjectsByStatusesTests()
+        public SearchAcademyConversionProjectsTests()
         {
             _fixture = new Fixture();
         }
         
         [Fact]
-        public async Task GetAcademyConversionProjectProjectByStatuses_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
+        public async Task SearchAcademyConversionProjects_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
         {
             const int page = 1;
             const int count = 50;
@@ -33,50 +31,17 @@ namespace TramsDataApi.Test.UseCases
             var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
-            var useCase = new GetAcademyConversionProjectsByStatuses(
+            var useCase = new SearchAcademyConversionProjects(
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
 
-            var result = await useCase.Execute(page, count, statuses);
+            var result = await useCase.Execute(page, count, statuses, 1001);
 
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse>());
         }
         
         [Fact]
-        public async Task GetAcademyConversionProjectProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
-        {
-            const int page = 1;
-            const int count = 1;
-            var statuses = new List<string> {"ProjectStatus"};
-            
-            var project = _fixture.Build<AcademyConversionProject>()
-                .With(f => f.SchoolName, "school")
-                .With(f => f.ProjectStatus, "ProjectStatus")
-                .Create();
-            var expected = AcademyConversionProjectResponseFactory.Create(project);
-            
-            var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
-            var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
-            
-            mockProjectsGateway
-                .Setup(acg => acg.GetByStatuses(It.IsAny<int>(), It.IsAny<int>(), statuses))
-                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
-            
-            mockEstablishmentsGateway
-                .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
-                .Returns(() => new MisEstablishments());
-            
-            var useCase = new GetAcademyConversionProjectsByStatuses(
-                mockProjectsGateway.Object,
-                mockEstablishmentsGateway.Object);
-
-            var result = await useCase.Execute(page, count, statuses);
-            
-            result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
-        }
-        
-        [Fact]
-        public async Task GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
+        public async Task SearchAcademyConversionProjects_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
         {
             const int page = 1;
             const int count = 50;
@@ -92,24 +57,24 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
             
             mockProjectsGateway
-                .Setup(acg => acg.GetByStatuses(It.IsAny<int>(), It.IsAny<int>(), statuses))
+                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, null))
                 .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
 
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
                 .Returns(() => new MisEstablishments());
             
-            var useCase = new GetAcademyConversionProjectsByStatuses(
+            var useCase = new SearchAcademyConversionProjects(
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
 
-            var result = await useCase.Execute(page, count, statuses);
+            var result = await useCase.Execute(page, count, statuses, null);
             
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
         
         [Fact]
-        public async Task GetAcademyConversionProjectByStatuses_ReturnsListOfProjectResponsesWithUkPrnAndLaestab_WhenAcademyConversionProjectsAndEstablishmentsAreFound()
+        public async Task SearchAcademyConversionProjects_ReturnsListOfProjectResponsesWithUkPrnAndLaestab_WhenAcademyConversionProjectsAndEstablishmentsAreFound()
         {
             const int page = 1;
             const int count = 50;
@@ -132,7 +97,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
             mockProjectsGateway
-                .Setup(acg => acg.GetByStatuses(It.IsAny<int>(), It.IsAny<int>(), statuses))
+                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, urn))
                 .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
             
             mockEstablishmentsGateway
@@ -143,11 +108,11 @@ namespace TramsDataApi.Test.UseCases
                 .Setup(acg => acg.GetByUrn(urn))
                 .Returns(() => new Establishment {Urn = urn, Ukprn = ukPrn});
 
-            var useCase = new GetAcademyConversionProjectsByStatuses(
+            var useCase = new SearchAcademyConversionProjects(
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
 
-            var result = await useCase.Execute(page, count, statuses);
+            var result = await useCase.Execute(page, count, statuses, urn);
 
             result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }

@@ -87,7 +87,7 @@ namespace TramsDataApi
 
             services.AddScoped<IGetAcademyConversionProject, GetAcademyConversionProject>();
             services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();
-            services.AddScoped<IGetAcademyConversionProjectsByStatuses, GetAcademyConversionProjectsByStatuses>();
+            services.AddScoped<ISearchAcademyConversionProjects, SearchAcademyConversionProjects>();
 
             services.AddApiVersioning(config => 
             {
