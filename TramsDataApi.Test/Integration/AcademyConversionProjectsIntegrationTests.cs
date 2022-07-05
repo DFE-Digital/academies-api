@@ -78,7 +78,7 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            content.Should().BeInDescendingOrder(c => c.Id);
+            content.Should().BeInDescendingOrder(c => c.ApplicationReceivedDate);
         }
 
         [Fact]

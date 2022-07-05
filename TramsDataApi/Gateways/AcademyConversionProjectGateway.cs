@@ -25,7 +25,7 @@ namespace TramsDataApi.Gateways
         public async Task<List<AcademyConversionProject>> GetProjects(int page, int count)
         {
             return await _tramsDbContext.AcademyConversionProjects
-                .OrderByDescending(p => p.Id)
+                .OrderByDescending(p => p.ApplicationReceivedDate)
                 .Skip((page - 1) * count)
                 .Take(count)
                 .AsNoTracking()
