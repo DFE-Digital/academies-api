@@ -25,7 +25,7 @@ namespace TramsDataApi.Gateways
         public async Task<List<AcademyConversionProject>> GetProjects(int page, int count)
         {
             return await _tramsDbContext.AcademyConversionProjects
-                .OrderByDescending(p => p.Id)
+                .OrderByDescending(p => p.ApplicationReceivedDate)
                 .Skip((page - 1) * count)
                 .Take(count)
                 .AsNoTracking()
@@ -44,7 +44,7 @@ namespace TramsDataApi.Gateways
         public async Task<List<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn)
         {
             IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects
-                .OrderByDescending(acp => acp.Id)
+                .OrderByDescending(acp => acp.ApplicationReceivedDate)
                 .Skip((page - 1) * count)
                 .Take(count)
                 .AsNoTracking();
