@@ -3,28 +3,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using TramsDataApi.Factories.CaseActionFactories;
 using TramsDataApi.Gateways;
-using TramsDataApi.ResponseModels.CaseActions.NTI.UnderConsideration;
+using TramsDataApi.ResponseModels.CaseActions.FinancialPlan;
 
 namespace TramsDataApi.UseCases.CaseActions
 {
-    public class GetNTIUnderConsiderationByCaseUrn : IUseCase<int, List<NTIUnderConsiderationResponse>>
+    public class GetFinancialPlanByCaseId : IUseCase<int, List<FinancialPlanResponse>>
     {
-        private readonly INTIUnderConsiderationGateway _gateway;
+        private readonly IFinancialPlanGateway _gateway;
 
-        public GetNTIUnderConsiderationByCaseUrn(INTIUnderConsiderationGateway gateway)
+        public GetFinancialPlanByCaseId(IFinancialPlanGateway gateway)
         {
             _gateway = gateway;
         }
 
-        public List<NTIUnderConsiderationResponse> Execute(int caseUrn)
+        public List<FinancialPlanResponse> Execute(int caseUrn)
         {
             return ExecuteAsync(caseUrn).Result;
         }
 
-        public async Task<List<NTIUnderConsiderationResponse>> ExecuteAsync(int caseUrn)
+        public async Task<List<FinancialPlanResponse>> ExecuteAsync(int caseUrn)
         {
-            var considerations = await _gateway.GetNTIUnderConsiderationByCaseUrn(caseUrn);
-            return considerations.Select(consideration => NTIUnderConsiderationFactory.CreateResponse(consideration)).ToList();
+            var fps = await _gateway.GetFinancialPlansByCaseUrn(caseUrn);
+            return fps.Select(fp => FinancialPlanFactory.CreateResponse(fp)).ToList();
         }
     }
 }
