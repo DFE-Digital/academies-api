@@ -40,6 +40,17 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<NTIUnderConsiderationReason> NTIUnderConsiderationReasons { get; set; }
         public virtual DbSet<NTIUnderConsideration> NTIUnderConsiderations { get; set; }
         public virtual DbSet<NTIUnderConsiderationReasonMapping> NTIUnderConsiderationReasonMappings { get; set; }
+        public virtual DbSet<NTIWarningLetter> NTIWarningLetters { get; set; }
+        public virtual DbSet<NTIWarningLetterConditionType> NTIWarningLetterConditionTypes { get; set; }
+        public virtual DbSet<NTIWarningLetterCondition> NTIWarningLetterConditions { get; set; }
+        public virtual DbSet<NTIWarningLetterReason> NTIWarningLetterReasons { get; set; }
+        public virtual DbSet<NTIWarningLetterStatus> NTIWarningLetterStatuses { get; set; }
+        public virtual DbSet<NTIWarningLetterReasonMapping> NTIWarningLetterReasonsMapping { get; set; }
+        public virtual DbSet<NTIWarningLetterConditionMapping> NTIWarningLetterConditionsMapping { get; set; }
+
+
+
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -452,6 +463,70 @@ namespace TramsDataApi.DatabaseModels
                     }));
             });
 
+            modelBuilder.Entity<NTIWarningLetterConditionType>(entity =>
+            {
+                entity.HasData(
+                    Enum.GetValues(typeof(Enums.NTIWarningLetterConditionType)).Cast<Enums.NTIWarningLetterConditionType>()
+                    .Where(enm => enm != Enums.NTIWarningLetterConditionType.Unknown)
+                    .Select(enm => new NTIWarningLetterConditionType
+                    {
+                        Id = (int)enm,
+                        Name = enm.ToString(),
+                        CreatedAt = new DateTime(2022, 07, 12),
+                        UpdatedAt = new DateTime(2022, 07, 12)
+                    }));
+            });
+
+            modelBuilder.Entity<NTIWarningLetterCondition>(entity =>
+            {
+                var createdAt = new DateTime(2022, 07, 12);
+
+                var financialManagementTypeId = (int)Enums.NTIWarningLetterConditionType.FinancialManagement;
+                var governanceTypeId = (int)Enums.NTIWarningLetterConditionType.Governance;
+                var complianceTypeId = (int)Enums.NTIWarningLetterConditionType.Compliance;
+                var standardTypeId = (int)Enums.NTIWarningLetterConditionType.Standard;
+
+                entity.HasData(
+                     new NTIWarningLetterCondition[]
+                    {
+                        new NTIWarningLetterCondition{ Id = 1, Name = Enums.NTIWarningLetterCondition.TrustFinancialPlan.ToString(), CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementTypeId },
+                        new NTIWarningLetterCondition{ Id = 2, Name = Enums.NTIWarningLetterCondition.ActionPlan.ToString(), CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceTypeId  },
+                        new NTIWarningLetterCondition{ Id = 3, Name = Enums.NTIWarningLetterCondition.LinesOfAccountability.ToString(), CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceTypeId  },
+                        new NTIWarningLetterCondition{ Id = 4, Name = Enums.NTIWarningLetterCondition.ProvidingSufficientChallenge.ToString(), CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceTypeId  },
+                        new NTIWarningLetterCondition{ Id = 5, Name = Enums.NTIWarningLetterCondition.SchemeOfDelegation.ToString(), CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceTypeId  },
+                        new NTIWarningLetterCondition{ Id = 6, Name = Enums.NTIWarningLetterCondition.PublishingRequirements.ToString(), CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = complianceTypeId  },
+                        new NTIWarningLetterCondition{ Id = 7, Name = Enums.NTIWarningLetterCondition.FinancialReturns.ToString(), CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = standardTypeId  }
+                    });
+            });
+
+            modelBuilder.Entity<NTIWarningLetterReason>(entity =>
+            {
+                entity.HasData(
+                    Enum.GetValues(typeof(Enums.NTIWarningLetterReason)).Cast<Enums.NTIWarningLetterReason>()
+                    .Where(enm => enm != Enums.NTIWarningLetterReason.Unknown)
+                    .Select(enm => new NTIWarningLetterReason
+                    {
+                        Id = (int)enm,
+                        Name = enm.ToString(),
+                        CreatedAt = new DateTime(2022, 07, 12),
+                        UpdatedAt = new DateTime(2022, 07, 12)
+                    }));
+            });
+
+            modelBuilder.Entity<NTIWarningLetterStatus>(entity =>
+            {
+                entity.HasData(
+                    Enum.GetValues(typeof(Enums.NTIUnderConsiderationStatus)).Cast<Enums.NTIUnderConsiderationStatus>()
+                    .Where(enm => enm != Enums.NTIUnderConsiderationStatus.Unknown)
+                    .Select(enm => new NTIWarningLetterStatus
+                    {
+                        Id = (int)enm,
+                        Name = enm.ToString(),
+                        CreatedAt = new DateTime(2022, 07, 12),
+                        UpdatedAt = new DateTime(2022, 07, 12)
+                    }));
+            });
+
             modelBuilder.Entity<NTIUnderConsiderationReasonMapping>()
                 .HasOne(n => n.NTIUnderConsideration)
                 .WithMany(n => n.UnderConsiderationReasonsMapping)
@@ -461,6 +536,26 @@ namespace TramsDataApi.DatabaseModels
                 .HasOne(n => n.NTIUnderConsiderationReason)
                 .WithMany(n => n.UnderConsiderationReasonsMapping)
                 .HasForeignKey(n => n.NTIUnderConsiderationReasonId);
+
+            modelBuilder.Entity<NTIWarningLetterReasonMapping>()
+                .HasOne(n => n.NTIWarningLetter)
+                .WithMany(n => n.WarningLetterReasonsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterId);
+
+            modelBuilder.Entity<NTIWarningLetterReasonMapping>()
+                .HasOne(n => n.NTIWarningLetterReason)
+                .WithMany(n => n.WarningLetterReasonsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterReasonId);
+
+            modelBuilder.Entity<NTIWarningLetterConditionMapping>()
+                .HasOne(n => n.NTIWarningLetter)
+                .WithMany(n => n.WarningLetterConditionsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterId);
+
+            modelBuilder.Entity<NTIWarningLetterConditionMapping>()
+                .HasOne(n => n.NTIWarningLetterCondition)
+                .WithMany(n => n.WarningLetterConditionsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterConditionId);
 
             OnModelCreatingPartial(modelBuilder);
         }
