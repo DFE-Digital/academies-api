@@ -42,7 +42,7 @@ namespace TramsDataApi.ResponseModels
         public string RealisticYearofOpening { get; set; }
         public string MemberOfParliament { get; set; }
         public string NumberOfPupil { get; set; }
-        // Government Office Region  
+        // Geographical Region  
         public string GeographicalRegion { get; set; }
     }
 }
