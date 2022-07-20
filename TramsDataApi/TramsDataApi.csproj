@@ -29,6 +29,9 @@
       <Folder Include="ResponseModels\CaseActions\NTI\UnderConsideration\" />
       <Folder Include="UseCases\CaseActions\NTI\" />
       <Folder Include="UseCases\CaseActions\NTI\UnderConsideration\" />
+      <Folder Include="RequestModels\CaseActions\NTI\WarningLetter\" />
+      <Folder Include="ResponseModels\CaseActions\NTI\WarningLetter\" />
+      <Folder Include="UseCases\CaseActions\NTI\WarningLetter\" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="CensusData/2018-2019_england_census.csv">
@@ -43,5 +46,8 @@
       <None Remove="ResponseModels\CaseActions\NTI\UnderConsideration\" />
       <None Remove="UseCases\CaseActions\NTI\" />
       <None Remove="UseCases\CaseActions\NTI\UnderConsideration\" />
+      <None Remove="RequestModels\CaseActions\NTI\WarningLetter\" />
+      <None Remove="ResponseModels\CaseActions\NTI\WarningLetter\" />
+      <None Remove="UseCases\CaseActions\NTI\WarningLetter\" />
     </ItemGroup>
 </Project>

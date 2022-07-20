@@ -1498,58 +1498,58 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "CashFlowProblems",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Cash flow problems",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "CumulativeDeficitActual",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Cumulative deficit (actual)",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "CumulativeDeficitProjected",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Cumulative deficit (projected)",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GovernanceConcerns",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Governance concerns",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "NonComplianceWithAcademiesFinancialTrustHandbook",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Non-Compliance with Academies Financial/Trust Handbook",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "NonComplianceWithFinancialReturns",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Non-Compliance with financial returns",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "RiskOfInsolvency",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Risk of insolvency",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Safeguarding",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -1585,6 +1585,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1599,16 +1602,17 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "NoFurtherAction",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "No further action being taken",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ToBeEscalated",
-                            UpdatedAt = new DateTime(2022, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Warning letter or NTI can be set up using \"Add to case\".",
+                            Name = "To be escalated",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -1687,7 +1691,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 1,
                             ConditionTypeId = 1,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "TrustFinancialPlan",
+                            Name = "Trust financial plan",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1695,7 +1699,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 2,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ActionPlan",
+                            Name = "Action plan",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1703,7 +1707,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 3,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "LinesOfAccountability",
+                            Name = "Lines of accountability",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1711,7 +1715,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 4,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ProvidingSufficientChallenge",
+                            Name = "Providing sufficient challenge",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1719,7 +1723,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 5,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "SchemeOfDelegation",
+                            Name = "Scheme of delegation",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1727,7 +1731,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 6,
                             ConditionTypeId = 3,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "PublishingRequirements",
+                            Name = "Publishing requirements (compliance with)",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1735,7 +1739,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 7,
                             ConditionTypeId = 4,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "FinancialReturns",
+                            Name = "Financial returns",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1787,28 +1791,28 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "FinancialManagement",
+                            Name = "Financial management conditions",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Governance",
+                            Name = "Governance conditions",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Compliance",
+                            Name = "Compliance conditions",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Standard",
+                            Name = "Standard conditions (Mandatory)",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1837,58 +1841,58 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "CashFlowProblems",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            Name = "Cash flow problems",
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "CumulativeDeficitActual",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            Name = "Cumulative deficit (actual)",
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "CumulativeDeficitProjected",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            Name = "Cumulative deficit (projected)",
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GovernanceConcerns",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            Name = "Governance concerns",
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "NonComplianceWithAcademiesFinancial",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            Name = "Non-Compliance with Academies Financial/Trust Handbook",
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "NonComplianceWithFinancialReturns",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            Name = "Non-Compliance with financial returns",
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "RiskOfInsolvency",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            Name = "Risk of insolvency",
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Safeguarding",
-                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         });
                 });
 
@@ -1924,6 +1928,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1939,14 +1946,38 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "NoFurtherAction",
+                            Name = "Preparing warning letter",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ToBeEscalated",
+                            Name = "Sent to trust",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "The warning letter is no longer needed.",
+                            Name = "Cancel warning letter",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "You are satisfied that all the conditions have been, or will be, met as outlined in the letter",
+                            Name = "Conditions met",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\"",
+                            Name = "Escalate to Notice To Improve",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
