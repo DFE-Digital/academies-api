@@ -46,5 +46,7 @@ namespace TramsDataApi.DatabaseModels
         public string MemberOfParliament { get; set; }
 
         public string NumberOfPupil { get; set; }
+        public string GeographicalRegion { get; set; }
+
     }
 }
