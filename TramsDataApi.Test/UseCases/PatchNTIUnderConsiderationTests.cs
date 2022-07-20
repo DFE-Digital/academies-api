@@ -16,8 +16,9 @@ namespace TramsDataApi.Test.UseCases
 {
     public class PatchNTIUnderConsiderationTests
     {
+
         [Fact]
-        public void ShouldSaveAnUpdateAcademyTransferProject_WhenGivenAPartialModelToUpdate()
+        public void ShouldPatchNTIUnderConsiderationAndReturnNTIUnderConsiderationResponse_WhenGivenPatchNTIUnderConsiderationRequest()
         {
             var id = 123;
             var caseUrn = 544;
