@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
 {
-    [Table("NTIUnderConsiderationStatus", Schema = "sdd")]
-    public class NTIUnderConsiderationStatus
+    [Table("NTIWarningLetterStatus", Schema = "sdd")]
+    public class NTIWarningLetterStatus
     {
         [Key]
         public int Id { get; set; }

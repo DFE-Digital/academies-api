@@ -194,7 +194,7 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void PatchNTIUnderConsider_ReturnsUpdatedFincialPlan()
+        public void PatchNTIUnderConsideration_ReturnsUpdatedNTIUnderConsideration()
         {
             var underConsiderationId = 544;
             var newNotes = "updated notes";

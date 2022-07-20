@@ -40,6 +40,17 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<NTIUnderConsiderationReason> NTIUnderConsiderationReasons { get; set; }
         public virtual DbSet<NTIUnderConsideration> NTIUnderConsiderations { get; set; }
         public virtual DbSet<NTIUnderConsiderationReasonMapping> NTIUnderConsiderationReasonMappings { get; set; }
+        public virtual DbSet<NTIWarningLetter> NTIWarningLetters { get; set; }
+        public virtual DbSet<NTIWarningLetterConditionType> NTIWarningLetterConditionTypes { get; set; }
+        public virtual DbSet<NTIWarningLetterCondition> NTIWarningLetterConditions { get; set; }
+        public virtual DbSet<NTIWarningLetterReason> NTIWarningLetterReasons { get; set; }
+        public virtual DbSet<NTIWarningLetterStatus> NTIWarningLetterStatuses { get; set; }
+        public virtual DbSet<NTIWarningLetterReasonMapping> NTIWarningLetterReasonsMapping { get; set; }
+        public virtual DbSet<NTIWarningLetterConditionMapping> NTIWarningLetterConditionsMapping { get; set; }
+
+
+
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -424,32 +435,99 @@ namespace TramsDataApi.DatabaseModels
             {
                 entity.ToTable("NTIUnderConsiderationStatus", "sdd");
 
+                var createdAt = new DateTime(2022, 07, 12);
+
                 entity.HasData(
-                    Enum.GetValues(typeof(Enums.NTIUnderConsiderationStatus)).Cast<Enums.NTIUnderConsiderationStatus>()
-                    .Where(enm => enm != Enums.NTIUnderConsiderationStatus.Unknown)
-                    .Select(enm => new NTIUnderConsiderationStatus
+                     new NTIUnderConsiderationStatus[]
                     {
-                        Id = (int)enm,
-                        Name = enm.ToString(),
-                        CreatedAt = new DateTime(2022, 06, 14),
-                        UpdatedAt = new DateTime(2022, 06, 14)
-                    }));
+                        new NTIUnderConsiderationStatus{ Id = 1, Name = "No further action being taken", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationStatus{ Id = 2, Name = "To be escalated", Description="Warning letter or NTI can be set up using \"Add to case\".", CreatedAt = createdAt, UpdatedAt = createdAt }
+                    });
+
             });
 
             modelBuilder.Entity<NTIUnderConsiderationReason>(entity =>
             {
                 entity.ToTable("NTIUnderConsiderationReason", "sdd");
 
+                var createdAt = new DateTime(2022, 07, 12);
+
                 entity.HasData(
-                    Enum.GetValues(typeof(Enums.NTIUnderConsiderationReason)).Cast<Enums.NTIUnderConsiderationReason>()
-                    .Where(enm => enm != Enums.NTIUnderConsiderationReason.Unknown)
-                    .Select(enm => new NTIUnderConsiderationReason
+                     new NTIUnderConsiderationReason[]
                     {
-                        Id = (int)enm,
-                        Name = enm.ToString(),
-                        CreatedAt = new DateTime(2022, 06, 14),
-                        UpdatedAt = new DateTime(2022, 06, 14)
-                    }));
+                        new NTIUnderConsiderationReason{ Id = 1, Name = "Cash flow problems", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationReason{ Id = 2, Name = "Cumulative deficit (actual)", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationReason{ Id = 3, Name = "Cumulative deficit (projected)", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationReason{ Id = 4, Name = "Governance concerns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationReason{ Id = 5, Name = "Non-Compliance with Academies Financial/Trust Handbook", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationReason{ Id = 6, Name = "Non-Compliance with financial returns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationReason{ Id = 7, Name = "Risk of insolvency", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIUnderConsiderationReason{ Id = 8, Name = "Safeguarding", CreatedAt = createdAt, UpdatedAt = createdAt }
+                    });
+            });
+
+            modelBuilder.Entity<NTIWarningLetterConditionType>(entity =>
+            {
+                var createdAt = new DateTime(2022, 07, 12);
+
+                entity.HasData(
+                     new NTIWarningLetterConditionType[]
+                    {
+                        new NTIWarningLetterConditionType{ Id = 1, Name = "Financial management conditions", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterConditionType{ Id = 2, Name = "Governance conditions", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterConditionType{ Id = 3, Name = "Compliance conditions", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterConditionType{ Id = 4, Name = "Standard conditions (Mandatory)", CreatedAt = createdAt, UpdatedAt = createdAt }
+                    });
+            });
+
+            modelBuilder.Entity<NTIWarningLetterCondition>(entity =>
+            {
+                var createdAt = new DateTime(2022, 07, 12);
+
+                entity.HasData(
+                     new NTIWarningLetterCondition[]
+                    {
+                        new NTIWarningLetterCondition{ Id = 1, Name = "Trust financial plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 1 },
+                        new NTIWarningLetterCondition{ Id = 2, Name = "Action plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
+                        new NTIWarningLetterCondition{ Id = 3, Name = "Lines of accountability", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
+                        new NTIWarningLetterCondition{ Id = 4, Name = "Providing sufficient challenge", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
+                        new NTIWarningLetterCondition{ Id = 5, Name = "Scheme of delegation", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
+                        new NTIWarningLetterCondition{ Id = 6, Name = "Publishing requirements (compliance with)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 3  },
+                        new NTIWarningLetterCondition{ Id = 7, Name = "Financial returns", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 4  }
+                    });
+            });
+
+            modelBuilder.Entity<NTIWarningLetterReason>(entity =>
+            {
+                var createdAt = DateTime.Now;
+
+                entity.HasData(
+                     new NTIWarningLetterReason[]
+                    {
+                        new NTIWarningLetterReason{ Id = 1, Name = "Cash flow problems", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 2, Name = "Cumulative deficit (actual)", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 3, Name = "Cumulative deficit (projected)", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 4, Name = "Governance concerns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 5, Name = "Non-Compliance with Academies Financial/Trust Handbook", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 6, Name = "Non-Compliance with financial returns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 7, Name = "Risk of insolvency", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 8, Name = "Safeguarding", CreatedAt = createdAt, UpdatedAt = createdAt }
+                    });
+            });
+
+            modelBuilder.Entity<NTIWarningLetterStatus>(entity =>
+            {
+                var createdAt = new DateTime(2022, 07, 12);
+
+                entity.HasData(
+                     new NTIWarningLetterStatus[]
+                    {
+                        new NTIWarningLetterStatus{ Id = 1, Name = "Preparing warning letter", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterStatus{ Id = 2, Name = "Sent to trust", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterStatus{ Id = 3, Name = "Cancel warning letter", Description="The warning letter is no longer needed.", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterStatus{ Id = 4, Name = "Conditions met", Description="You are satisfied that all the conditions have been, or will be, met as outlined in the letter", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterStatus{ Id = 5, Name = "Escalate to Notice To Improve", Description="Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\"", CreatedAt = createdAt, UpdatedAt = createdAt }
+                    });
             });
 
             modelBuilder.Entity<NTIUnderConsiderationReasonMapping>()
@@ -461,6 +539,26 @@ namespace TramsDataApi.DatabaseModels
                 .HasOne(n => n.NTIUnderConsiderationReason)
                 .WithMany(n => n.UnderConsiderationReasonsMapping)
                 .HasForeignKey(n => n.NTIUnderConsiderationReasonId);
+
+            modelBuilder.Entity<NTIWarningLetterReasonMapping>()
+                .HasOne(n => n.NTIWarningLetter)
+                .WithMany(n => n.WarningLetterReasonsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterId);
+
+            modelBuilder.Entity<NTIWarningLetterReasonMapping>()
+                .HasOne(n => n.NTIWarningLetterReason)
+                .WithMany(n => n.WarningLetterReasonsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterReasonId);
+
+            modelBuilder.Entity<NTIWarningLetterConditionMapping>()
+                .HasOne(n => n.NTIWarningLetter)
+                .WithMany(n => n.WarningLetterConditionsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterId);
+
+            modelBuilder.Entity<NTIWarningLetterConditionMapping>()
+                .HasOne(n => n.NTIWarningLetterCondition)
+                .WithMany(n => n.WarningLetterConditionsMapping)
+                .HasForeignKey(n => n.NTIWarningLetterConditionId);
 
             OnModelCreatingPartial(modelBuilder);
         }
