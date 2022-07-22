@@ -96,7 +96,9 @@ namespace TramsDataApi.Test.Integration
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HtbDateInserted = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HasHtbDate = true)
+                .With(d => d.HasHtbDateInserted = true)
                 .With(d => d.HasTargetDateForTransfer = true)
                 .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
@@ -159,6 +161,8 @@ namespace TramsDataApi.Test.Integration
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HasHtbDate = true)
+                .With(d => d.HtbDateInserted = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDateInserted = true)
                 .With(d => d.HasTargetDateForTransfer = true)
                 .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
@@ -239,6 +243,8 @@ namespace TramsDataApi.Test.Integration
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HasHtbDate = true)
+                .With(d => d.HtbDateInserted = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDateInserted = true)
                 .With(d => d.HasTargetDateForTransfer = true)
                 .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
@@ -329,6 +335,8 @@ namespace TramsDataApi.Test.Integration
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HasHtbDate = true)
+                .With(d => d.HtbDateInserted = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDateInserted = true)
                 .With(d => d.HasTargetDateForTransfer = true)
                 .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
@@ -745,6 +753,8 @@ namespace TramsDataApi.Test.Integration
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HasHtbDate = true)
+                 .With(d => d.HtbDateInserted = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .With(d => d.HasHtbDateInserted = true)
                 .With(d => d.HasTargetDateForTransfer = true)
                 .With(d => d.HasTransferFirstDiscussedDate = true)
                 .Build();
