@@ -128,12 +128,8 @@ namespace TramsDataApi.Test.Factories
 
             var expectedDates = new AcademyTransferProjectDatesResponse
             {
-                TransferFirstDiscussed =
-                    academyTransferProjectModel.TransferFirstDiscussed?.ToString("dd/MM/yyyy",
-                        CultureInfo.InvariantCulture),
-                TargetDateForTransfer =
-                    academyTransferProjectModel.TargetDateForTransfer?.ToString("dd/MM/yyyy",
-                        CultureInfo.InvariantCulture),
+                TransferFirstDiscussed = academyTransferProjectModel.TransferFirstDiscussed?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                TargetDateForTransfer = academyTransferProjectModel.TargetDateForTransfer?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HtbDate = academyTransferProjectModel.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HtbDateInserted = academyTransferProjectModel.HtbDateInserted?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HasHtbDate = academyTransferProjectModel.HasHtbDate,
