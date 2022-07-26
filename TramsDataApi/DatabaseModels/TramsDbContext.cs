@@ -96,6 +96,8 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.HtbDate).HasColumnType("date");
 
+                entity.Property(e => e.HtbDateInserted).HasColumnType("date");
+
                 entity.Property(e => e.OutgoingTrustUkprn)
                     .IsRequired()
                     .HasMaxLength(8);
@@ -476,7 +478,7 @@ namespace TramsDataApi.DatabaseModels
                         new NTIWarningLetterConditionType{ Id = 1, Name = "Financial management conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 1 },
                         new NTIWarningLetterConditionType{ Id = 2, Name = "Governance conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 2 },
                         new NTIWarningLetterConditionType{ Id = 3, Name = "Compliance conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 3 },
-                        new NTIWarningLetterConditionType{ Id = 4, Name = "Standard conditions (Mandatory)", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 4 }
+                        new NTIWarningLetterConditionType{ Id = 4, Name = "Standard conditions (mandatory)", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 4 }
                     });
             });
 
@@ -508,8 +510,8 @@ namespace TramsDataApi.DatabaseModels
                         new NTIWarningLetterReason{ Id = 2, Name = "Cumulative deficit (actual)", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 3, Name = "Cumulative deficit (projected)", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 4, Name = "Governance concerns", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterReason{ Id = 5, Name = "Non-Compliance with Academies Financial/Trust Handbook", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterReason{ Id = 6, Name = "Non-Compliance with financial returns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 5, Name = "Non-compliance with Academies Financial/Trust Handbook", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 6, Name = "Non-compliance with financial returns", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 7, Name = "Risk of insolvency", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 8, Name = "Safeguarding", CreatedAt = createdAt, UpdatedAt = createdAt }
                     });
