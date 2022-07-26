@@ -26,9 +26,11 @@ namespace TramsDataApi.Test.Factories
                 TransferFirstDiscussed = null,
                 TargetDateForTransfer = null,
                 HtbDate = null,
+                HtbDateInserted = null,
                 ProjectRationale = null,
                 TrustSponsorRationale = null,
                 HasHtbDate = null,
+                HasHtbDateInserted = null,
                 HasTransferFirstDiscussedDate = null,
                 HasTargetDateForTransfer = null,
                 State = null,
@@ -126,14 +128,12 @@ namespace TramsDataApi.Test.Factories
 
             var expectedDates = new AcademyTransferProjectDatesResponse
             {
-                TransferFirstDiscussed =
-                    academyTransferProjectModel.TransferFirstDiscussed?.ToString("dd/MM/yyyy",
-                        CultureInfo.InvariantCulture),
-                TargetDateForTransfer =
-                    academyTransferProjectModel.TargetDateForTransfer?.ToString("dd/MM/yyyy",
-                        CultureInfo.InvariantCulture),
+                TransferFirstDiscussed = academyTransferProjectModel.TransferFirstDiscussed?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                TargetDateForTransfer = academyTransferProjectModel.TargetDateForTransfer?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HtbDate = academyTransferProjectModel.HtbDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                HtbDateInserted = academyTransferProjectModel.HtbDateInserted?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HasHtbDate = academyTransferProjectModel.HasHtbDate,
+                HasHtbDateInserted = academyTransferProjectModel.HasHtbDateInserted,
                 HasTransferFirstDiscussedDate = academyTransferProjectModel.HasTransferFirstDiscussedDate,
                 HasTargetDateForTransfer = academyTransferProjectModel.HasTargetDateForTransfer
             };
