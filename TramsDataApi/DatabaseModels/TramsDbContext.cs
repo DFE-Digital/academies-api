@@ -473,10 +473,10 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasData(
                      new NTIWarningLetterConditionType[]
                     {
-                        new NTIWarningLetterConditionType{ Id = 1, Name = "Financial management conditions", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterConditionType{ Id = 2, Name = "Governance conditions", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterConditionType{ Id = 3, Name = "Compliance conditions", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterConditionType{ Id = 4, Name = "Standard conditions (Mandatory)", CreatedAt = createdAt, UpdatedAt = createdAt }
+                        new NTIWarningLetterConditionType{ Id = 1, Name = "Financial management conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 1 },
+                        new NTIWarningLetterConditionType{ Id = 2, Name = "Governance conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 2 },
+                        new NTIWarningLetterConditionType{ Id = 3, Name = "Compliance conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 3 },
+                        new NTIWarningLetterConditionType{ Id = 4, Name = "Standard conditions (mandatory)", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 4 }
                     });
             });
 
@@ -487,19 +487,19 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasData(
                      new NTIWarningLetterCondition[]
                     {
-                        new NTIWarningLetterCondition{ Id = 1, Name = "Trust financial plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 1 },
-                        new NTIWarningLetterCondition{ Id = 2, Name = "Action plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
-                        new NTIWarningLetterCondition{ Id = 3, Name = "Lines of accountability", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
-                        new NTIWarningLetterCondition{ Id = 4, Name = "Providing sufficient challenge", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
-                        new NTIWarningLetterCondition{ Id = 5, Name = "Scheme of delegation", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2  },
-                        new NTIWarningLetterCondition{ Id = 6, Name = "Publishing requirements (compliance with)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 3  },
-                        new NTIWarningLetterCondition{ Id = 7, Name = "Financial returns", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 4  }
+                        new NTIWarningLetterCondition{ Id = 1, Name = "Trust financial plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 1, DisplayOrder = 1 },
+                        new NTIWarningLetterCondition{ Id = 2, Name = "Action plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2, DisplayOrder = 1  },
+                        new NTIWarningLetterCondition{ Id = 3, Name = "Lines of accountability", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2, DisplayOrder = 2  },
+                        new NTIWarningLetterCondition{ Id = 4, Name = "Providing sufficient challenge", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2, DisplayOrder = 3  },
+                        new NTIWarningLetterCondition{ Id = 5, Name = "Scheme of delegation", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 2, DisplayOrder = 4  },
+                        new NTIWarningLetterCondition{ Id = 6, Name = "Publishing requirements (compliance with)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 3, DisplayOrder = 1  },
+                        new NTIWarningLetterCondition{ Id = 7, Name = "Financial returns", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = 4, DisplayOrder = 1  }
                     });
             });
 
             modelBuilder.Entity<NTIWarningLetterReason>(entity =>
             {
-                var createdAt = DateTime.Now;
+                var createdAt = new DateTime(2022, 07, 12);
 
                 entity.HasData(
                      new NTIWarningLetterReason[]
@@ -508,8 +508,8 @@ namespace TramsDataApi.DatabaseModels
                         new NTIWarningLetterReason{ Id = 2, Name = "Cumulative deficit (actual)", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 3, Name = "Cumulative deficit (projected)", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 4, Name = "Governance concerns", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterReason{ Id = 5, Name = "Non-Compliance with Academies Financial/Trust Handbook", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterReason{ Id = 6, Name = "Non-Compliance with financial returns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 5, Name = "Non-compliance with Academies Financial/Trust Handbook", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NTIWarningLetterReason{ Id = 6, Name = "Non-compliance with financial returns", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 7, Name = "Risk of insolvency", CreatedAt = createdAt, UpdatedAt = createdAt },
                         new NTIWarningLetterReason{ Id = 8, Name = "Safeguarding", CreatedAt = createdAt, UpdatedAt = createdAt }
                     });
@@ -522,11 +522,11 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasData(
                      new NTIWarningLetterStatus[]
                     {
-                        new NTIWarningLetterStatus{ Id = 1, Name = "Preparing warning letter", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterStatus{ Id = 2, Name = "Sent to trust", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterStatus{ Id = 3, Name = "Cancel warning letter", Description="The warning letter is no longer needed.", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterStatus{ Id = 4, Name = "Conditions met", Description="You are satisfied that all the conditions have been, or will be, met as outlined in the letter", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new NTIWarningLetterStatus{ Id = 5, Name = "Escalate to Notice To Improve", Description="Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\"", CreatedAt = createdAt, UpdatedAt = createdAt }
+                        new NTIWarningLetterStatus{ Id = 1, Name = "Preparing warning letter", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NTIWarningLetterStatus{ Id = 2, Name = "Sent to trust", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NTIWarningLetterStatus{ Id = 3, Name = "Cancel warning letter", Description="The warning letter is no longer needed.", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true },
+                        new NTIWarningLetterStatus{ Id = 4, Name = "Conditions met", Description="You are satisfied that all the conditions have been, or will be, met as outlined in the letter", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true },
+                        new NTIWarningLetterStatus{ Id = 5, Name = "Escalate to Notice To Improve", Description="Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\".", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true }
                     });
             });
 
