@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220726151313_updateNTIStatusValues")]
+    partial class updateNTIStatusValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -857,6 +859,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<bool?>("HasHtbDate")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("HasHtbDateInserted")
+                        .HasColumnType("bit");
+
                     b.Property<bool?>("HasTargetDateForTransfer")
                         .HasColumnType("bit");
 
@@ -870,6 +875,9 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("HtbDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("HtbDateInserted")
                         .HasColumnType("date");
 
                     b.Property<string>("OtherBenefitValue")

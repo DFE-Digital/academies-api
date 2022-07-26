@@ -14,6 +14,7 @@ namespace TramsDataApi.DatabaseModels
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public int ConditionTypeId { get; set; }
+        public int DisplayOrder { get; set; }
 
         public virtual NTIWarningLetterConditionType ConditionType { get; set; }
 
