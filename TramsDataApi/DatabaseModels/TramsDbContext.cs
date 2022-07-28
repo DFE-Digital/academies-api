@@ -21,6 +21,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<AcademyConversionProject> AcademyConversionProjects { get; set; }
         public virtual DbSet<AcademyConversionProjectNote> AcademyConversionProjectNotes { get; set; }
         public virtual DbSet<ConcernsCase> ConcernsCase { get; set; }
+        public virtual DbSet<ConcernsMeansOfReferral> ConcernsMeansOfReferrals { get; set; }
         public virtual DbSet<ConcernsStatus> ConcernsStatus { get; set; }
         public virtual DbSet<ConcernsRecord> ConcernsRecord { get; set; }
         public virtual DbSet<ConcernsType> ConcernsTypes { get; set; }
@@ -327,6 +328,34 @@ namespace TramsDataApi.DatabaseModels
                         UpdatedAt = new DateTime(2021, 11, 17)
                     }
                 );
+            });
+            modelBuilder.Entity<ConcernsMeansOfReferral>(entity =>
+            {
+                entity.ToTable("ConcernsMeansOfReferral", "sdd");
+
+                entity.HasKey(e => e.Id)
+                    .HasName("PK__CMeansOfReferral");
+
+                entity.Property(e => e.Urn)
+                    .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
+
+                entity.HasData(
+                    new ConcernsMeansOfReferral()
+                    {
+                        Id = 1,
+                        Name = "Internal",
+                        Description = "ESFA activity, TFFT or other departmental activity",
+                        CreatedAt = new DateTime(2022, 7, 28),
+                        UpdatedAt = new DateTime(2022, 7, 28)
+                    },
+                    new ConcernsMeansOfReferral()
+                    {
+                        Id = 2,
+                        Name = "External",
+                        Description = "CIU casework, whistleblowing, self reported, RSCs or other government bodies",
+                        CreatedAt = new DateTime(2022, 7, 28),
+                        UpdatedAt = new DateTime(2022, 7, 28)
+                    });
             });
 
             modelBuilder.Entity<ConcernsRating>(entity =>

@@ -692,6 +692,33 @@ namespace TramsDataApi.Test.Integration
             }
         }
         
+        [Fact]
+        public async Task IndexConcernsMeansOfReferral_ShouldReturnAllConcernsMeansOfReferral()
+        {
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-meansofreferral/"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                }
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<ConcernsMeansOfReferralResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Count().Should().Be(2);
+            						
+            content.Data.First().Name.Should().Be("Internal");
+            content.Data.First().Description.Should().Be("ESFA activity, TFFT or other departmental activity");
+            content.Data.First().Urn.Should().BeGreaterThan(1);
+			
+            content.Data.Last().Name.Should().Be("External");
+            content.Data.Last().Description.Should().Be("CIU casework, whistleblowing, self reported, RSCs or other government bodies");
+            content.Data.Last().Urn.Should().BeGreaterThan(1);
+        }
+        
         public void Dispose()
         {
             _dbContext.ConcernsCase.RemoveRange(_dbContext.ConcernsCase);

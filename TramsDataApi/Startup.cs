@@ -69,6 +69,9 @@ namespace TramsDataApi
             services.AddScoped<IIndexConcernsTypes, IndexConcernsTypes>();
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
             
+            services.AddScoped<IIndexConcernsMeansOfReferrals, IndexConcernsMeansOfReferrals>();
+            services.AddScoped<IConcernsMeansOfReferralGateway, ConcernsMeansOfReferralGateway>();
+            
             services.AddScoped<IFssProjectGateway, FssProjectGateway>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
