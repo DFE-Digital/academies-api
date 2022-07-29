@@ -16,5 +16,6 @@ namespace TramsDataApi.ResponseModels
         public int StatusUrn { get; set; }
         public int TypeUrn { get; set; }
         public int CaseUrn { get; set; }
+        public int? MeansOfReferralUrn { get; set; }
     }
 }

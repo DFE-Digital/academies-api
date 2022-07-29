@@ -15,5 +15,6 @@ namespace TramsDataApi.RequestModels
         public int TypeUrn { get; set; }
         public int RatingUrn { get; set; }
         public int StatusUrn { get; set; }
+        public int MeansOfReferralUrn { get; set; }
     }
 }

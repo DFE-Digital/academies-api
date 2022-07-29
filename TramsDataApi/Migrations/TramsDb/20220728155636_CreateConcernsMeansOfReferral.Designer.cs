@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220728111527_CreateConcernsMeansOfReferral")]
+    [Migration("20220728155636_CreateConcernsMeansOfReferral")]
     partial class CreateConcernsMeansOfReferral
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1155,6 +1155,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MeansOfReferralId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1185,6 +1188,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasName("PK__CRecord");
 
                     b.HasIndex("CaseId");
+
+                    b.HasIndex("MeansOfReferralId");
 
                     b.HasIndex("RatingId");
 
@@ -1893,58 +1898,58 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Cash flow problems",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Cumulative deficit (actual)",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Cumulative deficit (projected)",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Governance concerns",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Non-Compliance with Academies Financial/Trust Handbook",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Non-Compliance with financial returns",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Risk of insolvency",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
                             Name = "Safeguarding",
-                            UpdatedAt = new DateTime(2022, 7, 28, 12, 15, 27, 562, DateTimeKind.Local).AddTicks(473)
+                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
                         });
                 });
 
@@ -2307,6 +2312,13 @@ namespace TramsDataApi.Migrations.TramsDb
                         .WithMany("ConcernsRecords")
                         .HasForeignKey("CaseId")
                         .HasConstraintName("FK__ConcernsCase_ConcernsRecord")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TramsDataApi.DatabaseModels.ConcernsMeansOfReferral", "ConcernsMeansOfReferral")
+                        .WithMany("FkConcernsRecord")
+                        .HasForeignKey("MeansOfReferralId")
+                        .HasConstraintName("FK__ConcernsRecord_ConcernsMeansOfReferral")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

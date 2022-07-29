@@ -23,12 +23,14 @@ namespace TramsDataApi.Test.UseCases
             
             var concernsType = Builder<ConcernsType>.CreateNew().Build();
             var concernsRating = Builder<ConcernsRating>.CreateNew().Build();
+            var concernsMeansOfReferral = Builder<ConcernsMeansOfReferral>.CreateNew().Build();
             
             var concernsRecords = Builder<ConcernsRecord>.CreateListOfSize(5)
                 .All()
                 .With(r => r.ConcernsCase = concernsCase)
                 .With(r => r.ConcernsType = concernsType)
                 .With(r => r.ConcernsRating = concernsRating)
+                .With(r => r.ConcernsMeansOfReferral = concernsMeansOfReferral)
                 .Build();
 
             concernsCase.ConcernsRecords = concernsRecords;

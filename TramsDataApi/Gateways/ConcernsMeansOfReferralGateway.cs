@@ -17,5 +17,10 @@ namespace TramsDataApi.Gateways
         {
             return _tramsDbContext.ConcernsMeansOfReferrals.ToList();
         }
+
+        public ConcernsMeansOfReferral GetMeansOfReferralByUrn(long urn)
+        {
+            return _tramsDbContext.ConcernsMeansOfReferrals.SingleOrDefault(m => m.Urn == urn);
+        }
     }
 }

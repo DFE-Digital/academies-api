@@ -1153,6 +1153,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MeansOfReferralId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1183,6 +1186,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasName("PK__CRecord");
 
                     b.HasIndex("CaseId");
+
+                    b.HasIndex("MeansOfReferralId");
 
                     b.HasIndex("RatingId");
 
@@ -2305,6 +2310,13 @@ namespace TramsDataApi.Migrations.TramsDb
                         .WithMany("ConcernsRecords")
                         .HasForeignKey("CaseId")
                         .HasConstraintName("FK__ConcernsCase_ConcernsRecord")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TramsDataApi.DatabaseModels.ConcernsMeansOfReferral", "ConcernsMeansOfReferral")
+                        .WithMany("FkConcernsRecord")
+                        .HasForeignKey("MeansOfReferralId")
+                        .HasConstraintName("FK__ConcernsRecord_ConcernsMeansOfReferral")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

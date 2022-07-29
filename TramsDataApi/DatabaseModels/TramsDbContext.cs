@@ -210,6 +210,11 @@ namespace TramsDataApi.DatabaseModels
                     .WithMany(c => c.FkConcernsRecord)
                     .HasForeignKey(r => r.RatingId)
                     .HasConstraintName("FK__ConcernsRecord_ConcernsRating");
+                
+                entity.HasOne(e => e.ConcernsMeansOfReferral)
+                    .WithMany(e => e.FkConcernsRecord)
+                    .HasForeignKey(e => e.MeansOfReferralId)
+                    .HasConstraintName("FK__ConcernsRecord_ConcernsMeansOfReferral");
             });
 
             modelBuilder.Entity<ConcernsType>(entity =>
@@ -335,7 +340,7 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.HasKey(e => e.Id)
                     .HasName("PK__CMeansOfReferral");
-
+                
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
 

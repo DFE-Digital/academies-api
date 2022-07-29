@@ -9,7 +9,8 @@ namespace TramsDataApi.Factories
             ConcernsRecordRequest concernsRecordRequest, 
             ConcernsCase concernsCase, 
             ConcernsType concernsType, 
-            ConcernsRating concernsRating)
+            ConcernsRating concernsRating,
+            ConcernsMeansOfReferral concernsMeansOfReferral)
         {
             return new ConcernsRecord
             {
@@ -23,7 +24,8 @@ namespace TramsDataApi.Factories
                 ConcernsCase = concernsCase,
                 ConcernsType = concernsType,
                 ConcernsRating = concernsRating,
-                StatusUrn = concernsRecordRequest.StatusUrn
+                StatusUrn = concernsRecordRequest.StatusUrn,
+                ConcernsMeansOfReferral = concernsMeansOfReferral
             };
         }
         
@@ -32,9 +34,9 @@ namespace TramsDataApi.Factories
             ConcernsRecordRequest concernsRecordRequest, 
             ConcernsCase concernsCase, 
             ConcernsType concernsType, 
-            ConcernsRating concernsRating)
+            ConcernsRating concernsRating, 
+            ConcernsMeansOfReferral concernsMeansOfReferral)
         {
-
             original.CreatedAt = concernsRecordRequest.CreatedAt;
             original.UpdatedAt = concernsRecordRequest.UpdatedAt;
             original.ReviewAt = concernsRecordRequest.ReviewAt;
@@ -46,6 +48,7 @@ namespace TramsDataApi.Factories
             original.ConcernsType = concernsType;
             original.ConcernsRating = concernsRating;
             original.StatusUrn = concernsRecordRequest.StatusUrn;
+            original.ConcernsMeansOfReferral = concernsMeansOfReferral;
 
             return original;
         }

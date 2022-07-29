@@ -351,11 +351,13 @@ namespace TramsDataApi.Test.Integration
             var linkedCase = _dbContext.ConcernsCase.First();
             var linkedType = _dbContext.ConcernsTypes.First();
             var linkedRating = _dbContext.ConcernsRatings.First();
+            var linkedMeansOfReferral = _dbContext.ConcernsMeansOfReferrals.First();
 
             var createRequest = Builder<ConcernsRecordRequest>.CreateNew()
                 .With(c => c.CaseUrn = linkedCase.Urn)
                 .With(c => c.TypeUrn = linkedType.Urn)
                 .With(c => c.RatingUrn = linkedRating.Urn)
+                .With(c => c.MeansOfReferralUrn = linkedMeansOfReferral.Urn)
                 .Build();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -369,7 +371,7 @@ namespace TramsDataApi.Test.Integration
                 Content =  JsonContent.Create(createRequest)
             };
             
-            var expectedRecordToBeCreated = ConcernsRecordFactory.Create(createRequest, linkedCase, linkedType, linkedRating);
+            var expectedRecordToBeCreated = ConcernsRecordFactory.Create(createRequest, linkedCase, linkedType, linkedRating, linkedMeansOfReferral);
             var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(expectedRecordToBeCreated);
             var expected = new ApiSingleResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
             
@@ -404,11 +406,12 @@ namespace TramsDataApi.Test.Integration
                 DeEscalationPoint = _randomGenerator.NextString(3, 10),
                 NextSteps = _randomGenerator.NextString(3, 10),
                 DirectionOfTravel = _randomGenerator.NextString(3, 10),
-                StatusUrn = 2,
+                StatusUrn = 2
             };
 
             var concernsType = _dbContext.ConcernsTypes.FirstOrDefault(t => t.Id == 1);
             var concernsRating = _dbContext.ConcernsRatings.FirstOrDefault(r => r.Id == 1);
+            var concernsMeansOfReferral = _dbContext.ConcernsMeansOfReferrals.FirstOrDefault(r => r.Id == 1);
             
             var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase);
             _dbContext.SaveChanges();
@@ -425,21 +428,21 @@ namespace TramsDataApi.Test.Integration
                 StatusUrn = 1,
                 ConcernsCase = currentConcernsCase.Entity,
                 ConcernsType = concernsType,
-                ConcernsRating = concernsRating
+                ConcernsRating = concernsRating,
+                ConcernsMeansOfReferral = concernsMeansOfReferral
             };
             
             var currentConcernsRecord =  _dbContext.ConcernsRecord.Add(concernsRecord);
             _dbContext.SaveChanges();
             var currentRecordUrn = currentConcernsRecord.Entity.Urn;
 
-
-
             var updateRequest = Builder<ConcernsRecordRequest>.CreateNew()
                 .With(r => r.CaseUrn = concernsCase.Urn)
                 .With(r => r.TypeUrn = concernsType.Urn)
-                .With(r => r.RatingUrn = concernsRating.Urn).Build();
+                .With(r => r.RatingUrn = concernsRating.Urn)
+                .With(r => r.MeansOfReferralUrn = concernsMeansOfReferral.Urn).Build();
 
-            var expectedConcernsRecord = ConcernsRecordFactory.Create(updateRequest, concernsCase, concernsType, concernsRating);
+            var expectedConcernsRecord = ConcernsRecordFactory.Create(updateRequest, concernsCase, concernsType, concernsRating, concernsMeansOfReferral);
             expectedConcernsRecord.Urn = currentRecordUrn;
             var expectedContent = ConcernsRecordResponseFactory.Create(expectedConcernsRecord);
 
@@ -458,7 +461,6 @@ namespace TramsDataApi.Test.Integration
             
             response.StatusCode.Should().Be(200);
             content.Data.Should().BeEquivalentTo(expectedContent);
-
         }
 
         [Fact]
@@ -482,7 +484,7 @@ namespace TramsDataApi.Test.Integration
                 DeEscalationPoint = _randomGenerator.NextString(3, 10),
                 NextSteps = _randomGenerator.NextString(3, 10),
                 DirectionOfTravel = _randomGenerator.NextString(3, 10),
-                StatusUrn = 2,
+                StatusUrn = 2
             };
             
             var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase).Entity;
@@ -490,6 +492,7 @@ namespace TramsDataApi.Test.Integration
 
             var concernsRating = _dbContext.ConcernsRatings.FirstOrDefault();
             var concernsType = _dbContext.ConcernsTypes.FirstOrDefault();
+            var concernsMeansOfReferral = _dbContext.ConcernsMeansOfReferrals.FirstOrDefault();
 
             var recordCreateRequest1 = new ConcernsRecordRequest
             {
@@ -501,9 +504,10 @@ namespace TramsDataApi.Test.Integration
                 Description = _randomGenerator.NextString(3, 10),
                 Reason = _randomGenerator.NextString(3, 10),
                 CaseUrn = currentConcernsCase.Urn,
-                TypeUrn = concernsType.Urn,
-                RatingUrn = concernsRating.Urn,
-                StatusUrn = 1
+                TypeUrn = concernsType!.Urn,
+                RatingUrn = concernsRating!.Urn,
+                StatusUrn = 1,
+                MeansOfReferralUrn = concernsMeansOfReferral!.Urn
             };
             
             var recordCreateRequest2 = new ConcernsRecordRequest
@@ -518,7 +522,8 @@ namespace TramsDataApi.Test.Integration
                 CaseUrn = currentConcernsCase.Urn,
                 TypeUrn = concernsType.Urn,
                 RatingUrn = concernsRating.Urn,
-                StatusUrn = 1
+                StatusUrn = 1,
+                MeansOfReferralUrn = concernsMeansOfReferral.Urn
             };
 
             var httpCreateRequestMessage1 = new HttpRequestMessage
@@ -552,10 +557,10 @@ namespace TramsDataApi.Test.Integration
             createResponse2.StatusCode.Should().Be(201);
             
             var createdRecord1 = ConcernsRecordFactory
-                .Create(recordCreateRequest1, currentConcernsCase, concernsType, concernsRating);
+                .Create(recordCreateRequest1, currentConcernsCase, concernsType, concernsRating, concernsMeansOfReferral);
             createdRecord1.Urn = content1.Data.Urn;
             var createdRecord2 = ConcernsRecordFactory
-                .Create(recordCreateRequest2, currentConcernsCase, concernsType, concernsRating);
+                .Create(recordCreateRequest2, currentConcernsCase, concernsType, concernsRating, concernsMeansOfReferral);
             createdRecord2.Urn = content2.Data.Urn;
             var createdRecords = new List<ConcernsRecord> {createdRecord1, createdRecord2};
             var expected = createdRecords
