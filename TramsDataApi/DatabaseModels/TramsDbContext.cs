@@ -85,8 +85,6 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.HtbDate).HasColumnType("date");
 
-                entity.Property(e => e.HtbDateInserted).HasColumnType("date");
-
                 entity.Property(e => e.OutgoingTrustUkprn)
                     .IsRequired()
                     .HasMaxLength(8);
