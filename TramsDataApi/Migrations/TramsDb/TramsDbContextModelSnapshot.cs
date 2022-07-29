@@ -857,9 +857,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<bool?>("HasHtbDate")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("HasHtbDateInserted")
-                        .HasColumnType("bit");
-
                     b.Property<bool?>("HasTargetDateForTransfer")
                         .HasColumnType("bit");
 
@@ -873,9 +870,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("HtbDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime?>("HtbDateInserted")
                         .HasColumnType("date");
 
                     b.Property<string>("OtherBenefitValue")

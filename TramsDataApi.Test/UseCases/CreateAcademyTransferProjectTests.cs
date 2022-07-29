@@ -36,9 +36,8 @@ namespace TramsDataApi.Test.UseCases
                 .With(d => d.TargetDateForTransfer =
                     randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .With(d => d.HtbDateInserted = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
                 .Build();
-
+            
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
                 .With(c => c.Benefits = benefitsRequest)
                 .With(c => c.Dates = datesRequest)
