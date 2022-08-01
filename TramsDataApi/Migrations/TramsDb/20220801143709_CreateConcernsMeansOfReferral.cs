@@ -35,11 +35,13 @@ namespace TramsDataApi.Migrations.TramsDb
                 schema: "sdd",
                 table: "ConcernsMeansOfReferral",
                 columns: new[] { "Id", "CreatedAt", "Description", "Name", "UpdatedAt" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "ESFA activity, TFFT or other departmental activity", "Internal", new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "CIU casework, whistleblowing, self reported, RSCs or other government bodies", "External", new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) }
-                });
+                values: new object[] { 1, new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "ESFA activity, TFFT or other departmental activity", "Internal", new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
+                schema: "sdd",
+                table: "ConcernsMeansOfReferral",
+                columns: new[] { "Id", "CreatedAt", "Description", "Name", "UpdatedAt" },
+                values: new object[] { 2, new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "CIU casework, whistleblowing, self reported, RSCs or other government bodies", "External", new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ConcernsRecord_MeansOfReferralId",
@@ -55,7 +57,7 @@ namespace TramsDataApi.Migrations.TramsDb
                 principalSchema: "sdd",
                 principalTable: "ConcernsMeansOfReferral",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -78,6 +80,6 @@ namespace TramsDataApi.Migrations.TramsDb
                 name: "MeansOfReferralId",
                 schema: "sdd",
                 table: "ConcernsRecord");
-       }
+        }
     }
 }

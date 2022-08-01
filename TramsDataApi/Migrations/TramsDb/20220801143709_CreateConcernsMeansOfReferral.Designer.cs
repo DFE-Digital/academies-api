@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220728155636_CreateConcernsMeansOfReferral")]
+    [Migration("20220801143709_CreateConcernsMeansOfReferral")]
     partial class CreateConcernsMeansOfReferral
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1155,7 +1155,7 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MeansOfReferralId")
+                    b.Property<int?>("MeansOfReferralId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -1730,6 +1730,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1748,6 +1751,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 1,
                             ConditionTypeId = 1,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 1,
                             Name = "Trust financial plan",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1756,6 +1760,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 2,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 1,
                             Name = "Action plan",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1764,6 +1769,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 3,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 2,
                             Name = "Lines of accountability",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1772,6 +1778,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 4,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 3,
                             Name = "Providing sufficient challenge",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1780,6 +1787,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 5,
                             ConditionTypeId = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 4,
                             Name = "Scheme of delegation",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1788,6 +1796,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 6,
                             ConditionTypeId = 3,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 1,
                             Name = "Publishing requirements (compliance with)",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1796,6 +1805,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 7,
                             ConditionTypeId = 4,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 1,
                             Name = "Financial returns",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -1833,6 +1843,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1848,6 +1861,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 1,
                             Name = "Financial management conditions",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1855,6 +1869,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 2,
                             Name = "Governance conditions",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1862,6 +1877,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DisplayOrder = 3,
                             Name = "Compliance conditions",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1869,7 +1885,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Standard conditions (Mandatory)",
+                            DisplayOrder = 4,
+                            Name = "Standard conditions (mandatory)",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1898,58 +1915,58 @@ namespace TramsDataApi.Migrations.TramsDb
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cash flow problems",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cumulative deficit (actual)",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cumulative deficit (projected)",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Governance concerns",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
-                            Name = "Non-Compliance with Academies Financial/Trust Handbook",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Non-compliance with Academies Financial/Trust Handbook",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
-                            Name = "Non-Compliance with financial returns",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Non-compliance with financial returns",
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Risk of insolvency",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070),
+                            CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Safeguarding",
-                            UpdatedAt = new DateTime(2022, 7, 20, 10, 34, 44, 985, DateTimeKind.Local).AddTicks(9070)
+                            UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -1988,6 +2005,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsClosingState")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -2003,6 +2023,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsClosingState = false,
                             Name = "Preparing warning letter",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -2010,6 +2031,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsClosingState = false,
                             Name = "Sent to trust",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -2018,6 +2040,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 3,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "The warning letter is no longer needed.",
+                            IsClosingState = true,
                             Name = "Cancel warning letter",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -2026,6 +2049,7 @@ namespace TramsDataApi.Migrations.TramsDb
                             Id = 4,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "You are satisfied that all the conditions have been, or will be, met as outlined in the letter",
+                            IsClosingState = true,
                             Name = "Conditions met",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -2033,7 +2057,8 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\"",
+                            Description = "Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\".",
+                            IsClosingState = true,
                             Name = "Escalate to Notice To Improve",
                             UpdatedAt = new DateTime(2022, 7, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -2318,8 +2343,7 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.HasOne("TramsDataApi.DatabaseModels.ConcernsMeansOfReferral", "ConcernsMeansOfReferral")
                         .WithMany("FkConcernsRecord")
                         .HasForeignKey("MeansOfReferralId")
-                        .HasConstraintName("FK__ConcernsRecord_ConcernsMeansOfReferral")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK__ConcernsRecord_ConcernsMeansOfReferral");
 
                     b.HasOne("TramsDataApi.DatabaseModels.ConcernsRating", "ConcernsRating")
                         .WithMany("FkConcernsRecord")
