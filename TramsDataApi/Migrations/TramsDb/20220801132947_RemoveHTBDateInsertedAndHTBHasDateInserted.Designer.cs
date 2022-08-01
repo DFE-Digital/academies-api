@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220801132947_RemoveHTBDateInsertedAndHTBHasDateInserted")]
+    partial class RemoveHTBDateInsertedAndHTBHasDateInserted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1015,56 +1017,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.ToTable("ConcernsCase","sdd");
                 });
 
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsMeansOfReferral", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Urn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
-
-                    b.HasKey("Id")
-                        .HasName("PK__CMeansOfReferral");
-
-                    b.ToTable("ConcernsMeansOfReferral","sdd");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "ESFA activity, TFFT or other departmental activity",
-                            Name = "Internal",
-                            UpdatedAt = new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Urn = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "CIU casework, whistleblowing, self reported, RSCs or other government bodies",
-                            Name = "External",
-                            UpdatedAt = new DateTime(2022, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Urn = 0
-                        });
-                });
-
             modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsRating", b =>
                 {
                     b.Property<int>("Id")
@@ -1153,9 +1105,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MeansOfReferralId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -1186,8 +1135,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasName("PK__CRecord");
 
                     b.HasIndex("CaseId");
-
-                    b.HasIndex("MeansOfReferralId");
 
                     b.HasIndex("RatingId");
 
@@ -2337,12 +2284,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasConstraintName("FK__ConcernsCase_ConcernsRecord")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("TramsDataApi.DatabaseModels.ConcernsMeansOfReferral", "ConcernsMeansOfReferral")
-                        .WithMany("FkConcernsRecord")
-                        .HasForeignKey("MeansOfReferralId")
-                        .HasConstraintName("FK__ConcernsRecord_ConcernsMeansOfReferral")
-                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TramsDataApi.DatabaseModels.ConcernsRating", "ConcernsRating")
                         .WithMany("FkConcernsRecord")
