@@ -351,13 +351,11 @@ namespace TramsDataApi.Test.Integration
             var linkedCase = _dbContext.ConcernsCase.First();
             var linkedType = _dbContext.ConcernsTypes.First();
             var linkedRating = _dbContext.ConcernsRatings.First();
-            var linkedMeansOfReferral = _dbContext.ConcernsMeansOfReferrals.First();
 
             var createRequest = Builder<ConcernsRecordRequest>.CreateNew()
                 .With(c => c.CaseUrn = linkedCase.Urn)
                 .With(c => c.TypeUrn = linkedType.Urn)
                 .With(c => c.RatingUrn = linkedRating.Urn)
-                .With(c => c.MeansOfReferralUrn = linkedMeansOfReferral.Urn)
                 .Build();
             
             var httpRequestMessage = new HttpRequestMessage
@@ -371,7 +369,7 @@ namespace TramsDataApi.Test.Integration
                 Content =  JsonContent.Create(createRequest)
             };
             
-            var expectedRecordToBeCreated = ConcernsRecordFactory.Create(createRequest, linkedCase, linkedType, linkedRating, linkedMeansOfReferral);
+            var expectedRecordToBeCreated = ConcernsRecordFactory.Create(createRequest, linkedCase, linkedType, linkedRating, null);
             var expectedConcernsRecordResponse = ConcernsRecordResponseFactory.Create(expectedRecordToBeCreated);
             var expected = new ApiSingleResponseV2<ConcernsRecordResponse>(expectedConcernsRecordResponse);
             
@@ -463,6 +461,96 @@ namespace TramsDataApi.Test.Integration
             content.Data.Should().BeEquivalentTo(expectedContent);
         }
 
+        [Theory]
+        [InlineData(true, true)]
+        [InlineData(false, false)]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        public async Task UpdateConcernsRecord_MeansOfReferral_ShouldReturnTheUpdatedConcernsRecord(bool hasCurrentMeansOfReferral, bool isAddingMeansOfReferral)
+        {
+            var concernsCase = new ConcernsCase
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                CreatedBy = _randomGenerator.NextString(3, 10),
+                Description = _randomGenerator.NextString(3, 10),
+                CrmEnquiry = _randomGenerator.NextString(3, 10),
+                TrustUkprn = _randomGenerator.NextString(3, 10),
+                ReasonAtReview = _randomGenerator.NextString(3, 10),
+                DeEscalation = _randomGenerator.DateTime(),
+                Issue = _randomGenerator.NextString(3, 10),
+                CurrentStatus = _randomGenerator.NextString(3, 10),
+                CaseAim = _randomGenerator.NextString(3, 10),
+                DeEscalationPoint = _randomGenerator.NextString(3, 10),
+                NextSteps = _randomGenerator.NextString(3, 10),
+                DirectionOfTravel = _randomGenerator.NextString(3, 10),
+                StatusUrn = 2
+            };
+
+            var currentConcernsCase =  _dbContext.ConcernsCase.Add(concernsCase);
+            _dbContext.SaveChanges();
+            
+            var concernsType = _dbContext.ConcernsTypes.FirstOrDefault(t => t.Id == 1);
+            var concernsRating = _dbContext.ConcernsRatings.FirstOrDefault(r => r.Id == 1);
+            
+            var currentMeansOfReferral = hasCurrentMeansOfReferral
+                ? _dbContext.ConcernsMeansOfReferrals.FirstOrDefault(r => r.Id == 1)
+                : null;
+            
+            var updateMeansOfReferral = isAddingMeansOfReferral
+                ? _dbContext.ConcernsMeansOfReferrals.FirstOrDefault(r => r.Id == 2)
+                : null;
+            
+            var concernsRecord = new ConcernsRecord
+            {
+                CreatedAt = _randomGenerator.DateTime(),
+                UpdatedAt = _randomGenerator.DateTime(),
+                ReviewAt = _randomGenerator.DateTime(),
+                ClosedAt = _randomGenerator.DateTime(),
+                Name = _randomGenerator.NextString(3, 10),
+                Description = _randomGenerator.NextString(3, 10),
+                Reason = _randomGenerator.NextString(3, 10),
+                StatusUrn = 1,
+                ConcernsCase = currentConcernsCase.Entity,
+                ConcernsType = concernsType,
+                ConcernsRating = concernsRating,
+                ConcernsMeansOfReferral = currentMeansOfReferral
+            };
+            
+            var currentConcernsRecord =  _dbContext.ConcernsRecord.Add(concernsRecord);
+            _dbContext.SaveChanges();
+            var currentRecordUrn = currentConcernsRecord.Entity.Urn;
+
+            var updateRequest = Builder<ConcernsRecordRequest>.CreateNew()
+                .With(r => r.CaseUrn = concernsCase.Urn)
+                .With(r => r.TypeUrn = concernsType.Urn)
+                .With(r => r.RatingUrn = concernsRating.Urn)
+                .With(r => r.MeansOfReferralUrn = updateMeansOfReferral?.Urn)
+                .Build();
+            
+            var expectedConcernsRecord = ConcernsRecordFactory.Create(updateRequest, concernsCase, concernsType, concernsRating, updateMeansOfReferral ?? currentMeansOfReferral);
+            expectedConcernsRecord.Urn = currentRecordUrn;
+            var expectedContent = ConcernsRecordResponseFactory.Create(expectedConcernsRecord);
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri($"https://trams-api.com/v2/concerns-records/{currentRecordUrn}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+                Content =  JsonContent.Create(updateRequest)
+            };
+            var response = await _client.SendAsync(httpRequestMessage);
+            var content = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<ConcernsRecordResponse>>();
+            
+            response.StatusCode.Should().Be(200);
+            content.Data.Should().BeEquivalentTo(expectedContent);
+        }
+        
         [Fact]
         public async Task GetConcernsRecordsByConcernsCaseUid()
         {
