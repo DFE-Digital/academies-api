@@ -64,7 +64,7 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public ActionResult<ApiResponseV2<ConcernsRecordResponse>> GetByCaseUrn(int urn, int page = 1, int count = 50)
         {
-            _logger.LogInformation($"Attempting to update Concerns Case {urn}");
+            _logger.LogInformation($"Attempting to get Concerns Case {urn}");
             var records = _getConcernsRecordsByCaseUrn.Execute(urn);
 
             _logger.LogInformation($"Returning Records for Case urn: {urn}");
