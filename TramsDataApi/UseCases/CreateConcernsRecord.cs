@@ -31,7 +31,7 @@ namespace TramsDataApi.UseCases
             var concernsCase = _concernsCaseGateway.GetConcernsCaseByUrn(request.CaseUrn);
             var concernsType = _concernsTypeGateway.GetConcernsTypeByUrn(request.TypeUrn);
             var concernsRatings = _concernsRatingGateway.GetRatingByUrn(request.RatingUrn);
-            var concernsMeansOfReferral = _concernsMeansOfReferralGateway.GetMeansOfReferralByUrn(request.MeansOfReferralUrn);
+            var concernsMeansOfReferral = request.MeansOfReferralUrn != null ? _concernsMeansOfReferralGateway.GetMeansOfReferralByUrn((int)request.MeansOfReferralUrn) : null;
             var concernsRecordToCreate = ConcernsRecordFactory.Create(request, concernsCase, concernsType, concernsRatings, concernsMeansOfReferral);
             var savedConcernsRecord = _concernsRecordGateway.SaveConcernsCase(concernsRecordToCreate);
             return ConcernsRecordResponseFactory.Create(savedConcernsRecord);

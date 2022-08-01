@@ -1,3 +1,4 @@
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels;
@@ -30,20 +31,52 @@ namespace TramsDataApi.UseCases
         public ConcernsRecordResponse Execute(int urn, ConcernsRecordRequest request)
         {
             var currentConcernsRecord = _concernsRecordGateway.GetConcernsRecordByUrn(urn);
+            
             var concernsCase = _concernsCaseGateway.GetConcernsCaseByUrn(request.CaseUrn) ??
                                 currentConcernsRecord.ConcernsCase;
+            
             var concernsType = _concernsTypeGateway.GetConcernsTypeByUrn(request.TypeUrn) ??
                                 currentConcernsRecord.ConcernsType;
-            var concernsRating = _concernsRatingGateway.GetRatingByUrn(request.RatingUrn) ?? 
-                                currentConcernsRecord.ConcernsRating;
-            var concernsMeansOfReferral = _concernsMeansOfReferralGateway.GetMeansOfReferralByUrn(request.MeansOfReferralUrn) ?? 
-                                currentConcernsRecord.ConcernsMeansOfReferral;
             
+            var concernsRating = _concernsRatingGateway.GetRatingByUrn(request.RatingUrn) ?? 
+                                 currentConcernsRecord.ConcernsRating;
+
+            if (!TryGetConcernsMeansOfReferralByUrn(request.MeansOfReferralUrn, out var concernsMeansOfReferral))
+            {
+                TryGetConcernsMeansOfReferralById(currentConcernsRecord.MeansOfReferralId, out concernsMeansOfReferral);
+            }
+
             var concernsCaseToUpdate = ConcernsRecordFactory
                 .Update(currentConcernsRecord, request, concernsCase, concernsType, concernsRating, concernsMeansOfReferral);
             
             var updatedConcernsRecord = _concernsRecordGateway.Update(concernsCaseToUpdate);
             return ConcernsRecordResponseFactory.Create(updatedConcernsRecord);
+        }
+
+        private bool TryGetConcernsMeansOfReferralById(int? id, out ConcernsMeansOfReferral meansOfReferral)
+        {
+            if (id == null)
+            {
+                meansOfReferral = null;
+                return false;
+            }
+
+            meansOfReferral = _concernsMeansOfReferralGateway.GetMeansOfReferralById((int)id);
+
+            return meansOfReferral != null;
+        }
+ 
+        private bool TryGetConcernsMeansOfReferralByUrn(int? urn, out ConcernsMeansOfReferral meansOfReferral)
+        {
+            if (urn == null)
+            {
+                meansOfReferral = null;
+                return false;
+            }
+
+            meansOfReferral = _concernsMeansOfReferralGateway.GetMeansOfReferralByUrn((int)urn);
+
+            return meansOfReferral != null;
         }
     }
 }

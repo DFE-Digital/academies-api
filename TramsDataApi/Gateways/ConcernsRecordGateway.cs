@@ -1,11 +1,12 @@
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
 {
     public class ConcernsRecordGateway : IConcernsRecordGateway
     {
-        private TramsDbContext _tramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
 
         public ConcernsRecordGateway(TramsDbContext tramsDbContext)
         {

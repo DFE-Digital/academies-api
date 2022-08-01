@@ -17,7 +17,7 @@ namespace TramsDataApi.DatabaseModels
         public int RatingId { get; set; }
         public int Urn { get; set; }
         public int StatusUrn { get; set; }
-        public int MeansOfReferralId { get; set; }
+        public int? MeansOfReferralId { get; set; }
         public virtual ConcernsCase ConcernsCase { get; set; }
         public virtual ConcernsType ConcernsType { get; set; }
         public virtual ConcernsRating ConcernsRating { get; set; }

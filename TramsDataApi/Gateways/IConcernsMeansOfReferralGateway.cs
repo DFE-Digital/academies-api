@@ -6,6 +6,7 @@ namespace TramsDataApi.Gateways
     public interface IConcernsMeansOfReferralGateway
     {
         IList<ConcernsMeansOfReferral> GetMeansOfReferrals();
-        ConcernsMeansOfReferral GetMeansOfReferralByUrn(long urn);
+        ConcernsMeansOfReferral GetMeansOfReferralByUrn(int urn);
+        ConcernsMeansOfReferral GetMeansOfReferralById(int id);
     }
 }

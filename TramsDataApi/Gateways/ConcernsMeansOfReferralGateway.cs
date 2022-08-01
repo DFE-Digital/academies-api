@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -15,12 +16,26 @@ namespace TramsDataApi.Gateways
 
         public IList<ConcernsMeansOfReferral> GetMeansOfReferrals()
         {
-            return _tramsDbContext.ConcernsMeansOfReferrals.ToList();
+            return _tramsDbContext
+                .ConcernsMeansOfReferrals
+                .AsNoTracking()
+                .ToList();
         }
 
-        public ConcernsMeansOfReferral GetMeansOfReferralByUrn(long urn)
+        public ConcernsMeansOfReferral GetMeansOfReferralByUrn(int urn)
         {
-            return _tramsDbContext.ConcernsMeansOfReferrals.SingleOrDefault(m => m.Urn == urn);
+            return _tramsDbContext
+                .ConcernsMeansOfReferrals
+                .AsNoTracking()
+                .SingleOrDefault(m => m.Urn == urn);
+        }
+        
+        public ConcernsMeansOfReferral GetMeansOfReferralById(int id)
+        {
+            return _tramsDbContext
+                .ConcernsMeansOfReferrals
+                .AsNoTracking()
+                .SingleOrDefault(m => m.Id == id);
         }
     }
 }

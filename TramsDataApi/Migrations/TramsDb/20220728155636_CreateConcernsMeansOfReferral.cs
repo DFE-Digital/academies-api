@@ -11,8 +11,7 @@ namespace TramsDataApi.Migrations.TramsDb
                 name: "MeansOfReferralId",
                 schema: "sdd",
                 table: "ConcernsRecord",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "ConcernsMeansOfReferral",
