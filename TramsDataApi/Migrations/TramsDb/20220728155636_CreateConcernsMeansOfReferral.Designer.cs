@@ -2319,8 +2319,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         .WithMany("FkConcernsRecord")
                         .HasForeignKey("MeansOfReferralId")
                         .HasConstraintName("FK__ConcernsRecord_ConcernsMeansOfReferral")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TramsDataApi.DatabaseModels.ConcernsRating", "ConcernsRating")
                         .WithMany("FkConcernsRecord")
