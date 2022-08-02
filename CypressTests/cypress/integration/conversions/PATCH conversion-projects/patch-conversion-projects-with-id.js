@@ -7,24 +7,26 @@ describe("GET conversion-projects", () => {
     cy.request({
         method : 'PATCH',
         failOnStatusCode: false,
-        url: url+"/conversion-projects/abcdef",
+        url: url+"conversion-projects/abcdef",
         headers: {
           ApiKey: apiKey,
           "Content-type" : "application/json"
+        },
+        body: {
+
         }
       })
       .should((response)=>{
         cy.log(response)
-        expect(response.body.errors.id).to.contain('The value \'abcdef\' is not valid.')
-        expect(response.status).to.eq(400)
+        expect(response.status).to.eq(404)
       })
-  });
+  })
 
   it('Should reject PATCH request to URI containing invalid project Id with 404- non-existant ID', () => {
     cy.request({
         method : 'PATCH',
         failOnStatusCode: false,
-        url: url+"/conversion-projects/99999999",
+        url: url+"conversion-projects/99999999",
         headers: {
           ApiKey: apiKey,
         },
@@ -40,7 +42,7 @@ describe("GET conversion-projects", () => {
       cy.request({
           method : 'PATCH',
           failOnStatusCode: false,
-          url: url+"/conversion-projects/-1",
+          url: url+"conversion-projects/-1",
           headers: {
             ApiKey: apiKey,
           },

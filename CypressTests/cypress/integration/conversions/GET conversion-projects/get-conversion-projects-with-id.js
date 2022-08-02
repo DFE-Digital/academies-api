@@ -3,10 +3,10 @@ describe("GET conversion-projects", () => {
  let apiKey = Cypress.env('apiKey');
  let url = Cypress.env('url')
 
-  it('Should reject invalid \'?count\' parameters - alphabetical chars', () => {
+  it('Should reject invalid parameters - alphabetical chars', () => {
     cy.request({
         failOnStatusCode: false,
-        url: url+"/conversion-projects?count=abcdef",
+        url: url+"conversion-projects?count=abcdef",
         headers: {
           ApiKey: apiKey,
         }
@@ -14,10 +14,10 @@ describe("GET conversion-projects", () => {
       .its('body.errors.count').should('contain','The value \'abcdef\' is not valid.')
   });
 
-  it('Should reject invalid \'?count\' parameters - negative integer value', () => {
+  it('Should reject invalid parameters - negative integer value', () => {
     cy.request({
         failOnStatusCode: false,
-        url: url+"/conversion-projects?count=-1",
+        url: url+"conversion-projects?count=-1",
         headers: {
           ApiKey: apiKey,
         }
@@ -27,10 +27,10 @@ describe("GET conversion-projects", () => {
       })
     })    
 
-    it('Should reject invalid \'?count\' parameters - negative integer value', () => {
+    it('Should reject invalidparameters - negative integer value', () => {
       cy.request({
           failOnStatusCode: false,
-          url: url+"/conversion-projects?count=-1",
+          url: url+"conversion-projects?count=-1",
           headers: {
             ApiKey: apiKey,
           }
