@@ -3,13 +3,14 @@ using TramsDataApi.RequestModels;
 
 namespace TramsDataApi.Factories
 {
-    public class ConcernsRecordFactory
+    public static class ConcernsRecordFactory
     {
         public static ConcernsRecord Create(
             ConcernsRecordRequest concernsRecordRequest, 
             ConcernsCase concernsCase, 
             ConcernsType concernsType, 
-            ConcernsRating concernsRating)
+            ConcernsRating concernsRating,
+            ConcernsMeansOfReferral concernsMeansOfReferral = null)
         {
             return new ConcernsRecord
             {
@@ -23,18 +24,19 @@ namespace TramsDataApi.Factories
                 ConcernsCase = concernsCase,
                 ConcernsType = concernsType,
                 ConcernsRating = concernsRating,
-                StatusUrn = concernsRecordRequest.StatusUrn
+                StatusUrn = concernsRecordRequest.StatusUrn,
+                ConcernsMeansOfReferral = concernsMeansOfReferral
             };
         }
-        
+
         public static ConcernsRecord Update( 
             ConcernsRecord original,
             ConcernsRecordRequest concernsRecordRequest, 
             ConcernsCase concernsCase, 
             ConcernsType concernsType, 
-            ConcernsRating concernsRating)
+            ConcernsRating concernsRating, 
+            ConcernsMeansOfReferral concernsMeansOfReferral = null)
         {
-
             original.CreatedAt = concernsRecordRequest.CreatedAt;
             original.UpdatedAt = concernsRecordRequest.UpdatedAt;
             original.ReviewAt = concernsRecordRequest.ReviewAt;
@@ -46,6 +48,11 @@ namespace TramsDataApi.Factories
             original.ConcernsType = concernsType;
             original.ConcernsRating = concernsRating;
             original.StatusUrn = concernsRecordRequest.StatusUrn;
+
+            if (concernsMeansOfReferral != null)
+            {
+                original.ConcernsMeansOfReferral = concernsMeansOfReferral;
+            }
 
             return original;
         }

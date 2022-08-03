@@ -21,6 +21,7 @@ namespace TramsDataApi.Factories
                 TypeUrn = concernsRecord.ConcernsType.Urn,
                 CaseUrn = concernsRecord.ConcernsCase.Urn,
                 RatingUrn = concernsRecord.ConcernsRating.Urn,
+                MeansOfReferralUrn = concernsRecord.ConcernsMeansOfReferral?.Urn
             };
         }
     }

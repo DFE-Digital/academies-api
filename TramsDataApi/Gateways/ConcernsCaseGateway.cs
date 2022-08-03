@@ -48,6 +48,8 @@ namespace TramsDataApi.Gateways
                 .ThenInclude(record => record.ConcernsRating)
                 .Include(c => c.ConcernsRecords)
                 .ThenInclude(record => record.ConcernsType)
+                .Include(c => c.ConcernsRecords)
+                .ThenInclude(record => record.ConcernsMeansOfReferral)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Urn == urn);
             
