@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220801143709_CreateConcernsMeansOfReferral")]
+    partial class CreateConcernsMeansOfReferral
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1451,12 +1453,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsClosedStatus")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
@@ -1473,8 +1469,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 1L,
                             CreatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Awaiting Plan",
-                            IsClosedStatus = false,
                             Name = "AwaitingPlan",
                             UpdatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1482,8 +1476,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 2L,
                             CreatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Return To Trust",
-                            IsClosedStatus = false,
                             Name = "ReturnToTrust",
                             UpdatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1491,8 +1483,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 3L,
                             CreatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Viable Plan Received",
-                            IsClosedStatus = true,
                             Name = "ViablePlanReceived",
                             UpdatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -1500,8 +1490,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         {
                             Id = 4L,
                             CreatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Abandoned",
-                            IsClosedStatus = true,
                             Name = "Abandoned",
                             UpdatedAt = new DateTime(2022, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });

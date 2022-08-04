@@ -15,17 +15,17 @@ describe("GET conversion-projects", () => {
   it("Should return a valid 401 response when omitting API key", () => {
     cy.request({
       failOnStatusCode: false,
-      url: url+"/conversion-projects?",
+      url: url+"conversion-projects?",
       headers: {
         ApiKey: '',
       }
     }).its('status').should('eq', 401)
   });
 
-  it('Should reject invalid \'?count\' parameters - alphabetical chars', () => {
+  it('Should reject invalid parameters - alphabetical chars', () => {
     cy.request({
         failOnStatusCode: false,
-        url: url+"/conversion-projects?count=abcdef",
+        url: url+"conversion-projects?count=abcdef",
         headers: {
           ApiKey: apiKey,
         }

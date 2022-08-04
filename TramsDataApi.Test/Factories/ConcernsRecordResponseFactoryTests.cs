@@ -16,6 +16,8 @@ namespace TramsDataApi.Test.Factories
             var concernCase = Builder<ConcernsCase>.CreateNew().Build();
             var concernType = Builder<ConcernsType>.CreateNew().Build();
             var concernRating = Builder<ConcernsRating>.CreateNew().Build();
+            var concernMeansOfReferral = Builder<ConcernsMeansOfReferral>.CreateNew().Build();
+            
             var concernsRecord = new ConcernsRecord
             {
                 Id = 1,
@@ -33,7 +35,8 @@ namespace TramsDataApi.Test.Factories
                 StatusUrn = 23,
                 ConcernsCase = concernCase,
                 ConcernsType = concernType,
-                ConcernsRating = concernRating
+                ConcernsRating = concernRating,
+                ConcernsMeansOfReferral = concernMeansOfReferral
             };
 
             var expected = new ConcernsRecordResponse
@@ -50,6 +53,7 @@ namespace TramsDataApi.Test.Factories
                 TypeUrn = concernType.Urn,
                 CaseUrn = concernCase.Urn,
                 RatingUrn = concernRating.Urn,
+                MeansOfReferralUrn = concernMeansOfReferral.Urn
             };
 
             var result = ConcernsRecordResponseFactory.Create(concernsRecord);
