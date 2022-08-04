@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.CaseActions.FinancialPlan;
 using TramsDataApi.ResponseModels;
@@ -76,6 +76,28 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiSingleResponseV2<List<FinancialPlanStatus>>> GetAllStatuses()
         {
             var statuses = _getAllStatuses.Execute(null);
+            var response = new ApiSingleResponseV2<List<FinancialPlanStatus>>(statuses);
+
+            return Ok(response);
+        }
+        
+        [HttpGet]
+        [Route("closure-statuses")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<List<FinancialPlanStatus>>> GetClosureStatuses()
+        {
+            var statuses = _getAllStatuses.Execute(null).Where(s => s.IsClosedStatus).ToList();
+            var response = new ApiSingleResponseV2<List<FinancialPlanStatus>>(statuses);
+
+            return Ok(response);
+        }
+        
+        [HttpGet]
+        [Route("open-statuses")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiSingleResponseV2<List<FinancialPlanStatus>>> GetOpenStatuses()
+        {
+            var statuses = _getAllStatuses.Execute(null).Where(s => !s.IsClosedStatus).ToList();
             var response = new ApiSingleResponseV2<List<FinancialPlanStatus>>(statuses);
 
             return Ok(response);

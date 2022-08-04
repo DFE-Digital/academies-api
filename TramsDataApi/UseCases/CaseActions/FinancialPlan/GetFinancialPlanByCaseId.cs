@@ -20,7 +20,6 @@ namespace TramsDataApi.UseCases.CaseActions
         {
             return ExecuteAsync(caseUrn).Result;
         }
-
         public async Task<List<FinancialPlanResponse>> ExecuteAsync(int caseUrn)
         {
             var fps = await _gateway.GetFinancialPlansByCaseUrn(caseUrn);

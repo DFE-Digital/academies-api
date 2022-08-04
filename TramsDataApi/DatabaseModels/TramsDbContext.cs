@@ -424,10 +424,10 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasData(
                      new FinancialPlanStatus[]
                     {
-                        new FinancialPlanStatus{ Id = 1, Name = "AwaitingPlan", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new FinancialPlanStatus{ Id = 2, Name = "ReturnToTrust", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new FinancialPlanStatus{ Id = 3, Name = "ViablePlanReceived", CreatedAt = createdAt, UpdatedAt = createdAt },
-                        new FinancialPlanStatus{ Id = 4, Name = "Abandoned", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new FinancialPlanStatus{ Id = 1, Name = "AwaitingPlan", Description = "Awaiting Plan", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosedStatus = false },
+                        new FinancialPlanStatus{ Id = 2, Name = "ReturnToTrust", Description = "Return To Trust", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosedStatus = false },
+                        new FinancialPlanStatus{ Id = 3, Name = "ViablePlanReceived", Description = "Viable Plan Received", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosedStatus = true },
+                        new FinancialPlanStatus{ Id = 4, Name = "Abandoned", Description = "Abandoned", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosedStatus = true }
                     });
             });
 

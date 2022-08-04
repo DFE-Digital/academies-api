@@ -30,7 +30,7 @@ namespace TramsDataApi.Test.Controllers
         private readonly Mock<IUseCase<PatchFinancialPlanRequest, FinancialPlanResponse>> _mockPatchFinancialPlanUseCase;
         private readonly Mock<IUseCase<object, List<FinancialPlanStatus>>> _mockGetAllStatuses;
 
-        private readonly FinancialPlanController controllerSUT;
+        private readonly FinancialPlanController _controllerSut;
 
         public FinancialPlanControllerTests()
         {
@@ -41,7 +41,7 @@ namespace TramsDataApi.Test.Controllers
             _mockPatchFinancialPlanUseCase = new Mock<IUseCase<PatchFinancialPlanRequest, FinancialPlanResponse>>();
             _mockGetAllStatuses = new Mock<IUseCase<object, List<FinancialPlanStatus>>>();
 
-            controllerSUT = new FinancialPlanController(_mockLogger.Object, _mockCreateFinancialPlanUseCase.Object, _mockGetFinancialPlanByIdUseCase.Object,
+            _controllerSut = new FinancialPlanController(_mockLogger.Object, _mockCreateFinancialPlanUseCase.Object, _mockGetFinancialPlanByIdUseCase.Object,
                 _mockGetFinancialPlansByCaseUseCase.Object, _mockPatchFinancialPlanUseCase.Object, _mockGetAllStatuses.Object);
         }
 
@@ -64,7 +64,7 @@ namespace TramsDataApi.Test.Controllers
                 .Setup(x => x.Execute(It.IsAny<CreateFinancialPlanRequest>()))
                 .Returns(response);
 
-            var result = controllerSUT.Create(new CreateFinancialPlanRequest
+            var result = _controllerSut.Create(new CreateFinancialPlanRequest
             {
                 StatusId = status,
                 CaseUrn = caseUrn,
@@ -85,18 +85,6 @@ namespace TramsDataApi.Test.Controllers
                 Notes = "match"
             };
 
-            var fps = new List<FinancialPlanCase> {
-                matchingFinancialPlan,
-                new FinancialPlanCase {
-                    CaseUrn = 222,
-                    Notes = "FinancialPlan 2"
-                },
-                new FinancialPlanCase {
-                    CaseUrn = 456,
-                    Notes = "FinancialPlan 3"
-                }
-            };
-
             var fpResponse = Builder<FinancialPlanResponse>
                 .CreateNew()
                 .With(r => r.CaseUrn = matchingFinancialPlan.CaseUrn)
@@ -109,13 +97,13 @@ namespace TramsDataApi.Test.Controllers
                 .Setup(x => x.Execute(caseUrn))
                 .Returns(collection);
 
-            OkObjectResult controllerResponse = controllerSUT.GetFinancialPlansByCaseId(caseUrn).Result as OkObjectResult;
+            OkObjectResult controllerResponse = _controllerSut.GetFinancialPlansByCaseId(caseUrn).Result as OkObjectResult;
 
-            var actualResult = controllerResponse.Value as ApiSingleResponseV2<List<FinancialPlanResponse>>;
+            var actualResult = controllerResponse?.Value as ApiSingleResponseV2<List<FinancialPlanResponse>>;
 
-            actualResult.Data.Should().NotBeNull();
-            actualResult.Data.Count.Should().Be(1);
-            actualResult.Data.First().CaseUrn.Should().Be(caseUrn);
+            actualResult?.Data.Should().NotBeNull();
+            actualResult?.Data.Count.Should().Be(1);
+            actualResult?.Data.First().CaseUrn.Should().Be(caseUrn);
         }
 
         [Fact]
@@ -129,18 +117,6 @@ namespace TramsDataApi.Test.Controllers
                 Notes = "match"
             };
 
-            var fps = new List<FinancialPlanCase> {
-                matchingFinancialPlan,
-                new FinancialPlanCase {
-                    Id = 222,
-                    Notes = "FinancialPlan 2"
-                },
-                new FinancialPlanCase {
-                    Id = 456,
-                    Notes = "FinancialPlan 3"
-                }
-            };
-
             var fpResponse = Builder<FinancialPlanResponse>
                 .CreateNew()
                 .With(r => r.Id = matchingFinancialPlan.Id)
@@ -151,12 +127,12 @@ namespace TramsDataApi.Test.Controllers
                 .Setup(x => x.Execute(fpId))
                 .Returns(fpResponse);
 
-            OkObjectResult controllerResponse = controllerSUT.GetFinancialPlanById(fpId).Result as OkObjectResult;
+            OkObjectResult controllerResponse = _controllerSut.GetFinancialPlanById(fpId).Result as OkObjectResult;
 
-            var actualResult = controllerResponse.Value as ApiSingleResponseV2<FinancialPlanResponse>;
+            var actualResult = controllerResponse?.Value as ApiSingleResponseV2<FinancialPlanResponse>;
 
-            actualResult.Data.Should().NotBeNull();
-            actualResult.Data.Id.Should().Be(fpId);
+            actualResult?.Data.Should().NotBeNull();
+            actualResult?.Data.Id.Should().Be(fpId);
         }
 
         [Fact]
@@ -191,12 +167,12 @@ namespace TramsDataApi.Test.Controllers
                 .Setup(x => x.Execute(request))
                 .Returns(fpResponse);
 
-            OkObjectResult controllerResponse = controllerSUT.Patch(request).Result as OkObjectResult;
+            OkObjectResult controllerResponse = _controllerSut.Patch(request).Result as OkObjectResult;
 
-            var actualResult = controllerResponse.Value as ApiSingleResponseV2<FinancialPlanResponse>;
+            var actualResult = controllerResponse?.Value as ApiSingleResponseV2<FinancialPlanResponse>;
 
-            actualResult.Data.Should().NotBeNull();
-            actualResult.Data.Id.Should().Be(fpId);
+            actualResult?.Data.Should().NotBeNull();
+            actualResult?.Data.Id.Should().Be(fpId);
         }
 
         [Fact]
@@ -213,13 +189,60 @@ namespace TramsDataApi.Test.Controllers
                 .Setup(x => x.Execute(null))
                 .Returns(statuses);
 
-            OkObjectResult controllerResponse = controllerSUT.GetAllStatuses().Result as OkObjectResult;
+            var controllerResponse = _controllerSut.GetAllStatuses().Result as OkObjectResult;
 
-            var actualResult = controllerResponse.Value as ApiSingleResponseV2<List<FinancialPlanStatus>>;
+            var actualResult = controllerResponse!.Value as ApiSingleResponseV2<List<FinancialPlanStatus>>;
 
-            actualResult.Data.Should().NotBeNull();
-            actualResult.Data.Count.Should().Be(noOfStatuses);
-            actualResult.Data.First().Name.Should().Be(statuses.First().Name);
+            actualResult?.Data.Should().NotBeNull();
+            actualResult?.Data.Should().BeEquivalentTo(statuses);
+        }
+        
+        [Fact]
+        public void GetOpenStatuses_ReturnsListOfStatusesApplicableToOpenFinancialPlanActions()
+        {
+            var noOfStatusesToCreate = 4;
+
+            var statuses = Builder<FinancialPlanStatus>
+                .CreateListOfSize(noOfStatusesToCreate)
+                .Build()
+                .ToList();
+
+            var expectedStatuses = statuses.Where(s => !s.IsClosedStatus).ToList();
+
+            _mockGetAllStatuses
+                .Setup(x => x.Execute(null))
+                .Returns(statuses);
+
+            var controllerResponse = _controllerSut.GetOpenStatuses().Result as OkObjectResult;
+
+            var actualResult = controllerResponse!.Value as ApiSingleResponseV2<List<FinancialPlanStatus>>;
+
+            actualResult?.Data.Should().NotBeNull();
+            actualResult?.Data.Should().BeEquivalentTo(expectedStatuses);
+        }
+                
+        [Fact]
+        public void GetClosedStatuses_ReturnsListOfStatusesApplicableToClosedFinancialPlanActions()
+        {
+            var noOfStatusesToCreate = 4;
+
+            var statuses = Builder<FinancialPlanStatus>
+                .CreateListOfSize(noOfStatusesToCreate)
+                .Build()
+                .ToList();
+
+            var expectedStatuses = statuses.Where(s => s.IsClosedStatus).ToList();
+
+            _mockGetAllStatuses
+                .Setup(x => x.Execute(null))
+                .Returns(statuses);
+
+            var controllerResponse = _controllerSut.GetClosureStatuses().Result as OkObjectResult;
+
+            var actualResult = controllerResponse!.Value as ApiSingleResponseV2<List<FinancialPlanStatus>>;
+
+            actualResult?.Data.Should().NotBeNull();
+            actualResult?.Data.Should().BeEquivalentTo(expectedStatuses);
         }
     }
 }
