@@ -41,12 +41,16 @@ namespace TramsDataApi.Gateways
 
         public async Task<FinancialPlanCase> GetFinancialPlanById(long financialPlanId)
         {
-            return await _tramsDbContext.FinancialPlanCases.Include(fp => fp.Status).SingleOrDefaultAsync(fp => fp.Id == financialPlanId);
+            return await _tramsDbContext.FinancialPlanCases
+                .Include(fp => fp.Status)
+                .SingleOrDefaultAsync(fp => fp.Id == financialPlanId);
         }
 
         public async Task<ICollection<FinancialPlanCase>> GetFinancialPlansByCaseUrn(int caseUrn)
         {
-            return await _tramsDbContext.FinancialPlanCases.Include(fp => fp.Status).Where(s => s.CaseUrn == caseUrn).ToListAsync();
+            return await _tramsDbContext.FinancialPlanCases
+                .Include(fp => fp.Status)
+                .Where(s => s.CaseUrn == caseUrn).ToListAsync();
         }
 
         public async Task<FinancialPlanCase> PatchFinancialPlan(FinancialPlanCase patchedFinancialPlan)
