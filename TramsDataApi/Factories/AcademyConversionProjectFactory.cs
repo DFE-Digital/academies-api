@@ -89,6 +89,7 @@ namespace TramsDataApi.Factories
             project.ConversionSupportGrantAmount =
                 updateRequest.ConversionSupportGrantAmount ?? project.ConversionSupportGrantAmount;
             project.ConversionSupportGrantChangeReason = updateRequest.ConversionSupportGrantChangeReason ?? project.ConversionSupportGrantChangeReason;
+            project.ProjectStatus = updateRequest.ProjectStatus ?? project.ProjectStatus;
 
             return project;
         }

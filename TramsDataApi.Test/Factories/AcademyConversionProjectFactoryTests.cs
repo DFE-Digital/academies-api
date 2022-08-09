@@ -1,7 +1,6 @@
 using System;
 using AutoFixture;
 using FluentAssertions;
-using FluentAssertions.Common;
 using Newtonsoft.Json;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
@@ -153,6 +152,7 @@ namespace TramsDataApi.Test.Factories
             expected.KeyStage5PerformanceAdditionalInformation = updateRequest.KeyStage5PerformanceAdditionalInformation;
             expected.ConversionSupportGrantAmount = updateRequest.ConversionSupportGrantAmount ?? default;
             expected.ConversionSupportGrantChangeReason = updateRequest.ConversionSupportGrantChangeReason;
+            expected.ProjectStatus = updateRequest.ProjectStatus;
 
             return expected;
         }
