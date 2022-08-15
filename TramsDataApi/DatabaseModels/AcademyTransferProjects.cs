@@ -48,6 +48,8 @@ namespace TramsDataApi.DatabaseModels
 
         public bool? OtherRisksShouldBeConsidered { get; set; }
         
+        public bool? EqualitiesImpactAssessmentConsidered { get; set; }
+        
         [MaxLength(20000)]
         public string OtherRisksFurtherSpecification { get; set; }
         public string OtherBenefitValue { get; set; }
