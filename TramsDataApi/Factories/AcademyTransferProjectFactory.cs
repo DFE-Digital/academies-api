@@ -44,6 +44,7 @@ namespace TramsDataApi.Factories
                 OtherRisksShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.OtherRisks?.ShouldBeConsidered,
                 OtherRisksFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.OtherRisks?.FurtherSpecification,
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
+                EqualitiesImpactAssessmentConsidered = request.Benefits?.EqualitiesImpactAssessmentConsidered,
                 AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
                 FeatureSectionIsCompleted = request.Features?.IsCompleted,
