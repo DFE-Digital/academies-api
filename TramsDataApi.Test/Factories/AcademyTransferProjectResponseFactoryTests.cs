@@ -177,6 +177,7 @@ namespace TramsDataApi.Test.Factories
                 {
                     IntendedTransferBenefits = expectedIntendedTransferBenefits,
                     OtherFactorsToConsider = expectedOtherFactorsToConsider,
+                    EqualitiesImpactAssessmentConsidered = academyTransferProjectModel.EqualitiesImpactAssessmentConsidered,
                     IsCompleted = academyTransferProjectModel.BenefitsSectionIsCompleted,
                     AnyRisks = academyTransferProjectModel.AnyRisks
                 },
