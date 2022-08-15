@@ -92,6 +92,7 @@ namespace TramsDataApi.Factories
                 {
                     IntendedTransferBenefits = intendedTransferBenefits,
                     OtherFactorsToConsider = otherFactorsToConsider,
+                    EqualitiesImpactAssessmentConsidered = model.EqualitiesImpactAssessmentConsidered,
                     IsCompleted = model.BenefitsSectionIsCompleted,
                     AnyRisks = model.AnyRisks
                 },
