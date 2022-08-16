@@ -491,31 +491,9 @@ namespace TramsDataApi.Test.Integration
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
             indexResponse.StatusCode.Should().Be(200);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
-            var indexProjectResponse =
-                JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
-
-            var expectedResponse = academyTransferProjectsToCreate.OrderByDescending(atp => atp.Id).Take(numberOfProjectsPerPage).Select(atp =>
-                new AcademyTransferProjectSummaryResponse
-                {
-                    ProjectUrn = atp.Urn.ToString(),
-                    OutgoingTrustUkprn = outgoingTrustGroup.Ukprn,
-                    OutgoingTrustName = outgoingTrustGroup.GroupName,
-                    ProjectReference = atp.ProjectReference,                    
-                    TransferringAcademies = atp.TransferringAcademies.Select(ta => new TransferringAcademiesResponse
-                    {
-                        OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                        IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                        IncomingTrustName = incomingTrustGroup.GroupName,
-                        PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
-                        LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
-                        KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
-                        KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
-                        KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
-                    }).ToList()
-                }).ToList();
-            indexProjectResponse.Count().Should().Be(numberOfProjectsPerPage);
-            indexProjectResponse.Should().BeEquivalentTo(expectedResponse);
-         }
+            var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
+            indexProjectResponse.Count.Should().Be(numberOfProjectsPerPage);
+        }
 
 
         [Fact]
@@ -575,33 +553,11 @@ namespace TramsDataApi.Test.Integration
             };
 
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
-            indexResponse.StatusCode.Should().Be(200);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
-            var indexProjectResponse =
-                JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
-
-            var expectedResponse = academyTransferProjectsToCreate.OrderByDescending(atp => atp.Id).Skip(numberOfProjectsPerPage).Take(numberOfProjectsPerPage).Select(
-                atp =>
-                    new AcademyTransferProjectSummaryResponse
-                    {
-                        ProjectUrn = atp.Urn.ToString(),
-                        ProjectReference = atp.ProjectReference,
-                        OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
-                        OutgoingTrustName = outgoingTrustGroup.GroupName,
-                        TransferringAcademies = atp.TransferringAcademies.Select(ta => new TransferringAcademiesResponse
-                        {
-                            OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                            IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                            IncomingTrustName = incomingTrustGroup.GroupName,
-                            PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
-                            LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
-                            KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
-                            KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
-                            KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
-                        }).ToList()
-                    }).ToList();
-            indexProjectResponse.Count().Should().Be(numberOfProjectsPerPage);
-            indexProjectResponse.Should().BeEquivalentTo(expectedResponse);
+            var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
+           
+            indexResponse.StatusCode.Should().Be(200);
+            indexProjectResponse.Count.Should().Be(numberOfProjectsPerPage);
         }
 
 
@@ -652,7 +608,7 @@ namespace TramsDataApi.Test.Integration
             var indexProjectResponse =
                 JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
 
-            indexProjectResponse.Count().Should().Be(0);
+            indexProjectResponse.Count.Should().Be(0);
             indexProjectResponse.Should().BeEquivalentTo(new List<AcademyTransferProjectSummaryResponse>());
         }
 
