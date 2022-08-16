@@ -14,5 +14,6 @@ namespace TramsDataApi.DatabaseModels
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public bool IsClosingState { get; set; }
+        public string PastTenseName { get; set; }
     }
 }
