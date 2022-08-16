@@ -148,6 +148,8 @@ namespace TramsDataApi.Factories
             original.OtherRisksFurtherSpecification = toMerge.OtherRisksFurtherSpecification ?? 
                                                           original.OtherRisksFurtherSpecification;
             original.OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue;
+            original.EqualitiesImpactAssessmentConsidered = toMerge.EqualitiesImpactAssessmentConsidered ??
+                                                            original.EqualitiesImpactAssessmentConsidered;
             
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
 
