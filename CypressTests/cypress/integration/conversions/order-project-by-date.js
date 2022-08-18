@@ -16,13 +16,11 @@ describe('Project Application ordered by date', () => {
             .map((str) => new Date(str))
             cy.log(timestamps)
 
-            // GET & sort timestamps => flip timestamps so that it is in descending order
-            const sorted = Cypress._.sortBy(timestamps, function(n) {
-                return Math.sin(n)
-              })
+            // GET & sort timestamps ascending order
+            const sorted = Cypress._.sortBy(timestamps)
             cy.log(sorted)
             // timestamps[1] === slice i.e.,projectDates([0], [1], [2])
-            expect(timestamps[1]).to.deep.equal(sorted[0])
+            expect(timestamps[2]).to.deep.equal(sorted[0])
         })
     })
 })
