@@ -49,7 +49,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<NTIWarningLetterReasonMapping> NTIWarningLetterReasonsMapping { get; set; }
         public virtual DbSet<NTIWarningLetterConditionMapping> NTIWarningLetterConditionsMapping { get; set; }
 
-
+        public virtual DbSet<ConcernsTeamCaseworkSelectedUser> ConcernsTeamCaseworkSelectedUsers { get; set; }
 
 
 
@@ -593,6 +593,9 @@ namespace TramsDataApi.DatabaseModels
                 .HasOne(n => n.NTIWarningLetterCondition)
                 .WithMany(n => n.WarningLetterConditionsMapping)
                 .HasForeignKey(n => n.NTIWarningLetterConditionId);
+
+            modelBuilder.Entity<ConcernsTeamCaseworkSelectedUser>()
+                .HasKey(nameof(ConcernsTeamCaseworkSelectedUser.OwnerId), nameof(ConcernsTeamCaseworkSelectedUser.SelectedTeamMember));
 
             OnModelCreatingPartial(modelBuilder);
         }
