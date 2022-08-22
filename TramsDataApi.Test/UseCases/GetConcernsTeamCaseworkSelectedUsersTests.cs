@@ -23,11 +23,16 @@ namespace TramsDataApi.Test.UseCases
             var useCase = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
 
             mockGateway
-                .Setup(g => g.GetByOwnerId(ownerId, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ConcernsTeamCaseworkTeamMember[] { 
+            .Setup(g => g.GetByOwnerId(ownerId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new ConcernsCaseworkTeam
+            {
+                Id = ownerId,
+                TeamMembers = new List<ConcernsTeamCaseworkTeamMember>
+                {
                     new ConcernsTeamCaseworkTeamMember { TeamMember = "user.one" } ,
                     new ConcernsTeamCaseworkTeamMember { TeamMember = "user.two" } ,
-                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.three" } ,
+                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.three" }
+                }
             });
 
             var sut = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
@@ -49,7 +54,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockGateway
                 .Setup(g => g.GetByOwnerId(ownerId, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(default(ConcernsTeamCaseworkTeamMember[]));
+                .ReturnsAsync(default(ConcernsCaseworkTeam));
 
             var sut = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
             var result = await sut.Execute(ownerId, CancellationToken.None);

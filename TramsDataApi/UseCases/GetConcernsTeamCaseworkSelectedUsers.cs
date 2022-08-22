@@ -18,13 +18,13 @@ namespace TramsDataApi.UseCases
 
         public async Task<ConcernsTeamCaseworkSelectedUsersResponse> Execute(string ownerId, CancellationToken cancellationToken)
         {
-            var records = await _gateway.GetByOwnerId(ownerId, cancellationToken);
+            var record = await _gateway.GetByOwnerId(ownerId, cancellationToken);
 
-            if (records is null)
+            if (record is null)
             {
                 return null;
             }
-            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = ownerId, SelectedTeamMembers = records.Select(x => x.TeamMember).ToArray() };
+            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = ownerId, SelectedTeamMembers = record.TeamMembers.Select(x => x.TeamMember).ToArray() };
         }
     }
 }
