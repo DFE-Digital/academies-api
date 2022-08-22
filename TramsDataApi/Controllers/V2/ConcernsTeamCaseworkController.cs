@@ -36,6 +36,11 @@ namespace TramsDataApi.Controllers.V2
             return await LogAndInvoke(async () =>
             {
                 var result = await _getCommand.Execute(ownerId, cancellationToken);
+                if (result is null)
+                {
+                    return NotFound();
+                }
+
                 var responseData = new ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>(result);
                 return Ok(responseData);
             });
@@ -45,7 +50,7 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>>> Put(
             string ownerId,
-            [FromBody] ConcernsTeamCaseworkSelectedUsersRequest updateModel,
+            [FromBody] ConcernsTeamCaseworkSelectedUsersUpdateRequest updateModel,
             CancellationToken cancellationToken)
         {
             return await LogAndInvoke(async () =>
@@ -61,7 +66,7 @@ namespace TramsDataApi.Controllers.V2
             });
         }
 
-        private async Task<ObjectResult> LogAndInvoke(Func<Task<ObjectResult>> method, [CallerMemberName] string caller = "")
+        private async Task<ActionResult> LogAndInvoke(Func<Task<ActionResult>> method, [CallerMemberName] string caller = "")
         {
             _logger.LogInformation($"Invoking {caller}");
             var result = await method();

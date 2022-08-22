@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TramsDataApi.RequestModels.Concerns.TeamCasework
+﻿namespace TramsDataApi.RequestModels.Concerns.TeamCasework
 {
-    public class ConcernsTeamCaseworkSelectedUsersRequest
+    public class ConcernsTeamCaseworkSelectedUsersUpdateRequest
     {
         public string OwnerId { get; set; }
 
