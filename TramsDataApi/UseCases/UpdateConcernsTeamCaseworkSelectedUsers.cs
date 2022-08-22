@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.Concerns.TeamCasework;
 using TramsDataApi.ResponseModels.Concerns.TeamCasework;
@@ -24,10 +25,10 @@ namespace TramsDataApi.UseCases
             _ = updateRequest ?? throw new ArgumentNullException(nameof(updateRequest));
 
             var ownerId = updateRequest.OwnerId;
-            var newSelections = updateRequest.SelectedTeamMembers.Select(x => new ConcernsTeamCaseworkSelectedUser { OwnerId = updateRequest.OwnerId, SelectedTeamMember = x}).ToArray();
+            var newSelections = updateRequest.SelectedTeamMembers.Select(x => new ConcernsTeamCaseworkTeamMember {TeamMember = x}).ToArray();
             await _gateway.UpdateTeamCaseworkUserSelections(updateRequest.OwnerId, newSelections, cancellationToken);
 
-            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = updateRequest.OwnerId, SelectedTeamMembers = newSelections.Select(x => x.SelectedTeamMember).ToArray() };
+            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = updateRequest.OwnerId, SelectedTeamMembers = newSelections.Select(x => x.TeamMember).ToArray() };
         }
     }
 }

@@ -1,6 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -48,11 +49,8 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<NTIWarningLetterStatus> NTIWarningLetterStatuses { get; set; }
         public virtual DbSet<NTIWarningLetterReasonMapping> NTIWarningLetterReasonsMapping { get; set; }
         public virtual DbSet<NTIWarningLetterConditionMapping> NTIWarningLetterConditionsMapping { get; set; }
-
-        public virtual DbSet<ConcernsTeamCaseworkSelectedUser> ConcernsTeamCaseworkSelectedUsers { get; set; }
-
-
-
+        public virtual DbSet<ConcernsCaseworkTeam> ConcernsTeamCaseworkTeam { get; set; }
+        public virtual DbSet<ConcernsTeamCaseworkTeamMember> ConcernsTeamCaseworkTeamMember { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -210,7 +208,7 @@ namespace TramsDataApi.DatabaseModels
                     .WithMany(c => c.FkConcernsRecord)
                     .HasForeignKey(r => r.RatingId)
                     .HasConstraintName("FK__ConcernsRecord_ConcernsRating");
-                
+
                 entity.HasOne(e => e.ConcernsMeansOfReferral)
                     .WithMany(e => e.FkConcernsRecord)
                     .HasForeignKey(e => e.MeansOfReferralId)
@@ -340,7 +338,7 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.HasKey(e => e.Id)
                     .HasName("PK__CMeansOfReferral");
-                
+
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
 
@@ -594,8 +592,11 @@ namespace TramsDataApi.DatabaseModels
                 .WithMany(n => n.WarningLetterConditionsMapping)
                 .HasForeignKey(n => n.NTIWarningLetterConditionId);
 
-            modelBuilder.Entity<ConcernsTeamCaseworkSelectedUser>()
-                .HasKey(nameof(ConcernsTeamCaseworkSelectedUser.OwnerId), nameof(ConcernsTeamCaseworkSelectedUser.SelectedTeamMember));
+            modelBuilder.Entity<ConcernsCaseworkTeam>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.HasMany(n => n.TeamMembers);
+            });
 
             OnModelCreatingPartial(modelBuilder);
         }

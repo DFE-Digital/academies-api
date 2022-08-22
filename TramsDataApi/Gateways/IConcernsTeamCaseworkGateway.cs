@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 using static Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions;
 
 namespace TramsDataApi.Gateways
 {
     public interface IConcernsTeamCaseworkGateway
     {
-        Task<IList<ConcernsTeamCaseworkSelectedUser>> GetByOwnerId(string ownerId, CancellationToken cancellationToken);
-        Task UpdateTeamCaseworkUserSelections(string ownerId, IList<ConcernsTeamCaseworkSelectedUser> selectedUsers, CancellationToken cancellationToken);
+        Task<IList<ConcernsTeamCaseworkTeamMember>> GetByOwnerId(string ownerId, CancellationToken cancellationToken);
+        Task UpdateTeamCaseworkUserSelections(string ownerId, IList<ConcernsTeamCaseworkTeamMember> selectedUsers, CancellationToken cancellationToken);
     }
 
     public class ConcernsTeamCaseworkGateway : IConcernsTeamCaseworkGateway
@@ -23,19 +24,21 @@ namespace TramsDataApi.Gateways
             _tramsDbContext = tramsDbContext ?? throw new ArgumentNullException(nameof(tramsDbContext));
         }
 
-        public async Task<IList<ConcernsTeamCaseworkSelectedUser>> GetByOwnerId(string ownerId, CancellationToken cancellationToken)
+        public async Task<IList<ConcernsTeamCaseworkTeamMember>> GetByOwnerId(string ownerId, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(ownerId))
             {
                 throw new ArgumentNullException(nameof(ownerId));
             }
 
-            return await _tramsDbContext.ConcernsTeamCaseworkSelectedUsers
-                .Where(x => x.OwnerId == ownerId)
-                .ToListAsync(cancellationToken);
+            var team = await _tramsDbContext.ConcernsTeamCaseworkTeam
+                .Include(t => t.TeamMembers)
+                .FirstOrDefaultAsync(x => x.Id == ownerId);
+
+            return team == null ? new List<ConcernsTeamCaseworkTeamMember>() : team.TeamMembers.ToList();
         }
 
-        public async Task UpdateTeamCaseworkUserSelections(string ownerId, IList<ConcernsTeamCaseworkSelectedUser> selectedUsers, CancellationToken cancellationToken)
+        public async Task UpdateTeamCaseworkUserSelections(string ownerId, IList<ConcernsTeamCaseworkTeamMember> selectedUsers, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(ownerId))
             {
@@ -43,10 +46,18 @@ namespace TramsDataApi.Gateways
             }
             _ = selectedUsers ?? throw new ArgumentNullException(nameof(selectedUsers));
 
-            var oldSelections = await GetByOwnerId(ownerId, cancellationToken);
-            
-            _tramsDbContext.ConcernsTeamCaseworkSelectedUsers.RemoveRange(oldSelections);
-            await _tramsDbContext.ConcernsTeamCaseworkSelectedUsers.AddRangeAsync(selectedUsers);
+            var team = await _tramsDbContext.ConcernsTeamCaseworkTeam.FirstOrDefaultAsync(x => x.Id == ownerId);
+
+            if (team == null)
+            {
+                team = new ConcernsCaseworkTeam { Id = ownerId, TeamMembers = selectedUsers.ToList() };
+                _tramsDbContext.Add(team);
+            }
+            else
+            {
+                team.TeamMembers = selectedUsers.ToList();
+            }
+
             await _tramsDbContext.SaveChangesAsync();
         }
     }

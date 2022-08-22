@@ -24,7 +24,7 @@ namespace TramsDataApi.UseCases
             {
                 return null;
             }
-            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = ownerId, SelectedTeamMembers = records.Select(x => x.SelectedTeamMember).ToArray() };
+            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = ownerId, SelectedTeamMembers = records.Select(x => x.TeamMember).ToArray() };
         }
     }
 }

@@ -10,7 +10,7 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220822140750_AddConcernsTeamCaseworkSelectedUsers")]
+    [Migration("20220822191523_AddConcernsTeamCaseworkSelectedUsers")]
     partial class AddConcernsTeamCaseworkSelectedUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -948,6 +948,35 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.ToTable("AcademyTransferProjects","sdd");
                 });
 
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeam", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConcernsTeamCaseworkTeam","sdd");
+                });
+
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsTeamCaseworkTeamMember", b =>
+                {
+                    b.Property<Guid>("TeamMemberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcernsCaseworkTeamId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TeamMember")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TeamMemberId");
+
+                    b.HasIndex("ConcernsCaseworkTeamId");
+
+                    b.ToTable("ConcernsTeamCaseworkTeamMember","sdd");
+                });
+
             modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsCase", b =>
                 {
                     b.Property<int>("Id")
@@ -1252,19 +1281,6 @@ namespace TramsDataApi.Migrations.TramsDb
                             UpdatedAt = new DateTime(2021, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Urn = 0
                         });
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsTeamCaseworkSelectedUser", b =>
-                {
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SelectedTeamMember")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("OwnerId", "SelectedTeamMember");
-
-                    b.ToTable("ConcernsTeamCaseworkSelectedUser","sdd");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsType", b =>
@@ -2359,6 +2375,13 @@ namespace TramsDataApi.Migrations.TramsDb
                         .WithMany("AcademyTransferProjectIntendedTransferBenefits")
                         .HasForeignKey("FkAcademyTransferProjectId")
                         .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
+                });
+
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsTeamCaseworkTeamMember", b =>
+                {
+                    b.HasOne("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeam", null)
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("ConcernsCaseworkTeamId");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsRecord", b =>

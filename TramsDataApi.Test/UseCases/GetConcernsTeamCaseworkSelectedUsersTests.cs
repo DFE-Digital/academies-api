@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using TramsDataApi.DatabaseModels;
+using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 using TramsDataApi.Gateways;
 using TramsDataApi.UseCases;
 using Xunit;
@@ -24,10 +24,10 @@ namespace TramsDataApi.Test.UseCases
 
             mockGateway
                 .Setup(g => g.GetByOwnerId(ownerId, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ConcernsTeamCaseworkSelectedUser[] { 
-                    new ConcernsTeamCaseworkSelectedUser { OwnerId = ownerId, SelectedTeamMember = "user.one" } ,
-                    new ConcernsTeamCaseworkSelectedUser { OwnerId = ownerId, SelectedTeamMember = "user.two" } ,
-                    new ConcernsTeamCaseworkSelectedUser { OwnerId = ownerId, SelectedTeamMember = "user.three" } ,
+                .ReturnsAsync(new ConcernsTeamCaseworkTeamMember[] { 
+                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.one" } ,
+                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.two" } ,
+                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.three" } ,
             });
 
             var sut = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
@@ -49,7 +49,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockGateway
                 .Setup(g => g.GetByOwnerId(ownerId, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(default(ConcernsTeamCaseworkSelectedUser[]));
+                .ReturnsAsync(default(ConcernsTeamCaseworkTeamMember[]));
 
             var sut = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
             var result = await sut.Execute(ownerId, CancellationToken.None);
