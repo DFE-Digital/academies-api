@@ -93,6 +93,10 @@ namespace TramsDataApi
             services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();
             services.AddScoped<ISearchAcademyConversionProjects, SearchAcademyConversionProjects>();
 
+            services.AddScoped<IGetConcernsTeamCaseworkSelectedUsers, GetConcernsTeamCaseworkSelectedUsers>();
+            services.AddScoped<IUpdateConcernsTeamCaseworkSelectedUsers, UpdateConcernsTeamCaseworkSelectedUsers>();
+            services.AddScoped<IConcernsTeamCaseworkGateway, ConcernsTeamCaseworkGateway>();
+
             services.AddApiVersioning(config => 
             {
                 config.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
