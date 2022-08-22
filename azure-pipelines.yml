@@ -9,7 +9,7 @@ trigger:
 pr: none
 
 pool:
-  vmImage: 'ubuntu-18.04'
+  vmImage: 'ubuntu-latest'
 
 variables:
   dotnetSdkVersion: '3.1.300'
