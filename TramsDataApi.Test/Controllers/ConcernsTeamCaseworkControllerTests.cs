@@ -31,10 +31,10 @@ namespace TramsDataApi.Test.Controllers
             var expectedOwnerId = "john.smith";
             var expectedData = new ConcernsCaseworkTeamResponse() { OwnerId = expectedOwnerId, TeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
             
-            var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
+            var getCommand = new Mock<IGetConcernsCaseworkTeam>();
             getCommand.Setup(x => x.Execute(expectedOwnerId, It.IsAny<CancellationToken>())).ReturnsAsync(expectedData);
 
-            var updateCommand = new Mock<IUpdateConcernsTeamCaseworkSelectedUsers>();
+            var updateCommand = new Mock<IUpdateConcernsCaseworkTeam>();
 
             var controller = new ConcernsTeamCaseworkController(
                 _mockLogger.Object,
@@ -60,10 +60,10 @@ namespace TramsDataApi.Test.Controllers
             var expectedOwnerId = "john.smith";
             var expectedData = new ConcernsCaseworkTeamResponse() { OwnerId = expectedOwnerId, TeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
 
-            var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
+            var getCommand = new Mock<IGetConcernsCaseworkTeam>();
             getCommand.Setup(x => x.Execute(expectedOwnerId, It.IsAny<CancellationToken>())).ReturnsAsync(default(ConcernsCaseworkTeamResponse));
 
-            var updateCommand = new Mock<IUpdateConcernsTeamCaseworkSelectedUsers>();
+            var updateCommand = new Mock<IUpdateConcernsCaseworkTeam>();
 
             var controller = new ConcernsTeamCaseworkController(
                 _mockLogger.Object,
@@ -80,8 +80,8 @@ namespace TramsDataApi.Test.Controllers
         public async Task Put_ReturnsBadRequest_When_OwnerId_Differs_From_Model()
         {
             // arrange            
-            var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
-            var updateCommand = new Mock<IUpdateConcernsTeamCaseworkSelectedUsers>();
+            var getCommand = new Mock<IGetConcernsCaseworkTeam>();
+            var updateCommand = new Mock<IUpdateConcernsCaseworkTeam>();
 
             var controller = new ConcernsTeamCaseworkController(
                 _mockLogger.Object,
@@ -104,9 +104,9 @@ namespace TramsDataApi.Test.Controllers
         public async Task Put_ReturnsBadRequest_When_Model_IsNull()
         {
             // arrange
-            var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
+            var getCommand = new Mock<IGetConcernsCaseworkTeam>();
 
-            var updateCommand = new Mock<IUpdateConcernsTeamCaseworkSelectedUsers>();
+            var updateCommand = new Mock<IUpdateConcernsCaseworkTeam>();
 
             var controller = new ConcernsTeamCaseworkController(
                 _mockLogger.Object,
@@ -126,8 +126,8 @@ namespace TramsDataApi.Test.Controllers
             var expectedOwnerId = "john.smith";
             var expectedModel = new ConcernsCaseworkTeamUpdateRequest() { OwnerId = expectedOwnerId, TeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
 
-            var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
-            var updateCommand = new Mock<IUpdateConcernsTeamCaseworkSelectedUsers>();
+            var getCommand = new Mock<IGetConcernsCaseworkTeam>();
+            var updateCommand = new Mock<IUpdateConcernsCaseworkTeam>();
             updateCommand.Setup(x => x.Execute(expectedModel, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new ConcernsCaseworkTeamResponse { OwnerId = expectedModel.OwnerId, TeamMembers = expectedModel.TeamMembers });
 

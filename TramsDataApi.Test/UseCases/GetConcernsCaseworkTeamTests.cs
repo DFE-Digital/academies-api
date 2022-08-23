@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
@@ -13,14 +10,20 @@ using Xunit;
 
 namespace TramsDataApi.Test.UseCases
 {
-    public class GetConcernsTeamCaseworkSelectedUsersTests
+    public class GetConcernsCaseworkTeamTests
     {
+        [Fact]
+        public async Task GetConcernsCaseworkTeam_Implements_IGetConcernsCaseworkTeam()
+        {
+            typeof(GetConcernsCaseworkTeam).Should().BeAssignableTo<GetConcernsCaseworkTeam>();
+        }
+
         [Fact]
         public async Task Execute_When_Team_Found_Returns_ConcernsCaseworkTeam()
         {
             var ownerId = "john.doe";
             var mockGateway = new Mock<IConcernsTeamCaseworkGateway>();
-            var useCase = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
+            var useCase = new GetConcernsCaseworkTeam(mockGateway.Object);
 
             mockGateway
             .Setup(g => g.GetByOwnerId(ownerId, It.IsAny<CancellationToken>()))
@@ -35,7 +38,7 @@ namespace TramsDataApi.Test.UseCases
                 }
             });
 
-            var sut = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
+            var sut = new GetConcernsCaseworkTeam(mockGateway.Object);
             var result = await sut.Execute(ownerId, CancellationToken.None);
 
             result.Should().NotBeNull();
@@ -45,18 +48,19 @@ namespace TramsDataApi.Test.UseCases
             result.TeamMembers.Should().Contain("user.two");
             result.TeamMembers.Should().Contain("user.three");
         }
+
         [Fact]
         public async Task Execute_When_Teamw_NotFound_Returns_Null()
         {
             var ownerId = "john.doe";
             var mockGateway = new Mock<IConcernsTeamCaseworkGateway>();
-            var useCase = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
+            var useCase = new GetConcernsCaseworkTeam(mockGateway.Object);
 
             mockGateway
                 .Setup(g => g.GetByOwnerId(ownerId, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(default(ConcernsCaseworkTeam));
 
-            var sut = new GetConcernsTeamCaseworkSelectedUsers(mockGateway.Object);
+            var sut = new GetConcernsCaseworkTeam(mockGateway.Object);
             var result = await sut.Execute(ownerId, CancellationToken.None);
 
             result.Should().BeNull();

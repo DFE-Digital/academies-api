@@ -7,11 +7,11 @@ using TramsDataApi.ResponseModels.Concerns.TeamCasework;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetConcernsTeamCaseworkSelectedUsers : IGetConcernsTeamCaseworkSelectedUsers
+    public class GetConcernsCaseworkTeam : IGetConcernsCaseworkTeam
     {
         private readonly IConcernsTeamCaseworkGateway _gateway;
 
-        public GetConcernsTeamCaseworkSelectedUsers(IConcernsTeamCaseworkGateway gateway)
+        public GetConcernsCaseworkTeam(IConcernsTeamCaseworkGateway gateway)
         {
             _gateway = gateway ?? throw new ArgumentNullException(nameof(gateway));
         }

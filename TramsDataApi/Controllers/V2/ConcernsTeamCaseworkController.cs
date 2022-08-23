@@ -18,11 +18,11 @@ namespace TramsDataApi.Controllers.V2
     public class ConcernsTeamCaseworkController : ControllerBase
     {
         private ILogger<ConcernsTeamCaseworkController> _logger;
-        private readonly IGetConcernsTeamCaseworkSelectedUsers _getCommand;
-        private readonly IUpdateConcernsTeamCaseworkSelectedUsers _updateCommand;
+        private readonly IGetConcernsCaseworkTeam _getCommand;
+        private readonly IUpdateConcernsCaseworkTeam _updateCommand;
 
-        public ConcernsTeamCaseworkController(ILogger<ConcernsTeamCaseworkController> logger, IGetConcernsTeamCaseworkSelectedUsers getCommand,
-            IUpdateConcernsTeamCaseworkSelectedUsers updateCommand)
+        public ConcernsTeamCaseworkController(ILogger<ConcernsTeamCaseworkController> logger, IGetConcernsCaseworkTeam getCommand,
+            IUpdateConcernsCaseworkTeam updateCommand)
         {
             _logger=logger ?? throw new ArgumentNullException(nameof(logger));
             _getCommand = getCommand ?? throw new ArgumentNullException(nameof(getCommand));

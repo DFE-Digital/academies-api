@@ -4,7 +4,7 @@ using TramsDataApi.ResponseModels.Concerns.TeamCasework;
 
 namespace TramsDataApi.UseCases
 {
-    public interface IGetConcernsTeamCaseworkSelectedUsers
+    public interface IGetConcernsCaseworkTeam
     {
         public Task<ConcernsCaseworkTeamResponse> Execute(string ownerId, CancellationToken cancellationToken);
     }

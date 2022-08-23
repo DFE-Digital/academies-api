@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
-    public partial class AddConcernsCaseworkTeams : Migration
+    public partial class AddConcernsTeamCasework : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,7 +37,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         principalSchema: "sdd",
                         principalTable: "ConcernsCaseworkTeam",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

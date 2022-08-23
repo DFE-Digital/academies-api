@@ -93,8 +93,8 @@ namespace TramsDataApi
             services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();
             services.AddScoped<ISearchAcademyConversionProjects, SearchAcademyConversionProjects>();
 
-            services.AddScoped<IGetConcernsTeamCaseworkSelectedUsers, GetConcernsTeamCaseworkSelectedUsers>();
-            services.AddScoped<IUpdateConcernsTeamCaseworkSelectedUsers, UpdateConcernsTeamCaseworkSelectedUsers>();
+            services.AddScoped<IGetConcernsCaseworkTeam, GetConcernsCaseworkTeam>();
+            services.AddScoped<IUpdateConcernsCaseworkTeam, UpdateConcernsCaseworkTeam>();
             services.AddScoped<IConcernsTeamCaseworkGateway, ConcernsTeamCaseworkGateway>();
 
             services.AddApiVersioning(config => 

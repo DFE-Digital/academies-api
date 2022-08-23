@@ -2379,7 +2379,8 @@ namespace TramsDataApi.Migrations.TramsDb
                 {
                     b.HasOne("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeam", null)
                         .WithMany("TeamMembers")
-                        .HasForeignKey("ConcernsCaseworkTeamId");
+                        .HasForeignKey("ConcernsCaseworkTeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsRecord", b =>

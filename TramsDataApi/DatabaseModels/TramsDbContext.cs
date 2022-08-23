@@ -595,7 +595,9 @@ namespace TramsDataApi.DatabaseModels
             modelBuilder.Entity<ConcernsCaseworkTeam>(entity =>
             {
                 entity.HasKey(x => x.Id);
-                entity.HasMany(n => n.TeamMembers);
+                entity.HasMany(n => n.TeamMembers)                
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);                              
             });
 
             OnModelCreatingPartial(modelBuilder);

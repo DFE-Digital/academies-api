@@ -10,8 +10,8 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220823093512_AddConcernsCaseworkTeams")]
-    partial class AddConcernsCaseworkTeams
+    [Migration("20220823135031_AddConcernsTeamCasework")]
+    partial class AddConcernsTeamCasework
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2381,7 +2381,8 @@ namespace TramsDataApi.Migrations.TramsDb
                 {
                     b.HasOne("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeam", null)
                         .WithMany("TeamMembers")
-                        .HasForeignKey("ConcernsCaseworkTeamId");
+                        .HasForeignKey("ConcernsCaseworkTeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsRecord", b =>
