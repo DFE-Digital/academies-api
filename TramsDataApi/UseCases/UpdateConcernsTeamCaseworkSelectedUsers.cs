@@ -20,15 +20,18 @@ namespace TramsDataApi.UseCases
             _gateway = gateway ?? throw new ArgumentNullException(nameof(gateway));
         }
 
-        public async Task<ConcernsTeamCaseworkSelectedUsersResponse> Execute(ConcernsTeamCaseworkSelectedUsersUpdateRequest updateRequest, CancellationToken cancellationToken)
+        public async Task<ConcernsCaseworkTeamResponse> Execute(ConcernsCaseworkTeamUpdateRequest updateRequest, CancellationToken cancellationToken)
         {
             _ = updateRequest ?? throw new ArgumentNullException(nameof(updateRequest));
 
             var ownerId = updateRequest.OwnerId;
-            var newSelections = updateRequest.SelectedTeamMembers.Select(x => new ConcernsTeamCaseworkTeamMember {TeamMember = x}).ToArray();
-            await _gateway.UpdateTeamCaseworkUserSelections(updateRequest.OwnerId, newSelections, cancellationToken);
+            var newSelections = updateRequest.TeamMembers.Select(x => new ConcernsCaseworkTeamMember {TeamMember = x}).ToArray();
 
-            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = updateRequest.OwnerId, SelectedTeamMembers = newSelections.Select(x => x.TeamMember).ToArray() };
+            var team = new ConcernsCaseworkTeam { Id = updateRequest.OwnerId, TeamMembers = updateRequest.TeamMembers.Select(x => new ConcernsCaseworkTeamMember { TeamMember = x }).ToList() };
+
+            await _gateway.UpdateCaseworkTeam(team, cancellationToken);
+
+            return new ConcernsCaseworkTeamResponse { OwnerId = updateRequest.OwnerId, TeamMembers = newSelections.Select(x => x.TeamMember).ToArray() };
         }
     }
 }

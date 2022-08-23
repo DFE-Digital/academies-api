@@ -6,6 +6,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetConcernsTeamCaseworkSelectedUsers
     {
-        public Task<ConcernsTeamCaseworkSelectedUsersResponse> Execute(string ownerId, CancellationToken cancellationToken);
+        public Task<ConcernsCaseworkTeamResponse> Execute(string ownerId, CancellationToken cancellationToken);
     }
 }

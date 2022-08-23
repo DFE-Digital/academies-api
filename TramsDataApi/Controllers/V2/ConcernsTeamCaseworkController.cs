@@ -31,26 +31,27 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet("owner/{ownerId}")]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>>> Get(string ownerId, CancellationToken cancellationToken)
+        public async Task<ActionResult<ApiSingleResponseV2<ConcernsCaseworkTeamResponse>>> Get(string ownerId, CancellationToken cancellationToken)
         {
             return await LogAndInvoke(async () =>
             {
                 var result = await _getCommand.Execute(ownerId, cancellationToken);
                 if (result is null)
                 {
-                    return NotFound();
+                    // successful, but nothing to return as no team created yet.
+                    return NoContent();
                 }
 
-                var responseData = new ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>(result);
+                var responseData = new ApiSingleResponseV2<ConcernsCaseworkTeamResponse>(result);
                 return Ok(responseData);
             });
         }
 
         [HttpPut("owner/{ownerId}")]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>>> Put(
+        public async Task<ActionResult<ApiSingleResponseV2<ConcernsCaseworkTeamResponse>>> Put(
             string ownerId,
-            [FromBody] ConcernsTeamCaseworkSelectedUsersUpdateRequest updateModel,
+            [FromBody] ConcernsCaseworkTeamUpdateRequest updateModel,
             CancellationToken cancellationToken)
         {
             return await LogAndInvoke(async () =>
@@ -61,7 +62,7 @@ namespace TramsDataApi.Controllers.V2
                 }
 
                 var result = await _updateCommand.Execute(updateModel, cancellationToken);
-                var responseData = new ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>(result);
+                var responseData = new ApiSingleResponseV2<ConcernsCaseworkTeamResponse>(result);
                 return Ok(responseData);
             });
         }

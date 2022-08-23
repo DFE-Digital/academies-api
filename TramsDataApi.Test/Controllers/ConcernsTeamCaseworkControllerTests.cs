@@ -29,7 +29,7 @@ namespace TramsDataApi.Test.Controllers
         {
             // arrange
             var expectedOwnerId = "john.smith";
-            var expectedData = new ConcernsTeamCaseworkSelectedUsersResponse() { OwnerId = expectedOwnerId, SelectedTeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
+            var expectedData = new ConcernsCaseworkTeamResponse() { OwnerId = expectedOwnerId, TeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
             
             var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
             getCommand.Setup(x => x.Execute(expectedOwnerId, It.IsAny<CancellationToken>())).ReturnsAsync(expectedData);
@@ -44,24 +44,24 @@ namespace TramsDataApi.Test.Controllers
 
             // act
             var actionResult = await controller.Get("john.smith", CancellationToken.None);
-            var expectedResponse = new ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>(expectedData);
+            var expectedResponse = new ApiSingleResponseV2<ConcernsCaseworkTeamResponse>(expectedData);
 
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
             okResult.StatusCode.Value.Should().Be(StatusCodes.Status200OK);
-            (okResult.Value as ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>).Should().NotBeNull();
-            ((ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>)okResult.Value).Data.Should().BeEquivalentTo(expectedData);
+            (okResult.Value as ApiSingleResponseV2<ConcernsCaseworkTeamResponse>).Should().NotBeNull();
+            ((ApiSingleResponseV2<ConcernsCaseworkTeamResponse>)okResult.Value).Data.Should().BeEquivalentTo(expectedData);
         }
 
 
         [Fact]
-        public async Task Get_ReturnsNotFoundWhenNoDataAvailable()
+        public async Task Get_ReturnsNoContentWhenNoDataAvailable()
         {
             // arrange
             var expectedOwnerId = "john.smith";
-            var expectedData = new ConcernsTeamCaseworkSelectedUsersResponse() { OwnerId = expectedOwnerId, SelectedTeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
+            var expectedData = new ConcernsCaseworkTeamResponse() { OwnerId = expectedOwnerId, TeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
 
             var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
-            getCommand.Setup(x => x.Execute(expectedOwnerId, It.IsAny<CancellationToken>())).ReturnsAsync(default(ConcernsTeamCaseworkSelectedUsersResponse));
+            getCommand.Setup(x => x.Execute(expectedOwnerId, It.IsAny<CancellationToken>())).ReturnsAsync(default(ConcernsCaseworkTeamResponse));
 
             var updateCommand = new Mock<IUpdateConcernsTeamCaseworkSelectedUsers>();
 
@@ -73,7 +73,7 @@ namespace TramsDataApi.Test.Controllers
 
             // act
             var actionResult = await controller.Get("john.smith", CancellationToken.None);
-            Assert.IsType<NotFoundResult>(actionResult.Result);
+            Assert.IsType<NoContentResult>(actionResult.Result);
         }
 
         [Fact]
@@ -89,10 +89,10 @@ namespace TramsDataApi.Test.Controllers
                 updateCommand.Object
             );
 
-            var updateModel = new ConcernsTeamCaseworkSelectedUsersUpdateRequest
+            var updateModel = new ConcernsCaseworkTeamUpdateRequest
             {
                 OwnerId = "different.ownerId",
-                SelectedTeamMembers = new[] { "Barny.Rubble" }
+                TeamMembers = new[] { "Barny.Rubble" }
             };
 
             // act
@@ -124,12 +124,12 @@ namespace TramsDataApi.Test.Controllers
         {
             // arrange
             var expectedOwnerId = "john.smith";
-            var expectedModel = new ConcernsTeamCaseworkSelectedUsersUpdateRequest() { OwnerId = expectedOwnerId, SelectedTeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
+            var expectedModel = new ConcernsCaseworkTeamUpdateRequest() { OwnerId = expectedOwnerId, TeamMembers = new[] { "john.doe", "jane.doe", "fred.flintstone" } };
 
             var getCommand = new Mock<IGetConcernsTeamCaseworkSelectedUsers>();
             var updateCommand = new Mock<IUpdateConcernsTeamCaseworkSelectedUsers>();
             updateCommand.Setup(x => x.Execute(expectedModel, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = expectedModel.OwnerId, SelectedTeamMembers = expectedModel.SelectedTeamMembers });
+                .ReturnsAsync(new ConcernsCaseworkTeamResponse { OwnerId = expectedModel.OwnerId, TeamMembers = expectedModel.TeamMembers });
 
             var controller = new ConcernsTeamCaseworkController(
                 _mockLogger.Object,
@@ -140,8 +140,8 @@ namespace TramsDataApi.Test.Controllers
             // act
             var actionResult = await controller.Put(expectedOwnerId, expectedModel, CancellationToken.None);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            (okResult.Value as ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>).Should().NotBeNull();
-            ((ApiSingleResponseV2<ConcernsTeamCaseworkSelectedUsersResponse>)okResult.Value).Data.Should().BeEquivalentTo(expectedModel);
+            (okResult.Value as ApiSingleResponseV2<ConcernsCaseworkTeamResponse>).Should().NotBeNull();
+            ((ApiSingleResponseV2<ConcernsCaseworkTeamResponse>)okResult.Value).Data.Should().BeEquivalentTo(expectedModel);
         }
     }
 }

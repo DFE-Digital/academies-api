@@ -8,6 +8,6 @@ namespace TramsDataApi.Gateways
     public interface IConcernsTeamCaseworkGateway
     {
         Task<ConcernsCaseworkTeam> GetByOwnerId(string ownerId, CancellationToken cancellationToken);
-        Task UpdateTeamCaseworkUserSelections(string ownerId, IList<ConcernsTeamCaseworkTeamMember> selectedUsers, CancellationToken cancellationToken);
+        Task UpdateCaseworkTeam(ConcernsCaseworkTeam team, CancellationToken cancellationToken);
     }
 }

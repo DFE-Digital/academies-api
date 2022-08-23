@@ -1,9 +1,9 @@
 ﻿namespace TramsDataApi.ResponseModels.Concerns.TeamCasework
 {
-    public class ConcernsTeamCaseworkSelectedUsersResponse
+    public class ConcernsCaseworkTeamResponse
     {
         public string OwnerId { get; set; }
 
-        public string[] SelectedTeamMembers { get; set; }
+        public string[] TeamMembers { get; set; }
     }
 }

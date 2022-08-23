@@ -16,7 +16,7 @@ namespace TramsDataApi.Test.UseCases
     public class GetConcernsTeamCaseworkSelectedUsersTests
     {
         [Fact]
-        public async Task Execute_When_Teamwork_Selections_Found_Returns_ConcernsTeamCaseworkSelectedUsers()
+        public async Task Execute_When_Team_Found_Returns_ConcernsCaseworkTeam()
         {
             var ownerId = "john.doe";
             var mockGateway = new Mock<IConcernsTeamCaseworkGateway>();
@@ -27,11 +27,11 @@ namespace TramsDataApi.Test.UseCases
             .ReturnsAsync(new ConcernsCaseworkTeam
             {
                 Id = ownerId,
-                TeamMembers = new List<ConcernsTeamCaseworkTeamMember>
+                TeamMembers = new List<ConcernsCaseworkTeamMember>
                 {
-                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.one" } ,
-                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.two" } ,
-                    new ConcernsTeamCaseworkTeamMember { TeamMember = "user.three" }
+                    new ConcernsCaseworkTeamMember { TeamMember = "user.one" } ,
+                    new ConcernsCaseworkTeamMember { TeamMember = "user.two" } ,
+                    new ConcernsCaseworkTeamMember { TeamMember = "user.three" }
                 }
             });
 
@@ -40,13 +40,13 @@ namespace TramsDataApi.Test.UseCases
 
             result.Should().NotBeNull();
             result.OwnerId.Should().Be(ownerId);
-            result.SelectedTeamMembers.Length.Should().Be(3);
-            result.SelectedTeamMembers.Should().Contain("user.one");
-            result.SelectedTeamMembers.Should().Contain("user.two");
-            result.SelectedTeamMembers.Should().Contain("user.three");
+            result.TeamMembers.Length.Should().Be(3);
+            result.TeamMembers.Should().Contain("user.one");
+            result.TeamMembers.Should().Contain("user.two");
+            result.TeamMembers.Should().Contain("user.three");
         }
         [Fact]
-        public async Task Execute_When_Teamwork_Selections_NotFound_Returns_Null()
+        public async Task Execute_When_Teamw_NotFound_Returns_Null()
         {
             var ownerId = "john.doe";
             var mockGateway = new Mock<IConcernsTeamCaseworkGateway>();

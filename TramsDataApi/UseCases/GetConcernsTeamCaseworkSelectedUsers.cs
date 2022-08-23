@@ -16,7 +16,7 @@ namespace TramsDataApi.UseCases
             _gateway = gateway ?? throw new ArgumentNullException(nameof(gateway));
         }
 
-        public async Task<ConcernsTeamCaseworkSelectedUsersResponse> Execute(string ownerId, CancellationToken cancellationToken)
+        public async Task<ConcernsCaseworkTeamResponse> Execute(string ownerId, CancellationToken cancellationToken)
         {
             var record = await _gateway.GetByOwnerId(ownerId, cancellationToken);
 
@@ -24,7 +24,7 @@ namespace TramsDataApi.UseCases
             {
                 return null;
             }
-            return new ConcernsTeamCaseworkSelectedUsersResponse { OwnerId = ownerId, SelectedTeamMembers = record.TeamMembers.Select(x => x.TeamMember).ToArray() };
+            return new ConcernsCaseworkTeamResponse { OwnerId = ownerId, TeamMembers = record.TeamMembers.Select(x => x.TeamMember).ToArray() };
         }
     }
 }

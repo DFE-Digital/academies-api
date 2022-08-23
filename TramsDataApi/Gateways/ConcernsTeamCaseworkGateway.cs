@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,39 +28,39 @@ namespace TramsDataApi.Gateways
                 .Include(t => t.TeamMembers)
                 .FirstOrDefaultAsync(x => x.Id == ownerId);
 
-            return team; 
+            return team;
         }
 
-        public async Task UpdateTeamCaseworkUserSelections(string ownerId, IList<ConcernsTeamCaseworkTeamMember> selectedUsers, CancellationToken cancellationToken)
+        public async Task UpdateCaseworkTeam(ConcernsCaseworkTeam team, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrWhiteSpace(ownerId))
+            _ = team ?? throw new ArgumentNullException(nameof(team));
+            if (string.IsNullOrWhiteSpace(team.Id))
             {
-                throw new ArgumentNullException(nameof(ownerId));
+                throw new ArgumentNullException(nameof(team.Id));
             }
-            _ = selectedUsers ?? throw new ArgumentNullException(nameof(selectedUsers));
+            _ = team.TeamMembers ?? throw new ArgumentNullException(nameof(team.TeamMembers));
 
-            var team = await this.GetByOwnerId(ownerId, cancellationToken);
+            var existingTeam = await this.GetByOwnerId(team.Id, cancellationToken);
 
-            if (team == null)
+            if (existingTeam == null)
             {
-                team = new ConcernsCaseworkTeam { Id = ownerId, TeamMembers = selectedUsers.ToList() };
                 _tramsDbContext.Add(team);
             }
             else
             {
-                var membersToRemove = team.TeamMembers.Where(x => !selectedUsers.Any(s => s.TeamMember == x.TeamMember))
+                var membersToRemove = existingTeam.TeamMembers.Where(x => !team.TeamMembers.Any(s => s.TeamMember == x.TeamMember))
                     .ToArray();
 
                 foreach (var member in membersToRemove)
                 {
-                    team.TeamMembers.Remove(member);
+                    existingTeam.TeamMembers.Remove(member);
                 }
 
-                var newMembersModels = selectedUsers.Where(s => !team.TeamMembers.Any(x => s.TeamMember == x.TeamMember))
-                    .Select(s => new ConcernsTeamCaseworkTeamMember { TeamMember = s.TeamMember })
+                var newTeamMembers = team.TeamMembers.Where(s => !existingTeam.TeamMembers.Any(x => s.TeamMember == x.TeamMember))
+                    .Select(s => new ConcernsCaseworkTeamMember { TeamMember = s.TeamMember })
                     .ToArray();
 
-                team.TeamMembers.AddRange(newMembersModels);
+                existingTeam.TeamMembers.AddRange(newTeamMembers);
 
                 _tramsDbContext.ConcernsTeamCaseworkTeamMember.RemoveRange(membersToRemove);
             }

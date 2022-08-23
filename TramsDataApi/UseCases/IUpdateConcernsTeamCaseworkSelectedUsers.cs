@@ -7,6 +7,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IUpdateConcernsTeamCaseworkSelectedUsers
     {
-        public Task<ConcernsTeamCaseworkSelectedUsersResponse> Execute(ConcernsTeamCaseworkSelectedUsersUpdateRequest updateRequest, CancellationToken cancellationToken);
+        public Task<ConcernsCaseworkTeamResponse> Execute(ConcernsCaseworkTeamUpdateRequest updateRequest, CancellationToken cancellationToken);
     }
 }

@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
-    public partial class AddConcernsTeamCaseworkSelectedUsers : Migration
+    public partial class AddConcernsCaseworkTeams : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ConcernsTeamCaseworkTeam",
+                name: "ConcernsCaseworkTeam",
                 schema: "sdd",
                 columns: table => new
                 {
@@ -16,11 +16,11 @@ namespace TramsDataApi.Migrations.TramsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConcernsTeamCaseworkTeam", x => x.Id);
+                    table.PrimaryKey("PK_ConcernsCaseworkTeam", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ConcernsTeamCaseworkTeamMember",
+                name: "ConcernsCaseworkTeamMember",
                 schema: "sdd",
                 columns: table => new
                 {
@@ -30,31 +30,31 @@ namespace TramsDataApi.Migrations.TramsDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConcernsTeamCaseworkTeamMember", x => x.TeamMemberId);
+                    table.PrimaryKey("PK_ConcernsCaseworkTeamMember", x => x.TeamMemberId);
                     table.ForeignKey(
-                        name: "FK_ConcernsTeamCaseworkTeamMember_ConcernsTeamCaseworkTeam_ConcernsCaseworkTeamId",
+                        name: "FK_ConcernsCaseworkTeamMember_ConcernsCaseworkTeam_ConcernsCaseworkTeamId",
                         column: x => x.ConcernsCaseworkTeamId,
                         principalSchema: "sdd",
-                        principalTable: "ConcernsTeamCaseworkTeam",
+                        principalTable: "ConcernsCaseworkTeam",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ConcernsTeamCaseworkTeamMember_ConcernsCaseworkTeamId",
+                name: "IX_ConcernsCaseworkTeamMember_ConcernsCaseworkTeamId",
                 schema: "sdd",
-                table: "ConcernsTeamCaseworkTeamMember",
+                table: "ConcernsCaseworkTeamMember",
                 column: "ConcernsCaseworkTeamId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ConcernsTeamCaseworkTeamMember",
+                name: "ConcernsCaseworkTeamMember",
                 schema: "sdd");
 
             migrationBuilder.DropTable(
-                name: "ConcernsTeamCaseworkTeam",
+                name: "ConcernsCaseworkTeam",
                 schema: "sdd");
         }
     }

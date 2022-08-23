@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels.Concerns.TeamCasework
 {
-    [Table("ConcernsTeamCaseworkTeamMember", Schema = "sdd")]
-    public class ConcernsTeamCaseworkTeamMember
+    [Table("ConcernsCaseworkTeamMember", Schema = "sdd")]
+    public class ConcernsCaseworkTeamMember
     {
         [Key]
         public Guid TeamMemberId { get; set; }

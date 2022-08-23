@@ -10,8 +10,8 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20220822191523_AddConcernsTeamCaseworkSelectedUsers")]
-    partial class AddConcernsTeamCaseworkSelectedUsers
+    [Migration("20220823093512_AddConcernsCaseworkTeams")]
+    partial class AddConcernsCaseworkTeams
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -955,10 +955,10 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConcernsTeamCaseworkTeam","sdd");
+                    b.ToTable("ConcernsCaseworkTeam","sdd");
                 });
 
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsTeamCaseworkTeamMember", b =>
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeamMember", b =>
                 {
                     b.Property<Guid>("TeamMemberId")
                         .ValueGeneratedOnAdd()
@@ -974,7 +974,7 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.HasIndex("ConcernsCaseworkTeamId");
 
-                    b.ToTable("ConcernsTeamCaseworkTeamMember","sdd");
+                    b.ToTable("ConcernsCaseworkTeamMember","sdd");
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.ConcernsCase", b =>
@@ -2377,7 +2377,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
                 });
 
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsTeamCaseworkTeamMember", b =>
+            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeamMember", b =>
                 {
                     b.HasOne("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeam", null)
                         .WithMany("TeamMembers")
