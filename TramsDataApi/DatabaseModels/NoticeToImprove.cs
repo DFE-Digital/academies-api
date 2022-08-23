@@ -14,7 +14,6 @@ namespace TramsDataApi.DatabaseModels
         public int CaseUrn { get; set; }
         public int? StatusId { get; set; }
         public DateTime? DateStarted { get; set; }
-
         [StringLength(2000)]
         public string Notes { get; set; }
         public string CreatedBy { get; set; }
@@ -23,14 +22,13 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? ClosedAt { get; set; }
         public int? ClosedStatusId { get; set; }
 
-
         [ForeignKey(nameof(StatusId))]
-        public virtual NTIWarningLetterStatus Status { get; set; }
+        public virtual NoticeToImproveStatus Status { get; set; }
 
         [ForeignKey(nameof(ClosedStatusId))]
-        public virtual NTIWarningLetterStatus ClosedStatus { get; set; }
+        public virtual NoticeToImproveStatus ClosedStatus { get; set; }
 
-        public virtual ICollection<NTIWarningLetterReasonMapping> WarningLetterReasonsMapping { get; set; }
-        public virtual ICollection<NTIWarningLetterConditionMapping> WarningLetterConditionsMapping { get; set; }
+        public virtual ICollection<NoticeToImproveReasonMapping> NoticeToImproveReasonsMapping { get; set; }
+        public virtual ICollection<NoticeToImproveConditionMapping> NoticeToImproveConditionsMapping { get; set; }
     }
 }
