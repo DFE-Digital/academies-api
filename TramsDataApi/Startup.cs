@@ -88,6 +88,7 @@ namespace TramsDataApi
             services.AddScoped<IFinancialPlanGateway, FinancialPlanGateway>();
             services.AddScoped<INTIUnderConsiderationGateway, NTIUnderConsiderationGateway>();
             services.AddScoped<INTIWarningLetterGateway, NTIWarningLetterGateway>();
+            services.AddScoped<INoticeToImproveGateway, NoticeToImproveGateway>();
 
             services.AddScoped<IGetAcademyConversionProject, GetAcademyConversionProject>();
             services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();

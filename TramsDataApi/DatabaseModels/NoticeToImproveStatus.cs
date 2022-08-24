@@ -4,16 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
 {
-    [Table("NTIWarningLetterStatus", Schema = "sdd")]
-    public class NTIWarningLetterStatus
+    [Table("NoticeToImproveStatus", Schema = "sdd")]
+    public class NoticeToImproveStatus
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public bool IsClosingState { get; set; }
-        public string PastTenseName { get; set; }
     }
 }

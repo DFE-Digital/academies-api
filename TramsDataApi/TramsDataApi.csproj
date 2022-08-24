@@ -32,6 +32,8 @@
       <Folder Include="RequestModels\CaseActions\NTI\WarningLetter\" />
       <Folder Include="ResponseModels\CaseActions\NTI\WarningLetter\" />
       <Folder Include="UseCases\CaseActions\NTI\WarningLetter\" />
+      <Folder Include="RequestModels\CaseActions\NTI\NoticeToImprove\" />
+      <Folder Include="ResponseModels\CaseActions\NTI\NoticeToImprove\" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="CensusData/2018-2019_england_census.csv">
@@ -49,5 +51,7 @@
       <None Remove="RequestModels\CaseActions\NTI\WarningLetter\" />
       <None Remove="ResponseModels\CaseActions\NTI\WarningLetter\" />
       <None Remove="UseCases\CaseActions\NTI\WarningLetter\" />
+      <None Remove="RequestModels\CaseActions\NTI\NoticeToImprove\" />
+      <None Remove="ResponseModels\CaseActions\NTI\NoticeToImprove\" />
     </ItemGroup>
 </Project>

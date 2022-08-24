@@ -4,7 +4,7 @@
     {
 		Unknown = 0,
 		OfferLinked = 1,
-		AMSDIntervention = 2,
-		RDDIntervention = 3  
+        SchoolsFinancialSupportAndOversight = 2,
+        RegionsGroupIntervention = 3  
 	}
 }

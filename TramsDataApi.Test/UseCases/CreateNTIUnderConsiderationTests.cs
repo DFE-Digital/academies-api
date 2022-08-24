@@ -17,7 +17,7 @@ namespace TramsDataApi.Test.UseCases
     public class CreateNTIUnderConsiderationTests
 	{
 	    [Fact]
-        public void CreateCreateNTIUnderConsideration_ShouldCreateAndReturnFinancialPlanResponse_WhenGivenCreateNTIUnderConsiderationRequest()
+        public void CreateCreateNTIUnderConsideration_ShouldCreateAndReturnNTIUnderConsiderationResponse_WhenGivenCreateNTIUnderConsiderationRequest()
         {
 			var caseUrn = 544;
 			var now = DateTime.Now;
