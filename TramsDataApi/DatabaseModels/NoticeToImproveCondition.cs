@@ -17,6 +17,7 @@ namespace TramsDataApi.DatabaseModels
         public int DisplayOrder { get; set; }
 
         public virtual NoticeToImproveConditionType ConditionType { get; set; }
+
         public virtual ICollection<NoticeToImproveConditionMapping> NoticeToImproveConditionsMapping { get; set; }
     }
 }
