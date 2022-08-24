@@ -1,7 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -56,10 +57,8 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<NoticeToImproveStatus> NoticeToImproveStatuses { get; set; }
         public virtual DbSet<NoticeToImproveReasonMapping> NoticeToImproveReasonsMappings { get; set; }
         public virtual DbSet<NoticeToImproveConditionMapping> NoticeToImproveConditionsMappings { get; set; }
-
-
-
-
+        public virtual DbSet<ConcernsCaseworkTeam> ConcernsTeamCaseworkTeam { get; set; }
+        public virtual DbSet<ConcernsCaseworkTeamMember> ConcernsTeamCaseworkTeamMember { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -218,7 +217,7 @@ namespace TramsDataApi.DatabaseModels
                     .WithMany(c => c.FkConcernsRecord)
                     .HasForeignKey(r => r.RatingId)
                     .HasConstraintName("FK__ConcernsRecord_ConcernsRating");
-                
+
                 entity.HasOne(e => e.ConcernsMeansOfReferral)
                     .WithMany(e => e.FkConcernsRecord)
                     .HasForeignKey(e => e.MeansOfReferralId)
@@ -348,7 +347,7 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.HasKey(e => e.Id)
                     .HasName("PK__CMeansOfReferral");
-                
+
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
 
@@ -723,6 +722,7 @@ namespace TramsDataApi.DatabaseModels
                 .WithMany(n => n.WarningLetterConditionsMapping)
                 .HasForeignKey(n => n.NTIWarningLetterConditionId);
 
+
             modelBuilder.Entity<NoticeToImproveConditionMapping>()
                 .HasOne(n => n.NoticeToImprove)
                 .WithMany(n => n.NoticeToImproveConditionsMapping)
@@ -745,6 +745,13 @@ namespace TramsDataApi.DatabaseModels
 
 
 
+            modelBuilder.Entity<ConcernsCaseworkTeam>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+                entity.HasMany(n => n.TeamMembers)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 
