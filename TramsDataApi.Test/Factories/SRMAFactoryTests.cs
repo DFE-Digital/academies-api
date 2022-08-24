@@ -29,7 +29,7 @@ namespace TramsDataApi.Test.Factories
                 DateVisitEnd = dtNow.AddDays(26),
                 DateAccepted = dtNow.AddDays(25),
                 Status = Enums.SRMAStatus.TrustConsidering,
-                Reason = Enums.SRMAReasonOffered.RDDIntervention,
+                Reason = Enums.SRMAReasonOffered.SchoolsFinancialSupportAndOversight,
                 Notes = "notes notes notes"
             };
 
@@ -83,7 +83,7 @@ namespace TramsDataApi.Test.Factories
                 DateVisitEnd = dtNow.AddDays(26),
                 DateAccepted = dtNow.AddDays(25),
                 Status = Enums.SRMAStatus.TrustConsidering,
-                Reason = Enums.SRMAReasonOffered.RDDIntervention,
+                Reason = Enums.SRMAReasonOffered.SchoolsFinancialSupportAndOversight,
                 Notes = "notes notes notes",
                 Urn = 963L,
                 CloseStatusId = (int?)null,

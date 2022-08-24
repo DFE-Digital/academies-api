@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using Microsoft.VisualBasic;
 using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 
 namespace TramsDataApi.DatabaseModels
@@ -49,8 +50,16 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<NTIWarningLetterStatus> NTIWarningLetterStatuses { get; set; }
         public virtual DbSet<NTIWarningLetterReasonMapping> NTIWarningLetterReasonsMapping { get; set; }
         public virtual DbSet<NTIWarningLetterConditionMapping> NTIWarningLetterConditionsMapping { get; set; }
+        public virtual DbSet<NoticeToImprove> NoticesToImprove { get; set; }
+        public virtual DbSet<NoticeToImproveConditionType> NoticeToImproveConditionTypes { get; set; }
+        public virtual DbSet<NoticeToImproveCondition> NoticeToImproveConditions { get; set; }
+        public virtual DbSet<NoticeToImproveReason> NoticeToImproveReasons { get; set; }
+        public virtual DbSet<NoticeToImproveStatus> NoticeToImproveStatuses { get; set; }
+        public virtual DbSet<NoticeToImproveReasonMapping> NoticeToImproveReasonsMappings { get; set; }
+        public virtual DbSet<NoticeToImproveConditionMapping> NoticeToImproveConditionsMappings { get; set; }
         public virtual DbSet<ConcernsCaseworkTeam> ConcernsTeamCaseworkTeam { get; set; }
         public virtual DbSet<ConcernsCaseworkTeamMember> ConcernsTeamCaseworkTeamMember { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -554,11 +563,132 @@ namespace TramsDataApi.DatabaseModels
                 entity.HasData(
                      new NTIWarningLetterStatus[]
                     {
-                        new NTIWarningLetterStatus{ Id = 1, Name = "Preparing warning letter", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
-                        new NTIWarningLetterStatus{ Id = 2, Name = "Sent to trust", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
-                        new NTIWarningLetterStatus{ Id = 3, Name = "Cancel warning letter", Description="The warning letter is no longer needed.", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true },
-                        new NTIWarningLetterStatus{ Id = 4, Name = "Conditions met", Description="You are satisfied that all the conditions have been, or will be, met as outlined in the letter", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true },
-                        new NTIWarningLetterStatus{ Id = 5, Name = "Escalate to Notice To Improve", Description="Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\".", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true }
+                        new NTIWarningLetterStatus{ Id = 1, Name = "Preparing warning letter", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false, PastTenseName="" },
+                        new NTIWarningLetterStatus{ Id = 2, Name = "Sent to trust", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false, PastTenseName="" },
+                        new NTIWarningLetterStatus{ Id = 3, Name = "Cancel warning letter", Description="The warning letter is no longer needed.", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true, PastTenseName="Conditions met" },
+                        new NTIWarningLetterStatus{ Id = 4, Name = "Conditions met", Description="You are satisfied that all the conditions have been, or will be, met as outlined in the letter", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true, PastTenseName="Conditions met" },
+                        new NTIWarningLetterStatus{ Id = 5, Name = "Escalate to Notice To Improve", Description="Conditions have not been met. Close NTI: Warning letter and begin NTI on case page using \"Add to case\".", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true, PastTenseName="Conditions met" }
+                    });
+            });
+
+
+
+            modelBuilder.Entity<NoticeToImproveStatus>(entity =>
+            {
+                var createdAt = new DateTime(2022, 08, 17);
+
+                entity.HasData(
+                     new NoticeToImproveStatus[]
+                    {
+                        new NoticeToImproveStatus{ Id = 1, Name = "Preparing NTI", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NoticeToImproveStatus{ Id = 2, Name = "Issued NTI", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NoticeToImproveStatus{ Id = 3, Name = "Progress on track", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false},
+                        new NoticeToImproveStatus{ Id = 4, Name = "Evidence of NTI non-compliance", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NoticeToImproveStatus{ Id = 5, Name = "Serious NTI breaches - considering escalation to TWN", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NoticeToImproveStatus{ Id = 6, Name = "Submission to lift NTI in progress", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NoticeToImproveStatus{ Id = 7, Name = "Submission to close NTI in progress", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = false },
+                        new NoticeToImproveStatus{ Id = 8, Name = "Lifted", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true },
+                        new NoticeToImproveStatus{ Id = 9, Name = "Closed", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true },
+                        new NoticeToImproveStatus{ Id = 10, Name = "Cancelled", CreatedAt = createdAt, UpdatedAt = createdAt, IsClosingState = true }
+                    });
+            });
+
+
+            modelBuilder.Entity<NoticeToImproveReason>(entity =>
+            {
+                var createdAt = new DateTime(2022, 08, 17);
+
+                entity.HasData(
+                     new NoticeToImproveReason[]
+                    {
+                        new NoticeToImproveReason{ Id = 1, Name = "Cash flow problems", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NoticeToImproveReason{ Id = 2, Name = "Cumulative deficit (actual)", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NoticeToImproveReason{ Id = 3, Name = "Cumulative deficit (projected)", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NoticeToImproveReason{ Id = 4, Name = "Governance concerns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NoticeToImproveReason{ Id = 5, Name = "Non-compliance with Academies Financial/Trust Handbook", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NoticeToImproveReason{ Id = 6, Name = "Non-compliance with financial returns", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NoticeToImproveReason{ Id = 7, Name = "Risk of insolvency", CreatedAt = createdAt, UpdatedAt = createdAt },
+                        new NoticeToImproveReason{ Id = 8, Name = "Safeguarding", CreatedAt = createdAt, UpdatedAt = createdAt }
+                    });
+            });
+
+            modelBuilder.Entity<NoticeToImproveConditionType>(entity =>
+            {
+                var createdAt = new DateTime(2022, 07, 12);
+
+                entity.HasData(
+                     new NoticeToImproveConditionType[]
+                    {
+                        new NoticeToImproveConditionType{ Id = 1, Name = "Financial management conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 1 },
+                        new NoticeToImproveConditionType{ Id = 2, Name = "Governance conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 2 },
+                        new NoticeToImproveConditionType{ Id = 3, Name = "Compliance conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 3 },
+                        new NoticeToImproveConditionType{ Id = 4, Name = "Safeguarding conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 4 },
+                        new NoticeToImproveConditionType{ Id = 5, Name = "Fraud and irregularity", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 5 },
+                        new NoticeToImproveConditionType{ Id = 6, Name = "Standard conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 6 },
+                        new NoticeToImproveConditionType{ Id = 7, Name = "Additional Financial Support conditions", CreatedAt = createdAt, UpdatedAt = createdAt, DisplayOrder = 7 }
+                    });
+            });
+
+            modelBuilder.Entity<NoticeToImproveCondition>(entity =>
+            {
+                var createdAt = new DateTime(2022, 08, 17);
+
+                var financialManagementConditionTypeId = 1;
+                var governanceConditionTypeId = 2;
+                var complianceConditionTypeId = 3;
+                var safeguardingConditionTypeId = 4;
+                var fraudAndIrregularityConditionTypeId = 5;
+                var standardConditionTypeId = 6;
+                var additionalFinancialSupportConditionTypeId = 7;
+
+                entity.HasData(
+                     new NoticeToImproveCondition[]
+                    {
+                        new NoticeToImproveCondition{ Id = 1, Name = "Audit and risk committee", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 1 },
+                        new NoticeToImproveCondition{ Id = 2, Name = "Internal audit findings", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 2 },
+                        new NoticeToImproveCondition{ Id = 3, Name = "Trust financial plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 3  },
+                        new NoticeToImproveCondition{ Id = 4, Name = "Financial management and governance review", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 4 },
+                        new NoticeToImproveCondition{ Id = 5, Name = "Financial systems & controls and internal scrutiny", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 5 },
+                        new NoticeToImproveCondition{ Id = 6, Name = "Integrated curriculum and financial planning", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 6 },
+                        new NoticeToImproveCondition{ Id = 7, Name = "Monthly management accounts", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 7 },
+                        new NoticeToImproveCondition{ Id = 8, Name = "National deals for schools", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 8 },
+                        new NoticeToImproveCondition{ Id = 9, Name = "School resource management", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = financialManagementConditionTypeId, DisplayOrder = 9 },
+
+                        new NoticeToImproveCondition{ Id = 10, Name = "Academy ambassadors", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 1 },
+                        new NoticeToImproveCondition{ Id = 11, Name = "Academy transfer", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 2 },
+                        new NoticeToImproveCondition{ Id = 12, Name = "Action plan", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 3 },
+                        new NoticeToImproveCondition{ Id = 13, Name = "AGM of members", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 4 },
+                        new NoticeToImproveCondition{ Id = 14, Name = "Board meetings", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 5 },
+                        new NoticeToImproveCondition{ Id = 15, Name = "Independant review of governance", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 6 },
+                        new NoticeToImproveCondition{ Id = 16, Name = "Lines of accountability", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 7 },
+                        new NoticeToImproveCondition{ Id = 17, Name = "Providing sufficient challenge", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 8 },
+                        new NoticeToImproveCondition{ Id = 18, Name = "Scheme of delegation", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 9 },
+                        new NoticeToImproveCondition{ Id = 19, Name = "School improvement", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 10 },
+                        new NoticeToImproveCondition{ Id = 20, Name = "Strengthen governance", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = governanceConditionTypeId, DisplayOrder = 11 },
+
+                        new NoticeToImproveCondition{ Id = 21, Name = "Admissions", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = complianceConditionTypeId, DisplayOrder = 1 },
+                        new NoticeToImproveCondition{ Id = 22, Name = "Excessive executive payments (high pay)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = complianceConditionTypeId, DisplayOrder = 2 },
+                        new NoticeToImproveCondition{ Id = 23, Name = "Publishing requirements (compliance with)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = complianceConditionTypeId, DisplayOrder = 3 },
+                        new NoticeToImproveCondition{ Id = 24, Name = "Related party Transactions (RPTs)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = complianceConditionTypeId, DisplayOrder = 4 },
+
+                        new NoticeToImproveCondition{ Id = 25, Name = "Review and update safeguarding policies", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = safeguardingConditionTypeId, DisplayOrder = 1 },
+                        new NoticeToImproveCondition{ Id = 26, Name = "Commission external review of safeguarding", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = safeguardingConditionTypeId, DisplayOrder = 2 },
+                        new NoticeToImproveCondition{ Id = 27, Name = "Appoint trustee with leadership responsibility for safeguarding", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = safeguardingConditionTypeId, DisplayOrder = 3 },
+                        new NoticeToImproveCondition{ Id = 28, Name = "Safeguarding recruitment process", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = safeguardingConditionTypeId, DisplayOrder = 4 },
+
+                        new NoticeToImproveCondition{ Id = 29, Name = "Novel, contentious, and/or repercussive transactions", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = fraudAndIrregularityConditionTypeId, DisplayOrder = 1 },
+                        new NoticeToImproveCondition{ Id = 30, Name = "Off-payroll payments", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = fraudAndIrregularityConditionTypeId, DisplayOrder = 2 },
+                        new NoticeToImproveCondition{ Id = 31, Name = "Procurement policy", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = fraudAndIrregularityConditionTypeId, DisplayOrder = 3 },
+                        new NoticeToImproveCondition{ Id = 32, Name = "Register of interests", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = fraudAndIrregularityConditionTypeId, DisplayOrder = 4 },
+
+                        new NoticeToImproveCondition{ Id = 33, Name = "Financial returns", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = standardConditionTypeId, DisplayOrder = 1 },
+                        new NoticeToImproveCondition{ Id = 34, Name = "Delegated freedoms", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = standardConditionTypeId, DisplayOrder = 2 },
+                        new NoticeToImproveCondition{ Id = 35, Name = "Trustee contact details", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = standardConditionTypeId, DisplayOrder = 3 },
+
+                        new NoticeToImproveCondition{ Id = 36, Name = "Review of board and executive team capability", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = additionalFinancialSupportConditionTypeId, DisplayOrder = 1 },
+                        new NoticeToImproveCondition{ Id = 37, Name = "Academy transfer (lower risk)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = additionalFinancialSupportConditionTypeId, DisplayOrder = 2 },
+                        new NoticeToImproveCondition{ Id = 38, Name = "Move to latest model funding agreement", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = additionalFinancialSupportConditionTypeId, DisplayOrder = 3 },
+                        new NoticeToImproveCondition{ Id = 39, Name = "Qualified Floating Charge (QFC)", CreatedAt = createdAt, UpdatedAt = createdAt, ConditionTypeId = additionalFinancialSupportConditionTypeId, DisplayOrder = 4 }
                     });
             });
 
@@ -592,14 +722,36 @@ namespace TramsDataApi.DatabaseModels
                 .WithMany(n => n.WarningLetterConditionsMapping)
                 .HasForeignKey(n => n.NTIWarningLetterConditionId);
 
+
+            modelBuilder.Entity<NoticeToImproveConditionMapping>()
+                .HasOne(n => n.NoticeToImprove)
+                .WithMany(n => n.NoticeToImproveConditionsMapping)
+                .HasForeignKey(n => n.NoticeToImproveId);
+
+            modelBuilder.Entity<NoticeToImproveConditionMapping>()
+                .HasOne(n => n.NoticeToImproveCondition)
+                .WithMany(n => n.NoticeToImproveConditionsMapping)
+                .HasForeignKey(n => n.NoticeToImproveConditionId);
+
+            modelBuilder.Entity<NoticeToImproveReasonMapping>()
+                .HasOne(n => n.NoticeToImprove)
+                .WithMany(n => n.NoticeToImproveReasonsMapping)
+                .HasForeignKey(n => n.NoticeToImproveId);
+
+            modelBuilder.Entity<NoticeToImproveReasonMapping>()
+                .HasOne(n => n.NoticeToImproveReason)
+                .WithMany(n => n.NoticeToImproveReasonsMapping)
+                .HasForeignKey(n => n.NoticeToImproveReasonId);
+
+
+
             modelBuilder.Entity<ConcernsCaseworkTeam>(entity =>
             {
                 entity.HasKey(x => x.Id);
-                entity.HasMany(n => n.TeamMembers)                
+                entity.HasMany(n => n.TeamMembers)
                 .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);                              
+                .OnDelete(DeleteBehavior.Cascade);
             });
-
             OnModelCreatingPartial(modelBuilder);
         }
 

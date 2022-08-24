@@ -23,7 +23,7 @@ namespace TramsDataApi.Test.UseCases
             var matchingWarningLetter = new NTIWarningLetter
             {
                 CaseUrn = caseUrn,
-                Notes = "Test consideration",
+                Notes = "Test warning letter",
                 WarningLetterReasonsMapping = reasonMappings,
                 WarningLetterConditionsMapping = conditionMappings
             };
@@ -52,11 +52,11 @@ namespace TramsDataApi.Test.UseCases
 
             var expectedResult = NTIWarningLetterFactory.CreateResponse(matchingWarningLetter);
 
-            var mockNTIUnderConsiderationGateway = new Mock<INTIWarningLetterGateway>();
-            mockNTIUnderConsiderationGateway.Setup(g => g.GetNTIWarningLetterByCaseUrn(caseUrn)).Returns(Task.FromResult((ICollection<NTIWarningLetter>)warningLetters.Where(s => s.CaseUrn == caseUrn).ToList()));
+            var mockNTIWarningLetterGateway = new Mock<INTIWarningLetterGateway>();
+            mockNTIWarningLetterGateway.Setup(g => g.GetNTIWarningLetterByCaseUrn(caseUrn)).Returns(Task.FromResult((ICollection<NTIWarningLetter>)warningLetters.Where(s => s.CaseUrn == caseUrn).ToList()));
 
 
-            var useCase = new GetNTIWarningLetterByCaseUrn(mockNTIUnderConsiderationGateway.Object);
+            var useCase = new GetNTIWarningLetterByCaseUrn(mockNTIWarningLetterGateway.Object);
 
             var result = useCase.Execute(caseUrn);
 

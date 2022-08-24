@@ -186,7 +186,7 @@ namespace TramsDataApi.Test.Controllers
         {
             var srmaId = 123;
             var startingReason = Enums.SRMAReasonOffered.OfferLinked;
-            var targetReason = Enums.SRMAReasonOffered.AMSDIntervention;
+            var targetReason = Enums.SRMAReasonOffered.RegionsGroupIntervention;
 
             var srmaModel = new SRMACase
             {
