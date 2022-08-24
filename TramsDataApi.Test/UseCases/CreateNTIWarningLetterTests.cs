@@ -53,7 +53,7 @@ namespace TramsDataApi.Test.UseCases
 						NTIWarningLetterReasonId = r
 					};
 				}).ToList(),
-				WarningLetterConditionsMapping = reasons.Select(r => {
+				WarningLetterConditionsMapping = conditions.Select(r => {
 					return new NTIWarningLetterConditionMapping()
 					{
 						NTIWarningLetterConditionId = r

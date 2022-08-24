@@ -120,7 +120,7 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void GetAllReasons_ReturnsAllConditions()
+        public void GetAllConditions_ReturnsAllConditions()
         {
             var noOfConditions = 7;
 
@@ -143,7 +143,7 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public void GetAllReasons_ReturnsAllConditionTypes()
+        public void GetAllConditionTypes_ReturnsAllConditionTypes()
         {
             var noOfConditionTypes = 4;
 
@@ -250,7 +250,7 @@ namespace TramsDataApi.Test.Controllers
             var newNotes = "updated notes";
             var newClosedStatusId = 2;
 
-            var originalConsideration = new NTIWarningLetter()
+            var originalWarningLetter = new NTIWarningLetter()
             {
                 Id = warningLetterId,
                 Notes = "original note"
@@ -258,7 +258,7 @@ namespace TramsDataApi.Test.Controllers
 
             var request = Builder<PatchNTIWarningLetterRequest>
                 .CreateNew()
-                .With(r => r.Id = originalConsideration.Id)
+                .With(r => r.Id = originalWarningLetter.Id)
                 .With(r => r.Notes = newNotes)
                 .With(r => r.ClosedStatusId = newClosedStatusId)
                 .Build();
