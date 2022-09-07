@@ -103,7 +103,10 @@ namespace TramsDataApi.Migrations.TramsDb
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     ClosedAt = table.Column<DateTime>(nullable: true),
-                    ClosedStatusId = table.Column<int>(nullable: true)
+                    ClosedStatusId = table.Column<int>(nullable: true),
+                    SumissionDecisionId = table.Column<string>(nullable: true),
+                    DateNTILifted = table.Column<DateTime>(nullable: true),
+                    DateNTIClosed = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

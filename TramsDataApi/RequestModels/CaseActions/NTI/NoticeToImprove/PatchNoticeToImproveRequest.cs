@@ -21,6 +21,9 @@ namespace TramsDataApi.RequestModels.CaseActions.NTI.NoticeToImprove
         public DateTime? UpdatedAt { get; set; }
         public DateTime? ClosedAt { get; set; }
         public int? ClosedStatusId { get; set; }
+        public string SumissionDecisionId { get; set; }
+        public DateTime? DateNTILifted { get; set; }
+        public DateTime? DateNTIClosed { get; set; }
 
         public ICollection<int> NoticeToImproveReasonsMapping { get; set; }
         public ICollection<int> NoticeToImproveConditionsMapping { get; set; }

@@ -51,6 +51,9 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 UpdatedAt = patchNoticeToImproveRequest.UpdatedAt,
                 ClosedAt = patchNoticeToImproveRequest.ClosedAt,
                 ClosedStatusId = patchNoticeToImproveRequest.ClosedStatusId,
+                SumissionDecisionId = patchNoticeToImproveRequest.SumissionDecisionId,
+                DateNTILifted = patchNoticeToImproveRequest.DateNTILifted,
+                DateNTIClosed = patchNoticeToImproveRequest.DateNTIClosed,
                 NoticeToImproveReasonsMapping = patchNoticeToImproveRequest.NoticeToImproveReasonsMapping.Select(r => {
                     return new NoticeToImproveReasonMapping()
                     {
@@ -80,6 +83,9 @@ namespace TramsDataApi.Factories.CaseActionFactories
                 UpdatedAt = model.UpdatedAt,
                 ClosedAt = model.ClosedAt,
                 ClosedStatusId = model.ClosedStatusId,
+                SumissionDecisionId = model.SumissionDecisionId,
+                DateNTILifted = model.DateNTILifted,
+                DateNTIClosed = model.DateNTIClosed,
                 NoticeToImproveReasonsMapping = model.NoticeToImproveReasonsMapping.Select(r => { return r.NoticeToImproveReasonId; }).ToList(),
                 NoticeToImproveConditionsMapping = model.NoticeToImproveConditionsMapping.Select(c => { return c.NoticeToImproveConditionId; }).ToList(),
             };
