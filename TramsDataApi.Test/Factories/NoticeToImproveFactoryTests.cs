@@ -96,7 +96,10 @@ namespace TramsDataApi.Test.Factories
                 NoticeToImproveReasonsMapping = new List<int>() { 1, 3 },
                 NoticeToImproveConditionsMapping = new List<int>() { 1, 3 },
                 ClosedStatusId = 1,
-                ClosedAt = dtCreated
+                ClosedAt = dtCreated,
+                SumissionDecisionId = "100001",
+                DateNTILifted = dtCreated,
+                DateNTIClosed = dtCreated
             };
 
 
@@ -114,6 +117,9 @@ namespace TramsDataApi.Test.Factories
                 .With(r => r.UpdatedAt = details.UpdatedAt)
                 .With(r => r.ClosedStatusId = details.ClosedStatusId)
                 .With(r => r.ClosedAt = details.ClosedAt)
+                .With(r => r.SumissionDecisionId = details.SumissionDecisionId)
+                .With(r => r.DateNTILifted = details.DateNTILifted)
+                .With(r => r.DateNTIClosed = details.DateNTIClosed)
                 .Build();
 
 
@@ -140,7 +146,10 @@ namespace TramsDataApi.Test.Factories
                 CreatedAt = details.CreatedAt,
                 UpdatedAt = details.UpdatedAt,
                 ClosedStatusId = details.ClosedStatusId,
-                ClosedAt = details.ClosedAt
+                ClosedAt = details.ClosedAt,
+                SumissionDecisionId = details.SumissionDecisionId,
+                DateNTILifted = details.DateNTILifted,
+                DateNTIClosed = details.DateNTIClosed
             };
 
             var response = NoticeToImproveFactory.CreateDBModel(patchNoticeToImprove);
@@ -171,7 +180,10 @@ namespace TramsDataApi.Test.Factories
                    return new NoticeToImproveConditionMapping() { NoticeToImproveConditionId = c };
                }).ToList(),
                ClosedStatusId = 1,
-               ClosedAt = dtCreated
+               ClosedAt = dtCreated,
+               SumissionDecisionId = "100001",
+               DateNTILifted = dtCreated,
+               DateNTIClosed = dtCreated
            };
 
 
@@ -189,6 +201,9 @@ namespace TramsDataApi.Test.Factories
                 .With(r => r.UpdatedAt = details.UpdatedAt)
                 .With(r => r.ClosedStatusId = details.ClosedStatusId)
                 .With(r => r.ClosedAt = details.ClosedAt)
+                .With(r => r.SumissionDecisionId = details.SumissionDecisionId)
+                .With(r => r.DateNTILifted = details.DateNTILifted)
+                .With(r => r.DateNTIClosed = details.DateNTIClosed)
                 .Build();
 
             var expectedNoticeToImprove = new NoticeToImproveResponse
@@ -204,7 +219,10 @@ namespace TramsDataApi.Test.Factories
                 CreatedAt = details.CreatedAt,
                 UpdatedAt = details.UpdatedAt,
                 ClosedStatusId = details.ClosedStatusId,
-                ClosedAt = details.ClosedAt
+                ClosedAt = details.ClosedAt,
+                SumissionDecisionId = details.SumissionDecisionId,
+                DateNTILifted = details.DateNTILifted,
+                DateNTIClosed = details.DateNTIClosed
             };
 
            var response = NoticeToImproveFactory.CreateResponse(noticeToImprove);
