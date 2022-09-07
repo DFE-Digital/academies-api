@@ -2138,6 +2138,12 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DateNTIClosed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateNTILifted")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DateStarted")
                         .HasColumnType("datetime2");
 
@@ -2147,6 +2153,9 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SumissionDecisionId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
