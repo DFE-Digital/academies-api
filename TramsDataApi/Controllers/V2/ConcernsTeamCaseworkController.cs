@@ -19,17 +19,21 @@ namespace TramsDataApi.Controllers.V2
     {
         private ILogger<ConcernsTeamCaseworkController> _logger;
         private readonly IGetConcernsCaseworkTeam _getCommand;
+        private readonly IGetConcernsCaseworkTeamOwners _getTeamOwnersCommand;
         private readonly IUpdateConcernsCaseworkTeam _updateCommand;
 
-        public ConcernsTeamCaseworkController(ILogger<ConcernsTeamCaseworkController> logger, IGetConcernsCaseworkTeam getCommand,
+        public ConcernsTeamCaseworkController(ILogger<ConcernsTeamCaseworkController> logger, 
+            IGetConcernsCaseworkTeam getTeamCommand,
+            IGetConcernsCaseworkTeamOwners getTeamOwnersCommand,
             IUpdateConcernsCaseworkTeam updateCommand)
         {
             _logger=logger ?? throw new ArgumentNullException(nameof(logger));
-            _getCommand = getCommand ?? throw new ArgumentNullException(nameof(getCommand));
+            _getCommand = getTeamCommand ?? throw new ArgumentNullException(nameof(getTeamCommand));
+            _getTeamOwnersCommand = getTeamOwnersCommand ?? throw  new ArgumentNullException(nameof(getTeamOwnersCommand));
             _updateCommand = updateCommand ?? throw new ArgumentNullException(nameof(updateCommand));
         }
 
-        [HttpGet("owner/{ownerId}")]
+        [HttpGet("owners/{ownerId}")]
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<ApiSingleResponseV2<ConcernsCaseworkTeamResponse>>> Get(string ownerId, CancellationToken cancellationToken)
         {
@@ -47,7 +51,25 @@ namespace TramsDataApi.Controllers.V2
             });
         }
 
-        [HttpPut("owner/{ownerId}")]
+        [HttpGet("owners")]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<ApiSingleResponseV2<string[]>>> Get(CancellationToken cancellationToken)
+        {
+            return await LogAndInvoke(async () =>
+            {
+                var result = await _getTeamOwnersCommand.Execute(cancellationToken);
+                if (result is null)
+                {
+                    // successful, but nothing to return as no team created yet.
+                    return NoContent();
+                }
+
+                var responseData = new ApiSingleResponseV2<string[]>(result);
+                return Ok(responseData);
+            });
+        }
+
+        [HttpPut("owners/{ownerId}")]
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<ApiSingleResponseV2<ConcernsCaseworkTeamResponse>>> Put(
             string ownerId,
