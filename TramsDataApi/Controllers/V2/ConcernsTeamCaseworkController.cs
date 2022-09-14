@@ -35,7 +35,7 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet("owners/{ownerId}")]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<ApiSingleResponseV2<ConcernsCaseworkTeamResponse>>> Get(string ownerId, CancellationToken cancellationToken)
+        public async Task<ActionResult<ApiSingleResponseV2<ConcernsCaseworkTeamResponse>>> GetTeam(string ownerId, CancellationToken cancellationToken)
         {
             return await LogAndInvoke(async () =>
             {
