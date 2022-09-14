@@ -25,7 +25,7 @@ namespace TramsDataApi.Test.Controllers
         private Mock<ILogger<ConcernsTeamCaseworkController>> _mockLogger = new Mock<ILogger<ConcernsTeamCaseworkController>>();
 
         [Fact]
-        public async Task Get_Returns200WhenSuccessfullyFetchedData()
+        public async Task Get_Returns200_When_Successfully_Fetched_Data()
         {
             // arrange
             var expectedOwnerId = "john.smith";
@@ -57,7 +57,7 @@ namespace TramsDataApi.Test.Controllers
 
 
         [Fact]
-        public async Task Get_ReturnsNoContentWhenNoDataAvailable()
+        public async Task Get_ReturnsNoContent_When_No_Data_Available()
         {
             // arrange
             var expectedOwnerId = "john.smith";
@@ -80,6 +80,59 @@ namespace TramsDataApi.Test.Controllers
             // act
             var actionResult = await controller.GetTeam("john.smith", CancellationToken.None);
             Assert.IsType<NoContentResult>(actionResult.Result);
+        }
+
+        [Fact]
+        public async Task GetTeamOwners_Returns_200_And_Data_When_Data_Exists()
+        {
+            // arrange
+            var expectedData = new[] { "john.doe", "jane.doe", "fred.flintstone" };
+
+            var getTeamOwnersCommand = new Mock<IGetConcernsCaseworkTeamOwners>();
+            getTeamOwnersCommand.Setup(x => x.Execute(CancellationToken.None)).ReturnsAsync(expectedData);
+
+
+            var updateCommand = new Mock<IUpdateConcernsCaseworkTeam>();
+
+            var controller = new ConcernsTeamCaseworkController(
+                _mockLogger.Object,
+                Mock.Of<IGetConcernsCaseworkTeam>(),
+                getTeamOwnersCommand.Object,
+                updateCommand.Object
+            );
+
+            // act
+            var actionResult = await controller.GetTeamOwners(CancellationToken.None);
+
+            var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            okResult.StatusCode.Value.Should().Be(StatusCodes.Status200OK);
+            (okResult.Value as ApiSingleResponseV2<string[]>).Should().NotBeNull();
+            ((ApiSingleResponseV2<string[]>)okResult.Value).Data.Should().BeEquivalentTo(expectedData);
+        }
+
+        [Fact]
+        public async Task GetTeamOwners_Returns_200_When_No_Data_Exists()
+        {
+            // arrange
+            var getTeamOwnersCommand = new Mock<IGetConcernsCaseworkTeamOwners>();
+            getTeamOwnersCommand.Setup(x => x.Execute(CancellationToken.None)).ReturnsAsync(default(string[]));
+
+            var updateCommand = new Mock<IUpdateConcernsCaseworkTeam>();
+
+            var controller = new ConcernsTeamCaseworkController(
+                _mockLogger.Object,
+                Mock.Of<IGetConcernsCaseworkTeam>(),
+                getTeamOwnersCommand.Object,
+                updateCommand.Object
+            );
+
+            // act
+            var actionResult = await controller.GetTeamOwners(CancellationToken.None);
+
+            var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            okResult.StatusCode.Value.Should().Be(StatusCodes.Status200OK);
+            (okResult.Value as ApiSingleResponseV2<string[]>).Should().NotBeNull();
+            ((ApiSingleResponseV2<string[]>)okResult.Value).Data.Should().BeEquivalentTo(Array.Empty<string>());
         }
 
         [Fact]

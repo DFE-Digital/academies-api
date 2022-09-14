@@ -53,15 +53,14 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet("owners")]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<ApiSingleResponseV2<string[]>>> Get(CancellationToken cancellationToken)
+        public async Task<ActionResult<ApiSingleResponseV2<string[]>>> GetTeamOwners(CancellationToken cancellationToken)
         {
             return await LogAndInvoke(async () =>
             {
                 var result = await _getTeamOwnersCommand.Execute(cancellationToken);
                 if (result is null)
                 {
-                    // successful, but nothing to return as no team created yet.
-                    return NoContent();
+                    return Ok(new ApiSingleResponseV2<string[]>(Array.Empty<string>()));
                 }
 
                 var responseData = new ApiSingleResponseV2<string[]>(result);
