@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,9 +19,9 @@ namespace TramsDataApi.Gateways
 
         public async Task AddCaseworkTeam(ConcernsCaseworkTeam team, CancellationToken cancellationToken)
         {
-            _ = team ?? throw new ArgumentNullException(nameof(team));            
+            _ = team ?? throw new ArgumentNullException(nameof(team));
             _ = team.TeamMembers ?? throw new ArgumentNullException(nameof(team.TeamMembers));
-            
+
             _tramsDbContext.ConcernsTeamCaseworkTeam.Add(team);
             await _tramsDbContext.SaveChangesAsync(cancellationToken);
         }
@@ -34,11 +33,9 @@ namespace TramsDataApi.Gateways
                 throw new ArgumentNullException(nameof(ownerId));
             }
 
-            var team = await _tramsDbContext.ConcernsTeamCaseworkTeam
+            return await _tramsDbContext.ConcernsTeamCaseworkTeam
                 .Include(t => t.TeamMembers)
-                .FirstOrDefaultAsync(x => x.Id == ownerId);
-
-            return team;
+                .FirstOrDefaultAsync(x => x.Id == ownerId, cancellationToken);
         }
 
         public async Task UpdateCaseworkTeam(ConcernsCaseworkTeam team, CancellationToken cancellationToken)
@@ -49,9 +46,16 @@ namespace TramsDataApi.Gateways
                 throw new ArgumentNullException(nameof(team.Id));
             }
             _ = team.TeamMembers ?? throw new ArgumentNullException(nameof(team.TeamMembers));
-            
+
             _tramsDbContext.ConcernsTeamCaseworkTeam.Update(team);
             await _tramsDbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<string[]> GetTeamOwners(CancellationToken cancellationToken)
+        {
+            return await _tramsDbContext.ConcernsTeamCaseworkTeam
+                .Select(x => x.Id)
+                .ToArrayAsync(cancellationToken);
         }
     }
 }
