@@ -95,6 +95,7 @@ namespace TramsDataApi
             services.AddScoped<ISearchAcademyConversionProjects, SearchAcademyConversionProjects>();
 
             services.AddScoped<IGetConcernsCaseworkTeam, GetConcernsCaseworkTeam>();
+            services.AddScoped<IGetConcernsCaseworkTeamOwners, GetConcernsCaseworkTeamOwners>();
             services.AddScoped<IUpdateConcernsCaseworkTeam, UpdateConcernsCaseworkTeam>();
             services.AddScoped<IConcernsTeamCaseworkGateway, ConcernsTeamCaseworkGateway>();
 
