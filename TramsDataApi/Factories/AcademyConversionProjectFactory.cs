@@ -53,6 +53,13 @@ namespace TramsDataApi.Factories
             project.MemberOfParliamentParty = updateRequest.MemberOfParliamentParty ?? project.MemberOfParliamentParty;
              project.GeneralInformationSectionComplete = updateRequest.GeneralInformationSectionComplete ?? project.GeneralInformationSectionComplete;
             project.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete ?? project.RisksAndIssuesSectionComplete;
+
+            project.Consultation = updateRequest.Consultation ?? project.Consultation;
+            project.GoverningBodyResolution = updateRequest.GoverningBodyResolution ?? project.GoverningBodyResolution;
+            project.DiocesanConsent = updateRequest.DiocesanConsent ?? project.DiocesanConsent;
+            project.FoundationConsent = updateRequest.FoundationConsent ?? project.FoundationConsent;
+            project.LegalRequirementsSectionComplete = updateRequest.LegalRequirementsSectionComplete ?? project.LegalRequirementsSectionComplete;
+
             project.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation ??
                 project.SchoolPerformanceAdditionalInformation;
             project.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear == default(decimal) ? null :

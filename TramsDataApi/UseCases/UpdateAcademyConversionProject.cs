@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.AcademyConversionProject;
@@ -17,13 +18,13 @@ namespace TramsDataApi.UseCases
 
         public async Task<AcademyConversionProjectResponse> Execute(int id, UpdateAcademyConversionProjectRequest request)
         {
-            var academyConversionProject = await _academyConversionProjectGateway.GetById(id);
+            AcademyConversionProject academyConversionProject = await _academyConversionProjectGateway.GetById(id);
             if (academyConversionProject == null)
             {
                 return null;
             }
 
-            var updatedProject = AcademyConversionProjectFactory.Update(academyConversionProject, request);
+            AcademyConversionProject updatedProject = AcademyConversionProjectFactory.Update(academyConversionProject, request);
             await _academyConversionProjectGateway.Update(updatedProject);
 
             return AcademyConversionProjectResponseFactory.Create(updatedProject);
