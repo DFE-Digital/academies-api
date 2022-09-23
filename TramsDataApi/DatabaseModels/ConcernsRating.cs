@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace TramsDataApi.DatabaseModels
 {
+    [Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class ConcernsRating
     {
         public int Id { get; set; }

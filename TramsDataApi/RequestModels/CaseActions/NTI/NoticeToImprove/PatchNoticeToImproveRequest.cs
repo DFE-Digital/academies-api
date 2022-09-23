@@ -5,6 +5,7 @@ using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.RequestModels.CaseActions.NTI.NoticeToImprove
 {
+    [Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class PatchNoticeToImproveRequest
     {
         [Required]

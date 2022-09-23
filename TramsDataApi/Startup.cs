@@ -113,7 +113,6 @@ namespace TramsDataApi
             services.AddSwaggerGen();
             services.ConfigureOptions<SwaggerOptions>();
             services.AddUseCases();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

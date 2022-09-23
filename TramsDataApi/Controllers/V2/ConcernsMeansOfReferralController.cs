@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers.V2
 {
-    [ApiVersion("2.0")]
+    [ApiVersion("2.0", Deprecated = true)]
     [ApiController]
     [Route("v{version:apiVersion}/concerns-meansofreferral")]
+    [Obsolete("This endpoint is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class ConcernsMeansOfReferralController: ControllerBase
     {
         

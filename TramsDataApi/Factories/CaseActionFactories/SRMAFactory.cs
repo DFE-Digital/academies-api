@@ -1,10 +1,12 @@
-﻿using TramsDataApi.DatabaseModels;
+﻿using System;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Enums;
 using TramsDataApi.RequestModels.CaseActions.SRMA;
 using TramsDataApi.ResponseModels.CaseActions.SRMA;
 
 namespace TramsDataApi.Factories.CaseActionFactories
 {
+    [Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public static class SRMAFactory
     {
         public static SRMACase CreateDBModel(CreateSRMARequest createSRMARequest)
