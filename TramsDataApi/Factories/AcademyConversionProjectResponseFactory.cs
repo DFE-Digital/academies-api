@@ -51,6 +51,13 @@ namespace TramsDataApi.Factories
 				MemberOfParliamentParty = academyConversionProject.MemberOfParliamentParty,
 				GeneralInformationSectionComplete = academyConversionProject.GeneralInformationSectionComplete,
 				RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete,
+				// Legal Requirements
+				LegalRequirementsSectionComplete = academyConversionProject.LegalRequirementsSectionComplete,
+				GoverningBodyResolution = academyConversionProject.GoverningBodyResolution,
+				DiocesanConsent = academyConversionProject.DiocesanConsent,
+				FoundationConsent = academyConversionProject.FoundationConsent,
+				Consultation = academyConversionProject.Consultation,
+
 				SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation,
 				CapitalCarryForwardAtEndMarchCurrentYear = academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear,
 				CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear,
