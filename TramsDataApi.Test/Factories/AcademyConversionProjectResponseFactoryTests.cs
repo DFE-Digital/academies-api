@@ -89,6 +89,11 @@ namespace TramsDataApi.Test.Factories
                 RationaleForProject = academyConversionProject.RationaleForProject,
                 RationaleForTrust = academyConversionProject.RationaleForTrust,
                 RisksAndIssues = academyConversionProject.RisksAndIssues,
+                LegalRequirementsSectionComplete = academyConversionProject.LegalRequirementsSectionComplete,
+                DiocesanConsent = academyConversionProject.DiocesanConsent,
+                Consultation = academyConversionProject.Consultation,
+                FoundationConsent = academyConversionProject.FoundationConsent,
+                GoverningBodyResolution = academyConversionProject.GoverningBodyResolution,
                 RevenueCarryForwardAtEndMarchCurrentYear = academyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear,
                 ProjectedRevenueBalanceAtEndMarchNextYear = academyConversionProject.ProjectedRevenueBalanceAtEndMarchNextYear,
 
