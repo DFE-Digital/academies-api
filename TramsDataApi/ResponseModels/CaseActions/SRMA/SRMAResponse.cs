@@ -3,6 +3,7 @@ using TramsDataApi.Enums;
 
 namespace TramsDataApi.ResponseModels.CaseActions.SRMA
 {
+	[Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class SRMAResponse
     {
 		public int Id { get; set; }

@@ -4,6 +4,7 @@ using TramsDataApi.Enums;
 
 namespace TramsDataApi.RequestModels.CaseActions.FinancialPlan
 {
+    [Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class CreateFinancialPlanRequest
     {
         [Required]

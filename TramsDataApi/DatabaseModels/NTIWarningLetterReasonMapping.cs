@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TramsDataApi.DatabaseModels
 {
+	[Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     [Table("NTIWarningLetterReasonMapping", Schema = "sdd")]
 	public class NTIWarningLetterReasonMapping
 	{

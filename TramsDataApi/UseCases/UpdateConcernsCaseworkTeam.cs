@@ -9,6 +9,7 @@ using TramsDataApi.ResponseModels.Concerns.TeamCasework;
 
 namespace TramsDataApi.UseCases
 {
+    [Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class UpdateConcernsCaseworkTeam : IUpdateConcernsCaseworkTeam
     {
         private readonly IConcernsTeamCaseworkGateway _gateway;

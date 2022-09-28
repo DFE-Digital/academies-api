@@ -13,6 +13,7 @@ namespace TramsDataApi.Controllers.V2
 {
     [ApiVersion("2.0")]
     [Route("v{version:apiVersion}/case-actions/nti-under-consideration")]
+    [Obsolete("This endpoint is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     [ApiController]
     public class NTIUnderConsiderationController : Controller
     {
