@@ -6,6 +6,7 @@ using TramsDataApi.ResponseModels.CaseActions.NTI.WarningLetter;
 
 namespace TramsDataApi.Factories.CaseActionFactories
 {
+    [Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public static class NTIWarningLetterFactory
     {
         public static NTIWarningLetter CreateDBModel(CreateNTIWarningLetterRequest createNTIWarningLetterRequest)

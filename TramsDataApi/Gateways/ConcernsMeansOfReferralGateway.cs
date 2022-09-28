@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
 {
+    [Obsolete("This is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class ConcernsMeansOfReferralGateway : IConcernsMeansOfReferralGateway
     {
         private readonly TramsDbContext _tramsDbContext;

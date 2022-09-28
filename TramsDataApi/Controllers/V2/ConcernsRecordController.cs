@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ namespace TramsDataApi.Controllers.V2
     [ApiVersion("2.0")]
     [ApiController]
     [Route("v{version:apiVersion}/concerns-records")]
+    [Obsolete("This endpoint is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     
     public class ConcernsRecordController : ControllerBase
     {
