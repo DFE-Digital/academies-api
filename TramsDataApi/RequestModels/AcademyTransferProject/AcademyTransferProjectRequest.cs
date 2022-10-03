@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TramsDataApi.DatabaseModels;
 
-namespace TramsDataApi.RequestModels
+namespace TramsDataApi.RequestModels.AcademyTransferProject
 {
     public class AcademyTransferProjectRequest
     {
@@ -12,6 +12,7 @@ namespace TramsDataApi.RequestModels
         public AcademyTransferProjectFeaturesRequest Features { get; set; }
         public AcademyTransferProjectDatesRequest Dates { get; set; }
         public AcademyTransferProjectBenefitsRequest Benefits { get; set; }
+        public AcademyTransferProjectLegalRequirementsRequest LegalRequirements { get; set; }
         public AcademyTransferProjectRationaleRequest Rationale { get; set; }
         public AcademyTransferProjectGeneralInformationRequest GeneralInformation { get; set; }
         public string State { get; set; }

@@ -55,6 +55,9 @@ namespace TramsDataApi.DatabaseModels
         public string OtherBenefitValue { get; set; }
         public string Author { get; set; }
         public string Recommendation { get; set; }
+        public string TrustAgreement { get; set; }
+        public string DiocesanConsent { get; set; }
+        public string FoundationConsent { get; set; }
         public bool? FeatureSectionIsCompleted { get; set; }
         public bool? BenefitsSectionIsCompleted { get; set; }
         public bool? RationaleSectionIsCompleted { get; set; }

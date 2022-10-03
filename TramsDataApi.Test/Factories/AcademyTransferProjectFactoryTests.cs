@@ -7,6 +7,7 @@ using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
