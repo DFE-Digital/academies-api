@@ -2,7 +2,7 @@ using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels.AcademyTransferProject;
-using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.UseCases
 {

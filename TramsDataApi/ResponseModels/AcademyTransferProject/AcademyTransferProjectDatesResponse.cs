@@ -1,4 +1,4 @@
-namespace TramsDataApi.ResponseModels
+namespace TramsDataApi.ResponseModels.AcademyTransferProject
 {
     public class AcademyTransferProjectDatesResponse
     {
