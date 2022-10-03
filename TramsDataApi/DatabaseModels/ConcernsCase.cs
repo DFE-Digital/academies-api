@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -28,5 +29,8 @@ namespace TramsDataApi.DatabaseModels
         public int StatusUrn { get; set; }
         public int RatingUrn { get; set; }
         public virtual ICollection<ConcernsRecord> ConcernsRecords { get; set; }
+
+        public Decision Decision { get; private set; }
+
     }
 }
