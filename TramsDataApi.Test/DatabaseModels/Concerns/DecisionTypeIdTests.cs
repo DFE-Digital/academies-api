@@ -5,13 +5,13 @@ using Xunit;
 
 namespace TramsDataApi.Test.DatabaseModels.Concerns
 {
-    public class DecisionTypeTests
+    public class DecisionTypeIdTests
     {
         [Fact]
         public void CanConstruct_DecisionType()
         {
             var fixture = new Fixture();
-            var sut = fixture.Create<DecisionType>();
+            var sut = fixture.Create<DecisionTypeId>();
             sut.Should().NotBeNull();
         }
 
@@ -19,13 +19,12 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
         public void DecisionType_Properties_SetByConstructor()
         {
             var fixture = new Fixture();
+            const string noticeToImproveNti = "Notice to Improve (NTI)";
             var expectedId = Enums.Concerns.DecisionType.EsfaApproval;
-            var expectedDecisionId = fixture.Create<int>();
-            var sut = new DecisionType(expectedId, expectedDecisionId);
+            var sut = new DecisionTypeId(expectedId, noticeToImproveNti);
 
-            sut.DecisionTypeId.Should().Be(expectedId);
-            sut.DecisionId.Should().Be(expectedDecisionId);
-
+            sut.Id.Should().Be(expectedId);
+            sut.Name.Should().Be(noticeToImproveNti);
         }
     }
 }

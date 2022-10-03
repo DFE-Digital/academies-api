@@ -2,20 +2,19 @@
 {
     public class DecisionType
     {
-        public Enums.Concerns.DecisionType Id { get; private set; }
-        public string Name { get; private set; }
+        public Enums.Concerns.DecisionType DecisionTypeId { get; private set; }
 
         private DecisionType()
         {
                 
         }
 
-        public DecisionType(Enums.Concerns.DecisionType decisionType, string name)
+        public DecisionType(Enums.Concerns.DecisionType decisionType, int decisionId)
         {
-            Id = decisionType;
-            Name = name;
-        }   
+            DecisionTypeId = decisionType;
+            DecisionId = decisionId;
+        }
 
-
+        public int DecisionId { get; private set; }
     }
 }

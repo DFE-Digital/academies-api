@@ -6,7 +6,7 @@ using Xunit;
 
 namespace TramsDataApi.Test.DatabaseModels.Concerns
 {
-    public class CaseDecisionTests
+    public class DecisionTests
     {
         [Fact]
         public void CanConstruct_Decision()
@@ -21,16 +21,18 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
         {
 
             var fixture = new Fixture();
-
-
+            var decisionId = fixture.Create<int>();
+            
             var decisionTypes = new[]
             {
-                new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove, "Notice to Improve"),
-                new DecisionType(Enums.Concerns.DecisionType.OtherFinancialSupport, "Other financial support")
+                new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove, decisionId),
+                new DecisionType(Enums.Concerns.DecisionType.OtherFinancialSupport, decisionId)
             };
 
             var expectation = new
             {
+                ConcernsCaseId = fixture.Create<int>(),
+                DecisionId = decisionId,
                 CrmCaseNumber = fixture.Create<string>(),
                 RetrospectiveApproval = true,
                 SubmissionRequired = true,
@@ -42,6 +44,8 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             };
 
             var sut = new Decision(
+                expectation.ConcernsCaseId,
+                expectation.DecisionId,
                 expectation.CrmCaseNumber,
                 expectation.RetrospectiveApproval,
                 expectation.SubmissionRequired,

@@ -6,20 +6,24 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
     {
         private Decision()
         {
-            
+
         }
 
         public Decision(
+            int concernsCaseId,
+            int decisionId,
             string crmCaseNumber,
-            bool retrospectiveApproval, 
+            bool retrospectiveApproval,
             bool submissionRequired,
-            string submissionDocumentLink, 
-            DateTimeOffset receivedRequestDate, 
-            DecisionType[] decisionTypes, 
-            decimal totalAmountRequested, 
+            string submissionDocumentLink,
+            DateTimeOffset receivedRequestDate,
+            DecisionType[] decisionTypes,
+            decimal totalAmountRequested,
             string supportingNotes
         )
         {
+            ConcernsCaseId = concernsCaseId;
+            DecisionId = decisionId;
             DecisionTypes = decisionTypes;
             TotalAmountRequested = totalAmountRequested;
             SupportingNotes = supportingNotes;
@@ -30,6 +34,8 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
             CrmCaseNumber = crmCaseNumber;
         }
 
+        public int ConcernsCaseId { get; set; }
+        public int DecisionId { get; private set; }
         public DecisionType[] DecisionTypes { get; private set; }
         public decimal TotalAmountRequested { get; private set; }
         public string SupportingNotes { get; private set; }
