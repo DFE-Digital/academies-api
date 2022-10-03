@@ -3,7 +3,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.RequestModels.AcademyTransferProject;
-using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
 using TramsDataApi.Validators;
 

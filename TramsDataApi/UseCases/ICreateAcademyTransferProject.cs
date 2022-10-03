@@ -1,5 +1,5 @@
 using TramsDataApi.RequestModels.AcademyTransferProject;
-using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.UseCases
 {
