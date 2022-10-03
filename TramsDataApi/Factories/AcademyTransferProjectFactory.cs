@@ -50,6 +50,7 @@ namespace TramsDataApi.Factories
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
                 FeatureSectionIsCompleted = request.Features?.IsCompleted,
                 BenefitsSectionIsCompleted = request.Benefits?.IsCompleted,
+                LegalRequirementsSectionIsCompleted = request.LegalRequirements?.IsCompleted,
                 RationaleSectionIsCompleted = request.Rationale?.IsCompleted,
                 HasHtbDate = request.Dates?.HasHtbDate,
                 HasTransferFirstDiscussedDate = request.Dates?.HasTransferFirstDiscussedDate,
@@ -151,11 +152,14 @@ namespace TramsDataApi.Factories
             original.OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue;
             original.EqualitiesImpactAssessmentConsidered = toMerge.EqualitiesImpactAssessmentConsidered ??
                                                             original.EqualitiesImpactAssessmentConsidered;
-            
+            original.DiocesanConsent = toMerge.DiocesanConsent ?? original.DiocesanConsent;
+            original.FoundationConsent = toMerge.FoundationConsent ?? original.FoundationConsent;
+            original.TrustAgreement = toMerge.TrustAgreement ?? original.TrustAgreement;
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
 
             original.FeatureSectionIsCompleted = toMerge.FeatureSectionIsCompleted ?? original.FeatureSectionIsCompleted;
             original.BenefitsSectionIsCompleted = toMerge.BenefitsSectionIsCompleted ?? original.BenefitsSectionIsCompleted;
+            original.LegalRequirementsSectionIsCompleted = toMerge.LegalRequirementsSectionIsCompleted ?? original.LegalRequirementsSectionIsCompleted;
             original.RationaleSectionIsCompleted = toMerge.RationaleSectionIsCompleted ?? original.RationaleSectionIsCompleted;
 
             original.AcademyTransferProjectIntendedTransferBenefits =
