@@ -15,6 +15,7 @@ using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 
 namespace TramsDataApi.Test.Integration
 {

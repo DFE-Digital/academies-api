@@ -1,7 +1,7 @@
 using System.Linq;
 using FizzWare.NBuilder;
 using FluentValidation.TestHelper;
-using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 using TramsDataApi.Validators;
 using Xunit;
 

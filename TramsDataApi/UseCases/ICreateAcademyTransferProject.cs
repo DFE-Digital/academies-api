@@ -1,4 +1,4 @@
-using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
