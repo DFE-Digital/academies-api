@@ -8,6 +8,7 @@ using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
 using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
 using Xunit;
 

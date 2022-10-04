@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221003131613_transfers-legal-requirement")]
+    partial class transferslegalrequirement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -895,9 +897,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<DateTime?>("HtbDate")
                         .HasColumnType("date");
-
-                    b.Property<bool?>("LegalRequirementsSectionIsCompleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("OtherBenefitValue")
                         .HasColumnType("nvarchar(max)");

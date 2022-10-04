@@ -838,7 +838,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("BenefitsSectionIsCompleted")
+                    b.Property<bool?>("" +
+                                      "BenefitsSectionIsCompleted" +
+                                      "")
                         .HasColumnType("bit");
 
                     b.Property<string>("ComplexLandAndBuildingFurtherSpecification")
