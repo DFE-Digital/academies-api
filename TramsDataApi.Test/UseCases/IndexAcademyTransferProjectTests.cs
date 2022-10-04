@@ -5,6 +5,7 @@ using Moq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
 using Xunit;
 

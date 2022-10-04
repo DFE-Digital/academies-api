@@ -9,6 +9,7 @@ using Xunit;
 using System;
 using TramsDataApi.UseCases;
 using TramsDataApi.Factories;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 
 namespace TramsDataApi.Test.UseCases
 {

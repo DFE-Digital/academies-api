@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers;
-using TramsDataApi.RequestModels;
-using TramsDataApi.ResponseModels;
+using TramsDataApi.RequestModels.AcademyTransferProject;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
 using Xunit;
 

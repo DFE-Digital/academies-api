@@ -1,6 +1,6 @@
 using System.Linq;
 using FluentValidation;
-using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 
 namespace TramsDataApi.Validators
 {

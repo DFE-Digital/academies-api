@@ -1,4 +1,4 @@
-namespace TramsDataApi.RequestModels
+namespace TramsDataApi.RequestModels.AcademyTransferProject
 {
     public class AcademyTransferProjectBenefitsRequest
     {
@@ -7,6 +7,6 @@ namespace TramsDataApi.RequestModels
         public bool? EqualitiesImpactAssessmentConsidered { get; set; }
         public bool? AnyRisks { get; set; }
         public bool? IsCompleted { get; set; }
-        
+
     }
 }

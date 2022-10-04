@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TramsDataApi.ResponseModels
+namespace TramsDataApi.ResponseModels.AcademyTransferProject
 {
     public class AcademyTransferProjectSummaryResponse
     {

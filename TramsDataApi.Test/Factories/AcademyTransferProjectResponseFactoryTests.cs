@@ -5,6 +5,7 @@ using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
@@ -47,6 +48,7 @@ namespace TramsDataApi.Test.Factories
                 OtherBenefitValue = null,
                 FeatureSectionIsCompleted = null,
                 BenefitsSectionIsCompleted = null,
+                LegalRequirementsSectionIsCompleted = null,
                 RationaleSectionIsCompleted = null,
                 AcademyTransferProjectIntendedTransferBenefits = null,
                 TransferringAcademies = Builder<TransferringAcademies>
@@ -84,6 +86,13 @@ namespace TramsDataApi.Test.Factories
                     },
                     IsCompleted = null,
                     AnyRisks = null
+                },
+                LegalRequirements = new AcademyTransferProjectLegalRequirementsResponse
+                {
+                    TrustAgreement = null,
+                    DiocesanConsent = null,
+                    FoundationConsent = null,
+                    IsCompleted = null,
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse(),
                 GeneralInformation = new AcademyTransferProjectGeneralInformationResponse(),
@@ -180,6 +189,13 @@ namespace TramsDataApi.Test.Factories
                     EqualitiesImpactAssessmentConsidered = academyTransferProjectModel.EqualitiesImpactAssessmentConsidered,
                     IsCompleted = academyTransferProjectModel.BenefitsSectionIsCompleted,
                     AnyRisks = academyTransferProjectModel.AnyRisks
+                },
+                LegalRequirements = new AcademyTransferProjectLegalRequirementsResponse
+                {
+                    TrustAgreement = academyTransferProjectModel.TrustAgreement,
+                    DiocesanConsent = academyTransferProjectModel.DiocesanConsent,
+                    FoundationConsent = academyTransferProjectModel.FoundationConsent,
+                    IsCompleted = academyTransferProjectModel.LegalRequirementsSectionIsCompleted,
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
                 {
