@@ -1,4 +1,5 @@
 ﻿using TramsDataApi.DatabaseModels;
+using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 
 namespace TramsDataApi.Factories
@@ -75,7 +76,11 @@ namespace TramsDataApi.Factories
 				KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation,
 				ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
 				ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
-				EqualitiesImpactAssessmentConsidered = academyConversionProject.EqualitiesImpactAssessmentConsidered
+				EqualitiesImpactAssessmentConsidered = academyConversionProject.EqualitiesImpactAssessmentConsidered,
+				AssignedUser = new AssignedUser(
+					academyConversionProject.AssignedUserId, 
+					academyConversionProject.AssignedUserFullName,
+					academyConversionProject.AssignedUserEmailAddress)
 			};
     }
 }
