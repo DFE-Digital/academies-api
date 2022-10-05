@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221005100254_Add_assigneduser_to_conversionproject")]
+    partial class Add_assigneduser_to_conversionproject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -869,9 +871,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<bool?>("ComplexLandAndBuildingShouldBeConsidered")
                         .HasColumnType("bit");
 
-                    b.Property<string>("DiocesanConsent")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool?>("EqualitiesImpactAssessmentConsidered")
                         .HasColumnType("bit");
 
@@ -883,9 +882,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<bool?>("FinanceAndDebtShouldBeConsidered")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FoundationConsent")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("HasHtbDate")
                         .HasColumnType("bit");
@@ -904,9 +900,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<DateTime?>("HtbDate")
                         .HasColumnType("date");
-
-                    b.Property<bool?>("LegalRequirementsSectionIsCompleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("OtherBenefitValue")
                         .HasColumnType("nvarchar(max)");
@@ -955,9 +948,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<DateTime?>("TransferFirstDiscussed")
                         .HasColumnType("date");
-
-                    b.Property<string>("TrustAgreement")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrustSponsorRationale")
                         .HasColumnType("nvarchar(max)");

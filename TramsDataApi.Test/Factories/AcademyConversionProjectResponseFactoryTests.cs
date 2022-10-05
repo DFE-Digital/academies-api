@@ -2,6 +2,7 @@ using AutoFixture;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.RequestModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
 using Xunit;
 
@@ -131,7 +132,11 @@ namespace TramsDataApi.Test.Factories
                 KeyStage5PerformanceAdditionalInformation = academyConversionProject.KeyStage5PerformanceAdditionalInformation,
                 ConversionSupportGrantAmount = academyConversionProject.ConversionSupportGrantAmount,
                 ConversionSupportGrantChangeReason = academyConversionProject.ConversionSupportGrantChangeReason,
-                EqualitiesImpactAssessmentConsidered = academyConversionProject.EqualitiesImpactAssessmentConsidered
+                EqualitiesImpactAssessmentConsidered = academyConversionProject.EqualitiesImpactAssessmentConsidered,
+                AssignedUser = new AssignedUser(
+                    academyConversionProject.AssignedUserId,
+                    academyConversionProject.AssignedUserFullName,
+                    academyConversionProject.AssignedUserEmailAddress)
             };
 
             return expected;
