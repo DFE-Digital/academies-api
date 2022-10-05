@@ -13,6 +13,6 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
         
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
     }
 }
