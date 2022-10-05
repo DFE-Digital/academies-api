@@ -25,8 +25,8 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
 
             var decisionTypes = new[]
             {
-                new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove, decisionId),
-                new DecisionType(Enums.Concerns.DecisionType.OtherFinancialSupport, decisionId)
+                new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove) { DecisionId =decisionId },
+                new DecisionType(Enums.Concerns.DecisionType.OtherFinancialSupport){ DecisionId =decisionId }
             };
 
             var expectation = new

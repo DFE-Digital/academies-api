@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 {
@@ -6,7 +7,7 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
     {
         private Decision()
         {
-
+            DecisionTypes = new List<DecisionType>();
         }
 
         public Decision(
@@ -38,7 +39,7 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
         public int ConcernsCaseId { get;  set; }
         
         public int DecisionId { get;  set; } 
-        public DecisionType[] DecisionTypes { get;  set; }
+        public IList<DecisionType> DecisionTypes { get;  set; }
         public decimal TotalAmountRequested { get;  set; }
         public string SupportingNotes { get;  set; }
         public DateTimeOffset ReceivedRequestDate { get;  set; }
