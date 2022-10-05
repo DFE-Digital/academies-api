@@ -21,7 +21,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     SubmissionDocumentLink = table.Column<string>(nullable: true),
                     SubmissionRequired = table.Column<bool>(nullable: false),
                     RetrospectiveApproval = table.Column<bool>(nullable: false),
-                    CrmCaseNumber = table.Column<string>(nullable: true)
+                    CrmCaseNumber = table.Column<string>(nullable: true),
+                    CreatedAtDateTimeOffset = table.Column<DateTimeOffset>(nullable: false),
+                    UpdatedAtDateTimeOffset = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,15 +67,7 @@ namespace TramsDataApi.Migrations.TramsDb
                         principalSchema: "sdd",
                         principalTable: "ConcernsDecision",
                         principalColumn: "DecisionId",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_ConcernsDecisionType_ConcernsDecisionTypeId_Id",
-                        column: x => x.DecisionTypeId,
-                        principalSchema: "sdd",
-                        principalTable: "ConcernsDecisionTypeId",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction
-                    );
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -99,8 +93,7 @@ namespace TramsDataApi.Migrations.TramsDb
                 name: "IX_ConcernsDecision_ConcernsCaseId",
                 schema: "sdd",
                 table: "ConcernsDecision",
-                column: "ConcernsCaseId",
-                unique: true);
+                column: "ConcernsCaseId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

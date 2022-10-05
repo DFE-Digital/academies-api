@@ -22,7 +22,7 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
 
             var fixture = new Fixture();
             var decisionId = fixture.Create<int>();
-            
+
             var decisionTypes = new[]
             {
                 new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove, decisionId),
@@ -32,7 +32,6 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             var expectation = new
             {
                 ConcernsCaseId = fixture.Create<int>(),
-                DecisionId = decisionId,
                 CrmCaseNumber = fixture.Create<string>(),
                 RetrospectiveApproval = true,
                 SubmissionRequired = true,
@@ -40,12 +39,12 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
                 ReceivedRequestDate = fixture.Create<DateTimeOffset>(),
                 DecisionTypes = decisionTypes,
                 TotalAmountRequested = 13.5m,
-                SupportingNotes = fixture.Create<string>()
+                SupportingNotes = fixture.Create<string>(),
+                CurrentDateTime = DateTimeOffset.UtcNow
             };
 
             var sut = new Decision(
                 expectation.ConcernsCaseId,
-                expectation.DecisionId,
                 expectation.CrmCaseNumber,
                 expectation.RetrospectiveApproval,
                 expectation.SubmissionRequired,
@@ -53,10 +52,14 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
                 expectation.ReceivedRequestDate,
                 expectation.DecisionTypes,
                 expectation.TotalAmountRequested,
-                expectation.SupportingNotes
+                expectation.SupportingNotes,
+                expectation.CurrentDateTime
             );
 
-            sut.Should().BeEquivalentTo(expectation);
+            sut.Should().BeEquivalentTo(expectation, cfg => cfg.Excluding(e => e.CurrentDateTime));
+            sut.CreatedAtDateTimeOffset.Should().Be(expectation.CurrentDateTime);
+            sut.UpdatedAtDateTimeOffset.Should().Be(expectation.CurrentDateTime);
+            sut.DecisionId.Should().Be(0, "DecisionId should be assigned by the database");
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 using TramsDataApi.DatabaseModels;
+using TramsDataApi.Factories.Concerns.Decisions;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
 using TramsDataApi.Swagger;
@@ -98,6 +99,10 @@ namespace TramsDataApi
             services.AddScoped<IGetConcernsCaseworkTeamOwners, GetConcernsCaseworkTeamOwners>();
             services.AddScoped<IUpdateConcernsCaseworkTeam, UpdateConcernsCaseworkTeam>();
             services.AddScoped<IConcernsTeamCaseworkGateway, ConcernsTeamCaseworkGateway>();
+
+            // concerns factories
+            services.AddScoped<ICreateDecisionResponseFactory, CreateDecisionResponseFactory>();
+            services.AddScoped<IDecisionFactory, DecisionFactory>();
 
             services.AddApiVersioning(config => 
             {

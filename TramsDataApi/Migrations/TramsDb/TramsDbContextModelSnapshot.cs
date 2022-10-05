@@ -971,6 +971,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<int>("ConcernsCaseId")
                         .HasColumnType("int");
 
+                    b.Property<DateTimeOffset>("CreatedAtDateTimeOffset")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("CrmCaseNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -992,10 +995,12 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<decimal>("TotalAmountRequested")
                         .HasColumnType("money");
 
+                    b.Property<DateTimeOffset>("UpdatedAtDateTimeOffset")
+                        .HasColumnType("datetimeoffset");
+
                     b.HasKey("DecisionId");
 
-                    b.HasIndex("ConcernsCaseId")
-                        .IsUnique();
+                    b.HasIndex("ConcernsCaseId");
 
                     b.ToTable("ConcernsDecision","sdd");
                 });
@@ -3269,8 +3274,8 @@ namespace TramsDataApi.Migrations.TramsDb
             modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.Decision", b =>
                 {
                     b.HasOne("TramsDataApi.DatabaseModels.ConcernsCase", null)
-                        .WithOne("Decision")
-                        .HasForeignKey("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.Decision", "ConcernsCaseId")
+                        .WithMany("Decisions")
+                        .HasForeignKey("ConcernsCaseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

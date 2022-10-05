@@ -30,7 +30,12 @@ namespace TramsDataApi.DatabaseModels
         public int RatingUrn { get; set; }
         public virtual ICollection<ConcernsRecord> ConcernsRecords { get; set; }
 
-        public Decision Decision { get; private set; }
+        public virtual ICollection<Decision> Decisions { get; private set; } = new List<Decision>();
 
+        public void AddDecision(Decision decision)
+        {
+            _ = decision ?? throw new ArgumentNullException(nameof(decision));
+            Decisions.Add(decision);
+        }
     }
 }

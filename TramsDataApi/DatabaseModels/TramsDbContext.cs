@@ -158,7 +158,7 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
 
-                entity.HasOne(x => x.Decision)
+                entity.HasMany(x => x.Decisions)
                     .WithOne();
             });
 
