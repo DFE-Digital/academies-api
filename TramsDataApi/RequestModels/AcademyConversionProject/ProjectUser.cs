@@ -4,7 +4,11 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
 {
     public class AssignedUser
     {
-        public AssignedUser(Guid id, string fullName, string emailAddress)
+        public AssignedUser()
+        {
+        }
+
+        public AssignedUser(Guid? id, string fullName, string emailAddress)
         {
             Id = id;
             FullName = fullName;
