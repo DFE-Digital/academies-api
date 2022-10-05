@@ -11,8 +11,11 @@ using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories.Concerns.Decisions;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
+using TramsDataApi.RequestModels.Concerns.Decisions;
+using TramsDataApi.ResponseModels.Concerns.Decisions;
 using TramsDataApi.Swagger;
 using TramsDataApi.UseCases;
+using TramsDataApi.UseCases.CaseActions.Decisions;
 
 namespace TramsDataApi
 {
@@ -101,6 +104,7 @@ namespace TramsDataApi
             services.AddScoped<IConcernsTeamCaseworkGateway, ConcernsTeamCaseworkGateway>();
 
             // concerns factories
+            services.AddScoped<IUseCase<CreateDecisionRequest, CreateDecisionResponse>, CreateDecision>();
             services.AddScoped<ICreateDecisionResponseFactory, CreateDecisionResponseFactory>();
             services.AddScoped<IDecisionFactory, DecisionFactory>();
 

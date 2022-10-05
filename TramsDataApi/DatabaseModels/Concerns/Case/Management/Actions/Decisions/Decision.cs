@@ -36,19 +36,19 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
             UpdatedAtDateTimeOffset = createdAtDateTimeOffset;
         }
 
-        public int ConcernsCaseId { get;  set; }
+        public int ConcernsCaseId { get;  private set; }
         
-        public int DecisionId { get;  set; } 
-        public IList<DecisionType> DecisionTypes { get;  set; }
-        public decimal TotalAmountRequested { get;  set; }
-        public string SupportingNotes { get;  set; }
-        public DateTimeOffset ReceivedRequestDate { get;  set; }
-        public string SubmissionDocumentLink { get;  set; }
-        public bool SubmissionRequired { get;  set; }
-        public bool RetrospectiveApproval { get;  set; }
-        public string CrmCaseNumber { get;  set; }
-        public DateTimeOffset CreatedAtDateTimeOffset { get;  set; }
-        public DateTimeOffset UpdatedAtDateTimeOffset { get;  set; }
+        public int DecisionId { get;  private set; } 
+        public IList<DecisionType> DecisionTypes { get;  private set; }
+        public decimal TotalAmountRequested { get;  private set; }
+        public string SupportingNotes { get;  private set; }
+        public DateTimeOffset ReceivedRequestDate { get;  private set; }
+        public string SubmissionDocumentLink { get;  private set; }
+        public bool SubmissionRequired { get;  private set; }
+        public bool RetrospectiveApproval { get;  private set; }
+        public string CrmCaseNumber { get;  private set; }
+        public DateTimeOffset CreatedAtDateTimeOffset { get;  private set; }
+        public DateTimeOffset UpdatedAtDateTimeOffset { get;  private set; }
 
     }
 }

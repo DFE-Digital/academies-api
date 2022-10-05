@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Linq;
+using TramsDataApi.Enums.Concerns;
 
-namespace TramsDataApi.RequestModels.Concerns.Decisions
+namespace TramsDataApi.ResponseModels.Concerns.Decisions
 {
-    public class CreateDecisionRequest
+    public class DecisionResponse
     {
-        public int ConcernsCaseUrn { get; set; }
+        public int ConcernsCaseId { get; set; }
+
         public int DecisionId { get; set; }
-        public Enums.Concerns.DecisionType[] DecisionTypes { get; set; }
+        public DecisionType[] DecisionTypes { get; set; }
         public decimal TotalAmountRequested { get; set; }
         public string SupportingNotes { get; set; }
         public DateTimeOffset ReceivedRequestDate { get; set; }
@@ -15,10 +16,7 @@ namespace TramsDataApi.RequestModels.Concerns.Decisions
         public bool SubmissionRequired { get; set; }
         public bool RetrospectiveApproval { get; set; }
         public string CrmCaseNumber { get; set; }
-
-        public bool IsValid()
-        {
-            return DecisionTypes.All(x => Enum.IsDefined(typeof(Enums.Concerns.DecisionType), x));
-        }
+        public DateTimeOffset CreatedAtDateTimeOffset { get; set; }
+        public DateTimeOffset UpdatedAtDateTimeOffset { get; set; }
     }
 }

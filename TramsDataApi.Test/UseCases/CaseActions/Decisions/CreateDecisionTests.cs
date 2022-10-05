@@ -61,14 +61,13 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
             var request = fixture.Create<CreateDecisionRequest>();
             var fakeNewDecision = fixture.Create<Decision>();
 
-
             var mockGateway = new Mock<IConcernsCaseGateway>();
             mockGateway.Setup(x => x.GetConcernsCaseByUrn(request.ConcernsCaseUrn))
                 .Returns(fakeConcernsCase);
 
 
             var mockDecisionFactory = new Mock<IDecisionFactory>();
-            mockDecisionFactory.Setup(x => x.CreateDecision(request))
+            mockDecisionFactory.Setup(x => x.CreateDecision(fakeConcernsCase.Id, request))
                 .Returns(fakeNewDecision);
 
             var fakeResponse = new CreateDecisionResponse(fakeConcernsCase.Urn, fixture.Create<int>());

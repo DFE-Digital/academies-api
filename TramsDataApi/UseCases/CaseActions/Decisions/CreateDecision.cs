@@ -22,10 +22,16 @@ namespace TramsDataApi.UseCases.CaseActions.Decisions
         public CreateDecisionResponse Execute(CreateDecisionRequest request)
         {
             _ = request ?? throw new ArgumentNullException(nameof(request));
+
+            if (!request.IsValid())
+            {
+                throw new ArgumentException("Request is not valid", nameof(request));
+            }
+
             var concernsCase = _concernsCaseGateway.GetConcernsCaseByUrn(request.ConcernsCaseUrn)
                           ?? throw new InvalidOperationException($"The concerns case for urn {request.ConcernsCaseUrn}, was not found");
 
-            var decision = _factory.CreateDecision(request);
+            var decision = _factory.CreateDecision(concernsCase.Id, request);
             concernsCase.AddDecision(decision);
 
             _concernsCaseGateway.SaveConcernsCase(concernsCase);

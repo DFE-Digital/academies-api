@@ -2,7 +2,6 @@
 {
     public enum DecisionType
     {
-        Unknown = 0,
         NoticeToImprove = 1,
         Section128 = 2,
         QualifiedFloatingCharge = 3,

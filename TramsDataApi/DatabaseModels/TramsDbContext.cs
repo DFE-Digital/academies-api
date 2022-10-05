@@ -778,7 +778,6 @@ namespace TramsDataApi.DatabaseModels
                 e.HasKey(x => x.Id);
                 e.HasData(
                     Enum.GetValues(typeof(Enums.Concerns.DecisionType)).Cast<Enums.Concerns.DecisionType>()
-                        .Where(enm => enm != Enums.Concerns.DecisionType.Unknown)
                         .Select(enm => new DecisionTypeId(enm, enm.ToString())));
             });
 
