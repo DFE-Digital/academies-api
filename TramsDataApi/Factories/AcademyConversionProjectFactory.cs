@@ -97,6 +97,9 @@ namespace TramsDataApi.Factories
                 updateRequest.ConversionSupportGrantAmount ?? project.ConversionSupportGrantAmount;
             project.ConversionSupportGrantChangeReason = updateRequest.ConversionSupportGrantChangeReason ?? project.ConversionSupportGrantChangeReason;
             project.ProjectStatus = updateRequest.ProjectStatus ?? project.ProjectStatus;
+            project.AssignedUserId = updateRequest?.AssignedUser?.Id ?? project.AssignedUserId;
+            project.AssignedUserFullName = updateRequest?.AssignedUser.FullName ?? project.AssignedUserFullName;
+            project.AssignedUserEmailAddress = updateRequest?.AssignedUser?.EmailAddress ?? project.AssignedUserEmailAddress;
 
             return project;
         }
