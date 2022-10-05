@@ -115,6 +115,6 @@ namespace TramsDataApi.DatabaseModels
         // assigned user
         public string AssignedUserFullName { get; set; }
         public string AssignedUserEmailAddress { get; set; }
-        public Guid AssignedUserId { get; set; }
+        public Guid? AssignedUserId { get; set; }
     }   
 }
