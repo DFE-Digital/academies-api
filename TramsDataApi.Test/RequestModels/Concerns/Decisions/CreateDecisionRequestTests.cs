@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoFixture;
+﻿using AutoFixture;
 using FluentAssertions;
 using TramsDataApi.Enums.Concerns;
 using TramsDataApi.RequestModels.Concerns.Decisions;
@@ -18,7 +13,7 @@ namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
         {
             var fixture = new Fixture();
             var sut = fixture.Build<CreateDecisionRequest>()
-                    .With(x => x.DecisionTypes, new Enums.Concerns.DecisionType [] {0})
+                    .With(x => x.DecisionTypes, new Enums.Concerns.DecisionType[] { 0 })
                     .Create();
 
             sut.IsValid().Should().BeFalse();
@@ -29,7 +24,7 @@ namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
         {
             var fixture = new Fixture();
             var sut = fixture.Build<CreateDecisionRequest>()
-                .With(x => x.DecisionTypes, new Enums.Concerns.DecisionType [] { DecisionType.EsfaApproval })
+                .With(x => x.DecisionTypes, new Enums.Concerns.DecisionType[] { DecisionType.EsfaApproval })
                 .Create();
 
             sut.IsValid().Should().BeTrue();

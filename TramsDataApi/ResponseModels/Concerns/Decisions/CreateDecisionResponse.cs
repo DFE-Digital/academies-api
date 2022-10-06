@@ -2,6 +2,7 @@
 
 namespace TramsDataApi.ResponseModels.Concerns.Decisions
 {
+    [Obsolete("This endpoint is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class CreateDecisionResponse
     {
         public CreateDecisionResponse(int concernsCaseUrn, int decisionId)

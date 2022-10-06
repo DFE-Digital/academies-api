@@ -1,4 +1,6 @@
-﻿namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
+﻿using System;
+
+namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 {
     public class DecisionType
     {
@@ -11,6 +13,11 @@
 
         public DecisionType(Enums.Concerns.DecisionType decisionType)
         {
+            if (!Enum.IsDefined(typeof(Enums.Concerns.DecisionType), decisionType))
+            {
+                throw new ArgumentOutOfRangeException(nameof(decisionType),
+                    "The given value is not one of the supported decision types");
+            }
             DecisionTypeId = decisionType;
         }
 

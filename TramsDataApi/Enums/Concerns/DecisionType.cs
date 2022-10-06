@@ -1,5 +1,8 @@
-﻿namespace TramsDataApi.Enums.Concerns
+﻿using System;
+
+namespace TramsDataApi.Enums.Concerns
 {
+    [Obsolete("This endpoint is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public enum DecisionType
     {
         NoticeToImprove = 1,

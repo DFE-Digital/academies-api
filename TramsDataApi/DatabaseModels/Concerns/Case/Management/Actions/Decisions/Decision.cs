@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 {
+    [Obsolete("This endpoint is planned to be moved into the Concerns Casework API. If it is accessed by other APIs, please let the Concerns team know.")]
     public class Decision
     {
         private Decision()

@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using FluentAssertions;
+using System;
 using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 using Xunit;
 
@@ -26,6 +27,16 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             sut.DecisionTypeId.Should().Be(expectedId);
             sut.DecisionId.Should().Be(expectedDecisionId);
 
+        }
+
+        [Fact]
+        public void Given_Invalid_DecisionTypes_Constructor_Throws_Exception()
+        {
+            var fixture = new Fixture();
+
+            Action action = () => new DecisionType(0) { DecisionId = 1 };
+
+            action.Should().ThrowExactly<ArgumentOutOfRangeException>().And.ParamName.Should().Be("decisionType");
         }
     }
 }

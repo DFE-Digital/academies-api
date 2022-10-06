@@ -3,6 +3,8 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 using TramsDataApi.Factories.Concerns.Decisions;
@@ -18,23 +20,23 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
     public class CreateDecisionTests
     {
         [Fact]
-        public void CreateDecision_Implements_IUseCase()
+        public void CreateDecision_Implements_IUseCaseAsync()
         {
-            typeof(CreateDecision).Should().BeAssignableTo<IUseCase<CreateDecisionRequest, CreateDecisionResponse>>();
+            typeof(CreateDecision).Should().BeAssignableTo<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>>();
         }
 
         [Fact]
-        public void Execute_Throws_Exception_If_Request_IsNull()
+        public async Task Execute_Throws_Exception_If_Request_IsNull()
         {
             var sut = new CreateDecision(Mock.Of<IConcernsCaseGateway>(), Mock.Of<IDecisionFactory>(), Mock.Of<ICreateDecisionResponseFactory>());
 
-            Action action = () => sut.Execute(null);
+            Func<Task> action = async () => await sut.Execute(null, CancellationToken.None);
             action.Should().Throw<ArgumentNullException>();
 
         }
 
         [Fact]
-        public void Execute_When_Concerns_Case_NotFound_Throws_Exception()
+        public async Task Execute_When_Concerns_Case_NotFound_Throws_Exception()
         {
             var fixture = CreateFixture();
 
@@ -45,14 +47,14 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
             var request = fixture.Create<CreateDecisionRequest>();
 
             var sut = new CreateDecision(mockGateway.Object, Mock.Of<IDecisionFactory>(), Mock.Of<ICreateDecisionResponseFactory>());
-            Action action = () => sut.Execute(request);
+            Func<Task> action = async () => await sut.Execute(request, CancellationToken.None);
 
             action.Should().Throw<InvalidOperationException>().And.Message.Should()
                 .Contain($"The concerns case for urn {request.ConcernsCaseUrn}, was not found");
         }
-        
+
         [Fact]
-        public void Execute_Adds_Decision()
+        public async Task Execute_Adds_Decision()
         {
             var fixture = CreateFixture();
 
@@ -79,7 +81,7 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
 
             var sut = new CreateDecision(mockGateway.Object, mockDecisionFactory.Object, mockResponseFactory.Object);
 
-            var result = sut.Execute(request);
+            var result = await sut.Execute(request, CancellationToken.None);
 
             mockGateway.Verify(x => x.SaveConcernsCase(fakeConcernsCase), Times.Once);
             result.Should().Be(fakeResponse);

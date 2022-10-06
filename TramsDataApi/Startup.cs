@@ -104,7 +104,7 @@ namespace TramsDataApi
             services.AddScoped<IConcernsTeamCaseworkGateway, ConcernsTeamCaseworkGateway>();
 
             // concerns factories
-            services.AddScoped<IUseCase<CreateDecisionRequest, CreateDecisionResponse>, CreateDecision>();
+            services.AddScoped<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>, CreateDecision>();
             services.AddScoped<ICreateDecisionResponseFactory, CreateDecisionResponseFactory>();
             services.AddScoped<IDecisionFactory, DecisionFactory>();
 
