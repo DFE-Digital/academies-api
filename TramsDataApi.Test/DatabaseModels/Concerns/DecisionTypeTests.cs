@@ -32,8 +32,6 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
         [Fact]
         public void Given_Invalid_DecisionTypes_Constructor_Throws_Exception()
         {
-            var fixture = new Fixture();
-
             Action action = () => new DecisionType(0) { DecisionId = 1 };
 
             action.Should().ThrowExactly<ArgumentOutOfRangeException>().And.ParamName.Should().Be("decisionType");
