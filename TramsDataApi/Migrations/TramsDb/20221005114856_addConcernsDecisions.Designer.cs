@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221005114856_addConcernsDecisions")]
+    partial class addConcernsDecisions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -568,15 +570,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime?>("AssignedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("AssignedUserEmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AssignedUserFullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("AssignedUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
@@ -869,9 +862,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<bool?>("ComplexLandAndBuildingShouldBeConsidered")
                         .HasColumnType("bit");
 
-                    b.Property<string>("DiocesanConsent")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool?>("EqualitiesImpactAssessmentConsidered")
                         .HasColumnType("bit");
 
@@ -883,9 +873,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<bool?>("FinanceAndDebtShouldBeConsidered")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FoundationConsent")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("HasHtbDate")
                         .HasColumnType("bit");
@@ -904,9 +891,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<DateTime?>("HtbDate")
                         .HasColumnType("date");
-
-                    b.Property<bool?>("LegalRequirementsSectionIsCompleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("OtherBenefitValue")
                         .HasColumnType("nvarchar(max)");
@@ -956,9 +940,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime?>("TransferFirstDiscussed")
                         .HasColumnType("date");
 
-                    b.Property<string>("TrustAgreement")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TrustSponsorRationale")
                         .HasColumnType("nvarchar(max)");
 
@@ -992,7 +973,7 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<int>("ConcernsCaseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAtDateTimeOffset")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("CrmCaseNumber")
@@ -1016,7 +997,7 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<decimal>("TotalAmountRequested")
                         .HasColumnType("money");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAtDateTimeOffset")
                         .HasColumnType("datetimeoffset");
 
                     b.HasKey("DecisionId");

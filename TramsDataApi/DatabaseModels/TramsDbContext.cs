@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using Microsoft.VisualBasic;
+using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 
 namespace TramsDataApi.DatabaseModels
@@ -156,6 +156,8 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Urn)
                     .HasDefaultValueSql("NEXT VALUE FOR ConcernsGlobalSequence");
 
+                entity.HasMany(x => x.Decisions)
+                    .WithOne();
             });
 
             modelBuilder.Entity<ConcernsStatus>(entity =>
@@ -752,6 +754,31 @@ namespace TramsDataApi.DatabaseModels
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
             });
+
+
+            modelBuilder.Entity<Decision>(e =>
+            {
+                e.ToTable("ConcernsDecision", "sdd");
+                e.HasKey(x => x.DecisionId);
+                e.Property(x => x.TotalAmountRequested).HasColumnType("money");
+                e.HasMany(x => x.DecisionTypes).WithOne();
+            });
+
+            modelBuilder.Entity<DecisionType>(e =>
+            {
+                e.ToTable("ConcernsDecisionType", "sdd");
+                e.HasKey(x => new { x.DecisionId, x.DecisionTypeId });
+            });
+
+            modelBuilder.Entity<DecisionTypeId>(e =>
+            {
+                e.ToTable("ConcernsDecisionTypeId", "sdd");
+                e.HasKey(x => x.Id);
+                e.HasData(
+                    Enum.GetValues(typeof(Enums.Concerns.DecisionType)).Cast<Enums.Concerns.DecisionType>()
+                        .Select(enm => new DecisionTypeId(enm, enm.ToString())));
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
