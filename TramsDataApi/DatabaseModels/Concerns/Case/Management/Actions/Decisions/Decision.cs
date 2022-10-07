@@ -22,7 +22,7 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
             DecisionType[] decisionTypes,
             decimal totalAmountRequested,
             string supportingNotes,
-            DateTimeOffset createdAtDateTimeOffset
+            DateTimeOffset createdAt
         )
         {
             ConcernsCaseId = concernsCaseId;
@@ -34,8 +34,8 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
             SubmissionRequired = submissionRequired;
             RetrospectiveApproval = retrospectiveApproval;
             CrmCaseNumber = crmCaseNumber;
-            CreatedAtDateTimeOffset = createdAtDateTimeOffset;
-            UpdatedAtDateTimeOffset = createdAtDateTimeOffset;
+            CreatedAt = createdAt;
+            UpdatedAt = createdAt;
         }
 
         public int ConcernsCaseId { get;  private set; }
@@ -49,8 +49,8 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
         public bool SubmissionRequired { get;  private set; }
         public bool RetrospectiveApproval { get;  private set; }
         public string CrmCaseNumber { get;  private set; }
-        public DateTimeOffset CreatedAtDateTimeOffset { get;  private set; }
-        public DateTimeOffset UpdatedAtDateTimeOffset { get;  private set; }
+        public DateTimeOffset CreatedAt { get;  private set; }
+        public DateTimeOffset UpdatedAt { get;  private set; }
 
     }
 }

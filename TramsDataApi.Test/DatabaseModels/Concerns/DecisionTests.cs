@@ -57,8 +57,8 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             );
 
             sut.Should().BeEquivalentTo(expectation, cfg => cfg.Excluding(e => e.CurrentDateTime));
-            sut.CreatedAtDateTimeOffset.Should().Be(expectation.CurrentDateTime);
-            sut.UpdatedAtDateTimeOffset.Should().Be(expectation.CurrentDateTime);
+            sut.CreatedAt.Should().Be(expectation.CurrentDateTime);
+            sut.UpdatedAt.Should().Be(expectation.CurrentDateTime);
             sut.DecisionId.Should().Be(0, "DecisionId should be assigned by the database");
         }
     }

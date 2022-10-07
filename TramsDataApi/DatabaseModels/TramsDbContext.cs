@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualBasic;
 using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 using TramsDataApi.DatabaseModels.Concerns.TeamCasework;
 

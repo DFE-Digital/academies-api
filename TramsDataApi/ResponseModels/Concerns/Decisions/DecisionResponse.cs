@@ -16,7 +16,7 @@ namespace TramsDataApi.ResponseModels.Concerns.Decisions
         public bool SubmissionRequired { get; set; }
         public bool RetrospectiveApproval { get; set; }
         public string CrmCaseNumber { get; set; }
-        public DateTimeOffset CreatedAtDateTimeOffset { get; set; }
-        public DateTimeOffset UpdatedAtDateTimeOffset { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }
