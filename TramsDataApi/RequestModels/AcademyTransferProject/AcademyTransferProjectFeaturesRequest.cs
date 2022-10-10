@@ -1,6 +1,6 @@
-namespace TramsDataApi.ResponseModels
+namespace TramsDataApi.RequestModels.AcademyTransferProject
 {
-    public class AcademyTransferProjectFeaturesResponse
+    public class AcademyTransferProjectFeaturesRequest
     {
         public string WhoInitiatedTheTransfer { get; set; }
         public bool? RddOrEsfaIntervention { get; set; }

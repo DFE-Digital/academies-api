@@ -1,6 +1,6 @@
-namespace TramsDataApi.RequestModels
+namespace TramsDataApi.ResponseModels.AcademyTransferProject
 {
-    public class AcademyTransferProjectRationaleRequest
+    public class AcademyTransferProjectRationaleResponse
     {
         public string ProjectRationale { get; set; }
         public string TrustSponsorRationale { get; set; }

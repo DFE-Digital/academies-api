@@ -7,6 +7,7 @@ using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.RequestModels;
+using TramsDataApi.RequestModels.AcademyTransferProject;
 using Xunit;
 
 namespace TramsDataApi.Test.Factories
@@ -67,6 +68,7 @@ namespace TramsDataApi.Test.Factories
                 AcademyTransferProjectIntendedTransferBenefits = null,
                 FeatureSectionIsCompleted = null,
                 BenefitsSectionIsCompleted = null,
+                LegalRequirementsSectionIsCompleted = null,
                 RationaleSectionIsCompleted = null,
                 TransferringAcademies = createRequest.TransferringAcademies
                     .Select(t => new TransferringAcademies
@@ -172,6 +174,7 @@ namespace TramsDataApi.Test.Factories
                 EqualitiesImpactAssessmentConsidered = createRequest.Benefits.EqualitiesImpactAssessmentConsidered,
                 FeatureSectionIsCompleted = createRequest.Features?.IsCompleted,
                 BenefitsSectionIsCompleted = createRequest.Benefits?.IsCompleted,
+                LegalRequirementsSectionIsCompleted = createRequest.LegalRequirements?.IsCompleted,
                 RationaleSectionIsCompleted = createRequest.Rationale?.IsCompleted,
                 AcademyTransferProjectIntendedTransferBenefits = createRequest.Benefits.IntendedTransferBenefits
                     .SelectedBenefits
@@ -252,8 +255,12 @@ namespace TramsDataApi.Test.Factories
                 OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 EqualitiesImpactAssessmentConsidered = academyTransferProject.EqualitiesImpactAssessmentConsidered,
+                TrustAgreement = academyTransferProject.TrustAgreement,
+                DiocesanConsent = academyTransferProject.DiocesanConsent,
+                FoundationConsent = academyTransferProject.FoundationConsent,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
+                LegalRequirementsSectionIsCompleted = academyTransferProject.LegalRequirementsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
@@ -340,8 +347,12 @@ namespace TramsDataApi.Test.Factories
                 OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 EqualitiesImpactAssessmentConsidered = academyTransferProject.EqualitiesImpactAssessmentConsidered,
+                TrustAgreement = academyTransferProject.TrustAgreement,
+                DiocesanConsent = academyTransferProject.DiocesanConsent,
+                FoundationConsent = academyTransferProject.FoundationConsent,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
+                LegalRequirementsSectionIsCompleted = academyTransferProject.LegalRequirementsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
@@ -421,9 +432,13 @@ namespace TramsDataApi.Test.Factories
                 OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 EqualitiesImpactAssessmentConsidered = academyTransferProject.EqualitiesImpactAssessmentConsidered,
+                TrustAgreement = academyTransferProject.TrustAgreement,
+                DiocesanConsent = academyTransferProject.DiocesanConsent,
+                FoundationConsent = academyTransferProject.FoundationConsent,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
+                LegalRequirementsSectionIsCompleted = academyTransferProject.LegalRequirementsSectionIsCompleted,
                 AcademyTransferProjectIntendedTransferBenefits = expectedBenefits,
                 HasHtbDate = academyTransferProject.HasHtbDate,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
@@ -486,8 +501,12 @@ namespace TramsDataApi.Test.Factories
                 OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
                 EqualitiesImpactAssessmentConsidered = academyTransferProject.EqualitiesImpactAssessmentConsidered,
+                TrustAgreement = academyTransferProject.TrustAgreement,
+                DiocesanConsent = academyTransferProject.DiocesanConsent,
+                FoundationConsent = academyTransferProject.FoundationConsent,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
+                LegalRequirementsSectionIsCompleted = academyTransferProject.LegalRequirementsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
@@ -558,9 +577,13 @@ namespace TramsDataApi.Test.Factories
                 OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
                 OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
                 OtherBenefitValue = academyTransferProject.OtherBenefitValue,
+                TrustAgreement = academyTransferProject.TrustAgreement,
+                DiocesanConsent = academyTransferProject.DiocesanConsent,
+                FoundationConsent = academyTransferProject.FoundationConsent,
                 EqualitiesImpactAssessmentConsidered = academyTransferProject.EqualitiesImpactAssessmentConsidered,
                 FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
                 BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
+                LegalRequirementsSectionIsCompleted = academyTransferProject.LegalRequirementsSectionIsCompleted,
                 RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
                 AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,

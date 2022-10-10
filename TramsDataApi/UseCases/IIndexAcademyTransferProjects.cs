@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using TramsDataApi.RequestModels;
-using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.UseCases
 {

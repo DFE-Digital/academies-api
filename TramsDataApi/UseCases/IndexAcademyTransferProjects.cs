@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.UseCases
 {

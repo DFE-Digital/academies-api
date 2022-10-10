@@ -13,8 +13,9 @@ using TramsDataApi.RequestModels;
 using Xunit;
 using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
-using TramsDataApi.ResponseModels;
 using TramsDataApi.Factories;
+using TramsDataApi.RequestModels.AcademyTransferProject;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.Test.Integration
 {
@@ -104,6 +105,7 @@ namespace TramsDataApi.Test.Integration
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
                 .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8, 8))
                 .With(c => c.Benefits = benefitsRequest)
+                .With(c => c.LegalRequirements = Builder<AcademyTransferProjectLegalRequirementsRequest>.CreateNew().Build())
                 .With(c => c.Dates = datesRequest)
                 .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
                 .With(c => c.GeneralInformation =

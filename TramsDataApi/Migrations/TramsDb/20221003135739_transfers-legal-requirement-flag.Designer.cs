@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221003135739_transfers-legal-requirement-flag")]
+    partial class transferslegalrequirementflag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -568,15 +570,6 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<DateTime?>("AssignedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("AssignedUserEmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AssignedUserFullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("AssignedUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
@@ -980,133 +973,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasName("AcademyTransferProjectUrn");
 
                     b.ToTable("AcademyTransferProjects","sdd");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.Decision", b =>
-                {
-                    b.Property<int>("DecisionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ConcernsCaseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("CrmCaseNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("ReceivedRequestDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<bool>("RetrospectiveApproval")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SubmissionDocumentLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SubmissionRequired")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SupportingNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalAmountRequested")
-                        .HasColumnType("money");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("DecisionId");
-
-                    b.HasIndex("ConcernsCaseId");
-
-                    b.ToTable("ConcernsDecision","sdd");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.DecisionType", b =>
-                {
-                    b.Property<int>("DecisionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DecisionTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DecisionId", "DecisionTypeId");
-
-                    b.ToTable("ConcernsDecisionType","sdd");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.DecisionTypeId", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ConcernsDecisionTypeId","sdd");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "NoticeToImprove"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Section128"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "QualifiedFloatingCharge"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "NonRepayableFinancialSupport"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "RepayableFinancialSupport"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "ShortTermCashAdvance"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "WriteOffRecoverableFunding"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "OtherFinancialSupport"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "EstimatesFundingOrPupilNumberAdjustment"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "EsfaApproval"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "FreedomOfInformationExemptions"
-                        });
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeam", b =>
@@ -3290,24 +3156,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .WithMany("AcademyTransferProjectIntendedTransferBenefits")
                         .HasForeignKey("FkAcademyTransferProjectId")
                         .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.Decision", b =>
-                {
-                    b.HasOne("TramsDataApi.DatabaseModels.ConcernsCase", null)
-                        .WithMany("Decisions")
-                        .HasForeignKey("ConcernsCaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.DecisionType", b =>
-                {
-                    b.HasOne("TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions.Decision", null)
-                        .WithMany("DecisionTypes")
-                        .HasForeignKey("DecisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TramsDataApi.DatabaseModels.Concerns.TeamCasework.ConcernsCaseworkTeamMember", b =>

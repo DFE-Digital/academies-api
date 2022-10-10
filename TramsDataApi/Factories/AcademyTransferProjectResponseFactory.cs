@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.Factories
 {
@@ -95,6 +96,13 @@ namespace TramsDataApi.Factories
                     EqualitiesImpactAssessmentConsidered = model.EqualitiesImpactAssessmentConsidered,
                     IsCompleted = model.BenefitsSectionIsCompleted,
                     AnyRisks = model.AnyRisks
+                },
+                LegalRequirements = new AcademyTransferProjectLegalRequirementsResponse
+                {
+                    TrustAgreement = model.TrustAgreement,
+                    DiocesanConsent = model.DiocesanConsent,
+                    FoundationConsent = model.FoundationConsent,
+                    IsCompleted = model.LegalRequirementsSectionIsCompleted,
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
                 {
