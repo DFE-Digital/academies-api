@@ -11,7 +11,7 @@ namespace TramsDataApi.Migrations.TramsDb
                 schema: "sdd",
                 table: "ConcernsDecision",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 1);
 
             migrationBuilder.CreateTable(
                 name: "ConcernsDecisionStates",
