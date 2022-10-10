@@ -779,6 +779,15 @@ namespace TramsDataApi.DatabaseModels
                         .Select(enm => new DecisionTypeId(enm, enm.ToString())));
             });
 
+            modelBuilder.Entity<DecisionStatus>(e =>
+            {
+                e.ToTable("ConcernsDecisionStates", "sdd");
+                e.HasKey(x => x.Id);
+                e.HasData(
+                    Enum.GetValues(typeof(Enums.Concerns.DecisionStatus)).Cast<Enums.Concerns.DecisionStatus>()
+                        .Select(enm => new DecisionStatus(enm) { Name = enm.ToString() }));
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 

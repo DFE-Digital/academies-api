@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 using Xunit;
 
@@ -16,11 +17,12 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             sut.Should().NotBeNull();
         }
 
-        [Fact]
-        public void DecisionType_Properties_SetByConstructor()
+        [Theory]
+        [MemberData(nameof(DecisionTypeTests.EnumValues))]
+        public void DecisionType_Properties_SetByConstructor(Enums.Concerns.DecisionType enumValue)
         {
             var fixture = new Fixture();
-            var expectedId = Enums.Concerns.DecisionType.EsfaApproval;
+            var expectedId = enumValue;
             var expectedDecisionId = fixture.Create<int>();
             var sut = new DecisionType(expectedId) { DecisionId = expectedDecisionId };
 
@@ -35,6 +37,14 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             Action action = () => new DecisionType(0) { DecisionId = 1 };
 
             action.Should().ThrowExactly<ArgumentOutOfRangeException>().And.ParamName.Should().Be("decisionType");
+        }
+
+        public static IEnumerable<object[]> EnumValues()
+        {
+            foreach (var number in Enum.GetValues(typeof(Enums.Concerns.DecisionType)))
+            {
+                yield return new object[] { number };
+            }
         }
     }
 }

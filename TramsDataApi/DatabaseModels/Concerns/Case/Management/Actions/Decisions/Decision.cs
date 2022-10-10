@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 {
@@ -12,11 +12,11 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
             DecisionTypes = new List<DecisionType>();
         }
 
-        public Decision(
+        public static Decision CreateNew(
             int concernsCaseId,
             string crmCaseNumber,
-            bool retrospectiveApproval,
-            bool submissionRequired,
+            bool? retrospectiveApproval,
+            bool? submissionRequired,
             string submissionDocumentLink,
             DateTimeOffset receivedRequestDate,
             DecisionType[] decisionTypes,
@@ -25,32 +25,78 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
             DateTimeOffset createdAt
         )
         {
-            ConcernsCaseId = concernsCaseId;
-            DecisionTypes = decisionTypes;
-            TotalAmountRequested = totalAmountRequested;
-            SupportingNotes = supportingNotes;
-            ReceivedRequestDate = receivedRequestDate;
-            SubmissionDocumentLink = submissionDocumentLink;
-            SubmissionRequired = submissionRequired;
-            RetrospectiveApproval = retrospectiveApproval;
-            CrmCaseNumber = crmCaseNumber;
-            CreatedAt = createdAt;
-            UpdatedAt = createdAt;
+            // some of these validations are good candidates for turning into value types
+            _ = concernsCaseId > 0 ? concernsCaseId : throw new ArgumentOutOfRangeException(nameof(concernsCaseId), "value must be greater than zero");
+            _ = totalAmountRequested >= 0 ? totalAmountRequested : throw new ArgumentOutOfRangeException(nameof(totalAmountRequested), "The total amount requested cannot be a negative value");
+
+            if (crmCaseNumber?.Length > MaxCaseNumberLength)
+            {
+                throw new ArgumentException($"{nameof(crmCaseNumber)} can be a maximum of {MaxCaseNumberLength} characters", nameof(crmCaseNumber));
+            }
+
+            if (supportingNotes?.Length > MaxSupportingNotesLength)
+            {
+                throw new ArgumentException($"{nameof(supportingNotes)} can be a maximum of {MaxSupportingNotesLength} characters", nameof(supportingNotes));
+            }
+
+            if (submissionDocumentLink?.Length > MaxUrlLength)
+            {
+                throw new ArgumentException($"{nameof(submissionDocumentLink)} can be a maximum of {MaxUrlLength} characters", nameof(submissionDocumentLink));
+            }
+
+            return new Decision()
+            {
+                ConcernsCaseId = concernsCaseId,
+                DecisionTypes = decisionTypes ?? Array.Empty<DecisionType>(),
+                TotalAmountRequested = totalAmountRequested,
+                SupportingNotes = supportingNotes,
+                ReceivedRequestDate = receivedRequestDate,
+                SubmissionDocumentLink = submissionDocumentLink,
+                SubmissionRequired = submissionRequired,
+                RetrospectiveApproval = retrospectiveApproval,
+                CrmCaseNumber = crmCaseNumber,
+                CreatedAt = createdAt,
+                UpdatedAt = createdAt,
+                Status = Enums.Concerns.DecisionStatus.InProgress
+            };
+
         }
 
-        public int ConcernsCaseId { get;  private set; }
-        
-        public int DecisionId { get;  private set; } 
-        public IList<DecisionType> DecisionTypes { get;  private set; }
-        public decimal TotalAmountRequested { get;  private set; }
-        public string SupportingNotes { get;  private set; }
-        public DateTimeOffset ReceivedRequestDate { get;  private set; }
-        public string SubmissionDocumentLink { get;  private set; }
-        public bool SubmissionRequired { get;  private set; }
-        public bool RetrospectiveApproval { get;  private set; }
-        public string CrmCaseNumber { get;  private set; }
-        public DateTimeOffset CreatedAt { get;  private set; }
-        public DateTimeOffset UpdatedAt { get;  private set; }
+        public const int MaxUrlLength = 2048;
+        public const int MaxSupportingNotesLength = 2000;
+        public const int MaxCaseNumberLength = 20;
+
+        public int ConcernsCaseId { get; private set; }
+
+        public int DecisionId { get; private set; }
+        public IList<DecisionType> DecisionTypes { get; private set; }
+
+        // nullable
+        public decimal TotalAmountRequested { get; private set; }
+
+        // 2,000 chars   
+        [StringLength(MaxSupportingNotesLength)]
+        public string SupportingNotes { get; private set; }
+
+        // nullable
+        public DateTimeOffset ReceivedRequestDate { get; private set; }
+
+        // 2,048 chars
+        [StringLength(MaxUrlLength)]
+        public string SubmissionDocumentLink { get; private set; }
+
+        // nullable
+        public bool? SubmissionRequired { get; private set; }
+
+        // nullable
+        public bool? RetrospectiveApproval { get; private set; }
+
+        [StringLength(MaxCaseNumberLength)]
+        public string CrmCaseNumber { get; private set; }
+        public DateTimeOffset CreatedAt { get; private set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
+
+        public Enums.Concerns.DecisionStatus Status { get; private set; }
 
     }
 }

@@ -36,7 +36,7 @@ namespace TramsDataApi.Controllers.V2
         {
             _ = request ?? throw new ArgumentNullException(nameof(request));
 
-            if (!request.IsValid())
+            if(!request.IsValid())
             {
                 _logger.LogInformation($"Failed to create Concerns Case Decision due to bad request");
                 return BadRequest();

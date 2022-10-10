@@ -20,8 +20,7 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
             var decision = sut.CreateDecision(concernsCaseId, input);
 
             decision.Should().BeEquivalentTo(input, cfg => cfg.Excluding(x => x.DecisionTypes)
-                .Excluding(x => x.ConcernsCaseUrn)
-                .Excluding(x => x.DecisionId));
+                .Excluding(x => x.ConcernsCaseUrn));
 
             for (int i = 0; i < input.DecisionTypes.Length; i++)
             {
