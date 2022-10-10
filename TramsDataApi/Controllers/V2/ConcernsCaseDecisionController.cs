@@ -32,7 +32,7 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpPost]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<ApiSingleResponseV2<ConcernsCaseResponse>>> Create(int urn, CreateDecisionRequest request, CancellationToken cancellationToken)
+        public async Task<ActionResult<ApiSingleResponseV2<CreateDecisionResponse>>> Create(int urn, CreateDecisionRequest request, CancellationToken cancellationToken)
         {
             _ = request ?? throw new ArgumentNullException(nameof(request));
 
