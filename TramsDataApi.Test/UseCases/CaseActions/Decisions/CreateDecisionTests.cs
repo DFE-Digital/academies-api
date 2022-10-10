@@ -61,7 +61,7 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
             var fakeConcernsCase = fixture.Create<ConcernsCase>();
 
             var request = fixture.Create<CreateDecisionRequest>();
-            var fakeNewDecision = fixture.Create<Decision>();
+            var fakeNewDecision = CreateRandomDecision(fixture, request);
 
             var mockGateway = new Mock<IConcernsCaseGateway>();
             mockGateway.Setup(x => x.GetConcernsCaseByUrn(request.ConcernsCaseUrn))
@@ -93,6 +93,21 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
             fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
             return fixture;
+        }
+
+        private Decision CreateRandomDecision(Fixture fixture, CreateDecisionRequest request)
+        {
+            return Decision.CreateNew(
+                concernsCaseId: fixture.Create<int>(),
+                crmCaseNumber: request.CrmCaseNumber,
+                retrospectiveApproval: request.RetrospectiveApproval,
+                submissionRequired: request.SubmissionRequired,
+                submissionDocumentLink: request.SubmissionDocumentLink,
+                receivedRequestDate: request.ReceivedRequestDate,
+                decisionTypes: request.DecisionTypes.Select(x => new DecisionType(x)).ToArray(),
+                totalAmountRequested: request.TotalAmountRequested,
+                supportingNotes: request.SupportingNotes,
+                createdAt: fixture.Create<DateTimeOffset>());
         }
     }
 }

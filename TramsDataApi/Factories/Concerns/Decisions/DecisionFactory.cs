@@ -12,7 +12,7 @@ namespace TramsDataApi.Factories.Concerns.Decisions
         {
             var decisionTypes = request.DecisionTypes.Select(x => new DecisionType(x)).ToArray();
 
-            return new Decision(concernsCaseId, request.CrmCaseNumber, request.RetrospectiveApproval,
+            return Decision.CreateNew(concernsCaseId, request.CrmCaseNumber, request.RetrospectiveApproval,
                 request.SubmissionRequired, request.SubmissionDocumentLink, request.ReceivedRequestDate,
                 decisionTypes, request.TotalAmountRequested, request.SupportingNotes, DateTimeOffset.Now);
         }
