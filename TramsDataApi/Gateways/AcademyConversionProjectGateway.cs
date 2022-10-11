@@ -41,13 +41,10 @@ namespace TramsDataApi.Gateways
             return entity.Entity;
         }
 
-        public async Task<List<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn)
+        public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn)
         {
             IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects
-                .OrderByDescending(acp => acp.ApplicationReceivedDate)
-                .Skip((page - 1) * count)
-                .Take(count)
-                .AsNoTracking();
+                .OrderByDescending(acp => acp.ApplicationReceivedDate);
 
             if (statuses != null && statuses.Any())
             {
@@ -60,7 +57,14 @@ namespace TramsDataApi.Gateways
                 academyConversionProjects = academyConversionProjects.Where(acp => acp.Urn == urn);
             }
 
-            return await academyConversionProjects.ToListAsync();
+            var totalCount = academyConversionProjects.Count();
+            var projects = await academyConversionProjects
+                .Skip((page - 1) * count)
+                .Take(count)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return new PagedResult<AcademyConversionProject>(projects, totalCount);
         }
     }
 }

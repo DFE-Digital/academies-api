@@ -54,7 +54,7 @@ namespace TramsDataApi.Test.Integration
             _dbContext.AcademyConversionProjects.AddRange(expectedProjects);
             await _dbContext.SaveChangesAsync();
 
-            var expected = expectedProjects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
+            var expected = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
 
             var response = await _client.GetAsync("/conversion-projects");
             var content = await response.Content.ReadFromJsonAsync<IEnumerable<AcademyConversionProjectResponse>>();
@@ -183,7 +183,7 @@ namespace TramsDataApi.Test.Integration
 
             _dbContext.SaveChanges();
 
-            var expectedData = expectedProjects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
+            var expectedData = expectedProjects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
 
@@ -256,8 +256,7 @@ namespace TramsDataApi.Test.Integration
             await _dbContext.SaveChangesAsync();
 
             var expectedData = academyConversionProjects
-                .Select(AcademyConversionProjectResponseFactory.Create)
-                .ToList();
+                .Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();                
 
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
@@ -324,7 +323,7 @@ namespace TramsDataApi.Test.Integration
             
             await _dbContext.SaveChangesAsync();
 
-            var expectedData = projects.Select(AcademyConversionProjectResponseFactory.Create).ToList();
+            var expectedData = projects.Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();
 
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);

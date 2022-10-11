@@ -6,7 +6,7 @@ namespace TramsDataApi.Factories
 {
 	public class AcademyConversionProjectResponseFactory
     {
-	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject) =>
+	    public static AcademyConversionProjectResponse Create(AcademyConversionProject academyConversionProject, string ukprn = null, int? laestab = null) =>
 			new AcademyConversionProjectResponse
 			{
 				Id = academyConversionProject.Id,
@@ -80,7 +80,9 @@ namespace TramsDataApi.Factories
 				AssignedUser = new AssignedUser(
 					academyConversionProject.AssignedUserId, 
 					academyConversionProject.AssignedUserFullName,
-					academyConversionProject.AssignedUserEmailAddress)
+					academyConversionProject.AssignedUserEmailAddress),
+				UkPrn = ukprn,
+				Laestab = laestab ?? 0
 			};
     }
 }

@@ -37,7 +37,7 @@ namespace TramsDataApi.Test.UseCases
 
             var result = await useCase.Execute(page, count, statuses, 1001);
 
-            result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse>());
+            result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse>());
         }
         
         [Fact]
@@ -58,7 +58,7 @@ namespace TramsDataApi.Test.UseCases
             
             mockProjectsGateway
                 .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, null))
-                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
+                .Returns(Task.FromResult(new PagedResult<AcademyConversionProject>(new List<AcademyConversionProject> { project })));
 
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
@@ -70,7 +70,7 @@ namespace TramsDataApi.Test.UseCases
 
             var result = await useCase.Execute(page, count, statuses, null);
             
-            result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
+            result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
         
         [Fact]
@@ -98,7 +98,7 @@ namespace TramsDataApi.Test.UseCases
 
             mockProjectsGateway
                 .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, urn))
-                .Returns(Task.FromResult(new List<AcademyConversionProject> { project }));
+                .Returns(Task.FromResult(new PagedResult<AcademyConversionProject>(new List<AcademyConversionProject> { project })));
             
             mockEstablishmentsGateway
                 .Setup(acg => acg.GetMisEstablishmentByUrn(urn))
@@ -114,7 +114,7 @@ namespace TramsDataApi.Test.UseCases
 
             var result = await useCase.Execute(page, count, statuses, urn);
 
-            result.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
+            result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
     }
 }

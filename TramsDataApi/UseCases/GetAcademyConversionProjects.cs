@@ -27,7 +27,7 @@ namespace TramsDataApi.UseCases
             if (!conversionProjects.Any()) return new List<AcademyConversionProjectResponse>();
 
             var responses = conversionProjects
-                .Select(AcademyConversionProjectResponseFactory.Create)
+                .Select(p => AcademyConversionProjectResponseFactory.Create(p))
                 .ToList();
             
             responses.ForEach(r =>
