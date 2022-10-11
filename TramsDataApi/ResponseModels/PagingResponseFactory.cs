@@ -17,7 +17,7 @@ namespace TramsDataApi.ResponseModels
             };
 
             if (recordCount != count) return pagingResponse;
-            
+
             var queryAttributes = request.Query
                 .Where(q => q.Key != nameof(page) && q.Key != nameof(count))
                 .Select(q => new KeyValuePair<string, string>(q.Key, q.Value));
