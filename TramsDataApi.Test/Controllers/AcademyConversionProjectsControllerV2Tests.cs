@@ -48,6 +48,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
             
             var result = await controller.GetConversionProjects(projectStatus, urn: urn);
@@ -68,6 +69,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
 
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = 0};
@@ -102,6 +104,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,                
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object)
             {
                 ControllerContext = controllerContext
@@ -137,6 +140,7 @@ namespace TramsDataApi.Test.Controllers
                mockUseCase.Object,
                new Mock<IGetAcademyConversionProject>().Object,
                new Mock<IUpdateAcademyConversionProject>().Object,
+               new Mock<IGetAcademyConversionProjectStatuses>().Object,
                _mockLogger.Object)
             {
                 ControllerContext = controllerContext
@@ -165,6 +169,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ISearchAcademyConversionProjects>().Object,                
                 mockUseCase.Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
@@ -183,6 +188,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
@@ -204,8 +210,9 @@ namespace TramsDataApi.Test.Controllers
             
             var controller = new AcademyConversionProjectController(
                 new Mock<ISearchAcademyConversionProjects>().Object,
-                new Mock<IGetAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,                
                 mockUseCase.Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
@@ -224,6 +231,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
