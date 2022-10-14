@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace TramsDataApi.DatabaseModels
 {
@@ -116,5 +118,17 @@ namespace TramsDataApi.DatabaseModels
         public string AssignedUserFullName { get; set; }
         public string AssignedUserEmailAddress { get; set; }
         public Guid? AssignedUserId { get; set; }
-    }   
+    }
+
+    public class PagedResult<T>
+    {
+        public PagedResult(IEnumerable<T> results = null, int totalCount = 0)
+        {
+            Results = results ?? Enumerable.Empty<T>();
+            TotalCount = totalCount;
+        }
+
+        public IEnumerable<T> Results { get; set; }
+        public int TotalCount { get; set; }
+    }
 }
