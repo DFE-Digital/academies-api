@@ -27,7 +27,7 @@ namespace TramsDataApi.UseCases.CaseActions.Decisions
             var concernsCase = _concernsCaseGateway.GetConcernsCaseByUrn(request.ConcernsCaseUrn);
             var decision = concernsCase?.Decisions.FirstOrDefault(x => x.DecisionId == request.DecisionId);
             
-            return _responseFactory.Create(decision);
+            return decision != null ? _responseFactory.Create(decision) : null;
         }
     }
 }

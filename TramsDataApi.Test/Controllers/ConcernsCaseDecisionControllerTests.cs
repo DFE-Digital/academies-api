@@ -57,6 +57,25 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
+        public async Task CreateConcernsCaseDecision_ReturnsBadRequest_When_CreateDecisionRequest_IsInvalid2()
+        {
+            var testBuilder = new TestBuilder();
+            
+            var createDecisionRequest = testBuilder.Fixture.Build<CreateDecisionRequest>()
+                .With(x => x.DecisionTypes, () => new DecisionType[] { 0 })
+                .Create();
+
+            var createDecisionResponse = testBuilder.Fixture.Create<CreateDecisionResponse>();
+
+            testBuilder.CreateDecisionUseCase.Setup(a => a.Execute(createDecisionRequest, It.IsAny<CancellationToken>())).ReturnsAsync(createDecisionResponse);
+
+            var sut = testBuilder.BuildSut();
+            var result = await sut.Create(123, createDecisionRequest, CancellationToken.None);
+
+            result.Result.Should().BeEquivalentTo(new BadRequestResult());
+        }
+
+        [Fact]
         public async Task GetById_When_Invalid_Urn_Returns_BadRequest()
         {
             var testBuilder = new TestBuilder();
