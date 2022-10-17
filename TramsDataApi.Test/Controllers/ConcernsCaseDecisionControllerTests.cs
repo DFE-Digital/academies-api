@@ -86,7 +86,7 @@ namespace TramsDataApi.Test.Controllers
 
             var testBuilder = new TestBuilder();
 
-            var expectedDecisionResponse = testBuilder.Fixture.Build<DecisionResponse>()
+            var expectedDecisionResponse = testBuilder.Fixture.Build<GetDecisionResponse>()
                 .With(x => x.DecisionId, expectedDecisionId)
                 .Create();
 
@@ -98,7 +98,7 @@ namespace TramsDataApi.Test.Controllers
             
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            var expectedOkResult = new OkObjectResult(new ApiSingleResponseV2<DecisionResponse>(expectedDecisionResponse));
+            var expectedOkResult = new OkObjectResult(new ApiSingleResponseV2<GetDecisionResponse>(expectedDecisionResponse));
             okResult.Should().BeEquivalentTo(expectedOkResult);
         }
 
@@ -106,7 +106,7 @@ namespace TramsDataApi.Test.Controllers
         {
             internal Mock<ILogger<ConcernsCaseDecisionController>> MockLogger;
             internal Mock<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>> CreateDecisionUseCase;
-            internal Mock<IUseCaseAsync<GetDecisionRequest, DecisionResponse>> GetDecisionUseCase;
+            internal Mock<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>> GetDecisionUseCase;
             internal Fixture Fixture;
 
             public TestBuilder()
@@ -114,7 +114,7 @@ namespace TramsDataApi.Test.Controllers
                 Fixture = new Fixture();
                 MockLogger = new Mock<ILogger<ConcernsCaseDecisionController>>();
                 CreateDecisionUseCase = new Mock<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>>();            
-                GetDecisionUseCase = new Mock<IUseCaseAsync<GetDecisionRequest, DecisionResponse>>();
+                GetDecisionUseCase = new Mock<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>>();
             }
 
             internal ConcernsCaseDecisionController BuildSut()

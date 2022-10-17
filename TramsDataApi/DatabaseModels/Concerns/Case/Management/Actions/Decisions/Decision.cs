@@ -66,37 +66,37 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
         public const int MaxSupportingNotesLength = 2000;
         public const int MaxCaseNumberLength = 20;
 
-        public int ConcernsCaseId { get; private set; }
+        public int ConcernsCaseId { get; set;}
 
-        public int DecisionId { get; private set; }
-        public IList<DecisionType> DecisionTypes { get; private set; }
+        public int DecisionId { get; set; }
+        public IList<DecisionType> DecisionTypes { get; set;}
 
         // nullable
-        public decimal TotalAmountRequested { get; private set; }
+        public decimal TotalAmountRequested { get; set;}
 
         // 2,000 chars   
         [StringLength(MaxSupportingNotesLength)]
-        public string SupportingNotes { get; private set; }
+        public string SupportingNotes { get; set;}
 
         // nullable
-        public DateTimeOffset ReceivedRequestDate { get; private set; }
+        public DateTimeOffset ReceivedRequestDate { get; set;}
 
         // 2,048 chars
         [StringLength(MaxUrlLength)]
-        public string SubmissionDocumentLink { get; private set; }
+        public string SubmissionDocumentLink { get; set;}
 
         // nullable
-        public bool? SubmissionRequired { get; private set; }
+        public bool? SubmissionRequired { get; set;}
 
         // nullable
-        public bool? RetrospectiveApproval { get; private set; }
+        public bool? RetrospectiveApproval { get; set;}
 
         [StringLength(MaxCaseNumberLength)]
-        public string CrmCaseNumber { get; private set; }
-        public DateTimeOffset CreatedAt { get; private set; }
-        public DateTimeOffset UpdatedAt { get; private set; }
+        public string CrmCaseNumber { get; set;}
+        public DateTimeOffset CreatedAt { get; set;}
+        public DateTimeOffset UpdatedAt { get; set;}
 
-        public Enums.Concerns.DecisionStatus Status { get; private set; }
+        public Enums.Concerns.DecisionStatus Status { get; set;}
 
     }
 }

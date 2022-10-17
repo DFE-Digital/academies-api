@@ -20,12 +20,12 @@ namespace TramsDataApi.Controllers.V2
     {
         private readonly ILogger<ConcernsCaseDecisionController> _logger;
         private readonly IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse> _createDecisionUseCase;
-        private readonly IUseCaseAsync<GetDecisionRequest, DecisionResponse> _getDecisionUserCase;
+        private readonly IUseCaseAsync<GetDecisionRequest, GetDecisionResponse> _getDecisionUserCase;
 
         public ConcernsCaseDecisionController(
             ILogger<ConcernsCaseDecisionController> logger,
             IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse> createDecisionUseCase,
-            IUseCaseAsync<GetDecisionRequest, DecisionResponse> getDecisionUserCase
+            IUseCaseAsync<GetDecisionRequest, GetDecisionResponse> getDecisionUserCase
         )
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -63,7 +63,7 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet("{decisionId:int}")]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<ApiSingleResponseV2<DecisionResponse>>> GetById(int urn, int decisionId, CancellationToken cancellationToken)
+        public async Task<ActionResult<ApiSingleResponseV2<GetDecisionResponse>>> GetById(int urn, int decisionId, CancellationToken cancellationToken)
         {
             LogInfo($"Attempting to get Concerns Decision by Urn {urn}, DecisionId {decisionId}");
 
@@ -87,7 +87,7 @@ namespace TramsDataApi.Controllers.V2
             else
             {
                 LogInfo($" returning OK Response");
-                var actionResponse = new ApiSingleResponseV2<DecisionResponse>(decisionResponse);
+                var actionResponse = new ApiSingleResponseV2<GetDecisionResponse>(decisionResponse);
                 return Ok(actionResponse);
             }
         }

@@ -32,7 +32,6 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
 
             Func<Task> action = async () => await sut.Execute(null, CancellationToken.None);
             action.Should().Throw<ArgumentNullException>();
-
         }
 
         [Fact]

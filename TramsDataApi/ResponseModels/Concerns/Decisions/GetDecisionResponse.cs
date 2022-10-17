@@ -3,7 +3,7 @@ using TramsDataApi.Enums.Concerns;
 
 namespace TramsDataApi.ResponseModels.Concerns.Decisions
 {
-    public class DecisionResponse
+    public class GetDecisionResponse
     {
         public int ConcernsCaseId { get; set; }
 

@@ -53,7 +53,6 @@ namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
             assertion.Verify(typeof(CreateDecisionRequest));
         }
 
-
         [Fact]
         public void Property_Setters_Work_As_Expected()
         {

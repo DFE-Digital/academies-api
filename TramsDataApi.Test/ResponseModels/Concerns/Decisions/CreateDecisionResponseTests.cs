@@ -1,11 +1,11 @@
 ﻿using AutoFixture;
 using AutoFixture.Idioms;
-using TramsDataApi.RequestModels.Concerns.Decisions;
+using TramsDataApi.ResponseModels.Concerns.Decisions;
 using Xunit;
 
-namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
+namespace TramsDataApi.Test.ResponseModels.Concerns.Decisions
 {
-    public class GetDecisionRequestTests
+    public class CreateDecisionResponseTests
     {
         [Fact]
         public void Constructor_Guards_Against_Nulls()
@@ -15,7 +15,7 @@ namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
             var assertion = fixture.Create<GuardClauseAssertion>();
 
             // Act & Assert
-            assertion.Verify(typeof(GetDecisionRequest).GetConstructors());
+            assertion.Verify(typeof(CreateDecisionResponse).GetConstructors());
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
             var assertion = fixture.Create<ConstructorInitializedMemberAssertion>();
 
             // Act & Assert
-            assertion.Verify(typeof(GetDecisionRequest));
+            assertion.Verify(typeof(CreateDecisionResponse));
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
             var assertion = fixture.Create<WritablePropertyAssertion>();
 
             // Act & Assert
-            assertion.Verify(typeof(GetDecisionRequest));
+            assertion.Verify(typeof(CreateDecisionResponse));
         }
     }
 }
