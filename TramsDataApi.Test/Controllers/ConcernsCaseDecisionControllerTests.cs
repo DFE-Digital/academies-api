@@ -52,6 +52,7 @@ namespace TramsDataApi.Test.Controllers
             result.Result.Should().BeEquivalentTo(new ObjectResult(expected) { StatusCode = StatusCodes.Status201Created });
         }
 
+
         [Fact]
         public async Task CreateConcernsCaseDecision_ReturnsBadRequest_When_CreateDecisionRequest_IsInvalid()
         {
@@ -78,6 +79,25 @@ namespace TramsDataApi.Test.Controllers
 
             var sut = testBuilder.BuildSut();
             var result = await sut.Create(123, null, CancellationToken.None);
+
+            result.Result.Should().BeEquivalentTo(new BadRequestResult());
+        }
+
+        [Fact]
+        public async Task CreateConcernsCaseDecision_ReturnsBadRequest_When_Urn_Is_Zero()
+        {
+            var testBuilder = new TestBuilder();
+
+            var createDecisionRequest = testBuilder.Fixture.Build<CreateDecisionRequest>()
+                .With(x => x.DecisionTypes, () => new DecisionType[] { DecisionType.EsfaApproval })
+                .Create();
+
+            var createDecisionResponse = testBuilder.Fixture.Create<CreateDecisionResponse>();
+
+            testBuilder.CreateDecisionUseCase.Setup(a => a.Execute(createDecisionRequest, It.IsAny<CancellationToken>())).ReturnsAsync(createDecisionResponse);
+
+            var sut = testBuilder.BuildSut();
+            var result = await sut.Create(0, createDecisionRequest, CancellationToken.None);
 
             result.Result.Should().BeEquivalentTo(new BadRequestResult());
         }
@@ -126,6 +146,25 @@ namespace TramsDataApi.Test.Controllers
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
             var expectedOkResult = new OkObjectResult(new ApiSingleResponseV2<GetDecisionResponse>(expectedDecisionResponse));
             okResult.Should().BeEquivalentTo(expectedOkResult);
+        }
+
+        [Fact]
+        public async Task GetById_When_DecisionNotFound_Returns_NotFound()
+        {
+            const int expectedConcernsCaseUrn = 123;
+            const int expectedDecisionId = 456;
+
+            var testBuilder = new TestBuilder();
+
+            testBuilder.GetDecisionUseCase.Setup(x => x.Execute(It.Is<GetDecisionRequest>(r => r.ConcernsCaseUrn == expectedConcernsCaseUrn && r.DecisionId == expectedDecisionId), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(default(GetDecisionResponse));
+
+            // Act
+            var sut = testBuilder.BuildSut();
+            var actionResult = await sut.GetById(expectedConcernsCaseUrn, expectedDecisionId, CancellationToken.None);
+
+            // Assert
+            var okResult = Assert.IsType<NotFoundResult>(actionResult.Result);
         }
 
         private class TestBuilder
