@@ -40,9 +40,10 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
         [InlineData(110, 1000, "caseNumber", "notes", "_maxString_", "submissionDocumentLink")]
         public void CreateNew_With_Invalid_Arguments_Throws_Exception(int caseId, decimal amountRequested, string crmCaseNumber, string supportingNotes, string submissionDocumentLink, string expectedParamName)
         {
-            crmCaseNumber = crmCaseNumber == "_maxString_" ? Large2100CharString : crmCaseNumber;
-            supportingNotes = supportingNotes == "_maxString_" ? Large2100CharString : supportingNotes;
-            submissionDocumentLink = submissionDocumentLink == "_maxString_" ? Large2100CharString : submissionDocumentLink;
+            var fixture = new Fixture();
+            crmCaseNumber = crmCaseNumber == "_maxString_" ? CreateFixedLengthString(fixture, Decision.MaxCaseNumberLength + 1): crmCaseNumber;
+            supportingNotes = supportingNotes == "_maxString_" ? CreateFixedLengthString(fixture, Decision.MaxSupportingNotesLength + 1) : supportingNotes;
+            submissionDocumentLink = submissionDocumentLink == "_maxString_" ? CreateFixedLengthString(fixture, Decision.MaxUrlLength + 1) : submissionDocumentLink;
 
             Action act = () => Decision.CreateNew(caseId, crmCaseNumber, null, null, submissionDocumentLink, DateTimeOffset.UtcNow,
                 Array.Empty<DecisionType>(), amountRequested, supportingNotes, DateTimeOffset.Now);
@@ -50,8 +51,10 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             act.Should().Throw<ArgumentException>().And.ParamName.Should().Be(expectedParamName);
         }
 
-        private const string Large2100CharString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sollicitudin eu quam pellentesque faucibus. Pellentesque ligula enim, rhoncus vitae auctor nec, rhoncus nec mauris. Fusce porta hendrerit interdum. Praesent nec orci purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent imperdiet nunc posuere eleifend pretium. Nullam aliquam lectus in augue lobortis euismod.\r\n\r\nMauris euismod nibh ac felis consequat, a fermentum arcu tempor. In accumsan tortor dolor. Donec mattis pulvinar mi, a cursus lectus pharetra sed. Nulla facilisi. Duis vulputate metus in scelerisque malesuada. Proin varius elit et lacus iaculis vestibulum. Praesent posuere dapibus est, feugiat aliquet felis.\r\n\r\nMorbi nec laoreet metus. Donec pretium magna sed sem commodo, porttitor volutpat ex lacinia. Sed sed hendrerit enim, ac feugiat dui. Nam eleifend quis ex vel faucibus. Nullam maximus convallis nibh eget placerat. Aliquam aliquam euismod venenatis. Ut sed lorem mattis, hendrerit massa a, tempus eros. Fusce sollicitudin lacinia justo, ut mattis elit pretium quis. Morbi sit amet arcu pretium, aliquam augue ut, auctor lectus.\r\n\r\nEtiam in urna at magna pretium suscipit. Donec varius lacinia tortor quis finibus. Donec justo sapien, maximus quis enim sit amet, sagittis convallis augue. Curabitur a diam in arcu accumsan molestie in nec sem. Cras pretium leo sit amet orci commodo porttitor. Aliquam sit amet nibh id erat pellentesque convallis. Morbi ultrices consequat molestie. Nam posuere condimentum massa eu ultricies. Ut dignissim, sem vitae blandit auctor, metus lacus accumsan elit, eget ornare quam tortor sed felis. Quisque vel leo lectus. Sed nec porta sapien. Etiam congue in magna vitae blandit. Vivamus varius, augue eget mollis molestie, purus mi rhoncus quam, a sodales elit ipsum sit amet sem. Nullam laoreet sem nibh, nec vestibulum nisi fermentum non.\r\n\r\nIn lacus augue, efficitur sed fermentum nec, hendrerit eu magna. Suspendisse molestie erat risus, in ultrices dui gravida sit amet. Pellentesque fermentum ornare finibus. Integer iaculis orci aliquam.";
-
+        private string CreateFixedLengthString(Fixture fixture, int size)
+        {
+            return new string(fixture.CreateMany<char>(size).ToArray());
+        }
 
         [Theory]
         [InlineData("caseNumber", "notes", "link")]
