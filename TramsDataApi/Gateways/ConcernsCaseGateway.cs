@@ -30,6 +30,7 @@ namespace TramsDataApi.Gateways
                 .Where(c => c.TrustUkprn == trustUkPrn)
                 .Skip((page - 1) * count)
                 .Take(count)
+                .Include(x => x.Decisions)
                 .AsNoTracking()
                 .ToList();
         }
@@ -37,6 +38,7 @@ namespace TramsDataApi.Gateways
         public ConcernsCase GetConcernsCaseByUrn(int urn)
         {
             var concernsCase = _tramsDbContext.ConcernsCase
+                .Include(x => x.Decisions)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Urn == urn);
             
@@ -52,6 +54,7 @@ namespace TramsDataApi.Gateways
                 .ThenInclude(record => record.ConcernsType)
                 .Include(c => c.ConcernsRecords)
                 .ThenInclude(record => record.ConcernsMeansOfReferral)
+                .Include(x => x.Decisions)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Urn == urn);
             
@@ -62,6 +65,7 @@ namespace TramsDataApi.Gateways
         {
 
             var query = _tramsDbContext.ConcernsCase
+                .Include(x => x.Decisions)
                 .Where(c => c.CreatedBy == ownerId);
 
             if (statusUrn != null)
