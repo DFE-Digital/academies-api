@@ -53,8 +53,10 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
         private const string Large2100CharString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sollicitudin eu quam pellentesque faucibus. Pellentesque ligula enim, rhoncus vitae auctor nec, rhoncus nec mauris. Fusce porta hendrerit interdum. Praesent nec orci purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent imperdiet nunc posuere eleifend pretium. Nullam aliquam lectus in augue lobortis euismod.\r\n\r\nMauris euismod nibh ac felis consequat, a fermentum arcu tempor. In accumsan tortor dolor. Donec mattis pulvinar mi, a cursus lectus pharetra sed. Nulla facilisi. Duis vulputate metus in scelerisque malesuada. Proin varius elit et lacus iaculis vestibulum. Praesent posuere dapibus est, feugiat aliquet felis.\r\n\r\nMorbi nec laoreet metus. Donec pretium magna sed sem commodo, porttitor volutpat ex lacinia. Sed sed hendrerit enim, ac feugiat dui. Nam eleifend quis ex vel faucibus. Nullam maximus convallis nibh eget placerat. Aliquam aliquam euismod venenatis. Ut sed lorem mattis, hendrerit massa a, tempus eros. Fusce sollicitudin lacinia justo, ut mattis elit pretium quis. Morbi sit amet arcu pretium, aliquam augue ut, auctor lectus.\r\n\r\nEtiam in urna at magna pretium suscipit. Donec varius lacinia tortor quis finibus. Donec justo sapien, maximus quis enim sit amet, sagittis convallis augue. Curabitur a diam in arcu accumsan molestie in nec sem. Cras pretium leo sit amet orci commodo porttitor. Aliquam sit amet nibh id erat pellentesque convallis. Morbi ultrices consequat molestie. Nam posuere condimentum massa eu ultricies. Ut dignissim, sem vitae blandit auctor, metus lacus accumsan elit, eget ornare quam tortor sed felis. Quisque vel leo lectus. Sed nec porta sapien. Etiam congue in magna vitae blandit. Vivamus varius, augue eget mollis molestie, purus mi rhoncus quam, a sodales elit ipsum sit amet sem. Nullam laoreet sem nibh, nec vestibulum nisi fermentum non.\r\n\r\nIn lacus augue, efficitur sed fermentum nec, hendrerit eu magna. Suspendisse molestie erat risus, in ultrices dui gravida sit amet. Pellentesque fermentum ornare finibus. Integer iaculis orci aliquam.";
 
 
-        [Fact]
-        public void CreateNew_Sets_Properties()
+        [Theory]
+        [InlineData("caseNumber", "notes", "link")]
+        [InlineData(null, null, null)]
+        public void CreateNew_Sets_Properties(string caseNumber, string notes, string link)
         {
 
             var fixture = new Fixture();
@@ -69,14 +71,14 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             var expectation = new
             {
                 ConcernsCaseId = fixture.Create<int>(),
-                CrmCaseNumber = fixture.Create<string>().Substring(0, 20),
+                CrmCaseNumber = caseNumber,
                 RetrospectiveApproval = true,
                 SubmissionRequired = true,
-                SubmissionDocumentLink = fixture.Create<string>(),
+                SubmissionDocumentLink = link,
                 ReceivedRequestDate = fixture.Create<DateTimeOffset>(),
                 DecisionTypes = decisionTypes,
                 TotalAmountRequested = 13.5m,
-                SupportingNotes = fixture.Create<string>(),
+                SupportingNotes = notes,
                 CurrentDateTime = DateTimeOffset.UtcNow
             };
 

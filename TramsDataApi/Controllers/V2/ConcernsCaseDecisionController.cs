@@ -39,16 +39,18 @@ namespace TramsDataApi.Controllers.V2
         {
             LogInfo($"Executing Create. Urn {urn}");
 
-            _ = request ?? throw new ArgumentNullException(nameof(request));
-
             if (urn <= 0)
             {
                 LogInfo($"Failed to create Concerns Case Decision - invalid urn value");
                 return BadRequest();
             }
-            request.ConcernsCaseUrn = urn;
 
-            if(!request.IsValid())
+            if (request != null)
+            {
+                request.ConcernsCaseUrn = urn;
+            }
+
+            if(request == null || !request.IsValid())
             {
                 LogInfo($"Failed to create Concerns Case Decision due to bad request");
                 return BadRequest();

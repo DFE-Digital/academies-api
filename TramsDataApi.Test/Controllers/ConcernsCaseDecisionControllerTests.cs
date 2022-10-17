@@ -1,4 +1,5 @@
 using AutoFixture;
+using AutoFixture.Idioms;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,20 @@ namespace TramsDataApi.Test.Controllers
         private readonly Mock<ILogger<ConcernsCaseDecisionController>> _mockLogger = new Mock<ILogger<ConcernsCaseDecisionController>>();
 
         [Fact]
+        public void Constructor_Guards_Against_Null_Arguments()
+        {
+            // Arrange
+            var fixture = new Fixture();
+            fixture.Register(() => Mock.Of<ILogger<ConcernsCaseDecisionController>>());
+            fixture.Register(() => Mock.Of<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>>());
+            fixture.Register(() => Mock.Of<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>>());
+            var assertion = fixture.Create<GuardClauseAssertion>();
+
+            // Act & Assert
+            assertion.Verify(typeof(ConcernsCaseDecisionController).GetConstructors());
+        }
+
+        [Fact]
         public async Task CreateConcernsCaseDecision_Returns201WhenSuccessfullyCreatesAConcernsCase()
         {
             var testBuilder = new TestBuilder();
@@ -41,7 +56,7 @@ namespace TramsDataApi.Test.Controllers
         public async Task CreateConcernsCaseDecision_ReturnsBadRequest_When_CreateDecisionRequest_IsInvalid()
         {
             var testBuilder = new TestBuilder();
-            
+
             var createDecisionRequest = testBuilder.Fixture.Build<CreateDecisionRequest>()
                 .With(x => x.DecisionTypes, () => new DecisionType[] { 0 })
                 .Create();
@@ -57,20 +72,12 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
-        public async Task CreateConcernsCaseDecision_ReturnsBadRequest_When_CreateDecisionRequest_IsInvalid2()
+        public async Task CreateConcernsCaseDecision_ReturnsBadRequest_When_CreateDecisionRequest_IsNull()
         {
             var testBuilder = new TestBuilder();
-            
-            var createDecisionRequest = testBuilder.Fixture.Build<CreateDecisionRequest>()
-                .With(x => x.DecisionTypes, () => new DecisionType[] { 0 })
-                .Create();
-
-            var createDecisionResponse = testBuilder.Fixture.Create<CreateDecisionResponse>();
-
-            testBuilder.CreateDecisionUseCase.Setup(a => a.Execute(createDecisionRequest, It.IsAny<CancellationToken>())).ReturnsAsync(createDecisionResponse);
 
             var sut = testBuilder.BuildSut();
-            var result = await sut.Create(123, createDecisionRequest, CancellationToken.None);
+            var result = await sut.Create(123, null, CancellationToken.None);
 
             result.Result.Should().BeEquivalentTo(new BadRequestResult());
         }
@@ -79,7 +86,7 @@ namespace TramsDataApi.Test.Controllers
         public async Task GetById_When_Invalid_Urn_Returns_BadRequest()
         {
             var testBuilder = new TestBuilder();
-            
+
             var sut = testBuilder.BuildSut();
 
             var result = await sut.GetById(0, 123, CancellationToken.None);
@@ -90,13 +97,13 @@ namespace TramsDataApi.Test.Controllers
         public async Task GetById_When_Invalid_DecisionId_Returns_BadRequest()
         {
             var testBuilder = new TestBuilder();
-            
+
             var sut = testBuilder.BuildSut();
 
             var result = await sut.GetById(123, 0, CancellationToken.None);
             result.Result.Should().BeEquivalentTo(new BadRequestResult());
         }
-        
+
         [Fact]
         public async Task GetById_When_Valid_DecisionId_Returns_DecisionResponse()
         {
@@ -110,11 +117,11 @@ namespace TramsDataApi.Test.Controllers
                 .Create();
 
             testBuilder.GetDecisionUseCase.Setup(x => x.Execute(It.Is<GetDecisionRequest>(r => r.ConcernsCaseUrn == expectedConcernsCaseUrn && r.DecisionId == expectedDecisionId), It.IsAny<CancellationToken>())).ReturnsAsync(expectedDecisionResponse);
-            
+
             // Act
             var sut = testBuilder.BuildSut();
             var actionResult = await sut.GetById(expectedConcernsCaseUrn, expectedDecisionId, CancellationToken.None);
-            
+
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
             var expectedOkResult = new OkObjectResult(new ApiSingleResponseV2<GetDecisionResponse>(expectedDecisionResponse));
@@ -132,7 +139,7 @@ namespace TramsDataApi.Test.Controllers
             {
                 Fixture = new Fixture();
                 MockLogger = new Mock<ILogger<ConcernsCaseDecisionController>>();
-                CreateDecisionUseCase = new Mock<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>>();            
+                CreateDecisionUseCase = new Mock<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>>();
                 GetDecisionUseCase = new Mock<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>>();
             }
 

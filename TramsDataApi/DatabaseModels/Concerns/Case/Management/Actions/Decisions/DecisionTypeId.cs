@@ -11,7 +11,7 @@
                 
         }
 
-        public DecisionTypeId(Enums.Concerns.DecisionType decisionType, string name)
+        public DecisionTypeId(Enums.Concerns.DecisionType decisionType, string name) : this()
         {
             Id = decisionType;
             Name = name;
