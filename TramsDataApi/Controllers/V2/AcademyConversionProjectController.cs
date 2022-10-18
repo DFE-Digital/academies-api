@@ -77,7 +77,8 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<List<string>>> GetAvailableStatuses()
         {
-            return Ok(await _getAcademyConversionProjectStatuses.Execute());
+            var result = await _getAcademyConversionProjectStatuses.Execute();
+            return Ok(result);
         }
 
         [HttpGet("{id:int}")]
