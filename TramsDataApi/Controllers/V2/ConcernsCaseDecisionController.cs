@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using TramsDataApi.RequestModels.Concerns.Decisions;
@@ -19,34 +20,83 @@ namespace TramsDataApi.Controllers.V2
     {
         private readonly ILogger<ConcernsCaseDecisionController> _logger;
         private readonly IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse> _createDecisionUseCase;
+        private readonly IUseCaseAsync<GetDecisionRequest, GetDecisionResponse> _getDecisionUserCase;
 
         public ConcernsCaseDecisionController(
             ILogger<ConcernsCaseDecisionController> logger,
-            IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse> createDecisionUseCase
+            IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse> createDecisionUseCase,
+            IUseCaseAsync<GetDecisionRequest, GetDecisionResponse> getDecisionUserCase
         )
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _createDecisionUseCase =
-                createDecisionUseCase ?? throw new ArgumentNullException(nameof(createDecisionUseCase));
+            _createDecisionUseCase = createDecisionUseCase ?? throw new ArgumentNullException(nameof(createDecisionUseCase));
+            _getDecisionUserCase = getDecisionUserCase ?? throw new ArgumentNullException(nameof(getDecisionUserCase));
         }
 
         [HttpPost]
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<ApiSingleResponseV2<CreateDecisionResponse>>> Create(int urn, CreateDecisionRequest request, CancellationToken cancellationToken)
         {
-            _ = request ?? throw new ArgumentNullException(nameof(request));
+            LogInfo($"Executing Create. Urn {urn}");
 
-            if(!request.IsValid())
+            if (urn <= 0)
             {
-                _logger.LogInformation($"Failed to create Concerns Case Decision due to bad request");
+                LogInfo($"Failed to create Concerns Case Decision - invalid urn value");
                 return BadRequest();
             }
 
-            request.ConcernsCaseUrn = urn;
+            if (request != null)
+            {
+                request.ConcernsCaseUrn = urn;
+            }
+
+            if(request == null || !request.IsValid())
+            {
+                LogInfo($"Failed to create Concerns Case Decision due to bad request");
+                return BadRequest();
+            }
+
             var createdDecision = await _createDecisionUseCase.Execute(request, cancellationToken);
             var response = new ApiSingleResponseV2<CreateDecisionResponse>(createdDecision);
-
+            
+            LogInfo($"Returning created response. Concerns Case Urn {response.Data.ConcernsCaseUrn}, DecisionId {response.Data.DecisionId}");
             return new ObjectResult(response) { StatusCode = StatusCodes.Status201Created };
+        }
+
+        [HttpGet("{decisionId:int}")]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<ApiSingleResponseV2<GetDecisionResponse>>> GetById(int urn, int decisionId, CancellationToken cancellationToken)
+        {
+            LogInfo($"Attempting to get Concerns Decision by Urn {urn}, DecisionId {decisionId}");
+
+            if (urn <= 0)
+            {
+                LogInfo($"Failed to GET Concerns Case Decision - invalid urn value");
+                return BadRequest();
+            }
+            if (decisionId <= 0)
+            {
+                LogInfo($"Failed to GET Concerns Case Decision - invalid urn value");
+                return BadRequest();
+            }
+
+            var decisionResponse = await _getDecisionUserCase.Execute(new GetDecisionRequest(urn, decisionId), cancellationToken);
+            if (decisionResponse == null)
+            {
+                LogInfo($" returning NotFound");
+                return NotFound();
+            }
+            else
+            {
+                LogInfo($" returning OK Response");
+                var actionResponse = new ApiSingleResponseV2<GetDecisionResponse>(decisionResponse);
+                return Ok(actionResponse);
+            }
+        }
+
+        private void LogInfo(string msg, [CallerMemberName] string caller = "")
+        {
+            _logger.LogInformation($"{caller} {msg}");
         }
     }
 }
