@@ -246,8 +246,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public async Task GetAvailableStatuses_ReturnsStatuses()
         {
-            var expected = new List<string>();
-            expected.Add(new string("DECLINED"));
+            var expected = new List<string> { "DECLINED" };
 
             var mockUseCase = new Mock<IGetAcademyConversionProjectStatuses>();
             mockUseCase
