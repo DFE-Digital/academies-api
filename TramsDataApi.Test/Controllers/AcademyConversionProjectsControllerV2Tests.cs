@@ -15,6 +15,7 @@ using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.UseCases;
 using Xunit;
 using TramsDataApi.DatabaseModels;
+using System.Security.Policy;
 
 namespace TramsDataApi.Test.Controllers
 {
@@ -48,6 +49,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
             
             var result = await controller.GetConversionProjects(projectStatus, urn: urn);
@@ -68,6 +70,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
 
             var expectedPaging = new PagingResponse {Page = 1, RecordCount = 0};
@@ -102,6 +105,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,                
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object)
             {
                 ControllerContext = controllerContext
@@ -137,6 +141,7 @@ namespace TramsDataApi.Test.Controllers
                mockUseCase.Object,
                new Mock<IGetAcademyConversionProject>().Object,
                new Mock<IUpdateAcademyConversionProject>().Object,
+               new Mock<IGetAcademyConversionProjectStatuses>().Object,
                _mockLogger.Object)
             {
                 ControllerContext = controllerContext
@@ -165,6 +170,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ISearchAcademyConversionProjects>().Object,                
                 mockUseCase.Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
@@ -183,6 +189,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
@@ -204,8 +211,9 @@ namespace TramsDataApi.Test.Controllers
             
             var controller = new AcademyConversionProjectController(
                 new Mock<ISearchAcademyConversionProjects>().Object,
-                new Mock<IGetAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,                
                 mockUseCase.Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
@@ -224,6 +232,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<ISearchAcademyConversionProjects>().Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object
             );
 
@@ -232,6 +241,55 @@ namespace TramsDataApi.Test.Controllers
 
             result.Result.Should().BeEquivalentTo(new NotFoundResult());
             
+        }
+
+        [Fact]
+        public async Task GetAvailableStatuses_ReturnsStatuses()
+        {
+            var expected = new List<string> { "DECLINED" };
+
+            var mockUseCase = new Mock<IGetAcademyConversionProjectStatuses>();
+            mockUseCase
+                .Setup(uc => uc.Execute())
+                .ReturnsAsync(expected);
+
+            var controller = new AcademyConversionProjectController(
+                new Mock<ISearchAcademyConversionProjects>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                mockUseCase.Object,
+                _mockLogger.Object
+            );
+
+            var result = await
+                controller.GetAvailableStatuses();
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+
+        }
+
+        [Fact]
+        public async Task GetAvailableStatuses_ReturnsEmptyList_If_No_Statuses()
+        {
+            
+            var mockUseCase = new Mock<IGetAcademyConversionProjectStatuses>();
+            mockUseCase
+                .Setup(uc => uc.Execute())
+                .ReturnsAsync(new List<string>());
+
+            var controller = new AcademyConversionProjectController(
+                new Mock<ISearchAcademyConversionProjects>().Object,
+                new Mock<IGetAcademyConversionProject>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                mockUseCase.Object,
+                _mockLogger.Object
+            );
+
+            var result = await
+                controller.GetAvailableStatuses();
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<string>()));
+
         }
     }
 }

@@ -19,6 +19,7 @@ namespace TramsDataApi.Controllers.V2
         private readonly ILogger<AcademyConversionProjectController> _logger;
         private readonly IGetAcademyConversionProject _getAcademyConversionProjectById;
         private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
+        private readonly IGetAcademyConversionProjectStatuses _getAcademyConversionProjectStatuses;
         private readonly ISearchAcademyConversionProjects _searchAcademyConversionProjects;
 
         private const string RetrieveProjectsLog = "Attempting to retrieve {Count} Academy Conversion Projects";
@@ -35,11 +36,13 @@ namespace TramsDataApi.Controllers.V2
             ISearchAcademyConversionProjects searchAcademyConversionProjects,
             IGetAcademyConversionProject getAcademyConversionProjectById,
             IUpdateAcademyConversionProject updateAcademyConversionProject,
+            IGetAcademyConversionProjectStatuses getAcademyConversionProjectStatuses,
             ILogger<AcademyConversionProjectController> logger)
         {
             _logger = logger;
             _getAcademyConversionProjectById = getAcademyConversionProjectById;
             _updateAcademyConversionProject = updateAcademyConversionProject;
+            _getAcademyConversionProjectStatuses = getAcademyConversionProjectStatuses;
             _searchAcademyConversionProjects = searchAcademyConversionProjects;
         }
 
@@ -68,6 +71,14 @@ namespace TramsDataApi.Controllers.V2
 
             var response = new ApiResponseV2<AcademyConversionProjectResponse>(result.Results, pagingResponse);
             return Ok(response);
+        }
+
+        [HttpGet("statuses")]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<List<string>>> GetAvailableStatuses()
+        {
+            var result = await _getAcademyConversionProjectStatuses.Execute();
+            return Ok(result);
         }
 
         [HttpGet("{id:int}")]
