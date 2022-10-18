@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using AutoFixture.Idioms;
 using FluentAssertions;
 using TramsDataApi.Enums.Concerns;
 using TramsDataApi.RequestModels.Concerns.Decisions;
@@ -28,6 +29,39 @@ namespace TramsDataApi.Test.RequestModels.Concerns.Decisions
                 .Create();
 
             sut.IsValid().Should().BeTrue();
+        }
+
+        [Fact]
+        public void Constructor_Guards_Against_Nulls()
+        {
+            // Arrange
+            var fixture = new Fixture();
+            var assertion = fixture.Create<GuardClauseAssertion>();
+
+            // Act & Assert
+            assertion.Verify(typeof(CreateDecisionRequest).GetConstructors());
+        }
+
+        [Fact]
+        public void Properties_Are_Initialized_By_Constructor()
+        {
+            // Arrange
+            var fixture = new Fixture();
+            var assertion = fixture.Create<ConstructorInitializedMemberAssertion>();
+
+            // Act & Assert
+            assertion.Verify(typeof(CreateDecisionRequest));
+        }
+
+        [Fact]
+        public void Property_Setters_Work_As_Expected()
+        {
+            // Arrange
+            var fixture = new Fixture();
+            var assertion = fixture.Create<WritablePropertyAssertion>();
+
+            // Act & Assert
+            assertion.Verify(typeof(CreateDecisionRequest));
         }
     }
 }
