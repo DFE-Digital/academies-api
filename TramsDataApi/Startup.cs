@@ -56,6 +56,7 @@ namespace TramsDataApi
             services.AddScoped<IGetKeyStagePerformanceByUrn, GetKeyStagePerformanceByUrn>();
             services.AddScoped<IEducationPerformanceGateway, EducationPerformanceGateway>();
             services.AddScoped<IAcademyConversionProjectGateway, AcademyConversionProjectGateway>();
+            services.AddScoped<IGetAcademyConversionProjectStatuses, GetAcademyConversionProjectStatuses>();
             services.AddScoped<ICensusDataGateway, CensusDataGateway>();
             services.AddScoped<IIfdPipelineGateway, IfdPipelineGateway>();
             services.AddScoped<ICreateConcernsCase, CreateConcernsCase>();
@@ -105,8 +106,10 @@ namespace TramsDataApi
 
             // concerns factories
             services.AddScoped<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>, CreateDecision>();
+            services.AddScoped<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>, GetDecision>();
             services.AddScoped<ICreateDecisionResponseFactory, CreateDecisionResponseFactory>();
             services.AddScoped<IDecisionFactory, DecisionFactory>();
+            services.AddScoped<IGetDecisionResponseFactory, GetDecisionResponseFactory>();
 
             services.AddApiVersioning(config => 
             {
