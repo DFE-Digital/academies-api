@@ -55,9 +55,9 @@ namespace TramsDataApi.Controllers.V2
             var statusList = !string.IsNullOrWhiteSpace(states)
                 ? states.Split(',').ToList()
                 : null;
-
+            
             _logger.LogInformation(SearchProjectsLog, count, states, urn, title);
-            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn);
+            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title);
 
             if (!result.Results.Any())
             {
