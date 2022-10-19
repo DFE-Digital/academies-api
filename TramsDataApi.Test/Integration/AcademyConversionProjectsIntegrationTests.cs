@@ -397,7 +397,11 @@ namespace TramsDataApi.Test.Integration
                 .Be(updateRequest.PreviousHeadTeacherBoardDate);
             academyConversionProject.ProposedAcademyOpeningDate.Should().Be(updateRequest.ProposedAcademyOpeningDate);
             academyConversionProject.SchoolAndTrustInformationSectionComplete.Should()
-                .Be(updateRequest.SchoolAndTrustInformationSectionComplete);
+                .Be(updateRequest.SchoolAndTrustInformationSectionComplete); 
+            // Assigned User
+            academyConversionProject.AssignedUserId.Should().Be(updateRequest.AssignedUser.Id);
+            academyConversionProject.AssignedUserEmailAddress.Should().Be(updateRequest.AssignedUser.EmailAddress);
+            academyConversionProject.AssignedUserFullName.Should().Be(updateRequest.AssignedUser.FullName);
         }
 
         private AcademyConversionProjectResponse CreateExpectedApiResponse(Trust trust,

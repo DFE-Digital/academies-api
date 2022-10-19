@@ -11,7 +11,7 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
         {
         }
 
-        public DecisionStatus(Enums.Concerns.DecisionStatus status)
+        public DecisionStatus(Enums.Concerns.DecisionStatus status) : this()
         {
             if (!Enum.IsDefined(typeof(Enums.Concerns.DecisionStatus), status))
             {

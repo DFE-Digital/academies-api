@@ -22,6 +22,16 @@ namespace TramsDataApi.Gateways
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<List<string>> GetAvailableProjectStatuses()
+        {
+            return await _tramsDbContext.AcademyConversionProjects                    
+                .OrderByDescending(p => p.ProjectStatus)
+                .AsNoTracking()
+                .Select(p => p.ProjectStatus)
+                .Distinct()
+                .ToListAsync();
+        }
+
         public async Task<List<AcademyConversionProject>> GetProjects(int page, int count)
         {
             return await _tramsDbContext.AcademyConversionProjects
