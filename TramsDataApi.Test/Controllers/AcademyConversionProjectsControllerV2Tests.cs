@@ -62,10 +62,9 @@ namespace TramsDataApi.Test.Controllers
 
             var mockUseCase = new Mock<ISearchAcademyConversionProjects>();
 
-            var data = new List<AcademyConversionProjectResponse> { new AcademyConversionProjectResponse { ProjectStatus = null, Urn = urn, SchoolName = "test title" } };
-
             var expectedPaging = new PagingResponse { Page = 1, RecordCount = 0 };
-
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
+            
             mockUseCase
                 .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), It.IsAny<int?>(), projectTitle))
                 .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(new List<AcademyConversionProjectResponse>()));
@@ -76,7 +75,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<IUpdateAcademyConversionProject>().Object,
                 _mockLogger.Object);
 
-            var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
+            
             var result = await controller.GetConversionProjects(string.Empty, title: projectTitle, urn: urn);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
