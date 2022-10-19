@@ -49,6 +49,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
 
             var result = await controller.GetConversionProjects(null, title: projectTitle, urn: urn);
@@ -74,6 +75,7 @@ namespace TramsDataApi.Test.Controllers
                 mockUseCase.Object,
                 new Mock<IGetAcademyConversionProject>().Object,
                 new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
 
             
