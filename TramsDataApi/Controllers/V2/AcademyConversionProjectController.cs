@@ -25,7 +25,7 @@ namespace TramsDataApi.Controllers.V2
         private const string RetrieveProjectsLog = "Attempting to retrieve {Count} Academy Conversion Projects";
 
         private const string SearchProjectsLog =
-            "Attempting to retrieve {Count} Academy Conversion Projects filtered by: states: {States} urn: {Urn}";
+            "Attempting to retrieve {Count} Academy Conversion Projects filtered by: states: {States} urn: {Urn} title: {Title}";
 
         private const string ProjectByIdNotFound = "No Academy Conversion Project found with Id: {id}";
         private const string ReturnProjectsLog = "Returning {count} Academy Conversion Projects with Id(s): {ids}";
@@ -50,6 +50,7 @@ namespace TramsDataApi.Controllers.V2
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<ApiResponseV2<AcademyConversionProjectResponse>>> GetConversionProjects(
             [FromQuery] string states,
+            [FromQuery] string title,
             [FromQuery] int page = 1,
             [FromQuery] int count = 50,
             [FromQuery] int? urn = null)
@@ -57,14 +58,14 @@ namespace TramsDataApi.Controllers.V2
             var statusList = !string.IsNullOrWhiteSpace(states)
                 ? states.Split(',').ToList()
                 : null;
-
-            _logger.LogInformation(SearchProjectsLog, count, states, urn);
-            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn);
+            
+            _logger.LogInformation(SearchProjectsLog, count, states, urn, title);
+            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title);
 
             if (!result.Results.Any())
             {
                 var projectIds = result.Results.Select(p => p.Id);
-                _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds));
+                _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds), title);
             }
 
             var pagingResponse = PagingResponseFactory.Create(page, count, result.TotalCount, Request);
