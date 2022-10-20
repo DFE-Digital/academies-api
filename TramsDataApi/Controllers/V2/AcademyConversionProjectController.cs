@@ -51,6 +51,7 @@ namespace TramsDataApi.Controllers.V2
         public async Task<ActionResult<ApiResponseV2<AcademyConversionProjectResponse>>> GetConversionProjects(
             [FromQuery] string states,
             [FromQuery] string title,
+            [FromQuery] string[] deliveryOfficers,
             [FromQuery] int page = 1,
             [FromQuery] int count = 50,
             [FromQuery] int? urn = null)
@@ -60,12 +61,12 @@ namespace TramsDataApi.Controllers.V2
                 : null;
             
             _logger.LogInformation(SearchProjectsLog, count, states, urn, title);
-            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title);
+            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title, deliveryOfficers);
 
             if (!result.Results.Any())
             {
                 var projectIds = result.Results.Select(p => p.Id);
-                _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds), title);
+                _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds));
             }
 
             var pagingResponse = PagingResponseFactory.Create(page, count, result.TotalCount, Request);
