@@ -21,7 +21,7 @@ namespace TramsDataApi.Test.UseCases
             _fixture = new Fixture();
         }
         private const string Title = "Title_One";
-        private const string DeliveryOfficer = "DO_One";
+        string[] DeliveryOfficer = { "DO_One" };
         private const int Page = 1;
         private const int Count = 50;
         [Fact]
@@ -56,7 +56,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
             
             mockProjectsGateway
-                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, null, It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, null, It.IsAny<string>(), It.IsAny<string[]>()))
                 .Returns(Task.FromResult(new PagedResult<AcademyConversionProject>(new List<AcademyConversionProject> { project })));
 
             mockEstablishmentsGateway
@@ -94,7 +94,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
             mockProjectsGateway
-                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, urn, It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, urn, It.IsAny<string>(), It.IsAny<string[]>()))
                 .Returns(Task.FromResult(new PagedResult<AcademyConversionProject>(new List<AcademyConversionProject> { project })));
             
             mockEstablishmentsGateway

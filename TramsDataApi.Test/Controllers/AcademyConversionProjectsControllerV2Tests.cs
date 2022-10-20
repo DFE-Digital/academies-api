@@ -42,7 +42,7 @@ namespace TramsDataApi.Test.Controllers
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
 
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), urn, projectTitle, It.IsAny<string>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), urn, projectTitle, It.IsAny<string[]>()))
                 .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(data, 1));
 
             var controller = new AcademyConversionProjectController(
@@ -52,7 +52,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
 
-            var result = await controller.GetConversionProjects(null, title: projectTitle, urn: urn, deliveryOfficer: string.Empty);
+            var result = await controller.GetConversionProjects(null, title: projectTitle, urn: urn, deliveryOfficers: Array.Empty<string>());
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
@@ -68,7 +68,7 @@ namespace TramsDataApi.Test.Controllers
             var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
             
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), It.IsAny<int?>(), projectTitle, It.IsAny<string>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), It.IsAny<int?>(), projectTitle, It.IsAny<string[]>()))
                 .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(new List<AcademyConversionProjectResponse>()));
 
             var controller = new AcademyConversionProjectController(
@@ -79,7 +79,7 @@ namespace TramsDataApi.Test.Controllers
                 _mockLogger.Object);
 
             
-            var result = await controller.GetConversionProjects(string.Empty, title: projectTitle, urn: urn, deliveryOfficer: string.Empty);
+            var result = await controller.GetConversionProjects(string.Empty, title: projectTitle, urn: urn, deliveryOfficers: Array.Empty<string>());
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
@@ -89,7 +89,7 @@ namespace TramsDataApi.Test.Controllers
         {
             const string projectStatus = "AStatus";
             const string projectTitle = "ATitle";
-            const string projectDeliveryOfficer = "ADO";
+            string[] projectDeliveryOfficer =  { "ADO" };
             const int urn = 10001;
             
             var mockUseCase = new Mock<ISearchAcademyConversionProjects>();
@@ -100,7 +100,7 @@ namespace TramsDataApi.Test.Controllers
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
 
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), urn, It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), urn, It.IsAny<string>(), It.IsAny<string[]>()))
                 .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(data, 1));
             
             var controller = new AcademyConversionProjectController(
@@ -110,7 +110,7 @@ namespace TramsDataApi.Test.Controllers
                 new Mock<IGetAcademyConversionProjectStatuses>().Object,
                 _mockLogger.Object);
             
-            var result = await controller.GetConversionProjects(projectStatus, title: projectTitle, urn: urn, deliveryOfficer: projectDeliveryOfficer);
+            var result = await controller.GetConversionProjects(projectStatus, title: projectTitle, urn: urn, deliveryOfficers: projectDeliveryOfficer);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
@@ -121,7 +121,7 @@ namespace TramsDataApi.Test.Controllers
             var mockUseCase = new Mock<ISearchAcademyConversionProjects>();
             
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<List<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<List<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string[]>()))
                 .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(new List<AcademyConversionProjectResponse>()));
             
             var controller = new AcademyConversionProjectController(
@@ -135,7 +135,7 @@ namespace TramsDataApi.Test.Controllers
             var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
 
             
-            var result = await controller.GetConversionProjects(string.Empty, string.Empty, string.Empty);
+            var result = await controller.GetConversionProjects(string.Empty, string.Empty, Array.Empty<string>());
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
         }
@@ -156,7 +156,7 @@ namespace TramsDataApi.Test.Controllers
             };
             
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<List<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<List<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string[]>()))
                 .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(data.Take(1).ToList(), 1));
 
             var controller = new AcademyConversionProjectController(
@@ -192,7 +192,7 @@ namespace TramsDataApi.Test.Controllers
             };
 
             mockUseCase
-                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string[]>()))
                 .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(data, 2));
 
             var controller = new AcademyConversionProjectController(
