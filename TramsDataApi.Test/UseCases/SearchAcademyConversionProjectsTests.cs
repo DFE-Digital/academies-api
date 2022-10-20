@@ -15,15 +15,16 @@ namespace TramsDataApi.Test.UseCases
     public class SearchAcademyConversionProjectsTests
     {
         private readonly Fixture _fixture;
+        private const string Title = "Title_One";
+        string[] DeliveryOfficers = { "DO_One" };
+        private const int Page = 1;
+        private const int Count = 50;
 
         public SearchAcademyConversionProjectsTests()
         {
             _fixture = new Fixture();
         }
-        private const string Title = "Title_One";
-        string[] DeliveryOfficers = { "DO_One" };
-        private const int Page = 1;
-        private const int Count = 50;
+        
         [Fact]
         public async Task SearchAcademyConversionProjects_ReturnsEmptyList_WhenAcademyConversionProjectIsNotFound()
         {
