@@ -21,10 +21,10 @@ namespace TramsDataApi.UseCases
             _establishmentGateway = establishmentGateway;
         }
 
-        public async Task<PagedResult<AcademyConversionProjectResponse>> Execute(int page, int count, IEnumerable<string> statuses, int? urn, string title, string deliveryOfficer)
+        public async Task<PagedResult<AcademyConversionProjectResponse>> Execute(int page, int count, IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers)
         {
             var academyConversionProjects = await _academyConversionProjectGateway
-                .SearchProjects(page, count, statuses, urn, title, deliveryOfficer);
+                .SearchProjects(page, count, statuses, urn, title, deliveryOfficers);
 
             if (academyConversionProjects == null) return new PagedResult<AcademyConversionProjectResponse>();
 
