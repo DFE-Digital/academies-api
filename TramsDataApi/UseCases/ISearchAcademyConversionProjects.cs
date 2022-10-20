@@ -7,6 +7,6 @@ namespace TramsDataApi.UseCases
 {
     public interface ISearchAcademyConversionProjects
     {
-        Task<PagedResult<AcademyConversionProjectResponse>> Execute(int page, int count, IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficer);
+        Task<PagedResult<AcademyConversionProjectResponse>> Execute(int page, int count, IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers);
     }
 }
