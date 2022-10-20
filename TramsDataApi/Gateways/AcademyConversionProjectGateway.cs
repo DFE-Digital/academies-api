@@ -51,7 +51,7 @@ namespace TramsDataApi.Gateways
             return entity.Entity;
         }
 
-        public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn, string title)
+        public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn, string title, string deliveryOfficer)
         {
             IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects
                 .OrderByDescending(acp => acp.ApplicationReceivedDate);
@@ -70,6 +70,11 @@ namespace TramsDataApi.Gateways
             if (title != null)
             {
                 academyConversionProjects = academyConversionProjects.Where(acp => acp.SchoolName.ToLower().Contains(title.ToLower()));
+            }
+
+            if (deliveryOfficer != null)
+            {
+                academyConversionProjects = academyConversionProjects.Where(acp => acp.AssignedUserFullName.ToLower().Contains(title.ToLower()));
             }
             var totalCount = academyConversionProjects.Count();
             var projects = await academyConversionProjects
