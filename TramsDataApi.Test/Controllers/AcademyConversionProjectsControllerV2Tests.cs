@@ -29,6 +29,62 @@ namespace TramsDataApi.Test.Controllers
         }
 
         [Fact]
+        public async Task GetConversionProjects_ReturnsResponseWithListOfAcademyConversionProjects_WhenDeliveryOfficerFilterAppliedAndProjectsExist()
+        {
+            string[] projectDeliveryOfficers = { "ADO" };
+            const int urn = 10001;
+
+            var mockUseCase = new Mock<ISearchAcademyConversionProjects>();
+
+            var data = new List<AcademyConversionProjectResponse> { new AcademyConversionProjectResponse { ProjectStatus = null, Urn = urn, SchoolName = null, AssignedUser = new AssignedUser(null, "ADO", string.Empty)} };
+
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 1 };
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
+
+            mockUseCase
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), urn, It.IsAny<string>(), projectDeliveryOfficers))
+                .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(data, 1));
+
+            var controller = new AcademyConversionProjectController(
+                mockUseCase.Object,
+                new Mock<IGetAcademyConversionProject>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
+                _mockLogger.Object);
+
+            var result = await controller.GetConversionProjects(null, title: string.Empty, urn: urn, deliveryOfficers: projectDeliveryOfficers);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+        [Fact]
+        public async Task GetConversionProjects_ReturnsResponseWithListOfAcademyConversionProjects_WhenDeliveryOfficerFilterAppliedAndNoResultsFound()
+        {
+            string[] projectDeliveryOfficers = { "ADO" };
+            const int urn = 10001;
+
+            var mockUseCase = new Mock<ISearchAcademyConversionProjects>();
+
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 0 };
+            var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
+
+            mockUseCase
+                .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string[]>()))
+                .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(new List<AcademyConversionProjectResponse>()));
+
+            var controller = new AcademyConversionProjectController(
+                mockUseCase.Object,
+                new Mock<IGetAcademyConversionProject>().Object,
+                new Mock<IUpdateAcademyConversionProject>().Object,
+                new Mock<IGetAcademyConversionProjectStatuses>().Object,
+                _mockLogger.Object);
+
+
+            var result = await controller.GetConversionProjects(string.Empty, title: string.Empty, urn: urn, deliveryOfficers: Array.Empty<string>());
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+        }
+
+        [Fact]
         public async Task GetConversionProjects_ReturnsResponseWithListOfAcademyConversionProjects_WhenTitleFilterAppliedAndProjectsExist()
         {
             const string projectTitle = "ATitle";
