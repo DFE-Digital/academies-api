@@ -21,7 +21,7 @@ namespace TramsDataApi.Test.UseCases
             _fixture = new Fixture();
         }
         private const string Title = "Title_One";
-        string[] DeliveryOfficer = { "DO_One" };
+        string[] DeliveryOfficers = { "DO_One" };
         private const int Page = 1;
         private const int Count = 50;
         [Fact]
@@ -36,7 +36,7 @@ namespace TramsDataApi.Test.UseCases
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
 
-            var result = await useCase.Execute(Page, Count, statuses, 1001, Title, DeliveryOfficer);
+            var result = await useCase.Execute(Page, Count, statuses, 1001, Title, DeliveryOfficers);
 
             result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse>());
         }
@@ -67,7 +67,7 @@ namespace TramsDataApi.Test.UseCases
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
 
-            var result = await useCase.Execute(Page, Count, statuses, null, Title, DeliveryOfficer);
+            var result = await useCase.Execute(Page, Count, statuses, null, Title, DeliveryOfficers);
             
             result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
@@ -109,7 +109,7 @@ namespace TramsDataApi.Test.UseCases
                 mockProjectsGateway.Object,
                 mockEstablishmentsGateway.Object);
 
-            var result = await useCase.Execute(Page, Count, statuses, urn, Title, DeliveryOfficer);
+            var result = await useCase.Execute(Page, Count, statuses, urn, Title, DeliveryOfficers);
 
             result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
