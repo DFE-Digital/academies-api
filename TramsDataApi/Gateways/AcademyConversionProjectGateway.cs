@@ -76,6 +76,11 @@ namespace TramsDataApi.Gateways
             {
                 var lowerDeliveryOfficers = deliveryOfficers.Select(officer => officer.ToLower());
                 academyConversionProjects = academyConversionProjects.Where(acp => lowerDeliveryOfficers.Contains(acp.AssignedUserFullName.ToLower()));
+                if (lowerDeliveryOfficers.Contains("Not assigned"))
+                {
+                    var notAssignedProjects = academyConversionProjects.Where(acp => acp.AssignedUserFullName == "" && acp.AssignedUserFullName == null);
+                    academyConversionProjects = academyConversionProjects.Concat(notAssignedProjects);
+                }
             }
             var totalCount = academyConversionProjects.Count();
             var projects = await academyConversionProjects
