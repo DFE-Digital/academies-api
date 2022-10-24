@@ -53,8 +53,17 @@ namespace TramsDataApi.Gateways
 
         public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers)
         {
-            IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects
-                .OrderByDescending(acp => acp.ApplicationReceivedDate);
+            IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects;
+            if (deliveryOfficers != null && deliveryOfficers.Any())
+            {
+                var lowerDeliveryOfficers = deliveryOfficers.Select(officer => officer.ToLower());
+                academyConversionProjects = academyConversionProjects.Where(acp => lowerDeliveryOfficers.Contains(acp.AssignedUserFullName.ToLower()));
+                if (lowerDeliveryOfficers.Contains("not assigned"))
+                {
+                    var notAssignedProjects = _tramsDbContext.AcademyConversionProjects.Where(acp => string.IsNullOrEmpty(acp.AssignedUserFullName));
+                    academyConversionProjects = academyConversionProjects.Concat(notAssignedProjects).OrderByDescending(acp => acp.ApplicationReceivedDate);
+                }
+            }
 
             if (statuses != null && statuses.Any())
             {
@@ -70,12 +79,6 @@ namespace TramsDataApi.Gateways
             if (title != null)
             {
                 academyConversionProjects = academyConversionProjects.Where(acp => acp.SchoolName.ToLower().Contains(title.ToLower()));
-            }
-
-            if (deliveryOfficers != null && deliveryOfficers.Any())
-            {
-                var lowerDeliveryOfficers = deliveryOfficers.Select(officer => officer.ToLower());
-                academyConversionProjects = academyConversionProjects.Where(acp => lowerDeliveryOfficers.Contains(acp.AssignedUserFullName.ToLower()));
             }
             var totalCount = academyConversionProjects.Count();
             var projects = await academyConversionProjects
