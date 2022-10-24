@@ -77,7 +77,7 @@ namespace TramsDataApi.Gateways
                 academyConversionProjects = academyConversionProjects.Where(acp => lowerDeliveryOfficers.Contains(acp.AssignedUserFullName.ToLower()));
                 if (lowerDeliveryOfficers.Contains("Not assigned"))
                 {
-                    var notAssignedProjects = academyConversionProjects.Where(acp => string.IsNullOrEmpty(acp.AssignedUserFullName) == true);
+                    var notAssignedProjects = academyConversionProjects.Where(acp => string.IsNullOrEmpty(acp.AssignedUserFullName));
                     academyConversionProjects = academyConversionProjects.Concat(notAssignedProjects).OrderByDescending(acp => acp.ApplicationReceivedDate);
                 }
             }
