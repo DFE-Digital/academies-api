@@ -53,8 +53,7 @@ namespace TramsDataApi.Gateways
 
         public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers)
         {
-            IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects
-                .OrderByDescending(acp => acp.ApplicationReceivedDate);
+            IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects;
 
             if (statuses != null && statuses.Any())
             {
@@ -79,7 +78,7 @@ namespace TramsDataApi.Gateways
                 if (lowerDeliveryOfficers.Contains("Not assigned"))
                 {
                     var notAssignedProjects = academyConversionProjects.Where(acp => string.IsNullOrEmpty(acp.AssignedUserFullName) == true);
-                    academyConversionProjects = academyConversionProjects.Concat(notAssignedProjects);
+                    academyConversionProjects = academyConversionProjects.Concat(notAssignedProjects).OrderByDescending(acp => acp.ApplicationReceivedDate);
                 }
             }
             var totalCount = academyConversionProjects.Count();
