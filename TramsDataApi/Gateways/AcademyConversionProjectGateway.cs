@@ -111,7 +111,7 @@ namespace TramsDataApi.Gateways
             return queryable;
         }
 
-        private static IQueryable<AcademyConversionProject> FilterBySchool(string? title, IQueryable<AcademyConversionProject> queryable)
+        private static IQueryable<AcademyConversionProject> FilterBySchool(string title, IQueryable<AcademyConversionProject> queryable)
         {
             if (!string.IsNullOrWhiteSpace(title)) queryable = queryable.Where(p => p.SchoolName!.ToLower().Contains(title!.ToLower()));
 
