@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +15,7 @@ namespace TramsDataApi.ResponseModels
                 Page = page
             };
 
-            if (recordCount != count) return pagingResponse;
+            if ((count * page) >= recordCount) return pagingResponse;
 
             var queryAttributes = request.Query
                 .Where(q => q.Key != nameof(page) && q.Key != nameof(count))
