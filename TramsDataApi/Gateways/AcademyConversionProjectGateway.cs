@@ -24,7 +24,7 @@ namespace TramsDataApi.Gateways
 
         public async Task<List<string>> GetAvailableProjectStatuses()
         {
-            return await _tramsDbContext.AcademyConversionProjects                    
+            return await _tramsDbContext.AcademyConversionProjects
                 .OrderByDescending(p => p.ProjectStatus)
                 .AsNoTracking()
                 .Select(p => p.ProjectStatus)
@@ -46,48 +46,76 @@ namespace TramsDataApi.Gateways
         {
             var entity = _tramsDbContext.AcademyConversionProjects
                 .Update(academyConversionProject);
-            
+
             await _tramsDbContext.SaveChangesAsync();
             return entity.Entity;
         }
 
-        public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers)
+        public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count,
+            IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers)
         {
             IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects;
+
+            academyConversionProjects = FilterByStatus(statuses, academyConversionProjects);
+            academyConversionProjects = FilterByUrn(urn, academyConversionProjects);
+            academyConversionProjects = FilterBySchool(title, academyConversionProjects);
+            academyConversionProjects = FilterByDeliveryOfficer(deliveryOfficers, academyConversionProjects);
+
+            var totalProjects = academyConversionProjects.Count();
+            var projects = await academyConversionProjects.OrderByDescending(acp => acp.ApplicationReceivedDate)
+                .Skip((page - 1) * count)
+                .Take(count).ToListAsync();
+            return new PagedResult<AcademyConversionProject>(projects, totalProjects);
+        }
+
+        private static IQueryable<AcademyConversionProject> FilterByDeliveryOfficer(IEnumerable<string> deliveryOfficers,
+            IQueryable<AcademyConversionProject> queryable)
+        {
             if (deliveryOfficers != null && deliveryOfficers.Any())
             {
-                var lowerDeliveryOfficers = deliveryOfficers.Select(officer => officer.ToLower());
-                academyConversionProjects = academyConversionProjects.Where(acp => lowerDeliveryOfficers.Contains(acp.AssignedUserFullName.ToLower()));
-                if (lowerDeliveryOfficers.Contains("not assigned"))
+                var lowerCaseDeliveryOfficers = deliveryOfficers.Select(officer => officer.ToLower());
+
+                if (lowerCaseDeliveryOfficers.Contains("not assigned"))
                 {
-                    var notAssignedProjects = _tramsDbContext.AcademyConversionProjects.Where(acp => string.IsNullOrEmpty(acp.AssignedUserFullName));
-                    academyConversionProjects = academyConversionProjects.Concat(notAssignedProjects).OrderByDescending(acp => acp.ApplicationReceivedDate);
+                    // Query by unassigned or assigned delivery officer
+                    queryable = queryable.Where(p =>
+                        (!string.IsNullOrEmpty(p.AssignedUserFullName) &&
+                         lowerCaseDeliveryOfficers.Contains(p.AssignedUserFullName.ToLower()))
+                        || string.IsNullOrEmpty(p.AssignedUserFullName));
+                }
+                else
+                {
+                    // Query by assigned delivery officer only
+                    queryable = queryable.Where(p =>
+                        !string.IsNullOrEmpty(p.AssignedUserFullName) &&
+                        lowerCaseDeliveryOfficers.Contains(p.AssignedUserFullName.ToLower()));
                 }
             }
 
-            if (statuses != null && statuses.Any())
+            return queryable;
+        }
+        private static IQueryable<AcademyConversionProject> FilterByStatus(IEnumerable<string> states, IQueryable<AcademyConversionProject> queryable)
+        {
+            if (states != null && states!.Any())
             {
-                var lowerStatuses = statuses.Select(status => status.ToLower());
-                academyConversionProjects = academyConversionProjects.Where(acp => lowerStatuses.Contains(acp.ProjectStatus.ToLower()));
+                queryable = queryable.Where(p => states.Contains(p.ProjectStatus!.ToLower()));
             }
 
-            if (urn.HasValue)
-            {
-                academyConversionProjects = academyConversionProjects.Where(acp => acp.Urn == urn);
-            }
+            return queryable;
+        }
 
-            if (title != null)
-            {
-                academyConversionProjects = academyConversionProjects.Where(acp => acp.SchoolName.ToLower().Contains(title.ToLower()));
-            }
-            var totalCount = academyConversionProjects.Count();
-            var projects = await academyConversionProjects
-                .Skip((page - 1) * count)
-                .Take(count)
-                .AsNoTracking()
-                .ToListAsync();
+        private static IQueryable<AcademyConversionProject> FilterByUrn(int? urn, IQueryable<AcademyConversionProject> queryable)
+        {
+            if (urn.HasValue) queryable = queryable.Where(p => p.Urn == urn);
 
-            return new PagedResult<AcademyConversionProject>(projects, totalCount);
+            return queryable;
+        }
+
+        private static IQueryable<AcademyConversionProject> FilterBySchool(string? title, IQueryable<AcademyConversionProject> queryable)
+        {
+            if (!string.IsNullOrWhiteSpace(title)) queryable = queryable.Where(p => p.SchoolName!.ToLower().Contains(title!.ToLower()));
+
+            return queryable;
         }
     }
 }
