@@ -31,9 +31,9 @@ namespace TramsDataApi.Test.Factories
         }
         
         [Fact]
-        public void CreatingPagingResponse_WithRecordCountEqualToCount_Should_ReturnPagingResponseWithNextPageUrlPointingToNextPage()
+        public void CreatingPagingResponse_WithRecordGreaterThanViewedRecords_Should_ReturnPagingResponseWithNextPageUrlPointingToNextPage()
         {
-            const int recordCount = 1;
+            const int recordCount = 2;
             const int count = 1;
             const int page = 1;
             var expectedNextPageUrl = $@"/controller-name/?page={page + 1}&count={count}";
