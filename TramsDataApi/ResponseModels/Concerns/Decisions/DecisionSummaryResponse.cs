@@ -9,7 +9,7 @@ namespace TramsDataApi.ResponseModels.Concerns.Decisions
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
         public string Title { get; set; }
-        public Enums.Concerns.DecisionStatus DecisionStatus { get; set; }
+        public Enums.Concerns.DecisionStatus Status { get; set; }
         public DateTimeOffset? ClosedAt { get; set; }
     }
 }

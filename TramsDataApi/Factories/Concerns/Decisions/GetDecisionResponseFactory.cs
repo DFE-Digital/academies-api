@@ -26,7 +26,9 @@ namespace TramsDataApi.Factories.Concerns.Decisions
                 RetrospectiveApproval = decision.RetrospectiveApproval,
                 CrmCaseNumber = decision.CrmCaseNumber,
                 CreatedAt = decision.CreatedAt,
-                UpdatedAt = decision.UpdatedAt
+                UpdatedAt = decision.UpdatedAt,
+                ClosedAt = decision.ClosedAt, // TODO,
+                DecisionStatus = decision.Status
             };
         }
     }

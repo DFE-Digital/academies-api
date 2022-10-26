@@ -26,8 +26,8 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
         public void Create_When_Invalid_Urn_Throws_Exception(int invalidUrn)
         {
             var fixture = CreateFixture();
-            CustomiseFixtureToCreateDecisions(fixture);
-            var expectedDecisions = fixture.CreateMany<Decision>().ToArray();
+            
+            var expectedDecisions = CreateDecisions(fixture, fixture.Create<int>());
 
             var sut = new GetDecisionsSummariesFactory();
             Action act = () => sut.Create(invalidUrn, expectedDecisions);
@@ -38,7 +38,6 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
         public void Create_When_Null_Decisions_Throws_Exception()
         {
             var fixture = CreateFixture();
-            CustomiseFixtureToCreateDecisions(fixture);
 
             var sut = new GetDecisionsSummariesFactory();
             Action act = () => sut.Create(fixture.Create<int>(), null);
@@ -49,28 +48,33 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
         public void Create_Maps_Decisions_To_DecisionSummaries()
         {
             var fixture = CreateFixture();
-            CustomiseFixtureToCreateDecisions(fixture);
-
-            var expectedDecisions = fixture.CreateMany<Decision>().ToArray();
+            
+            var expectedDecisions = CreateDecisions(fixture, fixture.Create<int>());
 
             var sut = new GetDecisionsSummariesFactory();
             var result = sut.Create(123, expectedDecisions);
 
-            result.Should().BeEquivalentTo(expectedDecisions, opt => opt.ExcludingMissingMembers());
+            expectedDecisions.Should().BeEquivalentTo(result, opt =>
+                opt.IncludingAllDeclaredProperties()
+                    .Excluding(x => x.ConcernsCaseUrn)
+                    .Excluding(x => x.Title)
+                );
         }
 
         [Fact]
         public void Create_When_Decision_Has_No_DecisionTypes_Maps_Decisions_To_DecisionSummaries()
         {
             var fixture = CreateFixture();
-            CustomiseFixtureToCreateDecisionsWithNoDecisionTypes(fixture);
 
-            var expectedDecisions = fixture.CreateMany<Decision>().ToArray();
+            var expectedDecisions = CreateDecisions(fixture, fixture.Create<int>(), false);
 
             var sut = new GetDecisionsSummariesFactory();
             var result = sut.Create(123, expectedDecisions);
 
-            result.Should().BeEquivalentTo(expectedDecisions, opt => opt.ExcludingMissingMembers());
+            expectedDecisions.Should().BeEquivalentTo(result, opt => 
+            opt.IncludingAllDeclaredProperties()
+                .Excluding(x => x.ConcernsCaseUrn)
+                .Excluding(x => x.Title));
             result[0].Title.Should().Be("Not Available");
         }
 
@@ -83,9 +87,10 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
             return fixture;
         }
 
-        private Fixture CustomiseFixtureToCreateDecisions(Fixture fixture)
+        private Decision[] CreateDecisions(Fixture fixture, int count, bool includeDecisionTypes = true)
         {
-            fixture.Customize<Decision>(sb => sb.FromFactory(() =>
+            List<Decision> decisions = new List<Decision>();
+            for (int i = 0; i < count; i++)
             {
                 var decision = Decision.CreateNew(
                     concernsCaseId: fixture.Create<int>(),
@@ -94,37 +99,17 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
                     submissionRequired: fixture.Create<bool>(),
                     submissionDocumentLink: new string(fixture.CreateMany<char>(Decision.MaxUrlLength).ToArray()),
                     receivedRequestDate: DateTimeOffset.Now,
-                    decisionTypes: new DecisionType[] { new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove) },
+                    decisionTypes: includeDecisionTypes ? new DecisionType[] { new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove)} : null,
                     totalAmountRequested: fixture.Create<decimal>(),
                     supportingNotes: new string(fixture.CreateMany<char>(Decision.MaxSupportingNotesLength).ToArray()),
                     createdAt: DateTimeOffset.Now
                 );
                 decision.DecisionId = fixture.Create<int>();
-                return decision;
-            }));
-            return fixture;
-        }
+                decisions.Add(decision);
+            }
 
-        private Fixture CustomiseFixtureToCreateDecisionsWithNoDecisionTypes(Fixture fixture)
-        {
-            fixture.Customize<Decision>(sb => sb.FromFactory(() =>
-            {
-                var decision = Decision.CreateNew(
-                    concernsCaseId: fixture.Create<int>(),
-                    crmCaseNumber: new string(fixture.CreateMany<char>(Decision.MaxCaseNumberLength).ToArray()),
-                    retrospectiveApproval: fixture.Create<bool>(),
-                    submissionRequired: fixture.Create<bool>(),
-                    submissionDocumentLink: new string(fixture.CreateMany<char>(Decision.MaxUrlLength).ToArray()),
-                    receivedRequestDate: DateTimeOffset.Now,
-                    decisionTypes: null,
-                    totalAmountRequested: fixture.Create<decimal>(),
-                    supportingNotes: new string(fixture.CreateMany<char>(Decision.MaxSupportingNotesLength).ToArray()),
-                    createdAt: DateTimeOffset.Now
-                );
-                decision.DecisionId = fixture.Create<int>();
-                return decision;
-            }));
-            return fixture;
+            return decisions.ToArray();
         }
+        
     }
 }

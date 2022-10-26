@@ -13,15 +13,15 @@ namespace TramsDataApi.Factories.Concerns.Decisions
             _ = concernsCaseUrn > 0 ? concernsCaseUrn : throw new ArgumentOutOfRangeException(nameof(concernsCaseUrn));
             _ = decisions ?? throw new ArgumentNullException(nameof(decisions));
 
-            return decisions.Select(x => new DecisionSummaryResponse()
+            return decisions.Select(decision => new DecisionSummaryResponse()
             {
                 ConcernsCaseUrn = concernsCaseUrn,
-                DecisionId = x.DecisionId, 
-                DecisionStatus = x.Status,
-                CreatedAt = x.CreatedAt,
-                UpdatedAt = x.UpdatedAt,
-                ClosedAt = null,
-                Title = x.DecisionTypes.FirstOrDefault()?.DecisionTypeId.ToString() ?? "Not Available",
+                DecisionId = decision.DecisionId, 
+                Status = decision.Status,
+                CreatedAt = decision.CreatedAt,
+                UpdatedAt = decision.UpdatedAt,
+                ClosedAt = decision.ClosedAt,
+                Title = decision.DecisionTypes.FirstOrDefault()?.DecisionTypeId.ToString() ?? "Not Available",
             }).ToArray();
         }
     }

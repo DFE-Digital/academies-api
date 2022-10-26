@@ -23,24 +23,27 @@ namespace TramsDataApi.UseCases.CaseActions.Decisions
             _getDecisionsSummariesFactory = getDecisionsSummariesFactory ?? throw new ArgumentNullException(nameof(getDecisionsSummariesFactory));
         }
 
-        public async Task<DecisionSummaryResponse[]> Execute(GetDecisionsRequest request, CancellationToken cancellationToken)
+        public Task<DecisionSummaryResponse[]> Execute(GetDecisionsRequest request, CancellationToken cancellationToken)
         {
-            _ = request ?? throw new ArgumentNullException(nameof(request));
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
 
             async Task<DecisionSummaryResponse[]> DoWork()
             {
-                var concernsCase =  _gateway.GetConcernsCaseByUrn(request.ConcernsCaseUrn);
+                cancellationToken.ThrowIfCancellationRequested();
+                var concernsCase = _gateway.GetConcernsCaseByUrn(request.ConcernsCaseUrn);
 
                 if (concernsCase == null)
                 {
-                    return default(DecisionSummaryResponse[]);
+                    return default;
                 }
 
-                var result = _getDecisionsSummariesFactory.Create(request.ConcernsCaseUrn, concernsCase.Decisions.AsEnumerable());
-                return result;
+                return _getDecisionsSummariesFactory.Create(request.ConcernsCaseUrn, concernsCase.Decisions.AsEnumerable());
             }
 
-            return await DoWork();
+            return DoWork();
         }
     }
 }

@@ -41,7 +41,13 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
             var result = sut.Create(concernsCaseUrn, decision);
 
             result.ConcernsCaseUrn.Should().Be(concernsCaseUrn);
-            result.Should().BeEquivalentTo(decision, opt => opt.ExcludingMissingMembers());
+            result.Should().BeEquivalentTo(decision,
+                opt => opt.IncludingAllDeclaredProperties()
+                    .Excluding(x => x.DecisionTypes)
+                    .Excluding(x => x.Status));
+            result.DecisionTypes.Should().BeEquivalentTo(decision.DecisionTypes.Select(x => x.DecisionTypeId),
+                opt => opt.WithStrictOrdering());
+            result.DecisionStatus.Should().Be(decision.Status);
         }
 
         [Fact]
