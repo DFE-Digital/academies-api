@@ -5,6 +5,6 @@ namespace TramsDataApi.Factories.Concerns.Decisions
 {
     public interface IGetDecisionResponseFactory
     {
-        public GetDecisionResponse Create(Decision decision);
+        public GetDecisionResponse Create(int concernsCaseUrn, Decision decision);
     }
 }

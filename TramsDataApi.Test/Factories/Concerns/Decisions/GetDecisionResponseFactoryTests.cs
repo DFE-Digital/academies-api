@@ -32,12 +32,15 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
         public void Create_Returns_DecisionResponse()
         {
             var fixture = CreateFixture();
+
+            var concernsCaseUrn = fixture.Create<int>();
             var decision = fixture.Create<Decision>();
 
             var sut = new GetDecisionResponseFactory();
 
-            var result = sut.Create(decision);
+            var result = sut.Create(concernsCaseUrn, decision);
 
+            result.ConcernsCaseUrn.Should().Be(concernsCaseUrn);
             result.Should().BeEquivalentTo(decision, opt => opt.ExcludingMissingMembers());
         }
 
