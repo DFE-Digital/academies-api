@@ -242,7 +242,7 @@ namespace TramsDataApi.Test.Controllers
             
             mockUseCase
                 .Setup(uc => uc.Execute(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<List<string>>(), It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string[]>()))
-                .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(data.Take(1).ToList(), 1));
+                .ReturnsAsync(new PagedResult<AcademyConversionProjectResponse>(data.Take(1).ToList(), 2));
 
             var controller = new AcademyConversionProjectController(
                 mockUseCase.Object,                
@@ -254,7 +254,7 @@ namespace TramsDataApi.Test.Controllers
                 ControllerContext = controllerContext
             };
             
-            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 1, NextPageUrl = expectedNextPageUrl};
+            var expectedPaging = new PagingResponse { Page = 1, RecordCount = 2, NextPageUrl = expectedNextPageUrl};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data.Take(1), expectedPaging);
 
             var result = await controller.GetConversionProjects(null, null, null,1, 1);
