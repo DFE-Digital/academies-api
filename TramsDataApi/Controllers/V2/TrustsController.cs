@@ -33,17 +33,16 @@ namespace TramsDataApi.Controllers.V2
                 "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
                 groupName, ukPrn, companiesHouseNumber, page, count);
 
-            var trusts = _searchTrusts
-                .Execute(page, count, groupName, ukPrn, companiesHouseNumber)
-                .ToList();
+            var (trusts, recordCount) = _searchTrusts
+                .Execute(page, count, groupName, ukPrn, companiesHouseNumber);
             
             _logger.LogInformation(
                 "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-                trusts.Count, groupName, ukPrn, companiesHouseNumber, page, count);
+                trusts.Count(), groupName, ukPrn, companiesHouseNumber, page, count);
             
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
             
-            var pagingResponse = PagingResponseFactory.Create(page, count, trusts.Count, Request);
+            var pagingResponse = PagingResponseFactory.Create(page, count, recordCount, Request);
             var response = new ApiResponseV2<TrustSummaryResponse>(trusts, pagingResponse);
             return new OkObjectResult(response);
         }

@@ -42,14 +42,15 @@ namespace TramsDataApi.Gateways
             return _dbContext.Trust.Where(predicate);
         }
 
-        public IList<Group> SearchGroups(int page, int count, string groupName, string ukPrn, string companiesHouseNumber)
+        public (IList<Group>, int) SearchGroups(int page, int count, string groupName, string ukPrn, string companiesHouseNumber)
         {
             if (groupName == null && ukPrn == null && companiesHouseNumber == null)
             {
-                return _dbContext.Group.OrderBy(group => group.GroupUid).Skip((page - 1) * count).Take(count).ToList();
+                var allGroups = _dbContext.Group.OrderBy(group => group.GroupUid).Skip((page - 1) * count).Take(count).ToList();
+                return (allGroups, allGroups.Count);
             }
 
-            return _dbContext.Group
+            var filteredGroups = _dbContext.Group
                 .Where(g => (
                     (g.GroupName.Contains(groupName) ||
                      g.Ukprn.Contains(ukPrn) ||
@@ -59,8 +60,12 @@ namespace TramsDataApi.Gateways
                         g.GroupType == "Multi-academy trust"
                     )
                 ))
-                .OrderBy(group => group.GroupUid)
-                .Skip((page - 1) * count).Take(count).ToList();
+                .OrderBy(group => group.GroupUid);
+
+            return (
+                filteredGroups.Skip((page - 1) * count).Take(count).ToList(), 
+                filteredGroups.Count()
+                );
         }
     }
 }

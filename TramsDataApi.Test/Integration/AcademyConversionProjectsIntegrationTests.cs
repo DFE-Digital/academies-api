@@ -258,7 +258,7 @@ namespace TramsDataApi.Test.Integration
             var expectedData = academyConversionProjects
                 .Select(p => AcademyConversionProjectResponseFactory.Create(p)).ToList();                
 
-            var expectedPaging = new PagingResponse {Page = 1, RecordCount = expectedData.Count};
+            var expectedPaging = new PagingResponse {Page = 1, RecordCount = academyConversionProjects.Count};
             var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
 
             var response = await _client.GetAsync("v2/conversion-projects/");
