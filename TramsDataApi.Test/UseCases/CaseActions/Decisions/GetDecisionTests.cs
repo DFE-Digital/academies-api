@@ -95,7 +95,7 @@ namespace TramsDataApi.Test.UseCases.CaseActions.Decisions
 
             var mockGetDecisionResponseFactory = new Mock<IGetDecisionResponseFactory>();
             mockGetDecisionResponseFactory
-                .Setup(x => x.Create(fakeDecision))
+                .Setup(x => x.Create(fakeConcernsCase.Urn, fakeDecision))
                 .Returns(fakeResponse);
 
             // act
