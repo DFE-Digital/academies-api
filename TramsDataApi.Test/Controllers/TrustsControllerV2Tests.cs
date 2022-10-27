@@ -89,7 +89,7 @@ namespace TramsDataApi.Test.Controllers
 
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber))
-                .Returns(new List<TrustSummaryResponse>());
+                .Returns((new List<TrustSummaryResponse>(), 0));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
             var result = controller.SearchTrusts(groupName, ukprn, companiesHouseNumber, 1, 10);
@@ -119,7 +119,7 @@ namespace TramsDataApi.Test.Controllers
             
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber))
-                .Returns(expectedTrustSummaries);
+                .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
             var result = controller.SearchTrusts(groupName, null, companiesHouseNumber, 1, 10);
@@ -148,7 +148,7 @@ namespace TramsDataApi.Test.Controllers
             
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(1, 10, null, ukprn, null))
-                .Returns(expectedTrustSummaries);
+                .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
             var result = controller.SearchTrusts(null, ukprn, null, 1, 10);
@@ -169,7 +169,7 @@ namespace TramsDataApi.Test.Controllers
             };
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts.Setup(s => s.Execute(1, 10, null, null, null))
-                .Returns(expectedTrustSummaries);
+                .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
             var result = controller.SearchTrusts(null, null, null, 1, 10);
@@ -187,14 +187,14 @@ namespace TramsDataApi.Test.Controllers
             var expectedPaging = new PagingResponse
             {
                 Page = 1,
-                RecordCount = 10,
+                RecordCount = 20,
                 NextPageUrl = "?page=2&count=10"
             };
             
             var searchTrusts = new Mock<ISearchTrusts>();
             searchTrusts
                 .Setup(s => s.Execute(1, 10, null, null, null))
-                .Returns(expectedTrustSummaries.Take(10).ToList());
+                .Returns((expectedTrustSummaries.Take(10).ToList(), expectedTrustSummaries.Count));
             
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object)
             {

@@ -58,7 +58,7 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void CreatingPagingResponse_WithRecordCountEqualToCountAndQueryParameters_Should_ReturnPagingResponseWithNextPageUrlPointingToNextPageIncludingQueryParameters()
         {
-            const int recordCount = 1;
+            const int recordCount = 2;
             const int count = 1;
             const int page = 1;
 
