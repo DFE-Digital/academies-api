@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
+using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 using TramsDataApi.RequestModels.Concerns.Decisions;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.Concerns.Decisions;
@@ -21,16 +23,19 @@ namespace TramsDataApi.Controllers.V2
         private readonly ILogger<ConcernsCaseDecisionController> _logger;
         private readonly IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse> _createDecisionUseCase;
         private readonly IUseCaseAsync<GetDecisionRequest, GetDecisionResponse> _getDecisionUserCase;
+        private readonly IUseCaseAsync<GetDecisionsRequest, DecisionSummaryResponse[]> _getDecisionsUserCase;
 
         public ConcernsCaseDecisionController(
             ILogger<ConcernsCaseDecisionController> logger,
             IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse> createDecisionUseCase,
-            IUseCaseAsync<GetDecisionRequest, GetDecisionResponse> getDecisionUserCase
+            IUseCaseAsync<GetDecisionRequest, GetDecisionResponse> getDecisionUseCase,
+            IUseCaseAsync<GetDecisionsRequest, DecisionSummaryResponse[]> getDecisionsUseCase
         )
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _createDecisionUseCase = createDecisionUseCase ?? throw new ArgumentNullException(nameof(createDecisionUseCase));
-            _getDecisionUserCase = getDecisionUserCase ?? throw new ArgumentNullException(nameof(getDecisionUserCase));
+            _getDecisionUserCase = getDecisionUseCase ?? throw new ArgumentNullException(nameof(getDecisionUseCase));
+            _getDecisionsUserCase = getDecisionsUseCase ?? throw new ArgumentNullException(nameof(getDecisionsUseCase));
         }
 
         [HttpPost]
@@ -39,9 +44,8 @@ namespace TramsDataApi.Controllers.V2
         {
             LogInfo($"Executing Create. Urn {urn}");
 
-            if (urn <= 0)
+            if (!ValidateUrn(urn, nameof(Create)))
             {
-                LogInfo($"Failed to create Concerns Case Decision - invalid urn value");
                 return BadRequest();
             }
 
@@ -50,7 +54,7 @@ namespace TramsDataApi.Controllers.V2
                 request.ConcernsCaseUrn = urn;
             }
 
-            if(request == null || !request.IsValid())
+            if (request == null || !request.IsValid())
             {
                 LogInfo($"Failed to create Concerns Case Decision due to bad request");
                 return BadRequest();
@@ -58,7 +62,7 @@ namespace TramsDataApi.Controllers.V2
 
             var createdDecision = await _createDecisionUseCase.Execute(request, cancellationToken);
             var response = new ApiSingleResponseV2<CreateDecisionResponse>(createdDecision);
-            
+
             LogInfo($"Returning created response. Concerns Case Urn {response.Data.ConcernsCaseUrn}, DecisionId {response.Data.DecisionId}");
             return new ObjectResult(response) { StatusCode = StatusCodes.Status201Created };
         }
@@ -69,11 +73,11 @@ namespace TramsDataApi.Controllers.V2
         {
             LogInfo($"Attempting to get Concerns Decision by Urn {urn}, DecisionId {decisionId}");
 
-            if (urn <= 0)
+            if (!ValidateUrn(urn, nameof(GetById)))
             {
-                LogInfo($"Failed to GET Concerns Case Decision - invalid urn value");
                 return BadRequest();
             }
+
             if (decisionId <= 0)
             {
                 LogInfo($"Failed to GET Concerns Case Decision - invalid urn value");
@@ -92,6 +96,37 @@ namespace TramsDataApi.Controllers.V2
                 var actionResponse = new ApiSingleResponseV2<GetDecisionResponse>(decisionResponse);
                 return Ok(actionResponse);
             }
+        }
+
+        private bool ValidateUrn(int urn, string methodName)
+        {
+            if (urn <= 0)
+            {
+                LogInfo($"{methodName} found invalid urn value");
+                return false;
+            }
+
+            return true;
+        }
+
+        [HttpGet()]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<ApiSingleResponseV2<DecisionSummaryResponse[]>>> GetDecisions(int urn, CancellationToken cancellationToken)
+        {
+            LogInfo($"Entered {nameof(GetDecisions)}, Urn {urn}");
+
+            if (!ValidateUrn(urn, nameof(GetDecisions)))
+            {
+                return BadRequest();
+            }
+
+            var results = await _getDecisionsUserCase.Execute(new GetDecisionsRequest(urn), cancellationToken);
+            if (results is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new ApiSingleResponseV2<DecisionSummaryResponse[]>(results));
         }
 
         private void LogInfo(string msg, [CallerMemberName] string caller = "")

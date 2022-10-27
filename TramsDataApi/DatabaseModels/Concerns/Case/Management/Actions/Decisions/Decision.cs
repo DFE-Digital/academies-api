@@ -73,22 +73,17 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 
         // nullable
         public decimal TotalAmountRequested { get; set;}
-
-        // 2,000 chars   
+        
         [StringLength(MaxSupportingNotesLength)]
         public string SupportingNotes { get; set;}
-
-        // nullable
+        
         public DateTimeOffset ReceivedRequestDate { get; set;}
-
-        // 2,048 chars
+        
         [StringLength(MaxUrlLength)]
         public string SubmissionDocumentLink { get; set;}
-
-        // nullable
+        
         public bool? SubmissionRequired { get; set;}
-
-        // nullable
+        
         public bool? RetrospectiveApproval { get; set;}
 
         [StringLength(MaxCaseNumberLength)]
@@ -97,6 +92,7 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
         public DateTimeOffset UpdatedAt { get; set;}
 
         public Enums.Concerns.DecisionStatus Status { get; set;}
+        public DateTimeOffset? ClosedAt { get; set; }
 
     }
 }

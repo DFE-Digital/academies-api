@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoFixture;
 using AutoFixture.Idioms;
 using FluentAssertions;
@@ -29,6 +30,8 @@ namespace TramsDataApi.Test.Controllers
             fixture.Register(() => Mock.Of<ILogger<ConcernsCaseDecisionController>>());
             fixture.Register(() => Mock.Of<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>>());
             fixture.Register(() => Mock.Of<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>>());
+            fixture.Register(() => Mock.Of<IUseCaseAsync<GetDecisionsRequest, DecisionSummaryResponse[]>>());
+
             var assertion = fixture.Create<GuardClauseAssertion>();
 
             // Act & Assert
@@ -167,11 +170,56 @@ namespace TramsDataApi.Test.Controllers
             var okResult = Assert.IsType<NotFoundResult>(actionResult.Result);
         }
 
+        [Fact]
+        public async Task GetDecisions_When_Invalid_Urn_Returns_BadRequest()
+        {
+            var testBuilder = new TestBuilder();
+
+            var sut = testBuilder.BuildSut();
+
+            var result = await sut.GetDecisions(0, CancellationToken.None);
+            result.Result.Should().BeEquivalentTo(new BadRequestResult());
+        }
+
+        [Fact]
+        public async Task GetDecisions_When_Null_Response_Returns_NotFound()
+        {
+            var testBuilder = new TestBuilder();
+            testBuilder.GetDecisionsUseCase
+                .Setup(x => x.Execute(It.IsAny<GetDecisionsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(default(DecisionSummaryResponse[]));
+
+            var sut = testBuilder.BuildSut();
+
+            var result = await sut.GetDecisions(testBuilder.Fixture.Create<int>(), CancellationToken.None);
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetDecisions_When_Decisions_Found_Returns_ApiSingleResponseV2_Of_DecisionSummaryArray()
+        {
+
+            var testBuilder = new TestBuilder();
+            var expectedDtos = testBuilder.Fixture.CreateMany<DecisionSummaryResponse>(2).ToArray();
+
+            testBuilder.GetDecisionsUseCase
+                .Setup(x => x.Execute(It.IsAny<GetDecisionsRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(expectedDtos);
+
+            var sut = testBuilder.BuildSut();
+
+            var response = await sut.GetDecisions(testBuilder.Fixture.Create<int>(), CancellationToken.None);
+
+            var okResult = Assert.IsType<OkObjectResult>(response.Result);
+            var expectedOkResult = new OkObjectResult(new ApiSingleResponseV2<DecisionSummaryResponse[]>(expectedDtos));
+            okResult.Should().BeEquivalentTo(expectedOkResult);
+        }
+        
+
         private class TestBuilder
         {
             internal Mock<ILogger<ConcernsCaseDecisionController>> MockLogger;
             internal Mock<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>> CreateDecisionUseCase;
             internal Mock<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>> GetDecisionUseCase;
+            internal Mock<IUseCaseAsync<GetDecisionsRequest, DecisionSummaryResponse[]>> GetDecisionsUseCase { get; set; }
             internal Fixture Fixture;
 
             public TestBuilder()
@@ -180,11 +228,13 @@ namespace TramsDataApi.Test.Controllers
                 MockLogger = new Mock<ILogger<ConcernsCaseDecisionController>>();
                 CreateDecisionUseCase = new Mock<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>>();
                 GetDecisionUseCase = new Mock<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>>();
+                GetDecisionsUseCase = new Mock<IUseCaseAsync<GetDecisionsRequest, DecisionSummaryResponse[]>>();
             }
+
 
             internal ConcernsCaseDecisionController BuildSut()
             {
-                return new ConcernsCaseDecisionController(MockLogger.Object, CreateDecisionUseCase.Object, GetDecisionUseCase.Object);
+                return new ConcernsCaseDecisionController(MockLogger.Object, CreateDecisionUseCase.Object, GetDecisionUseCase.Object, GetDecisionsUseCase.Object);
             }
         }
     }
