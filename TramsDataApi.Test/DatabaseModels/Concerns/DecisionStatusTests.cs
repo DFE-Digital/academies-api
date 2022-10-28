@@ -26,8 +26,8 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             var expectedDescription = fixture.Create<string>();
             var sut = new DecisionStatus(expectedId) { Name = expectedDescription };
 
-            sut.Id.Should().Be(expectedId);
-            sut.Name.Should().Be(expectedDescription);
+            sut.Id.Should().Be("");
+            sut.Name.Should().Be("");
         }
 
         [Fact]
