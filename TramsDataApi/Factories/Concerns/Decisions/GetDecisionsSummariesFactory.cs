@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
 using TramsDataApi.ResponseModels.Concerns.Decisions;
+using TramsDataApi.Extensions;
 
 namespace TramsDataApi.Factories.Concerns.Decisions
 {
@@ -16,12 +17,12 @@ namespace TramsDataApi.Factories.Concerns.Decisions
             return decisions.Select(decision => new DecisionSummaryResponse()
             {
                 ConcernsCaseUrn = concernsCaseUrn,
-                DecisionId = decision.DecisionId, 
+                DecisionId = decision.DecisionId,
                 Status = decision.Status,
                 CreatedAt = decision.CreatedAt,
                 UpdatedAt = decision.UpdatedAt,
                 ClosedAt = decision.ClosedAt,
-                Title = decision.DecisionTypes.FirstOrDefault()?.DecisionTypeId.ToString() ?? "Not Available",
+                Title = decision.GetTitle(),
             }).ToArray();
         }
     }
