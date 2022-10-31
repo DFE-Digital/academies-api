@@ -28,46 +28,32 @@ namespace TramsDataApi.UseCases
 
         public async Task<PagedResult<AcademyTransferProjectSummaryResponse>> Execute(int page, int count, int? urn, string title)
         {
-            var academyTransferProjects = await _academyTransferProjectGateway
-                .SearchProjects(page, count, urn, title);
+            var academyTransferProjects = _academyTransferProjectGateway.GetAcademyTransferProjects();
+            var recordTotal = academyTransferProjects.Count();
 
-            if (academyTransferProjects == null) return new PagedResult<AcademyTransferProjectSummaryResponse>();
+            var projects = AcademyTransferProjectFactory.AcademyTransferProjectSummaryResponseFactory(academyTransferProjects);
 
-            //var responses = academyTransferProjects.Results
-            //    .Select(p => AcademyTransferProjectResponseFactory.Create(
-            //        p));
+            projects = FilterByUrn(urn, projects);
+            projects = FilterByIncomingTrust(title, projects);
+            projects = projects.OrderByDescending(atp => atp.ProjectUrn)
+                .Skip((page - 1) * 10).Take(10).ToList();
+            return new PagedResult<AcademyTransferProjectSummaryResponse>(projects, recordTotal);
+        }
 
-            var projects = academyTransferProjects.Results.ToList().Select(atp =>
+        private static List<AcademyTransferProjectSummaryResponse> FilterByUrn(int? urn, List<AcademyTransferProjectSummaryResponse> queryable)
+        {
+            if (urn.HasValue) queryable = queryable.Where(p => p.ProjectUrn == urn.ToString()).ToList();
+
+            return queryable;
+        }
+        private static List<AcademyTransferProjectSummaryResponse> FilterByIncomingTrust(string title, List<AcademyTransferProjectSummaryResponse> queryable)
+        {
+            if (!string.IsNullOrWhiteSpace(title))
             {
-                var outgoingGroup = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn);
-                return new AcademyTransferProjectSummaryResponse()
-                {
-                    ProjectUrn = atp.Urn.ToString(),
-                    ProjectReference = atp.ProjectReference,
-                    OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
-                    OutgoingTrustName = outgoingGroup.GroupName,
-                    OutgoingTrustLeadRscRegion =
-                        _trustGateway.GetIfdTrustByGroupId(outgoingGroup.GroupId).LeadRscRegion,
-                    TransferringAcademies = atp.TransferringAcademies.Select(ta =>
-                    {
-                        var group = _trustGateway.GetGroupByUkPrn(ta.IncomingTrustUkprn);
-                        return new TransferringAcademiesResponse
-                        {
-                            OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                            IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                            IncomingTrustName = group.GroupName,
-                            IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion,
-                            PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
-                            LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
-                            KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
-                            KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
-                            KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
-                        };
-                    }).ToList()
-                };
-            }).ToList();
+                queryable = queryable.Where(p => p.TransferringAcademies.Any(r => r.IncomingTrustName!.ToLower().Contains(title!.ToLower()))).ToList();
+            }
 
-            return new PagedResult<AcademyTransferProjectSummaryResponse>(projects, academyTransferProjects.TotalCount);
+            return queryable;
         }
     }
 }
