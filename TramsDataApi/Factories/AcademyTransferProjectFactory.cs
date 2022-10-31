@@ -5,12 +5,22 @@ using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
+using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
+using TramsDataApi.Gateways;
 
 namespace TramsDataApi.Factories
 {
     public class AcademyTransferProjectFactory
     {
+        private static readonly ITrustGateway _trustGateway;
+
+        public AcademyTransferProjectFactory(ITrustGateway trustGateway)
+        {
+            _trustGateway = trustGateway;
+        }
+    
         public static AcademyTransferProjects Create(AcademyTransferProjectRequest request)
         {
             var transferFirstDiscussed = ParseDate(request?.Dates?.TransferFirstDiscussed);
@@ -170,6 +180,41 @@ namespace TramsDataApi.Factories
                 original.AcademyTransferProjectIntendedTransferBenefits;
             
             return original;
+        }
+
+        public static List<AcademyTransferProjectSummaryResponse> AcademyTransferProjectSummaryResponseFactory(IList<AcademyTransferProjects> academyTransferProjects)
+        {
+            var projects = academyTransferProjects.ToList().Select(atp =>
+            {
+                atp.TransferringAcademies.Add(new TransferringAcademies());
+                var outgoingGroup = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn);
+                return new AcademyTransferProjectSummaryResponse()
+                {
+                    ProjectUrn = atp.Urn.ToString(),
+                    ProjectReference = atp.ProjectReference,
+                    OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
+                    OutgoingTrustName = outgoingGroup.GroupName,
+                    OutgoingTrustLeadRscRegion =
+                        _trustGateway.GetIfdTrustByGroupId(outgoingGroup.GroupId).LeadRscRegion,
+                    TransferringAcademies = atp.TransferringAcademies.Select(ta =>
+                    {
+                        var group = _trustGateway.GetGroupByUkPrn(ta.IncomingTrustUkprn);
+                        return new TransferringAcademiesResponse
+                        {
+                            OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
+                            IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                            IncomingTrustName = group.GroupName,
+                            IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion,
+                            PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                            LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                            KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                            KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                            KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
+                        };
+                    }).ToList()
+                };
+            }).ToList();
+            return projects;
         }
     }
 }
