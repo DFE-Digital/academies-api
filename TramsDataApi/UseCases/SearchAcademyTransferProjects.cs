@@ -14,16 +14,12 @@ namespace TramsDataApi.UseCases
     public class SearchAcademyTransferProjects : ISearchAcademyTransferProjects
     {
         private readonly IAcademyTransferProjectGateway _academyTransferProjectGateway;
-        private readonly IEstablishmentGateway _establishmentGateway;
-        private readonly ITrustGateway _trustGateway;
 
         public SearchAcademyTransferProjects(
             IAcademyTransferProjectGateway academyTransferProjectGateway,
             IEstablishmentGateway establishmentGateway, ITrustGateway trustGateway)
         {
             _academyTransferProjectGateway = academyTransferProjectGateway;
-            _establishmentGateway = establishmentGateway;
-            _trustGateway = trustGateway;
         }
 
         public async Task<PagedResult<AcademyTransferProjectSummaryResponse>> Execute(int page, int count, int? urn, string title)
