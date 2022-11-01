@@ -22,7 +22,7 @@
         <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Migrations\LegacyTramsDb\" />
+      <Folder Include="Migrations" />
       <Folder Include="RequestModels\CaseActions\NTI\" />
       <Folder Include="RequestModels\CaseActions\NTI\UnderConsideration\" />
       <Folder Include="ResponseModels\CaseActions\NTI\" />
