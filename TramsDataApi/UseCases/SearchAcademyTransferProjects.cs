@@ -14,15 +14,12 @@ namespace TramsDataApi.UseCases
     public class SearchAcademyTransferProjects : ISearchAcademyTransferProjects
     {
         private readonly IAcademyTransferProjectGateway _academyTransferProjectGateway;
-        private readonly IEstablishmentGateway _establishmentGateway;
         private readonly ITrustGateway _trustGateway;
 
         public SearchAcademyTransferProjects(
-            IAcademyTransferProjectGateway academyTransferProjectGateway,
-            IEstablishmentGateway establishmentGateway, ITrustGateway trustGateway)
+            IAcademyTransferProjectGateway academyTransferProjectGateway, ITrustGateway trustGateway)
         {
             _academyTransferProjectGateway = academyTransferProjectGateway;
-            _establishmentGateway = establishmentGateway;
             _trustGateway = trustGateway;
         }
 
@@ -33,11 +30,7 @@ namespace TramsDataApi.UseCases
 
             if (academyTransferProjects == null) return new PagedResult<AcademyTransferProjectSummaryResponse>();
 
-            //var responses = academyTransferProjects.Results
-            //    .Select(p => AcademyTransferProjectResponseFactory.Create(
-            //        p));
-
-            var projects = academyTransferProjects.Results.ToList().Select(atp =>
+            var projects = academyTransferProjects.Results.Select(atp =>
             {
                 var outgoingGroup = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn);
                 return new AcademyTransferProjectSummaryResponse()
