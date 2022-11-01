@@ -26,7 +26,7 @@ namespace TramsDataApi.UseCases
               _academyTransferProjectGateway.IndexAcademyTransferProjects(page);
 
            return Tuple.Create<IList<AcademyTransferProjectSummaryResponse>, int>(
-              listOfAcademyTransferProjects.Item1.ToList().Select(atp =>
+              listOfAcademyTransferProjects.Item1.Select(atp =>
               {
                  Group outgoingGroup = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn);
                  return new AcademyTransferProjectSummaryResponse
