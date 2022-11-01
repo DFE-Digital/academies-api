@@ -15,13 +15,11 @@ namespace TramsDataApi.UseCases
     {
         private readonly IAcademyTransferProjectGateway _academyTransferProjectGateway;
         private readonly IIndexAcademyTransferProjects _indexAcademyTransfer;
-        private readonly ITrustGateway _trustGateway;
 
         public SearchAcademyTransferProjects(
             IAcademyTransferProjectGateway academyTransferProjectGateway, ITrustGateway trustGateway, IIndexAcademyTransferProjects indexAcademyTransfer)
         {
             _academyTransferProjectGateway = academyTransferProjectGateway;
-            _trustGateway = trustGateway;
             _indexAcademyTransfer = indexAcademyTransfer;
         }
 
