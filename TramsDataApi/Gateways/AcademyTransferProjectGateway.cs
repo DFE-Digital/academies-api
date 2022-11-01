@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -44,13 +45,18 @@ namespace TramsDataApi.Gateways
             return project;
         }
 
-        public IList<AcademyTransferProjects> IndexAcademyTransferProjects(int page)
+        public Tuple<IList<AcademyTransferProjects>, int> IndexAcademyTransferProjects(int page)
         {
-            return _tramsDbContext.AcademyTransferProjects
-                .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
-                .Include(atp => atp.TransferringAcademies)
-                .OrderByDescending(atp => atp.Id)
-                .Skip((page - 1) * 10).Take(10).ToList();
+           var academyTransferProjects = _tramsDbContext.AcademyTransferProjects
+              .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
+              .Include(atp => atp.TransferringAcademies);
+
+           return
+              Tuple.Create<IList<AcademyTransferProjects>, int>(
+                 academyTransferProjects
+                    .OrderByDescending(atp => atp.Id)
+                    .Skip((page - 1) * 10).Take(10).ToList(),
+                 academyTransferProjects.Count());
         }
 
         public AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn)
