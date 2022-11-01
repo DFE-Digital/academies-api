@@ -10,6 +10,6 @@ namespace TramsDataApi.Gateways
         AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn);
         AcademyTransferProjects UpdateAcademyTransferProject(AcademyTransferProjects project);
         IList<AcademyTransferProjects> IndexAcademyTransferProjects(int page);
-        IList<AcademyTransferProjects> GetAcademyTransferProjects();
+        Task<PagedResult<AcademyTransferProjects>> SearchProjects(int page, int count, int? urn, string title);
     }
 }
