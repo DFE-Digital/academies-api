@@ -14,13 +14,13 @@ namespace TramsDataApi.Factories
 {
     public class AcademyTransferProjectFactory
     {
-        private readonly ITrustGateway _trustGateway;
+        private static ITrustGateway _trustGateway;
 
         public AcademyTransferProjectFactory(ITrustGateway trustGateway)
         {
             _trustGateway = trustGateway;
         }
-
+    
         public static AcademyTransferProjects Create(AcademyTransferProjectRequest request)
         {
             var transferFirstDiscussed = ParseDate(request?.Dates?.TransferFirstDiscussed);
@@ -46,29 +46,20 @@ namespace TramsDataApi.Factories
                 Author = request.GeneralInformation?.Author,
                 Recommendation = request.GeneralInformation?.Recommendation,
                 AnyRisks = request.Benefits?.AnyRisks,
-                HighProfileShouldBeConsidered =
-                    request.Benefits?.OtherFactorsToConsider?.HighProfile?.ShouldBeConsidered,
-                HighProfileFurtherSpecification =
-                    request.Benefits?.OtherFactorsToConsider?.HighProfile?.FurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered = request.Benefits?.OtherFactorsToConsider
-                    ?.ComplexLandAndBuilding?.ShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification = request.Benefits?.OtherFactorsToConsider
-                    ?.ComplexLandAndBuilding?.FurtherSpecification,
-                FinanceAndDebtShouldBeConsidered =
-                    request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.ShouldBeConsidered,
-                FinanceAndDebtFurtherSpecification =
-                    request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.FurtherSpecification,
+                HighProfileShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.HighProfile?.ShouldBeConsidered,
+                HighProfileFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.HighProfile?.FurtherSpecification,
+                ComplexLandAndBuildingShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.ShouldBeConsidered,
+                ComplexLandAndBuildingFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.ComplexLandAndBuilding?.FurtherSpecification,
+                FinanceAndDebtShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.ShouldBeConsidered,
+                FinanceAndDebtFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.FinanceAndDebt?.FurtherSpecification,
                 OtherRisksShouldBeConsidered = request.Benefits?.OtherFactorsToConsider?.OtherRisks?.ShouldBeConsidered,
-                OtherRisksFurtherSpecification =
-                    request.Benefits?.OtherFactorsToConsider?.OtherRisks?.FurtherSpecification,
+                OtherRisksFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.OtherRisks?.FurtherSpecification,
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
                 EqualitiesImpactAssessmentConsidered = request.Benefits?.EqualitiesImpactAssessmentConsidered,
                 TrustAgreement = request.LegalRequirements?.TrustAgreement,
                 DiocesanConsent = request.LegalRequirements?.DiocesanConsent,
                 FoundationConsent = request.LegalRequirements?.FoundationConsent,
-                AcademyTransferProjectIntendedTransferBenefits =
-                    ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits
-                        ?.SelectedBenefits),
+                AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
                 FeatureSectionIsCompleted = request.Features?.IsCompleted,
                 BenefitsSectionIsCompleted = request.Benefits?.IsCompleted,
@@ -80,8 +71,7 @@ namespace TramsDataApi.Factories
             };
         }
 
-        private static IList<TransferringAcademies> ConvertTransferringAcademiesList(
-            IList<TransferringAcademiesRequest> transferringAcademiesRequests)
+        private static IList<TransferringAcademies> ConvertTransferringAcademiesList(IList<TransferringAcademiesRequest> transferringAcademiesRequests)
         {
             if (transferringAcademiesRequests == null)
             {
@@ -89,40 +79,36 @@ namespace TramsDataApi.Factories
             }
 
             return transferringAcademiesRequests
-                .Select(t => new TransferringAcademies
-                {
-                    OutgoingAcademyUkprn = t.OutgoingAcademyUkprn,
-                    IncomingTrustUkprn = t.IncomingTrustUkprn,
-                    PupilNumbersAdditionalInformation = t.PupilNumbersAdditionalInformation,
-                    LatestOfstedReportAdditionalInformation = t.LatestOfstedReportAdditionalInformation,
-                    KeyStage2PerformanceAdditionalInformation = t.KeyStage2PerformanceAdditionalInformation,
-                    KeyStage4PerformanceAdditionalInformation = t.KeyStage4PerformanceAdditionalInformation,
-                    KeyStage5PerformanceAdditionalInformation = t.KeyStage5PerformanceAdditionalInformation
-                })
-                .ToList();
+                    .Select(t => new TransferringAcademies
+                    {
+                        OutgoingAcademyUkprn = t.OutgoingAcademyUkprn, 
+                        IncomingTrustUkprn = t.IncomingTrustUkprn,
+                        PupilNumbersAdditionalInformation = t.PupilNumbersAdditionalInformation,
+                        LatestOfstedReportAdditionalInformation = t.LatestOfstedReportAdditionalInformation,
+                        KeyStage2PerformanceAdditionalInformation = t.KeyStage2PerformanceAdditionalInformation,
+                        KeyStage4PerformanceAdditionalInformation = t.KeyStage4PerformanceAdditionalInformation,
+                        KeyStage5PerformanceAdditionalInformation = t.KeyStage5PerformanceAdditionalInformation
+                    })
+                    .ToList();
         }
 
-        private static IList<AcademyTransferProjectIntendedTransferBenefits>
-            ConvertAcademyTransferProjectIntendedTransferBenefits(IList<string> selectedBenefits)
+        private static IList<AcademyTransferProjectIntendedTransferBenefits> ConvertAcademyTransferProjectIntendedTransferBenefits(IList<string> selectedBenefits)
         {
-            if (selectedBenefits == null)
-            {
+            if (selectedBenefits == null) {
                 return null;
             }
 
-            return selectedBenefits.Select(b => new AcademyTransferProjectIntendedTransferBenefits
-                { SelectedBenefit = b }).ToList();
+            return selectedBenefits.Select(b => new AcademyTransferProjectIntendedTransferBenefits { SelectedBenefit = b }).ToList();
         }
 
         private static DateTime? ParseDate(string date)
         {
             return date == null
-                ? (DateTime?)null
+                ? (DateTime?) null
                 : DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
-
-        public static AcademyTransferProjects Update(AcademyTransferProjects original,
-            AcademyTransferProjectRequest updateRequest)
+        
+        public static AcademyTransferProjects Update(AcademyTransferProjects original, AcademyTransferProjectRequest updateRequest)
         {
             if (updateRequest == null)
             {
@@ -142,12 +128,8 @@ namespace TramsDataApi.Factories
             original.TypeOfTransfer = toMerge?.TypeOfTransfer ?? original.TypeOfTransfer;
             original.OtherTransferTypeDescription =
                 toMerge?.OtherTransferTypeDescription ?? original.OtherTransferTypeDescription;
-            original.TransferFirstDiscussed = (updateRequest.Dates?.HasTransferFirstDiscussedDate ?? true)
-                ? (toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed)
-                : null;
-            original.TargetDateForTransfer = (updateRequest.Dates?.HasTargetDateForTransfer ?? true)
-                ? (toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer)
-                : null;
+            original.TransferFirstDiscussed = (updateRequest.Dates?.HasTransferFirstDiscussedDate ?? true) ? (toMerge.TransferFirstDiscussed ?? original.TransferFirstDiscussed) : null;
+            original.TargetDateForTransfer = (updateRequest.Dates?.HasTargetDateForTransfer ?? true) ? (toMerge.TargetDateForTransfer ?? original.TargetDateForTransfer) : null;
             original.HtbDate = (updateRequest.Dates?.HasHtbDate ?? true) ? (toMerge.HtbDate ?? original.HtbDate) : null;
             original.HasHtbDate = toMerge.HasHtbDate ?? original.HasHtbDate;
             original.HasTargetDateForTransfer = toMerge.HasTargetDateForTransfer ?? original.HasTargetDateForTransfer;
@@ -173,13 +155,13 @@ namespace TramsDataApi.Factories
             original.FinanceAndDebtShouldBeConsidered = toMerge.FinanceAndDebtShouldBeConsidered == null
                 ? original.FinanceAndDebtShouldBeConsidered
                 : toMerge.FinanceAndDebtShouldBeConsidered;
-            original.FinanceAndDebtFurtherSpecification = toMerge.FinanceAndDebtFurtherSpecification ??
+            original.FinanceAndDebtFurtherSpecification = toMerge.FinanceAndDebtFurtherSpecification ?? 
                                                           original.FinanceAndDebtFurtherSpecification;
             original.OtherRisksShouldBeConsidered = toMerge.OtherRisksShouldBeConsidered == null
                 ? original.OtherRisksShouldBeConsidered
                 : toMerge.OtherRisksShouldBeConsidered;
-            original.OtherRisksFurtherSpecification = toMerge.OtherRisksFurtherSpecification ??
-                                                      original.OtherRisksFurtherSpecification;
+            original.OtherRisksFurtherSpecification = toMerge.OtherRisksFurtherSpecification ?? 
+                                                          original.OtherRisksFurtherSpecification;
             original.OtherBenefitValue = toMerge.OtherBenefitValue ?? original.OtherBenefitValue;
             original.EqualitiesImpactAssessmentConsidered = toMerge.EqualitiesImpactAssessmentConsidered ??
                                                             original.EqualitiesImpactAssessmentConsidered;
@@ -188,21 +170,51 @@ namespace TramsDataApi.Factories
             original.TrustAgreement = toMerge.TrustAgreement ?? original.TrustAgreement;
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
 
-            original.FeatureSectionIsCompleted =
-                toMerge.FeatureSectionIsCompleted ?? original.FeatureSectionIsCompleted;
-            original.BenefitsSectionIsCompleted =
-                toMerge.BenefitsSectionIsCompleted ?? original.BenefitsSectionIsCompleted;
-            original.LegalRequirementsSectionIsCompleted = toMerge.LegalRequirementsSectionIsCompleted ??
-                                                           original.LegalRequirementsSectionIsCompleted;
-            original.RationaleSectionIsCompleted =
-                toMerge.RationaleSectionIsCompleted ?? original.RationaleSectionIsCompleted;
+            original.FeatureSectionIsCompleted = toMerge.FeatureSectionIsCompleted ?? original.FeatureSectionIsCompleted;
+            original.BenefitsSectionIsCompleted = toMerge.BenefitsSectionIsCompleted ?? original.BenefitsSectionIsCompleted;
+            original.LegalRequirementsSectionIsCompleted = toMerge.LegalRequirementsSectionIsCompleted ?? original.LegalRequirementsSectionIsCompleted;
+            original.RationaleSectionIsCompleted = toMerge.RationaleSectionIsCompleted ?? original.RationaleSectionIsCompleted;
 
             original.AcademyTransferProjectIntendedTransferBenefits =
                 toMerge.AcademyTransferProjectIntendedTransferBenefits ??
                 original.AcademyTransferProjectIntendedTransferBenefits;
-
+            
             return original;
         }
 
+        public static List<AcademyTransferProjectSummaryResponse> AcademyTransferProjectSummaryResponseFactory(IList<AcademyTransferProjects> academyTransferProjects)
+        {
+            var projects = academyTransferProjects.ToList().Select(atp =>
+            {
+                atp.TransferringAcademies.Add(new TransferringAcademies());
+                var outgoingGroup = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn);
+                return new AcademyTransferProjectSummaryResponse()
+                {
+                    ProjectUrn = atp.Urn.ToString(),
+                    ProjectReference = atp.ProjectReference,
+                    OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
+                    OutgoingTrustName = outgoingGroup.GroupName,
+                    OutgoingTrustLeadRscRegion =
+                        _trustGateway.GetIfdTrustByGroupId(outgoingGroup.GroupId).LeadRscRegion,
+                    TransferringAcademies = atp.TransferringAcademies.Select(ta =>
+                    {
+                        var group = _trustGateway.GetGroupByUkPrn(ta.IncomingTrustUkprn);
+                        return new TransferringAcademiesResponse
+                        {
+                            OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
+                            IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                            IncomingTrustName = group.GroupName,
+                            IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion,
+                            PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                            LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                            KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                            KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                            KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
+                        };
+                    }).ToList()
+                };
+            }).ToList();
+            return projects;
+        }
     }
 }

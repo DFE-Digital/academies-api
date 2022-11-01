@@ -25,7 +25,7 @@ namespace TramsDataApi.UseCases
         {
             var listOfAcademyTransferProjects = _academyTransferProjectGateway.IndexAcademyTransferProjects(page);
 
-            return _trustGateway.CreateAcademyTransferProjectSummaryResponseForTrust(
+            return AcademyTransferProjectFactory.AcademyTransferProjectSummaryResponseFactory(
                 listOfAcademyTransferProjects);
         }
     }

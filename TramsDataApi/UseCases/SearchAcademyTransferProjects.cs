@@ -14,7 +14,6 @@ namespace TramsDataApi.UseCases
     public class SearchAcademyTransferProjects : ISearchAcademyTransferProjects
     {
         private readonly IAcademyTransferProjectGateway _academyTransferProjectGateway;
-        private readonly ITrustGateway _trustGateway;
 
         public SearchAcademyTransferProjects(
             IAcademyTransferProjectGateway academyTransferProjectGateway,
@@ -28,7 +27,7 @@ namespace TramsDataApi.UseCases
             var academyTransferProjects = _academyTransferProjectGateway.GetAcademyTransferProjects();
             var recordTotal = academyTransferProjects.Count();
 
-            var projects = _trustGateway.CreateAcademyTransferProjectSummaryResponseForTrust(academyTransferProjects);
+            var projects = AcademyTransferProjectFactory.AcademyTransferProjectSummaryResponseFactory(academyTransferProjects);
 
             projects = FilterByUrn(urn, projects);
             projects = FilterByIncomingTrust(title, projects);
