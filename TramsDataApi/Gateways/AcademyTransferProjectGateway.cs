@@ -61,32 +61,12 @@ namespace TramsDataApi.Gateways
                 .Include(atp => atp.TransferringAcademies)
                 .FirstOrDefault(atp => atp.Urn == urn);
         }
-        public async Task<PagedResult<AcademyTransferProjects>> SearchProjects(int page, int count, int? urn, string title)
+
+        public IList<AcademyTransferProjects> GetAcademyTransferProjects()
         {
-            IQueryable<AcademyTransferProjects> academyTransferProjects = _tramsDbContext.AcademyTransferProjects
+            return _tramsDbContext.AcademyTransferProjects
                 .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
-                .Include(atp => atp.TransferringAcademies);
-
-            academyTransferProjects = FilterByUrn(urn, academyTransferProjects);
-            academyTransferProjects = FilterByTrust(title, academyTransferProjects);
-
-            var totalProjects = academyTransferProjects.Count();
-            var projects = await academyTransferProjects.ToListAsync();
-            return new PagedResult<AcademyTransferProjects>(projects
-                .OrderByDescending(atp => atp.Id)
-                .Skip((page - 1) * 10).Take(10).ToList(), totalProjects);
-        }
-        private static IQueryable<AcademyTransferProjects> FilterByTrust(string title, IQueryable<AcademyTransferProjects> queryable)
-        {
-            if (!string.IsNullOrWhiteSpace(title)) queryable = queryable.Where(p => p.ProjectReference!.ToLower().Contains(title!.ToLower()));
-
-            return queryable;
-        }
-        private static IQueryable<AcademyTransferProjects> FilterByUrn(int? urn, IQueryable<AcademyTransferProjects> queryable)
-        {
-            if (urn.HasValue) queryable = queryable.Where(p => p.Urn == urn);
-
-            return queryable;
+                .Include(atp => atp.TransferringAcademies).ToList();
         }
     }
 }
