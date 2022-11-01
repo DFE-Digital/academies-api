@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Extensions;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
+using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Gateways
 {
@@ -66,6 +68,41 @@ namespace TramsDataApi.Gateways
                 filteredGroups.Skip((page - 1) * count).Take(count).ToList(), 
                 filteredGroups.Count()
                 );
+        }
+
+        public List<AcademyTransferProjectSummaryResponse> CreateAcademyTransferProjectSummaryResponseForTrust(IList<AcademyTransferProjects> academyTransferProjects)
+        {
+            var projects = academyTransferProjects.ToList().Select(atp =>
+            {
+                atp.TransferringAcademies.Add(new TransferringAcademies());
+                var outgoingGroup = GetGroupByUkPrn(atp.OutgoingTrustUkprn);
+                return new AcademyTransferProjectSummaryResponse()
+                {
+                    ProjectUrn = atp.Urn.ToString(),
+                    ProjectReference = atp.ProjectReference,
+                    OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
+                    OutgoingTrustName = outgoingGroup.GroupName,
+                    OutgoingTrustLeadRscRegion =
+                        GetIfdTrustByGroupId(outgoingGroup.GroupId).LeadRscRegion,
+                    TransferringAcademies = atp.TransferringAcademies.Select(ta =>
+                    {
+                        var group = GetGroupByUkPrn(ta.IncomingTrustUkprn);
+                        return new TransferringAcademiesResponse
+                        {
+                            OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
+                            IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                            IncomingTrustName = group.GroupName,
+                            IncomingTrustLeadRscRegion = GetIfdTrustByGroupId(group.GroupId).LeadRscRegion,
+                            PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                            LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                            KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                            KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                            KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
+                        };
+                    }).ToList()
+                };
+            }).ToList();
+            return projects;
         }
     }
 }
