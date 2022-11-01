@@ -14,7 +14,7 @@ namespace TramsDataApi.Factories
 {
     public class AcademyTransferProjectFactory
     {
-        private static ITrustGateway _trustGateway;
+        private static readonly ITrustGateway _trustGateway;
 
         public AcademyTransferProjectFactory(ITrustGateway trustGateway)
         {
