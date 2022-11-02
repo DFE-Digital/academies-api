@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels;
@@ -7,7 +8,7 @@ namespace TramsDataApi.UseCases
 {
     public interface IIndexAcademyTransferProjects
     {
-        public IList<AcademyTransferProjectSummaryResponse> Execute(int page);
+        public Tuple<IList<AcademyTransferProjectSummaryResponse>, int> Execute(int page);
         public AcademyTransferProjectSummaryResponse AcademyTransferProjectSummaryResponse(AcademyTransferProjects atp);
     }
 }
