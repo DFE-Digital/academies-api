@@ -24,7 +24,7 @@ namespace TramsDataApi.UseCases
             _indexAcademyTransfer = indexAcademyTransfer;
         }
 
-        public async Task<PagedResult<AcademyTransferProjectSummaryResponse>> Execute(int page, int count, int? urn, string title)
+        public Task<PagedResult<AcademyTransferProjectSummaryResponse>> Execute(int page, int count, int? urn, string title)
         {
             IList<AcademyTransferProjects> academyTransferProjects = _academyTransferProjectGateway.GetAcademyTransferProjects();
             
@@ -35,7 +35,7 @@ namespace TramsDataApi.UseCases
             int recordTotal = academyTransferProjects.Count();
             projects = projects.OrderByDescending(atp => atp.ProjectUrn)
                 .Skip((page - 1) * 10).Take(10).ToList();
-            return new PagedResult<AcademyTransferProjectSummaryResponse>(projects, recordTotal);
+            return Task.FromResult(new PagedResult<AcademyTransferProjectSummaryResponse>(projects, recordTotal));
         }
         private static List<AcademyTransferProjectSummaryResponse> FilterByUrn(int? urn, List<AcademyTransferProjectSummaryResponse> queryable)
         {
