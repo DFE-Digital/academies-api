@@ -18,7 +18,7 @@ namespace TramsDataApi.UseCases
         private readonly IIndexAcademyTransferProjects _indexAcademyTransfer;
 
         public SearchAcademyTransferProjects(
-            IAcademyTransferProjectGateway academyTransferProjectGateway, ITrustGateway trustGateway, IIndexAcademyTransferProjects indexAcademyTransfer)
+            IAcademyTransferProjectGateway academyTransferProjectGateway, IIndexAcademyTransferProjects indexAcademyTransfer)
         {
             _academyTransferProjectGateway = academyTransferProjectGateway;
             _indexAcademyTransfer = indexAcademyTransfer;
@@ -26,12 +26,13 @@ namespace TramsDataApi.UseCases
 
         public async Task<PagedResult<AcademyTransferProjectSummaryResponse>> Execute(int page, int count, int? urn, string title)
         {
-            var academyTransferProjects = _academyTransferProjectGateway.GetAcademyTransferProjects();
-            var projects = academyTransferProjects.Select(atp => _indexAcademyTransfer.AcademyTransferProjectSummaryResponse(atp)).ToList();
+            IList<AcademyTransferProjects> academyTransferProjects = _academyTransferProjectGateway.GetAcademyTransferProjects();
+            
+            List<AcademyTransferProjectSummaryResponse> projects = academyTransferProjects.Select(project => _indexAcademyTransfer.AcademyTransferProjectSummaryResponse(project)).ToList();
 
             projects = FilterByUrn(urn, projects);
             projects = FilterByIncomingTrust(title, projects);
-            var recordTotal = academyTransferProjects.Count();
+            int recordTotal = academyTransferProjects.Count();
             projects = projects.OrderByDescending(atp => atp.ProjectUrn)
                 .Skip((page - 1) * 10).Take(10).ToList();
             return new PagedResult<AcademyTransferProjectSummaryResponse>(projects, recordTotal);
