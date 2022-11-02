@@ -82,7 +82,7 @@ namespace TramsDataApi.Test.UseCases
             searchResult.Results.Should().NotBeEmpty();
             searchResult.Results.Count().Should().Be(1);
             searchResult.TotalCount.Should().Be(5);
-            searchResult.Should().BeEquivalentTo(expectedIndexResponse[0]);
+            searchResult.Results.First().Should().BeEquivalentTo(expectedIndexResponse[0]);
         }
     }
 }
