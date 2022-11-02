@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -9,5 +10,7 @@ namespace TramsDataApi.Gateways
         AcademyTransferProjects GetAcademyTransferProjectByUrn(int urn);
         AcademyTransferProjects UpdateAcademyTransferProject(AcademyTransferProjects project);
         IList<AcademyTransferProjects> IndexAcademyTransferProjects(int page);
+        IList<AcademyTransferProjects> GetAcademyTransferProjects();
+
     }
 }
