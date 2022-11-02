@@ -11,7 +11,7 @@ namespace TramsDataApi.Factories.Concerns.Decisions
         {
             _ = concernsCaseUrn <= 0 ? throw new ArgumentOutOfRangeException(nameof(concernsCaseUrn)) : concernsCaseUrn;
             _ = decision ?? throw new ArgumentNullException(nameof(decision));
-
+            
             return new GetDecisionResponse()
             {
                 ConcernsCaseUrn = concernsCaseUrn,
@@ -27,9 +27,8 @@ namespace TramsDataApi.Factories.Concerns.Decisions
                 CrmCaseNumber = decision.CrmCaseNumber,
                 CreatedAt = decision.CreatedAt,
                 UpdatedAt = decision.UpdatedAt,
-                ClosedAt = decision.ClosedAt,
-                DecisionStatus = decision.Status,
-                Title = decision.GetTitle()
+                ClosedAt = decision.ClosedAt, // TODO,
+                DecisionStatus = decision.Status
             };
         }
     }
