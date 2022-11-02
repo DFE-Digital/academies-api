@@ -1,11 +1,8 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using AutoFixture.Xunit2;
 using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
-using TramsDataApi.Extensions;
 using Xunit;
 
 namespace TramsDataApi.Test.DatabaseModels.Concerns
@@ -44,7 +41,7 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
         public void CreateNew_With_Invalid_Arguments_Throws_Exception(int caseId, decimal amountRequested, string crmCaseNumber, string supportingNotes, string submissionDocumentLink, string expectedParamName)
         {
             var fixture = new Fixture();
-            crmCaseNumber = crmCaseNumber == "_maxString_" ? CreateFixedLengthString(fixture, Decision.MaxCaseNumberLength + 1) : crmCaseNumber;
+            crmCaseNumber = crmCaseNumber == "_maxString_" ? CreateFixedLengthString(fixture, Decision.MaxCaseNumberLength + 1): crmCaseNumber;
             supportingNotes = supportingNotes == "_maxString_" ? CreateFixedLengthString(fixture, Decision.MaxSupportingNotesLength + 1) : supportingNotes;
             submissionDocumentLink = submissionDocumentLink == "_maxString_" ? CreateFixedLengthString(fixture, Decision.MaxUrlLength + 1) : submissionDocumentLink;
 
@@ -113,81 +110,6 @@ namespace TramsDataApi.Test.DatabaseModels.Concerns
             var fixture = new Fixture();
             var sut = CreateRandomDecision(fixture);
             sut.Status.Should().Be(Enums.Concerns.DecisionStatus.InProgress);
-        }
-
-        [Fact]
-        public void GetTitle_Maps_Multiple_Decision_Types_To_Text()
-        {
-            var fixture = new Fixture();
-            var sut = Decision.CreateNew(
-                123,
-                "12345",
-                true,
-                true,
-                "https://somewhere/somelink.doc",
-                DateTimeOffset.UtcNow,
-                fixture.CreateMany<DecisionType>(5).ToArray(),
-                13.5m,
-                "some notes",
-                DateTimeOffset.UtcNow
-            );
-
-            sut.GetTitle().Should().Be("Multiple Decision Types");
-        }
-
-        [Fact]
-        public void GetTitle_Maps_Zero_Decision_Types_To_Text()
-        {
-            var sut = Decision.CreateNew(
-                123,
-                "12345",
-                true,
-                true,
-                "https://somewhere/somelink.doc",
-                DateTimeOffset.UtcNow,
-                null,
-                13.5m,
-                "some notes",
-                DateTimeOffset.UtcNow
-            );
-
-            sut.GetTitle().Should().Be("No Decision Types");
-        }
-
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void GetTitle_When_One_DecisionType_Maps_To_DecisionType_Description(Enums.Concerns.DecisionType decisionType)
-        {
-            var decisionTypes = new[]
-            {
-                new DecisionType(decisionType) { DecisionId = (int)decisionType },
-            };
-
-            var sut = Decision.CreateNew(
-                123,
-                "12345",
-                true,
-                true,
-                "https://somewhere/somelink.doc",
-                DateTimeOffset.UtcNow,
-                decisionTypes,
-                13.5m,
-                "some notes",
-                DateTimeOffset.UtcNow
-            );
-
-            sut.GetTitle().Should().Be(decisionType.GetDescription());
-        }
-
-        public static IEnumerable<object[]> Data
-        {
-            get
-            {
-                foreach (var enumValue in Enum.GetValues(typeof(Enums.Concerns.DecisionType)))
-                {
-                    yield return new object[] { (Enums.Concerns.DecisionType)enumValue };
-                }
-            }
         }
     }
 }

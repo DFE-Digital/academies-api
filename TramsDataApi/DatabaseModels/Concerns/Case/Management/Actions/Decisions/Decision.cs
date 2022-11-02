@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using TramsDataApi.Extensions;
 
 namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 {
@@ -74,17 +73,17 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 
         // nullable
         public decimal TotalAmountRequested { get; set;}
-
+        
         [StringLength(MaxSupportingNotesLength)]
         public string SupportingNotes { get; set;}
-
+        
         public DateTimeOffset ReceivedRequestDate { get; set;}
-
+        
         [StringLength(MaxUrlLength)]
         public string SubmissionDocumentLink { get; set;}
-
+        
         public bool? SubmissionRequired { get; set;}
-
+        
         public bool? RetrospectiveApproval { get; set;}
 
         [StringLength(MaxCaseNumberLength)]
@@ -95,17 +94,5 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
         public Enums.Concerns.DecisionStatus Status { get; set;}
         public DateTimeOffset? ClosedAt { get; set; }
 
-        public string GetTitle()
-        {
-            switch (this.DecisionTypes?.Count ?? 0)
-            {
-                case 0 :
-                    return "No Decision Types";
-                case int i when i > 1:
-                    return "Multiple Decision Types";
-                default:
-                    return this.DecisionTypes[0].DecisionTypeId.GetDescription();
-            }
-        }
     }
 }

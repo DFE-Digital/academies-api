@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
-using Newtonsoft.Json.Linq;
 using TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions;
-using TramsDataApi.Extensions;
 using TramsDataApi.Factories.Concerns.Decisions;
 using Xunit;
 
@@ -28,7 +26,7 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
         public void Create_When_Invalid_Urn_Throws_Exception(int invalidUrn)
         {
             var fixture = CreateFixture();
-
+            
             var expectedDecisions = CreateDecisions(fixture, fixture.Create<int>());
 
             var sut = new GetDecisionsSummariesFactory();
@@ -50,7 +48,7 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
         public void Create_Maps_Decisions_To_DecisionSummaries()
         {
             var fixture = CreateFixture();
-
+            
             var expectedDecisions = CreateDecisions(fixture, fixture.Create<int>());
 
             var sut = new GetDecisionsSummariesFactory();
@@ -61,13 +59,6 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
                     .Excluding(x => x.ConcernsCaseUrn)
                     .Excluding(x => x.Title)
                 );
-
-            var titles = result.Join(expectedDecisions, response => response.DecisionId, decision => decision.DecisionId,
-                (result, decision) => new
-                {
-                    resultTitle = result.Title, decisionTitle = decision.GetTitle(), decisionId = decision.DecisionId
-                }).ToArray();
-            titles.All(x => x.resultTitle == x.decisionTitle).Should().BeTrue();
         }
 
         [Fact]
@@ -75,15 +66,16 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
         {
             var fixture = CreateFixture();
 
-            var expectedDecisions = CreateDecisions(fixture, fixture.Create<int>(), 0);
+            var expectedDecisions = CreateDecisions(fixture, fixture.Create<int>(), false);
 
             var sut = new GetDecisionsSummariesFactory();
             var result = sut.Create(123, expectedDecisions);
 
-            expectedDecisions.Should().BeEquivalentTo(result, opt =>
+            expectedDecisions.Should().BeEquivalentTo(result, opt => 
             opt.IncludingAllDeclaredProperties()
                 .Excluding(x => x.ConcernsCaseUrn)
                 .Excluding(x => x.Title));
+            result[0].Title.Should().Be("Not Available");
         }
 
         private Fixture CreateFixture()
@@ -95,10 +87,8 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
             return fixture;
         }
 
-        private Decision[] CreateDecisions(Fixture fixture, int count, int numberOfDecisionTypes = 5)
+        private Decision[] CreateDecisions(Fixture fixture, int count, bool includeDecisionTypes = true)
         {
-            var x = fixture.CreateMany<DecisionType>();
-
             List<Decision> decisions = new List<Decision>();
             for (int i = 0; i < count; i++)
             {
@@ -109,7 +99,7 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
                     submissionRequired: fixture.Create<bool>(),
                     submissionDocumentLink: new string(fixture.CreateMany<char>(Decision.MaxUrlLength).ToArray()),
                     receivedRequestDate: DateTimeOffset.Now,
-                    decisionTypes: numberOfDecisionTypes >0 ? fixture.CreateMany<DecisionType>(numberOfDecisionTypes).ToArray() : null,
+                    decisionTypes: includeDecisionTypes ? new DecisionType[] { new DecisionType(Enums.Concerns.DecisionType.NoticeToImprove)} : null,
                     totalAmountRequested: fixture.Create<decimal>(),
                     supportingNotes: new string(fixture.CreateMany<char>(Decision.MaxSupportingNotesLength).ToArray()),
                     createdAt: DateTimeOffset.Now
@@ -120,6 +110,6 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
 
             return decisions.ToArray();
         }
-
+        
     }
 }
