@@ -33,6 +33,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 createAcademyTransferProject.Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
@@ -55,6 +56,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 createAcademyTransferProject.Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
@@ -78,6 +80,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 getAcademyTransferProject.Object,
                 updateAcademyTransferProject.Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
@@ -107,6 +110,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 getAcademyTransferProject.Object,
                 updateAcademyTransferProject.Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
@@ -132,6 +136,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 getAcademyTransferProject.Object,
                 updateAcademyTransferProject.Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
@@ -154,6 +159,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 getAcademyTransferProject.Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
@@ -178,6 +184,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 getAcademyTransferProject.Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
@@ -200,6 +207,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
                 indexAcademyTransferProject.Object,
@@ -224,6 +232,7 @@ namespace TramsDataApi.Test.Controllers
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
+                new Mock<ISearchAcademyTransferProjects>().Object,
                 new Mock<IGetAcademyTransferProject>().Object,
                 new Mock<IUpdateAcademyTransferProject>().Object,
                 indexAcademyTransferProject.Object,
