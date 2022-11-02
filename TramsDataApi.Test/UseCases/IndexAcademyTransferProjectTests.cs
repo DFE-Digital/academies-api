@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
@@ -38,7 +40,7 @@ namespace TramsDataApi.Test.UseCases
             var academyTransferProjectsGateway = new Mock<IAcademyTransferProjectGateway>();
 
             academyTransferProjectsGateway.Setup(atGateway => atGateway.IndexAcademyTransferProjects(1))
-                .Returns(() => expectedAcademyTransferProjects);
+               .Returns(() => Tuple.Create(expectedAcademyTransferProjects, expectedAcademyTransferProjects.Count));
 
             var trustGateway = new Mock<ITrustGateway>();
             trustGateway.Setup(tg => tg.GetGroupByUkPrn(outgoingTrust)).Returns(expectedOutgoingGroup);
@@ -73,9 +75,10 @@ namespace TramsDataApi.Test.UseCases
 
             var useCase = new IndexAcademyTransferProjects(academyTransferProjectsGateway.Object, trustGateway.Object);
             var result = useCase.Execute(1);
-            
-            result.Count.Should().Be(5);
-            result.Should().BeEquivalentTo(expectedIndexResponse);
+
+            result.Item1.Count.Should().Be(5);
+            result.Item2.Should().Be(5);
+            result.Item1.Should().BeEquivalentTo(expectedIndexResponse);
         }
     }
 }

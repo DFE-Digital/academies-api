@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.AcademyConversionProject;
@@ -104,12 +106,12 @@ namespace TramsDataApi.Controllers
         
         [HttpGet]
         [Route("academyTransferProject")]
-        public ActionResult<AcademyTransferProjectResponse> Index([FromQuery(Name="page")]int page = 1)
+        public ActionResult<PagedResult<AcademyTransferProjectSummaryResponse>> Index([FromQuery(Name="page")]int page = 1)
         {
             _logger.LogInformation($"Indexing Academy Transfer Projects from page {page}");
-            var projects = _indexAcademyTransferProject.Execute(page);
-            _logger.LogDebug(JsonSerializer.Serialize<IList<AcademyTransferProjectSummaryResponse>>(projects));
-            return Ok(projects);
+            Tuple<IList<AcademyTransferProjectSummaryResponse>, int> projects = _indexAcademyTransferProject.Execute(page);
+            _logger.LogDebug(JsonSerializer.Serialize(projects));
+            return Ok(new PagedResult<AcademyTransferProjectSummaryResponse>(projects.Item1, projects.Item2));
         }
 
         [HttpGet]

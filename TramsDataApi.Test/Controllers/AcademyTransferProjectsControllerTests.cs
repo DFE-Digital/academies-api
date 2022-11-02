@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
 using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
@@ -202,8 +203,10 @@ namespace TramsDataApi.Test.Controllers
             var indexAcademyTransferProject = new Mock<IIndexAcademyTransferProjects>();
 
             indexAcademyTransferProject
-                .Setup(get => get.Execute(1))
-                .Returns(() => new List<AcademyTransferProjectSummaryResponse>());
+               .Setup(get => get.Execute(1))
+               .Returns(() =>
+                  Tuple.Create<IList<AcademyTransferProjectSummaryResponse>, int>(
+                     new List<AcademyTransferProjectSummaryResponse>(), 0));
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
@@ -216,7 +219,11 @@ namespace TramsDataApi.Test.Controllers
 
             var result = controller.Index();
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<AcademyTransferProjectSummaryResponse>()));
+            var expectedPagedResult =
+               new PagedResult<AcademyTransferProjectSummaryResponse>(Enumerable
+                  .Empty<AcademyTransferProjectSummaryResponse>());
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedPagedResult));
         }
         
         [Fact]
@@ -227,8 +234,9 @@ namespace TramsDataApi.Test.Controllers
             var indexAcademyTransferProject = new Mock<IIndexAcademyTransferProjects>();
 
             indexAcademyTransferProject
-                .Setup(get => get.Execute(1))
-                .Returns(() => expectedIndexAcademyTransferProjectResponse);
+               .Setup(get => get.Execute(1))
+               .Returns(() => Tuple.Create(expectedIndexAcademyTransferProjectResponse,
+                  expectedIndexAcademyTransferProjectResponse.Count));
 
             var controller = new AcademyTransferProjectController(
                 new Mock<ICreateAcademyTransferProject>().Object,
@@ -241,7 +249,10 @@ namespace TramsDataApi.Test.Controllers
 
             var result = controller.Index();
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedIndexAcademyTransferProjectResponse));
+            var expectedPagedResult = new PagedResult<AcademyTransferProjectSummaryResponse>(
+               expectedIndexAcademyTransferProjectResponse, expectedIndexAcademyTransferProjectResponse.Count);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedPagedResult));
         }
     }
 }

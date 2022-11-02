@@ -493,8 +493,8 @@ namespace TramsDataApi.Test.Integration
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
             indexResponse.StatusCode.Should().Be(200);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
-            var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
-            indexProjectResponse.Count.Should().Be(numberOfProjectsPerPage);
+            var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
+            indexProjectResponse.Results.Count().Should().Be(numberOfProjectsPerPage);
         }
 
 
@@ -556,10 +556,10 @@ namespace TramsDataApi.Test.Integration
 
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
-            var indexProjectResponse = JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
+            var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
            
             indexResponse.StatusCode.Should().Be(200);
-            indexProjectResponse.Count.Should().Be(numberOfProjectsPerPage);
+            indexProjectResponse.Results.Count().Should().Be(numberOfProjectsPerPage);
         }
 
 
@@ -608,10 +608,10 @@ namespace TramsDataApi.Test.Integration
             indexResponse.StatusCode.Should().Be(200);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse =
-                JsonConvert.DeserializeObject<List<AcademyTransferProjectSummaryResponse>>(indexJson);
+                JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
 
-            indexProjectResponse.Count.Should().Be(0);
-            indexProjectResponse.Should().BeEquivalentTo(new List<AcademyTransferProjectSummaryResponse>());
+            indexProjectResponse.Results.Count().Should().Be(0);
+            indexProjectResponse.Results.Should().BeEquivalentTo(Enumerable.Empty<AcademyTransferProjectSummaryResponse>());
         }
 
         [Fact]

@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
 using TramsDataApi.ResponseModels;
@@ -20,14 +20,14 @@ namespace TramsDataApi.UseCases
             _trustGateway = trustGateway;
         }
 
-        public IList<AcademyTransferProjectSummaryResponse> Execute(int page)
+        public Tuple<IList<AcademyTransferProjectSummaryResponse>, int> Execute(int page)
         {
-            var listOfAcademyTransferProjects = _academyTransferProjectGateway.IndexAcademyTransferProjects(page);
+           Tuple<IList<AcademyTransferProjects>, int> listOfAcademyTransferProjects =
+              _academyTransferProjectGateway.IndexAcademyTransferProjects(page);
 
-            return listOfAcademyTransferProjects.ToList().Select(atp =>
-            {
-                return AcademyTransferProjectSummaryResponse(atp);
-            }).ToList();
+           return Tuple.Create<IList<AcademyTransferProjectSummaryResponse>, int>(
+              listOfAcademyTransferProjects.Item1.Select(AcademyTransferProjectSummaryResponse).ToList(),
+              listOfAcademyTransferProjects.Item2);
         }
 
         public AcademyTransferProjectSummaryResponse AcademyTransferProjectSummaryResponse(AcademyTransferProjects atp)
