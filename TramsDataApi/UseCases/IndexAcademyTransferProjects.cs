@@ -57,5 +57,35 @@ namespace TramsDataApi.UseCases
               }).ToList(),
               listOfAcademyTransferProjects.Item2);
         }
+
+        public AcademyTransferProjectSummaryResponse AcademyTransferProjectSummaryResponse(AcademyTransferProjects atp)
+        {
+            var outgoingGroup = _trustGateway.GetGroupByUkPrn(atp.OutgoingTrustUkprn);
+            return new AcademyTransferProjectSummaryResponse()
+            {
+                ProjectUrn = atp.Urn.ToString(),
+                ProjectReference = atp.ProjectReference,
+                OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
+                OutgoingTrustName = outgoingGroup.GroupName,
+                OutgoingTrustLeadRscRegion =
+                    _trustGateway.GetIfdTrustByGroupId(outgoingGroup.GroupId).LeadRscRegion,
+                TransferringAcademies = atp.TransferringAcademies.Select(ta =>
+                {
+                    var group = _trustGateway.GetGroupByUkPrn(ta.IncomingTrustUkprn);
+                    return new TransferringAcademiesResponse
+                    {
+                        OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
+                        IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                        IncomingTrustName = group.GroupName,
+                        IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion,
+                        PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                        LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                        KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                        KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                        KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
+                    };
+                }).ToList()
+            };
+        }
     }
 }
