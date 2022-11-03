@@ -21,9 +21,9 @@ namespace TramsDataApi.UseCases
 
         public Task<PagedResult<AcademyTransferProjectSummaryResponse>> Execute(int page, int count, int? urn, string title)
         {
-            IList<AcademyTransferProjects> academyTransferProjects = _academyTransferProjectGateway.GetAcademyTransferProjects();
+            IEnumerable<AcademyTransferProjects> academyTransferProjects = _academyTransferProjectGateway.GetAcademyTransferProjects();
             
-            List<AcademyTransferProjectSummaryResponse> projects = academyTransferProjects.Select(project => _indexAcademyTransfer.AcademyTransferProjectSummaryResponse(project)).ToList();
+            IEnumerable<AcademyTransferProjectSummaryResponse> projects = academyTransferProjects.Select(project => _indexAcademyTransfer.AcademyTransferProjectSummaryResponse(project)); //.ToList();
 
             projects = FilterByUrn(urn, projects);
             projects = FilterByIncomingTrust(title, projects);
@@ -32,17 +32,17 @@ namespace TramsDataApi.UseCases
                 .Skip((page - 1) * 10).Take(10).ToList();
             return Task.FromResult(new PagedResult<AcademyTransferProjectSummaryResponse>(projects, recordTotal));
         }
-        private static List<AcademyTransferProjectSummaryResponse> FilterByUrn(int? urn, List<AcademyTransferProjectSummaryResponse> queryable)
+        private static IEnumerable<AcademyTransferProjectSummaryResponse> FilterByUrn(int? urn, IEnumerable<AcademyTransferProjectSummaryResponse> queryable)
         {
-            if (urn.HasValue) queryable = queryable.Where(p => p.ProjectUrn == urn.ToString()).ToList();
+            if (urn.HasValue) queryable = queryable.Where(p => p.ProjectUrn == urn.ToString()); //.ToList();
 
             return queryable;
         }
-        private static List<AcademyTransferProjectSummaryResponse> FilterByIncomingTrust(string title, List<AcademyTransferProjectSummaryResponse> queryable)
+        private static IEnumerable<AcademyTransferProjectSummaryResponse> FilterByIncomingTrust(string title, IEnumerable<AcademyTransferProjectSummaryResponse> queryable)
         {
             if (!string.IsNullOrWhiteSpace(title))
             {
-                queryable = queryable.Where(p => p.TransferringAcademies.Any(r => r.IncomingTrustName!.ToLower().Contains(title!.ToLower()))).ToList();
+                queryable = queryable.Where(p => p.TransferringAcademies.Any(r => r.IncomingTrustName!.ToLower().Contains(title!.ToLower()))); //.ToList();
             }
             return queryable;
         }
