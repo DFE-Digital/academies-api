@@ -55,7 +55,7 @@ namespace TramsDataApi.Controllers
             {
                 var createdAcademyTransferProject = _createAcademyTransferProject.Execute(request);
                 _logger.LogInformation($"Successfully created new Academy Transfer Project with URN {createdAcademyTransferProject.ProjectUrn}");
-                _logger.LogDebug(JsonSerializer.Serialize<AcademyTransferProjectResponse>(createdAcademyTransferProject));
+                _logger.LogDebug(JsonSerializer.Serialize(createdAcademyTransferProject));
                 return CreatedAtAction("Create", createdAcademyTransferProject);
             }
             _logger.LogInformation($"Failed to create Academy Transfer Project due to bad request");
@@ -78,7 +78,7 @@ namespace TramsDataApi.Controllers
             {
                 var updatedAcademyTransferProject = _updateAcademyTransferProject.Execute(urn, request);
                 _logger.LogInformation($"Successfully updated Academy Transfer Project {urn}");
-                _logger.LogDebug(JsonSerializer.Serialize<AcademyTransferProjectResponse>(updatedAcademyTransferProject));
+                _logger.LogDebug(JsonSerializer.Serialize(updatedAcademyTransferProject));
                 return Ok(updatedAcademyTransferProject);
             }
             _logger.LogInformation($"Failed to update Academy Transfer Project due to bad request");
@@ -98,7 +98,7 @@ namespace TramsDataApi.Controllers
             }
 
             _logger.LogInformation($"Returning Academy Transfer Project with URN {urn}");
-            _logger.LogDebug(JsonSerializer.Serialize<AcademyTransferProjectResponse>(academyTransferProject));
+            _logger.LogDebug(JsonSerializer.Serialize(academyTransferProject));
             return Ok(academyTransferProject);
         }
         
