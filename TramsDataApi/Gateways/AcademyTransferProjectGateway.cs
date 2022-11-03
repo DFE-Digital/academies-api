@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
@@ -9,14 +8,11 @@ namespace TramsDataApi.Gateways
 {
     public class AcademyTransferProjectGateway : IAcademyTransferProjectGateway
     {
-        
-        private readonly LegacyTramsDbContext _legacyTramsDbContext;
-        private readonly TramsDbContext _tramsDbContext;
+       private readonly TramsDbContext _tramsDbContext;
 
-        public AcademyTransferProjectGateway(LegacyTramsDbContext legacyTramsDbContext, TramsDbContext tramsDbContext)
+        public AcademyTransferProjectGateway(TramsDbContext tramsDbContext)
         {
-            _legacyTramsDbContext = legacyTramsDbContext;
-            _tramsDbContext = tramsDbContext;
+           _tramsDbContext = tramsDbContext;
         }
         
         public AcademyTransferProjects SaveAcademyTransferProject(AcademyTransferProjects project)
@@ -68,11 +64,12 @@ namespace TramsDataApi.Gateways
                 .FirstOrDefault(atp => atp.Urn == urn);
         }
 
-        public IList<AcademyTransferProjects> GetAcademyTransferProjects()
+        public IEnumerable<AcademyTransferProjects> GetAcademyTransferProjects()
         {
             return _tramsDbContext.AcademyTransferProjects
                 .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
-                .Include(atp => atp.TransferringAcademies).ToList();
+                .Include(atp => atp.TransferringAcademies)
+                .AsEnumerable(); //.ToList();
         }
     }
 }
