@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -24,6 +25,6 @@ namespace TramsDataApi.Gateways
       ///    <para><paramref name="page" /> is 1-based, not zero-based (Page 1 is the first entry, not page zero)</para>
       /// </remarks>
       Tuple<IList<AcademyTransferProjects>, int> IndexAcademyTransferProjects(int page);
-      IList<AcademyTransferProjects> GetAcademyTransferProjects();
+      IEnumerable<AcademyTransferProjects> GetAcademyTransferProjects();
     }
 }
