@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
-using TramsDataApi.ResponseModels;
-using TramsDataApi.ResponseModels.AcademyConversionProject;
 using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
 using TramsDataApi.Validators;
@@ -117,24 +115,23 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("academyTransferProjects")]
         public async Task<ActionResult<AcademyTransferProjectResponse>> GetTransferProjects(
-            [FromQuery] string title,
-            [FromQuery] int page = 1,
-            [FromQuery] int count = 50,
-            [FromQuery] int? urn = null)
+           [FromQuery] string title,
+           [FromQuery] int page = 1,
+           [FromQuery] int count = 50,
+           [FromQuery] int? urn = null)
         {
-            _logger.LogInformation(SearchProjectsLog, count, urn, title);
-            var result = await _searchAcademyTransferProject.Execute(page, count, urn, title);
+           _logger.LogInformation(SearchProjectsLog, count, urn, title);
 
-            if (!result.Results.Any())
-            {
-                var projectIds = result.Results.Select(p => p.ProjectUrn);
-                _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds));
-            }
+           PagedResult<AcademyTransferProjectSummaryResponse> result =
+              await _searchAcademyTransferProject.Execute(page, count, urn, title);
 
-            var pagingResponse = PagingResponseFactory.Create(page, count, result.TotalCount, Request);
+           if (result.Results.Any())
+           {
+              IEnumerable<string> projectIds = result.Results.Select(p => p.ProjectUrn);
+              _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds));
+           }
 
-            var response = new ApiResponseV2<AcademyTransferProjectSummaryResponse>(result.Results, pagingResponse);
-            return Ok(response);
+           return Ok(result);
         }
     }
 }
