@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.AcademyTransferProject;
-using static System.Net.WebRequestMethods;
 
 namespace TramsDataApi.UseCases
 {
