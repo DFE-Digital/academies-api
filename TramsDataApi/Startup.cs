@@ -6,16 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.SwaggerUI;
-
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories.Concerns.Decisions;
 using TramsDataApi.Gateways;
 using TramsDataApi.Middleware;
-using TramsDataApi.RequestModels.Concerns.Decisions;
-using TramsDataApi.ResponseModels.Concerns.Decisions;
 using TramsDataApi.Swagger;
 using TramsDataApi.UseCases;
-using TramsDataApi.UseCases.CaseActions.Decisions;
 
 namespace TramsDataApi
 {
@@ -59,59 +54,18 @@ namespace TramsDataApi
             services.AddScoped<IGetAcademyConversionProjectStatuses, GetAcademyConversionProjectStatuses>();
             services.AddScoped<ICensusDataGateway, CensusDataGateway>();
             services.AddScoped<IIfdPipelineGateway, IfdPipelineGateway>();
-            services.AddScoped<ICreateConcernsCase, CreateConcernsCase>();
-            services.AddScoped<IConcernsCaseGateway, ConcernsCaseGateway>();
-            services.AddScoped<IGetConcernsCaseByUrn, GetConcernsCaseByUrn>();
-            services.AddScoped<IGetConcernsCaseByTrustUkprn, GetConcernsCaseByTrustUkprn>();
-            services.AddScoped<IIndexConcernsStatuses, IndexConcernsStatuses>();
-            services.AddScoped<IConcernsStatusGateway, ConcernsStatusGateway>();
-            services.AddScoped<IConcernsRecordGateway, ConcernsRecordGateway>();
-            services.AddScoped<ICreateConcernsRecord, CreateConcernsRecord>();
-            services.AddScoped<IConcernsTypeGateway, ConcernsTypeGateway>();
-            services.AddScoped<IConcernsRatingGateway, ConcernsRatingsGateway>();
-            services.AddScoped<IIndexConcernsRatings, IndexConcernsRatings>();
-            services.AddScoped<IUpdateConcernsCase, UpdateConcernsCase>();
-            services.AddScoped<IIndexConcernsTypes, IndexConcernsTypes>();
-            services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
-            
-            services.AddScoped<IIndexConcernsMeansOfReferrals, IndexConcernsMeansOfReferrals>();
-            services.AddScoped<IConcernsMeansOfReferralGateway, ConcernsMeansOfReferralGateway>();
             
             services.AddScoped<IFssProjectGateway, FssProjectGateway>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
-            services.AddScoped<IUpdateConcernsRecord, UpdateConcernsRecord>();
 
             services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
-
-            services.AddScoped<IGetConcernsRecordsByCaseUrn, GetConcernsRecordsByCaseUrn>();
-            services.AddScoped<IGetConcernsCasesByOwnerId, GetConcernsCasesByOwnerId>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
-
-            services.AddScoped<ISRMAGateway, SRMAGateway>();
-            services.AddScoped<IFinancialPlanGateway, FinancialPlanGateway>();
-            services.AddScoped<INTIUnderConsiderationGateway, NTIUnderConsiderationGateway>();
-            services.AddScoped<INTIWarningLetterGateway, NTIWarningLetterGateway>();
-            services.AddScoped<INoticeToImproveGateway, NoticeToImproveGateway>();
 
             services.AddScoped<IGetAcademyConversionProject, GetAcademyConversionProject>();
             services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();
             services.AddScoped<ISearchAcademyConversionProjects, SearchAcademyConversionProjects>();
-
-            services.AddScoped<IGetConcernsCaseworkTeam, GetConcernsCaseworkTeam>();
-            services.AddScoped<IGetConcernsCaseworkTeamOwners, GetConcernsCaseworkTeamOwners>();
-            services.AddScoped<IUpdateConcernsCaseworkTeam, UpdateConcernsCaseworkTeam>();
-            services.AddScoped<IConcernsTeamCaseworkGateway, ConcernsTeamCaseworkGateway>();
-
-            // concerns factories
-            services.AddScoped<IUseCaseAsync<CreateDecisionRequest, CreateDecisionResponse>, CreateDecision>();
-            services.AddScoped<IUseCaseAsync<GetDecisionRequest, GetDecisionResponse>, GetDecision>();
-            services.AddScoped<IUseCaseAsync<GetDecisionsRequest, DecisionSummaryResponse[]>, GetDecisions>();
-            services.AddScoped<ICreateDecisionResponseFactory, CreateDecisionResponseFactory>();
-            services.AddScoped<IDecisionFactory, DecisionFactory>();
-            services.AddScoped<IGetDecisionResponseFactory, GetDecisionResponseFactory>();
-            services.AddScoped<IGetDecisionsSummariesFactory, GetDecisionsSummariesFactory>();
 
             services.AddApiVersioning(config => 
             {
