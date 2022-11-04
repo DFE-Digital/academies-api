@@ -78,8 +78,10 @@ namespace TramsDataApi.ResponseModels.AcademyConversionProject
         public bool? LegalRequirementsSectionComplete { get; set; }
 
         // school budget info
+        public DateTime? EndOfCurrentFinancialYear { get; set; }
         public decimal? RevenueCarryForwardAtEndMarchCurrentYear { get; set; }
         public decimal? ProjectedRevenueBalanceAtEndMarchNextYear { get; set; }
+        public DateTime? EndOfNextFinancialYear { get; set; }
         public decimal? CapitalCarryForwardAtEndMarchCurrentYear { get; set; }
         public decimal? CapitalCarryForwardAtEndMarchNextYear { get; set; }
         public string SchoolBudgetInformationAdditionalInformation { get; set; }
