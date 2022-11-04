@@ -59,6 +59,15 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
                     .Excluding(x => x.ConcernsCaseUrn)
                     .Excluding(x => x.Title)
                 );
+
+            var titles = result.Join(expectedDecisions, response => response.DecisionId, decision => decision.DecisionId,
+          (result, decision) => new
+          {
+              resultTitle = result.Title,
+              decisionTitle = decision.GetTitle(),
+              decisionId = decision.DecisionId
+          }).ToArray();
+            titles.All(x => x.resultTitle == x.decisionTitle).Should().BeTrue();
         }
 
         [Fact]
@@ -89,6 +98,8 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
 
         private Decision[] CreateDecisions(Fixture fixture, int count, bool includeDecisionTypes = true)
         {
+            var x = fixture.CreateMany<DecisionType>();
+
             List<Decision> decisions = new List<Decision>();
             for (int i = 0; i < count; i++)
             {
