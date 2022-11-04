@@ -84,7 +84,6 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
             opt.IncludingAllDeclaredProperties()
                 .Excluding(x => x.ConcernsCaseUrn)
                 .Excluding(x => x.Title));
-            result[0].Title.Should().Be("Not Available");
         }
 
         private Fixture CreateFixture()
