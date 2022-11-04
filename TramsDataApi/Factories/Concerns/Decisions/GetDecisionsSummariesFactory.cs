@@ -21,7 +21,7 @@ namespace TramsDataApi.Factories.Concerns.Decisions
                 CreatedAt = decision.CreatedAt,
                 UpdatedAt = decision.UpdatedAt,
                 ClosedAt = decision.ClosedAt,
-                Title = decision.DecisionTypes.FirstOrDefault()?.DecisionTypeId.ToString() ?? "Not Available",
+                Title = decision.GetTitle(),
             }).ToArray();
         }
     }
