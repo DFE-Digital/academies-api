@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TramsDataApi.Extensions;
 
 namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
 {
@@ -60,6 +61,19 @@ namespace TramsDataApi.DatabaseModels.Concerns.Case.Management.Actions.Decisions
                 Status = Enums.Concerns.DecisionStatus.InProgress
             };
 
+        }
+
+        public string GetTitle()
+        {
+            switch (this.DecisionTypes?.Count ?? 0)
+            {
+                case 0:
+                    return "No Decision Types";
+                case int i when i > 1:
+                    return "Multiple Decision Types";
+                default:
+                    return this.DecisionTypes[0].DecisionTypeId.GetDescription();
+            }
         }
 
         public const int MaxUrlLength = 2048;
