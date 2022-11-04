@@ -11,5 +11,7 @@ namespace TramsDataApi.Gateways
         Trust GetIfdTrustByRID(string RID);
         IQueryable<Trust> GetIfdTrustsByTrustRef(string[] trustRefs);
         (IList<Group>, int) SearchGroups(int page, int count, string groupName, string ukPrn, string companiesHouseNumber);
+        IEnumerable<Group> GetMultipleGroupsByUkprn(IEnumerable<string> ukprns);
+        IEnumerable<Trust> GetMultipleTrustsByGroupId(IEnumerable<string> groupIds);
     }
 }

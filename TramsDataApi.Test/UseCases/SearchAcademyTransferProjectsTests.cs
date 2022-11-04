@@ -1,10 +1,6 @@
 ﻿using FizzWare.NBuilder;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
@@ -40,6 +36,7 @@ namespace TramsDataApi.Test.UseCases
             var expectedIncomingTrust = Builder<Trust>.CreateNew().Build();
 
             var academyTransferProjectsGateway = new Mock<IAcademyTransferProjectGateway>();
+            var trustGateway = new Mock<ITrustGateway>();
 
             academyTransferProjectsGateway.Setup(atGateway => atGateway.GetAcademyTransferProjects())
                 .Returns(() => expectedAcademyTransferProjects);
@@ -76,7 +73,8 @@ namespace TramsDataApi.Test.UseCases
                 .Returns(() => expectedIndexResponse[j]);
             }
 
-            SearchAcademyTransferProjects useCase = new SearchAcademyTransferProjects(academyTransferProjectsGateway.Object, indexAcademyTransferProjects.Object);
+            SearchAcademyTransferProjects useCase =
+               new SearchAcademyTransferProjects(academyTransferProjectsGateway.Object, trustGateway.Object);
             var searchResult = useCase.Execute(1, 50, default, searchCriteria).Result; 
             
             searchResult.Results.Should().NotBeEmpty();
