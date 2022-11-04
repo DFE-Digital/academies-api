@@ -48,6 +48,7 @@ namespace TramsDataApi.Test.Factories.Concerns.Decisions
             result.DecisionTypes.Should().BeEquivalentTo(decision.DecisionTypes.Select(x => x.DecisionTypeId),
                 opt => opt.WithStrictOrdering());
             result.DecisionStatus.Should().Be(decision.Status);
+            result.Title.Should().Be(decision.GetTitle());
         }
 
         [Fact]
