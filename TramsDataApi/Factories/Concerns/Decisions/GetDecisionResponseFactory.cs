@@ -27,8 +27,9 @@ namespace TramsDataApi.Factories.Concerns.Decisions
                 CrmCaseNumber = decision.CrmCaseNumber,
                 CreatedAt = decision.CreatedAt,
                 UpdatedAt = decision.UpdatedAt,
-                ClosedAt = decision.ClosedAt, // TODO,
-                DecisionStatus = decision.Status
+                ClosedAt = decision.ClosedAt,
+                DecisionStatus = decision.Status,
+                Title = decision.GetTitle()
             };
         }
     }
