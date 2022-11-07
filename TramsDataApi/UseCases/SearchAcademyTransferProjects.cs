@@ -32,7 +32,7 @@ namespace TramsDataApi.UseCases
 
          var recordTotal = projects.Count();
          projects = projects.OrderByDescending(atp => atp.ProjectUrn)
-            .Skip((page - 1) * 10).Take(10).ToList();
+            .Skip((page - 1) * count).Take(count).ToList();
 
          return Task.FromResult(new PagedResult<AcademyTransferProjectSummaryResponse>(projects, recordTotal));
       }
