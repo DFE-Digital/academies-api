@@ -1,88 +1,96 @@
-﻿using FizzWare.NBuilder;
-using Moq;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FizzWare.NBuilder;
 using FluentAssertions;
+using Moq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
-using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
 using Xunit;
 
 namespace TramsDataApi.Test.UseCases
 {
-    public class SearchAcademyTransferProjectsTests
-    {
-        [Fact]
-        public void Search_ReturnsAListOfAcademyTransferProjectSummaryResponses_WhenThereAreAcademyTransferProjects_ByTitle()
-        {
-            string outgoingTrust = nameof(outgoingTrust);
-            string incomingTrust = nameof(incomingTrust);
-            var expectedAcademyTransferProjects = Builder<AcademyTransferProjects>.CreateListOfSize(5).All()
-                .With(p => p.OutgoingTrustUkprn = outgoingTrust)
-                .With(p => p.TransferringAcademies = Builder<TransferringAcademies>.CreateListOfSize(5).All()
-                    .With(a => a.IncomingTrustUkprn = incomingTrust)
-                    .With(a => a.PupilNumbersAdditionalInformation = "pupil numbers")
-                    .With(a => a.LatestOfstedReportAdditionalInformation = "ofsted")
-                    .With(a => a.KeyStage2PerformanceAdditionalInformation = "ks2")
-                    .With(a => a.KeyStage4PerformanceAdditionalInformation = "ks4")
-                    .With(a => a.KeyStage5PerformanceAdditionalInformation = "ks5")
-                    .Build())
-                .Build();
+   public class SearchAcademyTransferProjectsTests
+   {
+      private const int Outgoing = 0, Incoming = 1;
 
-            var expectedOutgoingGroup = Builder<Group>.CreateNew().Build();
-            var expectedOutgoingTrust = Builder<Trust>.CreateNew().Build();
-            var expectedIncomingGroup = Builder<Group>.CreateNew().Build();
-            var expectedIncomingTrust = Builder<Trust>.CreateNew().Build();
+      [Fact]
+      public void
+         Search_ReturnsAListOfAcademyTransferProjectSummaryResponses_WhenThereAreAcademyTransferProjects_ByTitle()
+      {
+         IList<Trust> trusts = Builder<Trust>.CreateListOfSize(2).Build();
+         IList<Group> groups = Builder<Group>.CreateListOfSize(2).Build();
+         trusts[Outgoing].TrustRef = groups[Outgoing].GroupId;
+         trusts[Incoming].TrustRef = groups[Incoming].GroupId;
 
-            var academyTransferProjectsGateway = new Mock<IAcademyTransferProjectGateway>();
+         var academyTransferProjectsGateway = new Mock<IAcademyTransferProjectGateway>();
+         var trustGateway = new Mock<ITrustGateway>();
 
-            academyTransferProjectsGateway.Setup(atGateway => atGateway.GetAcademyTransferProjects())
-                .Returns(() => expectedAcademyTransferProjects);
+         IList<AcademyTransferProjects> expectedAcademyTransferProjects = Builder<AcademyTransferProjects>
+            .CreateListOfSize(5).All()
+            .With(p => p.OutgoingTrustUkprn = groups[Outgoing].Ukprn)
+            .With(p => p.TransferringAcademies = Builder<TransferringAcademies>.CreateListOfSize(3).All()
+               .With(a => a.IncomingTrustUkprn = groups[Outgoing].Ukprn)
+               .With(a => a.PupilNumbersAdditionalInformation = "pupil numbers")
+               .With(a => a.LatestOfstedReportAdditionalInformation = "ofsted")
+               .With(a => a.KeyStage2PerformanceAdditionalInformation = "ks2")
+               .With(a => a.KeyStage4PerformanceAdditionalInformation = "ks4")
+               .With(a => a.KeyStage5PerformanceAdditionalInformation = "ks5")
+               .Build())
+            .Build();
 
-            var expectedIndexResponse = expectedAcademyTransferProjects
-                .Select(atp => new AcademyTransferProjectSummaryResponse
-                {
-                    ProjectUrn = atp.Urn.ToString(),
-                    ProjectReference = atp.ProjectReference,
-                    OutgoingTrustUkprn = atp.OutgoingTrustUkprn,
-                    OutgoingTrustName = expectedOutgoingGroup.GroupName,
-                    OutgoingTrustLeadRscRegion = expectedOutgoingTrust.LeadRscRegion,
-                    TransferringAcademies = atp.TransferringAcademies.Select(ta => new TransferringAcademiesResponse
-                    {
-                        OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
-                        IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                        IncomingTrustName = expectedIncomingGroup.GroupName,
-                        IncomingTrustLeadRscRegion = expectedIncomingTrust.LeadRscRegion,
-                        PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
-                        LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
-                        KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
-                        KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
-                        KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
-                    }).ToList()
-                }).ToList();
+         expectedAcademyTransferProjects[1].TransferringAcademies.Skip(1).Take(1).First().IncomingTrustUkprn =
+            groups[Incoming].Ukprn;
 
-            var indexAcademyTransferProjects = new Mock<IIndexAcademyTransferProjects>();
-            string searchCriteria = "Find me!";
-            expectedIndexResponse[0].TransferringAcademies[0].IncomingTrustName = searchCriteria;
-            for (int i = 0; i < expectedAcademyTransferProjects.Count; i++)
+         academyTransferProjectsGateway.Setup(atGateway => atGateway.GetAcademyTransferProjects())
+            .Returns(() => expectedAcademyTransferProjects);
+
+         trustGateway.Setup(x => x.GetMultipleTrustsByGroupId(It.IsAny<IEnumerable<string>>()))
+            .Returns(trusts);
+         trustGateway.Setup(x => x.GetMultipleGroupsByUkprn(It.IsAny<IEnumerable<string>>()))
+            .Returns(groups);
+
+         var expectedIndexResponse = new List<AcademyTransferProjectSummaryResponse>
+         {
+            new AcademyTransferProjectSummaryResponse
             {
-                int j = i;
-                indexAcademyTransferProjects.Setup(index => index.AcademyTransferProjectSummaryResponse(expectedAcademyTransferProjects[j]))
-                .Returns(() => expectedIndexResponse[j]);
+               ProjectUrn = expectedAcademyTransferProjects[1].Urn.ToString(),
+               ProjectReference = expectedAcademyTransferProjects[1].ProjectReference,
+               OutgoingTrustUkprn = expectedAcademyTransferProjects[1].OutgoingTrustUkprn,
+               OutgoingTrustName = groups[Outgoing].GroupName,
+               OutgoingTrustLeadRscRegion = trusts[Outgoing].LeadRscRegion,
+               TransferringAcademies = expectedAcademyTransferProjects[1].TransferringAcademies.Select(ta =>
+               {
+                  Group group = groups.First(g => g.Ukprn == ta.IncomingTrustUkprn);
+                  return new TransferringAcademiesResponse
+                  {
+                     OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
+                     IncomingTrustUkprn = ta.IncomingTrustUkprn,
+                     IncomingTrustName = group.GroupName,
+                     IncomingTrustLeadRscRegion = trusts.First(x => x.TrustRef == group.GroupId).LeadRscRegion,
+                     PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
+                     LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
+                     KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
+                     KeyStage4PerformanceAdditionalInformation = ta.KeyStage4PerformanceAdditionalInformation,
+                     KeyStage5PerformanceAdditionalInformation = ta.KeyStage5PerformanceAdditionalInformation
+                  };
+               }).ToList()
             }
+         };
 
-            SearchAcademyTransferProjects useCase = new SearchAcademyTransferProjects(academyTransferProjectsGateway.Object, indexAcademyTransferProjects.Object);
-            var searchResult = useCase.Execute(1, 50, default, searchCriteria).Result; 
-            
-            searchResult.Results.Should().NotBeEmpty();
-            searchResult.Results.Count().Should().Be(1);
-            searchResult.TotalCount.Should().Be(5);
-            searchResult.Results.First().Should().BeEquivalentTo(expectedIndexResponse[0]);
-        }
-    }
+         var searchCriteria = groups[Incoming].GroupName;
+
+         var useCase = new SearchAcademyTransferProjects(academyTransferProjectsGateway.Object, trustGateway.Object);
+
+         PagedResult<AcademyTransferProjectSummaryResponse> searchResult =
+            useCase.Execute(1, 50, default, searchCriteria).Result;
+
+         searchResult.Results.Should().NotBeEmpty();
+         searchResult.Results.Count().Should().Be(1);
+         searchResult.TotalCount.Should().Be(1);
+         searchResult.Results.Should().BeEquivalentTo(expectedIndexResponse);
+      }
+   }
 }
