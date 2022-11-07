@@ -66,10 +66,9 @@ namespace TramsDataApi.Gateways
 
         public IEnumerable<AcademyTransferProjects> GetAcademyTransferProjects()
         {
-            return _tramsDbContext.AcademyTransferProjects
-                .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
-                .Include(atp => atp.TransferringAcademies)
-                .AsEnumerable(); //.ToList();
+           return _tramsDbContext.AcademyTransferProjects
+              .Include(atp => atp.AcademyTransferProjectIntendedTransferBenefits)
+              .Include(atp => atp.TransferringAcademies);
         }
     }
 }
