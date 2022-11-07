@@ -47,7 +47,7 @@ namespace TramsDataApi.UseCases
                {
                   OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                   IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                  IncomingTrustName = group.GroupName.ToLower(),
+                  IncomingTrustName = group.GroupName,
                   IncomingTrustLeadRscRegion = _trustGateway.GetIfdTrustByGroupId(group.GroupId).LeadRscRegion,
                   PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
                   LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
