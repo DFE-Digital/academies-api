@@ -148,6 +148,8 @@ namespace TramsDataApi.Test.Factories
             expected.RisksAndIssuesSectionComplete = updateRequest.RisksAndIssuesSectionComplete;
             expected.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation;
             expected.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear;
+            expected.EndOfCurrentFinancialYear = updateRequest.EndOfCurrentFinancialYear;
+            expected.EndOfNextFinancialYear = updateRequest.EndOfNextFinancialYear;
             expected.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear;
             expected.SchoolBudgetInformationAdditionalInformation =
                updateRequest.SchoolBudgetInformationAdditionalInformation;
