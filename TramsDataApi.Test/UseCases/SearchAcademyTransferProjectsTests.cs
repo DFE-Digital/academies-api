@@ -14,23 +14,25 @@ namespace TramsDataApi.Test.UseCases
 {
    public class SearchAcademyTransferProjectsTests
    {
+      private const int Outgoing = 0, Incoming = 1;
+
       [Fact]
       public void
          Search_ReturnsAListOfAcademyTransferProjectSummaryResponses_WhenThereAreAcademyTransferProjects_ByTitle()
       {
          IList<Trust> trusts = Builder<Trust>.CreateListOfSize(2).Build();
          IList<Group> groups = Builder<Group>.CreateListOfSize(2).Build();
-         trusts[0].TrustRef = groups[0].GroupId;
-         trusts[1].TrustRef = groups[1].GroupId;
+         trusts[Outgoing].TrustRef = groups[Outgoing].GroupId;
+         trusts[Incoming].TrustRef = groups[Incoming].GroupId;
 
          var academyTransferProjectsGateway = new Mock<IAcademyTransferProjectGateway>();
          var trustGateway = new Mock<ITrustGateway>();
 
          IList<AcademyTransferProjects> expectedAcademyTransferProjects = Builder<AcademyTransferProjects>
-            .CreateListOfSize(3).All()
-            .With(p => p.OutgoingTrustUkprn = groups[0].Ukprn)
+            .CreateListOfSize(5).All()
+            .With(p => p.OutgoingTrustUkprn = groups[Outgoing].Ukprn)
             .With(p => p.TransferringAcademies = Builder<TransferringAcademies>.CreateListOfSize(3).All()
-               .With(a => a.IncomingTrustUkprn = groups[0].Ukprn)
+               .With(a => a.IncomingTrustUkprn = groups[Outgoing].Ukprn)
                .With(a => a.PupilNumbersAdditionalInformation = "pupil numbers")
                .With(a => a.LatestOfstedReportAdditionalInformation = "ofsted")
                .With(a => a.KeyStage2PerformanceAdditionalInformation = "ks2")
@@ -40,7 +42,7 @@ namespace TramsDataApi.Test.UseCases
             .Build();
 
          expectedAcademyTransferProjects[1].TransferringAcademies.Skip(1).Take(1).First().IncomingTrustUkprn =
-            groups[1].Ukprn;
+            groups[Incoming].Ukprn;
 
          academyTransferProjectsGateway.Setup(atGateway => atGateway.GetAcademyTransferProjects())
             .Returns(() => expectedAcademyTransferProjects);
@@ -57,8 +59,8 @@ namespace TramsDataApi.Test.UseCases
                ProjectUrn = expectedAcademyTransferProjects[1].Urn.ToString(),
                ProjectReference = expectedAcademyTransferProjects[1].ProjectReference,
                OutgoingTrustUkprn = expectedAcademyTransferProjects[1].OutgoingTrustUkprn,
-               OutgoingTrustName = groups[0].GroupName,
-               OutgoingTrustLeadRscRegion = trusts[0].LeadRscRegion,
+               OutgoingTrustName = groups[Outgoing].GroupName,
+               OutgoingTrustLeadRscRegion = trusts[Outgoing].LeadRscRegion,
                TransferringAcademies = expectedAcademyTransferProjects[1].TransferringAcademies.Select(ta =>
                {
                   Group group = groups.First(g => g.Ukprn == ta.IncomingTrustUkprn);
@@ -78,7 +80,7 @@ namespace TramsDataApi.Test.UseCases
             }
          };
 
-         var searchCriteria = groups[1].GroupName;
+         var searchCriteria = groups[Incoming].GroupName;
 
          var useCase = new SearchAcademyTransferProjects(academyTransferProjectsGateway.Object, trustGateway.Object);
 
