@@ -62,6 +62,10 @@ namespace TramsDataApi.Factories
 
             project.SchoolPerformanceAdditionalInformation = updateRequest.SchoolPerformanceAdditionalInformation ??
                 project.SchoolPerformanceAdditionalInformation;
+            project.EndOfCurrentFinancialYear = updateRequest.EndOfCurrentFinancialYear == default(DateTime) ? null
+                : updateRequest.EndOfCurrentFinancialYear ?? project.EndOfCurrentFinancialYear;
+            project.EndOfNextFinancialYear = updateRequest.EndOfNextFinancialYear == default(DateTime) ? null
+                : updateRequest.EndOfNextFinancialYear ?? project.EndOfNextFinancialYear;
             project.CapitalCarryForwardAtEndMarchCurrentYear = updateRequest.CapitalCarryForwardAtEndMarchCurrentYear == default(decimal) ? null :
                 updateRequest.CapitalCarryForwardAtEndMarchCurrentYear ?? project.CapitalCarryForwardAtEndMarchCurrentYear;
             project.CapitalCarryForwardAtEndMarchNextYear = updateRequest.CapitalCarryForwardAtEndMarchNextYear == default(decimal) ? null :

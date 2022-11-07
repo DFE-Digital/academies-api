@@ -117,6 +117,8 @@ namespace TramsDataApi.Test.Factories
                 RisksAndIssuesSectionComplete = academyConversionProject.RisksAndIssuesSectionComplete,
                 SchoolPerformanceAdditionalInformation = academyConversionProject.SchoolPerformanceAdditionalInformation,
                 CapitalCarryForwardAtEndMarchCurrentYear = academyConversionProject.CapitalCarryForwardAtEndMarchCurrentYear,
+                EndOfCurrentFinancialYear = academyConversionProject.EndOfCurrentFinancialYear,
+                EndOfNextFinancialYear = academyConversionProject.EndOfNextFinancialYear,
                 CapitalCarryForwardAtEndMarchNextYear = academyConversionProject.CapitalCarryForwardAtEndMarchNextYear,
                 SchoolBudgetInformationAdditionalInformation = academyConversionProject.SchoolBudgetInformationAdditionalInformation,
                 SchoolBudgetInformationSectionComplete = academyConversionProject.SchoolBudgetInformationSectionComplete,
