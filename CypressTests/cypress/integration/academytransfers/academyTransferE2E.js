@@ -17,9 +17,9 @@ describe("E2E Academy Transfers", () => {
         })
         .then((response) =>{
             expect(response.status).to.eq(200);
-            savedURN = response.body[0].projectUrn;
+            savedURN = response.body.results[0].projectUrn;
             cy.log("1st Project URN = "+savedURN);
-            savedOutgoingTrustUkprn = response.body[0].outgoingTrustUkprn;
+            savedOutgoingTrustUkprn = response.body.results[0].outgoingTrustUkprn;
             cy.log("1st Project outgoingTrustUkprn = "+savedOutgoingTrustUkprn);
         })
         
