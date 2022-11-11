@@ -615,6 +615,12 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("DistanceFromSchoolToTrustHeadquartersAdditionalInformation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("EndOfCurrentFinancialYear")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EndOfNextFinancialYear")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("EqualitiesImpactAssessmentConsidered")
                         .HasColumnType("nvarchar(max)");
 

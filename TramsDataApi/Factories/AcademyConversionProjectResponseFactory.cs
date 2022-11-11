@@ -33,6 +33,8 @@ namespace TramsDataApi.Factories
 				RationaleForProject = academyConversionProject.RationaleForProject,
 				RationaleForTrust = academyConversionProject.RationaleForTrust,
 				RisksAndIssues = academyConversionProject.RisksAndIssues,
+				EndOfCurrentFinancialYear = academyConversionProject.EndOfCurrentFinancialYear,
+				EndOfNextFinancialYear = academyConversionProject.EndOfNextFinancialYear,
 				RevenueCarryForwardAtEndMarchCurrentYear = academyConversionProject.RevenueCarryForwardAtEndMarchCurrentYear,
 				ProjectedRevenueBalanceAtEndMarchNextYear = academyConversionProject.ProjectedRevenueBalanceAtEndMarchNextYear,
 				RationaleSectionComplete = academyConversionProject.RationaleSectionComplete,

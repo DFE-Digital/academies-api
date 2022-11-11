@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
 using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
@@ -14,7 +18,11 @@ namespace TramsDataApi.Controllers
 
     public class AcademyTransferProjectController : ControllerBase
     {
+        private const string SearchProjectsLog =
+            "Attempting to retrieve {Count} Academy Transfer Projects filtered by: urn: {Urn} title: {Title}";
+        private const string ReturnProjectsLog = "Returning {count} Academy Transfer Projects with Id(s): {ids}";
         private readonly ICreateAcademyTransferProject _createAcademyTransferProject;
+        private readonly ISearchAcademyTransferProjects _searchAcademyTransferProject;
         private readonly IGetAcademyTransferProject _getAcademyTransferProject;
         private readonly IUpdateAcademyTransferProject _updateAcademyTransferProject;
         private readonly IIndexAcademyTransferProjects _indexAcademyTransferProject;
@@ -23,12 +31,14 @@ namespace TramsDataApi.Controllers
 
         public AcademyTransferProjectController(
             ICreateAcademyTransferProject createAcademyTransferProject,
+            ISearchAcademyTransferProjects searchAcademyTransferProject,
             IGetAcademyTransferProject getAcademyTransferProject,
             IUpdateAcademyTransferProject updateAcademyTransferProject,
             IIndexAcademyTransferProjects indexAcademyTransferProjects,
             ILogger<AcademyTransferProjectController> logger)
         {
             _createAcademyTransferProject = createAcademyTransferProject;
+            _searchAcademyTransferProject = searchAcademyTransferProject;
             _getAcademyTransferProject = getAcademyTransferProject;
             _updateAcademyTransferProject = updateAcademyTransferProject;
             _indexAcademyTransferProject = indexAcademyTransferProjects;
@@ -45,7 +55,7 @@ namespace TramsDataApi.Controllers
             {
                 var createdAcademyTransferProject = _createAcademyTransferProject.Execute(request);
                 _logger.LogInformation($"Successfully created new Academy Transfer Project with URN {createdAcademyTransferProject.ProjectUrn}");
-                _logger.LogDebug(JsonSerializer.Serialize<AcademyTransferProjectResponse>(createdAcademyTransferProject));
+                _logger.LogDebug(JsonSerializer.Serialize(createdAcademyTransferProject));
                 return CreatedAtAction("Create", createdAcademyTransferProject);
             }
             _logger.LogInformation($"Failed to create Academy Transfer Project due to bad request");
@@ -68,7 +78,7 @@ namespace TramsDataApi.Controllers
             {
                 var updatedAcademyTransferProject = _updateAcademyTransferProject.Execute(urn, request);
                 _logger.LogInformation($"Successfully updated Academy Transfer Project {urn}");
-                _logger.LogDebug(JsonSerializer.Serialize<AcademyTransferProjectResponse>(updatedAcademyTransferProject));
+                _logger.LogDebug(JsonSerializer.Serialize(updatedAcademyTransferProject));
                 return Ok(updatedAcademyTransferProject);
             }
             _logger.LogInformation($"Failed to update Academy Transfer Project due to bad request");
@@ -88,18 +98,40 @@ namespace TramsDataApi.Controllers
             }
 
             _logger.LogInformation($"Returning Academy Transfer Project with URN {urn}");
-            _logger.LogDebug(JsonSerializer.Serialize<AcademyTransferProjectResponse>(academyTransferProject));
+            _logger.LogDebug(JsonSerializer.Serialize(academyTransferProject));
             return Ok(academyTransferProject);
         }
         
         [HttpGet]
         [Route("academyTransferProject")]
-        public ActionResult<AcademyTransferProjectResponse> Index([FromQuery(Name="page")]int page = 1)
+        public ActionResult<PagedResult<AcademyTransferProjectSummaryResponse>> Index([FromQuery(Name="page")]int page = 1)
         {
             _logger.LogInformation($"Indexing Academy Transfer Projects from page {page}");
-            var projects = _indexAcademyTransferProject.Execute(page);
-            _logger.LogDebug(JsonSerializer.Serialize<IList<AcademyTransferProjectSummaryResponse>>(projects));
-            return Ok(projects);
+            Tuple<IList<AcademyTransferProjectSummaryResponse>, int> projects = _indexAcademyTransferProject.Execute(page);
+            _logger.LogDebug(JsonSerializer.Serialize(projects));
+            return Ok(new PagedResult<AcademyTransferProjectSummaryResponse>(projects.Item1, projects.Item2));
+        }
+
+        [HttpGet]
+        [Route("academyTransferProjects")]
+        public async Task<ActionResult<AcademyTransferProjectResponse>> GetTransferProjects(
+           [FromQuery] string title,
+           [FromQuery] int page = 1,
+           [FromQuery] int count = 50,
+           [FromQuery] int? urn = null)
+        {
+           _logger.LogInformation(SearchProjectsLog, count, urn, title);
+
+           PagedResult<AcademyTransferProjectSummaryResponse> result =
+              await _searchAcademyTransferProject.Execute(page, count, urn, title);
+
+           if (result.Results.Any())
+           {
+              IEnumerable<string> projectIds = result.Results.Select(p => p.ProjectUrn);
+              _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds));
+           }
+
+           return Ok(result);
         }
     }
 }
