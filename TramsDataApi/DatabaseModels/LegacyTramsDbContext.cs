@@ -1988,10 +1988,6 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Createdby).HasColumnName("createdby");
 
-                entity.Property(e => e.CreatedbyEntitytype)
-                    .HasColumnName("createdby_entitytype")
-                    .HasMaxLength(128);
-
                 entity.Property(e => e.Createdbyname)
                     .HasColumnName("createdbyname")
                     .HasMaxLength(100);
@@ -2006,10 +2002,6 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Createdonbehalfby).HasColumnName("createdonbehalfby");
 
-                entity.Property(e => e.CreatedonbehalfbyEntitytype)
-                    .HasColumnName("createdonbehalfby_entitytype")
-                    .HasMaxLength(128);
-
                 entity.Property(e => e.Createdonbehalfbyname)
                     .HasColumnName("createdonbehalfbyname")
                     .HasMaxLength(100);
@@ -2021,10 +2013,6 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.Importsequencenumber).HasColumnName("importsequencenumber");
 
                 entity.Property(e => e.Modifiedby).HasColumnName("modifiedby");
-
-                entity.Property(e => e.ModifiedbyEntitytype)
-                    .HasColumnName("modifiedby_entitytype")
-                    .HasMaxLength(128);
 
                 entity.Property(e => e.Modifiedbyname)
                     .HasColumnName("modifiedbyname")
@@ -2040,10 +2028,6 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Modifiedonbehalfby).HasColumnName("modifiedonbehalfby");
 
-                entity.Property(e => e.ModifiedonbehalfbyEntitytype)
-                    .HasColumnName("modifiedonbehalfby_entitytype")
-                    .HasMaxLength(128);
-
                 entity.Property(e => e.Modifiedonbehalfbyname)
                     .HasColumnName("modifiedonbehalfbyname")
                     .HasMaxLength(100);
@@ -2058,10 +2042,6 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.Ownerid).HasColumnName("ownerid");
 
-                entity.Property(e => e.OwneridEntitytype)
-                    .HasColumnName("ownerid_entitytype")
-                    .HasMaxLength(128);
-
                 entity.Property(e => e.Owneridname)
                     .HasColumnName("owneridname")
                     .HasMaxLength(100);
@@ -2074,33 +2054,13 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("owneridyominame")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.Owningbusinessunit).HasColumnName("owningbusinessunit");
+                entity.Property(e => e.Owningbusinessunit).HasColumnName("owningbusinessunit");                
 
-                entity.Property(e => e.OwningbusinessunitEntitytype)
-                    .HasColumnName("owningbusinessunit_entitytype")
-                    .HasMaxLength(128);
+                entity.Property(e => e.Owningteam).HasColumnName("owningteam");                
 
-                entity.Property(e => e.Owningteam).HasColumnName("owningteam");
+                entity.Property(e => e.Owninguser).HasColumnName("owninguser");                
 
-                entity.Property(e => e.OwningteamEntitytype)
-                    .HasColumnName("owningteam_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.Owninguser).HasColumnName("owninguser");
-
-                entity.Property(e => e.OwninguserEntitytype)
-                    .HasColumnName("owninguser_entitytype")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.SinkCreatedOn).HasColumnType("datetime");
-
-                entity.Property(e => e.SinkModifiedOn).HasColumnType("datetime");
-
-                entity.Property(e => e.SipEstablishment).HasColumnName("sip_establishment");
-
-                entity.Property(e => e.SipEstablishmentEntitytype)
-                    .HasColumnName("sip_establishment_entitytype")
-                    .HasMaxLength(128);
+                entity.Property(e => e.SipEstablishment).HasColumnName("sip_establishment");                
 
                 entity.Property(e => e.SipEstablishmentname)
                     .HasColumnName("sip_establishmentname")
