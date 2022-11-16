@@ -23,7 +23,7 @@ namespace TramsDataApi.Gateways
             return
                 _dbContext.Establishment
                     .AsNoTracking()
-                    .Where(p => regions.Contains(p!.GorName))
+                    .Where(p => regions.Contains(p!.GorName.ToLower()))
                     .Select(e => e.Urn).ToList();
         }
 
