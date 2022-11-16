@@ -20,9 +20,11 @@ namespace TramsDataApi.Gateways
         }
         public IEnumerable<int?> GetURNsByRegion(IEnumerable<string> regions)
         {
+            var establishmentURNs = _dbContext.Establishment.Select(p => p.Urn).ToList();
             return
                 _dbContext.MisEstablishments
                     .AsNoTracking()
+                    .Where(p => establishmentURNs.Contains((int)p.Urn))
                     .Where(p => regions.Contains(p!.Region))
                     .Select(e => e.Urn);
         }
