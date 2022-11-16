@@ -22,7 +22,7 @@ namespace TramsDataApi.Test.Controllers
         private const string UKPRN = "mockukprn";
         private const int URN = 123456789;
 
-        public EstablishmentsControllerTests(Mock<IGetEstablishmentsByRegion> getEstablishmentsByRegion)
+        public EstablishmentsControllerTests()
         {
             _getEstablishmentsByRegion = new Mock<IGetEstablishmentsByRegion>();
             _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
