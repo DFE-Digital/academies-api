@@ -21,7 +21,7 @@ namespace TramsDataApi.UseCases
             if (region == null) return Enumerable.Empty<int?>();
             var URNs = _establishmentGateway.GetURNsByRegion(region);
             var buildResponse = URNs.ToList();
-            return !buildResponse.Any() ? null : buildResponse;
+            return !buildResponse.Any() ? Enumerable.Empty<int?>() : buildResponse;
         }
     }
 }
