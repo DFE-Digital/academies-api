@@ -44,6 +44,7 @@ namespace TramsDataApi
             services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
             services.AddScoped<IGetTrustByUkprn, GetTrustByUkprn>();
             services.AddScoped<IGetEstablishmentByUkprn, GetEstablishment>();
+            services.AddScoped<IGetEstablishmentsByRegion, GetEstablishmentsByRegion>();
             services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
             services.AddScoped<ISearchTrusts, SearchTrusts>();
 

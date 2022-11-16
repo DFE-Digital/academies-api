@@ -17,6 +17,10 @@ namespace TramsDataApi.Gateways
         { 
             return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
         }
+        public IEnumerable<int> GetEstablishmentURNs()
+        {
+            return _dbContext.Establishment.Select(p => p.Urn).ToList();
+        }
 
         public Establishment GetByUrn(int urn)
         {
