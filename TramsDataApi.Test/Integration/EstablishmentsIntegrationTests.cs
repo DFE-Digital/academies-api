@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetEstablishmentByUkprn()
         {
             var urn = _randomGenerator.Next(100000, 199999);
-            var expected = AddTestData(urn);
+            var expected = AddTestData(urn, string.Empty);
 
             var response = await _client.GetAsync("/establishment/mockukprn");
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -51,7 +52,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetEstablishmentByUrn()
         {
             var urn = _randomGenerator.Next(100000, 199999);
-            var expected = AddTestData(urn);
+            var expected = AddTestData(urn, string.Empty);
 
             var response = await _client.GetAsync($"/establishment/urn/{urn}");
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -59,6 +60,20 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task CanGetEstablishmentURNsByRegion()
+        {
+            var urn = _randomGenerator.Next(100000, 199999);
+            var expected = AddTestData(urn, "East");
+
+            var response = await _client.GetAsync("/establishment/regions?regions=East");
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<IEnumerable<int>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.FirstOrDefault().ToString().Should().Be(expected.Urn);
         }
 
         [Fact]
@@ -225,11 +240,12 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected);
         }
 
-        private EstablishmentResponse AddTestData(int urn)
+        private EstablishmentResponse AddTestData(int urn, string? region)
         {
             var establishment = Builder<Establishment>.CreateNew()
                 .With(e => e.Ukprn = "mockukprn")
                 .With(e => e.Urn = urn)
+                .With(e => e.GorName = region)
                 .Build();
             var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
             var furtherEducationEstablishment = Builder<FurtherEducationEstablishments>.CreateNew().With(f => f.ProviderUrn = establishment.Urn).Build();
