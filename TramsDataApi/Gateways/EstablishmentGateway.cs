@@ -18,15 +18,13 @@ namespace TramsDataApi.Gateways
         { 
             return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
         }
-        public IEnumerable<int?> GetURNsByRegion(IEnumerable<string> regions)
+        public IEnumerable<int> GetURNsByRegion(IEnumerable<string> regions)
         {
-            var establishmentURNs = _dbContext.Establishment.Select(p => p.Urn).ToList();
             return
-                _dbContext.MisEstablishments
+                _dbContext.Establishment
                     .AsNoTracking()
-                    .Where(p => establishmentURNs.Contains((int)p.Urn))
-                    .Where(p => regions.Contains(p!.Region))
-                    .Select(e => e.Urn);
+                    .Where(p => regions.Contains(p!.GorName))
+                    .Select(e => e.Urn).ToList();
         }
 
         public Establishment GetByUrn(int urn)

@@ -16,9 +16,9 @@ namespace TramsDataApi.UseCases
         {
             _establishmentGateway = establishmentGateway;
         }
-        public IEnumerable<int?> Execute(ICollection<string> region)
+        public IEnumerable<int> Execute(ICollection<string> region)
         {
-            if (region == null) return Enumerable.Empty<int?>();
+            if (region == null) return Enumerable.Empty<int>();
             var URNs = _establishmentGateway.GetURNsByRegion(region);
             var buildResponse = URNs.ToList();
             return buildResponse;
