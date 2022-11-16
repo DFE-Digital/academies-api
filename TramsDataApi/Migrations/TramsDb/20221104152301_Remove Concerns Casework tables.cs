@@ -10,13 +10,17 @@ namespace TramsDataApi.Migrations.TramsDb
             migrationBuilder.DropTable(
                 name: "ConcernsCaseworkTeamMember",
                 schema: "sdd");
-
+            
             migrationBuilder.DropTable(
-                name: "ConcernsDecisionStates",
+                name: "ConcernsDecisionType",
                 schema: "sdd");
 
             migrationBuilder.DropTable(
-                name: "ConcernsDecisionType",
+                name: "ConcernsDecision",
+                schema: "sdd");
+
+            migrationBuilder.DropTable(
+                name: "ConcernsDecisionStates",
                 schema: "sdd");
 
             migrationBuilder.DropTable(
@@ -65,10 +69,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
             migrationBuilder.DropTable(
                 name: "ConcernsCaseworkTeam",
-                schema: "sdd");
-
-            migrationBuilder.DropTable(
-                name: "ConcernsDecision",
                 schema: "sdd");
 
             migrationBuilder.DropTable(
