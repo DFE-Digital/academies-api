@@ -16,13 +16,15 @@ namespace TramsDataApi.Test.Controllers
     {
         private readonly EstablishmentsController _controller;
         private readonly Mock<IGetEstablishmentByUkprn> _getEstablishmentByUkprn;
+        private readonly Mock<IGetEstablishmentsByRegion> _getEstablishmentsByRegion;
         private readonly Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>> _getEstablishmentByUrn;
         private readonly Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>> _searchEstablishments;
         private const string UKPRN = "mockukprn";
         private const int URN = 123456789;
 
-        public EstablishmentsControllerTests()
+        public EstablishmentsControllerTests(Mock<IGetEstablishmentsByRegion> getEstablishmentsByRegion)
         {
+            _getEstablishmentsByRegion = new Mock<IGetEstablishmentsByRegion>();
             _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
             _getEstablishmentByUrn = new Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>>();
             _searchEstablishments = new Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>>();
@@ -31,7 +33,8 @@ namespace TramsDataApi.Test.Controllers
                 _getEstablishmentByUkprn.Object,
                 _getEstablishmentByUrn.Object,
                 _searchEstablishments.Object,
-                new Mock<ILogger<EstablishmentsController>>().Object
+                new Mock<ILogger<EstablishmentsController>>().Object,
+                _getEstablishmentsByRegion.Object
             );
         }
 
