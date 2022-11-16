@@ -5,6 +5,6 @@ namespace TramsDataApi.UseCases
 {
     public interface IGetEstablishmentsByRegion
     {
-        public IEnumerable<int?> Execute(ICollection<string> region);
+        public IEnumerable<int> Execute(ICollection<string> region);
     }
 }
