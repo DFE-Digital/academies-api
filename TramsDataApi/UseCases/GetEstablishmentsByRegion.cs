@@ -34,8 +34,6 @@ namespace TramsDataApi.UseCases
                 var matchingEstablishments = misEstablishments.Where(p => region.Contains(p!.Region)).ToList();
                 return matchingEstablishments.Select(e => e.Urn).ToList();
             }
-
-
         }
     }
 }
