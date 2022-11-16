@@ -54,7 +54,7 @@ namespace TramsDataApi.Controllers
         public ActionResult<EstablishmentResponse> GetURNsByRegion([FromQuery] string[] regions)
         {
             _logger.LogInformation($"Attempting to get Establishment URNs by Region {regions}");
-            var establishment = _getEstablishmentsByRegion.Execute(regions.ToList());
+            var establishment = _getEstablishmentsByRegion.Execute(regions);
 
             if (establishment == null)
             {
