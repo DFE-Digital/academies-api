@@ -10,28 +10,17 @@ namespace TramsDataApi.DatabaseModels
     public partial class SipPhonics
     {
         public Guid Id { get; set; }
-        public DateTime? SinkCreatedOn { get; set; }
-        public DateTime? SinkModifiedOn { get; set; }
         public int? Statecode { get; set; }
         public int? Statuscode { get; set; }
-        public Guid? Owninguser { get; set; }
-        public string OwninguserEntitytype { get; set; }
+        public Guid? Owninguser { get; set; }        
         public Guid? Createdonbehalfby { get; set; }
-        public string CreatedonbehalfbyEntitytype { get; set; }
         public Guid? Owningbusinessunit { get; set; }
-        public string OwningbusinessunitEntitytype { get; set; }
         public Guid? Owningteam { get; set; }
-        public string OwningteamEntitytype { get; set; }
         public Guid? Modifiedby { get; set; }
-        public string ModifiedbyEntitytype { get; set; }
-        public Guid? Createdby { get; set; }
-        public string CreatedbyEntitytype { get; set; }
+        public Guid? Createdby { get; set; }        
         public Guid? SipEstablishment { get; set; }
-        public string SipEstablishmentEntitytype { get; set; }
         public Guid? Modifiedonbehalfby { get; set; }
-        public string ModifiedonbehalfbyEntitytype { get; set; }
         public Guid? Ownerid { get; set; }
-        public string OwneridEntitytype { get; set; }
         public string Createdonbehalfbyyominame { get; set; }
         public int? SipPhonicsyear2pupils { get; set; }
         public string Owneridname { get; set; }
