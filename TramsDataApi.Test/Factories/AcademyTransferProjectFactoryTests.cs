@@ -266,7 +266,10 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
                 HasHtbDate = academyTransferProject.HasHtbDate,
-                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
+                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer,
+                AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
+                AssignedUserFullName = academyTransferProject.AssignedUserFullName,
+                AssignedUserId = academyTransferProject.AssignedUserId
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -358,7 +361,10 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasHtbDate = academyTransferProject.HasHtbDate,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
-                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
+                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer,
+                AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
+                AssignedUserFullName = academyTransferProject.AssignedUserFullName,
+                AssignedUserId = academyTransferProject.AssignedUserId
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -442,7 +448,10 @@ namespace TramsDataApi.Test.Factories
                 AcademyTransferProjectIntendedTransferBenefits = expectedBenefits,
                 HasHtbDate = academyTransferProject.HasHtbDate,
                 HasTransferFirstDiscussedDate = academyTransferProject.HasTransferFirstDiscussedDate,
-                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer
+                HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer,
+                AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
+                AssignedUserFullName = academyTransferProject.AssignedUserFullName,
+                AssignedUserId = academyTransferProject.AssignedUserId
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -512,7 +521,10 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = false,
                 HasHtbDate = false,
-                HasTargetDateForTransfer = false
+                HasTargetDateForTransfer = false,
+                AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
+                AssignedUserFullName = academyTransferProject.AssignedUserFullName,
+                AssignedUserId = academyTransferProject.AssignedUserId
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -589,7 +601,10 @@ namespace TramsDataApi.Test.Factories
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
                 HasTransferFirstDiscussedDate = false,
                 HasHtbDate = false,
-                HasTargetDateForTransfer = false
+                HasTargetDateForTransfer = false,
+                AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
+                AssignedUserFullName = academyTransferProject.AssignedUserFullName,
+                AssignedUserId = academyTransferProject.AssignedUserId
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
