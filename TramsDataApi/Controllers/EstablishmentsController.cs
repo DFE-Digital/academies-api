@@ -15,7 +15,7 @@ namespace TramsDataApi.Controllers
     public class EstablishmentsController : ControllerBase
     {
         private readonly IGetEstablishmentByUkprn _getEstablishmentByUkprn;
-        private readonly IGetEstablishmentsByRegion _getEstablishmentsByRegion;
+        private readonly IGetEstablishmentURNsByRegion _getEstablishmentURNsByRegion;
         private readonly IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> _getEstablishmentByUrn;
         private readonly IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> _searchEstablishments;
         private readonly ILogger<EstablishmentsController> _logger;
@@ -24,13 +24,13 @@ namespace TramsDataApi.Controllers
             IGetEstablishmentByUkprn getEstablishmentByUkprn, 
             IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> getEstablishmentByUrn,
             IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> searchEstablishments,
-            ILogger<EstablishmentsController> logger, IGetEstablishmentsByRegion getEstablishmentsByRegion)
+            ILogger<EstablishmentsController> logger, IGetEstablishmentURNsByRegion getEstablishmentURNsByRegion)
         {
             _getEstablishmentByUkprn = getEstablishmentByUkprn;
             _getEstablishmentByUrn = getEstablishmentByUrn;
             _searchEstablishments = searchEstablishments;
             _logger = logger;
-            _getEstablishmentsByRegion = getEstablishmentsByRegion;
+            _getEstablishmentURNsByRegion = getEstablishmentURNsByRegion;
         }
 
         [HttpGet]
@@ -54,7 +54,7 @@ namespace TramsDataApi.Controllers
         public ActionResult<IEnumerable<int>> GetURNsByRegion([FromQuery] string[] regions)
         {
             _logger.LogInformation($"Attempting to get Establishment URNs by Region {regions}");
-            var establishment = _getEstablishmentsByRegion.Execute(regions);
+            var establishment = _getEstablishmentURNsByRegion.Execute(regions);
 
             if (establishment == null)
             {

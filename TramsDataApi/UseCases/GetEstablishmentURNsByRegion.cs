@@ -8,11 +8,11 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetEstablishmentsByRegion : IGetEstablishmentsByRegion
+    public class GetEstablishmentURNsByRegion : IGetEstablishmentURNsByRegion
     {
         private readonly IEstablishmentGateway _establishmentGateway;
 
-        public GetEstablishmentsByRegion(IEstablishmentGateway establishmentGateway)
+        public GetEstablishmentURNsByRegion(IEstablishmentGateway establishmentGateway)
         {
             _establishmentGateway = establishmentGateway;
         }
