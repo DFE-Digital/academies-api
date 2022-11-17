@@ -72,7 +72,37 @@ namespace TramsDataApi.Test.UseCases
             
             result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
         }
-        
+
+        [Fact]
+        public async Task SearchAcademyConversionProjects_FilterByRegion_ReturnsListOfProjectResponses_WhenAcademyConversionProjectsAreFound()
+        {
+            var project = _fixture.Build<AcademyConversionProject>()
+                .With(f => f.SchoolName, "School")
+                .With(f => f.ProjectStatus, "ProjectStatus")
+                .Create();
+            var regions = new List<int?> { project.Urn };
+            var expected = AcademyConversionProjectResponseFactory.Create(project);
+
+            var mockProjectsGateway = new Mock<IAcademyConversionProjectGateway>();
+            var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
+
+            mockProjectsGateway
+                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), null, null, It.IsAny<string>(), It.IsAny<string[]>(), regions))
+                .Returns(Task.FromResult(new PagedResult<AcademyConversionProject>(new List<AcademyConversionProject> { project })));
+
+            mockEstablishmentsGateway
+                .Setup(acg => acg.GetMisEstablishmentByUrn(It.IsAny<int>()))
+                .Returns(() => new MisEstablishments());
+
+            var useCase = new SearchAcademyConversionProjects(
+                mockProjectsGateway.Object,
+                mockEstablishmentsGateway.Object);
+
+            var result = await useCase.Execute(Page, Count, null, null, Title, DeliveryOfficers, regions);
+
+            result.Results.Should().BeEquivalentTo(new List<AcademyConversionProjectResponse> { expected });
+        }
+
         [Fact]
         public async Task SearchAcademyConversionProjects_ReturnsListOfProjectResponsesWithUkPrnAndLaestab_WhenAcademyConversionProjectsAndEstablishmentsAreFound()
         {
