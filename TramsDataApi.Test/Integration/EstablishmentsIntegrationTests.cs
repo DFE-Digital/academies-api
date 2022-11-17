@@ -63,6 +63,23 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
+        public async Task CanGetEstablishmentsByBulkUrns()
+        {
+            const int urn1 = 12345;
+            const int urn2 = 23456;
+            var response1 = AddTestData(urn1);
+            var response2 = AddTestData(urn2);
+            var establishmentResponses = new List<EstablishmentResponse> { response1, response2 };
+
+            var response = await _client.GetAsync($"/establishments/bulk?Urn={urn1}&Urn={urn2}");
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<IList<EstablishmentResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(establishmentResponses);
+        }
+
+        [Fact]
         public async Task CanGetEstablishmentURNsByRegion()
         {
             var urn = _randomGenerator.Next(100000, 199999);
