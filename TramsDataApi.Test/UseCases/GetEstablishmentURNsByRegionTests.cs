@@ -42,7 +42,7 @@ namespace TramsDataApi.Test.UseCases
         [Fact]
         public void GetEstablishmentURNsByRegion_ReturnsNull_WhenNoEstablishmentsAreFound()
         {
-            _establishmentGateway.Setup(gateway => gateway.GetURNsByRegion(Regions)).Returns(() => null);
+            _establishmentGateway.Setup(gateway => gateway.GetURNsByRegion(Regions)).Returns(() => new List<int>());
 
             _useCase.Execute(Regions).Should().BeNull();
         }
