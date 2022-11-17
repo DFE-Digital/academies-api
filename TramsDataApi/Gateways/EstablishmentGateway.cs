@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,11 @@ namespace TramsDataApi.Gateways
             return _dbContext.Establishment.SingleOrDefault(e => e.Urn == urn);
         }
 
+        public IList<Establishment> GetByUrns(int[] urns)
+        {
+            return _dbContext.Establishment.AsNoTracking().Where(e => urns.Contains(e.Urn)).ToList();
+        }
+
         public IList<Establishment> GetByTrustUid(string trustUid)
         {
             return _dbContext.Establishment.Where(e => e.TrustsCode == trustUid)
@@ -43,9 +49,19 @@ namespace TramsDataApi.Gateways
             return _dbContext.MisEstablishments.FirstOrDefault(m => m.Urn == establishmentUrn);
         }
 
+        public IList<MisEstablishments> GetMisEstablishmentsByUrns(int[] establishmentUrns)
+        {
+            return _dbContext.MisEstablishments.AsNoTracking().Where(e => establishmentUrns.Contains((int)e.Urn)).ToList();
+        }
+
         public FurtherEducationEstablishments GetFurtherEducationEstablishmentByUrn(int establishmentUrn)
         {
             return _dbContext.FurtherEducationEstablishments.FirstOrDefault(m => m.ProviderUrn == establishmentUrn);
+        }
+
+        public IList<FurtherEducationEstablishments> GetFurtherEducationEstablishmentsByUrns(int[] establishmentUrns)
+        {
+            return _dbContext.FurtherEducationEstablishments.AsNoTracking().Where(e => establishmentUrns.Contains(e.ProviderUrn)).ToList();
         }
 
         public SmartData GetSmartDataByUrn(int establishmentUrn)
@@ -53,11 +69,23 @@ namespace TramsDataApi.Gateways
             return _dbContext.SmartData.FirstOrDefault(s => s.Urn == establishmentUrn.ToString());
         }
 
-
-         public ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int establishmentUrn) 
+        public IList<SmartData> GetSmartDataByUrns(int[] establishmentUrns)
         {
-            var viewAcademyConversionInfo = _dbContext.ViewAcademyConversions.FirstOrDefault(x => x.GeneralDetailsAcademyUrn == establishmentUrn.ToString());
-            return viewAcademyConversionInfo;
+            var stringUrns = Array.ConvertAll(establishmentUrns, urn => urn.ToString());
+
+            return _dbContext.SmartData.AsNoTracking().Where(e => stringUrns.Contains(e.Urn)).ToList();
+        }
+
+        public ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int establishmentUrn) 
+        {
+            return _dbContext.ViewAcademyConversions.FirstOrDefault(x => x.GeneralDetailsAcademyUrn == establishmentUrn.ToString());
+        }
+
+        public IList<ViewAcademyConversions> GetViewAcademyConversionInfoByUrns(int[] establishmentUrns)
+        {
+            var stringUrns = Array.ConvertAll(establishmentUrns, urn => urn.ToString());
+
+            return _dbContext.ViewAcademyConversions.AsNoTracking().Where(e => stringUrns.Contains(e.GeneralDetailsAcademyUrn)).ToList();
         }
 
         public IList<Establishment> SearchEstablishments(int? urn, string ukprn, string name)

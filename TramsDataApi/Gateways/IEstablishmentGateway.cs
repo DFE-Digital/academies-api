@@ -1,21 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
-using TramsDataApi.Controllers;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
 {
     public interface IEstablishmentGateway
     {
-        public Establishment GetByUkprn(string ukprn);
+        Establishment GetByUkprn(string ukprn);
+        Establishment GetByUrn(int urn);
+        IList<Establishment> GetByTrustUid(string trustUid);
+        MisEstablishments GetMisEstablishmentByUrn(int establishmentUrn);
+        SmartData GetSmartDataByUrn(int establishmentUrn);
         public IEnumerable<int> GetURNsByRegion(IEnumerable<string> regions);
-        public Establishment GetByUrn(int urn);
-        public IList<Establishment> GetByTrustUid(string trustUid);
-        public MisEstablishments GetMisEstablishmentByUrn(int establishmentUrn);
-        public SmartData GetSmartDataByUrn(int establishmentUrn);
-
-        public IList<Establishment> SearchEstablishments(int? urn, string ukprn, string name);
-        public FurtherEducationEstablishments GetFurtherEducationEstablishmentByUrn(int establishmentUrn);
-        public ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int urn);
+        IList<Establishment> SearchEstablishments(int? urn, string ukprn, string name);
+        FurtherEducationEstablishments GetFurtherEducationEstablishmentByUrn(int establishmentUrn);
+        ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int urn);
+        IList<Establishment> GetByUrns(int[] urns);
+        IList<MisEstablishments> GetMisEstablishmentsByUrns(int[] establishmentUrns);
+        IList<FurtherEducationEstablishments> GetFurtherEducationEstablishmentsByUrns(int[] establishmentUrns);
+        IList<SmartData> GetSmartDataByUrns(int[] establishmentUrns);
+        IList<ViewAcademyConversions> GetViewAcademyConversionInfoByUrns(int[] establishmentUrns);
     }
 }
