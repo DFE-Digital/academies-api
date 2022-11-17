@@ -38,7 +38,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetEstablishmentByUkprn()
         {
             var urn = _randomGenerator.Next(100000, 199999);
-            var expected = AddTestData(urn, string.Empty);
+            var expected = AddTestData(urn);
 
             var response = await _client.GetAsync("/establishment/mockukprn");
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -52,7 +52,7 @@ namespace TramsDataApi.Test.Integration
         public async Task CanGetEstablishmentByUrn()
         {
             var urn = _randomGenerator.Next(100000, 199999);
-            var expected = AddTestData(urn, string.Empty);
+            var expected = AddTestData(urn);
 
             var response = await _client.GetAsync($"/establishment/urn/{urn}");
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -240,7 +240,7 @@ namespace TramsDataApi.Test.Integration
             result.Should().BeEquivalentTo(expected);
         }
 
-        private EstablishmentResponse AddTestData(int urn, string? region)
+        private EstablishmentResponse AddTestData(int urn, string region = default)
         {
             var establishment = Builder<Establishment>.CreateNew()
                 .With(e => e.Ukprn = "mockukprn")
