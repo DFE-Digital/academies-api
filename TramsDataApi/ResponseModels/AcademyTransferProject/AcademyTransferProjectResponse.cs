@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using TramsDataApi.DatabaseModels;
-using TramsDataApi.RequestModels;
-using TramsDataApi.RequestModels.AcademyTransferProject;
 
 namespace TramsDataApi.ResponseModels.AcademyTransferProject
 {
@@ -19,6 +15,7 @@ namespace TramsDataApi.ResponseModels.AcademyTransferProject
         public AcademyTransferProjectLegalRequirementsResponse LegalRequirements { get; set; }
         public AcademyTransferProjectRationaleResponse Rationale { get; set; }
         public AcademyTransferProjectGeneralInformationResponse GeneralInformation { get; set; }
+        public AssignedUserResponse AssignedUser { get; set; }
         public string State { get; set; }
         public string Status { get; set; }
     }

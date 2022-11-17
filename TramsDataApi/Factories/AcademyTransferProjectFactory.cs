@@ -5,11 +5,10 @@ using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
-using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Factories
 {
-    public class AcademyTransferProjectFactory
+    public static class AcademyTransferProjectFactory
     {
         public static AcademyTransferProjects Create(AcademyTransferProjectRequest request)
         {
@@ -57,7 +56,10 @@ namespace TramsDataApi.Factories
                 RationaleSectionIsCompleted = request.Rationale?.IsCompleted,
                 HasHtbDate = request.Dates?.HasHtbDate,
                 HasTransferFirstDiscussedDate = request.Dates?.HasTransferFirstDiscussedDate,
-                HasTargetDateForTransfer = request.Dates?.HasTargetDateForTransfer
+                HasTargetDateForTransfer = request.Dates?.HasTargetDateForTransfer,
+                AssignedUserEmailAddress = request.AssignedUser?.EmailAddress,
+                AssignedUserFullName = request.AssignedUser?.FullName,
+                AssignedUserId = request.AssignedUser?.Id
             };
         }
 
@@ -168,7 +170,11 @@ namespace TramsDataApi.Factories
             original.AcademyTransferProjectIntendedTransferBenefits =
                 toMerge.AcademyTransferProjectIntendedTransferBenefits ??
                 original.AcademyTransferProjectIntendedTransferBenefits;
-            
+
+            original.AssignedUserId = toMerge?.AssignedUserId ?? original.AssignedUserId;
+            original.AssignedUserFullName = toMerge?.AssignedUserFullName ?? original.AssignedUserFullName;
+            original.AssignedUserEmailAddress = toMerge?.AssignedUserEmailAddress ?? original.AssignedUserEmailAddress;
+
             return original;
         }
     }
