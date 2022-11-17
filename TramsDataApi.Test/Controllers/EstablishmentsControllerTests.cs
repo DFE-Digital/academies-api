@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FizzWare.NBuilder;
 using FluentAssertions;
@@ -16,15 +17,17 @@ namespace TramsDataApi.Test.Controllers
     {
         private readonly EstablishmentsController _controller;
         private readonly Mock<IGetEstablishmentByUkprn> _getEstablishmentByUkprn;
-        private readonly Mock<IGetEstablishmentsByRegion> _getEstablishmentsByRegion;
+        private readonly Mock<IGetEstablishmentURNsByRegion> _getEstablishmentURNsByRegion;
         private readonly Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>> _getEstablishmentByUrn;
         private readonly Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>> _searchEstablishments;
         private const string UKPRN = "mockukprn";
         private const int URN = 123456789;
 
+        private static readonly string[] Regions = {"East", "West"};
+
         public EstablishmentsControllerTests()
         {
-            _getEstablishmentsByRegion = new Mock<IGetEstablishmentsByRegion>();
+            _getEstablishmentURNsByRegion = new Mock<IGetEstablishmentURNsByRegion>();
             _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
             _getEstablishmentByUrn = new Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>>();
             _searchEstablishments = new Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>>();
@@ -34,7 +37,7 @@ namespace TramsDataApi.Test.Controllers
                 _getEstablishmentByUrn.Object,
                 _searchEstablishments.Object,
                 new Mock<ILogger<EstablishmentsController>>().Object,
-                _getEstablishmentsByRegion.Object
+                _getEstablishmentURNsByRegion.Object
             );
         }
 
@@ -57,6 +60,35 @@ namespace TramsDataApi.Test.Controllers
             var result = _controller.GetByUkprn(UKPRN);
             
             result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
+        }
+        [Fact]
+        public void GetEstablishmentURNsByRegion_ReturnsNotFoundResult_WhenNoEstablishmentFound()
+        {
+            _getEstablishmentURNsByRegion.Setup(g => g.Execute(Regions)).Returns(() => new List<int>());
+
+            var result = _controller.GetURNsByRegion(Regions);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(new List<int>()));
+        }
+
+        [Fact]
+        public void GetEstablishmentURNsByRegion_ReturnsEstablishmentResponse_WhenEstablishmentFound()
+        {
+            var GOR = new NameAndCodeResponse()
+            {
+                Code = "Code",
+                Name = Regions[0]
+            };
+            var establishmentResponse = Builder<EstablishmentResponse>.CreateNew().With(b => b.Urn = "11").With(a => a.GOR = GOR).Build();
+            var listOfURNs = new List<int>
+            {
+                Convert.ToInt32(establishmentResponse.Urn)
+            };
+            _getEstablishmentURNsByRegion.Setup(g => g.Execute(Regions)).Returns(() => listOfURNs);
+
+            var result = _controller.GetURNsByRegion(Regions);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(listOfURNs));
         }
 
         [Fact]

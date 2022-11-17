@@ -3,7 +3,7 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public interface IGetEstablishmentsByRegion
+    public interface IGetEstablishmentURNsByRegion
     {
         public IEnumerable<int> Execute(ICollection<string> region);
     }

@@ -18,7 +18,7 @@ namespace TramsDataApi.Test.UseCases
 {
     public class GetEstablishmentURNsByRegionTests
     {
-        private readonly GetEstablishmentsByRegion _useCase;
+        private readonly GetEstablishmentURNsByRegion _useCase;
         private readonly Mock<IEstablishmentGateway> _establishmentGateway;
 
         private static readonly List<string> Regions = new List<string>()
@@ -36,7 +36,7 @@ namespace TramsDataApi.Test.UseCases
             BuilderSetup.SetDefaultPropertyName(new RandomValuePropertyNamer(new BuilderSettings()));
 
             _establishmentGateway = new Mock<IEstablishmentGateway>();
-            _useCase = new GetEstablishmentsByRegion(_establishmentGateway.Object);
+            _useCase = new GetEstablishmentURNsByRegion(_establishmentGateway.Object);
         }
 
         [Fact]
