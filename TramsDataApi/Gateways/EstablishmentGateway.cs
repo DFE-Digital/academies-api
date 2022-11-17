@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Gateways
@@ -16,6 +17,14 @@ namespace TramsDataApi.Gateways
         public Establishment GetByUkprn(string ukprn)
         { 
             return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
+        }
+        public IEnumerable<int> GetURNsByRegion(IEnumerable<string> regions)
+        {
+            return
+                _dbContext.Establishment
+                    .AsNoTracking()
+                    .Where(p => regions.Contains(p!.GorName.ToLower()))
+                    .Select(e => e.Urn).ToList();
         }
 
         public Establishment GetByUrn(int urn)
