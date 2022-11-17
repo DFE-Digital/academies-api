@@ -20,6 +20,7 @@ namespace TramsDataApi.Test.Controllers
         private readonly Mock<IGetEstablishmentURNsByRegion> _getEstablishmentURNsByRegion;
         private readonly Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>> _getEstablishmentByUrn;
         private readonly Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>> _searchEstablishments;
+        private readonly Mock<IGetEstablishmentsByUrns> _getEstablishmentsByUrns;
         private const string UKPRN = "mockukprn";
         private const int URN = 123456789;
 
@@ -31,13 +32,15 @@ namespace TramsDataApi.Test.Controllers
             _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
             _getEstablishmentByUrn = new Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>>();
             _searchEstablishments = new Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>>();
+            _getEstablishmentsByUrns = new Mock<IGetEstablishmentsByUrns>();
 
             _controller = new EstablishmentsController(
                 _getEstablishmentByUkprn.Object,
                 _getEstablishmentByUrn.Object,
                 _searchEstablishments.Object,
-                new Mock<ILogger<EstablishmentsController>>().Object,
-                _getEstablishmentURNsByRegion.Object
+                _getEstablishmentURNsByRegion.Object,
+                _getEstablishmentsByUrns.Object,
+                new Mock<ILogger<EstablishmentsController>>().Object
             );
         }
 
@@ -140,6 +143,33 @@ namespace TramsDataApi.Test.Controllers
             var result = _controller.SearchEstablishments(null);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponses));
+        }
+
+        [Fact]
+        public void GetByUrns_WhenNoEstablishmentsAreFound_ReturnsNotFoundResult()
+        {
+            const int missingEstablishmentUrn = 12345;
+            _getEstablishmentsByUrns.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => null);
+            var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = new int[] { missingEstablishmentUrn } };
+
+            var result = _controller.GetByUrns(getEstablishmentsByUrnsRequest);
+
+            result.Result.Should().BeOfType(typeof(NotFoundResult));
+        }
+
+        [Fact]
+        public void GetByUrns_WhenGivenCorrectUrns_ReturnsAListOfEstablishments()
+        {
+            const int URN2 = 23456789;
+            var establishmentResponse1 = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = URN.ToString()).Build();
+            var establishmentResponse2 = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = URN2.ToString()).Build();
+            var establishmentsResponse = new List<EstablishmentResponse> { establishmentResponse1, establishmentResponse2 };
+            _getEstablishmentsByUrns.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => establishmentsResponse);
+            var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = new int[] { URN, URN2 } };
+
+            var result = _controller.GetByUrns(getEstablishmentsByUrnsRequest);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentsResponse));
         }
     }
 }
