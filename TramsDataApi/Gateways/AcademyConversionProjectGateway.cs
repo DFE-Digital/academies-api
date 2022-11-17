@@ -52,10 +52,11 @@ namespace TramsDataApi.Gateways
         }
 
         public async Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count,
-            IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers)
+            IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers, IEnumerable<int?> regions = default)
         {
             IQueryable<AcademyConversionProject> academyConversionProjects = _tramsDbContext.AcademyConversionProjects;
 
+            academyConversionProjects = FilterByRegion(regions, academyConversionProjects);
             academyConversionProjects = FilterByStatus(statuses, academyConversionProjects);
             academyConversionProjects = FilterByUrn(urn, academyConversionProjects);
             academyConversionProjects = FilterBySchool(title, academyConversionProjects);
@@ -99,6 +100,15 @@ namespace TramsDataApi.Gateways
             if (states != null && states!.Any())
             {
                 queryable = queryable.Where(p => states.Contains(p.ProjectStatus!.ToLower()));
+            }
+
+            return queryable;
+        }
+        private static IQueryable<AcademyConversionProject> FilterByRegion(IEnumerable<int?> regions, IQueryable<AcademyConversionProject> queryable)
+        {
+            if (regions != null && regions!.Any())
+            {
+                queryable = queryable.Where(p => regions.Contains(p.Urn));
             }
 
             return queryable;

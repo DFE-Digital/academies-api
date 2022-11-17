@@ -57,7 +57,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
             
             mockProjectsGateway
-                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, null, It.IsAny<string>(), It.IsAny<string[]>()))
+                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, null, It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<IEnumerable<int?>>()))
                 .Returns(Task.FromResult(new PagedResult<AcademyConversionProject>(new List<AcademyConversionProject> { project })));
 
             mockEstablishmentsGateway
@@ -95,7 +95,7 @@ namespace TramsDataApi.Test.UseCases
             var mockEstablishmentsGateway = new Mock<IEstablishmentGateway>();
 
             mockProjectsGateway
-                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, urn, It.IsAny<string>(), It.IsAny<string[]>()))
+                .Setup(acg => acg.SearchProjects(It.IsAny<int>(), It.IsAny<int>(), statuses, urn, It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<int?[]>()))
                 .Returns(Task.FromResult(new PagedResult<AcademyConversionProject>(new List<AcademyConversionProject> { project })));
             
             mockEstablishmentsGateway
