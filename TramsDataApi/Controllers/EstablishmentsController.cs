@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,19 +16,23 @@ namespace TramsDataApi.Controllers
         private readonly IGetEstablishmentURNsByRegion _getEstablishmentURNsByRegion;
         private readonly IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> _getEstablishmentByUrn;
         private readonly IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> _searchEstablishments;
+        private readonly IGetEstablishmentsByUrns _getEstablishmentsByUrns;
         private readonly ILogger<EstablishmentsController> _logger;
 
         public EstablishmentsController(
-            IGetEstablishmentByUkprn getEstablishmentByUkprn, 
+            IGetEstablishmentByUkprn getEstablishmentByUkprn,
             IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> getEstablishmentByUrn,
             IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> searchEstablishments,
-            ILogger<EstablishmentsController> logger, IGetEstablishmentURNsByRegion getEstablishmentURNsByRegion)
+            IGetEstablishmentURNsByRegion getEstablishmentURNsByRegion,
+            IGetEstablishmentsByUrns getEstablishmentsByUrns,
+            ILogger<EstablishmentsController> logger)
         {
             _getEstablishmentByUkprn = getEstablishmentByUkprn;
             _getEstablishmentByUrn = getEstablishmentByUrn;
             _searchEstablishments = searchEstablishments;
-            _logger = logger;
             _getEstablishmentURNsByRegion = getEstablishmentURNsByRegion;
+            _getEstablishmentsByUrns = getEstablishmentsByUrns;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -90,6 +92,26 @@ namespace TramsDataApi.Controllers
             _logger.LogInformation($"Searching for Establishments");
             var establishments = _searchEstablishments.Execute(request);
             _logger.LogDebug(JsonSerializer.Serialize<IList<EstablishmentSummaryResponse>>(establishments));
+            return Ok(establishments);
+        }
+
+        [HttpGet]
+        [Route("establishments/bulk")]
+        public ActionResult<List<EstablishmentResponse>> GetByUrns([FromQuery] GetEstablishmentsByUrnsRequest request)
+        {
+            var commaSeparatedRequestUrns = string.Join(",", request.Urns);
+            _logger.LogInformation($"Attemping to get establishments by URNs: {commaSeparatedRequestUrns}");
+
+            var establishments = _getEstablishmentsByUrns.Execute(request);
+
+            if (establishments == null)
+            {
+                _logger.LogInformation($"No establishment was found any of the requested URNs: {commaSeparatedRequestUrns}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Establishments for URNs: {commaSeparatedRequestUrns}");
+            _logger.LogDebug(JsonSerializer.Serialize(establishments));
             return Ok(establishments);
         }
     }
