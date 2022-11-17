@@ -30,7 +30,6 @@ namespace TramsDataApi.Test.UseCases
         {
             "East"
         };
-        private const int URN = 123456789;
 
         public GetEstablishmentURNsByRegionTests()
         {
