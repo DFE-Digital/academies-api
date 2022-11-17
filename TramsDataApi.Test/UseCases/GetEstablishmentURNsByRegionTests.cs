@@ -44,7 +44,7 @@ namespace TramsDataApi.Test.UseCases
         {
             _establishmentGateway.Setup(gateway => gateway.GetURNsByRegion(Regions)).Returns(() => new List<int>());
 
-            _useCase.Execute(Regions).Should().BeNull();
+            _useCase.Execute(Regions).Should().BeEquivalentTo(new List<int>());
         }
 
         [Fact]
