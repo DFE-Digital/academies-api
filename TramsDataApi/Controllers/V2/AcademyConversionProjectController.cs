@@ -54,14 +54,15 @@ namespace TramsDataApi.Controllers.V2
             [FromQuery] string[] deliveryOfficers,
             [FromQuery] int page = 1,
             [FromQuery] int count = 50,
-            [FromQuery] int? urn = null)
+            [FromQuery] int? urn = null,
+            [FromQuery] int?[] regions = default)
         {
             var statusList = !string.IsNullOrWhiteSpace(states)
                 ? states.Split(',').ToList()
                 : null;
             
             _logger.LogInformation(SearchProjectsLog, count, states, urn, title);
-            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title, deliveryOfficers);
+            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title, deliveryOfficers, regions);
 
             if (!result.Results.Any())
             {
