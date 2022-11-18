@@ -61,7 +61,10 @@ namespace TramsDataApi.DatabaseModels
         public bool? LegalRequirementsSectionIsCompleted { get; set; }
         public bool? FeatureSectionIsCompleted { get; set; }
         public bool? BenefitsSectionIsCompleted { get; set; }
-        public bool? RationaleSectionIsCompleted { get; set; }
+        public bool? RationaleSectionIsCompleted { get; set; }        
+        public string AssignedUserFullName { get; set; }
+        public string AssignedUserEmailAddress { get; set; }
+        public Guid? AssignedUserId { get; set; }
 
         public virtual ICollection<AcademyTransferProjectIntendedTransferBenefits>
             AcademyTransferProjectIntendedTransferBenefits { get; set; }

@@ -115,6 +115,12 @@ namespace TramsDataApi.Factories
                     Author = model.Author,
                     Recommendation = model.Recommendation
                 },
+                AssignedUser = new AssignedUserResponse
+                {
+                    FullName = model.AssignedUserFullName,
+                    EmailAddress = model.AssignedUserEmailAddress,
+                    Id = model.AssignedUserId
+                },
                 State = model.State,
                 Status = model.Status
             };
