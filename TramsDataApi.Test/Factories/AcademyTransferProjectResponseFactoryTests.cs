@@ -98,7 +98,7 @@ namespace TramsDataApi.Test.Factories
                 GeneralInformation = new AcademyTransferProjectGeneralInformationResponse(),
                 State = null,
                 Status = null,
-                AssignedUser = new AssignedUserResponse(),
+                AssignedUser = null,
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);

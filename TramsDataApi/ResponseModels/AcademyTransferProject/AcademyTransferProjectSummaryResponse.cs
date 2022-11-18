@@ -10,5 +10,6 @@ namespace TramsDataApi.ResponseModels.AcademyTransferProject
         public string OutgoingTrustName { get; set; }
         public string OutgoingTrustLeadRscRegion { get; set; }
         public List<TransferringAcademiesResponse> TransferringAcademies { get; set; }
+        public AssignedUserResponse AssignedUser { get; set; }
     }
 }
