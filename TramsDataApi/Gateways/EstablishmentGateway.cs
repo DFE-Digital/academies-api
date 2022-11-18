@@ -19,6 +19,7 @@ namespace TramsDataApi.Gateways
         { 
             return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
         }
+
         public IEnumerable<int> GetURNsByRegion(IEnumerable<string> regions)
         {
             return
@@ -42,6 +43,11 @@ namespace TramsDataApi.Gateways
         {
             return _dbContext.Establishment.Where(e => e.TrustsCode == trustUid)
                 .ToList();
+        }
+
+        public IList<Establishment> GetByTrustUids(string[] trustUids)
+        {
+            return _dbContext.Establishment.AsNoTracking().Where(e => trustUids.Contains(e.TrustsCode)).ToList();
         }
 
         public MisEstablishments GetMisEstablishmentByUrn(int establishmentUrn)

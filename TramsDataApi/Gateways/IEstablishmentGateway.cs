@@ -15,6 +15,7 @@ namespace TramsDataApi.Gateways
         FurtherEducationEstablishments GetFurtherEducationEstablishmentByUrn(int establishmentUrn);
         ViewAcademyConversions GetViewAcademyConversionInfoByUrn(int urn);
         IList<Establishment> GetByUrns(int[] urns);
+        IList<Establishment> GetByTrustUids(string[] trustUids);
         IList<MisEstablishments> GetMisEstablishmentsByUrns(int[] establishmentUrns);
         IList<FurtherEducationEstablishments> GetFurtherEducationEstablishmentsByUrns(int[] establishmentUrns);
         IList<SmartData> GetSmartDataByUrns(int[] establishmentUrns);
