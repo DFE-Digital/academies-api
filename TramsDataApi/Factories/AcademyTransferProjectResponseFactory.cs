@@ -115,7 +115,9 @@ namespace TramsDataApi.Factories
                     Author = model.Author,
                     Recommendation = model.Recommendation
                 },
-                AssignedUser = new AssignedUserResponse
+                AssignedUser = string.IsNullOrWhiteSpace(model.AssignedUserEmailAddress)
+                ? null
+                : new AssignedUserResponse
                 {
                     FullName = model.AssignedUserFullName,
                     EmailAddress = model.AssignedUserEmailAddress,
