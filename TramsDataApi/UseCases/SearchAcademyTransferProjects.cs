@@ -82,6 +82,14 @@ namespace TramsDataApi.UseCases
                OutgoingTrustName = outgoingGroup.GroupName,
                OutgoingTrustLeadRscRegion =
                   outgoingTrusts.First(t => t.TrustRef == outgoingGroup.GroupId).LeadRscRegion,
+               AssignedUser = string.IsNullOrWhiteSpace(x.AssignedUserEmailAddress)
+               ? null
+               : new AssignedUserResponse
+               {
+                   EmailAddress = x.AssignedUserEmailAddress,
+                   FullName = x.AssignedUserFullName,
+                   Id = x.AssignedUserId
+               },
                TransferringAcademies = x.TransferringAcademies.Select(ta =>
                {
                   Group group = incomingGroups.First(g => g.Ukprn == ta.IncomingTrustUkprn);
