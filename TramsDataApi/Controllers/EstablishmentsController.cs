@@ -16,7 +16,7 @@ namespace TramsDataApi.Controllers
         private readonly IGetEstablishmentURNsByRegion _getEstablishmentURNsByRegion;
         private readonly IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> _getEstablishmentByUrn;
         private readonly IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> _searchEstablishments;
-        private readonly IGetEstablishmentsByUrns _getEstablishmentsByUrns;
+        private readonly IGetEstablishments _getEstablishments;
         private readonly ILogger<EstablishmentsController> _logger;
 
         public EstablishmentsController(
@@ -24,14 +24,14 @@ namespace TramsDataApi.Controllers
             IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> getEstablishmentByUrn,
             IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> searchEstablishments,
             IGetEstablishmentURNsByRegion getEstablishmentURNsByRegion,
-            IGetEstablishmentsByUrns getEstablishmentsByUrns,
+            IGetEstablishments getEstablishments,
             ILogger<EstablishmentsController> logger)
         {
             _getEstablishmentByUkprn = getEstablishmentByUkprn;
             _getEstablishmentByUrn = getEstablishmentByUrn;
             _searchEstablishments = searchEstablishments;
             _getEstablishmentURNsByRegion = getEstablishmentURNsByRegion;
-            _getEstablishmentsByUrns = getEstablishmentsByUrns;
+            _getEstablishments = getEstablishments;
             _logger = logger;
         }
 
@@ -102,7 +102,7 @@ namespace TramsDataApi.Controllers
             var commaSeparatedRequestUrns = string.Join(",", request.Urns);
             _logger.LogInformation($"Attemping to get establishments by URNs: {commaSeparatedRequestUrns}");
 
-            var establishments = _getEstablishmentsByUrns.Execute(request);
+            var establishments = _getEstablishments.Execute(request);
 
             if (establishments == null)
             {
