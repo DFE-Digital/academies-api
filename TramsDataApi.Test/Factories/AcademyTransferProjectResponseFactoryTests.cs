@@ -97,7 +97,8 @@ namespace TramsDataApi.Test.Factories
                 Rationale = new AcademyTransferProjectRationaleResponse(),
                 GeneralInformation = new AcademyTransferProjectGeneralInformationResponse(),
                 State = null,
-                Status = null
+                Status = null,
+                AssignedUser = new AssignedUserResponse(),
             };
 
             var result = AcademyTransferProjectResponseFactory.Create(academyTransferProjectModel);
@@ -207,6 +208,12 @@ namespace TramsDataApi.Test.Factories
                 {
                     Author = academyTransferProjectModel.Author,
                     Recommendation = academyTransferProjectModel.Recommendation
+                },
+                AssignedUser = new AssignedUserResponse
+                {
+                    EmailAddress = academyTransferProjectModel.AssignedUserEmailAddress,
+                    FullName = academyTransferProjectModel.AssignedUserFullName,
+                    Id = academyTransferProjectModel.AssignedUserId
                 },
                 State = academyTransferProjectModel.State,
                 Status = academyTransferProjectModel.Status

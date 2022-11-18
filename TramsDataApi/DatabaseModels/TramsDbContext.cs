@@ -109,8 +109,10 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(8);
 
                 entity.Property(e => e.TargetDateForTransfer).HasColumnType("date");
-
                 entity.Property(e => e.TransferFirstDiscussed).HasColumnType("date");
+                entity.Property(e => e.AssignedUserId).HasColumnType("uniqueidentifier");
+                entity.Property(e => e.AssignedUserFullName).HasColumnType("nvarchar(max)");
+                entity.Property(e => e.AssignedUserEmailAddress).HasColumnType("nvarchar(max)");
             });
 
             modelBuilder.Entity<TransferringAcademies>(entity =>
