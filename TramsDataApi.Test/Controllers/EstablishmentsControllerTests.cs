@@ -160,12 +160,10 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetByUrns_WhenGivenCorrectUrns_ReturnsAListOfEstablishments()
         {
-            const int URN2 = 23456789;
-            var establishmentResponse1 = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = URN.ToString()).Build();
-            var establishmentResponse2 = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = URN2.ToString()).Build();
-            var establishmentsResponse = new List<EstablishmentResponse> { establishmentResponse1, establishmentResponse2 };
+            var urns = new int[] { 123456, 234567 };
+            var establishmentsResponse = Builder<EstablishmentResponse>.CreateListOfSize(urns.Length).Build();
             _getEstablishmentsByUrns.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => establishmentsResponse);
-            var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = new int[] { URN, URN2 } };
+            var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = urns };
 
             var result = _controller.GetByUrns(getEstablishmentsByUrnsRequest);
 
