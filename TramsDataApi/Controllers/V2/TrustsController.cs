@@ -1,9 +1,9 @@
-
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
@@ -16,12 +16,14 @@ namespace TramsDataApi.Controllers.V2
     {
         private readonly IGetTrustByUkprn _getTrustByUkPrn;
         private readonly ISearchTrusts _searchTrusts;
+        private readonly IGetTrustsByUkprns _getTrustsByUkprns;
         private readonly ILogger<TrustsController> _logger;
 
-        public TrustsController(IGetTrustByUkprn getTrustByUkPrn, ISearchTrusts searchTrusts, ILogger<TrustsController> logger)
+        public TrustsController(IGetTrustByUkprn getTrustByUkPrn, ISearchTrusts searchTrusts, IGetTrustsByUkprns getTrustsByUkprns, ILogger<TrustsController> logger)
         {
             _getTrustByUkPrn = getTrustByUkPrn;
             _searchTrusts = searchTrusts;
+            _getTrustsByUkprns = getTrustsByUkprns;
             _logger = logger;
         }
         
@@ -66,6 +68,29 @@ namespace TramsDataApi.Controllers.V2
 
             var response = new ApiSingleResponseV2<TrustResponse>(trust);
             return new OkObjectResult(response);
+        }
+
+        [HttpGet]
+        [Route("trusts/bulk")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiResponseV2<TrustResponse>> GetByUkprns([FromQuery] GetTrustsByUkprnsRequest request)
+        {
+            var commaSeparatedRequestUkprns = string.Join(",", request.Ukprns);
+            _logger.LogInformation($"Attemping to get Trusts by UKPRNs: {commaSeparatedRequestUkprns}");
+
+            var trusts = _getTrustsByUkprns.Execute(request);
+
+            if (trusts == null)
+            {
+                _logger.LogInformation($"No Trust was found for any of the requested UKPRNs: {commaSeparatedRequestUkprns}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Trusts for UKPRNs: {commaSeparatedRequestUkprns}");
+            _logger.LogDebug(JsonSerializer.Serialize(trusts));
+
+            var response = new ApiResponseV2<TrustResponse>(trusts, null);
+            return Ok(response);
         }
     }
 }
