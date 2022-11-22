@@ -287,6 +287,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
             _legacyDbContext.SmartData.RemoveRange(_legacyDbContext.SmartData);
             _legacyDbContext.ViewAcademyConversions.RemoveRange(_legacyDbContext.ViewAcademyConversions);
+            _legacyDbContext.FurtherEducationEstablishments.RemoveRange(_legacyDbContext.FurtherEducationEstablishments);
             _legacyDbContext.SaveChanges();
         }
     }
