@@ -61,7 +61,7 @@ namespace TramsDataApi
             services.AddScoped<IGetKeyStagePerformanceByUrn, GetKeyStagePerformanceByUrn>();
             services.AddScoped<IEducationPerformanceGateway, EducationPerformanceGateway>();
             services.AddScoped<IAcademyConversionProjectGateway, AcademyConversionProjectGateway>();
-            services.AddScoped<IGetAcademyConversionProjectStatuses, GetAcademyConversionProjectStatuses>();
+            services.AddScoped<IGetAcademyConversionProjectFilterParameters, GetAcademyConversionProjectFilterParameters>();
             services.AddScoped<ICensusDataGateway, CensusDataGateway>();
             services.AddScoped<IIfdPipelineGateway, IfdPipelineGateway>();
             services.AddScoped<ICreateConcernsCase, CreateConcernsCase>();

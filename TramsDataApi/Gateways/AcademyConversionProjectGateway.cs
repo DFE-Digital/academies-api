@@ -32,6 +32,16 @@ namespace TramsDataApi.Gateways
                 .ToListAsync();
         }
 
+        public async Task<List<string>> GetAvailableAssignedUsers()
+        {
+            return await _tramsDbContext.AcademyConversionProjects
+                .OrderByDescending(p => p.AssignedUserFullName)
+                .AsNoTracking()
+                .Select(p => p.AssignedUserFullName)
+                .Distinct()
+                .ToListAsync();
+        }
+
         public async Task<List<AcademyConversionProject>> GetProjects(int page, int count)
         {
             return await _tramsDbContext.AcademyConversionProjects
