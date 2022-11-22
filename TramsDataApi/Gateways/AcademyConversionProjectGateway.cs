@@ -38,6 +38,7 @@ namespace TramsDataApi.Gateways
                 .OrderByDescending(p => p.AssignedUserFullName)
                 .AsNoTracking()
                 .Select(p => p.AssignedUserFullName)
+                .Where(p => !string.IsNullOrEmpty(p))
                 .Distinct()
                 .ToListAsync();
         }

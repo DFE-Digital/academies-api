@@ -291,7 +291,7 @@ namespace TramsDataApi.Test.Integration
 		}
 
 		[Fact]
-		public async Task Get_project_distinct_filter_parameters()
+		public async Task Get_project_should_return_distinct_filter_parameters()
 		{
 			var (status, assignedUser ) = ("Approved", "Bob 1");
 			var academyConversionProjects = _fixture.Build<AcademyConversionProject>()
@@ -318,7 +318,7 @@ namespace TramsDataApi.Test.Integration
 		}
 
 		[Fact]
-		public async Task Get_project_ordered_status_filter_parameters()
+		public async Task Get_project_should_return_ordered_status_filter_parameters()
 		{
 			var (status1, status2, status3) = ("Approved", "Declined", "Deferred" );
 
@@ -343,7 +343,7 @@ namespace TramsDataApi.Test.Integration
 		}
 
 		[Fact]
-		public async Task Get_project_ordered_assigneduser_filter_parameters()
+		public async Task Get_project_should_return_ordered_assigneduser_filter_parameters()
 		{
 			var (name1, name2, name3) = ("Bob", "Dave", "John");
 
@@ -364,6 +364,30 @@ namespace TramsDataApi.Test.Integration
 				() => content.AssignedUsers[0].Should().Be(name1),
 				() => content.AssignedUsers[1].Should().Be(name2),
 				() => content.AssignedUsers[2].Should().Be(name3)
+			);
+		}
+
+		[Fact]
+		public async Task Get_project_should_return_notnull_assigneduser_filter_parameters()
+		{
+			(string name1, string name2, string name3) = (null, "", "Dave");
+
+			_dbContext.AcademyConversionProjects.Add(
+				_fixture.Build<AcademyConversionProject>().With(x => x.AssignedUserFullName, name3).Without(x => x.Id).Create());
+			_dbContext.AcademyConversionProjects.Add(
+				_fixture.Build<AcademyConversionProject>().With(x => x.AssignedUserFullName, name1).Without(x => x.Id).Create());
+			_dbContext.AcademyConversionProjects.Add(
+				_fixture.Build<AcademyConversionProject>().With(x => x.AssignedUserFullName, name2).Without(x => x.Id).Create());
+
+			await _dbContext.SaveChangesAsync();
+
+			var response = await _client.GetAsync("v2/conversion-projects/parameters");
+			var content = await response.Content.ReadFromJsonAsync<ProjectFilterParameters>();
+
+			Assert.Multiple(
+				() => response.StatusCode.Should().Be(HttpStatusCode.OK),
+				() => content.AssignedUsers.Count.Should().Be(1),
+				() => content.AssignedUsers[0].Should().Be("Dave")
 			);
 		}
 
