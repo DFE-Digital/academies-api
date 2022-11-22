@@ -32,7 +32,6 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _randomGenerator = new RandomGenerator();
             _censusDataGateway = new CensusDataGateway();
-            Dispose();
         }
 
         [Fact]
