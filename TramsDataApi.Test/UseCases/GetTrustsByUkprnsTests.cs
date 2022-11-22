@@ -134,5 +134,42 @@ namespace TramsDataApi.Test.UseCases
 
             result.Should().BeEquivalentTo(trustResponses);
         }
+
+        [Fact]
+        public void GetTrustsByUkprns_WhenGetRelatedEstablishmentsIsFalse_ReturnsListOfTrustResponsesWithoutEstablishments()
+        {
+            var requestUkprns = new string[] { "12345678", "23456789" };
+            var request = new GetTrustsByUkprnsRequest { Ukprns = requestUkprns, GetRelatedEstablishments = false };
+
+            var groups = Builder<Group>.CreateListOfSize(requestUkprns.Length)
+                .All()
+                .With((g, i) => g.Ukprn = requestUkprns[i])
+                .Build();
+
+            var trustRefs = groups.Select(g => g.GroupId).ToArray();
+            var groupUids = groups.Select(g => g.GroupUid).ToArray();
+
+            var trusts = Builder<Trust>.CreateListOfSize(requestUkprns.Length)
+                .All()
+                .With((t, i) => t.TrustRef = trustRefs[i])
+                .Build();
+
+            _mockTrustGateway.Setup(gateway => gateway.GetMultipleGroupsByUkprn(requestUkprns)).Returns(() => groups);
+            _mockTrustGateway.Setup(gateway => gateway.GetMultipleTrustsByGroupId(trustRefs)).Returns(() => trusts);
+
+            var establishments = Builder<Establishment>.CreateListOfSize(requestUkprns.Length)
+                .All()
+                .With((e, i) => e.TrustsCode = groupUids[i])
+                .Build();
+            var establishmentResponses = establishments.Select(e => EstablishmentResponseFactory.Create(e, null, null, null, null, null)).ToList();
+
+            var trustResponses = groups.Select((g, i) => TrustResponseFactory.Create(g, trusts[i], new List<EstablishmentResponse> { establishmentResponses[i] })).ToList();
+
+            _mockGetEstablishmentsUseCase.Setup(useCase => useCase.Execute(groupUids)).Returns(() => establishmentResponses);
+
+            var result = _useCase.Execute(request);
+
+            result.Should().BeEquivalentTo(trustResponses, options => options.Excluding(trust => trust.Establishments));
+        }
     }
 }

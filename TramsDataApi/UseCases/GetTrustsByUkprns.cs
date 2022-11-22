@@ -31,7 +31,12 @@ namespace TramsDataApi.UseCases
             var groupUids = groups.Select(group => group.GroupUid).ToArray();
 
             var trusts = _trustGateway.GetMultipleTrustsByGroupId(groupIds).ToList();
-            var establishments = _getEstablishmentsUseCase.Execute(groupUids)?.ToList().Distinct();
+            IEnumerable<EstablishmentResponse> establishments = null;
+
+            if (request.GetRelatedEstablishments)
+            {
+                establishments = _getEstablishmentsUseCase.Execute(groupUids)?.ToList().Distinct();
+            }
 
             // Avoid any potential duplicate `Group`s. This mimics the way that
             // we call `FirstOrDefault` when fetching a single Group.
