@@ -52,18 +52,18 @@ namespace TramsDataApi.Controllers.V2
         [HttpGet]
         [Route("trust/{ukprn}")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<TrustResponse>> GetTrustByUkPrn(string ukPrn)
+        public ActionResult<ApiSingleResponseV2<TrustResponse>> GetTrustByUkPrn(string ukprn)
         {
-            _logger.LogInformation("Attempting to get trust by UKPRN {prn}", ukPrn);
-            var trust = _getTrustByUkPrn.Execute(ukPrn);
+            _logger.LogInformation("Attempting to get trust by UKPRN {prn}", ukprn);
+            var trust = _getTrustByUkPrn.Execute(ukprn);
 
             if (trust == null)
             {
-                _logger.LogInformation("No trust found for UKPRN {prn}", ukPrn);
+                _logger.LogInformation("No trust found for UKPRN {prn}", ukprn);
                 return new NotFoundResult();
             }
 
-            _logger.LogInformation("Returning trust found by UKPRN {prn}", ukPrn);
+            _logger.LogInformation("Returning trust found by UKPRN {prn}", ukprn);
             _logger.LogDebug(JsonSerializer.Serialize(trust));
 
             var response = new ApiSingleResponseV2<TrustResponse>(trust);
