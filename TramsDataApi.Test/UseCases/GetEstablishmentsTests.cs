@@ -192,23 +192,19 @@ namespace TramsDataApi.Test.UseCases
             [Fact]
             public void WhenMisEstablishmentsAreFound_ReturnsListOfEstablishmentResponses()
             {
-                (string TrustUid, int Urn)[] establishmentAttributes = {
-                    (TrustUid: "1234", Urn: 12345),
-                    (TrustUid: "2345", Urn: 23456)
-                };
-                var urns = establishmentAttributes.Select(e => e.Urn).ToArray();
-                var trustUids = establishmentAttributes.Select(e => e.TrustUid).ToArray();
+                var trustUids = new string[] { "1234", "2345" };
 
-                var establishments = Builder<Establishment>.CreateListOfSize(establishmentAttributes.Length)
+                var establishments = Builder<Establishment>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.Urn = establishmentAttributes[i].Urn)
                     .Build();
-                var misEstablishments = Builder<MisEstablishments>.CreateListOfSize(establishmentAttributes.Length)
+                var misEstablishments = Builder<MisEstablishments>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.Urn = establishmentAttributes[i].Urn)
+                    .With((e, i) => e.Urn = establishments[i].Urn)
                     .Build();
                 var establishmentResponses = establishments.Select((e, i) => EstablishmentResponseFactory
                     .Create(e, misEstablishments[i], null, null, null, null)).ToList();
+
+                var urns = establishments.Select(e => e.Urn).ToArray();
 
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetByTrustUids(trustUids)).Returns(() => establishments);
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetMisEstablishmentsByUrns(urns)).Returns(() => misEstablishments);
@@ -221,23 +217,19 @@ namespace TramsDataApi.Test.UseCases
             [Fact]
             public void WhenSmartDataIsFound_ReturnsListOfEstablishmentResponses()
             {
-                (string TrustUid, int Urn)[] establishmentAttributes = {
-                    (TrustUid: "1234", Urn: 12345),
-                    (TrustUid: "2345", Urn: 23456)
-                };
-                var urns = establishmentAttributes.Select(e => e.Urn).ToArray();
-                var trustUids = establishmentAttributes.Select(e => e.TrustUid).ToArray();
+                var trustUids = new string[] { "1234", "2345" };
 
-                var establishments = Builder<Establishment>.CreateListOfSize(establishmentAttributes.Length)
+                var establishments = Builder<Establishment>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.Urn = establishmentAttributes[i].Urn)
                     .Build();
-                var smartData = Builder<SmartData>.CreateListOfSize(establishmentAttributes.Length)
+                var smartData = Builder<SmartData>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.Urn = establishmentAttributes[i].Urn.ToString())
+                    .With((e, i) => e.Urn = establishments[i].Urn.ToString())
                     .Build();
                 var establishmentResponses = establishments.Select((e, i) => EstablishmentResponseFactory
                     .Create(e, null, smartData[i], null, null, null)).ToList();
+
+                var urns = establishments.Select(e => e.Urn).ToArray();
 
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetByTrustUids(trustUids)).Returns(() => establishments);
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetSmartDataByUrns(urns)).Returns(() => smartData);
@@ -250,23 +242,19 @@ namespace TramsDataApi.Test.UseCases
             [Fact]
             public void WhenFurtherEducationEstablishmentsAreFound_ReturnsListOfEstablishmentResponses()
             {
-                (string TrustUid, int Urn)[] establishmentAttributes = {
-                    (TrustUid: "1234", Urn: 12345),
-                    (TrustUid: "2345", Urn: 23456)
-                };
-                var urns = establishmentAttributes.Select(e => e.Urn).ToArray();
-                var trustUids = establishmentAttributes.Select(e => e.TrustUid).ToArray();
+                var trustUids = new string[] { "1234", "2345" };
 
-                var establishments = Builder<Establishment>.CreateListOfSize(establishmentAttributes.Length)
+                var establishments = Builder<Establishment>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.Urn = establishmentAttributes[i].Urn)
                     .Build();
-                var furtherEducationEstablishments = Builder<FurtherEducationEstablishments>.CreateListOfSize(establishmentAttributes.Length)
+                var furtherEducationEstablishments = Builder<FurtherEducationEstablishments>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.ProviderUrn = establishmentAttributes[i].Urn)
+                    .With((e, i) => e.ProviderUrn = establishments[i].Urn)
                     .Build();
                 var establishmentResponses = establishments.Select((e, i) => EstablishmentResponseFactory
                     .Create(e, null, null, furtherEducationEstablishments[i], null, null)).ToList();
+
+                var urns = establishments.Select(e => e.Urn).ToArray();
 
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetByTrustUids(trustUids)).Returns(() => establishments);
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetFurtherEducationEstablishmentsByUrns(urns)).Returns(() => furtherEducationEstablishments);
@@ -279,23 +267,19 @@ namespace TramsDataApi.Test.UseCases
             [Fact]
             public void WhenViewAcademyConversionsAreFound_ReturnsListOfEstablishmentResponses()
             {
-                (string TrustUid, int Urn)[] establishmentAttributes = {
-                    (TrustUid: "1234", Urn: 12345),
-                    (TrustUid: "2345", Urn: 23456)
-                };
-                var urns = establishmentAttributes.Select(e => e.Urn).ToArray();
-                var trustUids = establishmentAttributes.Select(e => e.TrustUid).ToArray();
+                var trustUids = new string[] { "1234", "2345" };
 
-                var establishments = Builder<Establishment>.CreateListOfSize(establishmentAttributes.Length)
+                var establishments = Builder<Establishment>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.Urn = establishmentAttributes[i].Urn)
-                    .Build(); ;
-                var viewAcademyConversions = Builder<ViewAcademyConversions>.CreateListOfSize(establishmentAttributes.Length)
+                    .Build();
+                var viewAcademyConversions = Builder<ViewAcademyConversions>.CreateListOfSize(trustUids.Length)
                     .All()
-                    .With((e, i) => e.GeneralDetailsAcademyUrn = establishmentAttributes[i].Urn.ToString())
+                    .With((e, i) => e.GeneralDetailsAcademyUrn = establishments[i].Urn.ToString())
                     .Build();
                 var establishmentResponses = establishments.Select((e, i) => EstablishmentResponseFactory
                     .Create(e, null, null, null, viewAcademyConversions[i], null)).ToList();
+
+                var urns = establishments.Select(e => e.Urn).ToArray();
 
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetByTrustUids(trustUids)).Returns(() => establishments);
                 _mockEstablishmentGateway.Setup(gateway => gateway.GetViewAcademyConversionInfoByUrns(urns)).Returns(() => viewAcademyConversions);
