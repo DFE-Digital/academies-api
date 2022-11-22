@@ -232,5 +232,19 @@ namespace TramsDataApi.Test.Controllers
             result.Result.Should().BeEquivalentTo(new OkObjectResult(trustsApiResponse));
             _mockGetTrustsByUkprnsUseCase.Verify(mock => mock.Execute(getTrustsByUrnsRequest), Times.Once());
         }
+
+        [Fact]
+        public void GetByUkprns_WhenGetRelatedEstablishmentsIsFalse_ReturnsAListOfTrusts()
+        {
+            var ukprns = new string[] { "12345678", "23456789" };
+            var trustsResponse = Builder<TrustResponse>.CreateListOfSize(ukprns.Length).Build();
+            var trustsApiResponse = new ApiResponseV2<TrustResponse>(trustsResponse, null);
+            _mockGetTrustsByUkprnsUseCase.Setup(g => g.Execute(It.IsAny<GetTrustsByUkprnsRequest>())).Returns(() => trustsResponse);
+            var getTrustsByUrnsRequest = new GetTrustsByUkprnsRequest { Ukprns = ukprns, GetRelatedEstablishments = false };
+
+            var result = _controller.GetByUkprns(getTrustsByUrnsRequest);
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(trustsApiResponse));
+            _mockGetTrustsByUkprnsUseCase.Verify(mock => mock.Execute(getTrustsByUrnsRequest), Times.Once());
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace TramsDataApi.RequestModels
         [Required]
         [FromQuery(Name = "Ukprn")]
         public string[] Ukprns { get; set; }
+        [FromQuery(Name = "Establishments")]
+        public bool GetRelatedEstablishments { get; set; } = true;
     }
 }
