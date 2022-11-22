@@ -32,6 +32,7 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _randomGenerator = new RandomGenerator();
             _censusDataGateway = new CensusDataGateway();
+            Dispose();
         }
 
         [Fact]
@@ -43,7 +44,7 @@ namespace TramsDataApi.Test.Integration
             var response = await _client.GetAsync("/establishment/mockukprn");
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<EstablishmentResponse>(jsonString);
-            
+
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
         }
@@ -101,7 +102,7 @@ namespace TramsDataApi.Test.Integration
                 .All()
                 .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
                 .Build();
-            
+
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.SaveChanges();
 
@@ -109,7 +110,7 @@ namespace TramsDataApi.Test.Integration
             {
                 EstablishmentSummaryResponseFactory.Create(establishments[0])
             };
-            
+
             var response = await _client.GetAsync($"/establishments?urn={establishments[0].Urn}");
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);
@@ -126,7 +127,7 @@ namespace TramsDataApi.Test.Integration
                 .All()
                 .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
                 .Build();
-            
+
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.SaveChanges();
 
@@ -134,7 +135,7 @@ namespace TramsDataApi.Test.Integration
             {
                 EstablishmentSummaryResponseFactory.Create(establishments[0])
             };
-            
+
             var response = await _client.GetAsync($"/establishments?ukprn={establishments[0].Ukprn}");
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);
@@ -151,8 +152,8 @@ namespace TramsDataApi.Test.Integration
                 .All()
                 .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
                 .Build();
-            
-            
+
+
             _legacyDbContext.Establishment.AddRange(establishments);
             _legacyDbContext.SaveChanges();
 
@@ -160,7 +161,7 @@ namespace TramsDataApi.Test.Integration
             {
                 EstablishmentSummaryResponseFactory.Create(establishments[0])
             };
-            
+
             var response = await _client.GetAsync($"/establishments?name={establishments[0].EstablishmentName}");
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);
@@ -177,7 +178,7 @@ namespace TramsDataApi.Test.Integration
                 .All()
                 .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
                 .Build();
-    
+
             establishments[9].EstablishmentName = "aFaKeESTABLISHMENT";
 
             _legacyDbContext.Establishment.AddRange(establishments);
@@ -187,7 +188,7 @@ namespace TramsDataApi.Test.Integration
             {
                 EstablishmentSummaryResponseFactory.Create(establishments[9])
             };
-            
+
             var response = await _client.GetAsync($"/establishments?name=afakeestab");
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);
@@ -205,8 +206,8 @@ namespace TramsDataApi.Test.Integration
                 .All()
                 .With(e => e.Urn = _randomGenerator.Next(100000, 199000))
                 .Build();
-            
-    
+
+
             establishments[5].Urn = 199954;
             establishments[9].Urn = 199999;
 
@@ -218,7 +219,7 @@ namespace TramsDataApi.Test.Integration
                 EstablishmentSummaryResponseFactory.Create(establishments[5]),
                 EstablishmentSummaryResponseFactory.Create(establishments[9])
             };
-            
+
             var response = await _client.GetAsync($"/establishments?urn=1999");
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);
@@ -236,7 +237,7 @@ namespace TramsDataApi.Test.Integration
                 .All()
                 .With(e => e.Urn = _randomGenerator.Next(100000, 199999))
                 .Build();
-            
+
             establishments[2].Ukprn = "testukprn1";
             establishments[6].Ukprn = "testukprn2";
 
@@ -248,7 +249,7 @@ namespace TramsDataApi.Test.Integration
                 EstablishmentSummaryResponseFactory.Create(establishments[2]),
                 EstablishmentSummaryResponseFactory.Create(establishments[6])
             };
-            
+
             var response = await _client.GetAsync($"/establishments?ukprn=testukprn");
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<EstablishmentSummaryResponse>>(jsonString);

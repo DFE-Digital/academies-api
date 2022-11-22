@@ -9,6 +9,7 @@ namespace TramsDataApi.Gateways
         Task<AcademyConversionProject> GetById(int id);
         Task<List<AcademyConversionProject>> GetProjects(int page, int count);
         Task<List<string>> GetAvailableProjectStatuses();
+        Task<List<string>> GetAvailableAssignedUsers();
         Task<AcademyConversionProject> Update(AcademyConversionProject academyConversionProject);
         Task<PagedResult<AcademyConversionProject>> SearchProjects(int page, int count, IEnumerable<string> statuses, int? urn, string title, IEnumerable<string> deliveryOfficers, IEnumerable<int?> regions = default);
     }
