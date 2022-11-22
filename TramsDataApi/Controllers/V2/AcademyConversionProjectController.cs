@@ -19,7 +19,7 @@ namespace TramsDataApi.Controllers.V2
         private readonly ILogger<AcademyConversionProjectController> _logger;
         private readonly IGetAcademyConversionProject _getAcademyConversionProjectById;
         private readonly IUpdateAcademyConversionProject _updateAcademyConversionProject;
-        private readonly IGetAcademyConversionProjectStatuses _getAcademyConversionProjectStatuses;
+        private readonly IGetAcademyConversionProjectFilterParameters _getAcademyConversionProjectStatuses;
         private readonly ISearchAcademyConversionProjects _searchAcademyConversionProjects;
 
         private const string RetrieveProjectsLog = "Attempting to retrieve {Count} Academy Conversion Projects";
@@ -36,7 +36,7 @@ namespace TramsDataApi.Controllers.V2
             ISearchAcademyConversionProjects searchAcademyConversionProjects,
             IGetAcademyConversionProject getAcademyConversionProjectById,
             IUpdateAcademyConversionProject updateAcademyConversionProject,
-            IGetAcademyConversionProjectStatuses getAcademyConversionProjectStatuses,
+            IGetAcademyConversionProjectFilterParameters getAcademyConversionProjectStatuses,
             ILogger<AcademyConversionProjectController> logger)
         {
             _logger = logger;
@@ -60,7 +60,7 @@ namespace TramsDataApi.Controllers.V2
             var statusList = !string.IsNullOrWhiteSpace(states)
                 ? states.Split(',').ToList()
                 : null;
-            
+
             _logger.LogInformation(SearchProjectsLog, count, states, urn, title);
             var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title, deliveryOfficers, regions);
 
@@ -76,11 +76,12 @@ namespace TramsDataApi.Controllers.V2
             return Ok(response);
         }
 
-        [HttpGet("statuses")]
+        [HttpGet("parameters")]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<List<string>>> GetAvailableStatuses()
+        public async Task<ActionResult<ProjectFilterParameters>> GetFilterParameters()
         {
             var result = await _getAcademyConversionProjectStatuses.Execute();
+
             return Ok(result);
         }
 
