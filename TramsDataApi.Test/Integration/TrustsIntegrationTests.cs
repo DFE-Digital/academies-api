@@ -18,7 +18,7 @@ using Xunit;
 namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class TrustsIntegrationTests : IClassFixture<TramsDataApiFactory>
+    public class TrustsIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
     {
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
@@ -134,9 +134,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected); 
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.Trust.RemoveRange(_legacyDbContext.Trust);
-            _legacyDbContext.SaveChanges();
         }
         
         [Fact]
@@ -208,9 +205,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -300,12 +294,6 @@ namespace TramsDataApi.Test.Integration
         
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
-            _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
-            _legacyDbContext.SmartData.RemoveRange(_legacyDbContext.SmartData);
-            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -339,9 +327,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
         
         [Fact]
@@ -393,10 +378,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-           
-            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -447,8 +428,6 @@ namespace TramsDataApi.Test.Integration
             var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -498,8 +477,6 @@ namespace TramsDataApi.Test.Integration
             var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -549,8 +526,6 @@ namespace TramsDataApi.Test.Integration
             var result = JsonConvert.DeserializeObject<List<TrustSummaryResponse>>(jsonString);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -600,9 +575,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
         
         [Fact]
@@ -644,9 +616,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
         
         [Fact]
@@ -695,9 +664,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -748,9 +714,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
 
 
@@ -801,10 +764,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
-            _legacyDbContext.SaveChanges();
         }
         
         [Fact]
@@ -885,9 +844,6 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Count.Should().Be(10);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
         
         
@@ -919,9 +875,6 @@ namespace TramsDataApi.Test.Integration
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Count.Should().Be(0);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.SaveChanges();
         }
         
         [Fact]
@@ -973,9 +926,89 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+        }
+
+        [Fact]
+        public async Task ShouldReturnTrusts_WithEstablishments_WhenGettingByUkprns()
+        {
+            const string ukprn1 = "12345678";
+            const string ukprn2 = "23456789";
+            var ukprns = new string[] { ukprn1, ukprn2 };
+
+            var randomGenerator = new RandomGenerator();
+            var groups = Builder<Group>.CreateListOfSize(ukprns.Length)
+                .All()
+                .With((g, i) => g.Ukprn = ukprns[i])
+                .With(g => g.GroupId = randomGenerator.NextString(7, 7))
+                .Build();
+            var trusts = groups
+                .Select((group, index) => new Trust { Rid = index.ToString(), TrustRef = group.GroupId})
+                .ToList();
+
+            _legacyDbContext.Group.AddRange(groups);
+            _legacyDbContext.Trust.AddRange(trusts);
+
             _legacyDbContext.SaveChanges();
+
+            var establishment1 = AddTestEstablishmentData(groups[0].GroupUid);
+            var establishment2 = AddTestEstablishmentData(groups[1].GroupUid);
+
+            var establishments = new EstablishmentResponse[] { establishment1, establishment2 };
+
+            var trustResponses = groups.Select((group, i) => TrustResponseFactory.Create(group, trusts[i], new List<EstablishmentResponse> { establishments[i] }));
+            var trustsApiResponse = new ApiResponseV2<TrustResponse>(trustResponses, null);
+
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/v2/trusts/bulk?Ukprn={ukprn1}&Ukprn={ukprn2}"),
+                Headers = { {"ApiKey", "testing-api-key"} }
+            };
+
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ApiResponseV2<TrustResponse>>(jsonString);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEquivalentTo(trustsApiResponse);
+        }
+
+        public void Dispose()
+        {
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.Trust.RemoveRange(_legacyDbContext.Trust);
+            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
+            _legacyDbContext.MisEstablishments.RemoveRange(_legacyDbContext.MisEstablishments);
+            _legacyDbContext.SmartData.RemoveRange(_legacyDbContext.SmartData);
+            _legacyDbContext.SmartData.RemoveRange(_legacyDbContext.SmartData);
+            _legacyDbContext.FurtherEducationEstablishments.RemoveRange(_legacyDbContext.FurtherEducationEstablishments);
+            _legacyDbContext.FurtherEducationEstablishments.RemoveRange(_legacyDbContext.FurtherEducationEstablishments);
+            _legacyDbContext.ViewAcademyConversions.RemoveRange(_legacyDbContext.ViewAcademyConversions);
+
+            _legacyDbContext.SaveChanges();
+        }
+
+        private EstablishmentResponse AddTestEstablishmentData(string trustsCode)
+        {
+            var establishment = Builder<Establishment>
+                .CreateNew()
+                .With(establishment => establishment.TrustsCode = trustsCode)
+                .With(establishment => establishment.Urn = _randomGenerator.Next(100000, 199999))
+                .Build();
+
+            var misEstablishment = Builder<MisEstablishments>.CreateNew().With(m => m.Urn = establishment.Urn).Build();
+            var furtherEducationEstablishment = Builder<FurtherEducationEstablishments>.CreateNew().With(f => f.ProviderUrn = establishment.Urn).Build();
+            var smartData = Generators.GenerateSmartData(establishment.Urn); 
+            var viewAcademyConversionData = Generators.GenerateViewAcademyConversions(establishment.Urn);
+
+            _legacyDbContext.Establishment.Add(establishment);
+            _legacyDbContext.MisEstablishments.Add(misEstablishment);
+            _legacyDbContext.SmartData.Add(smartData);
+            _legacyDbContext.FurtherEducationEstablishments.Add(furtherEducationEstablishment);
+            _legacyDbContext.ViewAcademyConversions.Add(viewAcademyConversionData);
+            _legacyDbContext.SaveChanges();
+
+            return EstablishmentResponseFactory.Create(establishment, misEstablishment, smartData, furtherEducationEstablishment, viewAcademyConversionData, null);
         }
 
         private Group GenerateTestGroup()

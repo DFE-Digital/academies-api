@@ -7,7 +7,7 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public class GetTrustsByUkprns
+    public class GetTrustsByUkprns : IGetTrustsByUkprns
     {
         private readonly ITrustGateway _trustGateway;
         private readonly IGetEstablishments _getEstablishmentsUseCase;

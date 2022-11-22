@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers.V2;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 using Xunit;
@@ -19,6 +20,7 @@ namespace TramsDataApi.Test.Controllers
         private readonly TrustsController _controller;
         private readonly Mock<IGetTrustByUkprn> _mockGetTrustByUkprnUseCase;
         private readonly Mock<ISearchTrusts> _mockSearchTrustsUseCase;
+        private readonly Mock<IGetTrustsByUkprns> _mockGetTrustsByUkprnsUseCase;
         private readonly Mock<ILogger<TrustsController>> _mockLogger;
 
         public TrustsControllerV2Tests()
@@ -27,11 +29,13 @@ namespace TramsDataApi.Test.Controllers
 
             _mockGetTrustByUkprnUseCase = new Mock<IGetTrustByUkprn>();
             _mockSearchTrustsUseCase = new Mock<ISearchTrusts>();
+            _mockGetTrustsByUkprnsUseCase = new Mock<IGetTrustsByUkprns>();
             _mockLogger = new Mock<ILogger<TrustsController>>();
 
             _controller = new TrustsController(
                     _mockGetTrustByUkprnUseCase.Object,
                     _mockSearchTrustsUseCase.Object,
+                    _mockGetTrustsByUkprnsUseCase.Object,
                     _mockLogger.Object);
         }
 
@@ -199,6 +203,34 @@ namespace TramsDataApi.Test.Controllers
 
             var expected = new OkObjectResult(new ApiResponseV2<TrustSummaryResponse>(expectedTrustSummaries.Take(10), expectedPaging));
             result.Result.Should().BeEquivalentTo(expected);
+        }
+
+
+        [Fact]
+        public void GetByUkprns_WhenNoTrustsAreFound_ReturnsNotFoundResult()
+        {
+            const string missingTrustUkprn = "12345678";
+            _mockGetTrustsByUkprnsUseCase.Setup(g => g.Execute(It.IsAny<GetTrustsByUkprnsRequest>())).Returns(() => null);
+            var getTrustsByUkprnsRequest = new GetTrustsByUkprnsRequest { Ukprns = new string[] { missingTrustUkprn } };
+
+            var result = _controller.GetByUkprns(getTrustsByUkprnsRequest);
+
+            result.Result.Should().BeOfType(typeof(NotFoundResult));
+        }
+
+        [Fact]
+        public void GetByUkprns_WhenGivenCorrectUkprns_ReturnsAListOfTrusts()
+        {
+            var ukprns = new string[] { "12345678", "23456789" };
+            var trustsResponse = Builder<TrustResponse>.CreateListOfSize(ukprns.Length).Build();
+            var trustsApiResponse = new ApiResponseV2<TrustResponse>(trustsResponse, null);
+            _mockGetTrustsByUkprnsUseCase.Setup(g => g.Execute(It.IsAny<GetTrustsByUkprnsRequest>())).Returns(() => trustsResponse);
+            var getTrustsByUrnsRequest = new GetTrustsByUkprnsRequest { Ukprns = ukprns };
+
+            var result = _controller.GetByUkprns(getTrustsByUrnsRequest);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(trustsApiResponse));
+            _mockGetTrustsByUkprnsUseCase.Verify(mock => mock.Execute(getTrustsByUrnsRequest), Times.Once());
         }
     }
 }
