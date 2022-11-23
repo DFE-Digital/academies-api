@@ -49,7 +49,7 @@ namespace TramsDataApi.Controllers.V2
         [HttpPost]
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<ApiResponseV2<AcademyConversionProjectResponse>>> GetConversionProjects(
-            GetAcademyConversionSearchModel searchModel, [FromQuery] int? urn = null)
+            GetAcademyConversionSearchModel? searchModel, [FromQuery] int? urn = null)
         {
             _logger.LogInformation(SearchProjectsLog, searchModel.Count, searchModel.StatusQueryString, urn, searchModel.TitleFilter);
             var result = await _searchAcademyConversionProjects.Execute(searchModel.Page, searchModel.Count, searchModel.StatusQueryString, urn, searchModel.TitleFilter, searchModel.DeliveryOfficerQueryString, searchModel.RegionUrnsQueryString);

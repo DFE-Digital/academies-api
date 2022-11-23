@@ -52,7 +52,12 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
 
-			var result = await controller.GetConversionProjects(null, title: string.Empty, urn: urn, regions: null, deliveryOfficers: projectDeliveryOfficers);
+			GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = string.Empty, Count = 1, Page = 1, RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = projectDeliveryOfficers
+            };
+			var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
@@ -80,10 +85,17 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IUpdateAcademyConversionProject>().Object,
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = string.Empty,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = projectDeliveryOfficers
+            };
+            var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
-			var result = await controller.GetConversionProjects(null, title: string.Empty, urn: urn, deliveryOfficers: projectDeliveryOfficers);
-
-			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
 		[Fact]
 		public async Task GetConversionProjects_ReturnsResponseWithListOfAcademyConversionProjects_WhenDeliveryOfficerFilterAppliedAndNoResultsFound()
@@ -107,10 +119,17 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
 
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = string.Empty,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = Array.Empty<string>()
+            };
+            var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
-			var result = await controller.GetConversionProjects(string.Empty, title: string.Empty, urn: urn, deliveryOfficers: Array.Empty<string>());
-
-			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
 
 		[Fact]
@@ -137,8 +156,16 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
 
-			var result = await controller.GetConversionProjects(null, title: projectTitle, urn: urn, deliveryOfficers: Array.Empty<string>());
-
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = projectTitle,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = null
+            };
+            var result = await controller.GetConversionProjects(searchModel, urn: urn);
+            
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
 		[Fact]
@@ -163,8 +190,15 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
 
-
-			var result = await controller.GetConversionProjects(string.Empty, title: projectTitle, urn: urn, deliveryOfficers: Array.Empty<string>());
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = projectTitle,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = null
+            };
+            var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
@@ -193,7 +227,15 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
 
-			var result = await controller.GetConversionProjects(null, title: null, urn: urn, deliveryOfficers: null, regions: projectRegionEstablishmentURNs);
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = null,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = projectRegionEstablishmentURNs,
+                DeliveryOfficerQueryString = null
+            };
+            var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
@@ -225,7 +267,16 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
 
-			var result = await controller.GetConversionProjects(projectStatus, title: projectTitle, urn: urn, deliveryOfficers: projectDeliveryOfficer, regions: projectRegionEstablishmentURNs);
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = projectTitle,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = projectRegionEstablishmentURNs,
+                DeliveryOfficerQueryString = projectDeliveryOfficer,
+				StatusQueryString = new[] { projectStatus }
+            };
+            var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
@@ -249,8 +300,15 @@ namespace TramsDataApi.Test.Controllers
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = 0 };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
 
-
-			var result = await controller.GetConversionProjects(string.Empty, string.Empty, Array.Empty<string>());
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = null,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = null
+            };
+            var result = await controller.GetConversionProjects(searchModel);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
@@ -286,8 +344,15 @@ namespace TramsDataApi.Test.Controllers
 
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = 2, NextPageUrl = expectedNextPageUrl };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data.Take(1), expectedPaging);
-
-			var result = await controller.GetConversionProjects(null, null, null, 1, 1);
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = null,
+                Count = 1,
+                Page = 1,
+                RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = null
+            };
+            var result = await controller.GetConversionProjects(searchModel);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
@@ -322,8 +387,15 @@ namespace TramsDataApi.Test.Controllers
 
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = 2, NextPageUrl = expectedNextPageUrl };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
-
-			var result = await controller.GetConversionProjects(null, null, null, 1, 10);
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
+            {
+                TitleFilter = null,
+                Count = 10,
+                Page = 1,
+                RegionUrnsQueryString = null,
+                DeliveryOfficerQueryString = null
+            };
+            var result = await controller.GetConversionProjects(searchModel);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
 		}
