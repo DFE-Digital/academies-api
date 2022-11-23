@@ -54,7 +54,10 @@ namespace TramsDataApi.Test.Controllers
 
 			GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
             {
-                TitleFilter = string.Empty, Count = 1, Page = 1, RegionUrnsQueryString = null,
+                TitleFilter = string.Empty, 
+                Count = 1, 
+                Page = 1, 
+                RegionUrnsQueryString = null,
                 DeliveryOfficerQueryString = projectDeliveryOfficers
             };
 			var result = await controller.GetConversionProjects(searchModel, urn: urn);
