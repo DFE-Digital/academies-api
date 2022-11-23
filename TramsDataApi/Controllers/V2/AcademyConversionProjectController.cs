@@ -46,23 +46,13 @@ namespace TramsDataApi.Controllers.V2
             _searchAcademyConversionProjects = searchAcademyConversionProjects;
         }
 
-        [HttpGet]
+        [HttpPost]
         [MapToApiVersion("2.0")]
         public async Task<ActionResult<ApiResponseV2<AcademyConversionProjectResponse>>> GetConversionProjects(
-            [FromQuery] string states,
-            [FromQuery] string title,
-            [FromQuery] string[] deliveryOfficers,
-            [FromQuery] int page = 1,
-            [FromQuery] int count = 50,
-            [FromQuery] int? urn = null,
-            [FromQuery] int?[] regions = default)
+            GetAcademyConversionSearchModel searchModel, [FromQuery] int? urn = null)
         {
-            var statusList = !string.IsNullOrWhiteSpace(states)
-                ? states.Split(',').ToList()
-                : null;
-
-            _logger.LogInformation(SearchProjectsLog, count, states, urn, title);
-            var result = await _searchAcademyConversionProjects.Execute(page, count, statusList, urn, title, deliveryOfficers, regions);
+            _logger.LogInformation(SearchProjectsLog, searchModel.Count, searchModel.StatusQueryString, urn, searchModel.TitleFilter);
+            var result = await _searchAcademyConversionProjects.Execute(searchModel.Page, searchModel.Count, searchModel.StatusQueryString, urn, searchModel.TitleFilter, searchModel.DeliveryOfficerQueryString, searchModel.RegionUrnsQueryString);
 
             if (!result.Results.Any())
             {
@@ -70,7 +60,7 @@ namespace TramsDataApi.Controllers.V2
                 _logger.LogInformation(ReturnProjectsLog, result.Results.Count(), string.Join(',', projectIds));
             }
 
-            var pagingResponse = PagingResponseFactory.Create(page, count, result.TotalCount, Request);
+            var pagingResponse = PagingResponseFactory.Create(searchModel.Page, searchModel.Count, result.TotalCount, Request);
 
             var response = new ApiResponseV2<AcademyConversionProjectResponse>(result.Results, pagingResponse);
             return Ok(response);
