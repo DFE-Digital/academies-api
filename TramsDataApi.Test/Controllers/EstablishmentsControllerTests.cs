@@ -20,7 +20,7 @@ namespace TramsDataApi.Test.Controllers
         private readonly Mock<IGetEstablishmentURNsByRegion> _getEstablishmentURNsByRegion;
         private readonly Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>> _getEstablishmentByUrn;
         private readonly Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>> _searchEstablishments;
-        private readonly Mock<IGetEstablishmentsByUrns> _getEstablishmentsByUrns;
+        private readonly Mock<IGetEstablishments> _getEstablishmentsByUrns;
         private const string UKPRN = "mockukprn";
         private const int URN = 123456789;
 
@@ -32,7 +32,7 @@ namespace TramsDataApi.Test.Controllers
             _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
             _getEstablishmentByUrn = new Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>>();
             _searchEstablishments = new Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>>();
-            _getEstablishmentsByUrns = new Mock<IGetEstablishmentsByUrns>();
+            _getEstablishmentsByUrns = new Mock<IGetEstablishments>();
 
             _controller = new EstablishmentsController(
                 _getEstablishmentByUkprn.Object,
@@ -160,12 +160,10 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetByUrns_WhenGivenCorrectUrns_ReturnsAListOfEstablishments()
         {
-            const int URN2 = 23456789;
-            var establishmentResponse1 = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = URN.ToString()).Build();
-            var establishmentResponse2 = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = URN2.ToString()).Build();
-            var establishmentsResponse = new List<EstablishmentResponse> { establishmentResponse1, establishmentResponse2 };
+            var urns = new int[] { 123456, 234567 };
+            var establishmentsResponse = Builder<EstablishmentResponse>.CreateListOfSize(urns.Length).Build();
             _getEstablishmentsByUrns.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => establishmentsResponse);
-            var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = new int[] { URN, URN2 } };
+            var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = urns };
 
             var result = _controller.GetByUrns(getEstablishmentsByUrnsRequest);
 

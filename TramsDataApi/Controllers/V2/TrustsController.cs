@@ -1,9 +1,9 @@
-
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
@@ -16,12 +16,14 @@ namespace TramsDataApi.Controllers.V2
     {
         private readonly IGetTrustByUkprn _getTrustByUkPrn;
         private readonly ISearchTrusts _searchTrusts;
+        private readonly IGetTrustsByUkprns _getTrustsByUkprns;
         private readonly ILogger<TrustsController> _logger;
 
-        public TrustsController(IGetTrustByUkprn getTrustByUkPrn, ISearchTrusts searchTrusts, ILogger<TrustsController> logger)
+        public TrustsController(IGetTrustByUkprn getTrustByUkPrn, ISearchTrusts searchTrusts, IGetTrustsByUkprns getTrustsByUkprns, ILogger<TrustsController> logger)
         {
             _getTrustByUkPrn = getTrustByUkPrn;
             _searchTrusts = searchTrusts;
+            _getTrustsByUkprns = getTrustsByUkprns;
             _logger = logger;
         }
         
@@ -50,22 +52,45 @@ namespace TramsDataApi.Controllers.V2
         [HttpGet]
         [Route("trust/{ukprn}")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiSingleResponseV2<TrustResponse>> GetTrustByUkPrn(string ukPrn)
+        public ActionResult<ApiSingleResponseV2<TrustResponse>> GetTrustByUkPrn(string ukprn)
         {
-            _logger.LogInformation("Attempting to get trust by UKPRN {prn}", ukPrn);
-            var trust = _getTrustByUkPrn.Execute(ukPrn);
+            _logger.LogInformation("Attempting to get trust by UKPRN {prn}", ukprn);
+            var trust = _getTrustByUkPrn.Execute(ukprn);
 
             if (trust == null)
             {
-                _logger.LogInformation("No trust found for UKPRN {prn}", ukPrn);
+                _logger.LogInformation("No trust found for UKPRN {prn}", ukprn);
                 return new NotFoundResult();
             }
 
-            _logger.LogInformation("Returning trust found by UKPRN {prn}", ukPrn);
+            _logger.LogInformation("Returning trust found by UKPRN {prn}", ukprn);
             _logger.LogDebug(JsonSerializer.Serialize(trust));
 
             var response = new ApiSingleResponseV2<TrustResponse>(trust);
             return new OkObjectResult(response);
+        }
+
+        [HttpGet]
+        [Route("trusts/bulk")]
+        [MapToApiVersion("2.0")]
+        public ActionResult<ApiResponseV2<TrustResponse>> GetByUkprns([FromQuery] GetTrustsByUkprnsRequest request)
+        {
+            var commaSeparatedRequestUkprns = string.Join(",", request.Ukprns);
+            _logger.LogInformation($"Attemping to get Trusts by UKPRNs: {commaSeparatedRequestUkprns}");
+
+            var trusts = _getTrustsByUkprns.Execute(request);
+
+            if (trusts == null)
+            {
+                _logger.LogInformation($"No Trust was found for any of the requested UKPRNs: {commaSeparatedRequestUkprns}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Trusts for UKPRNs: {commaSeparatedRequestUkprns}");
+            _logger.LogDebug(JsonSerializer.Serialize(trusts));
+
+            var response = new ApiResponseV2<TrustResponse>(trusts, null);
+            return Ok(response);
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers.V2;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 using Xunit;
@@ -16,24 +17,36 @@ namespace TramsDataApi.Test.Controllers
 {
     public class TrustsControllerV2Tests
     {
+        private readonly TrustsController _controller;
+        private readonly Mock<IGetTrustByUkprn> _mockGetTrustByUkprnUseCase;
+        private readonly Mock<ISearchTrusts> _mockSearchTrustsUseCase;
+        private readonly Mock<IGetTrustsByUkprns> _mockGetTrustsByUkprnsUseCase;
         private readonly Mock<ILogger<TrustsController>> _mockLogger;
 
         public TrustsControllerV2Tests()
         {
             BuilderSetup.SetDefaultPropertyName(new RandomValuePropertyNamer(new BuilderSettings()));
+
+            _mockGetTrustByUkprnUseCase = new Mock<IGetTrustByUkprn>();
+            _mockSearchTrustsUseCase = new Mock<ISearchTrusts>();
+            _mockGetTrustsByUkprnsUseCase = new Mock<IGetTrustsByUkprns>();
             _mockLogger = new Mock<ILogger<TrustsController>>();
+
+            _controller = new TrustsController(
+                    _mockGetTrustByUkprnUseCase.Object,
+                    _mockSearchTrustsUseCase.Object,
+                    _mockGetTrustsByUkprnsUseCase.Object,
+                    _mockLogger.Object);
         }
-        
+
         [Fact]
         public void GetTrustsByUkPrn_ReturnsNotFoundResult_WhenNoTrustsFound()
         {
-            var getTrustsByUkprn = new Mock<IGetTrustByUkprn>();
             var ukprn = "mockukprn";
-            getTrustsByUkprn.Setup(g => g.Execute(ukprn)).Returns(() => null);
+            _mockGetTrustByUkprnUseCase.Setup(g => g.Execute(ukprn)).Returns(() => null);
 
-            var controller = new TrustsController(getTrustsByUkprn.Object, new Mock<ISearchTrusts>().Object, _mockLogger.Object);
-            var result = controller.GetTrustByUkPrn(ukprn);
-            
+            var result = _controller.GetTrustByUkPrn(ukprn);
+
             result.Result.Should().BeOfType(typeof(NotFoundResult));
         }
 
@@ -62,24 +75,22 @@ namespace TramsDataApi.Test.Controllers
                     Ukprn = ukprn
                 }
             };
-            
-            var getTrustByUkPrn = new Mock<IGetTrustByUkprn>();
-            getTrustByUkPrn.Setup(g => g.Execute(ukprn)).Returns(trustResponse);
-            
-            var controller = new TrustsController(getTrustByUkPrn.Object, new Mock<ISearchTrusts>().Object, _mockLogger.Object);
-            var result = controller.GetTrustByUkPrn(ukprn);
+
+            _mockGetTrustByUkprnUseCase.Setup(g => g.Execute(ukprn)).Returns(trustResponse);
+
+            var result = _controller.GetTrustByUkPrn(ukprn);
 
             var expected = new OkObjectResult(new ApiSingleResponseV2<TrustResponse>(trustResponse));
             result.Result.Should().BeEquivalentTo(expected);
         }
-        
+
         [Fact]
         public void SearchTrusts_ReturnsEmptySetOfTrustSummaries_WhenNoTrustsFound()
         {
             var groupName = "Mockgroupname";
             var ukprn = "Mockurn";
             var companiesHouseNumber = "Mockcompanieshousenumber";
-            
+
             var expectedPagingResponse = new PagingResponse
             {
                 Page = 1,
@@ -87,13 +98,11 @@ namespace TramsDataApi.Test.Controllers
                 NextPageUrl = null
             };
 
-            var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber))
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber))
                 .Returns((new List<TrustSummaryResponse>(), 0));
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
-            var result = controller.SearchTrusts(groupName, ukprn, companiesHouseNumber, 1, 10);
-            
+            var result = _controller.SearchTrusts(groupName, ukprn, companiesHouseNumber, 1, 10);
+
             var expected = new OkObjectResult(new ApiResponseV2<TrustSummaryResponse>(new List<TrustSummaryResponse>(), expectedPagingResponse));
             result.Result.Should().BeEquivalentTo(expected);
         }
@@ -116,19 +125,17 @@ namespace TramsDataApi.Test.Controllers
                 RecordCount = 5,
                 NextPageUrl = null
             };
-            
-            var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber))
+
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
-            var result = controller.SearchTrusts(groupName, null, companiesHouseNumber, 1, 10);
+            var result = _controller.SearchTrusts(groupName, null, companiesHouseNumber, 1, 10);
 
             var expected = new OkObjectResult(new ApiResponseV2<TrustSummaryResponse>(expectedTrustSummaries, expectedPagingResponse));
             result.Result.Should().BeEquivalentTo(expected);
         }
-        
-        
+
+
         [Fact]
         public void SearchTrusts_ByUrn_ReturnsListOfTrustSummaries_WhenTrustsAreFound()
         {
@@ -138,21 +145,19 @@ namespace TramsDataApi.Test.Controllers
                 .All()
                 .With(g => g.Ukprn = ukprn)
                 .Build();
-            
+
             var expectedPagingResponse = new PagingResponse
             {
                 Page = 1,
                 RecordCount = 5,
                 NextPageUrl = null
             };
-            
-            var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, null, ukprn, null))
+
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, null, ukprn, null))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
-            var result = controller.SearchTrusts(null, ukprn, null, 1, 10);
-            
+            var result = _controller.SearchTrusts(null, ukprn, null, 1, 10);
+
             var expected = new OkObjectResult(new ApiResponseV2<TrustSummaryResponse>(expectedTrustSummaries, expectedPagingResponse));
             result.Result.Should().BeEquivalentTo(expected);
         }
@@ -167,12 +172,10 @@ namespace TramsDataApi.Test.Controllers
                 RecordCount = 5,
                 NextPageUrl = null
             };
-            var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, null, null, null))
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, null, null, null))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object);
-            var result = controller.SearchTrusts(null, null, null, 1, 10);
+            var result = _controller.SearchTrusts(null, null, null, 1, 10);
 
             var expected = new OkObjectResult(new ApiResponseV2<TrustSummaryResponse>(expectedTrustSummaries, expectedPaging));
             result.Result.Should().BeEquivalentTo(expected);
@@ -182,29 +185,66 @@ namespace TramsDataApi.Test.Controllers
         public void SearchTrusts_WithMultiplePagesOfResults_ReturnsAllTrustsWithPagingResponseForNextPage()
         {
             var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(20).Build();
-            var controllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
-            
+
             var expectedPaging = new PagingResponse
             {
                 Page = 1,
                 RecordCount = 20,
                 NextPageUrl = "?page=2&count=10"
             };
-            
-            var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts
+
+            _mockSearchTrustsUseCase
                 .Setup(s => s.Execute(1, 10, null, null, null))
                 .Returns((expectedTrustSummaries.Take(10).ToList(), expectedTrustSummaries.Count));
-            
-            var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, _mockLogger.Object)
-            {
-                ControllerContext = controllerContext
-            };
-            var result = controller.SearchTrusts(null, null, null, 1, 10);
+
+            _controller.ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
+
+            var result = _controller.SearchTrusts(null, null, null, 1, 10);
 
             var expected = new OkObjectResult(new ApiResponseV2<TrustSummaryResponse>(expectedTrustSummaries.Take(10), expectedPaging));
             result.Result.Should().BeEquivalentTo(expected);
         }
+
+
+        [Fact]
+        public void GetByUkprns_WhenNoTrustsAreFound_ReturnsNotFoundResult()
+        {
+            const string missingTrustUkprn = "12345678";
+            _mockGetTrustsByUkprnsUseCase.Setup(g => g.Execute(It.IsAny<GetTrustsByUkprnsRequest>())).Returns(() => null);
+            var getTrustsByUkprnsRequest = new GetTrustsByUkprnsRequest { Ukprns = new string[] { missingTrustUkprn } };
+
+            var result = _controller.GetByUkprns(getTrustsByUkprnsRequest);
+
+            result.Result.Should().BeOfType(typeof(NotFoundResult));
+        }
+
+        [Fact]
+        public void GetByUkprns_WhenGivenCorrectUkprns_ReturnsAListOfTrusts()
+        {
+            var ukprns = new string[] { "12345678", "23456789" };
+            var trustsResponse = Builder<TrustResponse>.CreateListOfSize(ukprns.Length).Build();
+            var trustsApiResponse = new ApiResponseV2<TrustResponse>(trustsResponse, null);
+            _mockGetTrustsByUkprnsUseCase.Setup(g => g.Execute(It.IsAny<GetTrustsByUkprnsRequest>())).Returns(() => trustsResponse);
+            var getTrustsByUrnsRequest = new GetTrustsByUkprnsRequest { Ukprns = ukprns };
+
+            var result = _controller.GetByUkprns(getTrustsByUrnsRequest);
+
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(trustsApiResponse));
+            _mockGetTrustsByUkprnsUseCase.Verify(mock => mock.Execute(getTrustsByUrnsRequest), Times.Once());
+        }
+
+        [Fact]
+        public void GetByUkprns_WhenGetRelatedEstablishmentsIsFalse_ReturnsAListOfTrusts()
+        {
+            var ukprns = new string[] { "12345678", "23456789" };
+            var trustsResponse = Builder<TrustResponse>.CreateListOfSize(ukprns.Length).Build();
+            var trustsApiResponse = new ApiResponseV2<TrustResponse>(trustsResponse, null);
+            _mockGetTrustsByUkprnsUseCase.Setup(g => g.Execute(It.IsAny<GetTrustsByUkprnsRequest>())).Returns(() => trustsResponse);
+            var getTrustsByUrnsRequest = new GetTrustsByUkprnsRequest { Ukprns = ukprns, GetRelatedEstablishments = false };
+
+            var result = _controller.GetByUkprns(getTrustsByUrnsRequest);
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(trustsApiResponse));
+            _mockGetTrustsByUkprnsUseCase.Verify(mock => mock.Execute(getTrustsByUrnsRequest), Times.Once());
+        }
     }
 }
-
