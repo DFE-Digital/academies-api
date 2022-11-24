@@ -4,8 +4,8 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public interface IGetEstablishmentsByUrns
+    public interface IGetTrustsByUkprns
     {
-        IList<EstablishmentResponse> Execute(GetEstablishmentsByUrnsRequest request);
+        IList<TrustResponse> Execute(GetTrustsByUkprnsRequest request);
     }
 }
