@@ -237,7 +237,7 @@ namespace TramsDataApi.Test.Integration
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = expectedData.Count };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
-                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: default);
             var response = await _client.PostAsync("v2/conversion-projects/", JsonContent.Create(searchModel));
 			var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 
@@ -264,7 +264,7 @@ namespace TramsDataApi.Test.Integration
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = academyConversionProjects.Count };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
-                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: default);
             var response = await _client.PostAsync("v2/conversion-projects", JsonContent.Create(searchModel));
 			var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 

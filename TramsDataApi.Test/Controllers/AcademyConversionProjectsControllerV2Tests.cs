@@ -53,7 +53,7 @@ namespace TramsDataApi.Test.Controllers
 				_mockLogger.Object);
 
 			GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: string.Empty,
-                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: projectDeliveryOfficers);
+                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: projectDeliveryOfficers, statusQueryString: default);
 			var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -84,7 +84,7 @@ namespace TramsDataApi.Test.Controllers
 				_mockLogger.Object);
 
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: string.Empty,
-                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: projectDeliveryOfficers);
+                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: projectDeliveryOfficers, statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -113,7 +113,7 @@ namespace TramsDataApi.Test.Controllers
 
 
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: string.Empty,
-                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: Array.Empty<string>());
+                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: Array.Empty<string>(), statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -144,7 +144,7 @@ namespace TramsDataApi.Test.Controllers
 				_mockLogger.Object);
 
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: projectTitle,
-                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel, urn: urn);
             
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -171,7 +171,7 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: projectTitle,
-                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -201,7 +201,7 @@ namespace TramsDataApi.Test.Controllers
 				new Mock<IGetAcademyConversionProjectFilterParameters>().Object,
 				_mockLogger.Object);
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
-                count: 1, page: 1, regionUrnsQueryString: projectRegionEstablishmentURNs, deliveryOfficerQueryString: null);
+                count: 1, page: 1, regionUrnsQueryString: projectRegionEstablishmentURNs, deliveryOfficerQueryString: null, statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel, urn: urn);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -259,7 +259,7 @@ namespace TramsDataApi.Test.Controllers
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = 0 };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
-                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -297,7 +297,7 @@ namespace TramsDataApi.Test.Controllers
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = 2, NextPageUrl = expectedNextPageUrl };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data.Take(1), expectedPaging);
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
-                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+                count: 1, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));
@@ -334,7 +334,7 @@ namespace TramsDataApi.Test.Controllers
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = 2, NextPageUrl = expectedNextPageUrl };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(data, expectedPaging);
             GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
-                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: default);
             var result = await controller.GetConversionProjects(searchModel);
 
 			result.Result.Should().BeEquivalentTo(new OkObjectResult(expected));

@@ -5,6 +5,10 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
 {
     public class GetAcademyConversionSearchModel
     {
+        public GetAcademyConversionSearchModel()
+        {
+            
+        }
         public GetAcademyConversionSearchModel(int page, int count, string? titleFilter,
             IEnumerable<string>? deliveryOfficerQueryString, IEnumerable<int?>? regionUrnsQueryString,
             IEnumerable<string>? statusQueryString)
@@ -15,15 +19,6 @@ namespace TramsDataApi.RequestModels.AcademyConversionProject
             DeliveryOfficerQueryString = deliveryOfficerQueryString;
             RegionUrnsQueryString = regionUrnsQueryString;
             StatusQueryString = statusQueryString;
-        }
-
-        public GetAcademyConversionSearchModel(string? titleFilter, int count, int page, IEnumerable<int?>? regionUrnsQueryString, IEnumerable<string>? deliveryOfficerQueryString)
-        {
-            TitleFilter = titleFilter;
-            Count = count;
-            Page = page;
-            RegionUrnsQueryString = regionUrnsQueryString;
-            DeliveryOfficerQueryString = deliveryOfficerQueryString;
         }
 
         public int Page { get; set; }
