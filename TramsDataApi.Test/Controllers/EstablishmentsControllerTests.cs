@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -18,28 +19,25 @@ namespace TramsDataApi.Test.Controllers
         private readonly EstablishmentsController _controller;
         private readonly Mock<IGetEstablishmentByUkprn> _getEstablishmentByUkprn;
         private readonly Mock<IGetEstablishmentURNsByRegion> _getEstablishmentURNsByRegion;
-        private readonly Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>> _getEstablishmentByUrn;
         private readonly Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>> _searchEstablishments;
-        private readonly Mock<IGetEstablishments> _getEstablishmentsByUrns;
+        private readonly Mock<IGetEstablishments> _getEstablishments;
         private const string UKPRN = "mockukprn";
         private const int URN = 123456789;
 
-        private static readonly string[] Regions = {"East", "West"};
+        private static readonly string[] Regions = { "East", "West" };
 
         public EstablishmentsControllerTests()
         {
             _getEstablishmentURNsByRegion = new Mock<IGetEstablishmentURNsByRegion>();
             _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
-            _getEstablishmentByUrn = new Mock<IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>>();
             _searchEstablishments = new Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>>();
-            _getEstablishmentsByUrns = new Mock<IGetEstablishments>();
+            _getEstablishments = new Mock<IGetEstablishments>();
 
             _controller = new EstablishmentsController(
                 _getEstablishmentByUkprn.Object,
-                _getEstablishmentByUrn.Object,
                 _searchEstablishments.Object,
                 _getEstablishmentURNsByRegion.Object,
-                _getEstablishmentsByUrns.Object,
+                _getEstablishments.Object,
                 new Mock<ILogger<EstablishmentsController>>().Object
             );
         }
@@ -61,9 +59,10 @@ namespace TramsDataApi.Test.Controllers
             _getEstablishmentByUkprn.Setup(g => g.Execute(UKPRN)).Returns(() => establishmentResponse);
 
             var result = _controller.GetByUkprn(UKPRN);
-            
+
             result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
         }
+
         [Fact]
         public void GetEstablishmentURNsByRegion_ReturnsNotFoundResult_WhenNoEstablishmentFound()
         {
@@ -97,7 +96,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetEstablishmentByUrn_ReturnsNotFoundResult_WhenNoEstablishmentFound()
         {
-            _getEstablishmentByUrn.Setup(g => g.Execute(It.IsAny<GetEstablishmentByUrnRequest>())).Returns(() => null);
+            _getEstablishments.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => null);
 
             var result = _controller.GetByUrn(URN);
 
@@ -107,12 +106,12 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetEstablishmentByUrn_ReturnsEstablishmentResponse_WhenEstablishmentFound()
         {
-            var establishmentResponse = Builder<EstablishmentResponse>.CreateNew().With(a => a.Urn = URN.ToString()).Build();
-            _getEstablishmentByUrn.Setup(g => g.Execute(It.Is<GetEstablishmentByUrnRequest>(req => req.URN == URN))).Returns(() => establishmentResponse);
+            var establishmentsResponse = Builder<EstablishmentResponse>.CreateListOfSize(1).Build();
+            _getEstablishments.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => establishmentsResponse);
 
             var result = _controller.GetByUrn(URN);
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentsResponse.First()));
         }
 
         [Fact]
@@ -149,7 +148,7 @@ namespace TramsDataApi.Test.Controllers
         public void GetByUrns_WhenNoEstablishmentsAreFound_ReturnsNotFoundResult()
         {
             const int missingEstablishmentUrn = 12345;
-            _getEstablishmentsByUrns.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => null);
+            _getEstablishments.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => null);
             var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = new int[] { missingEstablishmentUrn } };
 
             var result = _controller.GetByUrns(getEstablishmentsByUrnsRequest);
@@ -162,7 +161,7 @@ namespace TramsDataApi.Test.Controllers
         {
             var urns = new int[] { 123456, 234567 };
             var establishmentsResponse = Builder<EstablishmentResponse>.CreateListOfSize(urns.Length).Build();
-            _getEstablishmentsByUrns.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => establishmentsResponse);
+            _getEstablishments.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUrnsRequest>())).Returns(() => establishmentsResponse);
             var getEstablishmentsByUrnsRequest = new GetEstablishmentsByUrnsRequest { Urns = urns };
 
             var result = _controller.GetByUrns(getEstablishmentsByUrnsRequest);

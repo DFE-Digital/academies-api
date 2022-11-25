@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using TramsDataApi.CensusData;
 
 namespace TramsDataApi.Gateways
 {
     public interface ICensusDataGateway
     {
-        public CensusDataModel GetCensusDataByURN(string urn);
+        IList<CensusDataModel> GetCensusDataByURNs(IEnumerable<string> urns);
     }
 }

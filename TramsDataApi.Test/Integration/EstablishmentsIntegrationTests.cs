@@ -268,6 +268,7 @@ namespace TramsDataApi.Test.Integration
             var furtherEducationEstablishment = Builder<FurtherEducationEstablishments>.CreateNew().With(f => f.ProviderUrn = establishment.Urn).Build();
             var smartData = Generators.GenerateSmartData(establishment.Urn);
             var viewAcademyConversionData = Generators.GenerateViewAcademyConversions(establishment.Urn);
+            var censusData = _censusDataGateway.GetCensusDataByURNs(new string[] { urn.ToString() })?.First();
 
             _legacyDbContext.Establishment.Add(establishment);
             _legacyDbContext.MisEstablishments.Add(misEstablishment);
@@ -275,8 +276,6 @@ namespace TramsDataApi.Test.Integration
             _legacyDbContext.FurtherEducationEstablishments.Add(furtherEducationEstablishment);
             _legacyDbContext.ViewAcademyConversions.Add(viewAcademyConversionData);
             _legacyDbContext.SaveChanges();
-
-            var censusData = _censusDataGateway.GetCensusDataByURN(urn.ToString());
 
             return EstablishmentResponseFactory.Create(establishment, misEstablishment, smartData, furtherEducationEstablishment, viewAcademyConversionData, censusData);
         }

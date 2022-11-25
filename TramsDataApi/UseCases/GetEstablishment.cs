@@ -1,14 +1,13 @@
+using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Factories;
 using TramsDataApi.Gateways;
-using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
     public class GetEstablishment : 
-        IGetEstablishmentByUkprn,
-        IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse>
+        IGetEstablishmentByUkprn
     {
         private readonly IEstablishmentGateway _establishmentGateway;
         private readonly ICensusDataGateway _censusDataGateway;
@@ -25,12 +24,6 @@ namespace TramsDataApi.UseCases
             return BuildResponse(establishment);
         }
 
-        public EstablishmentResponse Execute(GetEstablishmentByUrnRequest request)
-        {
-            var establishment = _establishmentGateway.GetByUrn(request.URN);
-            return BuildResponse(establishment);
-        }
-
         private EstablishmentResponse BuildResponse(Establishment establishment)
         {
             if (establishment == null)
@@ -41,7 +34,7 @@ namespace TramsDataApi.UseCases
             var furtherEstablishmentData = _establishmentGateway.GetFurtherEducationEstablishmentByUrn(establishment.Urn);
             var smartData = _establishmentGateway.GetSmartDataByUrn(establishment.Urn);
             var viewAcademyConversion = _establishmentGateway.GetViewAcademyConversionInfoByUrn(establishment.Urn);
-            var censusData = _censusDataGateway.GetCensusDataByURN(establishment.Urn.ToString());
+            var censusData = _censusDataGateway.GetCensusDataByURNs(new string[] { establishment.Urn.ToString() })?.First();
 
 
             return EstablishmentResponseFactory.Create(establishment, 

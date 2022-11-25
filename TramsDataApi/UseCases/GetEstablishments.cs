@@ -11,20 +11,17 @@ namespace TramsDataApi.UseCases
     public class GetEstablishments : IGetEstablishments
     {
         private readonly IEstablishmentGateway _establishmentGateway;
+        private readonly ICensusDataGateway _cencusGateway;
 
-        public GetEstablishments(IEstablishmentGateway establishmentGateway)
+        public GetEstablishments(IEstablishmentGateway establishmentGateway, ICensusDataGateway cencusGateway)
         {
             _establishmentGateway = establishmentGateway;
+            _cencusGateway = cencusGateway;
         }
 
         public IList<EstablishmentResponse> Execute(string[] trustUids)
         {
             var establishments = _establishmentGateway.GetByTrustUids(trustUids);
-
-            if (!establishments.Any())
-            {
-                return null;
-            }
 
             return BuildEstablishmentResponses(establishments);
         }
@@ -33,11 +30,6 @@ namespace TramsDataApi.UseCases
         {
             var establishments = _establishmentGateway.GetByUrns(request.Urns);
 
-            if (!establishments.Any())
-            {
-                return null;
-            }
-
             return BuildEstablishmentResponses(establishments);
         }
 
@@ -45,19 +37,29 @@ namespace TramsDataApi.UseCases
         {
             var establishmentUrns = establishments.Select(establishment => establishment.Urn).ToArray();
 
+            if (!establishments.Any())
+            {
+                return null;
+            }
+
             var misEstablishments = _establishmentGateway.GetMisEstablishmentsByUrns(establishmentUrns);
             var smartData = _establishmentGateway.GetSmartDataByUrns(establishmentUrns);
             var furtherEducationEstablishments = _establishmentGateway.GetFurtherEducationEstablishmentsByUrns(establishmentUrns);
             var viewAcademyConversions = _establishmentGateway.GetViewAcademyConversionInfoByUrns(establishmentUrns);
+            var cencusData = _cencusGateway.GetCensusDataByURNs(establishmentUrns.Select(urn => urn.ToString()).ToArray());
 
-            return establishments.Select(establishment =>
+            // Avoid any potential duplicate `Establishments`s. This mimics the way that
+            // we call `FirstOrDefault` when fetching a single Establishment.
+            var distinctEstablishments = establishments.GroupBy(e => e.Urn).Select(g => g.First());
+
+            return distinctEstablishments.Select(establishment =>
                     EstablishmentResponseFactory.Create(
                         establishment,
                         misEstablishments?.FirstOrDefault(misEstablishment => misEstablishment.Urn == establishment.Urn),
                         smartData?.FirstOrDefault(smartData => smartData.Urn == establishment.Urn.ToString()),
                         furtherEducationEstablishments?.FirstOrDefault(furtherEducationEstablishment => furtherEducationEstablishment.ProviderUrn == establishment.Urn),
                         viewAcademyConversions?.FirstOrDefault(viewAcademyConversion => viewAcademyConversion.GeneralDetailsAcademyUrn == establishment.Urn.ToString()),
-                        null)
+                        cencusData?.FirstOrDefault(cencusData => cencusData.URN == establishment.Urn.ToString()))
                     )
                 .ToList();
         }

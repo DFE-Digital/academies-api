@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,21 +15,18 @@ namespace TramsDataApi.Controllers
     {
         private readonly IGetEstablishmentByUkprn _getEstablishmentByUkprn;
         private readonly IGetEstablishmentURNsByRegion _getEstablishmentURNsByRegion;
-        private readonly IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> _getEstablishmentByUrn;
         private readonly IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> _searchEstablishments;
         private readonly IGetEstablishments _getEstablishments;
         private readonly ILogger<EstablishmentsController> _logger;
 
         public EstablishmentsController(
             IGetEstablishmentByUkprn getEstablishmentByUkprn,
-            IUseCase<GetEstablishmentByUrnRequest, EstablishmentResponse> getEstablishmentByUrn,
             IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> searchEstablishments,
             IGetEstablishmentURNsByRegion getEstablishmentURNsByRegion,
             IGetEstablishments getEstablishments,
             ILogger<EstablishmentsController> logger)
         {
             _getEstablishmentByUkprn = getEstablishmentByUkprn;
-            _getEstablishmentByUrn = getEstablishmentByUrn;
             _searchEstablishments = searchEstablishments;
             _getEstablishmentURNsByRegion = getEstablishmentURNsByRegion;
             _getEstablishments = getEstablishments;
@@ -51,6 +49,7 @@ namespace TramsDataApi.Controllers
             _logger.LogDebug(JsonSerializer.Serialize<EstablishmentResponse>(establishment));
             return Ok(establishment);
         }
+
         [HttpGet]
         [Route("establishment/regions")]
         public ActionResult<IEnumerable<int>> GetURNsByRegion([FromQuery] string[] regions)
@@ -72,7 +71,8 @@ namespace TramsDataApi.Controllers
         [Route("establishment/urn/{urn}")]
         public ActionResult<EstablishmentResponse> GetByUrn(int urn)
         {
-            var establishment = _getEstablishmentByUrn.Execute(new GetEstablishmentByUrnRequest { URN = urn });
+            var request = new GetEstablishmentsByUrnsRequest { Urns = new int[] { urn } };
+            var establishment = _getEstablishments.Execute(request)?.First();
             _logger.LogInformation($"Attempting to get Establishment by URN {urn}");
 
             if (establishment == null)
