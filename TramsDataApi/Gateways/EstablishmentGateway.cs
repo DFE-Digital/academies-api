@@ -15,9 +15,9 @@ namespace TramsDataApi.Gateways
             _dbContext = dbContext;
         }
 
-        public Establishment GetByUkprn(string ukprn)
-        { 
-            return _dbContext.Establishment.FirstOrDefault(e => e.Ukprn == ukprn);
+        public IList<Establishment> GetByUkprns(string[] ukprns)
+        {
+            return _dbContext.Establishment.AsNoTracking().Where(e => ukprns.Contains(e.Ukprn)).ToList();
         }
 
         public IEnumerable<int> GetURNsByRegion(IEnumerable<string> regions)

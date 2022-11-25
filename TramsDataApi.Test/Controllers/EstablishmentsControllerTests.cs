@@ -17,7 +17,6 @@ namespace TramsDataApi.Test.Controllers
     public class EstablishmentsControllerTests
     {
         private readonly EstablishmentsController _controller;
-        private readonly Mock<IGetEstablishmentByUkprn> _getEstablishmentByUkprn;
         private readonly Mock<IGetEstablishmentURNsByRegion> _getEstablishmentURNsByRegion;
         private readonly Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>> _searchEstablishments;
         private readonly Mock<IGetEstablishments> _getEstablishments;
@@ -29,12 +28,10 @@ namespace TramsDataApi.Test.Controllers
         public EstablishmentsControllerTests()
         {
             _getEstablishmentURNsByRegion = new Mock<IGetEstablishmentURNsByRegion>();
-            _getEstablishmentByUkprn = new Mock<IGetEstablishmentByUkprn>();
             _searchEstablishments = new Mock<IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>>>();
             _getEstablishments = new Mock<IGetEstablishments>();
 
             _controller = new EstablishmentsController(
-                _getEstablishmentByUkprn.Object,
                 _searchEstablishments.Object,
                 _getEstablishmentURNsByRegion.Object,
                 _getEstablishments.Object,
@@ -45,7 +42,7 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetEstablishmentByUkprn_ReturnsNotFoundResult_WhenNoEstablishmentFound()
         {
-            _getEstablishmentByUkprn.Setup(g => g.Execute(UKPRN)).Returns(() => null);
+            _getEstablishments.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUkprnsRequest>())).Returns(() => null);
 
             var result = _controller.GetByUkprn(UKPRN);
 
@@ -55,12 +52,12 @@ namespace TramsDataApi.Test.Controllers
         [Fact]
         public void GetEstablishmentByUkprn_ReturnsEstablishmentResponse_WhenEstablishmentFound()
         {
-            var establishmentResponse = Builder<EstablishmentResponse>.CreateNew().With(a => a.Ukprn = UKPRN).Build();
-            _getEstablishmentByUkprn.Setup(g => g.Execute(UKPRN)).Returns(() => establishmentResponse);
+            var establishmentResponses = Builder<EstablishmentResponse>.CreateListOfSize(1).Build();
+            _getEstablishments.Setup(g => g.Execute(It.IsAny<GetEstablishmentsByUkprnsRequest>())).Returns(() => establishmentResponses);
 
             var result = _controller.GetByUkprn(UKPRN);
 
-            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponse));
+            result.Result.Should().BeEquivalentTo(new OkObjectResult(establishmentResponses.First()));
         }
 
         [Fact]

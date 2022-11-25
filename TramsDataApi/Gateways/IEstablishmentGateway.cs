@@ -5,7 +5,7 @@ namespace TramsDataApi.Gateways
 {
     public interface IEstablishmentGateway
     {
-        Establishment GetByUkprn(string ukprn);
+        IList<Establishment> GetByUkprns(string[] ukprns);
         Establishment GetByUrn(int urn);
         IList<Establishment> GetByTrustUid(string trustUid);
         MisEstablishments GetMisEstablishmentByUrn(int establishmentUrn);

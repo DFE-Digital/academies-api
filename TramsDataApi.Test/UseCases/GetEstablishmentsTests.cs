@@ -1,4 +1,4 @@
-using FizzWare.NBuilder;
+﻿using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
@@ -203,7 +203,108 @@ namespace TramsDataApi.Test.UseCases
             }
         }
 
-        private IList<CensusDataModel> GetMockCencusData(IEnumerable<Establishment> establishments)
+        public class GetEstablishmentsByUkprns : GetEstablishmentsTests
+        {
+            [Fact]
+            public void WhenNoEstablishmentsFound_ReturnsNull()
+            {
+                var requestUkprns = new string[] { "12345678" };
+                var request = new GetEstablishmentsByUkprnsRequest { Ukprns = requestUkprns };
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetByUkprns(requestUkprns)).Returns(() => new List<Establishment>());
+
+                var result = _useCase.Execute(request);
+
+                result.Should().BeNull();
+            }
+
+            [Fact]
+            public void WhenEstablishmentsAreFound_ReturnsListOfEstablishmentResponses()
+            {
+                var requestUkprns = new string[] { "12345678", "2345456789" };
+                var request = new GetEstablishmentsByUkprnsRequest { Ukprns = requestUkprns };
+
+                var establishments = Builder<Establishment>.CreateListOfSize(requestUkprns.Length)
+                    .All()
+                    .With((e, i) => e.Ukprn = requestUkprns[i])
+                    .Build();
+                var establishmentResponses = establishments.Select((e) => EstablishmentResponseFactory
+                    .Create(e, null, null, null, null, null)).ToList();
+
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetByUkprns(requestUkprns)).Returns(() => establishments);
+
+                var result = _useCase.Execute(request);
+
+                result.Should().BeEquivalentTo(establishmentResponses);
+            }
+
+            [Fact]
+            public void WhenRelatedDataIsFound_ReturnsListOfEstablishmentResponses()
+            {
+                var requestUkprns = new string[] { "12345678", "2345456789" };
+                var request = new GetEstablishmentsByUkprnsRequest { Ukprns = requestUkprns };
+
+                var establishments = Builder<Establishment>.CreateListOfSize(requestUkprns.Length)
+                    .All()
+                    .With((e, i) => e.Ukprn = requestUkprns[i])
+                    .Build();
+                var misEstablishments = Builder<MisEstablishments>.CreateListOfSize(requestUkprns.Length)
+                    .All()
+                    .With((e, i) => e.Urn = establishments[i].Urn)
+                    .Build();
+                var smartData = Builder<SmartData>.CreateListOfSize(requestUkprns.Length)
+                    .All()
+                    .With((e, i) => e.Urn = establishments[i].Urn.ToString())
+                    .Build();
+                var furtherEducationEstablishments = Builder<FurtherEducationEstablishments>.CreateListOfSize(requestUkprns.Length)
+                    .All()
+                    .With((e, i) => e.ProviderUrn = establishments[i].Urn)
+                    .Build();
+                var viewAcademyConversions = Builder<ViewAcademyConversions>.CreateListOfSize(requestUkprns.Length)
+                    .All()
+                    .With((e, i) => e.GeneralDetailsAcademyUrn = establishments[i].Urn.ToString())
+                    .Build();
+                var censusData = GetMockCensusData(establishments);
+                var establishmentResponses = establishments.Select((e, i) => EstablishmentResponseFactory
+                    .Create(e, misEstablishments[i], smartData[i], furtherEducationEstablishments[i], viewAcademyConversions[i], censusData[i])).ToList();
+
+                var urns = establishments.Select(e => e.Urn).ToArray();
+
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetByUkprns(requestUkprns)).Returns(() => establishments);
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetMisEstablishmentsByUrns(urns)).Returns(() => misEstablishments);
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetSmartDataByUrns(urns)).Returns(() => smartData);
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetFurtherEducationEstablishmentsByUrns(urns)).Returns(() => furtherEducationEstablishments);
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetViewAcademyConversionInfoByUrns(urns)).Returns(() => viewAcademyConversions);
+
+                var stringUrns = urns.Select(urn => urn.ToString()).ToArray();
+                _mockCensusGateway.Setup(gateway => gateway.GetCensusDataByURNs(stringUrns)).Returns(() => censusData);
+
+                var result = _useCase.Execute(request);
+
+                result.Should().BeEquivalentTo(establishmentResponses);
+            }
+
+            [Fact]
+            public void WhenThereAreMultipleEstablishmentsWithTheSameUkprn_OnlyReturnsTheFirstEstablishmentFound()
+            {
+                var requestUkprns = new string[] { "12345678" };
+                var request = new GetEstablishmentsByUkprnsRequest { Ukprns = requestUkprns };
+
+                var establishments = Builder<Establishment>.CreateListOfSize(2)
+                    .All()
+                    .With(e => e.Ukprn = requestUkprns[0])
+                    .Build();
+                var establishmentResponses = establishments.Select((e) => EstablishmentResponseFactory
+                    .Create(e, null, null, null, null, null)).ToList();
+
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetByUkprns(requestUkprns)).Returns(() => establishments);
+
+                var result = _useCase.Execute(request);
+
+                result.Should().BeEquivalentTo(establishmentResponses.First());
+            }
+        }
+
+        private IList<CensusDataModel> GetMockCensusData(IEnumerable<Establishment> establishments)
         {
             return establishments.Select(
                 establishment => new CensusDataModel

@@ -13,20 +13,17 @@ namespace TramsDataApi.Controllers
     [ApiVersion("1.0")]
     public class EstablishmentsController : ControllerBase
     {
-        private readonly IGetEstablishmentByUkprn _getEstablishmentByUkprn;
         private readonly IGetEstablishmentURNsByRegion _getEstablishmentURNsByRegion;
         private readonly IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> _searchEstablishments;
         private readonly IGetEstablishments _getEstablishments;
         private readonly ILogger<EstablishmentsController> _logger;
 
         public EstablishmentsController(
-            IGetEstablishmentByUkprn getEstablishmentByUkprn,
             IUseCase<SearchEstablishmentsRequest, IList<EstablishmentSummaryResponse>> searchEstablishments,
             IGetEstablishmentURNsByRegion getEstablishmentURNsByRegion,
             IGetEstablishments getEstablishments,
             ILogger<EstablishmentsController> logger)
         {
-            _getEstablishmentByUkprn = getEstablishmentByUkprn;
             _searchEstablishments = searchEstablishments;
             _getEstablishmentURNsByRegion = getEstablishmentURNsByRegion;
             _getEstablishments = getEstablishments;
@@ -38,7 +35,8 @@ namespace TramsDataApi.Controllers
         public ActionResult<EstablishmentResponse> GetByUkprn(string ukprn)
         {
             _logger.LogInformation($"Attempting to get Establishment by UKPRN {ukprn}");
-            var establishment = _getEstablishmentByUkprn.Execute(ukprn);
+            var request = new GetEstablishmentsByUkprnsRequest { Ukprns = new string[] { ukprn } };
+            var establishment = _getEstablishments.Execute(request)?.First();
 
             if (establishment == null)
             {
@@ -46,7 +44,7 @@ namespace TramsDataApi.Controllers
                 return NotFound();
             }
             _logger.LogInformation($"Returning Establishment with UKPRN {ukprn}");
-            _logger.LogDebug(JsonSerializer.Serialize<EstablishmentResponse>(establishment));
+            _logger.LogDebug(JsonSerializer.Serialize(establishment));
             return Ok(establishment);
         }
 
