@@ -117,7 +117,7 @@ namespace TramsDataApi.Gateways
         }
         private static IQueryable<AcademyConversionProject> FilterByRegion(IEnumerable<int?> regions, IQueryable<AcademyConversionProject> queryable)
         {
-            if (regions != null && regions!.Any())
+            if (regions != null)
             {
                 queryable = queryable.Where(p => regions.Contains(p.Urn));
             }
