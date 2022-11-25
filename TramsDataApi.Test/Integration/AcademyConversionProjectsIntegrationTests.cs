@@ -189,12 +189,8 @@ namespace TramsDataApi.Test.Integration
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
 
 			var states = new[] { "Approved for AO", "Converter Pre-AO" };
-            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
-            {
-                Page = 1,
-                Count = 10,
-				StatusQueryString = states
-            };
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: states);
             var response = await _client.PostAsync($"v2/conversion-projects", JsonContent.Create(searchModel));
             var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 
@@ -240,12 +236,9 @@ namespace TramsDataApi.Test.Integration
 
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = expectedData.Count };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
-            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
-            {
-				Page = 1,
-				Count = 10
-            };
-			var response = await _client.PostAsync("v2/conversion-projects/", JsonContent.Create(searchModel));
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
+            var response = await _client.PostAsync("v2/conversion-projects/", JsonContent.Create(searchModel));
 			var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 
 			response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -270,11 +263,8 @@ namespace TramsDataApi.Test.Integration
 
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = academyConversionProjects.Count };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
-            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
-            {
-                Page = 1,
-                Count = 10
-            };
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null);
             var response = await _client.PostAsync("v2/conversion-projects", JsonContent.Create(searchModel));
 			var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 
@@ -421,12 +411,8 @@ namespace TramsDataApi.Test.Integration
 
 			var states = new[] { "Approved for AO", "Converter Pre-AO" };
 
-            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
-            {
-                Page = 1,
-                Count = 10,
-                StatusQueryString = states
-            };
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: states);
             var response = await _client.PostAsync($"v2/conversion-projects", JsonContent.Create(searchModel));
 			var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 
@@ -441,12 +427,8 @@ namespace TramsDataApi.Test.Integration
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse> { Paging = expectedPaging };
 
 			var states = new[] { "Approved for AO", "Converter Pre-AO" };
-            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
-            {
-                Page = 1,
-                Count = 10,
-                StatusQueryString = states
-            };
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: states);
             var response = await _client.PostAsync($"v2/conversion-projects", JsonContent.Create(searchModel));
 			var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 
@@ -476,13 +458,9 @@ namespace TramsDataApi.Test.Integration
 			var expectedPaging = new PagingResponse { Page = 1, RecordCount = expectedData.Count };
 			var expected = new ApiResponseV2<AcademyConversionProjectResponse>(expectedData, expectedPaging);
 
-            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel
-            {
-                StatusQueryString = states,
-                Page = 1,
-                Count = 10
-            };
-			var response = await _client.PostAsync($"v2/conversion-projects", JsonContent.Create(searchModel));
+            GetAcademyConversionSearchModel searchModel = new GetAcademyConversionSearchModel(titleFilter: null,
+                count: 10, page: 1, regionUrnsQueryString: null, deliveryOfficerQueryString: null, statusQueryString: states);
+            var response = await _client.PostAsync($"v2/conversion-projects", JsonContent.Create(searchModel));
 			var content = await response.Content.ReadFromJsonAsync<ApiResponseV2<AcademyConversionProjectResponse>>();
 
 			response.StatusCode.Should().Be(HttpStatusCode.OK);
