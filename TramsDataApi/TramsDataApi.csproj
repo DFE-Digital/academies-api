@@ -23,17 +23,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Migrations" />
-      <Folder Include="RequestModels\CaseActions\NTI\" />
-      <Folder Include="RequestModels\CaseActions\NTI\UnderConsideration\" />
-      <Folder Include="ResponseModels\CaseActions\NTI\" />
-      <Folder Include="ResponseModels\CaseActions\NTI\UnderConsideration\" />
-      <Folder Include="UseCases\CaseActions\NTI\" />
-      <Folder Include="UseCases\CaseActions\NTI\UnderConsideration\" />
-      <Folder Include="RequestModels\CaseActions\NTI\WarningLetter\" />
-      <Folder Include="ResponseModels\CaseActions\NTI\WarningLetter\" />
-      <Folder Include="UseCases\CaseActions\NTI\WarningLetter\" />
-      <Folder Include="RequestModels\CaseActions\NTI\NoticeToImprove\" />
-      <Folder Include="ResponseModels\CaseActions\NTI\NoticeToImprove\" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="CensusData/2018-2019_england_census.csv">
