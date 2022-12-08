@@ -75,7 +75,8 @@ namespace TramsDataApi.Test.UseCases
 		            .ToList(),
 	            ApplyingSchools = applicationCreateRequest.ApplyingSchools
 		            .Select(A2BApplicationApplyingSchoolFactory.Create)
-		            .ToList()	            
+		            .ToList(),
+                DynamicsApplicationId = applicationCreateRequest.DynamicsApplicationId
             };
 
             var expectedResult = new A2BApplicationResponse
@@ -114,7 +115,8 @@ namespace TramsDataApi.Test.UseCases
 	            FormTrustImprovementApprovedSponsor = applicationCreateRequest.FormTrustImprovementApprovedSponsor,
 	            ApplicationStatusId = applicationCreateRequest.ApplicationStatusId,
 	            KeyPersons = applicationCreateRequest.KeyPersons,
-	            ApplyingSchools = applicationCreateRequest.ApplyingSchools
+	            ApplyingSchools = applicationCreateRequest.ApplyingSchools,
+				DynamicsApplicationId = applicationCreateRequest.DynamicsApplicationId
 			};
 			expectedResult.ApplyingSchools.ToList().ForEach(x => x.SchoolLeases = new List<A2BSchoolLeaseServiceModel>());
 			expectedResult.ApplyingSchools.ToList().ForEach(x => x.SchoolLoans = new List<A2BSchoolLoanServiceModel>());
