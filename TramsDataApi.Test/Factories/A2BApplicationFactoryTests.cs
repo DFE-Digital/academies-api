@@ -68,7 +68,8 @@ namespace TramsDataApi.Test.Factories
 	            FormTrustImprovementApprovedSponsor = applicationCreateRequest.FormTrustImprovementApprovedSponsor,
 	            ApplicationStatusId = applicationCreateRequest.ApplicationStatusId,
 	            KeyPersons = applicationCreateRequest.KeyPersons.Select(A2BApplicationKeyPersonsFactory.Create).ToList(),
-	            ApplyingSchools = applicationCreateRequest.ApplyingSchools.Select(A2BApplicationApplyingSchoolFactory.Create).ToList()
+	            ApplyingSchools = applicationCreateRequest.ApplyingSchools.Select(A2BApplicationApplyingSchoolFactory.Create).ToList(),
+				DynamicsApplicationId = applicationCreateRequest.DynamicsApplicationId
             };
                 
             var response = A2BApplicationFactory.Create(applicationCreateRequest);
@@ -130,7 +131,8 @@ namespace TramsDataApi.Test.Factories
 		            .ToList(),
 	            ApplyingSchools = application.ApplyingSchools
 		            .Select(A2BApplicationApplyingSchoolFactory.Create)
-		            .ToList()
+		            .ToList(),
+                DynamicsApplicationId = application.DynamicsApplicationId
             };
                 
             var response = A2BApplicationFactory.Create(application);

@@ -98,5 +98,12 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
 			public string DeclarationSignedByName { get; set; }
  			public ICollection<A2BSchoolLoanServiceModel> SchoolLoans { get; set; }
 			public ICollection<A2BSchoolLeaseServiceModel> SchoolLeases { get; set; }
-   }
+            public int Urn { get; set; }
+
+            public string LocalAuthorityName { get; set; }
+
+            public Guid DynamicsApplyingSchoolId { get; set; }
+
+            public Guid DynamicsApplicationId { get; set; }
+    }
 }

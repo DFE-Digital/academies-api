@@ -128,7 +128,11 @@ namespace TramsDataApi.Test.Factories
                 GoverningBodyConsentEvidenceDocumentLink = request.GoverningBodyConsentEvidenceDocumentLink,
                 FoundationEvidenceDocumentLink = request.FoundationEvidenceDocumentLink,
                 SchoolLeases = request.SchoolLeases.Select(A2BSchoolLeaseFactory.Create).ToList(),
-                SchoolLoans = request.SchoolLoans.Select(A2BSchoolLoanFactory.Create).ToList()
+                SchoolLoans = request.SchoolLoans.Select(A2BSchoolLoanFactory.Create).ToList(),
+                DynamicsApplicationId = request.DynamicsApplicationId,
+                DynamicsApplyingSchoolId = request.DynamicsApplyingSchoolId,
+                Urn = request.Urn,
+                LocalAuthorityName = request.LocalAuthorityName
             };
                 
             var response = A2BApplicationApplyingSchoolFactory.Create(request);
@@ -258,7 +262,11 @@ namespace TramsDataApi.Test.Factories
                     .ToList(),
                 SchoolLeases = request.SchoolLeases
                     .Select(A2BSchoolLeaseServiceModelFactory.Create)
-                    .ToList()
+                    .ToList(),
+                DynamicsApplicationId = request.DynamicsApplicationId,
+                DynamicsApplyingSchoolId = request.DynamicsApplyingSchoolId,
+                Urn = request.Urn,
+                LocalAuthorityName = request.LocalAuthorityName
             };
                 
             var response = A2BApplicationApplyingSchoolFactory.Create(request);
