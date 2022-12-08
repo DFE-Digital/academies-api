@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,5 +27,8 @@ namespace TramsDataApi.DatabaseModels
         
         public int ApplyingSchoolId { get; set; }
         public virtual A2BApplicationApplyingSchool A2BApplicationApplyingSchool { get; set; }
+
+        // MR:- below mods for Dynamics -> SQL server A2B external app conversion
+        public Guid DynamicsSchoolLeaseId { get; set; }
     }
 }
