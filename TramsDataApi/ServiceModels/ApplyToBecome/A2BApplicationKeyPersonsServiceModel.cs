@@ -13,5 +13,6 @@ namespace TramsDataApi.RequestModels.ApplyToBecome
         public bool? KeyPersonMember {get; set;}
         public bool? KeyPersonOther {get; set;}
         public bool? KeyPersonTrustee {get; set;}
+        public Guid DynamicsKeyPersonId { get; set; }
     }
 }

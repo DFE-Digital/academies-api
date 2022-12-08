@@ -44,5 +44,6 @@ namespace TramsDataApi.ResponseModels.ApplyToBecome
         public string ApplicationStatusId {get; set;}
         public ICollection<A2BApplicationKeyPersonsServiceModel> KeyPersons { get; set; }
         public ICollection<A2BApplicationApplyingSchoolServiceModel> ApplyingSchools { get; set; }
+        public Guid DynamicsApplicationId { get; set; }
     }
 }
