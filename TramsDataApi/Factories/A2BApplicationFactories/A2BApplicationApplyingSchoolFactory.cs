@@ -109,7 +109,11 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                         .ToList(),
                     SchoolLeases = request.SchoolLeases?
                         .Select(A2BSchoolLeaseFactory.Create)
-                        .ToList()
+                        .ToList(),
+                    DynamicsApplicationId = request.DynamicsApplicationId,
+                    LocalAuthorityName = request.LocalAuthorityName,
+                    DynamicsApplyingSchoolId = request.DynamicsApplyingSchoolId,
+                    Urn = request.Urn
                 };
         }
 
@@ -227,7 +231,11 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 SchoolLoans = request.SchoolLoans == null
                     ? new List<A2BSchoolLoanServiceModel>()
                     : request.SchoolLoans.Select(A2BSchoolLoanServiceModelFactory.Create)
-                    .ToList()
+                    .ToList(),
+                DynamicsApplicationId = request.DynamicsApplicationId,
+                LocalAuthorityName = request.LocalAuthorityName,
+                DynamicsApplyingSchoolId = request.DynamicsApplyingSchoolId,
+                Urn = request.Urn
              };
 	    }
     }
