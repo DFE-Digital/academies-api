@@ -157,6 +157,9 @@ namespace TramsDataApi.Migrations.TramsDb
                     b.Property<string>("GoverningBodyConsentEvidenceDocumentLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LocalAuthorityName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -426,6 +429,9 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<string>("SchoolSupportedFoundationBodyName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Urn")
+                        .HasColumnType("int");
 
                     b.HasKey("ApplyingSchoolId");
 

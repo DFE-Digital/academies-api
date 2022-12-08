@@ -10,8 +10,8 @@ using TramsDataApi.DatabaseModels;
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    [Migration("20221208103303_sdd-newcols-datamigration")]
-    partial class sddnewcolsdatamigration
+    [Migration("20221208133423_sdd-newcols-datamigrationmk2")]
+    partial class sddnewcolsdatamigrationmk2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,6 +157,9 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoverningBodyConsentEvidenceDocumentLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocalAuthorityName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -428,6 +431,9 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<string>("SchoolSupportedFoundationBodyName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Urn")
+                        .HasColumnType("int");
 
                     b.HasKey("ApplyingSchoolId");
 
