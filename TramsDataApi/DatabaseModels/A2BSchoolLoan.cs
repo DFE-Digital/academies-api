@@ -21,7 +21,6 @@ namespace TramsDataApi.DatabaseModels
         public int ApplyingSchoolId { get; set; }
         public virtual A2BApplicationApplyingSchool A2BApplicationApplyingSchool { get; set; }
 
-        // MR:- below mods for Dynamics -> SQL server A2B external app conversion
         public Guid DynamicsSchoolLoanId { get; set; }
     }
 }

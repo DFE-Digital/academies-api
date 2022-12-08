@@ -25,7 +25,6 @@ namespace TramsDataApi.DatabaseModels
         public string ApplicationId { get; set; }
         public virtual A2BApplication A2BApplication { get; set; }
 
-        // MR:- below mods for Dynamics -> SQL server A2B external app conversion
         public Guid DynamicsKeyPersonId { get; set; }
     }
 }

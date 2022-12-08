@@ -51,7 +51,6 @@ namespace TramsDataApi.DatabaseModels
         [ForeignKey(nameof(ApplicationId))]
         public virtual ICollection<A2BApplicationApplyingSchool> ApplyingSchools { get; set; }
 
-        // MR:- below mods for Dynamics -> SQL server A2B external app conversion
         public Guid DynamicsApplicationId { get; set; }
     }
 }
