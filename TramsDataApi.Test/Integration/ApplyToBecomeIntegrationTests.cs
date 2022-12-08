@@ -49,7 +49,8 @@ namespace TramsDataApi.Test.Integration
                 KeyPersonFinancialDirector = _randomGenerator.Boolean(),
                 KeyPersonMember = _randomGenerator.Boolean(),
                 KeyPersonOther = _randomGenerator.Boolean(),
-                KeyPersonTrustee = _randomGenerator.Boolean()
+                KeyPersonTrustee = _randomGenerator.Boolean(),
+                DynamicsKeyPersonId = Guid.NewGuid()
             };
 
             var loan = new A2BSchoolLoan
@@ -58,7 +59,8 @@ namespace TramsDataApi.Test.Integration
                 SchoolLoanInterestRate = _randomGenerator.NextString(2, 4),
                 SchoolLoanProvider = _randomGenerator.NextString(2, 10),
                 SchoolLoanPurpose = _randomGenerator.NextString(2, 10),
-                SchoolLoanSchedule = _randomGenerator.NextString(2, 10)
+                SchoolLoanSchedule = _randomGenerator.NextString(2, 10),
+                DynamicsSchoolLoanId = Guid.NewGuid()
             };
             var lease = new A2BSchoolLease
             {
@@ -68,7 +70,8 @@ namespace TramsDataApi.Test.Integration
                 SchoolLeaseRepaymentValue = 1000,
                 SchoolLeaseResponsibleForAssets = _randomGenerator.NextString(2, 10),
                 SchoolLeaseTerm = _randomGenerator.NextString(2, 10),
-                SchoolLeaseValueOfAssets = _randomGenerator.NextString(2, 10)
+                SchoolLeaseValueOfAssets = _randomGenerator.NextString(2, 10),
+                DynamicsSchoolLeaseId = Guid.NewGuid()
             };
 
            var applyingSchool = new A2BApplicationApplyingSchool
@@ -164,7 +167,11 @@ namespace TramsDataApi.Test.Integration
                 SchoolDeclarationSignedByName = _randomGenerator.NextString(2, 10),
                 SchoolAdEqualitiesImpactAssessmentDetails = _randomGenerator.NextString(2,10),
                SchoolLeases = new List<A2BSchoolLease>() { lease },
-               SchoolLoans = new List<A2BSchoolLoan>() { loan }
+               SchoolLoans = new List<A2BSchoolLoan>() { loan },
+               DynamicsApplicationId = Guid.NewGuid(),
+               DynamicsApplyingSchoolId = Guid.NewGuid(),
+               Urn = _randomGenerator.Int(),
+               LocalAuthorityName = _randomGenerator.NextString(2, 10)
            };
 
             var application = Builder<A2BApplication>
@@ -205,7 +212,8 @@ namespace TramsDataApi.Test.Integration
                 KeyPersonFinancialDirector = _randomGenerator.Boolean(),
                 KeyPersonMember = _randomGenerator.Boolean(),
                 KeyPersonOther = _randomGenerator.Boolean(),
-                KeyPersonTrustee = _randomGenerator.Boolean()
+                KeyPersonTrustee = _randomGenerator.Boolean(),
+                DynamicsKeyPersonId = Guid.NewGuid()
             };
 
             var loan = new A2BSchoolLoanServiceModel
@@ -214,7 +222,8 @@ namespace TramsDataApi.Test.Integration
                 SchoolLoanInterestRate = "15%",
                 SchoolLoanProvider = "Provider",
                 SchoolLoanPurpose = "Purpose",
-                SchoolLoanSchedule = "£100 monthly for two years"
+                SchoolLoanSchedule = "£100 monthly for two years",
+                DynamicsSchoolLoanId = Guid.NewGuid()
             };
             var lease = new A2BSchoolLeaseServiceModel
             {
@@ -224,7 +233,8 @@ namespace TramsDataApi.Test.Integration
                 SchoolLeaseRepaymentValue = 1100,
                 SchoolLeaseResponsibleForAssets = "who is responsible",
                 SchoolLeaseTerm = " 18  months",
-                SchoolLeaseValueOfAssets = "500"
+                SchoolLeaseValueOfAssets = "500",
+                DynamicsSchoolLeaseId = Guid.NewGuid()
             };
 
             var applyingSchool = new A2BApplicationApplyingSchoolServiceModel
@@ -326,7 +336,11 @@ namespace TramsDataApi.Test.Integration
                 SchoolPlanToConsultStakeholders = _randomGenerator.NextString(2, 10),
                 SchoolSupportGrantFundsPaidTo = _randomGenerator.NextString(2, 10),
                 SchoolLoans = new List<A2BSchoolLoanServiceModel>() { loan },
-                SchoolLeases = new List<A2BSchoolLeaseServiceModel>() { lease }
+                SchoolLeases = new List<A2BSchoolLeaseServiceModel>() { lease },
+                DynamicsApplicationId = Guid.NewGuid(),
+                DynamicsApplyingSchoolId = Guid.NewGuid(),
+                Urn = _randomGenerator.Int(),
+                LocalAuthorityName = _randomGenerator.NextString(2, 10)
             };
 
             var application = new A2BApplicationCreateRequest
@@ -366,7 +380,8 @@ namespace TramsDataApi.Test.Integration
                 TrustApproverEmail = "test@test.com",
                 ApplicationType = "JoinMat",
                 KeyPersons = new List<A2BApplicationKeyPersonsServiceModel> {keyPerson},
-                ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchool}
+                ApplyingSchools = new List<A2BApplicationApplyingSchoolServiceModel> {applyingSchool},
+                DynamicsApplicationId = Guid.NewGuid()
             };
             
             var response = await _client.PostAsJsonAsync("/v2/apply-to-become/application/", application);
