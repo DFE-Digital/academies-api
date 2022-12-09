@@ -30,7 +30,8 @@ namespace TramsDataApi.Test.Factories
                 SchoolLoanPurpose = schoolLoanCreateRequest.SchoolLoanPurpose,
                 SchoolLoanProvider = schoolLoanCreateRequest.SchoolLoanProvider,
                 SchoolLoanInterestRate = schoolLoanCreateRequest.SchoolLoanInterestRate,
-                SchoolLoanSchedule = schoolLoanCreateRequest.SchoolLoanSchedule
+                SchoolLoanSchedule = schoolLoanCreateRequest.SchoolLoanSchedule,
+                DynamicsSchoolLoanId = schoolLoanCreateRequest.DynamicsSchoolLoanId
             };
                 
             var response = A2BSchoolLoanFactory.Create(schoolLoanCreateRequest);

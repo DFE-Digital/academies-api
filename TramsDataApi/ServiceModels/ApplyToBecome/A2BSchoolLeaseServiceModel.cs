@@ -1,3 +1,5 @@
+using System;
+
 namespace TramsDataApi.ServiceModels.ApplyToBecome
 {
     public class A2BSchoolLeaseServiceModel
@@ -9,5 +11,6 @@ namespace TramsDataApi.ServiceModels.ApplyToBecome
         public string SchoolLeasePurpose {get; set;}
         public string SchoolLeaseValueOfAssets {get; set;}
         public string SchoolLeaseResponsibleForAssets {get; set;}
+        public Guid DynamicsSchoolLeaseId { get; set; }
     }
 }

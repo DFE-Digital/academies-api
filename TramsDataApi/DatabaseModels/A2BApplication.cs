@@ -50,5 +50,7 @@ namespace TramsDataApi.DatabaseModels
         
         [ForeignKey(nameof(ApplicationId))]
         public virtual ICollection<A2BApplicationApplyingSchool> ApplyingSchools { get; set; }
+
+        public Guid DynamicsApplicationId { get; set; }
     }
 }

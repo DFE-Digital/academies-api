@@ -15,7 +15,8 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolLoanPurpose = request.SchoolLoanPurpose,
                     SchoolLoanProvider = request.SchoolLoanProvider,
                     SchoolLoanInterestRate = request.SchoolLoanInterestRate,
-                    SchoolLoanSchedule = request.SchoolLoanSchedule
+                    SchoolLoanSchedule = request.SchoolLoanSchedule,
+                    DynamicsSchoolLoanId = request.DynamicsSchoolLoanId,
                 };
         }
     }

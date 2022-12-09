@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TramsDataApi.DatabaseModels;
 
 namespace TramsDataApi.Migrations.TramsDb
 {
     [DbContext(typeof(TramsDbContext))]
-    partial class TramsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208103303_sdd-newcols-datamigration")]
+    partial class sddnewcolsdatamigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,9 +157,6 @@ namespace TramsDataApi.Migrations.TramsDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoverningBodyConsentEvidenceDocumentLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocalAuthorityName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -429,9 +428,6 @@ namespace TramsDataApi.Migrations.TramsDb
 
                     b.Property<string>("SchoolSupportedFoundationBodyName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Urn")
-                        .HasColumnType("int");
 
                     b.HasKey("ApplyingSchoolId");
 

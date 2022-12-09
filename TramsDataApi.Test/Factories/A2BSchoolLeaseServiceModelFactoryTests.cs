@@ -32,7 +32,8 @@ namespace TramsDataApi.Test.Factories
                 SchoolLeasePaymentToDate = schoolLease.SchoolLeasePaymentToDate,
                 SchoolLeasePurpose = schoolLease.SchoolLeasePurpose,
                 SchoolLeaseValueOfAssets = schoolLease.SchoolLeaseValueOfAssets,
-                SchoolLeaseResponsibleForAssets = schoolLease.SchoolLeaseResponsibleForAssets
+                SchoolLeaseResponsibleForAssets = schoolLease.SchoolLeaseResponsibleForAssets,
+                DynamicsSchoolLeaseId = schoolLease.DynamicsSchoolLeaseId,
             };
                 
             var response = A2BSchoolLeaseServiceModelFactory.Create(schoolLease);

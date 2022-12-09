@@ -50,7 +50,8 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 			    .ToList(),
 		    ApplyingSchools = request.ApplyingSchools
 			    .Select(A2BApplicationApplyingSchoolFactory.Create)
-			    .ToList()
+			    .ToList(),
+			DynamicsApplicationId = request.DynamicsApplicationId,
 			
 	    };
 
@@ -99,7 +100,9 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
 			    ? new List<A2BApplicationApplyingSchoolServiceModel>()
 			    : application.ApplyingSchools
 					.Select(A2BApplicationApplyingSchoolFactory.Create)
-					.ToList()
+					.ToList(),
+			DynamicsApplicationId = application.DynamicsApplicationId,
+			
 	    };
     }
 }
