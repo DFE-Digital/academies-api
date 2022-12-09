@@ -111,7 +111,8 @@ namespace TramsDataApi.Test.Controllers
                 FormTrustImprovementStrategy = request.FormTrustImprovementStrategy,
                 FormTrustImprovementApprovedSponsor = request.FormTrustImprovementApprovedSponsor,
                 KeyPersons = request.KeyPersons,
-                ApplyingSchools = request.ApplyingSchools
+                ApplyingSchools = request.ApplyingSchools,
+                DynamicsApplicationId = request.DynamicsApplicationId
             };
 
             var expectedResponse = new ApiSingleResponseV2<A2BApplicationResponse>(expectedApplicationResponse);

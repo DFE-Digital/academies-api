@@ -17,7 +17,8 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     KeyPersonFinancialDirector = request.KeyPersonFinancialDirector,
                     KeyPersonMember = request.KeyPersonMember,
                     KeyPersonOther = request.KeyPersonOther,
-                    KeyPersonTrustee = request.KeyPersonTrustee
+                    KeyPersonTrustee = request.KeyPersonTrustee,
+                    DynamicsKeyPersonId = request.DynamicsKeyPersonId,
                 };
         }
         
@@ -33,7 +34,8 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                 KeyPersonFinancialDirector = request.KeyPersonFinancialDirector,
                 KeyPersonMember = request.KeyPersonMember,
                 KeyPersonOther = request.KeyPersonOther,
-                KeyPersonTrustee = request.KeyPersonTrustee
+                KeyPersonTrustee = request.KeyPersonTrustee,
+                DynamicsKeyPersonId = request.DynamicsKeyPersonId,
             };
         }
     }

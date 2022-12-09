@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,5 +20,7 @@ namespace TramsDataApi.DatabaseModels
         
         public int ApplyingSchoolId { get; set; }
         public virtual A2BApplicationApplyingSchool A2BApplicationApplyingSchool { get; set; }
+
+        public Guid DynamicsSchoolLoanId { get; set; }
     }
 }

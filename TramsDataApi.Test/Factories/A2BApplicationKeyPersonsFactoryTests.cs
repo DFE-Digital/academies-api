@@ -1,7 +1,6 @@
 using FluentAssertions;
 using FizzWare.NBuilder;
 using TramsDataApi.DatabaseModels;
-using TramsDataApi.Factories;
 using TramsDataApi.Factories.A2BApplicationFactories;
 using TramsDataApi.RequestModels.ApplyToBecome;
 using Xunit;
@@ -27,7 +26,8 @@ namespace TramsDataApi.Test.Factories
                 KeyPersonFinancialDirector = keyPersonsModel.KeyPersonFinancialDirector,
                 KeyPersonMember = keyPersonsModel.KeyPersonMember,
                 KeyPersonOther = keyPersonsModel.KeyPersonOther,
-                KeyPersonTrustee = keyPersonsModel.KeyPersonTrustee
+                KeyPersonTrustee = keyPersonsModel.KeyPersonTrustee,
+                DynamicsKeyPersonId = keyPersonsModel.DynamicsKeyPersonId
             };
                 
             var response = A2BApplicationKeyPersonsFactory.Create(keyPersonsModel);
@@ -52,7 +52,8 @@ namespace TramsDataApi.Test.Factories
                 KeyPersonFinancialDirector = keyPersons.KeyPersonFinancialDirector,
                 KeyPersonMember = keyPersons.KeyPersonMember,
                 KeyPersonOther = keyPersons.KeyPersonOther,
-                KeyPersonTrustee = keyPersons.KeyPersonTrustee
+                KeyPersonTrustee = keyPersons.KeyPersonTrustee,
+                DynamicsKeyPersonId = keyPersons.DynamicsKeyPersonId
             };
                 
             var response = A2BApplicationKeyPersonsFactory.Create(keyPersons);

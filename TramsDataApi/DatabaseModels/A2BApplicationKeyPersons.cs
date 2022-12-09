@@ -24,5 +24,7 @@ namespace TramsDataApi.DatabaseModels
         
         public string ApplicationId { get; set; }
         public virtual A2BApplication A2BApplication { get; set; }
+
+        public Guid DynamicsKeyPersonId { get; set; }
     }
 }

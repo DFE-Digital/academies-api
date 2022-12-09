@@ -17,7 +17,8 @@ namespace TramsDataApi.Factories.A2BApplicationFactories
                     SchoolLeasePaymentToDate = schoolLease.SchoolLeasePaymentToDate,
                     SchoolLeasePurpose = schoolLease.SchoolLeasePurpose,
                     SchoolLeaseValueOfAssets = schoolLease.SchoolLeaseValueOfAssets,
-                    SchoolLeaseResponsibleForAssets = schoolLease.SchoolLeaseResponsibleForAssets
+                    SchoolLeaseResponsibleForAssets = schoolLease.SchoolLeaseResponsibleForAssets,
+                    DynamicsSchoolLeaseId = schoolLease.DynamicsSchoolLeaseId
                 };
         }
     }
