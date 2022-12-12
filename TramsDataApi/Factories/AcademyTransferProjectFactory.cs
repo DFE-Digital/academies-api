@@ -45,9 +45,9 @@ namespace TramsDataApi.Factories
                 OtherRisksFurtherSpecification = request.Benefits?.OtherFactorsToConsider?.OtherRisks?.FurtherSpecification,
                 OtherBenefitValue = request.Benefits?.IntendedTransferBenefits.OtherBenefitValue,
                 EqualitiesImpactAssessmentConsidered = request.Benefits?.EqualitiesImpactAssessmentConsidered,
-                TrustAgreement = request.LegalRequirements?.TrustAgreement,
+                IncomingTrustAgreement = request.LegalRequirements?.IncomingTrustAgreement,
                 DiocesanConsent = request.LegalRequirements?.DiocesanConsent,
-                FoundationConsent = request.LegalRequirements?.FoundationConsent,
+                OutgoingTrustConsent = request.LegalRequirements?.OutgoingTrustConsent,
                 AcademyTransferProjectIntendedTransferBenefits = ConvertAcademyTransferProjectIntendedTransferBenefits(request.Benefits?.IntendedTransferBenefits?.SelectedBenefits),
                 TransferringAcademies = ConvertTransferringAcademiesList(request.TransferringAcademies),
                 FeatureSectionIsCompleted = request.Features?.IsCompleted,
@@ -158,8 +158,8 @@ namespace TramsDataApi.Factories
             original.EqualitiesImpactAssessmentConsidered = toMerge.EqualitiesImpactAssessmentConsidered ??
                                                             original.EqualitiesImpactAssessmentConsidered;
             original.DiocesanConsent = toMerge.DiocesanConsent ?? original.DiocesanConsent;
-            original.FoundationConsent = toMerge.FoundationConsent ?? original.FoundationConsent;
-            original.TrustAgreement = toMerge.TrustAgreement ?? original.TrustAgreement;
+            original.OutgoingTrustConsent = toMerge.OutgoingTrustConsent ?? original.OutgoingTrustConsent;
+            original.IncomingTrustAgreement = toMerge.IncomingTrustAgreement ?? original.IncomingTrustAgreement;
             original.TransferringAcademies = toMerge.TransferringAcademies ?? original.TransferringAcademies;
 
             original.FeatureSectionIsCompleted = toMerge.FeatureSectionIsCompleted ?? original.FeatureSectionIsCompleted;
