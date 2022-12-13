@@ -53,7 +53,7 @@ namespace TramsDataApi.UseCases
                 KeyStage5 = new List<KeyStage5PerformanceResponse>()
             };
             
-            educationPerformance.ForEach(epd =>
+            educationPerformance.GroupBy(a => a.SipName).Select(g => g.First()).ToList().ForEach(epd =>
             {
                 response.KeyStage2.Add(KeyStage2PerformanceResponseFactory.Create(
                     epd,
