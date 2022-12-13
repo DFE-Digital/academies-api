@@ -193,9 +193,9 @@ namespace TramsDataApi.Test.Factories
                 },
                 LegalRequirements = new AcademyTransferProjectLegalRequirementsResponse
                 {
-                    TrustAgreement = academyTransferProjectModel.TrustAgreement,
+                    TrustAgreement = academyTransferProjectModel.IncomingTrustAgreement,
                     DiocesanConsent = academyTransferProjectModel.DiocesanConsent,
-                    FoundationConsent = academyTransferProjectModel.FoundationConsent,
+                    FoundationConsent = academyTransferProjectModel.OutgoingTrustConsent,
                     IsCompleted = academyTransferProjectModel.LegalRequirementsSectionIsCompleted,
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
