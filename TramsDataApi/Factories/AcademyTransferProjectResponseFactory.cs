@@ -99,9 +99,9 @@ namespace TramsDataApi.Factories
                 },
                 LegalRequirements = new AcademyTransferProjectLegalRequirementsResponse
                 {
-                    TrustAgreement = model.IncomingTrustAgreement,
+                    IncomingTrustAgreement = model.IncomingTrustAgreement,
                     DiocesanConsent = model.DiocesanConsent,
-                    FoundationConsent = model.OutgoingTrustConsent,
+                    OutgoingTrustConsent = model.OutgoingTrustConsent,
                     IsCompleted = model.LegalRequirementsSectionIsCompleted,
                 },
                 Rationale = new AcademyTransferProjectRationaleResponse
