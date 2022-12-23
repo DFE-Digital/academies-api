@@ -418,7 +418,7 @@ namespace TramsDataApi.Test.Integration
 
             var firstCreateAcademy = createRequest.TransferringAcademies.ElementAt(0);
             var secondCreateAcademy = createRequest.TransferringAcademies.ElementAt(1);
-           
+
             updatedProject?.TransferringAcademies.ElementAt(0).IncomingTrustUkprn.Should().Be(firstCreateAcademy.IncomingTrustUkprn);
             updatedProject?.TransferringAcademies.ElementAt(0).OutgoingAcademyUkprn.Should().Be(firstCreateAcademy.OutgoingAcademyUkprn);
             updatedProject?.TransferringAcademies.ElementAt(0).LatestOfstedReportAdditionalInformation.Should().Be(firstCreateAcademy.LatestOfstedReportAdditionalInformation);
@@ -433,7 +433,7 @@ namespace TramsDataApi.Test.Integration
             updatedProject?.TransferringAcademies.ElementAt(1).PupilNumbersAdditionalInformation.Should().Be(secondCreateAcademy.PupilNumbersAdditionalInformation);
             updatedProject?.TransferringAcademies.ElementAt(1).KeyStage2PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage2PerformanceAdditionalInformation);
             updatedProject?.TransferringAcademies.ElementAt(1).KeyStage4PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage4PerformanceAdditionalInformation);
-            updatedProject?.TransferringAcademies.ElementAt(1).KeyStage5PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage5PerformanceAdditionalInformation);            
+            updatedProject?.TransferringAcademies.ElementAt(1).KeyStage5PerformanceAdditionalInformation.Should().Be(secondCreateAcademy.KeyStage5PerformanceAdditionalInformation);
         }
 
         [Fact]
@@ -441,7 +441,7 @@ namespace TramsDataApi.Test.Integration
         {
             const int numberOfProjects = 20;
             var randomGenerator = new RandomGenerator();
- 
+
             var groups = AddGroups(2);
             var outgoingTrustGroup = groups[0];
             var incomingTrustGroup = groups[1];
@@ -497,6 +497,65 @@ namespace TramsDataApi.Test.Integration
             indexProjectResponse.Results.Count().Should().Be(numberOfProjectsPerPage);
         }
 
+        [Fact]
+        public async Task ShouldReturnProjectsWithEmptyOutgoingAndIncomingTrusts()
+        {
+            const int numberOfProjects = 5;
+            var randomGenerator = new RandomGenerator();
+
+            var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
+                .CreateListOfSize(numberOfProjects)
+                .All()
+                .With(atp => atp.OutgoingTrustUkprn, "")
+                .With(atp => atp.Urn = 0)
+                .With(atp => atp.Id = 0)
+                .With(atp => atp.TransferringAcademies = Builder<TransferringAcademies>
+                    .CreateListOfSize(3)
+                    .All()
+                    .With(ta => ta.Id = 0)
+                    .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
+                    .With(ta => ta.IncomingTrustUkprn, "")
+                    .With(ta => ta.FkAcademyTransferProjectId = null)
+                    .With(ta => ta.PupilNumbersAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.LatestOfstedReportAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.KeyStage2PerformanceAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.KeyStage4PerformanceAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.KeyStage5PerformanceAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .Build()
+                )
+                .With(atp => atp.AcademyTransferProjectIntendedTransferBenefits =
+                    Builder<AcademyTransferProjectIntendedTransferBenefits>
+                        .CreateListOfSize(5)
+                        .All()
+                        .With(benefit => benefit.Id = 0)
+                        .Build()
+                )
+                .Build().ToList();
+
+            _tramsDbContext.AcademyTransferProjects.AddRange(academyTransferProjectsToCreate);
+            _tramsDbContext.SaveChanges();
+
+            var indexAcademyTransferProjectRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProjects?page=1&count={numberOfProjects}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+            };
+
+            var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
+            indexResponse.StatusCode.Should().Be(200);
+            var indexJson = await indexResponse.Content.ReadAsStringAsync();
+            var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
+
+            indexProjectResponse.Results.Count().Should().Be(numberOfProjects);
+            indexProjectResponse.Results.First().OutgoingTrustLeadRscRegion.Should().BeNull();
+            indexProjectResponse.Results.First().OutgoingTrustName.Should().BeNull();
+            indexProjectResponse.Results.First().TransferringAcademies.First().IncomingTrustLeadRscRegion.Should().BeNull();
+            indexProjectResponse.Results.First().TransferringAcademies.First().IncomingTrustName.Should().BeNull();
+        }
 
         [Fact]
         public async Task CanGetTheSecondPageOfAllAcademyTransferProjects()
@@ -505,7 +564,7 @@ namespace TramsDataApi.Test.Integration
             const int pageNumberRequested = 2;
 
             var randomGenerator = new RandomGenerator();
- 
+
             var groups = AddGroups(2);
             var outgoingTrustGroup = groups[0];
             var incomingTrustGroup = groups[1];
@@ -543,7 +602,7 @@ namespace TramsDataApi.Test.Integration
             _tramsDbContext.AcademyTransferProjects.AddRange(academyTransferProjectsToCreate);
             _tramsDbContext.SaveChanges();
 
-            
+
             var indexAcademyTransferProjectRequest = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -557,7 +616,7 @@ namespace TramsDataApi.Test.Integration
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
-           
+
             indexResponse.StatusCode.Should().Be(200);
             indexProjectResponse.Results.Count().Should().Be(numberOfProjectsPerPage);
         }
@@ -683,45 +742,6 @@ namespace TramsDataApi.Test.Integration
             responseModel.Should().BeEquivalentTo(expected);
         }
 
-        private AcademyTransferProjectRequest GenerateCreateRequest()
-        {
-            var randomGenerator = new RandomGenerator();
-
-            var benefitsRequest = Builder<AcademyTransferProjectBenefitsRequest>.CreateNew()
-                .With(b => b.IntendedTransferBenefits = Builder<IntendedTransferBenefitRequest>.CreateNew()
-                    .With(i => i.SelectedBenefits = new List<string>()).Build())
-                .With(b => b.OtherFactorsToConsider = Builder<OtherFactorsToConsiderRequest>.CreateNew()
-                    .With(o => o.ComplexLandAndBuilding = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
-                    .With(o => o.FinanceAndDebt = Builder<BenefitConsideredFactorRequest>.CreateNew().Build())
-                    .With(o => o.HighProfile = Builder<BenefitConsideredFactorRequest>.CreateNew().Build()).Build())
-                .Build();
-
-            var datesRequest = Builder<AcademyTransferProjectDatesRequest>.CreateNew()
-                .With(d => d.TransferFirstDiscussed =
-                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .With(d => d.TargetDateForTransfer =
-                    randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .With(d => d.HtbDate = randomGenerator.DateTime().ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .With(d => d.HasHtbDate = true)
-                .With(d => d.HasTargetDateForTransfer = true)
-                .With(d => d.HasTransferFirstDiscussedDate = true)
-                .Build();
-
-            return Builder<AcademyTransferProjectRequest>.CreateNew()
-                .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8, 8))
-                .With(c => c.Benefits = benefitsRequest)
-                .With(c => c.Dates = datesRequest)
-                .With(c => c.Rationale = Builder<AcademyTransferProjectRationaleRequest>.CreateNew().Build())
-                .With(c => c.GeneralInformation =
-                    Builder<AcademyTransferProjectGeneralInformationRequest>.CreateNew().Build())
-                .With(c => c.Features = Builder<AcademyTransferProjectFeaturesRequest>.CreateNew().Build())
-                .With(c => c.TransferringAcademies =
-                    (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
-                        .CreateListOfSize(2).All()
-                        .With(ta => ta.IncomingTrustUkprn = randomGenerator.NextString(8, 8))
-                        .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8)).Build())
-                .Build();
-        }
         private IList<Group> AddGroups(int numberOfGroups)
         {
             var randomGenerator = new RandomGenerator();
