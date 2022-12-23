@@ -73,15 +73,15 @@ namespace TramsDataApi.UseCases
 
          return atp.Select(x =>
          {
-            Group outgoingGroup = outgoingGroups.First(g => g.Ukprn == x.OutgoingTrustUkprn);
+            Group outgoingGroup = outgoingGroups.FirstOrDefault(g => g.Ukprn == x.OutgoingTrustUkprn);
             return new AcademyTransferProjectSummaryResponse
             {
                ProjectUrn = x.Urn.ToString(),
                ProjectReference = x.ProjectReference,
                OutgoingTrustUkprn = x.OutgoingTrustUkprn,
-               OutgoingTrustName = outgoingGroup.GroupName,
+               OutgoingTrustName = outgoingGroup?.GroupName,
                OutgoingTrustLeadRscRegion =
-                  outgoingTrusts.First(t => t.TrustRef == outgoingGroup.GroupId).LeadRscRegion,
+                  outgoingTrusts.FirstOrDefault(t => t.TrustRef == outgoingGroup.GroupId)?.LeadRscRegion,
                AssignedUser = string.IsNullOrWhiteSpace(x.AssignedUserEmailAddress)
                ? null
                : new AssignedUserResponse
@@ -92,13 +92,13 @@ namespace TramsDataApi.UseCases
                },
                TransferringAcademies = x.TransferringAcademies.Select(ta =>
                {
-                  Group group = incomingGroups.First(g => g.Ukprn == ta.IncomingTrustUkprn);
+                  Group group = incomingGroups.FirstOrDefault(g => g.Ukprn == ta.IncomingTrustUkprn);
                   return new TransferringAcademiesResponse
                   {
                      OutgoingAcademyUkprn = ta.OutgoingAcademyUkprn,
                      IncomingTrustUkprn = ta.IncomingTrustUkprn,
-                     IncomingTrustName = group.GroupName,
-                     IncomingTrustLeadRscRegion = incomingTrusts.First(t => t.TrustRef == group.GroupId).LeadRscRegion,
+                     IncomingTrustName = group?.GroupName,
+                     IncomingTrustLeadRscRegion = incomingTrusts.FirstOrDefault(t => t.TrustRef == group.GroupId)?.LeadRscRegion,
                      PupilNumbersAdditionalInformation = ta.PupilNumbersAdditionalInformation,
                      LatestOfstedReportAdditionalInformation = ta.LatestOfstedReportAdditionalInformation,
                      KeyStage2PerformanceAdditionalInformation = ta.KeyStage2PerformanceAdditionalInformation,
