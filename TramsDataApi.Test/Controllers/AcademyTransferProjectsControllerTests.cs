@@ -41,10 +41,10 @@ namespace TramsDataApi.Test.Controllers
                 mockLogger.Object
             );
             var result = controller.Create(createAcademyTransferRequest);
-            
+
             result.Result.Should().BeEquivalentTo(new CreatedAtActionResult("Create", null, null,academyTransferProjectResponse));
         }
-        
+
         [Fact]
         public void CreateAcademyTransferProject_Returns401WhenGivenIncompleteRequest()
         {
@@ -64,7 +64,7 @@ namespace TramsDataApi.Test.Controllers
                 mockLogger.Object
             );
             var result = controller.Create(createAcademyTransferRequest);
-            
+
             result.Result.Should().BeEquivalentTo(new BadRequestResult());
         }
 
@@ -76,7 +76,7 @@ namespace TramsDataApi.Test.Controllers
             var getAcademyTransferProject = new Mock<IGetAcademyTransferProject>();
 
             var updateAcademyTransferRequest = Builder<AcademyTransferProjectRequest>.CreateNew().Build();
-            
+
             getAcademyTransferProject.Setup(useCase => useCase.Execute(urn)).Returns(() => null);
 
             var controller = new AcademyTransferProjectController(
@@ -102,10 +102,10 @@ namespace TramsDataApi.Test.Controllers
             var updateAcademyTransferRequest = Builder<AcademyTransferProjectRequest>
                 .CreateNew().With(uat => uat.OutgoingTrustUkprn = "12345671").Build();
             var updateAcademyTransferResponse = Builder<AcademyTransferProjectResponse>.CreateNew().Build();
-            
+
             getAcademyTransferProject.Setup(useCase => useCase.Execute(urn))
                 .Returns(Builder<AcademyTransferProjectResponse>.CreateNew().Build);
-            
+
             updateAcademyTransferProject.Setup(useCase => useCase.Execute(urn, updateAcademyTransferRequest))
                 .Returns(updateAcademyTransferResponse);
 
@@ -116,7 +116,7 @@ namespace TramsDataApi.Test.Controllers
                 updateAcademyTransferProject.Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
                 mockLogger.Object
-            ); 
+            );
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(updateAcademyTransferResponse));
@@ -131,7 +131,7 @@ namespace TramsDataApi.Test.Controllers
 
             var updateAcademyTransferRequest = Builder<AcademyTransferProjectRequest>
                 .CreateNew().With(uat => uat.OutgoingTrustUkprn = null).Build();
-            
+
             getAcademyTransferProject.Setup(useCase => useCase.Execute(urn))
                 .Returns(Builder<AcademyTransferProjectResponse>.CreateNew().Build);
 
@@ -142,7 +142,7 @@ namespace TramsDataApi.Test.Controllers
                 updateAcademyTransferProject.Object,
                 new Mock<IIndexAcademyTransferProjects>().Object,
                 mockLogger.Object
-            ); 
+            );
             var result = controller.Update(urn, updateAcademyTransferRequest);
 
             result.Result.Should().BeEquivalentTo(new BadRequestResult());
@@ -196,7 +196,7 @@ namespace TramsDataApi.Test.Controllers
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(academyTransferProjectResponse));
         }
-        
+
         [Fact]
         public void IndexAcademyTransferProject_ReturnsEmptyList_WhenThereAreNoAcademyTransferProjects()
         {
@@ -225,7 +225,7 @@ namespace TramsDataApi.Test.Controllers
 
             result.Result.Should().BeEquivalentTo(new OkObjectResult(expectedPagedResult));
         }
-        
+
         [Fact]
         public void IndexAcademyTransferProject_ReturnsListOfAcademyTransferProjects_WhenThereAreAcademyTransferProjects()
         {
