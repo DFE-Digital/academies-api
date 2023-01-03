@@ -498,15 +498,19 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task ShouldReturnProjectsWithEmptyOutgoingAndIncomingTrusts()
+        public async Task ShouldNotReturnProjectsWithEmptyOutgoingTrust()
         {
             const int numberOfProjects = 5;
             var randomGenerator = new RandomGenerator();
 
+            var groups = AddGroups(2);
+            var outgoingTrustGroup = groups[0];
+            var incomingTrustGroup = groups[1];
+
             var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
                 .CreateListOfSize(numberOfProjects)
                 .All()
-                .With(atp => atp.OutgoingTrustUkprn, "")
+                .With(atp => atp.OutgoingTrustUkprn = outgoingTrustGroup.Ukprn)
                 .With(atp => atp.Urn = 0)
                 .With(atp => atp.Id = 0)
                 .With(atp => atp.TransferringAcademies = Builder<TransferringAcademies>
@@ -514,7 +518,7 @@ namespace TramsDataApi.Test.Integration
                     .All()
                     .With(ta => ta.Id = 0)
                     .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
-                    .With(ta => ta.IncomingTrustUkprn, "")
+                    .With(ta => ta.IncomingTrustUkprn = incomingTrustGroup.Ukprn)
                     .With(ta => ta.FkAcademyTransferProjectId = null)
                     .With(ta => ta.PupilNumbersAdditionalInformation = randomGenerator.NextString(0, 1000))
                     .With(ta => ta.LatestOfstedReportAdditionalInformation = randomGenerator.NextString(0, 1000))
@@ -531,6 +535,8 @@ namespace TramsDataApi.Test.Integration
                         .Build()
                 )
                 .Build().ToList();
+
+            academyTransferProjectsToCreate[0].OutgoingTrustUkprn = "";
 
             _tramsDbContext.AcademyTransferProjects.AddRange(academyTransferProjectsToCreate);
             _tramsDbContext.SaveChanges();
@@ -550,11 +556,71 @@ namespace TramsDataApi.Test.Integration
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
 
-            indexProjectResponse.Results.Count().Should().Be(numberOfProjects);
-            indexProjectResponse.Results.First().OutgoingTrustLeadRscRegion.Should().BeNull();
-            indexProjectResponse.Results.First().OutgoingTrustName.Should().BeNull();
-            indexProjectResponse.Results.First().TransferringAcademies.First().IncomingTrustLeadRscRegion.Should().BeNull();
-            indexProjectResponse.Results.First().TransferringAcademies.First().IncomingTrustName.Should().BeNull();
+            indexProjectResponse.Results.Count().Should().Be(numberOfProjects - 1);
+            Assert.DoesNotContain(indexProjectResponse.Results, p => p.ProjectUrn == academyTransferProjectsToCreate[0].Urn.ToString());
+        }
+
+        [Fact]
+        public async Task ShouldNotReturnProjectsWithEmptyIncomingTrust()
+        {
+            const int numberOfProjects = 5;
+            var randomGenerator = new RandomGenerator();
+
+            var groups = AddGroups(2);
+            var outgoingTrustGroup = groups[0];
+            var incomingTrustGroup = groups[1];
+
+            var academyTransferProjectsToCreate = Builder<AcademyTransferProjects>
+                .CreateListOfSize(numberOfProjects)
+                .All()
+                .With(atp => atp.OutgoingTrustUkprn = outgoingTrustGroup.Ukprn)
+                .With(atp => atp.Urn = 0)
+                .With(atp => atp.Id = 0)
+                .With(atp => atp.TransferringAcademies = Builder<TransferringAcademies>
+                    .CreateListOfSize(3)
+                    .All()
+                    .With(ta => ta.Id = 0)
+                    .With(ta => ta.OutgoingAcademyUkprn = randomGenerator.NextString(8, 8))
+                    .With(ta => ta.IncomingTrustUkprn = incomingTrustGroup.Ukprn)
+                    .With(ta => ta.FkAcademyTransferProjectId = null)
+                    .With(ta => ta.PupilNumbersAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.LatestOfstedReportAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.KeyStage2PerformanceAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.KeyStage4PerformanceAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .With(ta => ta.KeyStage5PerformanceAdditionalInformation = randomGenerator.NextString(0, 1000))
+                    .Build()
+                )
+                .With(atp => atp.AcademyTransferProjectIntendedTransferBenefits =
+                    Builder<AcademyTransferProjectIntendedTransferBenefits>
+                        .CreateListOfSize(5)
+                        .All()
+                        .With(benefit => benefit.Id = 0)
+                        .Build()
+                )
+                .Build().ToList();
+
+            academyTransferProjectsToCreate[0].TransferringAcademies.First().IncomingTrustUkprn = "";
+
+            _tramsDbContext.AcademyTransferProjects.AddRange(academyTransferProjectsToCreate);
+            _tramsDbContext.SaveChanges();
+
+            var indexAcademyTransferProjectRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://trams-api.com/academyTransferProjects?page=1&count={numberOfProjects}"),
+                Headers =
+                {
+                    {"ApiKey", "testing-api-key"}
+                },
+            };
+
+            var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
+            indexResponse.StatusCode.Should().Be(200);
+            var indexJson = await indexResponse.Content.ReadAsStringAsync();
+            var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
+
+            indexProjectResponse.Results.Count().Should().Be(numberOfProjects - 1);
+            Assert.DoesNotContain(indexProjectResponse.Results, p => p.ProjectUrn == academyTransferProjectsToCreate[0].Urn.ToString());
         }
 
         [Fact]
