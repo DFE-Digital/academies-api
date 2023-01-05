@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  zap:
+    container_name: zap
+    image: owasp/zap2docker-bare
+    command: zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+    ports:
+      - 8080:8080
+    user: zap
+    volumes:
+      - ./:/home/zap/:rw
+  cypress:
+    build:
+      context: ./CypressTests
+      dockerfile: Dockerfile
+    command: -- --env apiKey=<api-key>,url=<url>
+    depends_on:
+      zap:
+        condition: service_healthy
+    env_file:
+      - ./CypressTests/.env
