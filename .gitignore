@@ -147,3 +147,12 @@ _NCrunch*
 
 # node_modules
 CypressTests/node_modules
+
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.*.local
+!.env.development.local.example
+!.env.database.example
