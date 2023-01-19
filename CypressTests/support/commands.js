@@ -23,23 +23,3 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
-
-
-import { validateSchema } from "./validate-schema-command";
-
-Cypress.Commands.add("validateSchema", validateSchema);
-
-Cypress.Commands.add('beData', () => {
-    const apiKey = Cypress.env('apiKey')
-    const url = Cypress.env('url')
-
-    cy.request({
-        method:'GET',
-        url: url + '/conversion-projects?count=4',
-        headers: {
-            ApiKey: apiKey,
-            "Content-type" : "application/json"
-         }
-    })
-})
