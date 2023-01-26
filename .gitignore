@@ -155,3 +155,5 @@ CypressTests/cypress/videos
 # ZAP
 .ZAP
 .java
+
+zap/

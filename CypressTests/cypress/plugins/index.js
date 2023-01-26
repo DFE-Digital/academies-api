@@ -23,14 +23,17 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
 
   // Map process env var to cypress var for later usage
-  process.env.zapReport = config.env.zapReport
+  if(typeof config.env.zapReport === "undefined") {
+    process.env.zapReport = false
+  }
+  else {
+    process.env.zapReport = config.env.zapReport
+  }
 
   // eslint-disable-next-line no-unused-vars
-  on('after:run', (res) => {
-    console.log(true && process.env.zapReport)
-    if(process.env.zapReport) {
-      console.log("Generating report...")
-      generateZapHTMLReport()
+  on('after:run', async (res) => {
+    if(process.env.zapReport.toLowerCase() == "true") {
+      await generateZapHTMLReport()
     }
   })
 }
