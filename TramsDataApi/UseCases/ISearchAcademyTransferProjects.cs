@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using TramsDataApi.DatabaseModels;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.UseCases

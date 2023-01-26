@@ -28,7 +28,7 @@ namespace TramsDataApi
         {
             services.AddControllers();
             services.AddApiVersioning();
-            
+
             // EF setup
             services.AddDbContext<LegacyTramsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));// EF setup
@@ -52,15 +52,11 @@ namespace TramsDataApi
             services.AddScoped<IUpdateAcademyTransferProject, UpdateAcademyTransferProject>();
             services.AddScoped<IIndexAcademyTransferProjects, IndexAcademyTransferProjects>();
 
-            services.AddScoped<IUpdateAcademyConversionProject, UpdateAcademyConversionProject>();
-            services.AddScoped<IAddAcademyConversionProjectNote, AddAcademyConversionProjectNote>();
             services.AddScoped<IGetKeyStagePerformanceByUrn, GetKeyStagePerformanceByUrn>();
             services.AddScoped<IEducationPerformanceGateway, EducationPerformanceGateway>();
-            services.AddScoped<IAcademyConversionProjectGateway, AcademyConversionProjectGateway>();
-            services.AddScoped<IGetAcademyConversionProjectFilterParameters, GetAcademyConversionProjectFilterParameters>();
             services.AddScoped<ICensusDataGateway, CensusDataGateway>();
             services.AddScoped<IIfdPipelineGateway, IfdPipelineGateway>();
-            
+
             services.AddScoped<IFssProjectGateway, FssProjectGateway>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
 
@@ -69,11 +65,7 @@ namespace TramsDataApi
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
 
-            services.AddScoped<IGetAcademyConversionProject, GetAcademyConversionProject>();
-            services.AddScoped<IGetAcademyConversionProjects, GetAcademyConversionProjects>();
-            services.AddScoped<ISearchAcademyConversionProjects, SearchAcademyConversionProjects>();
-
-            services.AddApiVersioning(config => 
+            services.AddApiVersioning(config =>
             {
                 config.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
                 config.AssumeDefaultVersionWhenUnspecified = true;
@@ -99,7 +91,7 @@ namespace TramsDataApi
                 {
                     c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
                 }
-                
+
                 c.SupportedSubmitMethods(SubmitMethod.Get);
             });
 
