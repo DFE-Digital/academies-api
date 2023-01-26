@@ -2,13 +2,11 @@ version: "3.8"
 services:
   zap:
     container_name: zap
-    image: owasp/zap2docker-bare
-    command: zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+    image: owasp/zap2docker-stable:2.11.1 # pinned until alpn config issue is resolved - https://github.com/zaproxy/zaproxy/issues/7699
+    command: "zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
     ports:
       - 8080:8080
     user: zap
-    # volumes:
-    #   - ./:/home/zap/:rw
   cypress:
     build:
       context: ./CypressTests
@@ -19,8 +17,8 @@ services:
         condition: service_healthy
     env_file:
       - ./CypressTests/.env
-    # volumes:
-    #   - ./CypressTests/:/cypress:rw
+    volumes:
+      - ./zap:/reports
 
 # Command to use to ensure compose closes on test finishes
 # docker compose up --exit-code-from cypress
