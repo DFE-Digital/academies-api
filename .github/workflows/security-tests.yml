@@ -19,7 +19,7 @@ jobs:
       - name: Prepare environment
         run: |
           echo "{API_KEY}={${{ secrets.TRAMS_API_KEY }}}" >> $GITHUB_ENV
-          echo "{URL}={${{ secrets.TRAMS_API_ENDPOINT }}}" >> $GITHUB_ENV
+          echo "{URL}={${{ secrets.TRAMS_API_BASE_URL }}}" >> $GITHUB_ENV
           echo "{HTTP_PROXY}={http://zap:8080}" >> $GITHUB_ENV
           echo "{NO_PROXY}={zap,*.gvt1.com}" >> $GITHUB_ENV
           echo "{ZAP_API_KEY}={${{ secrets.ZAP_API_KEY }}}" >> $GITHUB_ENV
