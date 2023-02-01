@@ -1,6 +1,9 @@
 name: Security scanner tests
 
 on:
+  push:
+    branches:
+      - owasp-zap-ci
   workflow_dispatch:
   workflow_run:
     workflows: [Continuous delivery (development)]
