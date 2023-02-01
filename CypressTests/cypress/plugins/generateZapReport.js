@@ -27,18 +27,5 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
-    },
-
-    getAlertCount: async () => {
-
-        const zapOptions = {
-            apiKey: process.env.zapApiKey || '',
-            proxy: process.env.zapUrl || 'http://localhost:8080'
-        }
-
-        const zaproxy = new ZapClient(zapOptions)
-
-        return await zaproxy.core.numberOfAlerts(process.env.url)
-
     }
 }
