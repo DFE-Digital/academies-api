@@ -1,10 +1,6 @@
 name: Security scanner tests
 
 on:
-  push:
-    branches:
-      - owasp-zap-ci
-  workflow_dispatch:
   workflow_run:
     workflows: [Continuous delivery (development)]
     types:
@@ -33,5 +29,5 @@ jobs:
 
       - uses: actions/upload-artifact@v1
         with:
-          name: report.html
+          name: report
           path: ./CypressTests/ZAP-Report.html
