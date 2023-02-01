@@ -155,7 +155,7 @@ CypressTests/cypress/videos
 # ZAP
 .ZAP
 .java
-zap/
+ZAP-Report.html
 
 # Homebrew
 Brewfile.lock.json
