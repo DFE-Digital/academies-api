@@ -2,8 +2,6 @@ version: "3.8"
 services:
   zap:
     container_name: zap
-    env_file:
-      - .env
     image: owasp/zap2docker-stable:2.11.1 # pinned until alpn config issue is resolved - https://github.com/zaproxy/zaproxy/issues/7699
     command: "zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.key=${ZAP_API_KEY} -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
     ports:
@@ -17,7 +15,5 @@ services:
     depends_on:
       zap:
         condition: service_healthy
-    env_file:
-      - .env
     volumes:
       - ./zap:/reports
