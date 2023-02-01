@@ -12,7 +12,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const generateZapHTMLReport = require('./generateZapReport');
+const { generateZapHTMLReport, getAlertCount } = require('./generateZapReport');
 
 /**
  * @type {Cypress.PluginConfig}
@@ -22,18 +22,17 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  // Map process env var to cypress var for later usage
-  if(typeof config.env.zapReport === "undefined") {
-    process.env.zapReport = false
-  }
-  else {
-    process.env.zapReport = config.env.zapReport
-  }
+  // Map process env var to cypress var for usage outside of Cypress run
+  process.env = config.env
 
   // eslint-disable-next-line no-unused-vars
   on('after:run', async (res) => {
-    if(process.env.zapReport.toLowerCase() == "true") {
-      await generateZapHTMLReport()
+    if(process.env.zapReport) {
+      const alertCount = await getAlertCount()
+      if(Number(alertCount.numberOfAlerts) > 0)
+        await generateZapHTMLReport()
+      else
+        console.log('No alerts found')
     }
   })
 }
