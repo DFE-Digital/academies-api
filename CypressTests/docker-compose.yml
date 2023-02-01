@@ -16,4 +16,4 @@ services:
       zap:
         condition: service_healthy
     volumes:
-      - ./zap:/reports
+      - ./:/reports
