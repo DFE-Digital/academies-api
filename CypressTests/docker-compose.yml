@@ -21,6 +21,3 @@ services:
       - .env
     volumes:
       - ./zap:/reports
-
-# Command to use to ensure compose closes on test finishes
-# docker compose --env-file .env up --exit-code-from cypress

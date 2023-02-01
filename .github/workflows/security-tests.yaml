@@ -1,0 +1,35 @@
+name: Security scanner tests
+
+on:
+  workflow_run:
+    workflows: [Continuous delivery (development)]
+    types:
+      - completed
+
+jobs:
+  run-tests-with-zap:
+    name: Run Cypress tests with OWASP ZAP
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Make .env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_API_KEY: "${{ secrets.TRAMS_API_KEY }}"
+          envkey_URL: "${{ secrets.TRAMS_API_ENDPOINT }}"
+          envkey_HTTP_PROXY: "http://zap:8080"
+          envkey_NO_PROXY: "zap,*.gvt1.com"
+          envkey_ZAP_API_KEY: "" # TODO add value to github secrets
+          directory: CypressTests
+          fail_on_empty: true
+
+      - name: run tests with scanner
+        run: |
+          docker compose -f CypressTests/docker-compose.yaml up --exit-code-from cypress
+        uses: actions/upload-artifact@v1
+        with:
+          name: report.html
+          path: ./**/ZAP-Report.html

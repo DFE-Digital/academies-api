@@ -12,7 +12,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const { generateZapHTMLReport, getAlertCount } = require('./generateZapReport');
+const { generateZapHTMLReport } = require('./generateZapReport');
 
 /**
  * @type {Cypress.PluginConfig}
@@ -26,13 +26,9 @@ module.exports = (on, config) => {
   process.env = config.env
 
   // eslint-disable-next-line no-unused-vars
-  on('after:run', async (res) => {
+  on('after:run', async () => {
     if(process.env.zapReport) {
-      const alertCount = await getAlertCount()
-      if(Number(alertCount.numberOfAlerts) > 0)
-        await generateZapHTMLReport()
-      else
-        console.log('No alerts found')
+      await generateZapHTMLReport()
     }
   })
 }
