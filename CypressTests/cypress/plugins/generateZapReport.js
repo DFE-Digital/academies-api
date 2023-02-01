@@ -1,24 +1,44 @@
 const ZapClient = require('zaproxy')
 const fs = require('fs')
 
-// TODO pull these values from (Cypress) config
-const zapOptions = {
-    apiKey: '',
-    proxy: 'http://zap:8080'
-}
+module.exports = {
+    generateZapHTMLReport: async () => {
 
-const zaproxy = new ZapClient(zapOptions)
-
-const generateZapHTMLReport = async () => {
-    try {
-        const report = await zaproxy.core.htmlreport()
-        if(!fs.existsSync('./reports')) {
-            fs.mkdirSync('./reports')
+        const zapOptions = {
+            apiKey: process.env.zapApiKey || '',
+            proxy: process.env.zapUrl || 'http://localhost:8080'
         }
-        fs.writeFileSync('./reports/ZAP-Report.html', report)
-    } catch (err) {
-        console.log(err)
+
+        const zaproxy = new ZapClient(zapOptions)
+
+        try {
+            await zaproxy.core.htmlreport()
+            .then(
+                resp => {
+                    if(!fs.existsSync('./reports')) {
+                        fs.mkdirSync('./reports')
+                    }
+                    fs.writeFileSync('./reports/ZAP-Report.html', resp)
+                },
+                err => {
+                    console.log(err.message)
+                }
+            )
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
+    getAlertCount: async () => {
+
+        const zapOptions = {
+            apiKey: process.env.zapApiKey || '',
+            proxy: process.env.zapUrl || 'http://localhost:8080'
+        }
+
+        const zaproxy = new ZapClient(zapOptions)
+
+        return await zaproxy.core.numberOfAlerts(process.env.url)
+
     }
 }
-
-module.exports = generateZapHTMLReport;
