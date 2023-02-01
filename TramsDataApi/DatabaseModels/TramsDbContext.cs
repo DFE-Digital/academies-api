@@ -16,8 +16,6 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<AcademyTransferProjectIntendedTransferBenefits> AcademyTransferProjectIntendedTransferBenefits { get; set; }
         public virtual DbSet<AcademyTransferProjects> AcademyTransferProjects { get; set; }
         public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
-        public virtual DbSet<AcademyConversionProject> AcademyConversionProjects { get; set; }
-        public virtual DbSet<AcademyConversionProjectNote> AcademyConversionProjectNotes { get; set; }
         public virtual DbSet<A2BApplication> A2BApplications { get; set; }
         public virtual DbSet<A2BApplicationKeyPersons> A2BApplicationKeyPersons { get; set; }
         public virtual DbSet<A2BApplicationApplyingSchool> A2BApplicationApplyingSchools { get; set; }
@@ -97,16 +95,6 @@ namespace TramsDataApi.DatabaseModels
                     .WithMany(p => p.TransferringAcademies)
                     .HasForeignKey(d => d.FkAcademyTransferProjectId)
                     .HasConstraintName("FK__Transferr__fk_Ac__403A8C7D");
-            });
-
-            modelBuilder.Entity<AcademyConversionProject>(entity =>
-            {
-                entity.ToTable("AcademyConversionProject", "sdd");
-            });
-
-            modelBuilder.Entity<AcademyConversionProjectNote>(entity =>
-            {
-                entity.ToTable("AcademyConversionProjectNote", "sdd");
             });
 
             modelBuilder.Entity<FssProject>(entity =>

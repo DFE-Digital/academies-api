@@ -5,6 +5,7 @@ using FluentAssertions;
 using Moq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Gateways;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;

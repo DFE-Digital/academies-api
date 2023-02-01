@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using TramsDataApi.Controllers;
-using TramsDataApi.DatabaseModels;
+using TramsDataApi.RequestModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
 using TramsDataApi.ResponseModels.AcademyTransferProject;
 using TramsDataApi.UseCases;
@@ -17,7 +17,7 @@ namespace TramsDataApi.Test.Controllers
 {
     public class AcademyTransferProjectsControllerTests
     {
-        private Mock<ILogger<AcademyTransferProjectController>> mockLogger = new Mock<ILogger<AcademyTransferProjectController>>();
+        private readonly Mock<ILogger<AcademyTransferProjectController>> mockLogger = new Mock<ILogger<AcademyTransferProjectController>>();
 
         [Fact]
         public void CreateAcademyTransferProject_Returns201WhenSuccessfullyCreatesAnAcademyTransferProject()
