@@ -6,7 +6,7 @@ using TramsDataApi.ResponseModels.AcademyTransferProject;
 
 namespace TramsDataApi.Factories
 {
-    public class AcademyTransferProjectResponseFactory
+    public static class AcademyTransferProjectResponseFactory
     {
         public static AcademyTransferProjectResponse Create(AcademyTransferProjects model)
         {
