@@ -58,3 +58,18 @@ variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN FrontDoor. This will use the Container Apps endpoint as the origin."
   type        = bool
 }
+
+variable "cdn_frontdoor_enable_rate_limiting" {
+  description = "Enable CDN Front Door Rate Limiting. This will create a WAF policy, and CDN security policy. For pricing reasons, there will only be one WAF policy created."
+  type        = bool
+}
+
+variable "enable_monitoring" {
+  description = "Create an App Insights instance and notification group for the Container App"
+  type        = bool
+}
+
+variable "monitor_email_receivers" {
+  description = "A list of email addresses that should be notified by monitoring alerts"
+  type        = list(string)
+}
