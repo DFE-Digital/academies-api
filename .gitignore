@@ -148,6 +148,15 @@ _NCrunch*
 # node_modules
 CypressTests/node_modules
 
+# screenshots and videos
+CypressTests/cypress/screenshots
+CypressTests/cypress/videos
+
+# ZAP
+.ZAP
+.java
+ZAP-Report.html
+
 # Homebrew
 Brewfile.lock.json
 
