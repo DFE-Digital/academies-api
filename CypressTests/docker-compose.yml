@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  zap:
+    container_name: zap
+    image: owasp/zap2docker-stable:2.11.1 # pinned until alpn config issue is resolved - https://github.com/zaproxy/zaproxy/issues/7699
+    command: "zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.key=${ZAP_API_KEY} -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
+    ports:
+      - 8080:8080
+    user: zap
+  cypress:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: -- --env apiKey=${API_KEY},url="${URL}",zapReport=true,zapApiKey=${ZAP_API_KEY},zapUrl="${HTTP_PROXY}"
+    depends_on:
+      zap:
+        condition: service_healthy
+    volumes:
+      - ./:/reports
