@@ -11,4 +11,7 @@ locals {
   enable_cdn_frontdoor                   = var.enable_cdn_frontdoor
   key_vault_access_users                 = toset(var.key_vault_access_users)
   tfvars_filename                        = var.tfvars_filename
+  enable_monitoring                      = var.enable_monitoring
+  monitor_email_receivers                = var.monitor_email_receivers
+  cdn_frontdoor_enable_rate_limiting     = var.cdn_frontdoor_enable_rate_limiting
 }
