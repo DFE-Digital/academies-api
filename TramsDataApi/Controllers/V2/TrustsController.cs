@@ -26,7 +26,7 @@ namespace TramsDataApi.Controllers.V2
             _getTrustsByUkprns = getTrustsByUkprns;
             _logger = logger;
         }
-        
+
         [HttpGet("trusts")]
         [MapToApiVersion("2.0")]
         public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, int page = 1, int count = 50)
@@ -37,18 +37,21 @@ namespace TramsDataApi.Controllers.V2
 
             var (trusts, recordCount) = _searchTrusts
                 .Execute(page, count, groupName, ukPrn, companiesHouseNumber);
-            
+
             _logger.LogInformation(
                 "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
                 trusts.Count(), groupName, ukPrn, companiesHouseNumber, page, count);
-            
-            _logger.LogDebug(JsonSerializer.Serialize(trusts));
-            
+
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
+                _logger.LogDebug(JsonSerializer.Serialize(trusts));
+            }
+
             var pagingResponse = PagingResponseFactory.Create(page, count, recordCount, Request);
             var response = new ApiResponseV2<TrustSummaryResponse>(trusts, pagingResponse);
             return new OkObjectResult(response);
         }
-        
+
         [HttpGet]
         [Route("trust/{ukprn}")]
         [MapToApiVersion("2.0")]
