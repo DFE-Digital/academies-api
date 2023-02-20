@@ -50,7 +50,7 @@ namespace TramsDataApi.Controllers
                 groupName, ukPrn, companiesHouseNumber, page, count);
 
             var trusts = _searchTrusts
-                .Execute(page, count, groupName, ukPrn, companiesHouseNumber)
+                .Execute(page, count, groupName, ukPrn, companiesHouseNumber, true)
                 .Item1.ToList();
             
             _logger.LogInformation(
