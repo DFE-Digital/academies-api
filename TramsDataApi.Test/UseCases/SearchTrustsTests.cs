@@ -27,7 +27,7 @@ namespace TramsDataApi.Test.UseCases
                 .Returns((new List<Group>(), 0));
 
             var useCase = new SearchTrusts(gateway.Object, new Mock<IEstablishmentGateway>().Object);
-            var (result, _) = useCase.Execute(1, 10, groupName, ukprn, companiesHouseNumber, true);
+            var (result, _) = useCase.Execute(1, 10, groupName, ukprn, companiesHouseNumber);
 
             result.Should().BeEquivalentTo(new List<TrustSummaryResponse>());
         }
@@ -51,7 +51,7 @@ namespace TramsDataApi.Test.UseCases
             var trustsGateway = new Mock<ITrustGateway>();
             var establishmentsGateway = new Mock<IEstablishmentGateway>();
 
-            trustsGateway.Setup(g => g.SearchGroups(1, 10, groupName, null, null))
+            trustsGateway.Setup(g => g.SearchGroups(1, 10, groupName, string.Empty, string.Empty))
                 .Returns((expectedTrusts, expectedTrusts.Count));
 
             trustsGateway.Setup(m => m.GetIfdTrustsByTrustRef(It.IsAny<string[]>()))
@@ -65,7 +65,7 @@ namespace TramsDataApi.Test.UseCases
                 .ToList();
             
             var searchTrusts = new SearchTrusts(trustsGateway.Object, establishmentsGateway.Object);
-            var (result, _) = searchTrusts.Execute(1, 10, groupName, null, null, true);
+            var (result, _) = searchTrusts.Execute(1, 10, groupName);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -89,7 +89,7 @@ namespace TramsDataApi.Test.UseCases
             var trustGateway = new Mock<ITrustGateway>();
             var establishmentGateway = new Mock<IEstablishmentGateway>();
 
-            trustGateway.Setup(g => g.SearchGroups(1, 10, null, ukprn, null))
+            trustGateway.Setup(g => g.SearchGroups(1, 10, string.Empty, ukprn, string.Empty))
                 .Returns((new List<Group> {expectedTrust}, 1));
             trustGateway.Setup(m => m.GetIfdTrustsByTrustRef(It.IsAny<string[]>()))
                 .Returns(trusts);
@@ -102,12 +102,12 @@ namespace TramsDataApi.Test.UseCases
             };
 
             var searchTrusts = new SearchTrusts(trustGateway.Object, establishmentGateway.Object);
-            var (result, _) = searchTrusts.Execute(1, 10, null, ukprn, null, true);
+            var (result, _) = searchTrusts.Execute(1, 10, ukPrn: ukprn);
             result.Should().BeEquivalentTo(expected);
         }
         
         [Fact]
-        public void SearchTrusts_WithoutEstablishments_()
+        public void SearchTrusts_WithoutEstablishments()
         {
             var ukprn = "mockurn";
             var expectedTrust = Builder<Group>
@@ -118,7 +118,7 @@ namespace TramsDataApi.Test.UseCases
             var trusts = Builder<Trust>.CreateListOfSize(3).Build();
             var trustGateway = new Mock<ITrustGateway>();
 
-            trustGateway.Setup(g => g.SearchGroups(1, 10, null, ukprn, null))
+            trustGateway.Setup(g => g.SearchGroups(1, 10, string.Empty, ukprn, string.Empty))
                 .Returns((new List<Group> {expectedTrust}, 1));
             trustGateway.Setup(m => m.GetIfdTrustsByTrustRef(It.IsAny<string[]>()))
                 .Returns(trusts);
@@ -129,7 +129,7 @@ namespace TramsDataApi.Test.UseCases
             };
 
             var searchTrusts = new SearchTrusts(trustGateway.Object, null);
-            var (result, _) = searchTrusts.Execute(1, 10, null, ukprn, null, false);
+            var (result, _) = searchTrusts.Execute(1, 10, ukPrn: ukprn, includeEstablishments: false);
             result.Should().BeEquivalentTo(expected);
         }
     }
