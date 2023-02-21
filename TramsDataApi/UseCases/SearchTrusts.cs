@@ -18,8 +18,13 @@ namespace TramsDataApi.UseCases
             _establishmentGateway = establishmentGateway;
         }
 
-        public (IEnumerable<TrustSummaryResponse>, int) Execute(int page, int count, string groupName, string ukPrn, string companiesHouseNumber, 
-            bool includeEstablishments)
+        public (IEnumerable<TrustSummaryResponse>, int) Execute(
+            int page = 1, 
+            int count = 50, 
+            string groupName = "", 
+            string ukPrn = "", 
+            string companiesHouseNumber = "", 
+            bool includeEstablishments = true)
         {
             var (groups, recordCount) = _trustGateway.SearchGroups(page, count, groupName, ukPrn, companiesHouseNumber);
 
