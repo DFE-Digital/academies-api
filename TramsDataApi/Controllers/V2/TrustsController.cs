@@ -29,15 +29,17 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet("trusts")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, int page = 1, int count = 50)
+        public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, 
+            int page = 1, int count = 50, bool includeEstablishments = true)
         {
             _logger.LogInformation(
                 "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
                 groupName, ukPrn, companiesHouseNumber, page, count);
 
             var (trusts, recordCount) = _searchTrusts
-                .Execute(page, count, groupName, ukPrn, companiesHouseNumber);
-
+                .Execute(page, count, groupName, ukPrn, companiesHouseNumber, includeEstablishments);
+            trusts = trusts.ToList();
+            
             _logger.LogInformation(
                 "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
                 trusts.Count(), groupName, ukPrn, companiesHouseNumber, page, count);

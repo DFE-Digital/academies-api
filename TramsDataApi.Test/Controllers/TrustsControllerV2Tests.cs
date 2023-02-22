@@ -98,7 +98,7 @@ namespace TramsDataApi.Test.Controllers
                 NextPageUrl = null
             };
 
-            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber))
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber, true))
                 .Returns((new List<TrustSummaryResponse>(), 0));
 
             var result = _controller.SearchTrusts(groupName, ukprn, companiesHouseNumber, 1, 10);
@@ -126,7 +126,7 @@ namespace TramsDataApi.Test.Controllers
                 NextPageUrl = null
             };
 
-            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber))
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber, true))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var result = _controller.SearchTrusts(groupName, null, companiesHouseNumber, 1, 10);
@@ -153,7 +153,7 @@ namespace TramsDataApi.Test.Controllers
                 NextPageUrl = null
             };
 
-            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, null, ukprn, null))
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, null, ukprn, null, true))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var result = _controller.SearchTrusts(null, ukprn, null, 1, 10);
@@ -172,7 +172,7 @@ namespace TramsDataApi.Test.Controllers
                 RecordCount = 5,
                 NextPageUrl = null
             };
-            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, null, null, null))
+            _mockSearchTrustsUseCase.Setup(s => s.Execute(1, 10, null, null, null, true))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var result = _controller.SearchTrusts(null, null, null, 1, 10);
@@ -194,7 +194,7 @@ namespace TramsDataApi.Test.Controllers
             };
 
             _mockSearchTrustsUseCase
-                .Setup(s => s.Execute(1, 10, null, null, null))
+                .Setup(s => s.Execute(1, 10, null, null, null, true))
                 .Returns((expectedTrustSummaries.Take(10).ToList(), expectedTrustSummaries.Count));
 
             _controller.ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() };
