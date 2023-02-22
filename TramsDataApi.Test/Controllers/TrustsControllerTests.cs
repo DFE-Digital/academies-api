@@ -77,7 +77,7 @@ namespace TramsDataApi.Test.Controllers
             var companiesHouseNumber = "Mockcompanieshousenumber";
 
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber))
+            searchTrusts.Setup(s => s.Execute(1, 10, groupName, ukprn, companiesHouseNumber, true))
                 .Returns((new List<TrustSummaryResponse>(), 0));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
@@ -99,7 +99,7 @@ namespace TramsDataApi.Test.Controllers
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber))
+            searchTrusts.Setup(s => s.Execute(1, 10, groupName, null, companiesHouseNumber, true))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
@@ -120,7 +120,7 @@ namespace TramsDataApi.Test.Controllers
                 .Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, null, ukprn, null))
+            searchTrusts.Setup(s => s.Execute(1, 10, null, ukprn, null, true))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);
@@ -135,7 +135,7 @@ namespace TramsDataApi.Test.Controllers
             var expectedTrustSummaries = Builder<TrustSummaryResponse>.CreateListOfSize(5).Build();
             
             var searchTrusts = new Mock<ISearchTrusts>();
-            searchTrusts.Setup(s => s.Execute(1, 10, null, null, null))
+            searchTrusts.Setup(s => s.Execute(1, 10, null, null, null, true))
                 .Returns((expectedTrustSummaries, expectedTrustSummaries.Count));
 
             var controller = new TrustsController(new Mock<IGetTrustByUkprn>().Object, searchTrusts.Object, mockLogger.Object);

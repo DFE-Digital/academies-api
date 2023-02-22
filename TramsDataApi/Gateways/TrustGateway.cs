@@ -32,12 +32,9 @@ namespace TramsDataApi.Gateways
          return _dbContext.Trust.FirstOrDefault(x => x.Rid.Equals(RID));
       }
 
-      public IQueryable<Trust> GetIfdTrustsByTrustRef(string[] trustRefs)
+      public IList<Trust> GetIfdTrustsByTrustRef(string[] trustRefs)
       {
-         Expression<Func<Trust, bool>> predicate = PredicateBuilder.False<Trust>();
-         foreach (var trustRef in trustRefs) predicate = predicate.Or(t => t.TrustRef == trustRef);
-
-         return _dbContext.Trust.Where(predicate);
+         return _dbContext.Trust.Where(t => trustRefs.Contains(t.TrustRef)).ToList();
       }
 
       public (IList<Group>, int) SearchGroups(int page, int count, string groupName, string ukPrn,
