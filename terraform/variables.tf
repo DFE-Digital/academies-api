@@ -64,6 +64,11 @@ variable "cdn_frontdoor_enable_rate_limiting" {
   type        = bool
 }
 
+variable "cdn_frontdoor_host_add_response_headers" {
+  description = "List of response headers to add at the CDN Front Door `[{ \"Name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
+  type        = list(map(string))
+}
+
 variable "enable_monitoring" {
   description = "Create an App Insights instance and notification group for the Container App"
   type        = bool
