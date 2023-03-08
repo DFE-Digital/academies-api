@@ -14,6 +14,7 @@ locals {
   enable_monitoring                            = var.enable_monitoring
   monitor_email_receivers                      = var.monitor_email_receivers
   cdn_frontdoor_enable_rate_limiting           = var.cdn_frontdoor_enable_rate_limiting
+  cdn_frontdoor_host_add_response_headers      = var.cdn_frontdoor_host_add_response_headers
   container_health_probe_path                  = var.container_health_probe_path
   cdn_frontdoor_health_probe_path              = var.cdn_frontdoor_health_probe_path
   monitor_endpoint_healthcheck                 = var.monitor_endpoint_healthcheck
