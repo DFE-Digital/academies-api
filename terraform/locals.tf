@@ -9,6 +9,7 @@ locals {
   container_command                            = var.container_command
   container_secret_environment_variables       = var.container_secret_environment_variables
   enable_cdn_frontdoor                         = var.enable_cdn_frontdoor
+  enable_event_hub                             = var.enable_event_hub
   key_vault_access_users                       = toset(var.key_vault_access_users)
   tfvars_filename                              = var.tfvars_filename
   enable_monitoring                            = var.enable_monitoring
