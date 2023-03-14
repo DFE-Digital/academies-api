@@ -18,6 +18,8 @@ module "azure_container_apps_hosting" {
   cdn_frontdoor_enable_rate_limiting      = local.cdn_frontdoor_enable_rate_limiting
   cdn_frontdoor_host_add_response_headers = local.cdn_frontdoor_host_add_response_headers
 
+  enable_event_hub = local.enable_event_hub
+
   enable_monitoring               = local.enable_monitoring
   monitor_email_receivers         = local.monitor_email_receivers
   container_health_probe_path     = local.container_health_probe_path

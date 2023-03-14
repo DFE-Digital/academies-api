@@ -121,3 +121,8 @@ variable "existing_network_watcher_resource_group_name" {
   description = "Existing network watcher resource group."
   type        = string
 }
+
+variable "enable_event_hub" {
+  description = "Send Azure Container App logs to an Event Hub sink"
+  type        = bool
+}
