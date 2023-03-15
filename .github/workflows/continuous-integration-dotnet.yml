@@ -1,4 +1,4 @@
-name: Build and run tests
+name: .NET Build and Test
 
 on:
   push:
@@ -8,43 +8,59 @@ on:
     branches: [ main ]
     types: [ opened, synchronize, reopened ]
 
+env:
+  DOTNET_VERSION: '3.1.301'
+  EF_VERSION: '6.0.5'
+  JAVA_VERSION: '1.11'
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     services:
       db:
-        image: 'ghcr.io/dfe-digital/trams-development-database:latest'
+        image: mcr.microsoft.com/azure-sql-edge:latest
+        env_file: .env.database.example
         ports:
-          - 1433:1433/tcp
+          - 1433:1433
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
+        ref: ${{ github.ref }}
         fetch-depth: 0 # Shallow clones disabled for a better relevancy of SC analysis
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.301'
-    - name: Setup JDK 11
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Setup JDK
       uses: actions/setup-java@v1
       with:
-        java-version: 1.11
+        java-version: ${{ env.JAVA_VERSION }}
+
     - name: Cache SonarCloud packages
       uses: actions/cache@v1
       with:
         path: ~\sonar\cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
+
     - name: Install SonarCloud scanners
       run: dotnet tool install --global dotnet-sonarscanner
+
     - name: Install EF for tests
-      run: dotnet tool install --global dotnet-ef --version 6.0.5
+      run: dotnet tool install --global dotnet-ef --version ${{ env.EF_VERSION }}
+
     - name: Install dotnet reportgenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
     - name: Restore tools for tests
       run: dotnet tool restore
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build, Test and Analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,4 +70,4 @@ jobs:
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
         reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./CoverageReport -reporttypes:SonarQube
-        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"      
+        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
