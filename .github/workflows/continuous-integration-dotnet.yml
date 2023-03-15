@@ -19,7 +19,10 @@ jobs:
     services:
       db:
         image: mcr.microsoft.com/azure-sql-edge:latest
-        env_file: .env.database.example
+        env:
+          MSSQL_INITIAL_DATABASE: "sip"
+          MSSQL_SA_PASSWORD: "Your_password123"
+          ACCEPT_EULA: "Y"
         ports:
           - 1433:1433
 
