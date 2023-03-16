@@ -12,6 +12,7 @@ env:
   DOTNET_VERSION: '3.1.301'
   EF_VERSION: '6.0.5'
   JAVA_VERSION: '11'
+  CONNECTION_STRING: 'Server=localhost,1433;Database=sip;User Id=sa;TrustServerCertificate=True;Password=Your_password123'
 
 jobs:
   build-and-test:
@@ -60,6 +61,12 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
+
+    - name: Run TramsDbContext database migrations
+      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext
+
+    - name: Run LegacyTramsDbContext database migrations
+      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --project TramsDataApi --context TramsDataApi.DatabaseModels.LegacyTramsDbContext
 
     - name: Build, Test and Analyze
       env:
