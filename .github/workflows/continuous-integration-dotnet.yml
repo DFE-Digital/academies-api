@@ -60,13 +60,13 @@ jobs:
       run: dotnet tool restore
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore TramsDataApi.sln
 
     - name: Run TramsDbContext database migrations
-      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext
+      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --context TramsDataApi.DatabaseModels.TramsDbContext
 
     - name: Run LegacyTramsDbContext database migrations
-      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --project TramsDataApi --context TramsDataApi.DatabaseModels.LegacyTramsDbContext
+      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --context TramsDataApi.DatabaseModels.LegacyTramsDbContext
 
     - name: Build, Test and Analyze
       env:
