@@ -16,21 +16,17 @@ env:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    services:
-      db:
-        image: mcr.microsoft.com/azure-sql-edge:latest
-        env:
-          MSSQL_INITIAL_DATABASE: "sip"
-          MSSQL_SA_PASSWORD: "Your_password123"
-          ACCEPT_EULA: "Y"
-        ports:
-          - 1433:1433/tcp
-
     steps:
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.ref }}
         fetch-depth: 0 # Shallow clones disabled for a better relevancy of SC analysis
+
+    - name: Setup services
+      run: |
+        cp .env.database.example .env.database
+        cp .env.example .env.development
+        docker compose -f "docker-compose.yml" up -d --build db sqlcmd
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -75,3 +71,7 @@ jobs:
         dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
         reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./CoverageReport -reporttypes:SonarQube
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
