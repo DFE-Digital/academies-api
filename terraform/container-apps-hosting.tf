@@ -10,6 +10,9 @@ module "azure_container_apps_hosting" {
 
   enable_container_registry = local.enable_container_registry
 
+  enable_dns_zone      = local.enable_dns_zone
+  dns_zone_domain_name = local.dns_zone_domain_name
+
   image_name                             = local.image_name
   container_command                      = local.container_command
   container_secret_environment_variables = local.container_secret_environment_variables
