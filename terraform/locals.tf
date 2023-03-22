@@ -10,6 +10,8 @@ locals {
   container_secret_environment_variables       = var.container_secret_environment_variables
   enable_cdn_frontdoor                         = var.enable_cdn_frontdoor
   enable_event_hub                             = var.enable_event_hub
+  enable_dns_zone                              = var.enable_dns_zone
+  dns_zone_domain_name                         = var.dns_zone_domain_name
   key_vault_access_users                       = toset(var.key_vault_access_users)
   tfvars_filename                              = var.tfvars_filename
   enable_monitoring                            = var.enable_monitoring
