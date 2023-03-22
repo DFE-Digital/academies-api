@@ -49,7 +49,7 @@ namespace TramsDataApi.DatabaseModels
                     .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
             });
 
-            modelBuilder.HasSequence<int>("AcademyTransferProjectUrns").HasMin(10000000).StartsAt(10000000);
+            // modelBuilder.HasSequence<int>("AcademyTransferProjectUrns").HasMin(10000000).StartsAt(10000000);
 
             modelBuilder.Entity<AcademyTransferProjects>(entity =>
             {
