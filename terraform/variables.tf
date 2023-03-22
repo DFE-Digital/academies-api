@@ -64,6 +64,26 @@ variable "dns_zone_domain_name" {
   type        = string
 }
 
+variable "dns_ns_records" {
+  description = "DNS NS records to add to the DNS Zone"
+  type = map(
+    object({
+      ttl : optional(number, 300),
+      records : list(string)
+    })
+  )
+}
+
+variable "dns_txt_records" {
+  description = "DNS TXT records to add to the DNS Zone"
+  type = map(
+    object({
+      ttl : optional(number, 300),
+      records : list(string)
+    })
+  )
+}
+
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN FrontDoor. This will use the Container Apps endpoint as the origin."
   type        = bool
