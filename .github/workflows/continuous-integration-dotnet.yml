@@ -27,7 +27,7 @@ jobs:
       run: |
         cp .env.database.example .env.database
         cp .env.example .env.development
-        docker compose -f "docker-compose.yml" up -d --build db sqlcmd
+        docker compose -f "docker-compose.yml" up -d --build db
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -61,12 +61,6 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore TramsDataApi.sln
-
-    - name: Run TramsDbContext database migrations
-      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --context TramsDataApi.DatabaseModels.TramsDbContext
-
-    - name: Run LegacyTramsDbContext database migrations
-      run: dotnet ef database update --connection ${{ env.CONNECTION_STRING }} --context TramsDataApi.DatabaseModels.LegacyTramsDbContext
 
     - name: Build, Test and Analyze
       env:
