@@ -12,16 +12,9 @@ services:
       - db
     env_file:
       - .env.development
-    networks:
-      - dev
 
   db:
     image: ghcr.io/dfe-digital/trams-development-database:sql-2022
     env_file: .env.database
     ports:
       - 1433:1433
-    networks:
-      - dev
-
-networks:
-  dev:
