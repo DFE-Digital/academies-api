@@ -54,6 +54,36 @@ variable "container_secret_environment_variables" {
   sensitive   = true
 }
 
+variable "enable_dns_zone" {
+  description = "Conditionally create a DNS zone"
+  type        = bool
+}
+
+variable "dns_zone_domain_name" {
+  description = "DNS zone domain name. If created, records will automatically be created to point to the CDN."
+  type        = string
+}
+
+variable "dns_ns_records" {
+  description = "DNS NS records to add to the DNS Zone"
+  type = map(
+    object({
+      ttl : optional(number, 300),
+      records : list(string)
+    })
+  )
+}
+
+variable "dns_txt_records" {
+  description = "DNS TXT records to add to the DNS Zone"
+  type = map(
+    object({
+      ttl : optional(number, 300),
+      records : list(string)
+    })
+  )
+}
+
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN FrontDoor. This will use the Container Apps endpoint as the origin."
   type        = bool
@@ -87,6 +117,11 @@ variable "container_health_probe_path" {
 variable "cdn_frontdoor_health_probe_path" {
   description = "Specifies the path relative to the origin that is used to determine the health of the origin."
   type        = string
+}
+
+variable "cdn_frontdoor_custom_domains" {
+  description = "Azure CDN Front Door custom domains. If they are within the DNS zone (optionally created), the Validation TXT records and ALIAS/CNAME records will be created"
+  type        = list(string)
 }
 
 variable "monitor_endpoint_healthcheck" {
