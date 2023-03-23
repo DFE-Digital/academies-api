@@ -9,6 +9,6 @@
   "AllowedHosts": "*",
   "ApiKeys": ["{\"userName\": \"Test User\", \"apiKey\": \"testing-api-key\"}"],
   "ConnectionStrings": {
-    "DefaultConnection": "Server=db;Database=sip;User Id=sa;Password=Your_password123"
+    "DefaultConnection": "Server=127.0.0.1,1433;Database=sip;User Id=sa;TrustServerCertificate=True;Password=Your_password123"
   }
 }
