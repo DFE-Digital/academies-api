@@ -14,7 +14,7 @@ services:
       - .env.development
 
   db:
-    image: ghcr.io/dfe-digital/trams-development-database:sql-2022
+    image: ghcr.io/dfe-digital/trams-development-database:latest
     env_file: .env.database
     ports:
       - 1433:1433
