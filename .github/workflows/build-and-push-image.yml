@@ -16,6 +16,7 @@ concurrency:
 
 env:
   DOCKER_IMAGE: tramsapi-app
+  NODE_VERSION: 16.x
 
 jobs:
   set-env:
@@ -131,8 +132,8 @@ jobs:
               --image ${{ secrets.AZURE_ACR_URL }}/${{ env.DOCKER_IMAGE }}:${{ needs.set-env.outputs.release }} \
               --output none
 
-  run-tests-with-zap:
-    name: Run Cypress tests with OWASP ZAP
+  cypress-tests:
+    name: Run Cypress Tests
     if: needs.set-env.outputs.environment == 'test' || needs.set-env.outputs.environment == 'development'
     needs: [ deploy-image, set-env ]
     runs-on: ubuntu-22.04
@@ -146,19 +147,20 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Prepare environment
-        run: |
-          echo "API_KEY=${{ secrets.TRAMS_API_KEY }}" >> $GITHUB_ENV
-          echo "URL=${{ secrets.TRAMS_API_BASE_URL }}" >> $GITHUB_ENV
-          echo "HTTP_PROXY=http://zap:8080" >> $GITHUB_ENV
-          echo "NO_PROXY=zap,*.gvt1.com" >> $GITHUB_ENV
-          echo "ZAP_API_KEY=${{ secrets.ZAP_API_KEY }}" >> $GITHUB_ENV
-
-      - name: run tests with scanner
-        run: |
-          docker compose -f docker-compose.yml up --exit-code-from cypress
-
-      - uses: actions/upload-artifact@v1
+      - name: Setup node.js
+        uses: actions/setup-node@v3
         with:
-          name: report
-          path: ZAP-Report.html
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Npm install
+        run: npm install
+
+      - name: Run cypress
+        run: npm run cy:run -- --env apiKey="${{ secrets.TRAMS_API_KEY }}",url="${{ secrets.TRAMS_API_BASE_URL }}",authKey="${{ secrets.ZAP_API_KEY }}"
+
+      - name: Upload screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: screenshots-${{ needs.set-env.outputs.environment }}
+          path: screenshots
