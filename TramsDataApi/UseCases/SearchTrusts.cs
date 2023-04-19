@@ -42,8 +42,8 @@ namespace TramsDataApi.UseCases
             return (
                 groups.Select(group =>
                 {
+                    var trust = trustsForGroup.FirstOrDefault(e => e.TrustRef == group.GroupId);
                     var establishments = establishmentsForGroup.Where(e => e.TrustsCode == group.GroupUid);
-                    var trust = trustsForGroup.FirstOrDefault(e => e.TrustRef == group.GroupUid);
                     return TrustSummaryResponseFactory.Create(group, establishments, trust);
                 }).ToArray(),
                 recordCount

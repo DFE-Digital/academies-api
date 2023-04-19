@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,10 @@ namespace TramsDataApi.Test.UseCases
             result.Should().BeEquivalentTo(new List<TrustSummaryResponse>());
         }
 
-        [Fact]
-        public void SearchTrusts_ReturnsListOfTrustSummaryResponses_WhenTrustsFound()
+        private IList<Group> Test(string groupName)
         {
-            var groupName = "groupName";
 
-            var expectedTrusts = Builder<Group>.CreateListOfSize(10)
+            return Builder<Group>.CreateListOfSize(10)
                 .TheFirst(5)
                 .With(g => g.GroupType = "Trust")
                 .TheNext(3)
@@ -47,6 +46,14 @@ namespace TramsDataApi.Test.UseCases
                 .All()
                 .With(g => g.GroupName = groupName)
                 .Build();
+        }
+
+        [Fact]
+        public void SearchTrusts_ReturnsListOfTrustSummaryResponses_WhenTrustsFound()
+        {
+            var groupName = "groupName";
+
+            var expectedTrusts = Test(groupName);
 
             var trustsGateway = new Mock<ITrustGateway>();
             var establishmentsGateway = new Mock<IEstablishmentGateway>();
@@ -64,6 +71,45 @@ namespace TramsDataApi.Test.UseCases
                 Select(e => TrustSummaryResponseFactory.Create(e, new List<Establishment>(), null))
                 .ToList();
             
+            var searchTrusts = new SearchTrusts(trustsGateway.Object, establishmentsGateway.Object);
+            var (result, _) = searchTrusts.Execute(1, 10, groupName);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+        [Fact]
+        public void SearchTrusts_ReturnsListOfTrustSummaryResponsesWithAddresses_WhenTrustsFound()
+        {
+            var groupName = "groupName";
+
+            var expectedGroups = Test(groupName);
+
+            IDictionary<String, Trust> trusts = new Dictionary<String, Trust>();
+
+            foreach (var expectedGroup in expectedGroups)
+            {
+                var expectedTrust = Builder<Trust>
+                    .CreateNew()
+                    .With(g => g.TrustRef = expectedGroup.GroupId)
+                    .Build();
+                trusts.Add(expectedGroup.GroupId, expectedTrust);
+            }
+
+            var trustsGateway = new Mock<ITrustGateway>();
+            var establishmentsGateway = new Mock<IEstablishmentGateway>();
+
+            trustsGateway.Setup(g => g.SearchGroups(1, 10, groupName, string.Empty, string.Empty))
+                .Returns((expectedGroups, expectedGroups.Count));
+
+            trustsGateway.Setup(m => m.GetIfdTrustsByTrustRef(It.IsAny<string[]>()))
+                .Returns(trusts.Values.ToList());
+
+            establishmentsGateway.Setup(g => g.GetByTrustUids(It.IsAny<string[]>()))
+                .Returns(new List<Establishment>());
+
+            var expected = expectedGroups.
+                Select(e => TrustSummaryResponseFactory.Create(e, new List<Establishment>(), trusts[e.GroupId]))
+                .ToList();
+
             var searchTrusts = new SearchTrusts(trustsGateway.Object, establishmentsGateway.Object);
             var (result, _) = searchTrusts.Execute(1, 10, groupName);
 
@@ -132,5 +178,6 @@ namespace TramsDataApi.Test.UseCases
             var (result, _) = searchTrusts.Execute(1, 10, ukPrn: ukprn, includeEstablishments: false);
             result.Should().BeEquivalentTo(expected);
         }
+
     }
 }
