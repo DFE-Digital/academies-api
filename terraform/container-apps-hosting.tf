@@ -19,10 +19,12 @@ module "azure_container_apps_hosting" {
   container_command                      = local.container_command
   container_secret_environment_variables = local.container_secret_environment_variables
 
-  enable_cdn_frontdoor                    = local.enable_cdn_frontdoor
-  cdn_frontdoor_enable_rate_limiting      = local.cdn_frontdoor_enable_rate_limiting
-  cdn_frontdoor_host_add_response_headers = local.cdn_frontdoor_host_add_response_headers
-  cdn_frontdoor_custom_domains            = local.cdn_frontdoor_custom_domains
+  enable_cdn_frontdoor                      = local.enable_cdn_frontdoor
+  cdn_frontdoor_enable_rate_limiting        = local.cdn_frontdoor_enable_rate_limiting
+  cdn_frontdoor_host_add_response_headers   = local.cdn_frontdoor_host_add_response_headers
+  cdn_frontdoor_custom_domains              = local.cdn_frontdoor_custom_domains
+  cdn_frontdoor_origin_fqdn_override        = local.cdn_frontdoor_origin_fqdn_override
+  cdn_frontdoor_origin_host_header_override = local.cdn_frontdoor_origin_host_header_override
 
   enable_event_hub = local.enable_event_hub
 
