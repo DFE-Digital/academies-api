@@ -48,5 +48,31 @@ namespace TramsDataApi.Factories
                 Establishments = establishments.Select(EstablishmentSummaryResponseFactory.Create).ToList()
             };
         }
+
+        public static TrustSummaryResponse CreateFromMaster(Group group, IEnumerable<Establishment> establishments, TrustMasterData trust)
+        {
+            if (group == null)
+            {
+                return null;
+            }
+
+            return new TrustSummaryResponse
+            {
+                Ukprn = group.Ukprn,
+                GroupName = group.GroupName,
+                CompaniesHouseNumber = group.CompaniesHouseNumber,
+                TrustType = trust?.TrustsTrustType.ToString(),
+                TrustAddress = new AddressResponse
+                {
+                    Street = trust?.AddressLine1,
+                    AdditionalLine = trust?.AddressLine2,
+                    Locality = trust?.AddressLine3,
+                    Town = trust?.Town,
+                    County = trust?.County,
+                    Postcode = trust?.Postcode
+                },
+                Establishments = establishments.Select(EstablishmentSummaryResponseFactory.Create).ToList()
+            };
+        }
     }
 }

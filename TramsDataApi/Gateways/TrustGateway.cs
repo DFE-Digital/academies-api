@@ -74,5 +74,22 @@ namespace TramsDataApi.Gateways
          IEnumerable<string> distinctGroupIds = groupIds.Distinct();
          return _dbContext.Trust.AsNoTracking().Where(x => distinctGroupIds.Contains(x.TrustRef));
       }
-   }
+
+        public IList<TrustMasterData> GetMstrTrustsByTrustRef(string[] trustRefs)
+        {
+            return _dbContext.TrustMasterData.Where(t => trustRefs.Contains(t.GroupID)).ToList();
+        }
+
+        public TrustMasterData GetMstrTrustByGroupId(string groupId)
+        {
+            return _dbContext.TrustMasterData.FirstOrDefault(t => t.GroupID == groupId);
+        }
+
+        public IEnumerable<TrustMasterData> GetMultipleMasterTrustsByGroupId(IEnumerable<string> groupIds)
+        {
+            IEnumerable<string> distinctGroupIds = groupIds.Distinct();
+            return _dbContext.TrustMasterData.AsNoTracking().Where(x => distinctGroupIds.Contains(x.GroupID));
+        }
+
+    }
 }
