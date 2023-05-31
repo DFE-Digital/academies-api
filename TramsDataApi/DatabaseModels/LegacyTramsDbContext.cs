@@ -29,6 +29,7 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<GlobalOptionSetMetadata> GlobalOptionSetMetadata { get; set; }
         public virtual DbSet<IfdPipeline> IfdPipeline { get; set; }
+        public virtual DbSet<TrustMasterData> TrustMasterData { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -2148,7 +2149,7 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.LocalizedLabel).HasMaxLength(350);
             });
             
-              modelBuilder.Entity<IfdPipeline>(entity =>
+            modelBuilder.Entity<IfdPipeline>(entity =>
             {
                 entity.HasKey(e => e.Sk)
                     .HasName("Sk");
@@ -3413,6 +3414,56 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("Trust & Sponsor Management.Trust")
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TrustMasterData>(entity =>
+            {
+                entity.HasKey(e => e.RID);
+
+                entity.ToTable("Trust", "mstr");
+
+                entity.Property(e => e.SK).HasColumnName("SK").IsRequired();
+                entity.Property(e => e.TrustsTrustType).HasColumnName("FK_TrustType");
+                entity.Property(e => e.Region).HasColumnName("FK_Region");
+                entity.Property(e => e.TrustBanding).HasColumnName("FK_TrustBanding");
+                entity.Property(e => e.FK_TrustStatus).HasColumnName("FK_TrustStatus");
+                entity.Property(e => e.GroupUID).HasColumnName("Group UID").IsRequired();
+                entity.Property(e => e.GroupID).HasColumnName("Group ID");
+                entity.Property(e => e.RID).HasColumnName("RID");
+                entity.Property(e => e.Name).HasColumnName("Name").IsRequired();
+                entity.Property(e => e.CompaniesHouseNumber).HasColumnName("Companies House Number");
+                entity.Property(e => e.ClosedDate).HasColumnName("Closed Date");
+                entity.Property(e => e.TrustStatus).HasColumnName("Trust Status");
+                entity.Property(e => e.JoinedDate).HasColumnName("Joined Date");
+                entity.Property(e => e.MainPhone).HasColumnName("Main Phone");
+                entity.Property(e => e.AddressLine1).HasColumnName("Address Line1");
+                entity.Property(e => e.AddressLine2).HasColumnName("Address Line2");
+                entity.Property(e => e.AddressLine3).HasColumnName("Address Line3");
+                entity.Property(e => e.Town).HasColumnName("Town");
+                entity.Property(e => e.County).HasColumnName("County");
+                entity.Property(e => e.Postcode).HasColumnName("Postcode");
+                entity.Property(e => e.PrioritisedForReview).HasColumnName("Prioritised for Review");
+                entity.Property(e => e.CurrentSingleListGrouping).HasColumnName("Current Single List Grouping");
+                entity.Property(e => e.DateOfGroupingDecision).HasColumnName("Date of Grouping Decision");
+                entity.Property(e => e.DateEnteredOntoSingleList).HasColumnName("Date Entered Onto Single List");
+                entity.Property(e => e.TrustReviewWriteUp).HasColumnName("Trust Review Write Up");
+                entity.Property(e => e.DateOfTrustReviewMeeting).HasColumnName("Date of Trust Review Meeting");
+                entity.Property(e => e.FollowUpLetterSent).HasColumnName("Follow Up Letter Sent");
+                entity.Property(e => e.DateActionPlannedFor).HasColumnName("Date Action Planned For");
+                entity.Property(e => e.WIPSummaryGoesToMinister).HasColumnName("WIP Summary Goes To Minister");
+                entity.Property(e => e.ExternalGovernanceReviewDate).HasColumnName("External Governance Review Date");
+                entity.Property(e => e.EfficiencyICFPReviewCompleted).HasColumnName("Efficiency ICFP Review Completed");
+                entity.Property(e => e.EfficiencyICFPReviewOther).HasColumnName("Efficiency ICFP Review Other");
+                entity.Property(e => e.LinkToWorkplaceForEfficiencyICFPReview).HasColumnName("Link To Workplace For Efficiency ICFP Review");
+                entity.Property(e => e.NumberInTrust).HasColumnName("Number In Trust");
+                entity.Property(e => e.Modified).HasColumnName("Modified");
+                entity.Property(e => e.ModifiedBy).HasColumnName("Modified By");
+                entity.Property(e => e.AMSDTerritory).HasColumnName("AMSD Territory");
+                entity.Property(e => e.LeadAMSDTerritory).HasColumnName("Lead AMSD Territory");
+                entity.Property(e => e.UKPRN).HasColumnName("UKPRN");
+                entity.Property(e => e.TrustPerformanceAndRiskDateOfMeeting).HasColumnName("Trust Performance And Risk Date Of Meeting");
+                entity.Property(e => e.UPIN).HasColumnName("UPIN");
+                entity.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
             });
 
             modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
