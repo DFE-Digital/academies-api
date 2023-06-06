@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AutoFixture;
-using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -21,7 +20,6 @@ namespace TramsDataApi.Test.Integration
     {
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
-        private readonly RandomGenerator _randomGenerator;
         private static readonly Fixture _fixture = new Fixture();
 
         private readonly string _apiUrlPrefix = "https://trams-api.com/v3";
@@ -32,7 +30,6 @@ namespace TramsDataApi.Test.Integration
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _client.BaseAddress = new Uri("https://trams-api.com/");
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
-            _randomGenerator = new RandomGenerator();
         }
 
         [Fact]
@@ -201,7 +198,7 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            result.Data.Should().HaveCountGreaterOrEqualTo(2);
+            result.Data.Should().HaveCount(3);
         }
 
         [Fact]
@@ -350,16 +347,16 @@ namespace TramsDataApi.Test.Integration
 
         public void Dispose()
         {
-            //_legacyDbContext.TrustMasterData.RemoveRange(_legacyDbContext.TrustMasterData);
-            //_legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
+            _legacyDbContext.TrustMasterData.RemoveRange(_legacyDbContext.TrustMasterData);
 
-            //_legacyDbContext.SaveChanges();
+            _legacyDbContext.SaveChanges();
         }
 
         private static TrustMasterData BuildMasterTrustData(Group groupData)
         {
             var result = _fixture.Create<TrustMasterData>();
-            result.SK = null;
             result.RID = result.RID.Substring(0,10);
             result.CurrentSingleListGrouping = "Auto";
             result.FollowUpLetterSent = "yes";
