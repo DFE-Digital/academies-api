@@ -46,7 +46,7 @@ namespace TramsDataApi
             services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
             services.AddScoped<IGetEstablishments, GetEstablishments>();
             services.AddScoped<ISearchTrusts, SearchTrusts>();
-            services.AddScoped<ISearchTrusts, MasterSearchTrusts>();
+            services.AddScoped<IMstrSearchTrusts, MasterSearchTrusts>();
 
             services.AddScoped<ICreateAcademyTransferProject, CreateAcademyTransferProject>();
             services.AddScoped<ISearchAcademyTransferProjects, SearchAcademyTransferProjects>();
