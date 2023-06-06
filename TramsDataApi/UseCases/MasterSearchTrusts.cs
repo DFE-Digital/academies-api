@@ -7,7 +7,7 @@ using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.UseCases
 {
-    public class MasterSearchTrusts : ISearchTrusts
+    public class MasterSearchTrusts : IMstrSearchTrusts
     {
         private readonly ITrustGateway _trustGateway;
         private readonly IEstablishmentGateway _establishmentGateway;

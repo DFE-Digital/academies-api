@@ -15,11 +15,11 @@ namespace TramsDataApi.Controllers.V3
     public class TrustsController : ControllerBase
     {
         private readonly IGetMstrTrustByUkprn _getMstrTrustByUkPrn;
-        private readonly ISearchTrusts _searchTrusts;
+        private readonly IMstrSearchTrusts _searchTrusts;
         private readonly IGetMstrTrustsByUkprns _getMstrTrustsByUkprns;
         private readonly ILogger<TrustsController> _logger;
 
-        public TrustsController(IGetMstrTrustByUkprn getMstrTrustByUkPrn, ISearchTrusts searchTrusts, IGetMstrTrustsByUkprns getMstrTrustsByUkprns, ILogger<TrustsController> logger)
+        public TrustsController(IGetMstrTrustByUkprn getMstrTrustByUkPrn, IMstrSearchTrusts searchTrusts, IGetMstrTrustsByUkprns getMstrTrustsByUkprns, ILogger<TrustsController> logger)
         {
             _getMstrTrustByUkPrn = getMstrTrustByUkPrn;
             _searchTrusts = searchTrusts;

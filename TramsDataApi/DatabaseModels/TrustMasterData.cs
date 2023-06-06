@@ -4,7 +4,7 @@ namespace TramsDataApi.DatabaseModels
 {
     public partial class TrustMasterData
     {
-        public long SK { get; set; }
+        public long? SK { get; set; }
         public long? TrustsTrustType { get; set; }
         public long? Region { get; set; }
         public long? TrustBanding { get; set; }
