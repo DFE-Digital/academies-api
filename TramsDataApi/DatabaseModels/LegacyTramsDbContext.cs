@@ -3418,11 +3418,10 @@ namespace TramsDataApi.DatabaseModels
 
             modelBuilder.Entity<TrustMasterData>(entity =>
             {
-                entity.HasKey(e => e.RID);
+                entity.HasKey(e => e.SK).HasName("SK");
 
                 entity.ToTable("Trust", "mstr");
 
-                entity.Property(e => e.SK).HasColumnName("SK").IsRequired();
                 entity.Property(e => e.TrustsTrustType).HasColumnName("FK_TrustType");
                 entity.Property(e => e.Region).HasColumnName("FK_Region");
                 entity.Property(e => e.TrustBanding).HasColumnName("FK_TrustBanding");
@@ -3464,6 +3463,8 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.TrustPerformanceAndRiskDateOfMeeting).HasColumnName("Trust Performance And Risk Date Of Meeting");
                 entity.Property(e => e.UPIN).HasColumnName("UPIN");
                 entity.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
+                entity.Property(e => e.GorRegion).HasColumnName("GORregion");
+                entity.Property(e => e.SfsoTerritory).HasColumnName("SFSO Territory");
             });
 
             modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
