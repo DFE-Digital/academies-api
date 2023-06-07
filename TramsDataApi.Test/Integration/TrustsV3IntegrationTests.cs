@@ -107,7 +107,7 @@ namespace TramsDataApi.Test.Integration
 
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Data.MasterTrustData.Should().BeEquivalentTo(expectedTrustData);
+            result.Data.TrustData.Should().BeEquivalentTo(expectedTrustData);
             result.Data.GiasData.Should().BeEquivalentTo(expectedGiasData);
             result.Data.Establishments.Should().BeEmpty();
         }
@@ -139,7 +139,7 @@ namespace TramsDataApi.Test.Integration
 
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Data.MasterTrustData.Should().BeNull();
+            result.Data.TrustData.Should().BeNull();
             result.Data.GiasData.Should().BeEquivalentTo(expectedGiasData);
             result.Data.Establishments.Should().BeEmpty();
         }
@@ -170,7 +170,7 @@ namespace TramsDataApi.Test.Integration
             var result = JsonConvert.DeserializeObject<ApiSingleResponseV2<MasterTrustResponse>>(jsonString);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Data.MasterTrustData.NumberInTrust.Should().Be(trustMasterData.NumberInTrust.ToString());
+            result.Data.TrustData.NumberInTrust.Should().Be(trustMasterData.NumberInTrust.ToString());
             result.Data.GiasData.Ukprn.Should().Be(groupData.Ukprn);
 
             result.Data.Establishments.Should().HaveCount(1);

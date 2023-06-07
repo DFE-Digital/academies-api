@@ -141,7 +141,7 @@ namespace TramsDataApi.Factories
 
             return new MasterTrustResponse
             {
-                MasterTrustData = masterDataResponse,
+                TrustData = masterDataResponse,
                 GiasData = giasDataResponse,
                 Establishments = establishments
             };

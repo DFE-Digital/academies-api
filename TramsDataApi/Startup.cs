@@ -40,7 +40,6 @@ namespace TramsDataApi
             services.AddScoped<IGetTrustByUkprn, GetTrustByUkprn>();
             services.AddScoped<IGetMstrTrustByUkprn, GetMstrTrustByUkprn>();
             services.AddScoped<IGetTrustsByUkprns, GetTrustsByUkprns>();
-            services.AddScoped<IGetMstrTrustsByUkprns, GetMstrTrustsByUkprns>();
             services.AddScoped<IGetEstablishmentByUkprn, GetEstablishment>();
             services.AddScoped<IGetEstablishmentURNsByRegion, GetEstablishmentURNsByRegion>();
             services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
