@@ -11,7 +11,7 @@ namespace TramsDataApi.DatabaseModels
         public long? FK_TrustStatus { get; set; }
         public string GroupUID { get; set; }
         public string GroupID { get; set; }
-        public string RID { get; set; }
+        public string? RID { get; set; }
         public string Name { get; set; }
         public string CompaniesHouseNumber { get; set; }
         public DateTime? ClosedDate { get; set; }
@@ -46,5 +46,9 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? TrustPerformanceAndRiskDateOfMeeting { get; set; }
         public string UPIN { get; set; }
         public DateTime? IncorporatedOnOpenDate { get; set; }
+
+        public string? GorRegion { get; set; }
+
+        public string? SfsoTerritory { get; set; }
     }
 }
