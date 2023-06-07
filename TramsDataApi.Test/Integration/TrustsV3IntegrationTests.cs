@@ -201,21 +201,27 @@ namespace TramsDataApi.Test.Integration
             result.Data.Should().HaveCount(3);
         }
 
-        [Fact]
-        public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_ByUniqueGroupName()
+        [Theory]
+        [InlineData("My Group Name")]
+        [InlineData("my group")]
+        public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_ByUniqueGroupName(string searchString)
         {
             var groupData = BuildGroups().First();
+            groupData.GroupName = "My Group Name";
             _legacyDbContext.Group.AddRange(groupData);
 
             var trustMasterData = BuildMasterTrustData(groupData);
             _legacyDbContext.TrustMasterData.AddRange(trustMasterData);
+
+            var groupsWithoutGroupName = BuildGroups();
+            _legacyDbContext.Group.AddRange(groupsWithoutGroupName);
 
             _legacyDbContext.SaveChanges();
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?groupName={groupData.GroupName}"),
+                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?groupName={searchString}"),
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
@@ -263,10 +269,12 @@ namespace TramsDataApi.Test.Integration
             });
         }
 
-        [Fact]
-        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByCompaniesHouseNumber()
+        [Theory]
+        [InlineData("123456789")]
+        [InlineData("123")]
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByCompaniesHouseNumber(string searchString)
         {
-            var companiesHouseNumber = _fixture.Create<string>();
+            var companiesHouseNumber = "123456789";
             var groupWithCompaniesHouse = BuildGroups().First();
             groupWithCompaniesHouse.CompaniesHouseNumber = companiesHouseNumber;
             _legacyDbContext.Group.Add(groupWithCompaniesHouse);
@@ -283,7 +291,7 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?companiesHouseNumber={companiesHouseNumber}&includeEstablishments=false"),
+                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?companiesHouseNumber={searchString}&includeEstablishments=false"),
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
@@ -299,10 +307,12 @@ namespace TramsDataApi.Test.Integration
             trustData.Establishments.Should().HaveCount(0);
         }
 
-        [Fact]
-        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByUkPrn()
+        [Theory]
+        [InlineData("126434676534")]
+        [InlineData("1264")]
+        public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByUkPrn(string searchString)
         {
-            var ukPrn = _fixture.Create<string>();
+            var ukPrn = "126434676534";
             var groupWithUkPrn = BuildGroups().First();
             groupWithUkPrn.Ukprn = ukPrn;
             _legacyDbContext.Group.Add(groupWithUkPrn);
@@ -319,7 +329,7 @@ namespace TramsDataApi.Test.Integration
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?ukprn={ukPrn}"),
+                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?ukprn={searchString}"),
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
