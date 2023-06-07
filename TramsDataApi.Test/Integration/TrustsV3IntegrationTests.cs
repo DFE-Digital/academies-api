@@ -235,12 +235,12 @@ namespace TramsDataApi.Test.Integration
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByGroupName()
         {
             var groupName = _fixture.Create<string>();
-            var withGroupName = BuildGroups();
-            withGroupName.ToList().ForEach(g => g.GroupName = groupName);
-            _legacyDbContext.Group.AddRange(withGroupName);
+            var groupWithGroupName = BuildGroups();
+            groupWithGroupName.ToList().ForEach(g => g.GroupName = groupName);
+            _legacyDbContext.Group.AddRange(groupWithGroupName);
 
-            var withoutGroupName = BuildGroups();
-            _legacyDbContext.Group.AddRange(withoutGroupName);
+            var groupsWithoutGroupName = BuildGroups();
+            _legacyDbContext.Group.AddRange(groupsWithoutGroupName);
 
             _legacyDbContext.SaveChanges();
 
@@ -254,9 +254,9 @@ namespace TramsDataApi.Test.Integration
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<ApiResponseV2<TrustSummaryResponse>>(jsonString);
 
-            result.Data.Should().HaveCount(withGroupName.Count());
+            result.Data.Should().HaveCount(groupWithGroupName.Count());
 
-            withGroupName.ForEach(g =>
+            groupWithGroupName.ForEach(g =>
             {
                 var matchingGroup = result.Data.First(r => r.Ukprn == g.Ukprn);
                 matchingGroup.GroupName.Should().Be(groupName);
@@ -267,19 +267,23 @@ namespace TramsDataApi.Test.Integration
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByCompaniesHouseNumber()
         {
             var companiesHouseNumber = _fixture.Create<string>();
-            var withCompaniesHouse = BuildGroups().First();
-            withCompaniesHouse.CompaniesHouseNumber = companiesHouseNumber;
-            _legacyDbContext.Group.Add(withCompaniesHouse);
+            var groupWithCompaniesHouse = BuildGroups().First();
+            groupWithCompaniesHouse.CompaniesHouseNumber = companiesHouseNumber;
+            _legacyDbContext.Group.Add(groupWithCompaniesHouse);
 
-            var withoutCompaniesHouse = BuildGroups();
-            _legacyDbContext.Group.AddRange(withoutCompaniesHouse);
+            var groupsWithoutCompaniesHouse = BuildGroups();
+            _legacyDbContext.Group.AddRange(groupsWithoutCompaniesHouse);
+
+            var establishmentData = _fixture.Create<Establishment>();
+            establishmentData.TrustsCode = groupWithCompaniesHouse.GroupUid;
+            _legacyDbContext.Establishment.Add(establishmentData);
 
             _legacyDbContext.SaveChanges();
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?companiesHouseNumber={companiesHouseNumber}"),
+                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?companiesHouseNumber={companiesHouseNumber}&includeEstablishments=false"),
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
@@ -291,18 +295,24 @@ namespace TramsDataApi.Test.Integration
             var trustData = result.Data.First();
 
             trustData.CompaniesHouseNumber.Should().Be(companiesHouseNumber);
+
+            trustData.Establishments.Should().HaveCount(0);
         }
 
         [Fact]
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByUkPrn()
         {
             var ukPrn = _fixture.Create<string>();
-            var withUkPrn = BuildGroups().First();
-            withUkPrn.Ukprn = ukPrn;
-            _legacyDbContext.Group.Add(withUkPrn);
+            var groupWithUkPrn = BuildGroups().First();
+            groupWithUkPrn.Ukprn = ukPrn;
+            _legacyDbContext.Group.Add(groupWithUkPrn);
 
-            var withoutUkPrn = BuildGroups();
-            _legacyDbContext.Group.AddRange(withoutUkPrn);
+            var groupsWithoutUkPrn = BuildGroups();
+            _legacyDbContext.Group.AddRange(groupsWithoutUkPrn);
+
+            var establishmentData = _fixture.Create<Establishment>();
+            establishmentData.TrustsCode = groupWithUkPrn.GroupUid;
+            _legacyDbContext.Establishment.Add(establishmentData);
 
             _legacyDbContext.SaveChanges();
 
@@ -321,6 +331,10 @@ namespace TramsDataApi.Test.Integration
             var trustData = result.Data.First();
 
             trustData.Ukprn.Should().Be(ukPrn);
+
+            trustData.Establishments.Should().HaveCount(1);
+            var establishment = trustData.Establishments[0];
+            establishment.Ukprn.Should().Be(establishmentData.Ukprn);
         }
 
         [Fact]
