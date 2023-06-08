@@ -46,9 +46,5 @@ namespace TramsDataApi.DatabaseModels
         public DateTime? TrustPerformanceAndRiskDateOfMeeting { get; set; }
         public string UPIN { get; set; }
         public DateTime? IncorporatedOnOpenDate { get; set; }
-
-        public string? GorRegion { get; set; }
-
-        public string? SfsoTerritory { get; set; }
     }
 }
