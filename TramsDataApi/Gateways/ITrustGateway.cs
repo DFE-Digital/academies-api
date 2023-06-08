@@ -15,6 +15,5 @@ namespace TramsDataApi.Gateways
         (IList<Group>, int) SearchGroups(int page, int count, string groupName, string ukPrn, string companiesHouseNumber);
         IEnumerable<Group> GetMultipleGroupsByUkprn(IEnumerable<string> ukprns);
         IEnumerable<Trust> GetMultipleTrustsByGroupId(IEnumerable<string> groupIds);
-        IEnumerable<TrustMasterData> GetMultipleMasterTrustsByGroupId(IEnumerable<string> groupIds);
     }
 }
