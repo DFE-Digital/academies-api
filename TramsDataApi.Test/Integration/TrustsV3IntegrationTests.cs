@@ -185,17 +185,24 @@ namespace TramsDataApi.Test.Integration
         }
 
         [Fact]
-        public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_WithNoQueryParameters()
+        public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_WithNoQueryParametersAndPagination()
         {
-            var groups = BuildGroups();
-            _legacyDbContext.Group.AddRange(groups);
+            var allGroups = new List<Group>();
+
+            for (var idx = 0; idx < 10; idx++)
+            {
+                var groups = BuildGroups();
+                _legacyDbContext.Group.AddRange(groups);
+                allGroups.AddRange(groups);
+            }
+            var allTrustsSorted = allGroups.OrderBy(group => group.GroupUid).ToList();
 
             _legacyDbContext.SaveChanges();
 
             var httpRequestMessage = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"{_apiUrlPrefix}/trusts"),
+                RequestUri = new Uri($"{_apiUrlPrefix}/trusts?page=2&count=10"),
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
@@ -204,7 +211,12 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            result.Data.Should().HaveCount(3);
+            result.Data.Should().HaveCount(10);
+
+            var expectedTrusts = allTrustsSorted.Skip(10).Take(10).Select(t => t.Ukprn).ToList();
+            var actualTrusts = result.Data.Select(t => t.Ukprn).ToList();
+
+            actualTrusts.Should().BeEquivalentTo(expectedTrusts);
         }
 
         [Theory]
