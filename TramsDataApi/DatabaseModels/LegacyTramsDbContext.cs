@@ -3463,8 +3463,6 @@ namespace TramsDataApi.DatabaseModels
                 entity.Property(e => e.TrustPerformanceAndRiskDateOfMeeting).HasColumnName("Trust Performance And Risk Date Of Meeting");
                 entity.Property(e => e.UPIN).HasColumnName("UPIN");
                 entity.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
-                entity.Property(e => e.GorRegion).HasColumnName("GORregion");
-                entity.Property(e => e.SfsoTerritory).HasColumnName("SFSO Territory");
             });
 
             modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
