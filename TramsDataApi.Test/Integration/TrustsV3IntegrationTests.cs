@@ -16,7 +16,7 @@ using Xunit;
 namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class TrustsV3IntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
+    public class TrustsV3IntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
@@ -30,6 +30,12 @@ namespace TramsDataApi.Test.Integration
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _client.BaseAddress = new Uri("https://trams-api.com/");
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
+
+            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
+            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
+            _legacyDbContext.TrustMasterData.RemoveRange(_legacyDbContext.TrustMasterData);
+
+            _legacyDbContext.SaveChanges();
         }
 
         [Fact]
@@ -366,16 +372,6 @@ namespace TramsDataApi.Test.Integration
             var result = JsonConvert.DeserializeObject<ApiResponseV2<TrustSummaryResponse>>(jsonString);
 
             result.Data.Should().HaveCount(0);
-        }
-
-
-        public void Dispose()
-        {
-            _legacyDbContext.Group.RemoveRange(_legacyDbContext.Group);
-            _legacyDbContext.Establishment.RemoveRange(_legacyDbContext.Establishment);
-            _legacyDbContext.TrustMasterData.RemoveRange(_legacyDbContext.TrustMasterData);
-
-            _legacyDbContext.SaveChanges();
         }
 
         private static TrustMasterData BuildMasterTrustData(Group groupData)
