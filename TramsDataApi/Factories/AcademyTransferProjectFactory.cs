@@ -27,6 +27,7 @@ namespace TramsDataApi.Factories
                 OtherTransferTypeDescription = request.Features?.OtherTransferTypeDescription,
                 TransferFirstDiscussed = transferFirstDiscussed,
                 TargetDateForTransfer = targetDateForTransfer,
+                CreatedDateTime = DateTime.Now,
                 HtbDate = htbDate,
                 ProjectRationale = request.Rationale?.ProjectRationale,
                 TrustSponsorRationale = request.Rationale?.TrustSponsorRationale,
