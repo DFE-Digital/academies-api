@@ -18,6 +18,8 @@ namespace TramsDataApi.Test.Factories
         public void ReturnsAnAcademyTransferProject_WhenGivenAnInitialAcademyTransferProjectRequest()
         {
             var randomGenerator = new RandomGenerator();
+            DateTime expectedCreateDateTime = DateTime.Now;
+            DateTimeSource.UtcNow = () => expectedCreateDateTime;
             var createRequest = Builder<AcademyTransferProjectRequest>.CreateNew()
                 .With(c => c.OutgoingTrustUkprn = randomGenerator.NextString(8, 8))
                 .With(c => c.Status = null)
@@ -50,7 +52,6 @@ namespace TramsDataApi.Test.Factories
                 TypeOfTransfer = null,
                 OtherTransferTypeDescription = null,
                 TransferFirstDiscussed = null,
-                CreatedOn = null,
                 TargetDateForTransfer = null,
                 HtbDate = null,
                 ProjectRationale = null,
@@ -70,6 +71,7 @@ namespace TramsDataApi.Test.Factories
                 FeatureSectionIsCompleted = null,
                 BenefitsSectionIsCompleted = null,
                 LegalRequirementsSectionIsCompleted = null,
+                CreatedOn = DateTimeSource.UtcNow(),
                 RationaleSectionIsCompleted = null,
                 TransferringAcademies = createRequest.TransferringAcademies
                     .Select(t => new TransferringAcademies
@@ -93,6 +95,8 @@ namespace TramsDataApi.Test.Factories
         [Fact]
         public void ReturnsAnAcademyTransferProject_WhenGivenACompleteAcademyTransferProjectRequest()
         {
+            DateTime expectedCreateDateTime = DateTime.Now;
+            DateTimeSource.UtcNow = () => expectedCreateDateTime;
             var randomGenerator = new RandomGenerator();
 
             var benefitsRequest = Builder<AcademyTransferProjectBenefitsRequest>.CreateNew()
@@ -129,6 +133,7 @@ namespace TramsDataApi.Test.Factories
                 .With(c => c.TransferringAcademies =
                     (List<TransferringAcademiesRequest>) Builder<TransferringAcademiesRequest>
                         .CreateListOfSize(5).Build())
+                .With(d => d.CreatedOn = expectedCreateDateTime)
                 .Build();
 
             var expected = new AcademyTransferProjects
@@ -177,7 +182,7 @@ namespace TramsDataApi.Test.Factories
                 BenefitsSectionIsCompleted = createRequest.Benefits?.IsCompleted,
                 LegalRequirementsSectionIsCompleted = createRequest.LegalRequirements?.IsCompleted,
                 RationaleSectionIsCompleted = createRequest.Rationale?.IsCompleted,
-                CreatedOn = DateTime.Today,
+                CreatedOn = createRequest.CreatedOn,
                 AcademyTransferProjectIntendedTransferBenefits = createRequest.Benefits.IntendedTransferBenefits
                     .SelectedBenefits
                     .Select(b => new AcademyTransferProjectIntendedTransferBenefits {SelectedBenefit = b}).ToList(),
@@ -615,7 +620,6 @@ namespace TramsDataApi.Test.Factories
                 AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
                 AssignedUserFullName = academyTransferProject.AssignedUserFullName,
                 AssignedUserId = academyTransferProject.AssignedUserId,
-
                 CreatedOn = academyTransferProject.CreatedOn
             };
 
