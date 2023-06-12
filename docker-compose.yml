@@ -10,31 +10,11 @@ services:
     restart: always
     depends_on:
       - db
-      - sqlcmd
     env_file:
       - .env.development
-    networks:
-      - dev
 
   db:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: ghcr.io/dfe-digital/trams-development-database:latest
     env_file: .env.database
     ports:
       - 1433:1433
-    networks:
-      - dev
-
-  sqlcmd:
-    image: mcr.microsoft.com/mssql-tools:latest
-    env_file: .env.database
-    command: /etc/docker-entrypoint.sh
-    depends_on:
-      - db
-    stdin_open: true
-    volumes:
-      - ./script/sqlcmd-docker-entrypoint.sh:/etc/docker-entrypoint.sh
-    networks:
-      - dev
-
-networks:
-  dev:

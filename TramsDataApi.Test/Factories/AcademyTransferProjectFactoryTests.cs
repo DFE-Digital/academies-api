@@ -271,7 +271,9 @@ namespace TramsDataApi.Test.Factories
                 HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer,
                 AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
                 AssignedUserFullName = academyTransferProject.AssignedUserFullName,
-                AssignedUserId = academyTransferProject.AssignedUserId
+                AssignedUserId = academyTransferProject.AssignedUserId,
+
+                CreatedOn = academyTransferProject.CreatedOn
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -366,7 +368,9 @@ namespace TramsDataApi.Test.Factories
                 HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer,
                 AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
                 AssignedUserFullName = academyTransferProject.AssignedUserFullName,
-                AssignedUserId = academyTransferProject.AssignedUserId
+                AssignedUserId = academyTransferProject.AssignedUserId,
+
+                CreatedOn = academyTransferProject.CreatedOn
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -453,7 +457,9 @@ namespace TramsDataApi.Test.Factories
                 HasTargetDateForTransfer = academyTransferProject.HasTargetDateForTransfer,
                 AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
                 AssignedUserFullName = academyTransferProject.AssignedUserFullName,
-                AssignedUserId = academyTransferProject.AssignedUserId
+                AssignedUserId = academyTransferProject.AssignedUserId,
+
+                CreatedOn = academyTransferProject.CreatedOn
             };
 
             var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
@@ -480,56 +486,58 @@ namespace TramsDataApi.Test.Factories
 
             var expected = new AcademyTransferProjects
             {
-                Id = academyTransferProject.Id,
-                Urn = academyTransferProject.Urn,
-                ProjectReference = academyTransferProject.ProjectReference,
-                OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
-                ProjectRationale = academyTransferProject.ProjectRationale,
-                TransferringAcademies = academyTransferProject.TransferringAcademies,
-                WhoInitiatedTheTransfer = academyTransferProject.WhoInitiatedTheTransfer,
-                TargetDateForTransfer = null,
-                RddOrEsfaIntervention = academyTransferProject.RddOrEsfaIntervention,
-                RddOrEsfaInterventionDetail = academyTransferProject.RddOrEsfaInterventionDetail,
-                TypeOfTransfer = academyTransferProject.TypeOfTransfer,
-                OtherTransferTypeDescription = academyTransferProject.OtherTransferTypeDescription,
-                TransferFirstDiscussed = null,
-                HtbDate = null,
-                TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
-                State = academyTransferProject.State,
-                Status = academyTransferProject.Status,
-                Author = academyTransferProject.Author,
-                Recommendation = academyTransferProject.Recommendation,
-                AnyRisks = academyTransferProject.AnyRisks,
-                HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
-                HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
-                ComplexLandAndBuildingShouldBeConsidered =
+               Id = academyTransferProject.Id,
+               Urn = academyTransferProject.Urn,
+               ProjectReference = academyTransferProject.ProjectReference,
+               OutgoingTrustUkprn = academyTransferProject.OutgoingTrustUkprn,
+               ProjectRationale = academyTransferProject.ProjectRationale,
+               TransferringAcademies = academyTransferProject.TransferringAcademies,
+               WhoInitiatedTheTransfer = academyTransferProject.WhoInitiatedTheTransfer,
+               TargetDateForTransfer = null,
+               RddOrEsfaIntervention = academyTransferProject.RddOrEsfaIntervention,
+               RddOrEsfaInterventionDetail = academyTransferProject.RddOrEsfaInterventionDetail,
+               TypeOfTransfer = academyTransferProject.TypeOfTransfer,
+               OtherTransferTypeDescription = academyTransferProject.OtherTransferTypeDescription,
+               TransferFirstDiscussed = null,
+               HtbDate = null,
+               TrustSponsorRationale = academyTransferProject.TrustSponsorRationale,
+               State = academyTransferProject.State,
+               Status = academyTransferProject.Status,
+               Author = academyTransferProject.Author,
+               Recommendation = academyTransferProject.Recommendation,
+               AnyRisks = academyTransferProject.AnyRisks,
+               HighProfileShouldBeConsidered = academyTransferProject.HighProfileShouldBeConsidered,
+               HighProfileFurtherSpecification = academyTransferProject.HighProfileFurtherSpecification,
+               ComplexLandAndBuildingShouldBeConsidered =
                     academyTransferProject.ComplexLandAndBuildingShouldBeConsidered,
-                ComplexLandAndBuildingFurtherSpecification =
+               ComplexLandAndBuildingFurtherSpecification =
                     academyTransferProject.ComplexLandAndBuildingFurtherSpecification,
-                FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
-                FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
-                OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
-                OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
-                OtherBenefitValue = academyTransferProject.OtherBenefitValue,
-                EqualitiesImpactAssessmentConsidered = academyTransferProject.EqualitiesImpactAssessmentConsidered,
-                IncomingTrustAgreement = academyTransferProject.IncomingTrustAgreement,
-                DiocesanConsent = academyTransferProject.DiocesanConsent,
-                OutgoingTrustConsent = academyTransferProject.OutgoingTrustConsent,
-                FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
-                BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
-                LegalRequirementsSectionIsCompleted = academyTransferProject.LegalRequirementsSectionIsCompleted,
-                RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
-                AcademyTransferProjectIntendedTransferBenefits =
+               FinanceAndDebtShouldBeConsidered = academyTransferProject.FinanceAndDebtShouldBeConsidered,
+               FinanceAndDebtFurtherSpecification = academyTransferProject.FinanceAndDebtFurtherSpecification,
+               OtherRisksShouldBeConsidered = academyTransferProject.OtherRisksShouldBeConsidered,
+               OtherRisksFurtherSpecification = academyTransferProject.OtherRisksFurtherSpecification,
+               OtherBenefitValue = academyTransferProject.OtherBenefitValue,
+               EqualitiesImpactAssessmentConsidered = academyTransferProject.EqualitiesImpactAssessmentConsidered,
+               IncomingTrustAgreement = academyTransferProject.IncomingTrustAgreement,
+               DiocesanConsent = academyTransferProject.DiocesanConsent,
+               OutgoingTrustConsent = academyTransferProject.OutgoingTrustConsent,
+               FeatureSectionIsCompleted = academyTransferProject.FeatureSectionIsCompleted,
+               BenefitsSectionIsCompleted = academyTransferProject.BenefitsSectionIsCompleted,
+               LegalRequirementsSectionIsCompleted = academyTransferProject.LegalRequirementsSectionIsCompleted,
+               RationaleSectionIsCompleted = academyTransferProject.RationaleSectionIsCompleted,
+               AcademyTransferProjectIntendedTransferBenefits =
                     academyTransferProject.AcademyTransferProjectIntendedTransferBenefits,
-                HasTransferFirstDiscussedDate = false,
-                HasHtbDate = false,
-                HasTargetDateForTransfer = false,
-                AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
-                AssignedUserFullName = academyTransferProject.AssignedUserFullName,
-                AssignedUserId = academyTransferProject.AssignedUserId
+               HasTransferFirstDiscussedDate = false,
+               HasHtbDate = false,
+               HasTargetDateForTransfer = false,
+               AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
+               AssignedUserFullName = academyTransferProject.AssignedUserFullName,
+               AssignedUserId = academyTransferProject.AssignedUserId,
+
+               CreatedOn = academyTransferProject.CreatedOn
             };
 
-            var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
+         var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -606,10 +614,12 @@ namespace TramsDataApi.Test.Factories
                 HasTargetDateForTransfer = false,
                 AssignedUserEmailAddress = academyTransferProject.AssignedUserEmailAddress,
                 AssignedUserFullName = academyTransferProject.AssignedUserFullName,
-                AssignedUserId = academyTransferProject.AssignedUserId
+                AssignedUserId = academyTransferProject.AssignedUserId,
+
+                CreatedOn = academyTransferProject.CreatedOn
             };
 
-            var result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
+            AcademyTransferProjects result = AcademyTransferProjectFactory.Update(academyTransferProject, updateRequest);
 
             result.Should().BeEquivalentTo(expected);
         }
