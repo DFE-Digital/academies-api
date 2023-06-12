@@ -50,7 +50,7 @@ namespace TramsDataApi.Test.Factories
                 TypeOfTransfer = null,
                 OtherTransferTypeDescription = null,
                 TransferFirstDiscussed = null,
-                CreatedDateTime = null,
+                CreatedOn = null,
                 TargetDateForTransfer = null,
                 HtbDate = null,
                 ProjectRationale = null,
@@ -144,7 +144,6 @@ namespace TramsDataApi.Test.Factories
                     CultureInfo.InvariantCulture),
                 TargetDateForTransfer = DateTime.ParseExact(createRequest.Dates.TargetDateForTransfer, "dd/MM/yyyy",
                     CultureInfo.InvariantCulture),
-                CreatedDateTime = DateTime.Today,
                 HtbDate = DateTime.ParseExact(createRequest.Dates.HtbDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 HasHtbDate = createRequest.Dates.HasHtbDate,
                 HasTransferFirstDiscussedDate = createRequest.Dates.HasTransferFirstDiscussedDate,
@@ -178,6 +177,7 @@ namespace TramsDataApi.Test.Factories
                 BenefitsSectionIsCompleted = createRequest.Benefits?.IsCompleted,
                 LegalRequirementsSectionIsCompleted = createRequest.LegalRequirements?.IsCompleted,
                 RationaleSectionIsCompleted = createRequest.Rationale?.IsCompleted,
+                CreatedOn = DateTime.Today,
                 AcademyTransferProjectIntendedTransferBenefits = createRequest.Benefits.IntendedTransferBenefits
                     .SelectedBenefits
                     .Select(b => new AcademyTransferProjectIntendedTransferBenefits {SelectedBenefit = b}).ToList(),

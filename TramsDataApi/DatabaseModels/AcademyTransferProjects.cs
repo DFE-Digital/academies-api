@@ -27,7 +27,6 @@ namespace TramsDataApi.DatabaseModels
         public string RddOrEsfaInterventionDetail { get; set; }
         public string TypeOfTransfer { get; set; }
         public string OtherTransferTypeDescription { get; set; }
-        public DateTime? CreatedDateTime { get; set; }
         public DateTime? TransferFirstDiscussed { get; set; }
         public DateTime? TargetDateForTransfer { get; set; }
         public DateTime? HtbDate { get; set; }
@@ -72,6 +71,6 @@ namespace TramsDataApi.DatabaseModels
 
         public virtual ICollection<TransferringAcademies> TransferringAcademies { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
     }
 }
