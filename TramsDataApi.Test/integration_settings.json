@@ -8,7 +8,7 @@
   },
   "AllowedHosts": "*",
   "ApiKeys": ["{\"userName\": \"Test User\", \"apiKey\": \"testing-api-key\"}"],
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost,1433;Database=sip;User=sa;Password=StrongPassword905"
-  }
+   "ConnectionStrings": {
+      "DefaultConnection": "Server=127.0.0.1,1433;Database=sip;User Id=sa;TrustServerCertificate=True;Password=StrongPassword905"
+   }
 }
