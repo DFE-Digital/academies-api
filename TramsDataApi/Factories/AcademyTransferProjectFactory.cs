@@ -60,7 +60,7 @@ namespace TramsDataApi.Factories
                 AssignedUserEmailAddress = request.AssignedUser?.EmailAddress,
                 AssignedUserFullName = request.AssignedUser?.FullName,
                 AssignedUserId = request.AssignedUser?.Id,
-                CreatedOn = DateTime.Now
+                CreatedOn = DateTimeSource.UtcNow()
             };
         }
 
