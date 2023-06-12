@@ -27,7 +27,6 @@ namespace TramsDataApi.Factories
                 OtherTransferTypeDescription = request.Features?.OtherTransferTypeDescription,
                 TransferFirstDiscussed = transferFirstDiscussed,
                 TargetDateForTransfer = targetDateForTransfer,
-                CreatedDateTime = DateTime.Now,
                 HtbDate = htbDate,
                 ProjectRationale = request.Rationale?.ProjectRationale,
                 TrustSponsorRationale = request.Rationale?.TrustSponsorRationale,
@@ -60,7 +59,8 @@ namespace TramsDataApi.Factories
                 HasTargetDateForTransfer = request.Dates?.HasTargetDateForTransfer,
                 AssignedUserEmailAddress = request.AssignedUser?.EmailAddress,
                 AssignedUserFullName = request.AssignedUser?.FullName,
-                AssignedUserId = request.AssignedUser?.Id
+                AssignedUserId = request.AssignedUser?.Id,
+                CreatedOn = DateTime.Now
             };
         }
 
