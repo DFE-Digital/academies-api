@@ -23,6 +23,7 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Migrations" />
+      <Folder Include="Services\" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="CensusData/2018-2019_england_census.csv">

@@ -5,6 +5,7 @@ using System.Linq;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.RequestModels;
 using TramsDataApi.RequestModels.AcademyTransferProject;
+using TramsDataApi.Services;
 
 namespace TramsDataApi.Factories
 {
@@ -59,7 +60,8 @@ namespace TramsDataApi.Factories
                 HasTargetDateForTransfer = request.Dates?.HasTargetDateForTransfer,
                 AssignedUserEmailAddress = request.AssignedUser?.EmailAddress,
                 AssignedUserFullName = request.AssignedUser?.FullName,
-                AssignedUserId = request.AssignedUser?.Id
+                AssignedUserId = request.AssignedUser?.Id,
+                CreatedOn = DateTimeSource.UtcNow()
             };
         }
 
