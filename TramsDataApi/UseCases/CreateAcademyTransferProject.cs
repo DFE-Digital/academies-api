@@ -16,8 +16,8 @@ namespace TramsDataApi.UseCases
 
         public AcademyTransferProjectResponse Execute(AcademyTransferProjectRequest request)
         {
-            var academyTransferProjectToCreate = AcademyTransferProjectFactory.Create(request);
-            var createdAcademyTransferModel =
+            AcademyTransferProjects academyTransferProjectToCreate = AcademyTransferProjectFactory.Create(request);
+            AcademyTransferProjects createdAcademyTransferModel =
                 _academyTransferProjectGateway.SaveAcademyTransferProject(academyTransferProjectToCreate);
             return AcademyTransferProjectResponseFactory.Create(createdAcademyTransferModel);
         }

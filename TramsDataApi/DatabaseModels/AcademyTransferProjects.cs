@@ -71,6 +71,6 @@ namespace TramsDataApi.DatabaseModels
 
         public virtual ICollection<TransferringAcademies> TransferringAcademies { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
     }
 }
