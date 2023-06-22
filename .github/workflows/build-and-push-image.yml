@@ -156,7 +156,7 @@ jobs:
         run: npm install
 
       - name: Run cypress
-        run: npm run cy:run -- --env apiKey="${{ secrets.TRAMS_API_KEY }}",url="${{ secrets.TRAMS_API_BASE_URL }}",authKey="${{ secrets.ZAP_API_KEY }}"
+        run: npm run cy:run -- --env apiKey="${{ secrets.TRAMS_API_KEY }}",url="${{ secrets.TRAMS_API_BASE_URL }}"
 
       - name: Upload screenshots
         if: ${{ failure() }}
