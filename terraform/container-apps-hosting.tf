@@ -1,5 +1,5 @@
 module "azure_container_apps_hosting" {
-  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v0.18.1"
+  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v0.18.2"
 
   environment    = local.environment
   project_name   = local.project_name
@@ -26,7 +26,9 @@ module "azure_container_apps_hosting" {
   cdn_frontdoor_origin_fqdn_override        = local.cdn_frontdoor_origin_fqdn_override
   cdn_frontdoor_origin_host_header_override = local.cdn_frontdoor_origin_host_header_override
 
-  enable_event_hub = local.enable_event_hub
+  enable_event_hub                          = local.enable_event_hub
+  enable_logstash_consumer                  = local.enable_logstash_consumer
+  eventhub_export_log_analytics_table_names = local.eventhub_export_log_analytics_table_names
 
   enable_monitoring               = local.enable_monitoring
   monitor_email_receivers         = local.monitor_email_receivers
