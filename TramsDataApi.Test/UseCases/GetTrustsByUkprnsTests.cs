@@ -95,7 +95,7 @@ namespace TramsDataApi.Test.UseCases
 
             var result = _useCase.Execute(request);
 
-            result.Should().BeEquivalentTo(trustResponses.First());
+            result.Should().BeEquivalentTo(trustResponses);
         }
 
         [Fact]
