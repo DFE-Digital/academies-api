@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -192,7 +193,7 @@ namespace TramsDataApi.Test.Integration
             var response = await _client.GetAsync($"/v2/apply-to-become/application/{applicationId}");
      
         
-            response.StatusCode.Should().Be(200);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
             
             var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationResponse>>();
             result.Should().BeEquivalentTo(expectedResponse); 
@@ -386,7 +387,7 @@ namespace TramsDataApi.Test.Integration
             
             var response = await _client.PostAsJsonAsync("/v2/apply-to-become/application/", application);
             var result = await response.Content.ReadFromJsonAsync<ApiSingleResponseV2<A2BApplicationResponse>>();
-            response.StatusCode.Should().Be(201);
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
             result.Should().NotBeNull();
         
             var createdApplication =

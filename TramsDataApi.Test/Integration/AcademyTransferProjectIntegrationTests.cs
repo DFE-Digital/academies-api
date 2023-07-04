@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FizzWare.NBuilder;
@@ -67,7 +68,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
-            response.StatusCode.Should().Be(201);
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
@@ -130,7 +131,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
-            response.StatusCode.Should().Be(201);
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
@@ -192,7 +193,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
-            response.StatusCode.Should().Be(201);
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
@@ -210,7 +211,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var updateResponse = await _client.SendAsync(updateRequestMessage);
-            updateResponse.StatusCode.Should().Be(200);
+            updateResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var updateJson = await updateResponse.Content.ReadAsStringAsync();
             var updatedProjectResponse = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(updateJson);
 
@@ -274,7 +275,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
-            response.StatusCode.Should().Be(201);
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
@@ -293,7 +294,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var updateResponse = await _client.SendAsync(updateRequestMessage);
-            updateResponse.StatusCode.Should().Be(200);
+            updateResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var updateJson = await updateResponse.Content.ReadAsStringAsync();
             var updatedProjectResponse = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(updateJson);
 
@@ -365,7 +366,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var response = await _client.SendAsync(httpRequestMessage);
-            response.StatusCode.Should().Be(201);
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
             var jsonString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(jsonString);
 
@@ -405,7 +406,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var updateResponse = await _client.SendAsync(updateRequestMessage);
-            updateResponse.StatusCode.Should().Be(200);
+            updateResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var updateJson = await updateResponse.Content.ReadAsStringAsync();
             var updatedProjectResponse = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(updateJson);
 
@@ -491,7 +492,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
-            indexResponse.StatusCode.Should().Be(200);
+            indexResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
             indexProjectResponse.Results.Count().Should().Be(numberOfProjectsPerPage);
@@ -552,7 +553,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
-            indexResponse.StatusCode.Should().Be(200);
+            indexResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
 
@@ -615,7 +616,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
-            indexResponse.StatusCode.Should().Be(200);
+            indexResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
 
@@ -683,7 +684,7 @@ namespace TramsDataApi.Test.Integration
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse = JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
 
-            indexResponse.StatusCode.Should().Be(200);
+            indexResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             indexProjectResponse.Results.Count().Should().Be(numberOfProjectsPerPage);
         }
 
@@ -730,7 +731,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var indexResponse = await _client.SendAsync(indexAcademyTransferProjectRequest);
-            indexResponse.StatusCode.Should().Be(200);
+            indexResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var indexJson = await indexResponse.Content.ReadAsStringAsync();
             var indexProjectResponse =
                 JsonConvert.DeserializeObject<PagedResult<AcademyTransferProjectSummaryResponse>>(indexJson);
@@ -753,7 +754,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var getResponse = await _client.SendAsync(getAcademyTransferProjectRequest);
-            getResponse.StatusCode.Should().Be(404);
+            getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -798,7 +799,7 @@ namespace TramsDataApi.Test.Integration
             };
 
             var getResponse = await _client.SendAsync(getAcademyTransferProjectRequest);
-            getResponse.StatusCode.Should().Be(200);
+            getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var responseJson = await getResponse.Content.ReadAsStringAsync();
             var responseModel = JsonConvert.DeserializeObject<AcademyTransferProjectResponse>(responseJson);
