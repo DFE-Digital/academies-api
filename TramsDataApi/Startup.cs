@@ -1,19 +1,19 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using TramsDataApi.DatabaseModels;
-using TramsDataApi.Gateways;
-using TramsDataApi.Middleware;
-using TramsDataApi.Swagger;
-using TramsDataApi.UseCases;
-
 namespace TramsDataApi
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.ApiExplorer;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Swashbuckle.AspNetCore.SwaggerUI;
+    using DatabaseModels;
+    using Gateways;
+    using Middleware;
+    using Swagger;
+    using UseCases;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -81,6 +81,15 @@ namespace TramsDataApi
             services.AddSwaggerGen();
             services.ConfigureOptions<SwaggerOptions>();
             services.AddUseCases();
+
+            var appInsightsCnnStr = Configuration?.GetSection("ApplicationInsights")?["ConnectionString"];
+            if (!string.IsNullOrWhiteSpace(appInsightsCnnStr))
+            {
+                services.AddApplicationInsightsTelemetry(opt =>
+                {
+                    opt.ConnectionString = appInsightsCnnStr;
+                });
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
