@@ -1,17 +1,22 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using TramsDataApi.ResponseModels;
-using TramsDataApi.UseCases;
-
 namespace TramsDataApi.Middleware
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+    using ResponseModels;
+    using UseCases;
+
     public class ApiKeyMiddleware
     {
         private readonly RequestDelegate _next;
         private const string APIKEYNAME = "ApiKey";
-        public ApiKeyMiddleware(RequestDelegate next)
+        private readonly ILogger<ApiKeyMiddleware> _logger;
+
+        public ApiKeyMiddleware(RequestDelegate next, ILogger<ApiKeyMiddleware> logger)
         {
             _next = next;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         public async Task InvokeAsync(HttpContext context, IUseCase<string, ApiUser> apiKeyService)
         {
@@ -21,17 +26,21 @@ namespace TramsDataApi.Middleware
                 await context.Response.WriteAsync("Api Key was not provided.");
                 return;
             }
- 
+
             var user = apiKeyService.Execute(extractedApiKey);
-            
+
             if (user == null)
             {
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("Unauthorized client.");
-                return;
             }
-
-            await _next(context);
+            else
+            {
+                using (_logger.BeginScope("requester: {requester}", user.UserName))
+                {
+                    await _next(context);
+                }
+            }
         }
     }
 }

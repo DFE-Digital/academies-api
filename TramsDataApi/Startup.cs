@@ -115,8 +115,8 @@ namespace TramsDataApi
             }
 
             app.UseMiddleware<CorrelationIdMiddleware>();
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<ApiKeyMiddleware>();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<UrlDecoderMiddleware>();
 
             app.UseHttpsRedirection();
