@@ -9,6 +9,7 @@ RUN mkdir -p /app/SQL
 RUN touch /app/SQL/DbMigrationScriptLegacy.sql
 RUN touch /app/SQL/DbMigrationScript.sql
 
+RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
 RUN dotnet restore TramsDataApi.sln
 RUN dotnet new tool-manifest
 RUN dotnet tool install dotnet-ef --version 6.0.5
