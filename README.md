@@ -7,7 +7,11 @@ You can use Docker compose to start the dependant services for this api.
 
 - Make a copy of `.env.database.example` and rename it to `.env.database`
 - Make a copy of `.env.example` and rename it to `.env.development`
-- Start your services using Docker `docker compose -f "docker-compose.yml" up -d --build`
+- Start your local database using the Docker command `docker compose -f "docker-compose.yml" up -d --build db`
+
+**Important. Locally running the api via Docker compose requires a secret containing a GitHub PAT token to allow access to the DfE Nuget registry.
+For this reason it is not recommended anymore and instead you should setup a Nuget package source on your develoment machine and run the api without docker compose.**
+
 
 You can connect to the MSSQL Server on port `1433`.
 
