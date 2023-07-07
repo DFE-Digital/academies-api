@@ -81,7 +81,7 @@ namespace TramsDataApi.Controllers.V2
         public ActionResult<ApiResponseV2<TrustResponse>> GetByUkprns([FromQuery] GetTrustsByUkprnsRequest request)
         {
             var commaSeparatedRequestUkprns = string.Join(",", request.Ukprns);
-            _logger.LogInformation($"Attemping to get Trusts by UKPRNs: {commaSeparatedRequestUkprns}");
+            _logger.LogInformation($"Attempting to get Trusts by UKPRNs: {commaSeparatedRequestUkprns}");
 
             var trusts = _getTrustsByUkprns.Execute(request);
 
