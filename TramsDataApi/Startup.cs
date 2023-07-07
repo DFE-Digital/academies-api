@@ -1,3 +1,5 @@
+using Dfe.Academisation.CorrelationIdMiddleware;
+
 namespace TramsDataApi
 {
     using Microsoft.AspNetCore.Builder;
@@ -66,6 +68,7 @@ namespace TramsDataApi
             services.AddScoped<IGetA2BApplication, GetA2BApplication>();
             services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
+            services.AddScoped<ICorrelationContext, CorrelationContext>();
 
             services.AddApiVersioning(config =>
             {
@@ -111,6 +114,7 @@ namespace TramsDataApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<CorrelationIdMiddleware>();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<UrlDecoderMiddleware>();
