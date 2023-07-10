@@ -52,19 +52,20 @@ namespace TramsDataApi.UseCases
       }
 
       private static IEnumerable<AcademyTransferProjectSummaryResponse> FilterByIncomingTrust(string title,
-         IEnumerable<AcademyTransferProjectSummaryResponse> queryable)
+          IEnumerable<AcademyTransferProjectSummaryResponse> queryable)
       {
           if (!string.IsNullOrWhiteSpace(title))
           {
               queryable = queryable
                   .Where(p => p.TransferringAcademies != null && p.TransferringAcademies
-                      .Any(r => r != null && r.IncomingTrustName != null && r.IncomingTrustName.ToLower().Contains(title.ToLower())))
+                      .Exists(r => r != null && r.IncomingTrustName != null && r.IncomingTrustName.ToLower().Contains(title.ToLower())))
                   .ToList();
           }
           return queryable;
-        }
+      }
 
-      public IEnumerable<AcademyTransferProjectSummaryResponse> AcademyTransferProjectSummaryResponse(
+
+        public IEnumerable<AcademyTransferProjectSummaryResponse> AcademyTransferProjectSummaryResponse(
          IEnumerable<AcademyTransferProjects> atp)
       {
          IEnumerable<Group> outgoingGroups =
