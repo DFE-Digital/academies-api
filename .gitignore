@@ -168,6 +168,9 @@ Brewfile.lock.json
 !.env.development.local.example
 !.env.database.example
 
+# secret files
+.secret.*
+
 ### Terraform
 .terraformrc*
 terraform.rc*

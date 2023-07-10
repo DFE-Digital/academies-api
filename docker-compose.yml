@@ -1,18 +1,5 @@
 version: "3.8"
-services:
-  webapi:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: /bin/bash -c "./docker-entrypoint.sh dotnet TramsDataApi.dll"
-    ports:
-      - 80:80/tcp
-    restart: always
-    depends_on:
-      - db
-    env_file:
-      - .env.development
-
+services:  
   db:
     image: ghcr.io/dfe-digital/trams-development-database:latest
     env_file: .env.database
