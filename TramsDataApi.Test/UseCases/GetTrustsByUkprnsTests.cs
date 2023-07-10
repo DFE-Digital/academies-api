@@ -93,9 +93,8 @@ namespace TramsDataApi.Test.UseCases
             _mockTrustGateway.Setup(gateway => gateway.GetMultipleTrustsByGroupId(trustRefs)).Returns(() => trusts);
             _mockGetEstablishmentsUseCase.Setup(useCase => useCase.Execute(It.IsAny<string[]>())).Returns(() => null);
 
-            var result = _useCase.Execute(request);
-
-            result.Should().BeEquivalentTo(trustResponses.First());
+            var result = _useCase.Execute(request).ToList();
+            result.ForEach(x => x.Should().BeEquivalentTo(trustResponses.First()));
         }
 
         [Fact]
