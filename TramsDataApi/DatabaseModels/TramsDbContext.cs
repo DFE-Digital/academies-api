@@ -49,7 +49,7 @@ namespace TramsDataApi.DatabaseModels
                     .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
             });
 
-            modelBuilder.HasSequence<int>("AcademyTransferProjectUrns").HasMin(10000000).StartsAt(10000000);
+            modelBuilder.HasSequence<int>("sequence_AcademyTransferProjectUrn", "sdd").HasMin(10003000).StartsAt(10003000);
 
             modelBuilder.Entity<AcademyTransferProjects>(entity =>
             {
@@ -62,7 +62,7 @@ namespace TramsDataApi.DatabaseModels
                     .HasName("AcademyTransferProjectUrn");
 
                 entity.Property(e => e.Urn)
-                    .HasDefaultValueSql("NEXT VALUE FOR AcademyTransferProjectUrns");
+                    .HasDefaultValueSql("NEXT VALUE FOR sdd.sequence_AcademyTransferProjectUrn");
 
                 entity.Property(e => e.HtbDate).HasColumnType("date");
 
