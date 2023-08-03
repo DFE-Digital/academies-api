@@ -11,7 +11,7 @@ on:
 env:
   DOTNET_VERSION: '6.0.403'
   EF_VERSION: '6.0.5'
-  JAVA_VERSION: '11'
+  JAVA_VERSION: '17'
   CONNECTION_STRING: 'Server=localhost,1433;Database=sip;TrustServerCertificate=True;User Id=sa;Password=StrongPassword905'
 
 jobs:
