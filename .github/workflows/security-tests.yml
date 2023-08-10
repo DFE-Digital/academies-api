@@ -65,10 +65,11 @@ jobs:
           HTTP_PROXY: http://${{ env.ZAP_ADDRESS }}:${{ env.ZAP_PORT }}
           NO_PROXY: "*.google-analytics.com,*.googletagmanager.com,*.microsoftonline.com"
           URL: ${{ secrets.TRAMS_API_BASE_URL }}
+          ZAP: true
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
           ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
           ZAP_PORT: ${{ env.ZAP_PORT }}
-        run: npm run cy:run -- --env apiKey=$API_KEY,url=$URL,zap=true,zapApiKey=$ZAP_API_KEY,zapAddress=$ZAP_ADDRESS,zapPort=$ZAP_PORT
+        run: npm run cy:run -- --env apiKey=$API_KEY,url=$URL
 
       - name: Get git sha
         if: '!cancelled()'
