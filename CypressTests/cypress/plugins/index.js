@@ -27,7 +27,7 @@ module.exports = (on, config) => {
 
   // eslint-disable-next-line no-unused-vars
   on('after:run', async () => {
-    if(process.env.zapReport) {
+    if(process.env.ZAP) {
       await generateZapHTMLReport()
     }
   })
