@@ -22,9 +22,6 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  // Map process env var to cypress var for usage outside of Cypress run
-  process.env = config.env
-
   // eslint-disable-next-line no-unused-vars
   on('after:run', async () => {
     if(process.env.ZAP) {

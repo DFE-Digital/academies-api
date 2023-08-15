@@ -3,6 +3,9 @@ const fs = require('fs')
 
 module.exports = {
     generateZapHTMLReport: async () => {
+
+        console.log('Generating ZAP report')
+
         const zapOptions = {
             apiKey: process.env.ZAP_API_KEY,
             proxy: {
