@@ -22,7 +22,12 @@ namespace TramsDataApi.Gateways
          return _dbContext.Group.FirstOrDefault(g => g.Ukprn == ukPrn);
       }
 
-      public Trust GetIfdTrustByGroupId(string groupId)
+        public Group GetLatestGroupByUkPrn(string ukPrn)
+        {
+            return _dbContext.Group.OrderByDescending(f=> f.GroupUid).FirstOrDefault(g => g.Ukprn == ukPrn);
+        }
+
+        public Trust GetIfdTrustByGroupId(string groupId)
       {
          return _dbContext.Trust.FirstOrDefault(t => t.TrustRef == groupId);
       }
@@ -84,5 +89,7 @@ namespace TramsDataApi.Gateways
         {
             return _dbContext.TrustMasterData.FirstOrDefault(t => t.GroupID == groupId);
         }
+
+ 
     }
 }
