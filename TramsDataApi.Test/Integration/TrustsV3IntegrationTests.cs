@@ -184,6 +184,72 @@ namespace TramsDataApi.Test.Integration
             establishment.Ukprn.Should().Be(establishmentData.Ukprn);
         }
 
+        /// <summary>
+        /// Test covers data scenario where we have two records in the group table with nearly identical information. Assumption made that primary key of Open Trusts is higher than closed record.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task ShouldReturnEstablishmentDataAgainstOpenTrust_WhenTrustHasAnEstablishmentAndHasBeenOpenedAndClosedWithSameUKPRN()
+        {
+            //Arrange
+            string groupID = "TR02545";
+            string TrustName = "Trust A";
+            string TrustUKPRN = "123456789";
+
+            var closedTrustGroup = _fixture.Build<Group>()
+                .With(f => f.GroupUid, "1")
+                .With(f => f.GroupId, groupID)
+                .With(f=> f.GroupName, TrustName)
+                .With(f => f.Ukprn, TrustUKPRN)
+                .With(f => f.GroupStatus, "Closed")
+                .With(f => f.GroupStatusCode, "CLOSED")
+                .With(f => f.GroupType, "Single-academy trust")
+                .Without(p => p.CompaniesHouseNumber)
+                .Create();
+
+            var openTrustGroup = _fixture.Build<Group>()
+                .With(f => f.GroupUid, "2")
+                .With(f => f.GroupId, groupID)
+                 .With(f => f.GroupName, TrustName)
+                 .With(f => f.Ukprn, TrustUKPRN)
+                 .With(f => f.GroupStatus, "Open")
+                 .With(f => f.GroupStatusCode, "OPEN")
+                 .With(f => f.GroupType, "Multi-academy trust")
+                 .Create();
+
+            _legacyDbContext.Group.AddRange(closedTrustGroup, openTrustGroup);
+
+
+            var trustMasterData = BuildMasterTrustData(openTrustGroup);
+            _legacyDbContext.TrustMasterData.Add(trustMasterData);
+
+            var establishmentData = _fixture.Create<Establishment>();
+            establishmentData.TrustsCode = openTrustGroup.GroupUid;
+            _legacyDbContext.Establishment.Add(establishmentData);
+
+            _legacyDbContext.SaveChanges();
+
+            //Act
+            var httpRequestMessage = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"{_apiUrlPrefix}/trust/{trustMasterData.UKPRN}"),
+            };
+
+            var response = await _client.SendAsync(httpRequestMessage);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ApiSingleResponseV2<MasterTrustResponse>>(jsonString);
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Data.TrustData.NumberInTrust.Should().Be(trustMasterData.NumberInTrust.ToString());
+            result.Data.GiasData.Ukprn.Should().Be(openTrustGroup.Ukprn);
+
+            result.Data.Establishments.Should().HaveCount(1);
+            var establishment = result.Data.Establishments[0];
+            establishment.Ukprn.Should().Be(establishmentData.Ukprn);
+        }
+
         [Fact]
         public async Task ShouldReturnAllTrusts_WhenSearchingTrusts_WithNoQueryParametersAndPagination()
         {

@@ -7,6 +7,12 @@ namespace TramsDataApi.Gateways
     public interface ITrustGateway
     {
         Group GetGroupByUkPrn(string ukPrn);
+        /// <summary>
+        /// Returns the most recent group record should there be two records with the same UKPRN
+        /// </summary>
+        /// <param name="ukPrn"></param>
+        /// <returns></returns>
+        Group GetLatestGroupByUkPrn(string ukPrn);
         Trust GetIfdTrustByGroupId(string groupId);
         Trust GetIfdTrustByRID(string RID);
         IList<Trust> GetIfdTrustsByTrustRef(string[] trustRefs);
