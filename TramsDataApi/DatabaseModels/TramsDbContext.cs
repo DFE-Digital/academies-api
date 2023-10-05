@@ -12,10 +12,6 @@ namespace TramsDataApi.DatabaseModels
             : base(options)
         {
         }
-
-        public virtual DbSet<AcademyTransferProjectIntendedTransferBenefits> AcademyTransferProjectIntendedTransferBenefits { get; set; }
-        public virtual DbSet<AcademyTransferProjects> AcademyTransferProjects { get; set; }
-        public virtual DbSet<TransferringAcademies> TransferringAcademies { get; set; }
         public virtual DbSet<FssProject> FssProjects { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -27,71 +23,7 @@ namespace TramsDataApi.DatabaseModels
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<AcademyTransferProjectIntendedTransferBenefits>(entity =>
-            {
-                entity.ToTable("AcademyTransferProjectIntendedTransferBenefits", "sdd");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.FkAcademyTransferProjectId).HasColumnName("fk_AcademyTransferProjectId");
-
-                entity.Property(e => e.SelectedBenefit).IsRequired();
-
-                entity.HasOne(d => d.FkAcademyTransferProject)
-                    .WithMany(p => p.AcademyTransferProjectIntendedTransferBenefits)
-                    .HasForeignKey(d => d.FkAcademyTransferProjectId)
-                    .HasConstraintName("FK__AcademyTr__fk_Ac__4316F928");
-            });
-
-            modelBuilder.HasSequence<int>("sequence_AcademyTransferProjectUrn", "sdd").HasMin(10003000).StartsAt(10003000);
-
-            modelBuilder.Entity<AcademyTransferProjects>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                    .HasName("PK__AcademyT__C5B214360AF6201A");
-
-                entity.ToTable("AcademyTransferProjects", "sdd");
-
-                entity.HasIndex(e => e.Urn)
-                    .HasName("AcademyTransferProjectUrn");
-
-                entity.Property(e => e.Urn)
-                    .HasDefaultValueSql("NEXT VALUE FOR sdd.sequence_AcademyTransferProjectUrn");
-
-                entity.Property(e => e.HtbDate).HasColumnType("date");
-
-                entity.Property(e => e.OutgoingTrustUkprn)
-                    .IsRequired()
-                    .HasMaxLength(8);
-
-                entity.Property(e => e.TargetDateForTransfer).HasColumnType("date");
-                entity.Property(e => e.TransferFirstDiscussed).HasColumnType("date");
-                entity.Property(e => e.AssignedUserId).HasColumnType("uniqueidentifier");
-                entity.Property(e => e.AssignedUserFullName).HasColumnType("nvarchar(max)");
-                entity.Property(e => e.AssignedUserEmailAddress).HasColumnType("nvarchar(max)");
-            });
-
-            modelBuilder.Entity<TransferringAcademies>(entity =>
-            {
-                entity.ToTable("TransferringAcademies", "sdd");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.FkAcademyTransferProjectId).HasColumnName("fk_AcademyTransferProjectId");
-
-                entity.Property(e => e.IncomingTrustUkprn).HasMaxLength(8);
-
-                entity.Property(e => e.OutgoingAcademyUkprn)
-                    .IsRequired()
-                    .HasMaxLength(8);
-
-                entity.HasOne(d => d.FkAcademyTransferProject)
-                    .WithMany(p => p.TransferringAcademies)
-                    .HasForeignKey(d => d.FkAcademyTransferProjectId)
-                    .HasConstraintName("FK__Transferr__fk_Ac__403A8C7D");
-            });
-
+        {                       
             modelBuilder.Entity<FssProject>(entity =>
             {
                 entity.ToView("vw_Fss_ProjectData", "fsg");
