@@ -15,6 +15,8 @@ namespace TramsDataApi
     using Middleware;
     using Swagger;
     using UseCases;
+    using TramsDataApi.SerilogCustomEnrichers;
+    using TramsDataApi.ResponseModels;
 
     public class Startup
     {
@@ -90,6 +92,9 @@ namespace TramsDataApi
                     opt.ConnectionString = appInsightsCnnStr;
                 });
             }
+
+            services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
+            services.AddSingleton<ApiUserEnricher>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
