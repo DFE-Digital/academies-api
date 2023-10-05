@@ -1,25 +1,39 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using System;
+using TramsDataApi;
+using TramsDataApi.SerilogCustomEnrichers;
 
-namespace TramsDataApi
+var builder = WebApplication.CreateBuilder(args);
+
+
+var startup = new Startup(builder.Configuration);
+
+startup.ConfigureServices(builder.Services);
+
+builder.Host.UseSerilog((context, services, loggerConfiguration) =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    var enricher = services.GetRequiredService<ApiUserEnricher>();
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            var builder = Host.CreateDefaultBuilder(args);
-            return builder.ConfigureLogging(c =>
-                {
-                    c.ClearProviders();
-                    c.AddConsole();
-                })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-        }
-    }
-}
+    loggerConfiguration
+    .WriteTo.ApplicationInsights(services.GetRequiredService<TelemetryConfiguration>(), TelemetryConverter.Traces)
+    .Enrich.FromLogContext()
+    .Enrich.With(enricher)
+    .WriteTo.Console();
+    });
+
+var app = builder.Build();
+
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+startup.Configure(app, app.Environment, provider);
+
+ILogger<Program> logger = app.Services.GetRequiredService<ILogger<Program>>();
+
+logger.LogInformation("Logger is working...");
+
+app.Run();

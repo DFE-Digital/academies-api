@@ -15,6 +15,8 @@ namespace TramsDataApi
     using Middleware;
     using Swagger;
     using UseCases;
+    using TramsDataApi.SerilogCustomEnrichers;
+    using TramsDataApi.ResponseModels;
 
     public class Startup
     {
@@ -63,10 +65,7 @@ namespace TramsDataApi
 
             services.AddScoped<IFssProjectGateway, FssProjectGateway>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
-
-            services.AddScoped<IA2BApplicationGateway, A2BApplicationGateway>();
-            services.AddScoped<IGetA2BApplication, GetA2BApplication>();
-            services.AddScoped<ICreateA2BApplication, CreateA2BApplication>();
+            
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<ICorrelationContext, CorrelationContext>();
 
@@ -93,6 +92,9 @@ namespace TramsDataApi
                     opt.ConnectionString = appInsightsCnnStr;
                 });
             }
+
+            services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
+            services.AddSingleton<ApiUserEnricher>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
