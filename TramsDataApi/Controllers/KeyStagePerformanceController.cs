@@ -14,7 +14,7 @@ namespace TramsDataApi.Controllers
     /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
-    [SwaggerTag("Operations related to Key Stage Performance Data")]
+    [SwaggerTag("Key Stage Performance Data Endpoints")]
     public class KeyStagePerformanceController : ControllerBase
     {
         private readonly IGetKeyStagePerformanceByUrn _getKeyStagePerformanceByUrn;
