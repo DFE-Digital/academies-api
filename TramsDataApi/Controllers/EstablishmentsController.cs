@@ -2,14 +2,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers
 {
+    /// <summary>
+    /// Manages establishment-related operations.
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
+    [SwaggerTag("Establishment Endpoints")]
     public class EstablishmentsController : ControllerBase
     {
         private readonly IGetEstablishmentByUkprn _getEstablishmentByUkprn;
@@ -35,8 +40,16 @@ namespace TramsDataApi.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Retrieves an establishment by its UKPRN.
+        /// </summary>
+        /// <param name="ukprn">The UKPRN of the establishment.</param>
+        /// <returns>An establishment or NotFound if not available.</returns>
         [HttpGet]
         [Route("establishment/{ukprn}")]
+        [SwaggerOperation(Summary = "Get Establishment by UKPRN", Description = "Returns an establishment specified by UKPRN.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment.")]
+        [SwaggerResponse(404, "Establishment with specified UKPRN not found.")]
         public ActionResult<EstablishmentResponse> GetByUkprn(string ukprn)
         {
             _logger.LogInformation($"Attempting to get Establishment by UKPRN {ukprn}");
@@ -51,8 +64,16 @@ namespace TramsDataApi.Controllers
             _logger.LogDebug(JsonSerializer.Serialize<EstablishmentResponse>(establishment));
             return Ok(establishment);
         }
+        /// <summary>
+        /// Retrieves a list of establishment URNs by region.
+        /// </summary>
+        /// <param name="regions">Array of regions.</param>
+        /// <returns>List of establishment URNs or NotFound if none are available.</returns>
         [HttpGet]
         [Route("establishment/regions")]
+        [SwaggerOperation(Summary = "Get Establishment URNs by Region", Description = "Returns a list of establishment URNs by specified regions.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment URNs.")]
+        [SwaggerResponse(404, "No establishments found for specified regions.")]
         public ActionResult<IEnumerable<int>> GetURNsByRegion([FromQuery] string[] regions)
         {
             _logger.LogInformation($"Attempting to get Establishment URNs by Region {regions}");
@@ -68,8 +89,16 @@ namespace TramsDataApi.Controllers
             return Ok(establishment);
         }
 
+        /// <summary>
+        /// Retrieves an establishment by its URN.
+        /// </summary>
+        /// <param name="urn">The URN of the establishment.</param>
+        /// <returns>An establishment or NotFound if not available.</returns>
         [HttpGet]
         [Route("establishment/urn/{urn}")]
+        [SwaggerOperation(Summary = "Get Establishment by URN", Description = "Returns an establishment specified by URN.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment.")]
+        [SwaggerResponse(404, "Establishment with specified URN not found.")]
         public ActionResult<EstablishmentResponse> GetByUrn(int urn)
         {
             var establishment = _getEstablishmentByUrn.Execute(new GetEstablishmentByUrnRequest { URN = urn });
@@ -85,8 +114,15 @@ namespace TramsDataApi.Controllers
             return Ok(establishment);
         }
 
+        /// <summary>
+        /// Searches for establishments based on a query.
+        /// </summary>
+        /// <param name="request">Search criteria.</param>
+        /// <returns>List of establishments that meet the search criteria.</returns>
         [HttpGet]
         [Route("establishments")]
+        [SwaggerOperation(Summary = "Search for Establishments", Description = "Returns a list of establishments based on search criteria.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned establishments.")]
         public ActionResult<List<EstablishmentSummaryResponse>> SearchEstablishments([FromQuery] SearchEstablishmentsRequest request)
         {
             _logger.LogInformation($"Searching for Establishments");
@@ -95,8 +131,16 @@ namespace TramsDataApi.Controllers
             return Ok(establishments);
         }
 
+        /// <summary>
+        /// Retrieves a list of establishments by their URNs.
+        /// </summary>
+        /// <param name="request">Contains URNs of the establishments.</param>
+        /// <returns>List of establishments or NotFound if none are available.</returns>
         [HttpGet]
         [Route("establishments/bulk")]
+        [SwaggerOperation(Summary = "Get Establishments by URNs", Description = "Returns a list of establishments specified by URNs.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(404, "Establishments with specified URNs not found.")]
         public ActionResult<List<EstablishmentResponse>> GetByUrns([FromQuery] GetEstablishmentsByUrnsRequest request)
         {
             var commaSeparatedRequestUrns = string.Join(",", request.Urns);
