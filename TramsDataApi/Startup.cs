@@ -17,6 +17,9 @@ namespace TramsDataApi
     using UseCases;
     using TramsDataApi.SerilogCustomEnrichers;
     using TramsDataApi.ResponseModels;
+    using System.IO;
+    using System.Reflection;
+    using System;
 
     public class Startup
     {
@@ -49,7 +52,14 @@ namespace TramsDataApi
             services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
             services.AddScoped<IGetEstablishments, GetEstablishments>();
             services.AddScoped<ISearchTrusts, SearchTrusts>();
-            services.AddScoped<IMstrSearchTrusts, MasterSearchTrusts>();  
+            services.AddScoped<IMstrSearchTrusts, MasterSearchTrusts>();
+
+            services.AddScoped<ICreateAcademyTransferProject, CreateAcademyTransferProject>();
+            services.AddScoped<ISearchAcademyTransferProjects, SearchAcademyTransferProjects>();
+            services.AddScoped<IAcademyTransferProjectGateway, AcademyTransferProjectGateway>();
+            services.AddScoped<IGetAcademyTransferProject, GetAcademyTransferProject>();
+            services.AddScoped<IUpdateAcademyTransferProject, UpdateAcademyTransferProject>();
+            services.AddScoped<IIndexAcademyTransferProjects, IndexAcademyTransferProjects>();
 
             services.AddScoped<IGetKeyStagePerformanceByUrn, GetKeyStagePerformanceByUrn>();
             services.AddScoped<IEducationPerformanceGateway, EducationPerformanceGateway>();
@@ -58,7 +68,7 @@ namespace TramsDataApi
 
             services.AddScoped<IFssProjectGateway, FssProjectGateway>();
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
-            
+
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<ICorrelationContext, CorrelationContext>();
 
@@ -73,7 +83,13 @@ namespace TramsDataApi
                 setup.GroupNameFormat = "'v'VVV";
                 setup.SubstituteApiVersionInUrl = true;
             });
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+                c.EnableAnnotations();
+            });
             services.ConfigureOptions<SwaggerOptions>();
             services.AddUseCases();
 
