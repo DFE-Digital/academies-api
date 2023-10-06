@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <UserSecretsId>1ce62ee2-ff0b-4f40-9066-cfbdae2e889f</UserSecretsId>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CsvHelper" Version="30.0.1" />
