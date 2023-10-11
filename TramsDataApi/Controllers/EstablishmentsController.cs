@@ -41,42 +41,42 @@ namespace TramsDataApi.Controllers
         }
 
         /// <summary>
-        /// Retrieves an establishment by its UKPRN.
+        /// Retrieves an establishment by its UK Provider Reference Number (UKPRN).
         /// </summary>
-        /// <param name="ukprn">The UKPRN of the establishment.</param>
+        /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>An establishment or NotFound if not available.</returns>
         [HttpGet]
         [Route("establishment/{ukprn}")]
-        [SwaggerOperation(Summary = "Get Establishment by UKPRN", Description = "Returns an establishment specified by UKPRN.")]
+        [SwaggerOperation(Summary = "Get Establishment by UK Provider Reference Number (UKPRN)", Description = "Returns an establishment specified by UK Provider Reference Number (UKPRN).")]
         [SwaggerResponse(200, "Successfully found and returned the establishment.")]
-        [SwaggerResponse(404, "Establishment with specified UKPRN not found.")]
+        [SwaggerResponse(404, "Establishment with specified UK Provider Reference Number (UKPRN) not found.")]
         public ActionResult<EstablishmentResponse> GetByUkprn(string ukprn)
         {
-            _logger.LogInformation($"Attempting to get Establishment by UKPRN {ukprn}");
+            _logger.LogInformation($"Attempting to get Establishment by UK Provider Reference Number (UKPRN) {ukprn}");
             var establishment = _getEstablishmentByUkprn.Execute(ukprn);
 
             if (establishment == null)
             {
-                _logger.LogInformation($"No Establishment found for UKPRN {ukprn}");
+                _logger.LogInformation($"No Establishment found for UK Provider Reference Number (UKPRN) {ukprn}");
                 return NotFound();
             }
-            _logger.LogInformation($"Returning Establishment with UKPRN {ukprn}");
+            _logger.LogInformation($"Returning Establishment with UK Provider Reference Number (UKPRN) {ukprn}");
             _logger.LogDebug(JsonSerializer.Serialize<EstablishmentResponse>(establishment));
             return Ok(establishment);
         }
         /// <summary>
-        /// Retrieves a list of establishment URNs by region.
+        /// Retrieves a list of establishment Unique reference numbers (URNs) by region.
         /// </summary>
         /// <param name="regions">Array of regions.</param>
-        /// <returns>List of establishment URNs or NotFound if none are available.</returns>
+        /// <returns>List of establishment Unique reference numbers (URNs) or NotFound if none are available.</returns>
         [HttpGet]
         [Route("establishment/regions")]
-        [SwaggerOperation(Summary = "Get Establishment URNs by Region", Description = "Returns a list of establishment URNs by specified regions.")]
-        [SwaggerResponse(200, "Successfully found and returned the establishment URNs.")]
+        [SwaggerOperation(Summary = "Get Establishment Unique reference numbers (URNs) by Region", Description = "Returns a list of establishment Unique reference numbers (URNs) by specified regions.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment Unique reference numbers (URNs).")]
         [SwaggerResponse(404, "No establishments found for specified regions.")]
         public ActionResult<IEnumerable<int>> GetURNsByRegion([FromQuery] string[] regions)
         {
-            _logger.LogInformation($"Attempting to get Establishment URNs by Region {regions}");
+            _logger.LogInformation($"Attempting to get Establishment Unique reference numbers (URNs) by Region {regions}");
             var establishment = _getEstablishmentURNsByRegion.Execute(regions);
 
             if (establishment == null)
@@ -84,32 +84,32 @@ namespace TramsDataApi.Controllers
                 _logger.LogInformation($"No Establishments found for Region {regions}");
                 return NotFound();
             }
-            _logger.LogInformation($"Returning Establishment URNs with Region {regions}");
+            _logger.LogInformation($"Returning Establishment Unique reference numbers (URNs) with Region {regions}");
             _logger.LogDebug(JsonSerializer.Serialize(establishment));
             return Ok(establishment);
         }
 
         /// <summary>
-        /// Retrieves an establishment by its URN.
+        /// Retrieves an establishment by its Unique reference number (URN).
         /// </summary>
-        /// <param name="urn">The URN of the establishment.</param>
+        /// <param name="urn">The Unique reference number (URN) of the establishment.</param>
         /// <returns>An establishment or NotFound if not available.</returns>
         [HttpGet]
         [Route("establishment/urn/{urn}")]
-        [SwaggerOperation(Summary = "Get Establishment by URN", Description = "Returns an establishment specified by URN.")]
+        [SwaggerOperation(Summary = "Get Establishment by Unique reference number (URN)", Description = "Returns an establishment specified by Unique reference number (URN).")]
         [SwaggerResponse(200, "Successfully found and returned the establishment.")]
-        [SwaggerResponse(404, "Establishment with specified URN not found.")]
+        [SwaggerResponse(404, "Establishment with specified Unique reference number (URN) not found.")]
         public ActionResult<EstablishmentResponse> GetByUrn(int urn)
         {
             var establishment = _getEstablishmentByUrn.Execute(new GetEstablishmentByUrnRequest { URN = urn });
-            _logger.LogInformation($"Attempting to get Establishment by URN {urn}");
+            _logger.LogInformation($"Attempting to get Establishment by Unique reference number (URN) {urn}");
 
             if (establishment == null)
             {
-                _logger.LogInformation($"No Establishment found for URN {urn}");
+                _logger.LogInformation($"No Establishment found for Unique reference number (URN) {urn}");
                 return NotFound();
             }
-            _logger.LogInformation($"Returning Establishment with URN {urn}");
+            _logger.LogInformation($"Returning Establishment with Unique reference number (URN) {urn}");
             _logger.LogDebug(JsonSerializer.Serialize<EstablishmentResponse>(establishment));
             return Ok(establishment);
         }
@@ -132,29 +132,29 @@ namespace TramsDataApi.Controllers
         }
 
         /// <summary>
-        /// Retrieves a list of establishments by their URNs.
+        /// Retrieves a list of establishments by their Unique reference numbers (URNs).
         /// </summary>
-        /// <param name="request">Contains URNs of the establishments.</param>
+        /// <param name="request">Contains Unique reference number (URNs) of the establishments.</param>
         /// <returns>List of establishments or NotFound if none are available.</returns>
         [HttpGet]
         [Route("establishments/bulk")]
-        [SwaggerOperation(Summary = "Get Establishments by URNs", Description = "Returns a list of establishments specified by URNs.")]
+        [SwaggerOperation(Summary = "Get Establishments by Unique reference number (URNs)", Description = "Returns a list of establishments specified by Unique reference numbers (URNs).")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.")]
-        [SwaggerResponse(404, "Establishments with specified URNs not found.")]
+        [SwaggerResponse(404, "Establishments with specified Unique reference numbers (URNs) not found.")]
         public ActionResult<List<EstablishmentResponse>> GetByUrns([FromQuery] GetEstablishmentsByUrnsRequest request)
         {
             var commaSeparatedRequestUrns = string.Join(",", request.Urns);
-            _logger.LogInformation($"Attemping to get establishments by URNs: {commaSeparatedRequestUrns}");
+            _logger.LogInformation($"Attemping to get establishments by Unique reference numbers (URNs): {commaSeparatedRequestUrns}");
 
             var establishments = _getEstablishments.Execute(request);
 
             if (establishments == null)
             {
-                _logger.LogInformation($"No establishment was found any of the requested URNs: {commaSeparatedRequestUrns}");
+                _logger.LogInformation($"No establishment was found any of the requested Unique reference numbers (URNs): {commaSeparatedRequestUrns}");
                 return NotFound();
             }
 
-            _logger.LogInformation($"Returning Establishments for URNs: {commaSeparatedRequestUrns}");
+            _logger.LogInformation($"Returning Establishments for Unique reference numbers (URNs): {commaSeparatedRequestUrns}");
             _logger.LogDebug(JsonSerializer.Serialize(establishments));
             return Ok(establishments);
         }

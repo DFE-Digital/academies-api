@@ -29,27 +29,27 @@ namespace TramsDataApi.Controllers
         }
 
         /// <summary>
-        /// Retrieves a Trust by its UKPRN.
+        /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
         /// </summary>
-        /// <param name="ukprn">The UKPRN identifier.</param>
+        /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
         [Route("trust/{ukprn}")]
-        [SwaggerOperation(Summary = "Retrieve Trust by UKPRN", Description = "Returns a Trust identified by UKPRN.")]
+        [SwaggerOperation(Summary = "Retrieve Trust by UK Provider Reference Number (UKPRN)", Description = "Returns a Trust identified by UK Provider Reference Number (UKPRN).")]
         [SwaggerResponse(200, "Successfully found and returned the Trust.")]
-        [SwaggerResponse(404, "Trust with specified UKPRN not found.")]
+        [SwaggerResponse(404, "Trust with specified UK Provider Reference Number (UKPRN) not found.")]
         public ActionResult<TrustResponse> GetTrustByUkprn(string ukprn)
         {
-            _logger.LogInformation($"Attempting to get trust by UKPRN {ukprn}");
+            _logger.LogInformation($"Attempting to get trust by UK Provider Reference Number (UKPRN) {ukprn}");
             var trust = _getTrustByUkprn.Execute(ukprn);
 
             if (trust == null)
             {
-                _logger.LogInformation($"No trust found for UKPRN {ukprn}");
+                _logger.LogInformation($"No trust found for UK Provider Reference Number (UKPRN) {ukprn}");
                 return NotFound();
             }
 
-            _logger.LogInformation($"Returning trust found by UKPRN {ukprn}");
+            _logger.LogInformation($"Returning trust found by UK Provider Reference Number (UKPRN) {ukprn}");
             _logger.LogDebug(JsonSerializer.Serialize(trust));
             return Ok(trust);
         }
@@ -58,7 +58,7 @@ namespace TramsDataApi.Controllers
         /// Searches for Trusts based on query parameters.
         /// </summary>
         /// <param name="groupName">Name of the group.</param>
-        /// <param name="ukPrn">UKPRN identifier.</param>
+        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="companiesHouseNumber">Companies House Number.</param>
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>

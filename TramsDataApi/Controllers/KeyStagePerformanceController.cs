@@ -29,28 +29,28 @@ namespace TramsDataApi.Controllers
         }
 
         /// <summary>
-        /// Retrieves educational performance data for an establishment by its URN.
+        /// Retrieves educational performance data for an establishment by its Unique reference number (URN).
         /// </summary>
-        /// <param name="urn">The URN identifier of the establishment.</param>
+        /// <param name="urn">The Unique reference number (URN) identifier of the establishment.</param>
         /// <returns>An EducationalPerformanceResponse object or NotFound if unavailable.</returns>
         [HttpGet]
         [Route("educationPerformance/{urn}")]
         [SwaggerOperation(
-            Summary = "Retrieve Educational Performance by URN",
-            Description = "Returns educational performance data identified by URN."
+            Summary = "Retrieve Educational Performance by Unique reference number (URN)",
+            Description = "Returns educational performance data identified by Unique reference number (URN)."
         )]
         [SwaggerResponse(200, "Successfully found and returned the educational performance data.")]
-        [SwaggerResponse(404, "Educational performance data with the specified URN not found.")]
+        [SwaggerResponse(404, "Educational performance data with the specified Unique reference number (URN) not found.")]
         public ActionResult<EducationalPerformanceResponse> GetEducationPerformanceByUrn(string urn)
         {
-            _logger.LogInformation($"Attempting to get Performance Data for URN {urn}");
+            _logger.LogInformation($"Attempting to get Performance Data for Unique reference number (URN) {urn}");
             var performanceData = _getKeyStagePerformanceByUrn.Execute(urn);
             if (performanceData == null)
             {
-                _logger.LogInformation($"No Performance Data found for URN {urn}");
+                _logger.LogInformation($"No Performance Data found for Unique reference number (URN) {urn}");
                 return NotFound();
             }
-            _logger.LogInformation($"Returning Performance Data for URN {urn}");
+            _logger.LogInformation($"Returning Performance Data for Unique reference number (URN) {urn}");
             _logger.LogDebug(JsonSerializer.Serialize<EducationalPerformanceResponse>(performanceData));
             return Ok(performanceData);
         }
