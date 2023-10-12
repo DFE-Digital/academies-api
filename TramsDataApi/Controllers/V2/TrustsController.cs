@@ -3,15 +3,20 @@ using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
 namespace TramsDataApi.Controllers.V2
 {
+    /// <summary>
+    /// Manages trusts operations.
+    /// </summary>
     [ApiVersion("2.0")]
     [ApiController]
     [Route("v{version:apiVersion}/")]
+    [SwaggerTag("Operations related to Trusts")]
     public class TrustsController : ControllerBase
     {
         private readonly IGetTrustByUkprn _getTrustByUkPrn;
@@ -27,8 +32,16 @@ namespace TramsDataApi.Controllers.V2
             _logger = logger;
         }
 
+        /// <summary>
+        /// Searches for trusts based on given criteria.
+        /// </summary>
+        /// <remarks>
+        /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
+        /// </remarks>
         [HttpGet("trusts")]
         [MapToApiVersion("2.0")]
+        [SwaggerOperation(Summary = "Search Trusts", Description = "Search for trusts using the specified parameters.")]
+        [SwaggerResponse(200, "Successfully found and returned the list of trusts.")]
         public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, 
             int page = 1, int count = 50, bool includeEstablishments = true)
         {
@@ -54,9 +67,15 @@ namespace TramsDataApi.Controllers.V2
             return new OkObjectResult(response);
         }
 
+        /// <summary>
+        /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
+        /// </summary>
         [HttpGet]
         [Route("trust/{ukprn}")]
         [MapToApiVersion("2.0")]
+        [SwaggerOperation(Summary = "Get Trust By UK Provider Reference Number (UKPRN)", Description = "Retrieve a single trust by its UK Provider Reference Number (UKPRN).")]
+        [SwaggerResponse(200, "Successfully retrieved the trust.")]
+        [SwaggerResponse(404, "The trust was not found.")]
         public ActionResult<ApiSingleResponseV2<TrustResponse>> GetTrustByUkPrn(string ukprn)
         {
             _logger.LogInformation("Attempting to get trust by UKPRN {prn}", ukprn);
@@ -75,9 +94,15 @@ namespace TramsDataApi.Controllers.V2
             return new OkObjectResult(response);
         }
 
+        /// <summary>
+        /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
+        /// </summary>
         [HttpGet]
         [Route("trusts/bulk")]
         [MapToApiVersion("2.0")]
+        [SwaggerOperation(Summary = "Get Trusts By UK Provider Reference Numbers (UKPRNs)", Description = "Retrieve multiple trusts by their UK Provider Reference Numbers (UKPRNs).")]
+        [SwaggerResponse(200, "Successfully retrieved the trusts.")]
+        [SwaggerResponse(404, "The trusts were not found.")]
         public ActionResult<ApiResponseV2<TrustResponse>> GetByUkprns([FromQuery] GetTrustsByUkprnsRequest request)
         {
             var commaSeparatedRequestUkprns = string.Join(",", request.Ukprns);
