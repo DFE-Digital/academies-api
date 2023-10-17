@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TramsDataApi.Contracts.Test": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "PACT_DO_NOT_TRACK": "true"
+      }
+    }
+  }
+}
