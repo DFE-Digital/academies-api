@@ -46,5 +46,7 @@ namespace Dfe.Academies.Domain.Trust
         public DateTime? TrustPerformanceAndRiskDateOfMeeting { get; set; }
         public string UPIN { get; set; }
         public DateTime? IncorporatedOnOpenDate { get; set; }
+
+        public TrustType TrustType { get; set; }
     }
 }

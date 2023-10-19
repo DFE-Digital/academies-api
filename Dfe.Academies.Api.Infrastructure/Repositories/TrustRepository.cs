@@ -13,9 +13,31 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Trust?> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var trust = await this.dbSet.SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
+            var trust = await dbSet.SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
 
             return trust;
+        }
+
+        public async Task<List<Trust>> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
+        {
+            if (name == null && ukPrn == null && companiesHouseNumber == null)
+            {
+                List<Trust> allTrusts =  await dbSet.OrderBy(trust => trust.GroupUID).Skip((page - 1) * count)
+                   .Take(count).ToListAsync(cancellationToken).ConfigureAwait(false);
+                return allTrusts;
+            }
+
+            IOrderedQueryable<Trust> filteredGroups = dbSet
+               .Where(trust => (trust.Name.Contains(name) ||
+                            trust.UKPRN.Contains(ukPrn) ||
+                            trust.CompaniesHouseNumber.Contains(companiesHouseNumber))
+                           && (
+                              trust.TrustType.Name == "Single-academy trust" ||
+                              trust.TrustType.Name == "Multi-academy trust"
+                           ))
+               .OrderBy(trust => trust.GroupUID);
+
+            return await filteredGroups.Skip((page - 1) * count).Take(count).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

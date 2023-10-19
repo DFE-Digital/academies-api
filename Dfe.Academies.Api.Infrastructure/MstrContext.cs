@@ -3,6 +3,7 @@ using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Dfe.Academies.Academisation.Data;
 
@@ -14,12 +15,14 @@ public class MstrContext : DbContext
 
     }
 
-    public DbSet<Trust> Trusts { get; set; } = null!; // done
+    public DbSet<Trust> Trusts { get; set; } = null!;
+    public DbSet<TrustType> TrustTypes { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Trust>(ConfigureTrust);
+        modelBuilder.Entity<TrustType>(ConfigureTrustType);
 
         base.OnModelCreating(modelBuilder);
     }
@@ -77,6 +80,17 @@ public class MstrContext : DbContext
         trustConfiguration.Property(e => e.UPIN).HasColumnName("UPIN");
         trustConfiguration.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
 
+        trustConfiguration
+        .HasOne(x => x.TrustType)
+        .WithOne()
+        .HasForeignKey<Trust>(x => x.TrustsTrustType)
+        .IsRequired(false);
+    }
+
+    void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration) {
+        trustTypeConfiguration.HasKey(e => e.SK).HasName("SK");
+
+        trustTypeConfiguration.ToTable("Ref_TrustType", DEFAULT_SCHEMA);
     }
 
 }

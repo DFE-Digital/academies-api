@@ -14,8 +14,19 @@ namespace Dfe.Academies.Application.Queries.Trust
         public async Task<TrustDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken)
         {
             var trust = await _trustRepository.GetTrustByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
+            return trust == null ? null : MapToTrustDto(trust);
+        }
 
-            return trust == null ? null : new TrustDto()
+        public async Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
+        {
+            var trusts = await _trustRepository.Search(page, count, name, ukPrn, companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+
+            return (trusts.Select(x => MapToTrustDto(x)).ToList(), trusts.Count);
+        }
+
+        private static TrustDto MapToTrustDto(Domain.Trust.Trust trust)
+        {
+            return new TrustDto()
             {
                 Name = trust.Name,
                 CompaniesHouseNumber = trust.CompaniesHouseNumber,

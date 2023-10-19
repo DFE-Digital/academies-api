@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,8 +7,7 @@ using Dfe.Academies.Contracts.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using TramsDataApi.ResponseModels;
-using TramsDataApi.UseCases;
+
 
 namespace TramsDataApi.Controllers.V4
 {
@@ -35,6 +33,7 @@ namespace TramsDataApi.Controllers.V4
         /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <param name="cancellationToken"></param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
         [Route("trust/{ukprn}")]
@@ -57,35 +56,38 @@ namespace TramsDataApi.Controllers.V4
             return Ok(trust);
         }
 
-        ///// <summary>
-        ///// Searches for Trusts based on query parameters.
-        ///// </summary>
-        ///// <param name="groupName">Name of the group.</param>
-        ///// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
-        ///// <param name="companiesHouseNumber">Companies House Number.</param>
-        ///// <param name="page">Pagination page.</param>
-        ///// <param name="count">Number of results per page.</param>
-        ///// <returns>A list of Trusts that meet the search criteria.</returns>
-        //[HttpGet]
-        //[Route("trusts")]
-        //[SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
-        //[SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
-        //public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, int page = 1, int count = 10)
-        //{
-        //    _logger.LogInformation(
-        //        "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-        //        groupName, ukPrn, companiesHouseNumber, page, count);
+        /// <summary>
+        /// Searches for Trusts based on query parameters.
+        /// </summary>
+        /// <param name="groupName">Name of the group.</param>
+        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <param name="companiesHouseNumber">Companies House Number.</param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="page">Pagination page.</param>
+        /// <param name="count">Number of results per page.</param>
+        /// <returns>A list of Trusts that meet the search criteria.</returns>
+        [HttpGet]
+        [Route("trusts")]
+        [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
+        public async Task<ActionResult<List<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10)
+        {
+            _logger.LogInformation(
+                "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
+                groupName, ukPrn, companiesHouseNumber, page, count);
 
-        //    var trusts = _searchTrusts
-        //        .Execute(page, count, groupName, ukPrn, companiesHouseNumber, true)
-        //        .Item1.ToList();
-            
-        //    _logger.LogInformation(
-        //        "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-        //        trusts.Count, groupName, ukPrn, companiesHouseNumber, page, count);
-            
-        //    _logger.LogDebug(JsonSerializer.Serialize(trusts));
-        //    return Ok(trusts);
-        //}
+            var trustSearchResult = await _trustQueries
+                .Search(page, count, groupName, ukPrn, companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+
+            var trusts = trustSearchResult.Item1;
+            var trustCount = trustSearchResult.Item2;
+
+            _logger.LogInformation(
+                "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
+                trustCount, groupName, ukPrn, companiesHouseNumber, page, count);
+
+            _logger.LogDebug(JsonSerializer.Serialize(trusts));
+            return Ok(trusts);
+        }
     }
 }
