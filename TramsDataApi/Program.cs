@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using System;
 using TramsDataApi;
 using TramsDataApi.SerilogCustomEnrichers;
 
@@ -25,6 +24,8 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) =>
     .Enrich.With(enricher)
     .WriteTo.Console();
     });
+
+builder.Services.AddApplicationDependencyGroup(builder.Configuration);
 
 var app = builder.Build();
 

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Queries\Establishment\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
+    <ProjectReference Include="..\Dfe.Academies.Domain\Dfe.Academies.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
