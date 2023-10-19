@@ -1,6 +1,7 @@
 ﻿using Dfe.Academies.Academisation.Data;
 using Dfe.Academies.Academisation.Data.Repositories;
 using Dfe.Academies.Domain.Establishment;
+using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Infrastructure.Repositories
