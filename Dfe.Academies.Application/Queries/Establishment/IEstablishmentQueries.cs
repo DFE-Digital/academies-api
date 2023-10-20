@@ -10,5 +10,6 @@ namespace Dfe.Academies.Application.Queries.Establishment
     public interface IEstablishmentQueries
     {
         Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken);
+        Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken);
     }
 }

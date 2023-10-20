@@ -1,4 +1,5 @@
 ﻿using Dfe.Academies.Academisation.Data;
+using Dfe.Academies.Application.Queries.Establishment;
 using Dfe.Academies.Application.Queries.Trust;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
@@ -26,6 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             //Queries
             services.AddScoped<ITrustQueries, TrustQueries>();
+            services.AddScoped<IEstablishmentQueries, EstablishmentQueries>();
 
             //Repos
             services.AddScoped<ITrustRepository, TrustRepository>();

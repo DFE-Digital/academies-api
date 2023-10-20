@@ -10,5 +10,6 @@ namespace Dfe.Academies.Domain.Establishment
     public interface IEstablishmentRepository : IGenericRepository<Establishment>
     {
         Task<Establishment?> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken);
+        Task<Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken);
     }
 }

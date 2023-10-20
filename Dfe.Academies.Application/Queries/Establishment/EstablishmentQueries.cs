@@ -14,8 +14,17 @@ namespace Dfe.Academies.Application.Queries.Establishment
         public async Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken)
         {
             var establishment = await _establishmentRepository.GetEstablishmentByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
+            return establishment == null ? null : MapToEstablishmentDto(establishment);
+        }
+        public async Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken)
+        {
+            var establishment = await _establishmentRepository.GetEstablishmentByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
+            return establishment == null ? null : MapToEstablishmentDto(establishment);
+        }
 
-            return establishment == null ? null : new EstablishmentDto()
+        private static EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment? establishment)
+        {
+            return new EstablishmentDto()
             {
                 Name = establishment.EstablishmentName,
                 Urn = establishment?.URN.ToString() ?? string.Empty, // To question

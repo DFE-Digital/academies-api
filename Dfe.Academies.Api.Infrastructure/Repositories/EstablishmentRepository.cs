@@ -14,7 +14,13 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Establishment?> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var Establishment = await this.dbSet.SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
+            var Establishment = await dbSet.SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
+
+            return Establishment;
+        }
+        public async Task<Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken)
+        {
+            var Establishment = await dbSet.SingleOrDefaultAsync(x => x.URN.ToString() == urn).ConfigureAwait(false);
 
             return Establishment;
         }
