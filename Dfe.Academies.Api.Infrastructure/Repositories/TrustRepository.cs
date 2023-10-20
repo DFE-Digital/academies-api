@@ -18,6 +18,13 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return trust;
         }
 
+        public async Task<List<Trust>> GetTrustsByUkprns(string[] ukprns, CancellationToken cancellationToken)
+        {
+            var trusts = await dbSet.Where(x => ukprns.Contains(x.UKPRN)).ToListAsync(cancellationToken).ConfigureAwait(false);
+
+            return trusts;
+        }
+
         public async Task<List<Trust>> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
         {
             if (name == null && ukPrn == null && companiesHouseNumber == null)

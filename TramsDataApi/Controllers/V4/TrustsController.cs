@@ -7,7 +7,7 @@ using Dfe.Academies.Contracts.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-
+using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4
 {
@@ -70,23 +70,55 @@ namespace TramsDataApi.Controllers.V4
         [Route("trusts")]
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
-        public async Task<ActionResult<List<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10)
+        public async Task<ActionResult<ApiResponseV2<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10)
         {
             _logger.LogInformation(
                 "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
                 groupName, ukPrn, companiesHouseNumber, page, count);
 
-            var trustSearchResult = await _trustQueries
+            var (trusts, recordCount) = await _trustQueries
                 .Search(page, count, groupName, ukPrn, companiesHouseNumber, cancellationToken).ConfigureAwait(false);
-
-            var trusts = trustSearchResult.Item1;
-            var trustCount = trustSearchResult.Item2;
 
             _logger.LogInformation(
                 "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-                trustCount, groupName, ukPrn, companiesHouseNumber, page, count);
+                recordCount, groupName, ukPrn, companiesHouseNumber, page, count);
 
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
+
+            var pagingResponse = PagingResponseFactory.Create(page, count, recordCount, Request);
+            var response = new ApiResponseV2<TrustDto>(trusts, pagingResponse);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Returns Trusts based on supplied list of Ukprns query parameter.
+        /// </summary>
+        /// <param name="ukprns">List of ukprns to search for.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A list of Trusts that match the ukprns.</returns>
+        [HttpGet]
+        [Route("trusts/bulk")]
+        [MapToApiVersion("4.0")]
+        [SwaggerOperation(Summary = "Get Trusts By UK Provider Reference Numbers (UKPRNs)", Description = "Retrieve multiple trusts by their UK Provider Reference Numbers (UKPRNs).")]
+        [SwaggerResponse(200, "Successfully retrieved the trusts.")]
+        [SwaggerResponse(404, "The trusts were not found.")]
+        public async Task<ActionResult<List<TrustDto>>> GetByUkprns([FromQuery] string[] ukprns, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestUkprns = string.Join(",", ukprns);
+            _logger.LogInformation($"Attempting to get Trusts by UKPRNs: {commaSeparatedRequestUkprns}");
+
+            var trusts = await _trustQueries.GetByUkprns(ukprns, cancellationToken);
+
+            if (trusts == null)
+            {
+                _logger.LogInformation($"No Trust was found for any of the requested UKPRNs: {commaSeparatedRequestUkprns}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Trusts for UKPRNs: {commaSeparatedRequestUkprns}");
+            _logger.LogDebug(JsonSerializer.Serialize(trusts));
+
             return Ok(trusts);
         }
     }
