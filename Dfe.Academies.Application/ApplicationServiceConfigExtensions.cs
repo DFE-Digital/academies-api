@@ -1,5 +1,6 @@
 ﻿using Dfe.Academies.Academisation.Data;
 using Dfe.Academies.Application.Queries.Trust;
+using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             //Repos
             services.AddScoped<ITrustRepository, TrustRepository>();
+            services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
 
             //Db
             services.AddDbContext<MstrContext>(options =>
