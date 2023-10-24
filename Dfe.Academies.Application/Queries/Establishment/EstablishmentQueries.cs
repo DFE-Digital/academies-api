@@ -1,5 +1,8 @@
 ﻿using Dfe.Academies.Contracts.Establishments;
+using Dfe.Academies.Contracts.Trusts;
 using Dfe.Academies.Domain.Establishment;
+using System.Threading;
+using System;
 
 namespace Dfe.Academies.Application.Queries.Establishment
 {
@@ -14,8 +17,35 @@ namespace Dfe.Academies.Application.Queries.Establishment
         public async Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken)
         {
             var establishment = await _establishmentRepository.GetEstablishmentByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
+            return establishment == null ? null : MapToEstablishmentDto(establishment);
+        }
+        public async Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken)
+        {
+            var establishment = await _establishmentRepository.GetEstablishmentByUrn(urn, cancellationToken).ConfigureAwait(false);
+            return establishment == null ? null : MapToEstablishmentDto(establishment);
+        }
+        public async Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
+        {
+            var establishments = await _establishmentRepository.Search(name, ukPrn, urn, cancellationToken).ConfigureAwait(false);
 
-            return establishment == null ? null : new EstablishmentDto()
+            return (establishments.Select(x => MapToEstablishmentDto(x)).ToList(), establishments.Count);
+        }
+        public async Task<IEnumerable<int>> GetURNsByRegion(ICollection<string> regions, CancellationToken cancellationToken)
+        {
+            var URNs = await _establishmentRepository.GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);
+
+            return URNs;
+        }
+        public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns)
+        {
+            var establishments = await _establishmentRepository.GetByUrns(Urns).ConfigureAwait(false);
+
+            return (establishments.Select(x => MapToEstablishmentDto(x)).ToList());
+        }
+
+        private static EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment? establishment)
+        {
+            return new EstablishmentDto()
             {
                 Name = establishment.EstablishmentName,
                 Urn = establishment?.URN.ToString() ?? string.Empty, // To question
@@ -77,7 +107,7 @@ namespace Dfe.Academies.Application.Queries.Establishment
                     SixthFormProvision = establishment.SixthFormProvisionWhereApplicable.ToString(),
                     Weblink = establishment.Website,
                 },
-                Address = new AddressDto()
+                Address = new Contracts.Establishments.AddressDto()
                 {
                     Street = establishment.AddressLine1,
                     Town = establishment.Town,
