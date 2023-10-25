@@ -48,27 +48,26 @@ namespace Dfe.Academies.Application.Queries.Establishment
             return new EstablishmentDto()
             {
                 Name = establishment.EstablishmentName,
-                Urn = establishment?.URN.ToString() ?? string.Empty, // To question
-                LocalAuthorityCode = establishment?.FK_LocalAuthority.ToString() ?? string.Empty, // To question
-                LocalAuthorityName = establishment?.FK_LocalAuthority.ToString() ?? string.Empty, // To question/we're missing it's name unless the above is it
+                Urn = establishment?.URN.ToString() ?? string.Empty,
+                LocalAuthorityCode = establishment?.LocalAuthority.Code ?? string.Empty,
+                LocalAuthorityName = establishment?.LocalAuthority.Name ?? string.Empty, 
                 OfstedRating = establishment.OfstedRating,
                 OfstedLastInspection = establishment.OfstedLastInspection,
                 StatutoryLowAge = establishment.StatutoryLowAge,
                 StatutoryHighAge = establishment.StatutoryHighAge,
                 SchoolCapacity = establishment.SchoolCapacity,
-                Pfi = establishment.SchoolCapacity, // Not available
+                Pfi = establishment.IfdPipeline.DeliveryProcessPFI, // Not available, needs adding to the mstr schema
                 EstablishmentNumber = establishment?.EstablishmentNumber.ToString() ?? string.Empty,
                 Diocese = new NameAndCodeDto
                 {
                     Name = establishment.Diocese,
                     Code = establishment.Diocese // No Code
                 },
-                // There is no type, just a FK to a type
-                //EstablishmentType = new NameAndCodeDto
-                //{
-                //    Name = establishment.FK_EstablishmentType,
-                //    Code = establishment.FK_EstablishmentType // No Code
-                //},
+                EstablishmentType = new NameAndCodeDto
+                {
+                    Name = establishment.EstablishmentType.Name,
+                    Code = establishment.EstablishmentType.Code
+                },
                 Gor = new NameAndCodeDto
                 {
                     Name = establishment.GORregion, // This is all we have, may or may not align 

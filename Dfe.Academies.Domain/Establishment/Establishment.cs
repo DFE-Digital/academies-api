@@ -87,5 +87,10 @@ namespace Dfe.Academies.Domain.Establishment
         public string RouteOfProject { get; set; }
         public string GORregion { get; set; }
         public string SFSOTerritory { get; set; }
+
+        public LocalAuthority LocalAuthority { get; set; }
+        public EstablishmentType EstablishmentType{ get; set; }
+
+        public IfdPipeline IfdPipeline { get; set; }
     }
 }
