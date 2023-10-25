@@ -56,7 +56,7 @@ namespace Dfe.Academies.Application.Queries.Establishment
                 StatutoryLowAge = establishment.StatutoryLowAge,
                 StatutoryHighAge = establishment.StatutoryHighAge,
                 SchoolCapacity = establishment.SchoolCapacity,
-                Pfi = establishment.IfdPipeline.DeliveryProcessPFI, // Not available, needs adding to the mstr schema
+                Pfi = establishment.IfdPipeline.DeliveryProcessPFI,
                 EstablishmentNumber = establishment?.EstablishmentNumber.ToString() ?? string.Empty,
                 Diocese = new NameAndCodeDto
                 {
