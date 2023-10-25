@@ -1,0 +1,133 @@
+{
+  "consumer": {
+    "name": "prepare-academy-conversions"
+  },
+  "interactions": [
+    {
+      "description": "A GET request for Key Stage Performance by URN",
+      "request": {
+        "headers": {
+          "ApiKey": "abcdef12-3456-7890-abcd-ef0123456789"
+        },
+        "matchingRules": {
+          "header": {
+            "$.ApiKey[0]": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "([A-Fa-f0-9]{8}-)([A-Fa-f0-9]{4}-){3}([A-Fa-f0-9]{12})"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/educationPerformance/999999"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "status": 404
+      }
+    },
+    {
+      "description": "A GET request for Key Stage Performance by URN with incorrect API key",
+      "request": {
+        "headers": {
+          "ApiKey": "WrongApiKey"
+        },
+        "method": "GET",
+        "path": "/educationPerformance/999999"
+      },
+      "response": {
+        "status": 401
+      }
+    },
+    {
+      "description": "A GET request for Key Stage Performance by URN with no API key",
+      "request": {
+        "method": "GET",
+        "path": "/educationPerformance/999999"
+      },
+      "response": {
+        "status": 401
+      }
+    },
+    {
+      "description": "A GET request for Key Stage Performance by URN",
+      "providerStates": [
+        {
+          "name": "An application with ID 999999 exists"
+        }
+      ],
+      "request": {
+        "headers": {
+          "ApiKey": "abcdef12-3456-7890-abcd-ef0123456789"
+        },
+        "matchingRules": {
+          "header": {
+            "$.ApiKey[0]": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "([A-Fa-f0-9]{8}-)([A-Fa-f0-9]{4}-){3}([A-Fa-f0-9]{12})"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/educationPerformance/999999"
+      },
+      "response": {
+        "body": {
+          "keyStage1": [
+            {}
+          ],
+          "keyStage2": [
+            {}
+          ],
+          "keyStage4": [
+            {}
+          ],
+          "keyStage5": [
+            {}
+          ],
+          "schoolName": "Some School"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.4.0",
+      "models": "1.0.4"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "academies-api"
+  }
+}
