@@ -7,6 +7,7 @@ using Dfe.Academies.Contracts.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4
@@ -94,7 +95,7 @@ namespace TramsDataApi.Controllers.V4
         [Route("establishments")]
         [SwaggerOperation(Summary = "Search Establishments", Description = "Returns a list of Establishments based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Establishments.")]
-        public async Task<ActionResult<ApiResponseV2<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
                 "Searching for establishments by name \"{name}\", UKPRN \"{prn}\", urn \"{number}\"}",
@@ -109,9 +110,63 @@ namespace TramsDataApi.Controllers.V4
 
             _logger.LogDebug(JsonSerializer.Serialize(establishments));
 
-            var response = new ApiResponseV2<List<EstablishmentDto>>(establishments);
+            var response = new List<EstablishmentDto>(establishments);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Retrieves a list of establishment Unique Reference Numbers (URNs) by region.
+        /// </summary>
+        /// <param name="regions">Array of regions.</param>
+        /// <returns>List of establishment Unique Reference Numbers (URNs) or NotFound if none are available.</returns>
+        [HttpGet]
+        [Route("establishment/regions")]
+        [SwaggerOperation(Summary = "Get Establishment Unique Reference Numbers (URNs) by Region", Description = "Returns a list of establishment Unique Reference Numbers (URNs) by specified regions.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(404, "No establishments found for specified regions.")]
+        public async Task<ActionResult<IEnumerable<int>>> GetURNsByRegion(ICollection<string> regions,  CancellationToken cancellationToken)
+        {
+            _logger.LogInformation(
+                "Searching for establishment URNs by regions\"{regions}\"}",
+                regions);
+
+            var establishmentURNs = await _establishmentQueries
+                .GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);          
+
+            _logger.LogDebug(JsonSerializer.Serialize(establishmentURNs));
+
+            var response = new List<int>(establishmentURNs);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpGet]
+        [Route("establishments/bulk")]
+        [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
+        public ActionResult<List<EstablishmentResponse>> GetByUrns([FromQuery] int[] request)
+        {
+            var commaSeparatedRequestUrns = string.Join(",", request);
+            _logger.LogInformation($"Attemping to get establishments by Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}");
+
+            var establishments = _establishmentQueries.GetByUrns(request);         
+
+            if (establishments == null)
+            {
+                _logger.LogInformation($"No establishment was found any of the requested Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Establishments for Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}");
+            _logger.LogDebug(JsonSerializer.Serialize(establishments));
+            return Ok(establishments);
         }
     }
 }
