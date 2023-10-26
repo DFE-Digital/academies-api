@@ -2,6 +2,7 @@
 using Dfe.Academies.Academisation.Data.Repositories;
 using Dfe.Academies.Domain.Establishment;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
@@ -19,9 +20,9 @@ namespace Dfe.Academies.Infrastructure.Repositories
         }
         public async Task<Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken)
         {
-            var Establishment = await dbSet.SingleOrDefaultAsync(x => x.URN.ToString() == urn).ConfigureAwait(false);
+            var establishment = await DefaultIncludes().SingleOrDefaultAsync(x => x.URN.ToString() == urn).ConfigureAwait(false);
 
-            return Establishment;
+            return establishment;
         }
         public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
@@ -59,6 +60,17 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 .AsNoTracking()
                 .Where(e => urnsList.Contains((int)e.URN))
                 .ToListAsync();
+        }
+
+        private IQueryable<Establishment> DefaultIncludes()
+        {
+            var x = dbSet
+                .Include(x => x.EstablishmentType)
+                .Include(x => x.LocalAuthority)
+                .Include(x => x.IfdPipeline)
+                .AsQueryable();
+
+            return x;
         }
 
 

@@ -13,7 +13,9 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Trust?> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var trust = await dbSet.SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
+            var trust = await dbSet
+                .Include(x => x.TrustType)
+                .SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
 
             return trust;
         }
