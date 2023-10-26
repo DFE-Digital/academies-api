@@ -1,129 +1,136 @@
 {
-  "consumer": {
-    "name": "prepare-academy-conversions"
-  },
-  "interactions": [
-    {
-      "description": "A GET request for a Trust by UKPRN",
-      "request": {
-        "headers": {
-          "ApiKey": "abcdef12-3456-7890-abcd-ef0123456789"
-        },
-        "matchingRules": {
-          "header": {
-            "$.ApiKey[0]": {
-              "combine": "AND",
-              "matchers": [
-                {
-                  "match": "regex",
-                  "regex": "([A-Fa-f0-9]{8}-)([A-Fa-f0-9]{4}-){3}([A-Fa-f0-9]{12})"
-                }
-              ]
-            }
-          }
-        },
-        "method": "GET",
-        "path": "/v4/trust/999999"
-      },
-      "response": {
-        "status": 404
-      }
+    "consumer": {
+        "name": "prepare-academy-conversions"
     },
-    {
-        "description": "A GET request for for a Trust by UKPRN with incorrect API key",
-        "request": {
-            "headers": {
-                "ApiKey": "WrongApiKey"
-            },
-            "method": "GET",
-            "path": "/v4/trust/999999"
-        },
-        "response": {
-            "status": 401
-        }
-    },
-    {
-        "description": "A GET request for for a Trust by UKPRN with no API key",
-        "request": {
-            "method": "GET",
-            "path": "/v4/trust/999999"
-        },
-        "response": {
-            "status": 401
-        }
-    },
-    {
-        "description": "A GET request for for a Trust by UKPRN",
-        "providerStates": [
-            {
-                "name": "A trust with UKPRN 999999 exists"
-            }
-        ],
-        "request": {
-            "headers": {
-                "ApiKey": "abcdef12-3456-7890-abcd-ef0123456789"
-            },
-            "matchingRules": {
-                "header": {
-                    "$.ApiKey[0]": {
-                        "combine": "AND",
-                        "matchers": [
-                            {
-                                "match": "regex",
-                                "regex": "([A-Fa-f0-9]{8}-)([A-Fa-f0-9]{4}-){3}([A-Fa-f0-9]{12})"
-                            }
-                        ]
-                    }
-                }
-            },
-            "method": "GET",
-            "path": "/v4/trust/999999"
-        },
-        "response": {
-            "body": {
-                "name": "someSchool",
-                "ukprn": "someUKPRN",
-                "companiesHouseNumber": "someCompaniesHouseNumber",
-                "referenceNumber": "someReferenceNumber",
-                "address": {
-                    "street": "someStreet",
-                    "town": "someTown",
-                    "county": "someCounty",
-                    "postcode": "somePostcode",
-                    "locality": "someLocality",
-                    "additional": "someAdditional"
-                }
-            },
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            "matchingRules": {
-                "body": {
-                    "$": {
-                        "combine": "AND",
-                        "matchers": [
-                            {
-                                "match": "type"
-                            }
-                        ]
+    "interactions": [
+        {
+            "description": "A GET request for a Trust by UKPRN",
+            "request": {
+                "headers": {
+                    "ApiKey": "abcdef12-3456-7890-abcd-ef0123456789",
+                    "x-correlationId": "abcdef12-3456-7890-abcd-ef0123456789"
+                },
+                "matchingRules": {
+                    "header": {
+                        "$.ApiKey[0]": {
+                            "combine": "AND",
+                            "matchers": [
+                                {
+                                    "match": "regex",
+                                    "regex": "([A-Fa-f0-9]{8}-)([A-Fa-f0-9]{4}-){3}([A-Fa-f0-9]{12})"
+                                }
+                            ]
+                        }
                     }
                 },
-                "header": {}
+                "method": "GET",
+                "path": "/v4/trust/888888"
             },
-            "status": 200
+            "response": {
+                "status": 404
+            }
+        },
+        {
+            "description": "A GET request for for a Trust by UKPRN with incorrect API key",
+            "request": {
+                "headers": {
+                    "ApiKey": "WrongApiKey",
+                    "x-correlationId": "abcdef12-3456-7890-abcd-ef0123456789"
+                },
+                "method": "GET",
+                "path": "/v4/trust/999999"
+            },
+            "response": {
+                "status": 401
+            }
+        },
+        {
+            "description": "A GET request for for a Trust by UKPRN with no API key",
+            "request": {
+                "headers": {
+                    "x-correlationId": "abcdef12-3456-7890-abcd-ef0123456789"
+                },
+                "method": "GET",
+                "path": "/v4/trust/999999"
+            },
+            "response": {
+                "status": 401
+            }
+        },
+        {
+            "description": "A GET request for for a Trust by UKPRN",
+            "providerStates": [
+                {
+                    "name": "A trust with UKPRN 999999 exists"
+                }
+            ],
+            "request": {
+                "headers": {
+                    "ApiKey": "abcdef12-3456-7890-abcd-ef0123456789",
+                    "x-correlationId": "abcdef12-3456-7890-abcd-ef0123456789"
+                },
+                "matchingRules": {
+                    "header": {
+                        "$.ApiKey[0]": {
+                            "combine": "AND",
+                            "matchers": [
+                                {
+                                    "match": "regex",
+                                    "regex": "([A-Fa-f0-9]{8}-)([A-Fa-f0-9]{4}-){3}([A-Fa-f0-9]{12})"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "method": "GET",
+                "path": "/v4/trust/999999"
+            },
+            "response": {
+                "body": {
+                    "name": "someSchool",
+                    "ukprn": "someUKPRN",
+                    "companiesHouseNumber": "someCompaniesHouseNumber",
+                    "referenceNumber": "someReferenceNumber",
+                    "address": {
+                        "street": "someStreet",
+                        "town": "someTown",
+                        "county": "someCounty",
+                        "postcode": "somePostcode",
+                        "locality": "someLocality",
+                        "additional": "someAdditional"
+                    }
+                },
+                "headers": {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "x-correlationId": "abcdef12-3456-7890-abcd-ef0123456789"
+                },
+                "matchingRules": {
+                    "body": {
+                        "$": {
+                            "combine": "AND",
+                            "matchers": [
+                                {
+                                    "match": "type"
+                                }
+                            ]
+                        }
+                    },
+                    "header": {}
+                },
+                "status": 200
+            }
         }
-    }
-  ],
-  "metadata": {
-    "pactRust": {
-      "ffi": "0.4.0",
-      "models": "1.0.4"
+    ],
+    "metadata": {
+        "pactRust": {
+            "ffi": "0.4.0",
+            "models": "1.0.4"
+        },
+        "pactSpecification": {
+            "version": "3.0.0"
+        }
     },
-    "pactSpecification": {
-      "version": "3.0.0"
+    "provider": {
+        "name": "academies-api"
     }
-  },
-  "provider": {
-    "name": "academies-api"
-  }
 }

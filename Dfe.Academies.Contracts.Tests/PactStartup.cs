@@ -16,6 +16,9 @@ namespace Dfe.Academies.Contracts.Tests
 
         public PactStartup (IConfiguration configuration)
         {
+            configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json").Build();
+
             _proxy = new Startup(configuration);
         }
 
@@ -28,8 +31,9 @@ namespace Dfe.Academies.Contracts.Tests
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
-            app.UseMiddleware<ProviderMiddleware>();
             _proxy.Configure(app, env, provider);
+
+            app.UseMiddleware<ProviderMiddleware>();
         }
     }
 }

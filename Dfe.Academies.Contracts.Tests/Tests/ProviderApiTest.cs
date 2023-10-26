@@ -1,18 +1,23 @@
+using Dfe.Academies.Contracts.Tests.Middleware;
 using Dfe.Academies.Contracts.Tests.XUnitHelpers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PactNet;
 using PactNet.Infrastructure.Outputters;
 using PactNet.Verifier;
+using TramsDataApi.Controllers.V4;
 using Xunit.Abstractions;
 
 namespace Dfe.Academies.Contracts.Tests.Tests
 {
-    public class ProviderApiTest : IDisposable
+    public class ProviderApiTest
     {
         private readonly ITestOutputHelper _output;
         private static readonly Uri ProviderUri = new("http://localhost:9332");
-        private readonly IHost _fixture;
         private readonly PactVerifierConfig _config;
         public ProviderApiTest(ITestOutputHelper output)
         {
@@ -26,15 +31,28 @@ namespace Dfe.Academies.Contracts.Tests.Tests
                 },
             };
 
-            _fixture = Host.CreateDefaultBuilder()
-                                .ConfigureWebHostDefaults(webBuilder =>
-                                {
-                                    webBuilder.UseUrls(ProviderUri.ToString());
-                                    webBuilder.UseStartup<PactStartup>();
-                                })
-                                .Build();
+            var builder = WebApplication.CreateBuilder();
 
-            _fixture.Start();
+            builder.Services.AddControllers()
+                .PartManager
+                .ApplicationParts.Add(new AssemblyPart(typeof(TrustsController).Assembly));
+
+            var startup = new PactStartup(builder.Configuration);
+
+            startup.ConfigureServices(builder.Services);
+
+            var app = builder.Build();
+
+            app.MapControllers();
+
+            app.Urls.Add(ProviderUri.ToString());
+            app.UseMiddleware<ProviderMiddleware>();
+
+            var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+            startup.Configure(app, app.Environment, provider);
+
+            app.Start();
         }
 
         [Fact]
@@ -52,12 +70,8 @@ namespace Dfe.Academies.Contracts.Tests.Tests
             pactVerifier
                 .ServiceProvider("academies-api", ProviderUri)
                 .WithFileSource(new FileInfo(pactPath))
+                .WithSslVerificationDisabled()
                 .Verify();
-        }
-
-        public void Dispose()
-        {
-            _fixture.Dispose();
         }
     }
 }

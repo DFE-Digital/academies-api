@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+
+    <UserSecretsId>f59f6fe2-64b3-4147-83c9-d087ce2302cb</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
     <ProjectReference Include="..\TramsDataApi.Test\TramsDataApi.Test.csproj" />
     <ProjectReference Include="..\TramsDataApi\TramsDataApi.csproj" />
   </ItemGroup>

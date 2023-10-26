@@ -6,8 +6,9 @@ using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Dfe.Academies.Application
 {
     public static class ApplicationServiceCollectionExtensions
     {
