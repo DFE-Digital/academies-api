@@ -3,6 +3,7 @@ using Dfe.Academies.Contracts.Trusts;
 using Dfe.Academies.Domain.Establishment;
 using System.Threading;
 using System;
+using Dfe.Academies.Application.Builders;
 
 namespace Dfe.Academies.Application.Queries.Establishment
 {
@@ -30,7 +31,7 @@ namespace Dfe.Academies.Application.Queries.Establishment
 
             return (establishments.Select(x => MapToEstablishmentDto(x)).ToList(), establishments.Count);
         }
-        public async Task<IEnumerable<int>> GetURNsByRegion(ICollection<string> regions, CancellationToken cancellationToken)
+        public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
             var URNs = await _establishmentRepository.GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);
 
@@ -45,77 +46,19 @@ namespace Dfe.Academies.Application.Queries.Establishment
 
         private static EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment? establishment)
         {
-            return new EstablishmentDto()
-            {
-                Name = establishment.EstablishmentName,
-                Urn = establishment?.URN.ToString() ?? string.Empty,
-                LocalAuthorityCode = establishment?.LocalAuthority.Code ?? string.Empty,
-                LocalAuthorityName = establishment?.LocalAuthority.Name ?? string.Empty, 
-                OfstedRating = establishment.OfstedRating,
-                OfstedLastInspection = establishment.OfstedLastInspection,
-                StatutoryLowAge = establishment.StatutoryLowAge,
-                StatutoryHighAge = establishment.StatutoryHighAge,
-                SchoolCapacity = establishment.SchoolCapacity,
-                Pfi = establishment.IfdPipeline?.DeliveryProcessPFI,
-                EstablishmentNumber = establishment?.EstablishmentNumber.ToString() ?? string.Empty,
-                Diocese = new NameAndCodeDto
-                {
-                    Name = establishment.Diocese,
-                    Code = establishment.Diocese // No Code
-                },
-                EstablishmentType = new NameAndCodeDto
-                {
-                    Name = establishment.EstablishmentType.Name,
-                    Code = establishment.EstablishmentType.Code
-                },
-                Gor = new NameAndCodeDto
-                {
-                    Name = establishment.GORregion, // This is all we have, may or may not align 
-                    Code = establishment.GORregion // No Code
-                },
-                PhaseOfEducation = new NameAndCodeDto
-                {
-                    Name = establishment.PhaseOfEducation,
-                    Code = establishment.PhaseOfEducation // No Code
-                },
-                ReligiousCharacter = new NameAndCodeDto
-                {
-                    Name = establishment.ReligiousCharacter,
-                    Code = establishment.ReligiousCharacter // No Code
-                },
-                ParliamentaryConstituency = new NameAndCodeDto
-                {
-                    Name = establishment.ParliamentaryConstituency,
-                    Code = establishment.ParliamentaryConstituency // No Code
-                },
-                Census = new CensusDto
-                {
-                    NumberOfPupils = establishment.NumberOfPupils,
-                    PercentageFsm = establishment.PercentageFSM
-                },
-                MISEstablishment = new MisEstablishmentDto
-                {
-                    DateOfLatestSection8Inspection = establishment.DateOfLatestShortInspection.ToString(), // May not be correct
-                    InspectionEndDate = establishment.InspectionEndDate.ToString(),
-                    OverallEffectiveness = establishment.OverallEffectiveness.ToString(),
-                    QualityOfEducation = establishment.QualityOfEducation.ToString(),
-                    BehaviourAndAttitudes = establishment.BehaviourAndAttitudes.ToString(),
-                    PersonalDevelopment = establishment.PersonalDevelopment.ToString(),
-                    EffectivenessOfLeadershipAndManagement = establishment.EffectivenessOfLeadershipAndManagement.ToString(),
-                    EarlyYearsProvision = establishment.EarlyYearsProvisionWhereApplicable.ToString(),
-                    SixthFormProvision = establishment.SixthFormProvisionWhereApplicable.ToString(),
-                    Weblink = establishment.Website,
-                },
-                Address = new Contracts.Establishments.AddressDto()
-                {
-                    Street = establishment.AddressLine1,
-                    Town = establishment.Town,
-                    Postcode = establishment.Postcode,
-                    County = establishment.County,
-                    Additional = establishment.AddressLine2,
-                    Locality = establishment.AddressLine3
-                }
-            };
+            return new EstablishmentDtoBuilder()
+                .WithBasicDetails(establishment)
+                .WithLocalAuthority(establishment)
+                .WithDiocese(establishment)
+                .WithEstablishmentType(establishment)
+                .WithGor(establishment)
+                .WithPhaseOfEducation(establishment)
+                .WithReligiousCharacter(establishment)
+                .WithParliamentaryConstituency(establishment)
+                .WithCensus(establishment)
+                .WithMISEstablishment(establishment)
+                .WithAddress(establishment)
+                .Build();
         }
     }
 }

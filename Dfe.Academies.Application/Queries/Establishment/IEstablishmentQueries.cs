@@ -13,7 +13,7 @@ namespace Dfe.Academies.Application.Queries.Establishment
         Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken);
         Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken);
         Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken);
-        Task<IEnumerable<int>> GetURNsByRegion(ICollection<string> regions, CancellationToken cancellationToken);
+        Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken);
         Task<List<EstablishmentDto>> GetByUrns(int[] Urns);
     }
 }

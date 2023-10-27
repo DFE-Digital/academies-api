@@ -14,7 +14,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Establishment?> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var Establishment = await dbSet.SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
+            var Establishment = await DefaultIncludes().SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
 
             return Establishment;
         }
@@ -26,7 +26,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
         }
         public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
-            IQueryable<Establishment> query = dbSet;
+            IQueryable<Establishment> query = DefaultIncludes();
 
             query = !string.IsNullOrEmpty(name)
                 ? query.Where(establishment => establishment.EstablishmentName.Contains(name))
@@ -44,19 +44,19 @@ namespace Dfe.Academies.Infrastructure.Repositories
                               .ToListAsync(cancellationToken)
                               .ConfigureAwait(false);
         }
-        public async Task<IEnumerable<int>> GetURNsByRegion(ICollection<string> regions, CancellationToken cancellationToken)
-        {
-            return (IEnumerable<int>)await dbSet //Adding Explicit cast because the Domain entity has the URN as nullable
+        public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
+        {            
+            return await DefaultIncludes() //Adding Explicit cast because the Domain entity has the URN as nullable
                 .AsNoTracking()
-                .Where(p => regions.Contains(p!.GORregion.ToLower())) // Assuming GORregion is correct
-                .Select(e => e.URN)
+                .Where(p => regions.Contains(p!.GORregion.ToLower()) && p.URN.HasValue)
+                .Select(e => e.URN.Value)
                 .ToListAsync(cancellationToken)
                 .ConfigureAwait(false);
         }
         public async Task<List<Establishment>> GetByUrns(int[] urns)
         {
             var urnsList = urns.ToList();
-            return await dbSet
+            return await DefaultIncludes()
                 .AsNoTracking()
                 .Where(e => urnsList.Contains((int)e.URN))
                 .ToListAsync();

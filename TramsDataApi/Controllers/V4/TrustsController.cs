@@ -36,7 +36,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
-        [Route("trust/{ukprn}")]
+        [Route("trust/{ukprn}")]        
         [SwaggerOperation(Summary = "Retrieve Trust by UK Provider Reference Number (UKPRN)", Description = "Returns a Trust identified by UK Provider Reference Number (UKPRN).")]
         [SwaggerResponse(200, "Successfully found and returned the Trust.")]
         [SwaggerResponse(404, "Trust with specified UK Provider Reference Number (UKPRN) not found.")]
@@ -67,7 +67,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="count">Number of results per page.</param>
         /// <returns>A list of Trusts that meet the search criteria.</returns>
         [HttpGet]
-        [Route("trusts")]
+        [Route("trusts")]        
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
         public async Task<ActionResult<ApiResponseV2<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10)
@@ -98,8 +98,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <returns>A list of Trusts that match the ukprns.</returns>
         [HttpGet]
-        [Route("trusts/bulk")]
-        [MapToApiVersion("4.0")]
+        [Route("trusts/bulk")]        
         [SwaggerOperation(Summary = "Get Trusts By UK Provider Reference Numbers (UKPRNs)", Description = "Retrieve multiple trusts by their UK Provider Reference Numbers (UKPRNs).")]
         [SwaggerResponse(200, "Successfully retrieved the trusts.")]
         [SwaggerResponse(404, "The trusts were not found.")]

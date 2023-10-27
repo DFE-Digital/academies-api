@@ -125,7 +125,7 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Get Establishment Unique Reference Numbers (URNs) by Region", Description = "Returns a list of establishment Unique Reference Numbers (URNs) by specified regions.")]
         [SwaggerResponse(200, "Successfully found and returned the establishment Unique Reference Numbers (URNs).")]
         [SwaggerResponse(404, "No establishments found for specified regions.")]
-        public async Task<ActionResult<IEnumerable<int>>> GetURNsByRegion(ICollection<string> regions,  CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<int>>> GetURNsByRegion([FromQuery] string[] regions,  CancellationToken cancellationToken)
         {
             _logger.LogInformation(
                 "Searching for establishment URNs by regions\"{regions}\"}",
@@ -151,12 +151,12 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.")]
         [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
-        public ActionResult<List<EstablishmentResponse>> GetByUrns([FromQuery] int[] request)
+        public async Task<ActionResult<List<EstablishmentDto>>> GetByUrns([FromQuery] int[] request)
         {
             var commaSeparatedRequestUrns = string.Join(",", request);
             _logger.LogInformation($"Attemping to get establishments by Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}");
 
-            var establishments = _establishmentQueries.GetByUrns(request);         
+            var establishments = await _establishmentQueries.GetByUrns(request).ConfigureAwait(false);         
 
             if (establishments == null)
             {
@@ -165,8 +165,8 @@ namespace TramsDataApi.Controllers.V4
             }
 
             _logger.LogInformation($"Returning Establishments for Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}");
-            _logger.LogDebug(JsonSerializer.Serialize(establishments));
-            return Ok(establishments);
+            var response = new List<EstablishmentDto>(establishments);
+            return Ok(response);
         }
     }
 }
