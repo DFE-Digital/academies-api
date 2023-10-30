@@ -37,19 +37,6 @@ public class MstrContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    private void ConfigureIfdPipeline(EntityTypeBuilder<IfdPipeline> ifdPipelineConfiguration)
-    {
-        ifdPipelineConfiguration.HasKey(e => e.SK).HasName("SK");
-
-        ifdPipelineConfiguration.ToTable("IfdPipeline", DEFAULT_SCHEMA);
-
-        ifdPipelineConfiguration.Property(e => e.GeneralDetailsUrn)
-            .HasColumnName("General Details.URN");
-
-        ifdPipelineConfiguration.Property(e => e.DeliveryProcessPFI)
-            .HasColumnName("Delivery Process.PFI");
-    }
-
     private void ConfigureEstablishment(EntityTypeBuilder<Establishment> establishmentConfiguration)
     {
         establishmentConfiguration.HasKey(e => e.SK).HasName("SK");
@@ -218,7 +205,8 @@ public class MstrContext : DbContext
         .IsRequired(false);
     }
 
-    void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration) {
+    void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)
+    {
         trustTypeConfiguration.HasKey(e => e.SK).HasName("SK");
 
         trustTypeConfiguration.ToTable("Ref_TrustType", DEFAULT_SCHEMA);
@@ -234,6 +222,26 @@ public class MstrContext : DbContext
     {
         establishmentTypeConfiguration.HasKey(e => e.SK).HasName("SK");
         establishmentTypeConfiguration.ToTable("Ref_EducationEstablishmentType", DEFAULT_SCHEMA);
+    }
+
+    private void ConfigureIfdPipeline(EntityTypeBuilder<IfdPipeline> ifdPipelineConfiguration)
+    {
+        ifdPipelineConfiguration.HasKey(e => e.SK).HasName("SK");
+
+        ifdPipelineConfiguration.ToTable("IfdPipeline", DEFAULT_SCHEMA);
+
+        ifdPipelineConfiguration.Property(e => e.GeneralDetailsUrn)
+            .HasColumnName("General Details.URN");
+
+        ifdPipelineConfiguration.Property(e => e.DeliveryProcessPFI)
+            .HasColumnName("Delivery Process.PFI");
+        ifdPipelineConfiguration.Property(e => e.DeliveryProcessPAN)
+            .HasColumnName("Delivery Process.PAN");
+
+        ifdPipelineConfiguration.Property(e => e.ProjectTemplateInformationDeficit)
+            .HasColumnName("Project template information.Deficit?");
+        ifdPipelineConfiguration.Property(e => e.ProjectTemplateInformationViabilityIssue)
+            .HasColumnName("Project template information.Viability issue?");
     }
 
 }
