@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Application.Queries.Trust;
+using Dfe.Academies.Contracts.Trusts;
 using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
 using Moq;
@@ -51,10 +52,12 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
         }
 
         [Fact]
-        public async Task Search_StateUnderTest_ExpectedBehavior()
+        public async Task Search_TrustsReturnedFromRepo_eturnsAListOfTrustDtosInAPagedResponse()
         {
             // Arrange
+            var trusts = _fixture.Create<List<Domain.Trust.Trust>>();
             var mockRepo = new Mock<ITrustRepository>();
+            mockRepo.Setup(x => x.Search(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(trusts));
 
             var trustQueries = new TrustQueries(mockRepo.Object);
             int page = 0;
@@ -74,7 +77,25 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
                 cancellationToken);
 
             // Assert
-            Assert.True(false);
+            result.GetType().Should().Be(typeof((List<TrustDto>, int)));
+            result.Should().NotBeNull();
+            result.Item1.Count.Should().Be(trusts.Count);
+
+            foreach (var trust in result.Item1)
+            {
+                var domainTrust = trusts.Single(x => x.UKPRN == trust.Ukprn);
+
+                trust.Name.Should().Be(domainTrust.Name);
+                trust.Address.Street.Should().Be(domainTrust.AddressLine1);
+                trust.Address.Additional.Should().Be(domainTrust.AddressLine2);
+                trust.Address.Locality.Should().Be(domainTrust.AddressLine3);
+                trust.Address.Town.Should().Be(domainTrust.Town);
+                trust.Address.Postcode.Should().Be(domainTrust.Postcode);
+                trust.Address.County.Should().Be(domainTrust.County);
+                trust.ReferenceNumber.Should().Be(domainTrust.GroupID);
+                trust.CompaniesHouseNumber.Should().Be(domainTrust.CompaniesHouseNumber);
+                trust.Ukprn.Should().Be(domainTrust.UKPRN);
+            }
         }
 
         [Fact]
