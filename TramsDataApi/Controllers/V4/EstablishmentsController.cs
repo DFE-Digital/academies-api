@@ -151,12 +151,12 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.")]
         [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
-        public async Task<ActionResult<List<EstablishmentDto>>> GetByUrns([FromQuery] int[] request)
+        public async Task<ActionResult<List<EstablishmentDto>>> GetByUrns([FromQuery] int[] request, CancellationToken cancellationToken)
         {
             var commaSeparatedRequestUrns = string.Join(",", request);
             _logger.LogInformation($"Attemping to get establishments by Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}");
 
-            var establishments = await _establishmentQueries.GetByUrns(request).ConfigureAwait(false);         
+            var establishments = await _establishmentQueries.GetByUrns(request, cancellationToken).ConfigureAwait(false);         
 
             if (establishments == null)
             {

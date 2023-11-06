@@ -6,9 +6,6 @@ using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Dfe.Academies.Application.Tests.Queries.Establishment
 {
@@ -69,60 +66,74 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             result.Should().BeOfType(typeof(EstablishmentDto));
         }
 
-        //[Fact]
-        //public async Task Search_StateUnderTest_ExpectedBehavior()
-        //{
-        //    // Arrange
-        //    var establishmentQueries = this.CreateEstablishmentQueries();
-        //    string name = null;
-        //    string ukPrn = null;
-        //    string urn = null;
-        //    CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+        [Fact]
+        public async Task Search_WhenEstablishmentsReturnedFromRepo_EstablishmentDtoListAndCountIsReturned()
+        {
+            // Arrange
+            var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            string urn = "1010101";
+            string name = "Test name";
+            string ukPrn = "Test UkPrn";
+            mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
 
-        //    // Act
-        //    var result = await establishmentQueries.Search(
-        //        name,
-        //        ukPrn,
-        //        urn,
-        //        cancellationToken);
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object);
 
-        //    // Assert
-        //    Assert.True(false);
-        //    this.mockRepository.VerifyAll();
-        //}
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
-        //[Fact]
-        //public async Task GetURNsByRegion_StateUnderTest_ExpectedBehavior()
-        //{
-        //    // Arrange
-        //    var establishmentQueries = this.CreateEstablishmentQueries();
-        //    string[] regions = null;
-        //    CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            var result = await establishmentQueries.Search(
+                name,
+                ukPrn,
+                urn,
+                cancellationToken);
 
-        //    // Act
-        //    var result = await establishmentQueries.GetURNsByRegion(
-        //        regions,
-        //        cancellationToken);
+            // Assert
+            result.Should().BeOfType(typeof((List<EstablishmentDto>, int)));
+        }
 
-        //    // Assert
-        //    Assert.True(false);
-        //    this.mockRepository.VerifyAll();
-        //}
+        [Fact]
+        public async Task GetURNsByRegion_WhenEstablishmentUrnsReturnedFromRepo_IEnumebrableOfIntIsReturned()
+        {
+            // Arrange
+            string[] regions = _fixture.Create<string[]>();
+            var establishmentUrns = _fixture.Create<List<int>>().AsEnumerable();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            mockRepo.Setup(x => x.GetURNsByRegion(It.Is<string[]>(v => v == regions), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishmentUrns));
 
-        //[Fact]
-        //public async Task GetByUrns_StateUnderTest_ExpectedBehavior()
-        //{
-        //    // Arrange
-        //    var establishmentQueries = this.CreateEstablishmentQueries();
-        //    int[] Urns = null;
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object);
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
-        //    // Act
-        //    var result = await establishmentQueries.GetByUrns(
-        //        Urns);
+            // Act
+            var result = await establishmentQueries.GetURNsByRegion(
+                regions,
+                cancellationToken);
 
-        //    // Assert
-        //    Assert.True(false);
-        //    this.mockRepository.VerifyAll();
-        //}
+            // Assert
+            result.Should().BeAssignableTo(typeof(IEnumerable<int>));
+
+        }
+
+        [Fact]
+        public async Task GetByUrns_WhenEstablishmentsReturnedFromRepo_ListOfEstablishmentDtoIsReturned()
+        {
+            // Arrange
+            int[] Urns = _fixture.Create<int[]>();
+            var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            mockRepo.Setup(x => x.GetByUrns(It.Is<int[]>(v => v == Urns), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
+
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object);
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            var result = await establishmentQueries.GetByUrns(
+                Urns, cancellationToken);
+
+            // Assert
+            result.Should().BeOfType(typeof(List<EstablishmentDto>));
+        }
     }
 }
