@@ -53,13 +53,13 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 .ToListAsync(cancellationToken)
                 .ConfigureAwait(false);
         }
-        public async Task<List<Establishment>> GetByUrns(int[] urns)
+        public async Task<List<Establishment>> GetByUrns(int[] urns, CancellationToken cancellationToken)
         {
             var urnsList = urns.ToList();
             return await DefaultIncludes()
                 .AsNoTracking()
                 .Where(e => urnsList.Contains((int)e.URN))
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<List<Establishment>> GetByTrust(int trustId, CancellationToken cancellationToken)

@@ -9,7 +9,7 @@ namespace Dfe.Academies.Domain.Establishment
         Task<List<Establishment>> Search(string name, string ukPrn,
          string urn, CancellationToken cancellationToken);
         Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken);
-        Task<List<Establishment>> GetByUrns(int[] Urns);
         Task<List<Establishment>> GetByTrust(int trustId, CancellationToken cancellationToken);
+        Task<List<Establishment>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
     }
 }

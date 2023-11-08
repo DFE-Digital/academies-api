@@ -37,9 +37,9 @@ namespace Dfe.Academies.Application.Queries.Establishment
 
             return URNs;
         }
-        public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns)
+        public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken)
         {
-            var establishments = await _establishmentRepository.GetByUrns(Urns).ConfigureAwait(false);
+            var establishments = await _establishmentRepository.GetByUrns(Urns, cancellationToken).ConfigureAwait(false);
 
             return (establishments.Select(x => MapToEstablishmentDto(x)).ToList());
         }
