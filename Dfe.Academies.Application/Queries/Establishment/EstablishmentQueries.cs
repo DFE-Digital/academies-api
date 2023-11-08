@@ -4,16 +4,19 @@ using Dfe.Academies.Domain.Establishment;
 using System.Threading;
 using System;
 using Dfe.Academies.Application.Builders;
+using Dfe.Academies.Domain.Trust;
 
 namespace Dfe.Academies.Application.Queries.Establishment
 {
     public class EstablishmentQueries : IEstablishmentQueries
     {
         private readonly IEstablishmentRepository _establishmentRepository;
+        private readonly ITrustRepository _trustRepository;
 
-        public EstablishmentQueries(IEstablishmentRepository establishmentRepository)
+        public EstablishmentQueries(IEstablishmentRepository establishmentRepository, ITrustRepository trustRepository)
         {
             _establishmentRepository = establishmentRepository;
+            _trustRepository = trustRepository;
         }
         public async Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken)
         {
@@ -36,6 +39,12 @@ namespace Dfe.Academies.Application.Queries.Establishment
             var URNs = await _establishmentRepository.GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);
 
             return URNs;
+        }
+        public async Task<List<EstablishmentDto>> GetByTrust(string trustUkprn, CancellationToken cancellationToken)
+        {
+            var trust = await _trustRepository.GetTrustByUkprn(trustUkprn, cancellationToken);
+            var establishments = await _establishmentRepository.GetByTrust(trust.SK, cancellationToken).ConfigureAwait(false);
+            return establishments.Select(MapToEstablishmentDto).ToList();
         }
         public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns)
         {

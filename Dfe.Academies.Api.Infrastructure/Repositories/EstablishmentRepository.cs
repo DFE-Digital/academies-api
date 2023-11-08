@@ -2,6 +2,7 @@
 using Dfe.Academies.Academisation.Data.Repositories;
 using Dfe.Academies.Domain.Establishment;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Dfe.Academies.Infrastructure.Repositories
@@ -62,8 +63,9 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Establishment>> GetByTrust(int trustId, CancellationToken cancellationToken)
-        {       
+        public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
+        {
+            
             var establishmentIds = await context.EducationEstablishmentTrusts
                                                  .Where(eet => eet.FK_Trust == trustId)
                                                  .Select(eet => eet.FK_EducationEstablishment)
@@ -71,7 +73,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
                                                  .ConfigureAwait(false);
             
             var establishments = await DefaultIncludes()                                            
-                                              .Where(e => establishmentIds.Contains((int)e.SK))
+                                              .Where(e => establishmentIds.Contains(Convert.ToInt32(e.SK)))
                                               .ToListAsync(cancellationToken)
                                               .ConfigureAwait(false);
 

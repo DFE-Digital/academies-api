@@ -15,7 +15,7 @@ namespace Dfe.Academies.Domain.Establishment
         public int FK_EducationEstablishment { get; set; }
 
         // Navigation properties        
-        public virtual Domain.Trust.Trust Trust { get; set; }
+        public virtual Trust.Trust Trust { get; set; }
         public virtual Establishment Establishment { get; set; }
     }
 

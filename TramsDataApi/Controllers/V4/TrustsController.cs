@@ -55,6 +55,32 @@ namespace TramsDataApi.Controllers.V4
             _logger.LogDebug(JsonSerializer.Serialize(trust));
             return Ok(trust);
         }
+        /// <summary>
+        /// Retrieves a Trust by its Companies House Number.
+        /// </summary>
+        /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A Trust or NotFound if not available.</returns>
+        [HttpGet]
+        [Route("trust/{ukprn}")]
+        [SwaggerOperation(Summary = "Retrieve Trust by Companies House Number", Description = "Returns a Trust identified by Companies House Number.")]
+        [SwaggerResponse(200, "Successfully found and returned the Trust.")]
+        [SwaggerResponse(404, "Trust with specified Companies House Number not found.")]
+        public async Task<ActionResult<TrustDto>> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation($"Attempting to get trust by Companies House Number {companiesHouseNumber}");
+            var trust = await _trustQueries.GetByCompaniesHouseNumber(companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+
+            if (trust == null)
+            {
+                _logger.LogInformation($"No trust found for Companies House Number {companiesHouseNumber}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning trust found by Companies House Number {companiesHouseNumber}");
+            _logger.LogDebug(JsonSerializer.Serialize(trust));
+            return Ok(trust);
+        }
 
         /// <summary>
         /// Searches for Trusts based on query parameters.
