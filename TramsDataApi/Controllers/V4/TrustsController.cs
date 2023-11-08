@@ -62,7 +62,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
-        [Route("trust/{ukprn}")]
+        [Route("trust/{companiesHouseNumber}")]
         [SwaggerOperation(Summary = "Retrieve Trust by Companies House Number", Description = "Returns a Trust identified by Companies House Number.")]
         [SwaggerResponse(200, "Successfully found and returned the Trust.")]
         [SwaggerResponse(404, "Trust with specified Companies House Number not found.")]

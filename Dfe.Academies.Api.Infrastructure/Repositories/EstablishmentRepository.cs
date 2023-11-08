@@ -65,17 +65,20 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
         {
-            
+
+            // Change the select to cast to long if necessary
             var establishmentIds = await context.EducationEstablishmentTrusts
-                                                 .Where(eet => eet.FK_Trust == trustId)
-                                                 .Select(eet => eet.FK_EducationEstablishment)
-                                                 .ToListAsync(cancellationToken)
-                                                 .ConfigureAwait(false);
-            
-            var establishments = await DefaultIncludes()                                            
-                                              .Where(e => establishmentIds.Contains(Convert.ToInt32(e.SK)))
-                                              .ToListAsync(cancellationToken)
-                                              .ConfigureAwait(false);
+                                                .Where(eet => eet.FK_Trust == Convert.ToInt32(trustId))
+                                                .Select(eet => (long)eet.FK_EducationEstablishment)
+                                                .ToListAsync(cancellationToken)
+                                                .ConfigureAwait(false);
+
+            // And ensure there is no conversion if SK is long
+            var establishments = await DefaultIncludes()
+                                            .Where(e => establishmentIds.Contains(e.SK)) // No conversion here
+                                            .ToListAsync(cancellationToken)
+                                            .ConfigureAwait(false);
+
 
             return establishments;
         }
