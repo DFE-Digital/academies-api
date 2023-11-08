@@ -75,7 +75,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             // And ensure there is no conversion if SK is long
             var establishments = await DefaultIncludes()
-                                            .Where(e => establishmentIds.Contains(e.SK)) // No conversion here
+                                            .Where(e => establishmentIds.Contains(e.SK))
                                             .ToListAsync(cancellationToken)
                                             .ConfigureAwait(false);
 
