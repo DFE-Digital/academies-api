@@ -62,6 +62,24 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Establishment>> GetByTrust(int trustId, CancellationToken cancellationToken)
+        {       
+            var establishmentIds = await context.EducationEstablishmentTrusts
+                                                 .Where(eet => eet.FK_Trust == trustId)
+                                                 .Select(eet => eet.FK_EducationEstablishment)
+                                                 .ToListAsync(cancellationToken)
+                                                 .ConfigureAwait(false);
+            
+            var establishments = await DefaultIncludes()                                            
+                                              .Where(e => establishmentIds.Contains((int)e.SK))
+                                              .ToListAsync(cancellationToken)
+                                              .ConfigureAwait(false);
+
+            return establishments;
+        }
+
+
+
         private IQueryable<Establishment> DefaultIncludes()
         {
             var x = dbSet

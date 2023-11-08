@@ -19,6 +19,7 @@ public class MstrContext : DbContext
     public DbSet<TrustType> TrustTypes { get; set; } = null!;
     public DbSet<Establishment> Establishments { get; set; } = null!;
     public DbSet<EstablishmentType> EstablishmentTypes { get; set; } = null!;
+    public DbSet<EducationEstablishmentTrust> EducationEstablishmentTrusts { get; set; } = null!;
     public DbSet<LocalAuthority> LocalAuthorities { get; set; } = null!;
 
     public DbSet<IfdPipeline> IfdPipelines { get; set; } = null!;
@@ -31,6 +32,7 @@ public class MstrContext : DbContext
 
         modelBuilder.Entity<Establishment>(ConfigureEstablishment);
         modelBuilder.Entity<EstablishmentType>(ConfigureEstablishmentType);
+        modelBuilder.Entity<EducationEstablishmentTrust>(ConfigureEducationEstablishmentTrust);
         modelBuilder.Entity<LocalAuthority>(ConfigureLocalAuthority);
         modelBuilder.Entity<IfdPipeline>(ConfigureIfdPipeline);
 
@@ -223,7 +225,12 @@ public class MstrContext : DbContext
 
         trustTypeConfiguration.ToTable("Ref_TrustType", DEFAULT_SCHEMA);
     }
-
+    private void ConfigureEducationEstablishmentTrust(EntityTypeBuilder<EducationEstablishmentTrust> entityBuilder)
+    {
+        entityBuilder.HasKey(e => e.SK);
+        entityBuilder.ToTable("EducationEstablishmentTrust", DEFAULT_SCHEMA);        
+      
+    }
     void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
     {
         localAuthorityConfiguration.HasKey(e => e.SK).HasName("SK");
