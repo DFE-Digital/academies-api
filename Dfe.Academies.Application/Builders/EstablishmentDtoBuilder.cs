@@ -17,6 +17,9 @@ namespace Dfe.Academies.Application.Builders
             _dto.SchoolCapacity = establishment?.SchoolCapacity;
             _dto.Pfi = establishment?.IfdPipeline?.DeliveryProcessPFI;
             _dto.EstablishmentNumber = establishment?.EstablishmentNumber.ToString() ?? string.Empty;
+            _dto.Pan = establishment?.IfdPipeline?.DeliveryProcessPAN;
+            _dto.Deficit = establishment?.IfdPipeline?.ProjectTemplateInformationDeficit;
+            _dto.ViabilityIssue = establishment?.IfdPipeline?.ProjectTemplateInformationViabilityIssue;
 
             return this;
         }
