@@ -84,6 +84,33 @@ namespace TramsDataApi.Controllers.V4
         }
 
         /// <summary>
+        /// Retrieves a Trust by its Companies House Number.
+        /// </summary>
+        /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A Trust or NotFound if not available.</returns>
+        [HttpGet]
+        [Route("trust/trustReferenceNumber/{trustReferenceNumber}")]
+        [SwaggerOperation(Summary = "Retrieve Trust by Trust Reference Number also know as the GIAS Group ID", Description = "Retrieve Trust by Trust Reference Number also know as the GIAS Group ID.")]
+        [SwaggerResponse(200, "Successfully found and returned the Trust.")]
+        [SwaggerResponse(404, "Trust with specified Trust Reference Number not found.")]
+        public async Task<ActionResult<TrustDto>> GetTrustByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation($"Attempting to get trust by Trust Reference Number {trustReferenceNumber}");
+            var trust = await _trustQueries.GetByTrustReferenceNumber(trustReferenceNumber, cancellationToken).ConfigureAwait(false);
+
+            if (trust == null)
+            {
+                _logger.LogInformation($"No trust found for Trust Reference Number {trustReferenceNumber}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning trust found by Trust Reference Number {trustReferenceNumber}");
+            _logger.LogDebug(JsonSerializer.Serialize(trust));
+            return Ok(trust);
+        }
+
+        /// <summary>
         /// Searches for Trusts based on query parameters.
         /// </summary>
         /// <param name="groupName">Name of the group.</param>

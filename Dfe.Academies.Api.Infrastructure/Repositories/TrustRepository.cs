@@ -15,7 +15,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
         {
             var trust = await dbSet
                 .Include(x => x.TrustType)
-                .SingleOrDefaultAsync(x => x.UKPRN == ukprn).ConfigureAwait(false);
+                .SingleOrDefaultAsync(x => x.UKPRN == ukprn, cancellationToken).ConfigureAwait(false);
 
             return trust;
         }
@@ -23,7 +23,16 @@ namespace Dfe.Academies.Infrastructure.Repositories
         {
             var trust = await dbSet
                 .Include(x => x.TrustType)
-                .SingleOrDefaultAsync(x => x.CompaniesHouseNumber == companiesHouseNumber).ConfigureAwait(false);
+                .SingleOrDefaultAsync(x => x.CompaniesHouseNumber == companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+
+            return trust;
+        }
+
+        public async Task<Trust?> GetTrustByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
+        {
+            var trust = await dbSet
+                .Include(x => x.TrustType)
+                .SingleOrDefaultAsync(x => x.GroupID == trustReferenceNumber, cancellationToken).ConfigureAwait(false);
 
             return trust;
         }
