@@ -166,5 +166,33 @@ namespace TramsDataApi.Controllers.V4
             var response = new List<EstablishmentDto>(establishments);
             return Ok(response);
         }
+        /// <summary>
+        /// Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.
+        /// </summary>
+        /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
+        /// /// <param name="cancellationToken"></param>
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpGet]
+        [Route("establishments/trust")]
+        [SwaggerOperation(Summary = "Get Establishments by Trust", Description = "Returns a list of establishments specified by Trust UKPRN.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(404, "Establishments with specified Trust UKPRN  not found.")]
+        public async Task<ActionResult<List<EstablishmentDto>>> GetByTrust([FromQuery] string trustUkprn, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestTrust = string.Join(",", trustUkprn);
+            _logger.LogInformation($"Attemping to get establishments by Trust UKPRN : {commaSeparatedRequestTrust}");
+
+            var establishments = await _establishmentQueries.GetByTrust(trustUkprn, cancellationToken).ConfigureAwait(false);
+
+            if (establishments == null)
+            {
+                _logger.LogInformation($"No establishment was found with the requested Trust UKPRN : {commaSeparatedRequestTrust}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Establishments for Trust with specific UKPRN : {commaSeparatedRequestTrust}");
+            var response = new List<EstablishmentDto>(establishments);
+            return Ok(response);
+        }
     }
 }

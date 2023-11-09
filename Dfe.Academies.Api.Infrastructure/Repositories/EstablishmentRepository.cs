@@ -2,6 +2,7 @@
 using Dfe.Academies.Academisation.Data.Repositories;
 using Dfe.Academies.Domain.Establishment;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Dfe.Academies.Infrastructure.Repositories
@@ -26,23 +27,23 @@ namespace Dfe.Academies.Infrastructure.Repositories
         }
         public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
-            IQueryable<Establishment> query = DefaultIncludes();
-
-            query = !string.IsNullOrEmpty(name)
-                ? query.Where(establishment => establishment.EstablishmentName.Contains(name))
-                : query;
-
-            query = !string.IsNullOrEmpty(ukPrn)
-                ? query.Where(establishment => establishment.UKPRN.Contains(ukPrn))
-                : query;
-
-            query = !string.IsNullOrEmpty(urn)
-                ? query.Where(establishment => establishment.URN.ToString().Contains(urn))
-                : query;
-
-            return await query.OrderBy(establishment => establishment.SK)
-                              .ToListAsync(cancellationToken)
-                              .ConfigureAwait(false);
+            IQueryable<Establishment> query = DefaultIncludes().AsNoTracking();
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(e => e.EstablishmentName.Contains(name));
+            }
+            if (!string.IsNullOrEmpty(ukPrn))
+            {
+                query = query.Where(e => e.UKPRN == ukPrn);
+            }
+            if (!string.IsNullOrEmpty(urn))
+            {
+                if (int.TryParse(urn, out var urnAsNumber))
+                {
+                    query = query.Where(e => e.URN == urnAsNumber);
+                }               
+            }                       
+            return await query.Take(100).ToListAsync(cancellationToken);
         }
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {            
@@ -61,6 +62,25 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 .Where(e => urnsList.Contains((int)e.URN))
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
+        {            
+            var establishmentIds = await context.EducationEstablishmentTrusts
+                                                .Where(eet => eet.FK_Trust == Convert.ToInt32(trustId))
+                                                .Select(eet => (long)eet.FK_EducationEstablishment)
+                                                .ToListAsync(cancellationToken)
+                                                .ConfigureAwait(false);
+            
+            var establishments = await DefaultIncludes()
+                                            .Where(e => establishmentIds.Contains(e.SK))
+                                            .ToListAsync(cancellationToken)
+                                            .ConfigureAwait(false);
+
+
+            return establishments;
+        }
+
+
 
         private IQueryable<Establishment> DefaultIncludes()
         {

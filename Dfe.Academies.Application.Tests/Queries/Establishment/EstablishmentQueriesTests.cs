@@ -24,11 +24,13 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             // Arrange
             var establishment = _fixture.Create<Domain.Establishment.Establishment?>();
             var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
+
             string ukprn = "1010101";
             mockRepo.Setup(x => x.GetEstablishmentByUkprn(It.Is<string>(v => v == ukprn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishment));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object);
 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
@@ -48,11 +50,12 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             // Arrange
             var establishment = _fixture.Create<Domain.Establishment.Establishment?>();
             var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
             string urn = "1010101";
             mockRepo.Setup(x => x.GetEstablishmentByUrn(It.Is<string>(v => v == urn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishment));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object);
 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
@@ -72,13 +75,14 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             // Arrange
             var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
             var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();           
             string urn = "1010101";
             string name = "Test name";
             string ukPrn = "Test UkPrn";
             mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object);
 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
@@ -104,10 +108,11 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             string[] regions = _fixture.Create<string[]>();
             var establishmentUrns = _fixture.Create<List<int>>().AsEnumerable();
             var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
             mockRepo.Setup(x => x.GetURNsByRegion(It.Is<string[]>(v => v == regions), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishmentUrns));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object);
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
             // Act
@@ -128,10 +133,11 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             int[] Urns = _fixture.Create<int[]>();
             var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
             var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
             mockRepo.Setup(x => x.GetByUrns(It.Is<int[]>(v => v == Urns), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object);
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await establishmentQueries.GetByUrns(

@@ -19,6 +19,14 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return trust;
         }
+        public async Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
+        {
+            var trust = await dbSet
+                .Include(x => x.TrustType)
+                .SingleOrDefaultAsync(x => x.CompaniesHouseNumber == companiesHouseNumber).ConfigureAwait(false);
+
+            return trust;
+        }
 
         public async Task<List<Trust>> GetTrustsByUkprns(string[] ukprns, CancellationToken cancellationToken)
         {
