@@ -43,7 +43,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
                     query = query.Where(e => e.URN == urnAsNumber);
                 }               
             }                       
-            return await query.ToListAsync(cancellationToken);
+            return await query.Take(100).ToListAsync(cancellationToken);
         }
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {            
