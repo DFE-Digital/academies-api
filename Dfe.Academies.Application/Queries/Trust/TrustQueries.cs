@@ -36,6 +36,12 @@ namespace Dfe.Academies.Application.Queries.Trust
 
             return trusts.Select(x => MapToTrustDto(x)).ToList();
         }
+        public async Task<TrustDto?> GetByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
+        {
+            var trust = await _trustRepository.GetTrustByTrustReferenceNumber(trustReferenceNumber, cancellationToken).ConfigureAwait(false);
+            return trust == null ? null : MapToTrustDto(trust);
+        }
+
         private static TrustDto MapToTrustDto(Domain.Trust.Trust trust)
         {
             return new TrustDto()
