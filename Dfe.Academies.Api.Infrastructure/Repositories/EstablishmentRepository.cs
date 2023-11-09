@@ -27,23 +27,23 @@ namespace Dfe.Academies.Infrastructure.Repositories
         }
         public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
-            IQueryable<Establishment> query = DefaultIncludes();
-
-            query = !string.IsNullOrEmpty(name)
-                ? query.Where(establishment => establishment.EstablishmentName.Contains(name))
-                : query;
-
-            query = !string.IsNullOrEmpty(ukPrn)
-                ? query.Where(establishment => establishment.UKPRN.Contains(ukPrn))
-                : query;
-
-            query = !string.IsNullOrEmpty(urn)
-                ? query.Where(establishment => establishment.URN.ToString().Contains(urn))
-                : query;
-
-            return await query.OrderBy(establishment => establishment.SK)
-                              .ToListAsync(cancellationToken)
-                              .ConfigureAwait(false);
+            IQueryable<Establishment> query = DefaultIncludes().AsNoTracking();
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(e => e.EstablishmentName.Contains(name));
+            }
+            if (!string.IsNullOrEmpty(ukPrn))
+            {
+                query = query.Where(e => e.UKPRN == ukPrn);
+            }
+            if (!string.IsNullOrEmpty(urn))
+            {
+                if (int.TryParse(urn, out var urnAsNumber))
+                {
+                    query = query.Where(e => e.URN == urnAsNumber);
+                }               
+            }                       
+            return await query.ToListAsync(cancellationToken);
         }
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {            
