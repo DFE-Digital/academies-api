@@ -1,10 +1,4 @@
-﻿using Dfe.Academies.Contracts.Establishments;
-using Dfe.Academies.Contracts.Trusts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dfe.Academies.Contracts.V4.Establishments;
 
 namespace Dfe.Academies.Application.Queries.Establishment
 {

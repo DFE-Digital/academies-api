@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Application.Queries.Trust;
-using Dfe.Academies.Contracts.Trusts;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
 using Moq;
@@ -57,7 +57,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
             // Arrange
             var trusts = _fixture.Create<List<Domain.Trust.Trust>>();
             var mockRepo = new Mock<ITrustRepository>();
-            mockRepo.Setup(x => x.Search(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(trusts));
+            mockRepo.Setup(x => x.Search(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult((trusts, trusts.Count)));
 
             var trustQueries = new TrustQueries(mockRepo.Object);
             int page = 0;

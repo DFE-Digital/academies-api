@@ -1,4 +1,5 @@
-﻿using Dfe.Academies.Contracts.Establishments;
+﻿using Dfe.Academies.Contracts.V4;
+using Dfe.Academies.Contracts.V4.Establishments;
 
 namespace Dfe.Academies.Application.Builders
 {
@@ -128,7 +129,7 @@ namespace Dfe.Academies.Application.Builders
 
         public EstablishmentDtoBuilder WithAddress(Domain.Establishment.Establishment establishment)
         {
-            _dto.Address = new Contracts.Trusts.AddressDto()
+            _dto.Address = new AddressDto()
             {
                 Street = establishment?.AddressLine1,
                 Town = establishment?.Town,

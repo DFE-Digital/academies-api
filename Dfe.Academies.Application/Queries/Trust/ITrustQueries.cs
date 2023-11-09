@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Contracts.Trusts;
+﻿using Dfe.Academies.Contracts.V4.Trusts;
 
 namespace Dfe.Academies.Application.Queries.Trust
 {

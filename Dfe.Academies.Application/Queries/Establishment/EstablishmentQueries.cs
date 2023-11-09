@@ -1,8 +1,6 @@
-﻿using Dfe.Academies.Contracts.Establishments;
-using Dfe.Academies.Contracts.Trusts;
+﻿using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Domain.Establishment;
-using System.Threading;
-using System;
+
 using Dfe.Academies.Application.Builders;
 
 namespace Dfe.Academies.Application.Queries.Establishment

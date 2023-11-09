@@ -1,12 +1,9 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Application.Queries.Establishment;
-using Dfe.Academies.Contracts.Establishments;
-using Dfe.Academies.Contracts.Trusts;
+using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
 using Moq;
-using System.Runtime.CompilerServices;
 
 namespace Dfe.Academies.Application.Tests.Queries.Establishment
 {
