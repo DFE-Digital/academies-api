@@ -3,7 +3,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Dfe.Academies.Application.Queries.Trust;
-using Dfe.Academies.Contracts.Trusts;
+using Dfe.Academies.Contracts.V4;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -96,7 +97,7 @@ namespace TramsDataApi.Controllers.V4
         [Route("trusts")]        
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
-        public async Task<ActionResult<ApiResponseV2<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10)
+        public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10)
         {
             _logger.LogInformation(
                 "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
@@ -111,8 +112,8 @@ namespace TramsDataApi.Controllers.V4
 
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
 
-            var pagingResponse = PagingResponseFactory.Create(page, count, recordCount, Request);
-            var response = new ApiResponseV2<TrustDto>(trusts, pagingResponse);
+            var pagingResponse = PagingResponseFactory.CreateV4PagingResponse(page, count, recordCount, Request);
+            var response = new PagedDataResponse<TrustDto>(trusts, pagingResponse);
 
             return Ok(response);
         }

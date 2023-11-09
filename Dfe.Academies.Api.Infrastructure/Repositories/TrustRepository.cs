@@ -35,13 +35,13 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return trusts;
         }
 
-        public async Task<List<Trust>> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
+        public async Task<(List<Trust>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
         {
             if (name == null && ukPrn == null && companiesHouseNumber == null)
             {
                 List<Trust> allTrusts =  await dbSet.OrderBy(trust => trust.GroupUID).Skip((page - 1) * count)
                    .Take(count).ToListAsync(cancellationToken).ConfigureAwait(false);
-                return allTrusts;
+                return (allTrusts, allTrusts.Count);
             }
 
             IOrderedQueryable<Trust> filteredGroups = dbSet
@@ -54,7 +54,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
                            ))
                .OrderBy(trust => trust.GroupUID);
 
-            return await filteredGroups.Skip((page - 1) * count).Take(count).ToListAsync(cancellationToken).ConfigureAwait(false);
+            return (await filteredGroups.Skip((page - 1) * count).Take(count).ToListAsync(cancellationToken).ConfigureAwait(false), filteredGroups.Count());
         }
     }
 }

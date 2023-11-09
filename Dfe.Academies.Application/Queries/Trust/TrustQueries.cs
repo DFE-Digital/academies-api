@@ -1,4 +1,5 @@
-﻿using Dfe.Academies.Contracts.Trusts;
+﻿using Dfe.Academies.Contracts.V4;
+using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
 
 namespace Dfe.Academies.Application.Queries.Trust
@@ -24,9 +25,9 @@ namespace Dfe.Academies.Application.Queries.Trust
 
         public async Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
         {
-            var trusts = await _trustRepository.Search(page, count, name, ukPrn, companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+            var (trusts, recordCount) = await _trustRepository.Search(page, count, name, ukPrn, companiesHouseNumber, cancellationToken).ConfigureAwait(false);
 
-            return (trusts.Select(x => MapToTrustDto(x)).ToList(), trusts.Count);
+            return (trusts.Select(x => MapToTrustDto(x)).ToList(), recordCount);
         }
 
         public async Task<List<TrustDto>> GetByUkprns(string[] ukprns, CancellationToken cancellationToken)

@@ -7,7 +7,7 @@ namespace Dfe.Academies.Domain.Trust
         Task<Trust?> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken);
         Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken);
         Task<List<Trust>> GetTrustsByUkprns(string[] ukprns, CancellationToken cancellationToken);
-        Task<List<Trust>> Search(int page, int count, string name, string ukPrn,
+        Task<(List<Trust>, int)> Search(int page, int count, string name, string ukPrn,
          string companiesHouseNumber, CancellationToken cancellationToken);
     }
 }
