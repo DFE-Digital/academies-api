@@ -36,7 +36,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
-        [Route("trust/ukprn/{ukprn}")]        
+        [Route("trust/{ukprn}")]        
         [SwaggerOperation(Summary = "Retrieve Trust by UK Provider Reference Number (UKPRN)", Description = "Returns a Trust identified by UK Provider Reference Number (UKPRN).")]
         [SwaggerResponse(200, "Successfully found and returned the Trust.")]
         [SwaggerResponse(404, "Trust with specified UK Provider Reference Number (UKPRN) not found.")]
