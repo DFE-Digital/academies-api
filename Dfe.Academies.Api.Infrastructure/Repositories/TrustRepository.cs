@@ -60,7 +60,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
                            && (
                               trust.TrustType.Name == "Single-academy trust" ||
                               trust.TrustType.Name == "Multi-academy trust"
-                           ))
+                           ) && trust.TrustStatus == "Open")
                .OrderBy(trust => trust.GroupUID);
 
             return (await filteredGroups.Skip((page - 1) * count).Take(count).ToListAsync(cancellationToken).ConfigureAwait(false), filteredGroups.Count());
