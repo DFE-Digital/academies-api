@@ -80,7 +80,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.PhaseOfEducation = new NameAndCodeDto
             {
                 Name = establishment?.PhaseOfEducation,
-                Code = establishment?.PhaseOfEducationCode
+                Code = establishment?.PhaseOfEducationCode.ToString()
             };
 
             return this;
