@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using Dfe.Academies.Domain.Census;
 using FluentAssertions;
 using TramsDataApi.CensusData;
 using TramsDataApi.DatabaseModels;

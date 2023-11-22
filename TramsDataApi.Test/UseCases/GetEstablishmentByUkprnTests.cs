@@ -1,3 +1,4 @@
+using Dfe.Academies.Domain.Census;
 using FizzWare.NBuilder;
 using FizzWare.NBuilder.PropertyNaming;
 using FluentAssertions;

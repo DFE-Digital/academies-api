@@ -88,6 +88,17 @@ namespace Dfe.Academies.Domain.Establishment
         public string? GORregion { get; set; }
         public string? SFSOTerritory { get; set; }
 
+        public DateTime? GiasLastChangedDate { get; set; }
+        public int? NumberOfBoys { get; set; }
+        public int? NumberOfGirls { get; set; }
+        public string? DioceseCode { get; set; }
+        public string? GORregionCode { get; set; }
+        public string? ReligiousCharacterCode { get; set; }
+        public string? ParliamentaryConstituencyCode { get; set; }
+        public string? PhaseOfEducationCode { get; set; }
+        public int? SenUnitCapacity { get; set; }
+        public int? SenUnitOnRoll { get; set; }
+
         public LocalAuthority LocalAuthority { get; set; }
         public EstablishmentType EstablishmentType{ get; set; }
 

@@ -127,6 +127,12 @@ public class MstrContext : DbContext
         establishmentConfiguration.Property(e => e.URNAtSection8Inspection).HasColumnName("URN at Section 8 inspection");
         establishmentConfiguration.Property(e => e.Website).HasColumnName("Website");
 
+        establishmentConfiguration.Property(e => e.DioceseCode).HasColumnName("Diocese(code)");
+        establishmentConfiguration.Property(e => e.GORregionCode).HasColumnName("GORregion(code)");
+        establishmentConfiguration.Property(e => e.ReligiousCharacterCode).HasColumnName("ReligiousCharacter(code)");
+        establishmentConfiguration.Property(e => e.PhaseOfEducationCode).HasColumnName("PhaseOfEducation(code)");
+        establishmentConfiguration.Property(e => e.ParliamentaryConstituencyCode).HasColumnName("ParliamentaryConstituency(code)");
+
         establishmentConfiguration
             .HasOne(x => x.EstablishmentType)
             .WithOne()

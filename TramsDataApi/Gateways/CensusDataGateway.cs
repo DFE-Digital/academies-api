@@ -13,7 +13,7 @@ namespace TramsDataApi.Gateways
         
         public CensusDataModel GetCensusDataByURN(string urn)
         {
-            using (var reader = new StreamReader("CensusData/2018-2019_england_census.csv"))
+            using (var reader = new StreamReader("CensusData/2022-2023_england_census.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var records = csv.GetRecords<CensusDataModel>();
