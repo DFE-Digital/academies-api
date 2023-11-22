@@ -1,5 +1,7 @@
 ﻿using Dfe.Academies.Contracts.V4;
 using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.Academies.Domain.Census;
+using System;
 
 namespace Dfe.Academies.Application.Builders
 {
@@ -9,6 +11,13 @@ namespace Dfe.Academies.Application.Builders
 
         public EstablishmentDtoBuilder WithBasicDetails(Domain.Establishment.Establishment establishment)
         {
+            _dto.Ukprn = establishment?.UKPRN;
+            _dto.NoOfBoys = establishment?.NumberOfBoys.ToString();
+            _dto.NoOfGirls = establishment?.NumberOfGirls.ToString();
+            _dto.GiasLastChangedDate = establishment?.GiasLastChangedDate.ToString();
+            _dto.ReligousEthos = establishment?.ReligiousEthos;
+            _dto.SenUnitCapacity = establishment?.SenUnitCapacity.ToString();
+            _dto.SenUnitOnRoll = establishment?.SenUnitOnRoll.ToString();
             _dto.Name = establishment?.EstablishmentName;
             _dto.Urn = establishment?.URN.ToString() ?? string.Empty;
             _dto.OfstedRating = establishment?.OfstedRating;
@@ -38,7 +47,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.Diocese = new NameAndCodeDto
             {
                 Name = establishment?.Diocese,
-                Code = establishment?.Diocese // No Code
+                Code = establishment?.DioceseCode
             };
 
             return this;
@@ -60,7 +69,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.Gor = new NameAndCodeDto
             {
                 Name = establishment?.GORregion,
-                Code = establishment?.GORregion // No Code
+                Code = establishment?.GORregionCode
             };
 
             return this;
@@ -71,7 +80,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.PhaseOfEducation = new NameAndCodeDto
             {
                 Name = establishment?.PhaseOfEducation,
-                Code = establishment?.PhaseOfEducation // No Code
+                Code = establishment?.PhaseOfEducation // no code
             };
 
             return this;
@@ -82,7 +91,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.ReligiousCharacter = new NameAndCodeDto
             {
                 Name = establishment.ReligiousCharacter,
-                Code = establishment.ReligiousCharacter // No Code
+                Code = establishment.ReligiousCharacterCode
             };
 
             return this;
@@ -97,12 +106,40 @@ namespace Dfe.Academies.Application.Builders
 
             return this;
         }
-        public EstablishmentDtoBuilder WithCensus(Domain.Establishment.Establishment establishment)
+        public EstablishmentDtoBuilder WithCensus(Domain.Establishment.Establishment establishment, CensusData censusData)
         {
+            // census field descriptions
+            //URN School - Unique Reference Number
+            //LA  - LA number
+            //ESTAB - ESTAB number
+            //SCHOOLTYPE  - Type of school
+            //NOR - Total number of pupils on roll
+            //NORG - Number of girls on roll
+            //NORB - Number of boys on roll
+            //PNORG - Percentage of girls on roll
+            //PNORB - Percentage of boys on roll
+            //TSENELSE - Number of SEN pupils with an EHC plan
+            //PSENELSE  -   Percentage of SEN pupils with an EHC plan
+            //TSENELK - Number of eligible pupils with SEN support
+            //PSENELK - Percentage of eligible pupils with SEN support
+            //NUMEAL - No.  pupils where English not first language
+            //NUMENGFL - No. pupils with English first language
+            //NUMUNCFL -   No.pupils where first language is unclassified
+            //PNUMEAL - % pupils where English not first language
+            //PNUMENGFL - % pupils with English first language
+            //PNUMUNCFL - % pupils where first language is unclassified
+            //NUMFSM  - No.pupils eligible for free school meals
+            //NUMFSMEVER  - Number of pupils eligible for FSM at any time during the past 6 years
+            //PNUMFSMEVER - Percentage of pupils eligible for FSM at any time during the past 6 years
+
             _dto.Census = new CensusDto
             {
                 NumberOfPupils = establishment.NumberOfPupils,
-                PercentageFsm = establishment.PercentageFSM
+                PercentageFsm = establishment.PercentageFSM,
+                PercentageSen = censusData?.PSENELK,
+                PercentageEnglishAsSecondLanguage = censusData?.PNUMEAL,
+                PercentageFsmLastSixYears = censusData?.PNUMFSMEVER
+
             };
 
             return this;

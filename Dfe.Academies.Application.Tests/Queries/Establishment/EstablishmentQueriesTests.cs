@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Application.Queries.Establishment;
 using Dfe.Academies.Contracts.V4.Establishments;
+using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
@@ -26,12 +27,13 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             var establishment = _fixture.Create<Domain.Establishment.Establishment?>();
             var mockRepo = new Mock<IEstablishmentRepository>();
             var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
 
             string ukprn = "1010101";
             mockRepo.Setup(x => x.GetEstablishmentByUkprn(It.Is<string>(v => v == ukprn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishment));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object, mockTrustRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
@@ -52,11 +54,12 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             var establishment = _fixture.Create<Domain.Establishment.Establishment?>();
             var mockRepo = new Mock<IEstablishmentRepository>();
             var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
             string urn = "1010101";
             mockRepo.Setup(x => x.GetEstablishmentByUrn(It.Is<string>(v => v == urn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishment));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object, mockTrustRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
@@ -76,14 +79,16 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             // Arrange
             var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
             var mockRepo = new Mock<IEstablishmentRepository>();
-            var mockTrustRepo = new Mock<ITrustRepository>();           
+            var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
+
             string urn = "1010101";
             string name = "Test name";
             string ukPrn = "Test UkPrn";
             mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object, mockTrustRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
@@ -111,9 +116,9 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             var mockRepo = new Mock<IEstablishmentRepository>();
             var mockTrustRepo = new Mock<ITrustRepository>();
             mockRepo.Setup(x => x.GetURNsByRegion(It.Is<string[]>(v => v == regions), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishmentUrns));
-
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object, mockTrustRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
             // Act
@@ -135,10 +140,12 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
             var mockRepo = new Mock<IEstablishmentRepository>();
             var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
+
             mockRepo.Setup(x => x.GetByUrns(It.Is<int[]>(v => v == Urns), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
 
             var establishmentQueries = new EstablishmentQueries(
-                mockRepo.Object, mockTrustRepo.Object);
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await establishmentQueries.GetByUrns(

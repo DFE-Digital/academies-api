@@ -6,7 +6,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CsvHelper" Version="30.0.1" />
-        <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.4" />
+        <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.5" />
         <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
         <PackageReference Include="FluentValidation" Version="11.6.0" />
         <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
@@ -55,5 +55,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="CensusData\2022-2023_england_census.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 </Project>

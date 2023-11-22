@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Dfe.Academies.Domain.Census;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
