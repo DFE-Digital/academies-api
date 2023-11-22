@@ -94,6 +94,8 @@ namespace Dfe.Academies.Domain.Establishment
         public string? DioceseCode { get; set; }
         public string? GORregionCode { get; set; }
         public string? ReligiousCharacterCode { get; set; }
+        public string? ParliamentaryConstituencyCode { get; set; }
+        public string? PhaseOfEducationCode { get; set; }
         public int? SenUnitCapacity { get; set; }
         public int? SenUnitOnRoll { get; set; }
 

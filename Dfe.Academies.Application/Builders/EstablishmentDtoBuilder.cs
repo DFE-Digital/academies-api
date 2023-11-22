@@ -80,7 +80,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.PhaseOfEducation = new NameAndCodeDto
             {
                 Name = establishment?.PhaseOfEducation,
-                Code = establishment?.PhaseOfEducation // no code
+                Code = establishment?.PhaseOfEducationCode
             };
 
             return this;
@@ -101,7 +101,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.ParliamentaryConstituency = new NameAndCodeDto
             {
                 Name = establishment.ParliamentaryConstituency,
-                Code = establishment.ParliamentaryConstituency // No Code
+                Code = establishment.ParliamentaryConstituencyCode
             };
 
             return this;
