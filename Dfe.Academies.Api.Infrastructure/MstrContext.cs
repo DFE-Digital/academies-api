@@ -210,7 +210,7 @@ public class MstrContext : DbContext
         .HasOne(x => x.TrustType)
         .WithOne()
         .HasForeignKey<Trust>(x => x.TrustsTrustType)
-        .IsRequired(false);
+        .IsRequired(true);
     }
 
     void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)

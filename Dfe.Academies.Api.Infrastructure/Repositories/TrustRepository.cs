@@ -51,7 +51,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 return (allTrusts, allTrusts.Count);
             }
 
-            IOrderedQueryable<Trust> filteredGroups = DefaultIncludes()
+            IOrderedQueryable<Trust> filteredGroups = DefaultIncludes().AsNoTracking()
                .Where(trust => (trust.Name.Contains(name) ||
                             trust.UKPRN.Contains(ukPrn) ||
                             trust.CompaniesHouseNumber.Contains(companiesHouseNumber))
