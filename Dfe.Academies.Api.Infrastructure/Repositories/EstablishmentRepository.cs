@@ -71,7 +71,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
                                                 .ToListAsync(cancellationToken)
                                                 .ConfigureAwait(false);
             
-            var establishments = await DefaultIncludes()
+            var establishments = await DefaultIncludes().AsNoTracking()
                                             .Where(e => establishmentIds.Contains(e.SK))
                                             .ToListAsync(cancellationToken)
                                             .ConfigureAwait(false);
