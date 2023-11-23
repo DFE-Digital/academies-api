@@ -2,6 +2,7 @@
 using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Domain.Census;
 using System;
+using System.Globalization;
 
 namespace Dfe.Academies.Application.Builders
 {
@@ -14,7 +15,7 @@ namespace Dfe.Academies.Application.Builders
             _dto.Ukprn = establishment?.UKPRN;
             _dto.NoOfBoys = establishment?.NumberOfBoys.ToString();
             _dto.NoOfGirls = establishment?.NumberOfGirls.ToString();
-            _dto.GiasLastChangedDate = establishment?.GiasLastChangedDate.ToString();
+            _dto.GiasLastChangedDate = establishment?.GiasLastChangedDate?.ToString(new CultureInfo("en-GB"));
             _dto.ReligousEthos = establishment?.ReligiousEthos;
             _dto.SenUnitCapacity = establishment?.SenUnitCapacity.ToString();
             _dto.SenUnitOnRoll = establishment?.SenUnitOnRoll.ToString();
@@ -149,8 +150,8 @@ namespace Dfe.Academies.Application.Builders
         {
             _dto.MISEstablishment = new MisEstablishmentDto
             {
-                DateOfLatestSection8Inspection = establishment?.DateOfLatestShortInspection?.ToString(),
-                InspectionEndDate = establishment?.InspectionEndDate?.ToString(),
+                DateOfLatestSection8Inspection = establishment?.DateOfLatestShortInspection?.ToString(new CultureInfo("en-GB")),
+                InspectionEndDate = establishment?.InspectionEndDate?.ToString(new CultureInfo("en-GB")),
                 OverallEffectiveness = establishment?.OverallEffectiveness?.ToString(),
                 QualityOfEducation = establishment?.QualityOfEducation?.ToString(),
                 BehaviourAndAttitudes = establishment?.BehaviourAndAttitudes?.ToString(),
