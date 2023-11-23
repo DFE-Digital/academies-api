@@ -6,6 +6,7 @@ using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
 using Moq;
+using System.Globalization;
 
 namespace Dfe.Academies.Application.Tests.Queries.Establishment
 {
@@ -160,6 +161,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             }
         }
 
+
         private bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment)
         {
             return (
@@ -196,8 +198,8 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 dto.Census.NumberOfPupils == establishment.NumberOfPupils &&
                 dto.Census.PercentageFsm == establishment.PercentageFSM &&
 
-                dto.MISEstablishment.DateOfLatestSection8Inspection == establishment.DateOfLatestShortInspection?.ToString() &&
-                dto.MISEstablishment.InspectionEndDate == establishment.InspectionEndDate?.ToString() &&
+                dto.MISEstablishment.DateOfLatestSection8Inspection == establishment.DateOfLatestShortInspection?.ToString(new CultureInfo("en-GB")) &&
+                dto.MISEstablishment.InspectionEndDate == establishment.InspectionEndDate?.ToString(new CultureInfo("en-GB")) &&
                 dto.MISEstablishment.OverallEffectiveness == establishment.OverallEffectiveness?.ToString() &&
                 dto.MISEstablishment.QualityOfEducation == establishment.QualityOfEducation?.ToString() &&
                 dto.MISEstablishment.BehaviourAndAttitudes == establishment.BehaviourAndAttitudes?.ToString() &&
