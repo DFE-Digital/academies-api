@@ -198,8 +198,8 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 dto.Census.NumberOfPupils == establishment.NumberOfPupils &&
                 dto.Census.PercentageFsm == establishment.PercentageFSM &&
 
-                dto.MISEstablishment.DateOfLatestSection8Inspection == establishment.DateOfLatestShortInspection?.ToString(new CultureInfo("en-GB")) &&
-                dto.MISEstablishment.InspectionEndDate == establishment.InspectionEndDate?.ToString(new CultureInfo("en-GB")) &&
+                dto.MISEstablishment.DateOfLatestSection8Inspection == establishment.DateOfLatestShortInspection?.ToString("d", new CultureInfo("en-GB")) &&
+                dto.MISEstablishment.InspectionEndDate == establishment.InspectionEndDate?.ToString("d", new CultureInfo("en-GB")) &&
                 dto.MISEstablishment.OverallEffectiveness == establishment.OverallEffectiveness?.ToString() &&
                 dto.MISEstablishment.QualityOfEducation == establishment.QualityOfEducation?.ToString() &&
                 dto.MISEstablishment.BehaviourAndAttitudes == establishment.BehaviourAndAttitudes?.ToString() &&
