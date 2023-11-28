@@ -28,9 +28,6 @@
     "url": "https://github.com/DFE-Digital/academies-api/issues"
   },
   "homepage": "https://github.com/DFE-Digital/academies-api#readme",
-  "dependencies": {
-    
-  },
   "devDependencies": {
     "@cypress/schema-tools": "^4.7.10",
     "ajv": "^8.10.0",
