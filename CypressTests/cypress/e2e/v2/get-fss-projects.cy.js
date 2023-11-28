@@ -3,7 +3,7 @@ describe("GET fss-projects", () => {
  let apiKey = Cypress.env('apiKey');
  let url = Cypress.env('url')
   it("Should return a valid 200 response", () => {
-    cy.request({
+    cy.api({
       failOnStatusCode: false,
       url: url+"/v2/fss/projects",
       headers: {
@@ -13,7 +13,7 @@ describe("GET fss-projects", () => {
   });
 
   it("Should return a valid 401 response when omitting API key", () => {
-    cy.request({
+    cy.api({
       failOnStatusCode: false,
       url: url+"/v2/fss/projects",
       headers: {
