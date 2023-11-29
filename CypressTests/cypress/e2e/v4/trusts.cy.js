@@ -25,7 +25,8 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body.data).to.have.lengthOf.at.least(1).and.lengthOf.at.most(10)
+          expect(response.body.paging.page).to.eq(1)
         })
     })
 
@@ -46,7 +47,7 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body.data[0].name).to.eq(groupName)
         })
     })
 
@@ -67,7 +68,7 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body.data[0].name).to.eq(groupName)
         })
     })
 
@@ -88,7 +89,8 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body.data[0].name).to.eq(groupName)
+          expect(response.body.data[0].companiesHouseNumber).to.eq(companiesHouseNumber)
         })
     })
   })
@@ -107,7 +109,7 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body.name).to.eq(groupName)
         })
     })
   })
@@ -129,19 +131,22 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body[0].name).to.eq(groupName)
+          expect(response.body[0].ukprn).to.eq(ukprns[0])
         })
     })
 
     it('should return a list of trusts when multiple UKPRNs provided', () => {
 
+      /* TODO Update to make use of qs in request once issue #17921 resolved, see
+       * https://github.com/cypress-io/cypress/issues/17921
+      */
       cy.api({
         method: 'GET',
-        url: `${baseUrlV4}/trusts/bulk`,
-        qs: {
-          ukprns: ukprns[0],
-          ukprn: ukprns[1]
-        },
+        url: `${baseUrlV4}/trusts/bulk?ukprns=${ukprns[0]}&ukprns=${ukprns[1]}`,
+        // qs: {
+        //   ukprns: [ukprns[0], ukprns[1]]
+        // },
         headers: {
           ApiKey: apiKey,
           "Content-type": "application/json"
@@ -149,7 +154,10 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body[0].name).to.eq(groupName)
+          expect(response.body[0].ukprn).to.eq(ukprns[0])
+          expect(response.body[1].name).to.eq('THE BISHOP FRASER TRUST')
+          expect(response.body[1].ukprn).to.eq(ukprns[1])
         })
     })
   })
@@ -168,7 +176,8 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body.name).to.eq(groupName)
+          expect(response.body.companiesHouseNumber).to.eq(companiesHouseNumber)
         })
     })
   })
@@ -187,7 +196,8 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.body.name).to.eq(groupName)
+          expect(response.body.referenceNumber).to.eq(trustReferenceNumber)
         })
     })
   })

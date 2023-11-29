@@ -2,6 +2,10 @@ describe('Establishment endpoints tests', () => {
 
   const apiKey = Cypress.env('apiKey')
   const baseUrlV4 = `${Cypress.env('url')}/v4`
+  const name = 'The Aldgate School'
+  const ukPrn = '10079319'
+  const urns = [100000, 100002]
+  const trustUkprn = '10067112'
 
   context('Search Establishments', () => {
 
@@ -16,8 +20,8 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body).to.have.lengthOf.at.least(1).and.lengthOf.at.most(100)
         })
     })
 
@@ -27,7 +31,7 @@ describe('Establishment endpoints tests', () => {
         method: 'GET',
         url: `${baseUrlV4}/establishments`,
         qs: {
-          name: 'The Aldgate School'
+          name: name
         },
         headers: {
           ApiKey: apiKey,
@@ -35,8 +39,8 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body[0].name).to.eq(name)
         })
     })
 
@@ -54,8 +58,8 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body[0].ukprn).to.eq(ukPrn)
         })
     })
 
@@ -65,7 +69,7 @@ describe('Establishment endpoints tests', () => {
         method: 'GET',
         url: `${baseUrlV4}/establishments`,
         qs: {
-          urn: '100000'
+          urn: `${urns[0]}`
         },
         headers: {
           ApiKey: apiKey,
@@ -73,8 +77,8 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body[0].urn).to.eq(`${urns[0]}`)
         })
     })
   })
@@ -95,35 +99,36 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body).to.have.lengthOf.at.least(1)
         })
     })
 
     it('should return a list of URNs when multiple regions are provided', () => {
 
+      /* TODO Update to make use of qs in request once issue #17921 resolved, see
+       * https://github.com/cypress-io/cypress/issues/17921
+      */
       cy.api({
         method: 'GET',
-        url: `${baseUrlV4}/establishment/regions`,
-        qs: {
-          regions: 'North West',
-          regions: 'South West'
-        },
+        url: `${baseUrlV4}/establishment/regions?regions=North%20West&regions=South%20West`,
+        // qs: {
+        //   regions: 'North West',
+        //   regions: 'South West'
+        // },
         headers: {
           ApiKey: apiKey,
           "Content-type": "application/json"
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body).to.have.lengthOf.at.least(1)
         })
     })
   })
 
   context('Get Establishment by UKPRN', () => {
-
-    const ukPrn = '10079319'
 
     it('should return establishments when UKPRN set', () => {
 
@@ -136,37 +141,33 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body.ukprn).to.eq(ukPrn)
         })
     })
   })
 
   context('Get Establishment by URN', () => {
 
-    const urn = '100000';
-
     it('should return a single establishment when a URN is provided', () => {
 
       cy.api({
         method: 'GET',
-        url: `${baseUrlV4}/establishment/urn/${urn}`,
+        url: `${baseUrlV4}/establishment/urn/${urns[0]}`,
         headers: {
           ApiKey: apiKey,
           "Content-type": "application/json"
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body.urn).to.eq(`${urns[0]}`)
         })
     })
   })
 
   context('Bulk Get Establishments by URN', () => {
 
-    const urns = [100000, 100002];
-
     it('should return a single establishment when a URN is provided', () => {
 
       cy.api({
@@ -181,35 +182,37 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body[0].urn).to.eq(`${urns[0]}`)
         })
     })
 
     it('should return a list of establishments when multiple URNs are provided', () => {
 
+      /* TODO Update to make use of qs in request once issue #17921 resolved, see
+       * https://github.com/cypress-io/cypress/issues/17921
+      */
       cy.api({
         method: 'GET',
-        url: `${baseUrlV4}/establishments/bulk`,
-        qs: {
-          request: urns[0],
-          request: urns[1]
-        },
+        url: `${baseUrlV4}/establishments/bulk?request=${urns[0]}&request=${urns[1]}`,
+        // qs: {
+        //   request: urns[0],
+        //   request: urns[1]
+        // },
         headers: {
           ApiKey: apiKey,
           "Content-type": "application/json"
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body[0].urn).to.eq(`${urns[0]}`)
+          expect(response.body[1].urn).to.eq(`${urns[1]}`)
         })
     })
   })
 
   context('Get Establishments by Trust', () => {
-
-    const trustUkprn = '10067112'
 
     it('should return establishments when trust UKPRN set', () => {
 
@@ -225,8 +228,8 @@ describe('Establishment endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
-          // TODO add more response checks
+          expect(response.status).to.eq(200)
+          expect(response.body).to.have.lengthOf.at.least(1)
         })
     })
   })
