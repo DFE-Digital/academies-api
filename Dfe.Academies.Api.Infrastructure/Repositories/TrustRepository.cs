@@ -46,9 +46,10 @@ namespace Dfe.Academies.Infrastructure.Repositories
         {
             if (name == null && ukPrn == null && companiesHouseNumber == null)
             {
-                List<Trust> allTrusts =  await DefaultIncludes().OrderBy(trust => trust.GroupUID).Skip((page - 1) * count)
-                   .Take(count).ToListAsync(cancellationToken).ConfigureAwait(false);
-                return (allTrusts, allTrusts.Count);
+                IOrderedQueryable<Trust> allTrusts =  DefaultIncludes().AsNoTracking().OrderBy(trust => trust.GroupUID);
+                
+                return (await allTrusts.Skip((page - 1) * count)
+                   .Take(count).ToListAsync(cancellationToken).ConfigureAwait(false), allTrusts.Count());
             }
 
             IOrderedQueryable<Trust> filteredGroups = DefaultIncludes().AsNoTracking()
