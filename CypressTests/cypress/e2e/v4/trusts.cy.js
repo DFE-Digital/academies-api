@@ -154,10 +154,11 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200);
-          expect(response.body[0].name).to.eq(groupName)
-          expect(response.body[0].ukprn).to.eq(ukprns[0])
-          expect(response.body[1].name).to.eq('THE BISHOP FRASER TRUST')
-          expect(response.body[1].ukprn).to.eq(ukprns[1])
+          // Response isn't in UKPRN order
+          expect(response.body[1].name).to.eq(groupName)
+          expect(response.body[1].ukprn).to.eq(ukprns[0])
+          expect(response.body[0].name).to.eq('THE BISHOP FRASER TRUST')
+          expect(response.body[0].ukprn).to.eq(ukprns[1])
         })
     })
   })
