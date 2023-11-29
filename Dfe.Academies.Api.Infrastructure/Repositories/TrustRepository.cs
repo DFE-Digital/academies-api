@@ -14,14 +14,14 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Trust?> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var trust = await DefaultIncludes()
+            var trust = await DefaultIncludes().AsNoTracking()
                 .SingleOrDefaultAsync(x => x.UKPRN == ukprn, cancellationToken).ConfigureAwait(false);
 
             return trust;
         }
         public async Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
         {
-            var trust = await DefaultIncludes()
+            var trust = await DefaultIncludes().AsNoTracking()
                 .SingleOrDefaultAsync(x => x.CompaniesHouseNumber == companiesHouseNumber, cancellationToken).ConfigureAwait(false);
 
             return trust;
@@ -29,7 +29,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Trust?> GetTrustByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
         {
-            var trust = await DefaultIncludes()
+            var trust = await DefaultIncludes().AsNoTracking()
                 .SingleOrDefaultAsync(x => x.GroupID == trustReferenceNumber, cancellationToken).ConfigureAwait(false);
 
             return trust;
@@ -37,7 +37,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<List<Trust>> GetTrustsByUkprns(string[] ukprns, CancellationToken cancellationToken)
         {
-            var trusts = await DefaultIncludes().Where(x => ukprns.Contains(x.UKPRN)).ToListAsync(cancellationToken).ConfigureAwait(false);
+            var trusts = await DefaultIncludes().AsNoTracking().Where(x => ukprns.Contains(x.UKPRN)).ToListAsync(cancellationToken).ConfigureAwait(false);
 
             return trusts;
         }
@@ -46,9 +46,10 @@ namespace Dfe.Academies.Infrastructure.Repositories
         {
             if (name == null && ukPrn == null && companiesHouseNumber == null)
             {
-                List<Trust> allTrusts =  await DefaultIncludes().OrderBy(trust => trust.GroupUID).Skip((page - 1) * count)
-                   .Take(count).ToListAsync(cancellationToken).ConfigureAwait(false);
-                return (allTrusts, allTrusts.Count);
+                IOrderedQueryable<Trust> allTrusts =  DefaultIncludes().AsNoTracking().OrderBy(trust => trust.GroupUID);
+                
+                return (await allTrusts.Skip((page - 1) * count)
+                   .Take(count).ToListAsync(cancellationToken).ConfigureAwait(false), allTrusts.Count());
             }
 
             IOrderedQueryable<Trust> filteredGroups = DefaultIncludes().AsNoTracking()
