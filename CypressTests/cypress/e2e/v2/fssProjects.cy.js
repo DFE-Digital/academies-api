@@ -1,7 +1,7 @@
 /// <reference types="Cypress"/>
 describe("Free Schools Store endpoint", () => {
 
-  const apiKey = Cypress.env('apiKey');
+  const apiKey = Cypress.env('apiKey')
   const url = Cypress.env('url')
   
   it("Should return a valid 200 response", () => {
