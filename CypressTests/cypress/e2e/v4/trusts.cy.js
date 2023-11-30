@@ -1,6 +1,6 @@
 describe('Trusts endpoints tests', () => {
 
-  const apiKey = Cypress.env('apiKey');
+  const apiKey = Cypress.env('apiKey')
   const baseUrlV4 = `${Cypress.env('url')}/v4`
   const companiesHouseNumber = '11082297'
   const ukprns = ['10067112', '10067113']
@@ -24,7 +24,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data).to.have.lengthOf.at.least(1).and.lengthOf.at.most(10)
           expect(response.body.paging.page).to.eq(1)
         })
@@ -46,7 +46,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data[0].name).to.eq(groupName)
         })
     })
@@ -67,7 +67,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data[0].name).to.eq(groupName)
         })
     })
@@ -88,7 +88,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data[0].name).to.eq(groupName)
           expect(response.body.data[0].companiesHouseNumber).to.eq(companiesHouseNumber)
         })
@@ -108,7 +108,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.name).to.eq(groupName)
         })
     })
@@ -130,7 +130,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body[0].name).to.eq(groupName)
           expect(response.body[0].ukprn).to.eq(ukprns[0])
         })
@@ -153,7 +153,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           // Response isn't in UKPRN order
           expect(response.body[1].name).to.eq(groupName)
           expect(response.body[1].ukprn).to.eq(ukprns[0])
@@ -176,7 +176,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.name).to.eq(groupName)
           expect(response.body.companiesHouseNumber).to.eq(companiesHouseNumber)
         })
@@ -196,7 +196,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.name).to.eq(groupName)
           expect(response.body.referenceNumber).to.eq(trustReferenceNumber)
         })

@@ -1,6 +1,6 @@
 describe('Key Stage Performance endpoint tests', () => {
 
-  const apiKey = Cypress.env('apiKey');
+  const apiKey = Cypress.env('apiKey')
   const url = Cypress.env('url')
   const urn = '100000'
   const schoolName = 'The Aldgate School'

@@ -1,6 +1,6 @@
 describe('Trusts endpoints tests', () => {
 
-  const apiKey = Cypress.env('apiKey');
+  const apiKey = Cypress.env('apiKey')
   const baseUrlV3 = `${Cypress.env('url')}/v3`
   const companiesHouseNumber = '11082297'
   const ukprn = '10067112'
@@ -23,7 +23,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data).to.have.lengthOf.at.least(1).and.lengthOf.at.most(50)
           expect(response.body.paging.page).to.eq(1)
         })
@@ -45,7 +45,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data[0].groupName).to.eq(groupName)
         })
     })
@@ -66,7 +66,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data[0].groupName).to.eq(groupName)
         })
     })
@@ -87,7 +87,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data[0].groupName).to.eq(groupName)
           expect(response.body.data[0].companiesHouseNumber).to.eq(companiesHouseNumber)
         })
@@ -107,7 +107,7 @@ describe('Trusts endpoints tests', () => {
         }
       })
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expect(response.status).to.eq(200)
           expect(response.body.data).to.include.keys('trustData', 'giasData', 'establishments')
           expect(response.body.data.giasData.groupName).to.eq(groupName)
         })
