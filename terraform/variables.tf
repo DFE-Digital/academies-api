@@ -183,11 +183,13 @@ variable "existing_network_watcher_resource_group_name" {
 variable "enable_event_hub" {
   description = "Send Azure Container App logs to an Event Hub sink"
   type        = bool
+  default     = false
 }
 
 variable "enable_logstash_consumer" {
   description = "Create an Event Hub consumer group for Logstash"
   type        = bool
+  default     = false
 }
 
 variable "eventhub_export_log_analytics_table_names" {
