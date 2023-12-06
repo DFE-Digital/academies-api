@@ -213,7 +213,7 @@ public class MstrContext : DbContext
         .IsRequired(true);
     }
 
-    void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)
+    private void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)
     {
         trustTypeConfiguration.HasKey(e => e.SK).HasName("SK");
 
@@ -225,13 +225,13 @@ public class MstrContext : DbContext
         entityBuilder.ToTable("EducationEstablishmentTrust", DEFAULT_SCHEMA);        
       
     }
-    void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
+    private void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
     {
         localAuthorityConfiguration.HasKey(e => e.SK).HasName("SK");
         localAuthorityConfiguration.ToTable("Ref_LocalAuthority", DEFAULT_SCHEMA);
     }
 
-    void ConfigureEstablishmentType(EntityTypeBuilder<EstablishmentType> establishmentTypeConfiguration)
+    private void ConfigureEstablishmentType(EntityTypeBuilder<EstablishmentType> establishmentTypeConfiguration)
     {
         establishmentTypeConfiguration.HasKey(e => e.SK).HasName("SK");
         establishmentTypeConfiguration.ToTable("Ref_EducationEstablishmentType", DEFAULT_SCHEMA);

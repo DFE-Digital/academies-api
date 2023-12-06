@@ -5,6 +5,12 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
+      <Compile Remove="ServiceModels\**" />
+      <Content Remove="ServiceModels\**" />
+      <EmbeddedResource Remove="ServiceModels\**" />
+      <None Remove="ServiceModels\**" />
+    </ItemGroup>
+    <ItemGroup>
         <PackageReference Include="CsvHelper" Version="30.0.1" />
         <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.9" />
         <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
@@ -30,7 +36,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Migrations" />
-      <Folder Include="ServiceModels\" />
       <Folder Include="Services\" />
     </ItemGroup>
     <ItemGroup>

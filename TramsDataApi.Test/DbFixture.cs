@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using Dfe.Academies.Academisation.Data;
+using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
@@ -12,8 +14,10 @@ namespace TramsDataApi.Test
     {
         private readonly LegacyTramsDbContext _legacyTramsDbContext;
         private readonly TramsDbContext _tramsDbContext;
+        private readonly MstrContext _mstrDbContext;
         private readonly IDbContextTransaction _legacyTransaction;
         private readonly IDbContextTransaction _tramsTransaction;
+        private readonly IDbContextTransaction _mstrTransaction;
         public readonly string ConnString;
         
         
@@ -32,18 +36,27 @@ namespace TramsDataApi.Test
 
             var legacyContextBuilder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
             var tramsContextBuilder = new DbContextOptionsBuilder<TramsDbContext>();
+            var mstrContextBuilder = new DbContextOptionsBuilder<MstrContext>();
 
             legacyContextBuilder.UseSqlServer(ConnString);
             _legacyTramsDbContext = new LegacyTramsDbContext(legacyContextBuilder.Options);
 
             tramsContextBuilder.UseSqlServer(ConnString);
             _tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
+
+            mstrContextBuilder.UseSqlServer(ConnString);
+            _mstrDbContext = new MstrContext(mstrContextBuilder.Options);
             
             _tramsDbContext.Database.EnsureCreated();
             _tramsDbContext.Database.Migrate();
             
+            // Wrap in a transaction to ensure all of our changes are not persisted to the database
+            // This makes sure that none of the data is added or removed from the existing DB
+            // We have to do this because we use the same DB for the tests and development
+            // We cannot create the DB for the tests because the code to migrate does not exist
             _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
             _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
+            _mstrTransaction = _mstrDbContext.Database.BeginTransaction();
         }
 
         public void Dispose()
@@ -52,6 +65,8 @@ namespace TramsDataApi.Test
             _legacyTransaction.Dispose();
             _tramsTransaction.Rollback();
             _tramsTransaction.Dispose();
+            _mstrTransaction.Rollback();
+            _mstrTransaction.Dispose();
             GC.SuppressFinalize(this);
         }
     }
