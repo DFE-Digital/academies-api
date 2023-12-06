@@ -199,7 +199,7 @@ namespace TramsDataApi.Test.Integration
             var closedTrustGroup = _fixture.Build<Group>()
                 .With(f => f.GroupUid, "1")
                 .With(f => f.GroupId, groupID)
-                .With(f=> f.GroupName, TrustName)
+                .With(f => f.GroupName, TrustName)
                 .With(f => f.Ukprn, TrustUKPRN)
                 .With(f => f.GroupStatus, "Closed")
                 .With(f => f.GroupStatusCode, "CLOSED")
@@ -455,7 +455,7 @@ namespace TramsDataApi.Test.Integration
         private static TrustMasterData BuildMasterTrustData(Group groupData)
         {
             var result = _fixture.Create<TrustMasterData>();
-            result.RID = result.RID.Substring(0,10);
+            result.RID = result.RID.Substring(0, 10);
             result.CurrentSingleListGrouping = "Auto";
             result.FollowUpLetterSent = "yes";
             result.PrioritisedForReview = "no";

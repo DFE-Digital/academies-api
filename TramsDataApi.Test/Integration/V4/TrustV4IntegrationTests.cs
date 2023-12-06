@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.Test.Helpers;
 using Xunit;
 
@@ -23,24 +24,26 @@ namespace TramsDataApi.Test.Integration.V4
         public class TrustsV4IntegrationTests : IClassFixture<TramsDataApiFactory>
         {
             private readonly HttpClient _client;
-            private readonly MstrContext _context;
-            private static readonly Fixture _fixture = new Fixture();
+            private static readonly Fixture _autoFixture = new Fixture();
+            private readonly TramsDataApiFactory _apiFixture;
 
             private readonly string _apiUrlPrefix = "https://trams-api.com/v4";
 
             public TrustsV4IntegrationTests(TramsDataApiFactory fixture)
             {
+                _apiFixture = fixture;
                 _client = fixture.CreateClient();
                 _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
                 _client.BaseAddress = new Uri("https://trams-api.com/");
-                _context = fixture.Services.GetRequiredService<MstrContext>();
 
-                _context.Trusts.RemoveRange(_context.Trusts);
-                _context.TrustTypes.RemoveRange(_context.TrustTypes);
+                using var context = _apiFixture.GetMstrContext();
 
-                _context.TrustTypes.Add(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
-                _context.TrustTypes.Add(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
-                _context.SaveChanges();
+                context.Trusts.RemoveRange(context.Trusts);
+                context.TrustTypes.RemoveRange(context.TrustTypes);
+
+                context.TrustTypes.Add(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
+                context.TrustTypes.Add(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
+                context.SaveChanges();
             }
 
             [Fact]
@@ -56,8 +59,10 @@ namespace TramsDataApi.Test.Integration.V4
             {
                 var trustData = DatabaseModelBuilder.BuildTrust();
 
-                _context.Trusts.Add(trustData);
-                _context.SaveChanges();
+                using var context = _apiFixture.GetMstrContext();
+
+                context.Trusts.Add(trustData);
+                context.SaveChanges();
 
                 var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trust/{trustData.UKPRN}");
                 trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -80,8 +85,10 @@ namespace TramsDataApi.Test.Integration.V4
             {
                 var trustData = DatabaseModelBuilder.BuildTrust();
 
-                _context.Trusts.Add(trustData);
-                _context.SaveChanges();
+                using var context = _apiFixture.GetMstrContext();
+
+                context.Trusts.Add(trustData);
+                context.SaveChanges();
 
                 var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trust/companiesHouseNumber/{trustData.CompaniesHouseNumber}");
                 trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -104,8 +111,10 @@ namespace TramsDataApi.Test.Integration.V4
             {
                 var trustData = DatabaseModelBuilder.BuildTrust();
 
-                _context.Trusts.Add(trustData);
-                _context.SaveChanges();
+                using var context = _apiFixture.GetMstrContext();
+
+                context.Trusts.Add(trustData);
+                context.SaveChanges();
 
                 var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trust/trustReferenceNumber/{trustData.GroupID}");
                 trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -133,9 +142,11 @@ namespace TramsDataApi.Test.Integration.V4
                 var firstTrust = DatabaseModelBuilder.BuildTrust();
                 var secondTrust = DatabaseModelBuilder.BuildTrust();
 
-                _context.Trusts.Add(firstTrust);
-                _context.Trusts.Add(secondTrust);
-                _context.SaveChanges();
+                using var context = _apiFixture.GetMstrContext();
+
+                context.Trusts.Add(firstTrust);
+                context.Trusts.Add(secondTrust);
+                context.SaveChanges();
 
                 var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts/bulk?ukprns={firstTrust.UKPRN}&ukprns={secondTrust.UKPRN}");
                 trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -221,13 +232,24 @@ namespace TramsDataApi.Test.Integration.V4
             [Fact]
             public async Task Get_SearchByCriteria_Pagination_Returns_Ok()
             {
-                var groupName = _fixture.Create<string>();
-                var trustsWithName = BuildLargeTrustSet();
-                trustsWithName.ToList().ForEach(g => g.Name = groupName);
-                var allTrustsSorted = trustsWithName.OrderBy(trust => trust.GroupUID).ToList();
-                _context.Trusts.AddRange(trustsWithName);
+                using var context = _apiFixture.GetMstrContext();
 
-                _context.SaveChanges();
+                var groupName = _autoFixture.Create<string>();
+                var trustsWithName = BuildLargeTrustSet();
+                trustsWithName.ToList().ForEach(t => 
+                {
+                    t.Name = groupName;
+                    context.Trusts.Add(t);
+                    context.SaveChanges();
+                });
+
+                var allTrustsSorted = trustsWithName.OrderBy(trust => trust.GroupUID).ToList();
+
+                var distinctIds = trustsWithName.Select(t => t.SK).Distinct().ToList();
+
+                var totalTrusts = context.Trusts.Count();
+                var trustIds = context.Trusts.Select(t => t.SK).ToList();
+                var missing = trustIds.Where(t => !distinctIds.Contains(t)).ToList();
 
                 // Page one
                 var pageOneTrustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts?groupName={groupName}&page=1&count=5");
@@ -266,8 +288,10 @@ namespace TramsDataApi.Test.Integration.V4
                 var trustData = DatabaseModelBuilder.BuildTrust();
                 trustData.Name = trustName;
 
-                _context.Trusts.Add(trustData);
-                _context.SaveChanges();
+                using var context = _apiFixture.GetMstrContext();
+
+                context.Trusts.Add(trustData);
+                context.SaveChanges();
 
                 var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts?groupName={searchString}");
                 trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -301,9 +325,11 @@ namespace TramsDataApi.Test.Integration.V4
                 trustWithCompaniesHouse.CompaniesHouseNumber = companiesHouseNumber;
 
                 var trustWithoutCompaniesHouse = DatabaseModelBuilder.BuildTrust();
-                _context.Trusts.AddRange(trustWithCompaniesHouse, trustWithoutCompaniesHouse);
 
-                _context.SaveChanges();
+                using var context = _apiFixture.GetMstrContext();
+
+                context.Trusts.AddRange(trustWithCompaniesHouse, trustWithoutCompaniesHouse);
+                context.SaveChanges();
 
                 var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts?companiesHouseNumber={searchString}");
                 trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -328,9 +354,11 @@ namespace TramsDataApi.Test.Integration.V4
 
                 var trustWithoutUkPrn = DatabaseModelBuilder.BuildTrust();
 
-                _context.Trusts.AddRange(trustWithUkPrn, trustWithoutUkPrn);
+                using var context = _apiFixture.GetMstrContext();
 
-                _context.SaveChanges();
+                context.Trusts.AddRange(trustWithUkPrn, trustWithoutUkPrn);
+
+                context.SaveChanges();
 
                 var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts?ukprn={searchString}");
                 trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -356,13 +384,14 @@ namespace TramsDataApi.Test.Integration.V4
                 trustContent.Data.Should().HaveCount(0);
             }
 
-            private static List<Trust> BuildLargeTrustSet()
+            private static List<Dfe.Academies.Domain.Trust.Trust> BuildLargeTrustSet()
             {
-                var result = new List<Trust>();
+                var result = new List<Dfe.Academies.Domain.Trust.Trust>();
 
                 for (var idx = 0; idx < 20; idx++)
                 {
                     var trust = DatabaseModelBuilder.BuildTrust();
+                    trust.SK = idx + 1;
                     result.Add(trust);
                 }
 
@@ -370,7 +399,7 @@ namespace TramsDataApi.Test.Integration.V4
 
             }
 
-            private static void AssertTrustResponse(TrustDto actual, Trust expected)
+            private static void AssertTrustResponse(TrustDto actual, Dfe.Academies.Domain.Trust.Trust expected)
             {
                 actual.Name.Should().Be(expected.Name);
                 actual.CompaniesHouseNumber.Should().Be(expected.CompaniesHouseNumber);

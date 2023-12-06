@@ -19,6 +19,7 @@ namespace TramsDataApi.Test
         private readonly IDbContextTransaction _tramsTransaction;
         private readonly IDbContextTransaction _mstrTransaction;
         public readonly string ConnString;
+        public DbContextOptions<MstrContext> MstrContextOptions { get; }
         
         
         public DbFixture()
@@ -46,7 +47,8 @@ namespace TramsDataApi.Test
 
             mstrContextBuilder.UseSqlServer(ConnString);
             _mstrDbContext = new MstrContext(mstrContextBuilder.Options);
-            
+            MstrContextOptions = mstrContextBuilder.Options;
+
             _tramsDbContext.Database.EnsureCreated();
             _tramsDbContext.Database.Migrate();
             

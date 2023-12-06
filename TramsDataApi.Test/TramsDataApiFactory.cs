@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Dfe.Academies.Academisation.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
@@ -26,5 +27,7 @@ namespace TramsDataApi.Test
                 });
             });
         }
+
+        public MstrContext GetMstrContext() => new MstrContext(_dbFixture.MstrContextOptions);
     }
 }
