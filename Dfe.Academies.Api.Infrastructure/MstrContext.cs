@@ -4,6 +4,8 @@ using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Emit;
 
 namespace Dfe.Academies.Academisation.Data;
 
@@ -161,7 +163,7 @@ public class MstrContext : DbContext
     void ConfigureTrust(EntityTypeBuilder<Trust> trustConfiguration)
     {
         trustConfiguration.HasKey(e => e.SK).HasName("SK");
-
+        
         trustConfiguration.ToTable("Trust", DEFAULT_SCHEMA);
 
         trustConfiguration.Property(e => e.TrustsTrustType).HasColumnName("FK_TrustType");
