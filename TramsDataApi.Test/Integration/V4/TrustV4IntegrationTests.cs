@@ -33,15 +33,6 @@ namespace TramsDataApi.Test.Integration.V4
                 _client = fixture.CreateClient();
                 _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
                 _client.BaseAddress = new Uri("https://trams-api.com/");
-
-                using var context = _apiFixture.GetMstrContext();
-
-                context.Trusts.RemoveRange(context.Trusts);
-                context.TrustTypes.RemoveRange(context.TrustTypes);
-
-                context.TrustTypes.Add(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
-                context.TrustTypes.Add(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
-                context.SaveChanges();
             }
 
             [Fact]
@@ -430,10 +421,11 @@ namespace TramsDataApi.Test.Integration.V4
 
             public static IEnumerable<object[]> GetSearchTrustTestSet()
             {
-                var value = _autoFixture.Create<string>();
+                var firstValue = _autoFixture.Create<string>();
+                var secondValue = _autoFixture.Create<string>();
 
-                yield return new object[] { value, value };
-                yield return new object[] { value, value.Substring(0,4) };
+                yield return new object[] { firstValue, firstValue };
+                yield return new object[] { secondValue, secondValue.Substring(0,4) };
             }
         }
     }

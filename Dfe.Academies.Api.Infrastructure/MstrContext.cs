@@ -3,9 +3,6 @@ using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Emit;
 
 namespace Dfe.Academies.Academisation.Data;
 

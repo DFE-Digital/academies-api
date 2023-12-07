@@ -1,26 +1,19 @@
-using System;
-using System.IO;
 using Dfe.Academies.Academisation.Data;
 using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 using TramsDataApi.DatabaseModels;
 using Xunit;
 
 namespace TramsDataApi.Test
 {
-    public class DbFixture : IDisposable
+    public class DbFixture
     {
-        private readonly LegacyTramsDbContext _legacyTramsDbContext;
-        private readonly TramsDbContext _tramsDbContext;
-        private readonly MstrContext _mstrDbContext;
-        private readonly IDbContextTransaction _legacyTransaction;
-        private readonly IDbContextTransaction _tramsTransaction;
-        private readonly IDbContextTransaction _mstrTransaction;
         public readonly string ConnString;
-        public DbContextOptions<MstrContext> MstrContextOptions { get; }
-        
+        public readonly DbContextOptions<MstrContext> MstrContextOptions;
         
         public DbFixture()
         {
@@ -35,37 +28,34 @@ namespace TramsDataApi.Test
 
             ConnString = config.GetConnectionString("DefaultConnection");
 
-            var legacyContextBuilder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
             var tramsContextBuilder = new DbContextOptionsBuilder<TramsDbContext>();
-            var mstrContextBuilder = new DbContextOptionsBuilder<MstrContext>();
-
-            legacyContextBuilder.UseSqlServer(ConnString);
-            _legacyTramsDbContext = new LegacyTramsDbContext(legacyContextBuilder.Options);
-
             tramsContextBuilder.UseSqlServer(ConnString);
-            _tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
+            var tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
 
+            var mstrContextBuilder = new DbContextOptionsBuilder<MstrContext>();
             mstrContextBuilder.UseSqlServer(ConnString);
-            _mstrDbContext = new MstrContext(mstrContextBuilder.Options);
             MstrContextOptions = mstrContextBuilder.Options;
+            var mstrDbContext = new MstrContext(MstrContextOptions);
 
-            _tramsDbContext.Database.EnsureCreated();
-            _tramsDbContext.Database.Migrate();
-            
-            _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
-            _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
-            _mstrTransaction = _mstrDbContext.Database.BeginTransaction();
+            tramsDbContext.Database.EnsureCreated();
+            tramsDbContext.Database.Migrate();
+
+            ClearDatabase(mstrDbContext);
+            SeedDatabase(mstrDbContext);
         }
 
-        public void Dispose()
+        private static void ClearDatabase(MstrContext context)
         {
-            _legacyTransaction.Rollback();
-            _legacyTransaction.Dispose();
-            _tramsTransaction.Rollback();
-            _tramsTransaction.Dispose();
-            _mstrTransaction.Rollback();
-            _mstrTransaction.Dispose();
-            GC.SuppressFinalize(this);
+            context.TrustTypes.RemoveRange(context.TrustTypes);
+            context.Trusts.RemoveRange(context.Trusts);
+            context.SaveChanges();
+        }
+
+        private static void SeedDatabase(MstrContext context)
+        {
+            context.TrustTypes.Add(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
+            context.TrustTypes.Add(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
+            context.SaveChanges();
         }
     }
     
