@@ -52,10 +52,6 @@ namespace TramsDataApi.Test
             _tramsDbContext.Database.EnsureCreated();
             _tramsDbContext.Database.Migrate();
             
-            // Wrap in a transaction to ensure all of our changes are not persisted to the database
-            // This makes sure that none of the data is added or removed from the existing DB
-            // We have to do this because we use the same DB for the tests and development
-            // We cannot create the DB for the tests because the code to migrate does not exist
             _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
             _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
             _mstrTransaction = _mstrDbContext.Database.BeginTransaction();
