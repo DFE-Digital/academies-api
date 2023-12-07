@@ -163,10 +163,10 @@ public class MstrContext : DbContext
         
         trustConfiguration.ToTable("Trust", DEFAULT_SCHEMA);
 
-        trustConfiguration.Property(e => e.TrustsTrustType).HasColumnName("FK_TrustType");
-        trustConfiguration.Property(e => e.Region).HasColumnName("FK_Region");
-        trustConfiguration.Property(e => e.TrustBanding).HasColumnName("FK_TrustBanding");
-        trustConfiguration.Property(e => e.FK_TrustStatus).HasColumnName("FK_TrustStatus");
+        trustConfiguration.Property(e => e.TrustsTypeId).HasColumnName("FK_TrustType");
+        trustConfiguration.Property(e => e.RegionId).HasColumnName("FK_Region");
+        trustConfiguration.Property(e => e.TrustBandingId).HasColumnName("FK_TrustBanding");
+        trustConfiguration.Property(e => e.TrustStatusId).HasColumnName("FK_TrustStatus");
         trustConfiguration.Property(e => e.GroupUID).HasColumnName("Group UID").IsRequired();
         trustConfiguration.Property(e => e.GroupID).HasColumnName("Group ID");
         trustConfiguration.Property(e => e.RID).HasColumnName("RID");
@@ -208,7 +208,7 @@ public class MstrContext : DbContext
         trustConfiguration
         .HasOne(x => x.TrustType)
         .WithOne()
-        .HasForeignKey<Trust>(x => x.TrustsTrustType);
+        .HasForeignKey<Trust>(x => x.TrustsTypeId);
     }
 
     private void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)

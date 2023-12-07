@@ -11,11 +11,11 @@ namespace TramsDataApi.Test.Helpers
         {
             var result = _fixture.Create<Trust>();
             result.TrustStatus = "Open";
-            result.TrustsTrustType = 30;
+            result.TrustsTypeId = 30;
             result.TrustType = null;
-            result.FK_TrustStatus = null;
-            result.Region = null;
-            result.TrustBanding = null;
+            result.TrustStatusId = null;
+            result.RegionId = null;
+            result.TrustBandingId = null;
             result.CurrentSingleListGrouping = result.CurrentSingleListGrouping.Substring(0, 19);
             result.FollowUpLetterSent = result.CurrentSingleListGrouping.Substring(0, 19);
             result.PrioritisedForReview = result.PrioritisedForReview.Substring(0, 19);
