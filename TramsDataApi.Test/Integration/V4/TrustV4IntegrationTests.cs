@@ -298,17 +298,7 @@ namespace TramsDataApi.Test.Integration.V4
 
                 var trustResult = trustContent.Data.First(d => d.Ukprn == selectedTrust.UKPRN);
 
-                trustResult.Name.Should().Be(selectedTrust.Name);
-                trustResult.CompaniesHouseNumber.Should().Be(selectedTrust.CompaniesHouseNumber);
-                trustResult.ReferenceNumber.Should().Be(selectedTrust.GroupID);
-                trustResult.Ukprn.Should().Be(selectedTrust.UKPRN);
-                trustResult.Type.Code.Should().Be("06");
-                trustResult.Type.Name.Should().Be("Multi-academy trust");
-                trustResult.Address.Street.Should().Be(selectedTrust.AddressLine1);
-                trustResult.Address.Town.Should().Be(selectedTrust.Town);
-                trustResult.Address.Postcode.Should().Be(selectedTrust.Postcode);
-                trustResult.Address.County.Should().Be(selectedTrust.County);
-                trustResult.Address.Additional.Should().Be(selectedTrust.AddressLine2);
+                AssertTrustResponse(trustResult, selectedTrust);
             }
 
             [Theory]
@@ -370,6 +360,37 @@ namespace TramsDataApi.Test.Integration.V4
                 var trustContent = await trustResponse.Content.ReadFromJsonAsync<PagedDataResponse<TrustDto>>();
 
                 trustContent.Data.Should().HaveCount(0);
+            }
+
+            [Fact]
+            public async Task Get_WithMinimumCriteria_Returns_Ok()
+            {
+                using var context = _apiFixture.GetMstrContext();
+
+                var selectedTrust = new Trust();
+                selectedTrust.SK = context.GetNextTrustId();
+                selectedTrust.UKPRN = _autoFixture.Create<string>();
+                selectedTrust.GroupUID = _autoFixture.Create<string>();
+                selectedTrust.Name = _autoFixture.Create<string>();
+                context.Trusts.Add(selectedTrust);
+                context.SaveChanges();
+
+                var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trust/{selectedTrust.UKPRN}");
+                trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+                var actual = await trustResponse.Content.ReadFromJsonAsync<TrustDto>();
+
+                actual.Name.Should().Be(selectedTrust.Name);
+                actual.CompaniesHouseNumber.Should().BeNull();
+                actual.ReferenceNumber.Should().BeNull();
+                actual.Ukprn.Should().Be(selectedTrust.UKPRN);
+                actual.Type.Code.Should().BeNull();
+                actual.Type.Name.Should().BeNull();
+                actual.Address.Street.Should().BeNull();
+                actual.Address.Town.Should().BeNull();
+                actual.Address.Postcode.Should().BeNull();
+                actual.Address.County.Should().BeNull();
+                actual.Address.Additional.Should().BeNull();
             }
 
             private static List<Trust> BuildSmallTrustSet(MstrContext context)
