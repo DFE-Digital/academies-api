@@ -1,4 +1,5 @@
 using Dfe.Academies.Academisation.Data;
+using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +13,7 @@ namespace TramsDataApi.Test
     {
         public readonly string ConnString;
         public readonly DbContextOptions<MstrContext> MstrContextOptions;
-        
+
         public DbFixture()
         {
             var projectDir = Directory.GetCurrentDirectory();
@@ -46,17 +47,32 @@ namespace TramsDataApi.Test
         {
             context.TrustTypes.RemoveRange(context.TrustTypes);
             context.Trusts.RemoveRange(context.Trusts);
+            context.LocalAuthorities.RemoveRange(context.LocalAuthorities);
+            context.Establishments.RemoveRange(context.Establishments);
             context.SaveChanges();
         }
 
         private static void SeedDatabase(MstrContext context)
         {
+            SeedTrustTypes(context);
+            SeedLocalAuthorities(context);
+        }
+
+        private static void SeedTrustTypes(MstrContext context)
+        {
             context.TrustTypes.Add(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
             context.TrustTypes.Add(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
             context.SaveChanges();
         }
+
+        private static void SeedLocalAuthorities(MstrContext context)
+        {
+            context.LocalAuthorities.Add(new LocalAuthority() { SK = 1, Code = "202", Name = "Barnsley" });
+            context.LocalAuthorities.Add(new LocalAuthority() { SK = 2, Code = "203", Name = "Birmingham" });
+            context.LocalAuthorities.Add(new LocalAuthority() { SK = 3, Code = "204", Name = "Bradford" });
+        }
     }
-    
+
     [CollectionDefinition("Database", DisableParallelization = true)]
     public class DatabaseCollection : ICollectionFixture<DbFixture>
     {
