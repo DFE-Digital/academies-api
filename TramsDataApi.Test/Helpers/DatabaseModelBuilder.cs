@@ -39,5 +39,14 @@ namespace TramsDataApi.Test.Helpers
 
             return result;
         }
+
+        public static IfdPipeline BuildIfdPipeline()
+        {
+            var result = _fixture.Create<IfdPipeline>();
+            result.SK = null;
+            result.GeneralDetailsUrn = _fixture.Create<int>().ToString();
+
+            return result;
+        }
     }
 }
