@@ -27,7 +27,5 @@ namespace TramsDataApi.Test
                 });
             });
         }
-
-        public MstrContext GetMstrContext() => new MstrContext(_dbFixture.MstrContextOptions);
     }
 }

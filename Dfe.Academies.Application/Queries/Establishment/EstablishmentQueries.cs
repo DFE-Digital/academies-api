@@ -22,9 +22,15 @@ namespace Dfe.Academies.Application.Queries.Establishment
         public async Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken)
         {
             var establishment = await _establishmentRepository.GetEstablishmentByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
-            var censusData = this._censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
 
-            return establishment == null ? null : MapToEstablishmentDto(establishment, censusData);
+            if (establishment == null)
+            {
+                return null;
+            }
+
+            var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
+
+            return MapToEstablishmentDto(establishment, censusData);
         }
         public async Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken)
         {

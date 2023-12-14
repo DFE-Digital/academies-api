@@ -8,7 +8,7 @@ namespace Dfe.Academies.Domain.Establishment
 {
     public class Establishment
     {
-        public long SK { get; set; }
+        public long? SK { get; set; }
         public string? PK_GIAS_URN { get; set; }
         public long? PK_CDM_ID { get; set; }
         public int? URN { get; set; }
@@ -99,9 +99,9 @@ namespace Dfe.Academies.Domain.Establishment
         public int? SenUnitCapacity { get; set; }
         public int? SenUnitOnRoll { get; set; }
 
-        public LocalAuthority LocalAuthority { get; set; }
-        public EstablishmentType EstablishmentType{ get; set; }
+        public LocalAuthority? LocalAuthority { get; set; }
+        public EstablishmentType? EstablishmentType{ get; set; }
 
-        public IfdPipeline IfdPipeline { get; set; }
+        public IfdPipeline? IfdPipeline { get; set; }
     }
 }

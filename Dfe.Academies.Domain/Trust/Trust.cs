@@ -5,7 +5,7 @@ namespace Dfe.Academies.Domain.Trust
     public class Trust
     {
         public long? SK { get; set; }
-        public long? TrustsTypeId { get; set; }
+        public long? TrustTypeId { get; set; }
         public long? RegionId { get; set; }
         public long? TrustBandingId { get; set; }
         public long? TrustStatusId { get; set; }

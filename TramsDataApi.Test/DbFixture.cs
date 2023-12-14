@@ -12,7 +12,6 @@ namespace TramsDataApi.Test
     public class DbFixture
     {
         public readonly string ConnString;
-        public readonly DbContextOptions<MstrContext> MstrContextOptions;
 
         public DbFixture()
         {
@@ -31,45 +30,8 @@ namespace TramsDataApi.Test
             tramsContextBuilder.UseSqlServer(ConnString);
             var tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
 
-            var mstrContextBuilder = new DbContextOptionsBuilder<MstrContext>();
-            mstrContextBuilder.UseSqlServer(ConnString);
-            MstrContextOptions = mstrContextBuilder.Options;
-            var mstrDbContext = new MstrContext(MstrContextOptions);
-
             tramsDbContext.Database.EnsureCreated();
             tramsDbContext.Database.Migrate();
-
-            ClearDatabase(mstrDbContext);
-            SeedDatabase(mstrDbContext);
-        }
-
-        private static void ClearDatabase(MstrContext context)
-        {
-            context.TrustTypes.RemoveRange(context.TrustTypes);
-            context.Trusts.RemoveRange(context.Trusts);
-            context.LocalAuthorities.RemoveRange(context.LocalAuthorities);
-            context.Establishments.RemoveRange(context.Establishments);
-            context.SaveChanges();
-        }
-
-        private static void SeedDatabase(MstrContext context)
-        {
-            SeedTrustTypes(context);
-            SeedLocalAuthorities(context);
-        }
-
-        private static void SeedTrustTypes(MstrContext context)
-        {
-            context.TrustTypes.Add(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
-            context.TrustTypes.Add(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
-            context.SaveChanges();
-        }
-
-        private static void SeedLocalAuthorities(MstrContext context)
-        {
-            context.LocalAuthorities.Add(new LocalAuthority() { SK = 1, Code = "202", Name = "Barnsley" });
-            context.LocalAuthorities.Add(new LocalAuthority() { SK = 2, Code = "203", Name = "Birmingham" });
-            context.LocalAuthorities.Add(new LocalAuthority() { SK = 3, Code = "204", Name = "Bradford" });
         }
     }
 

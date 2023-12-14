@@ -72,7 +72,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
                                                 .ConfigureAwait(false);
             
             var establishments = await DefaultIncludes().AsNoTracking()
-                                            .Where(e => establishmentIds.Contains(e.SK))
+                                            .Where(e => establishmentIds.Contains(e.SK.Value))
                                             .ToListAsync(cancellationToken)
                                             .ConfigureAwait(false);
 
@@ -87,7 +87,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             var x = dbSet
                 .Include(x => x.EstablishmentType)
                 .Include(x => x.LocalAuthority)
-                .Include(x => x.IfdPipeline)
+                // .Include(x => x.IfdPipeline)
                 .AsQueryable();
 
             return x;
