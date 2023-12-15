@@ -1,14 +1,16 @@
 ﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Academisation.Data.Repositories;
 using Dfe.Academies.Domain.Establishment;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
-    public class EstablishmentRepository : GenericRepository<Establishment>, IEstablishmentRepository
+    public class EstablishmentRepository : IEstablishmentRepository
     {
-        public EstablishmentRepository(MstrContext context) : base(context)
+        private MstrContext _context;
+
+        public EstablishmentRepository(MstrContext context)
         {
+            _context = context;
         }
 
         public async Task<Establishment?> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken)
@@ -67,27 +69,29 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
-            return await DefaultIncludes() //Adding Explicit cast because the Domain entity has the URN as nullable
+            return await _context.Establishments
                 .AsNoTracking()
-                .Where(p => regions.Contains(p!.GORregion.ToLower()) && p.URN.HasValue)
+                .Where(p => regions.Contains(p.GORregion) && p.URN.HasValue)
                 .Select(e => e.URN.Value)
-                .ToListAsync(cancellationToken)
-                .ConfigureAwait(false);
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<List<Establishment>> GetByUrns(int[] urns, CancellationToken cancellationToken)
         {
             var urnsList = urns.ToList();
-            return await DefaultIncludes()
-                .AsNoTracking()
-                .Where(e => urnsList.Contains((int)e.URN))
+            var queryResult = await BaseQuery()
+                .Where(r => urnsList.Contains((int)r.Establishment.URN))
                 .ToListAsync(cancellationToken);
+
+            var result = queryResult.Select(ToEstablishment).ToList();
+
+            return result;
         }
 
         public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
         {
             var establishmentIds = 
-                await context.EducationEstablishmentTrusts
+                await _context.EducationEstablishmentTrusts
                         .AsNoTracking()             
                         .Where(eet => eet.TrustId == Convert.ToInt32(trustId))
                         .Select(eet => (long)eet.EducationEstablishmentId)
@@ -106,23 +110,13 @@ namespace Dfe.Academies.Infrastructure.Repositories
         private IQueryable<EstablishmentQueryResult> BaseQuery()
         {
             var result =
-                context.Establishments
+                _context.Establishments
                     .Include(x => x.EstablishmentType)
                     .Include(x => x.LocalAuthority)
-                    .Join(context.IfdPipelines, e => e.PK_GIAS_URN, i => i.GeneralDetailsUrn, (e, i) => new EstablishmentQueryResult { Establishment = e, IfdPipeline = i })
+                    .Join(_context.IfdPipelines, e => e.PK_GIAS_URN, i => i.GeneralDetailsUrn, (e, i) => new EstablishmentQueryResult { Establishment = e, IfdPipeline = i })
                     .AsNoTracking();
 
             return result;
-        }
-
-        private IQueryable<Establishment> DefaultIncludes()
-        {
-            var x = dbSet
-                .Include(x => x.EstablishmentType)
-                .Include(x => x.LocalAuthority)
-                .AsQueryable();
-
-            return x;
         }
 
         private static Establishment ToEstablishment(EstablishmentQueryResult queryResult)

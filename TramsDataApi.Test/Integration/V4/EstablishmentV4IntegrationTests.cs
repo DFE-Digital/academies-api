@@ -241,6 +241,77 @@ namespace TramsDataApi.Test.Integration.V4
             establishmentContent.First().Urn.Should().Be(firstEstablishmentData.Establishment.URN.ToString());
         }
 
+        [Fact]
+        public async Task Get_BulkEstablishment_NoEstablishmentsExist_Returns_Empty()
+        {
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments/bulk?request=123");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Get_BulkEstablishment_EstablishmentsExist_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustOne = CreateDataSet(context);
+
+            var establishmentOne = trustOne.Establishments.ElementAt(0);
+            var establishmentTwo = trustOne.Establishments.ElementAt(1);
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments/bulk?request={establishmentOne.Establishment.URN}&request={establishmentTwo.Establishment.URN}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Count.Should().Be(2);
+
+            var expectedEstablishments = new List<EstablishmentDataSet> { establishmentOne, establishmentTwo };
+
+            expectedEstablishments.ForEach(establishmentDataSet =>
+            {
+                var matchingEstablishment = establishmentContent.FirstOrDefault(x => x.Urn == establishmentDataSet.Establishment.URN.ToString());
+
+                AssertEstablishmentResponse(matchingEstablishment, establishmentDataSet.Establishment, establishmentDataSet.IfdPipeline);
+            });
+        }
+
+        [Fact]
+        public async Task Get_EstablishmentUrnsByRegion_NoEstablishmentsExist_Returns_NotFound()
+        {
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishment/regions?regions=123");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Get_EstablishmentUrnsByRegion_EstablishmentsExist_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustOne = CreateDataSet(context);
+
+            var establishmentOne = trustOne.Establishments.ElementAt(0);
+            var establishmentTwo = trustOne.Establishments.ElementAt(1);
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishment/regions?regions={establishmentOne.Establishment.GORregion}&regions={establishmentTwo.Establishment.GORregion}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var actual = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<int>>();
+
+            actual.Count.Should().Be(2);
+
+            var expectedEstablishmentUrns = new List<int>() { establishmentOne.Establishment.URN.Value, establishmentTwo.Establishment.URN.Value };
+
+            actual.Should().BeEquivalentTo(expectedEstablishmentUrns);
+        }
+
         private static TrustDataSet CreateDataSet(MstrContext context)
         {
             var trust = DatabaseModelBuilder.BuildTrust();
