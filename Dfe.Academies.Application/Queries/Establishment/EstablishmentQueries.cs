@@ -1,6 +1,5 @@
 ﻿using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Domain.Establishment;
-
 using Dfe.Academies.Application.Builders;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Domain.Census;
@@ -29,9 +28,7 @@ namespace Dfe.Academies.Application.Queries.Establishment
                 return null;
             }
 
-            var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
-
-            return MapToEstablishmentDto(establishment, censusData);
+            return MapToEstablishmentDto(establishment);
         }
 
         public async Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken)
@@ -43,23 +40,21 @@ namespace Dfe.Academies.Application.Queries.Establishment
                 return null;
             }
 
-            var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
-
-            return MapToEstablishmentDto(establishment, censusData);
+            return MapToEstablishmentDto(establishment);
         }
 
         public async Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
-            var establishments = await _establishmentRepository.Search(name, ukPrn, urn, cancellationToken).ConfigureAwait(false);
+            var establishments = await _establishmentRepository.Search(name, ukPrn, urn, cancellationToken);
 
-            return (establishments.Select(x => MapToEstablishmentDto(x, _censusDataRepository.GetCensusDataByURN(x.URN.Value))).ToList(), establishments.Count);
+            return (establishments.Select(x => MapToEstablishmentDto(x)).ToList(), establishments.Count);
         }
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
-            var URNs = await _establishmentRepository.GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);
+            var urns = await _establishmentRepository.GetURNsByRegion(regions, cancellationToken);
 
-            return URNs;
+            return urns;
         }
 
         public async Task<List<EstablishmentDto>> GetByTrust(string trustUkprn, CancellationToken cancellationToken)
@@ -72,19 +67,21 @@ namespace Dfe.Academies.Application.Queries.Establishment
             }
 
             var establishments = await _establishmentRepository.GetByTrust(trust.SK, cancellationToken).ConfigureAwait(false);
-            return establishments.Select(x => MapToEstablishmentDto(x, _censusDataRepository.GetCensusDataByURN(x.URN.Value))).ToList();
+            return establishments.Select(x => MapToEstablishmentDto(x)).ToList();
         }
 
         public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken)
         {
             var establishments = await _establishmentRepository.GetByUrns(Urns, cancellationToken).ConfigureAwait(false);
 
-            return (establishments.Select(x => MapToEstablishmentDto(x, _censusDataRepository.GetCensusDataByURN(x.URN.Value))).ToList());
+            return (establishments.Select(x => MapToEstablishmentDto(x)).ToList());
         }
 
-        private static EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment? establishment, CensusData censusData)
+        private EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment establishment)
         {
-            return new EstablishmentDtoBuilder()
+            var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
+
+            var result = new EstablishmentDtoBuilder()
                 .WithBasicDetails(establishment)
                 .WithLocalAuthority(establishment)
                 .WithDiocese(establishment)
@@ -97,6 +94,8 @@ namespace Dfe.Academies.Application.Queries.Establishment
                 .WithMISEstablishment(establishment)
                 .WithAddress(establishment)
                 .Build();
+
+            return result;
         }
     }
 }

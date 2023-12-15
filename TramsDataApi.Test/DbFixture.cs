@@ -1,17 +1,21 @@
-using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Trust;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using TramsDataApi.DatabaseModels;
 using Xunit;
 
 namespace TramsDataApi.Test
 {
-    public class DbFixture
+    public class DbFixture : IDisposable
     {
+        private readonly LegacyTramsDbContext _legacyTramsDbContext;
+        private readonly TramsDbContext _tramsDbContext;
+        private readonly IDbContextTransaction _legacyTransaction;
+        private readonly IDbContextTransaction _tramsTransaction;
         public readonly string ConnString;
+
 
         public DbFixture()
         {
@@ -26,12 +30,29 @@ namespace TramsDataApi.Test
 
             ConnString = config.GetConnectionString("DefaultConnection");
 
+            var legacyContextBuilder = new DbContextOptionsBuilder<LegacyTramsDbContext>();
             var tramsContextBuilder = new DbContextOptionsBuilder<TramsDbContext>();
-            tramsContextBuilder.UseSqlServer(ConnString);
-            var tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
 
-            tramsDbContext.Database.EnsureCreated();
-            tramsDbContext.Database.Migrate();
+            legacyContextBuilder.UseSqlServer(ConnString);
+            _legacyTramsDbContext = new LegacyTramsDbContext(legacyContextBuilder.Options);
+
+            tramsContextBuilder.UseSqlServer(ConnString);
+            _tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
+
+            _tramsDbContext.Database.EnsureCreated();
+            _tramsDbContext.Database.Migrate();
+
+            _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
+            _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
+        }
+
+        public void Dispose()
+        {
+            _legacyTransaction.Rollback();
+            _legacyTransaction.Dispose();
+            _tramsTransaction.Rollback();
+            _tramsTransaction.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 
