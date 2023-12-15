@@ -148,14 +148,14 @@ public class MstrContext : DbContext
 
         establishmentConfiguration
             .HasOne(x => x.EstablishmentType)
-            .WithOne()
-            .HasForeignKey<Establishment>(x => x.FK_EstablishmentType)
+            .WithMany()
+            .HasForeignKey(x => x.FK_EstablishmentType)
             .IsRequired(false);
 
         establishmentConfiguration
             .HasOne(x => x.LocalAuthority)
-            .WithOne()
-            .HasForeignKey<Establishment>(x => x.FK_LocalAuthority)
+            .WithMany()
+            .HasForeignKey(x => x.FK_LocalAuthority)
             .IsRequired(false);
     }
 
@@ -230,9 +230,12 @@ public class MstrContext : DbContext
     private void ConfigureEducationEstablishmentTrust(EntityTypeBuilder<EducationEstablishmentTrust> entityBuilder)
     {
         entityBuilder.HasKey(e => e.SK);
-        entityBuilder.ToTable("EducationEstablishmentTrust", DEFAULT_SCHEMA);        
-      
+        entityBuilder.ToTable("EducationEstablishmentTrust", DEFAULT_SCHEMA);
+
+        entityBuilder.Property(e => e.EducationEstablishmentId).HasColumnName("FK_EducationEstablishment");
+        entityBuilder.Property(e => e.TrustId).HasColumnName("FK_Trust");
     }
+
     private void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
     {
         localAuthorityConfiguration.HasKey(e => e.SK);

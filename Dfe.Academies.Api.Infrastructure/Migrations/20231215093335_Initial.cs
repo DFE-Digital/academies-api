@@ -13,6 +13,21 @@ namespace Dfe.Academies.Infrastructure.Migrations
                 name: "mstr");
 
             migrationBuilder.CreateTable(
+                name: "EducationEstablishmentTrust",
+                schema: "mstr",
+                columns: table => new
+                {
+                    SK = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FK_Trust = table.Column<int>(type: "int", nullable: false),
+                    FK_EducationEstablishment = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EducationEstablishmentTrust", x => x.SK);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IfdPipeline",
                 schema: "mstr",
                 columns: table => new
@@ -255,37 +270,6 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         principalColumn: "SK");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "EducationEstablishmentTrust",
-                schema: "mstr",
-                columns: table => new
-                {
-                    SK = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_Trust = table.Column<int>(type: "int", nullable: false),
-                    FK_EducationEstablishment = table.Column<int>(type: "int", nullable: false),
-                    TrustSK = table.Column<long>(type: "bigint", nullable: false),
-                    EstablishmentSK = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EducationEstablishmentTrust", x => x.SK);
-                    table.ForeignKey(
-                        name: "FK_EducationEstablishmentTrust_EducationEstablishment_EstablishmentSK",
-                        column: x => x.EstablishmentSK,
-                        principalSchema: "mstr",
-                        principalTable: "EducationEstablishment",
-                        principalColumn: "SK",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EducationEstablishmentTrust_Trust_TrustSK",
-                        column: x => x.TrustSK,
-                        principalSchema: "mstr",
-                        principalTable: "Trust",
-                        principalColumn: "SK",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 schema: "mstr",
                 table: "Ref_EducationEstablishmentType",
@@ -321,35 +305,19 @@ namespace Dfe.Academies.Infrastructure.Migrations
                 name: "IX_EducationEstablishment_FK_EstablishmentType",
                 schema: "mstr",
                 table: "EducationEstablishment",
-                column: "FK_EstablishmentType",
-                unique: true,
-                filter: "[FK_EstablishmentType] IS NOT NULL");
+                column: "FK_EstablishmentType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EducationEstablishment_FK_LocalAuthority",
                 schema: "mstr",
                 table: "EducationEstablishment",
-                column: "FK_LocalAuthority",
-                unique: true,
-                filter: "[FK_LocalAuthority] IS NOT NULL");
+                column: "FK_LocalAuthority");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EducationEstablishment_IfdPipelineSK",
                 schema: "mstr",
                 table: "EducationEstablishment",
                 column: "IfdPipelineSK");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EducationEstablishmentTrust_EstablishmentSK",
-                schema: "mstr",
-                table: "EducationEstablishmentTrust",
-                column: "EstablishmentSK");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EducationEstablishmentTrust_TrustSK",
-                schema: "mstr",
-                table: "EducationEstablishmentTrust",
-                column: "TrustSK");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trust_FK_TrustType",
@@ -361,11 +329,11 @@ namespace Dfe.Academies.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EducationEstablishmentTrust",
+                name: "EducationEstablishment",
                 schema: "mstr");
 
             migrationBuilder.DropTable(
-                name: "EducationEstablishment",
+                name: "EducationEstablishmentTrust",
                 schema: "mstr");
 
             migrationBuilder.DropTable(

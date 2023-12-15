@@ -1,10 +1,12 @@
 ﻿using AutoFixture;
+using Dfe.Academies.Academisation.Data;
 using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Domain.Establishment;
-using FizzWare.NBuilder.Extensions;
+using Dfe.Academies.Domain.Trust;
+using Dfe.Academies.Utils.Extensions;
 using FluentAssertions;
-using Microsoft.OpenApi.Extensions;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -12,7 +14,6 @@ using System.Threading.Tasks;
 using TramsDataApi.Test.Fixtures;
 using TramsDataApi.Test.Helpers;
 using Xunit;
-using Dfe.Academies.Utils.Extensions;
 
 namespace TramsDataApi.Test.Integration.V4
 {
@@ -44,92 +45,266 @@ namespace TramsDataApi.Test.Integration.V4
         {
             using var context = _apiFixture.GetMstrContext();
 
-            var establishment = DatabaseModelBuilder.BuildEstablishment();
-            var idfPipeline = DatabaseModelBuilder.BuildIfdPipeline();
+            var trust = CreateDataSet(context);
+            var establishmentDataSet = trust.Establishments.First();
+            var establishment = establishmentDataSet.Establishment;
+            var ifdPipeline = establishmentDataSet.IfdPipeline;
 
-            // Sets the URN to match the census data, which is statically checked in this test
+            // Matches a URN in the census
             establishment.URN = 100028;
-            establishment.PK_GIAS_URN = idfPipeline.GeneralDetailsUrn;
 
-            context.Establishments.Add(establishment);
-            context.IfdPipelines.Add(idfPipeline);
+            context.Update(establishment);
             context.SaveChanges();
 
             var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishment/{establishment.UKPRN}");
             getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
+            var actual = await getEstablishmentResponse.Content.ReadFromJsonAsync<EstablishmentDto>();
+
+            AssertEstablishmentResponse(actual, establishment, ifdPipeline);
+
+            // Check data from the census
+            actual.Census.PercentageFsmLastSixYears.Should().Be("5.70%");
+            actual.Census.PercentageEnglishAsSecondLanguage.Should().Be("52.60%");
+            actual.Census.PercentageSen.Should().Be("6.30%");
+        }
+
+        [Fact]
+        public async Task Get_EstablishmentByUrn_EstablishmentDoesNotExist_Returns_NotFound()
+        {
+            var urn = _autoFixture.Create<int>();
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishment/urn/{urn}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
+        public async Task Get_EstablishmentByUrn_EstablishmentExists_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trust = CreateDataSet(context);
+            var establishmentDataSet = trust.Establishments.First();
+            var establishment = establishmentDataSet.Establishment;
+            var ifdPipeline = establishmentDataSet.IfdPipeline;
+
+            // Matches a URN in the census
+            establishment.URN = 100270;
+
+            context.Update(establishment);
+            context.SaveChanges();
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishment/urn/{establishment.URN}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
             var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<EstablishmentDto>();
 
-            establishmentContent.Ukprn.Should().Be(establishment.UKPRN);
-            establishmentContent.Urn.Should().Be(establishment.URN.ToString());
-            establishmentContent.Name.Should().Be(establishment.EstablishmentName);
-            establishmentContent.OfstedRating.Should().Be(establishment.OfstedRating);
-            establishmentContent.OfstedLastInspection.Should().Be(establishment.OfstedLastInspection);
-            establishmentContent.StatutoryLowAge.Should().Be(establishment.StatutoryLowAge);
-            establishmentContent.StatutoryHighAge.Should().Be(establishment.StatutoryHighAge);
-            establishmentContent.SchoolCapacity.Should().Be(establishment.SchoolCapacity);
-            establishmentContent.EstablishmentNumber.Should().Be(establishment.EstablishmentNumber.ToString());
-            establishmentContent.GiasLastChangedDate.Should().Be(establishment.GiasLastChangedDate.ToResponseDate());
-            establishmentContent.NoOfBoys.Should().Be(establishment.NumberOfBoys.ToString());
-            establishmentContent.NoOfGirls.Should().Be(establishment.NumberOfGirls.ToString());
-            establishmentContent.SenUnitCapacity.Should().Be(establishment.SenUnitCapacity.ToString());
-            establishmentContent.SenUnitOnRoll.Should().Be(establishment.SenUnitOnRoll.ToString());
-            establishmentContent.ReligousEthos.Should().Be(establishment.ReligiousEthos);
-            establishmentContent.HeadteacherTitle.Should().Be(establishment.HeadTitle);
-            establishmentContent.HeadteacherFirstName.Should().Be(establishment.HeadFirstName);
-            establishmentContent.HeadteacherLastName.Should().Be(establishment.HeadLastName);
-            establishmentContent.HeadteacherPreferredJobTitle.Should().Be(establishment.HeadPreferredJobTitle);
-
-            establishmentContent.LocalAuthorityCode.Should().Be("202");
-            establishmentContent.LocalAuthorityName.Should().Be("Barnsley");
-
-            establishmentContent.Diocese.Code.Should().Be(establishment.DioceseCode);
-            establishmentContent.Diocese.Name.Should().Be(establishment.Diocese);
-
-            establishmentContent.EstablishmentType.Code.Should().Be("18");
-            establishmentContent.EstablishmentType.Name.Should().Be("Further education");
-
-            establishmentContent.Gor.Code.Should().Be(establishment.GORregionCode);
-            establishmentContent.Gor.Name.Should().Be(establishment.GORregion);
-
-            establishmentContent.PhaseOfEducation.Code.Should().Be(establishment.PhaseOfEducationCode.ToString());
-            establishmentContent.PhaseOfEducation.Name.Should().Be(establishment.PhaseOfEducation);
-
-            establishmentContent.ReligiousCharacter.Code.Should().Be(establishment.ReligiousCharacterCode);
-            establishmentContent.ReligiousCharacter.Name.Should().Be(establishment.ReligiousCharacter);
-
-            establishmentContent.ParliamentaryConstituency.Code.Should().Be(establishment.ParliamentaryConstituencyCode);
-            establishmentContent.ParliamentaryConstituency.Name.Should().Be(establishment.ParliamentaryConstituency);
-
-            establishmentContent.Address.Street.Should().Be(establishment.AddressLine1);
-            establishmentContent.Address.Additional.Should().Be(establishment.AddressLine2);
-            establishmentContent.Address.Locality.Should().Be(establishment.AddressLine3);
-            establishmentContent.Address.Town.Should().Be(establishment.Town);
-            establishmentContent.Address.County.Should().Be(establishment.County);
-            establishmentContent.Address.Postcode.Should().Be(establishment.Postcode);
-
-            establishmentContent.MISEstablishment.DateOfLatestSection8Inspection.Should().Be(establishment.DateOfLatestShortInspection.ToResponseDate());
-            establishmentContent.MISEstablishment.InspectionEndDate.Should().Be(establishment.InspectionEndDate.ToResponseDate());
-            establishmentContent.MISEstablishment.OverallEffectiveness.Should().Be(establishment.OverallEffectiveness.ToString());
-            establishmentContent.MISEstablishment.QualityOfEducation.Should().Be(establishment.QualityOfEducation.ToString());
-            establishmentContent.MISEstablishment.BehaviourAndAttitudes.Should().Be(establishment.BehaviourAndAttitudes.ToString());
-            establishmentContent.MISEstablishment.PersonalDevelopment.Should().Be(establishment.PersonalDevelopment.ToString());
-            establishmentContent.MISEstablishment.EffectivenessOfLeadershipAndManagement.Should().Be(establishment.EffectivenessOfLeadershipAndManagement.ToString());
-            establishmentContent.MISEstablishment.EarlyYearsProvision.Should().Be(establishment.EarlyYearsProvisionWhereApplicable.ToString());
-            establishmentContent.MISEstablishment.SixthFormProvision.Should().Be(establishment.SixthFormProvisionWhereApplicable.ToString());
-            establishmentContent.MISEstablishment.Weblink.Should().Be(establishment.Website);
-
-            establishmentContent.Census.NumberOfPupils.Should().Be(establishment.NumberOfPupils);
-            establishmentContent.Census.PercentageFsm.Should().Be(establishment.PercentageFSM);
-            establishmentContent.Census.PercentageFsmLastSixYears.Should().Be("5.70%");
-            establishmentContent.Census.PercentageEnglishAsSecondLanguage.Should().Be("52.60%");
-            establishmentContent.Census.PercentageSen.Should().Be("6.30%");
-
-            // IDF Pipeline
-            establishmentContent.Pan.Should().Be(idfPipeline.DeliveryProcessPAN);
-            establishmentContent.Pfi.Should().Be(idfPipeline.DeliveryProcessPFI);
-            establishmentContent.Deficit.Should().Be(idfPipeline.ProjectTemplateInformationDeficit);
-            establishmentContent.ViabilityIssue.Should().Be(idfPipeline.ProjectTemplateInformationViabilityIssue);
+            AssertEstablishmentResponse(establishmentContent, establishment, ifdPipeline);
         }
+
+        [Fact]
+        public async Task Get_EstablishmentListByTrust_TrustDoesNotExist_Returns_Empty()
+        {
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments/trust?trustUkPrn=NotExist");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Get_EstablishmentListByTrust_TrustHasNoEstablishments_Returns_Empty()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trust = DatabaseModelBuilder.BuildTrust();
+
+            context.Trusts.Add(trust);
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments/trust?trustUkPrn={trust.UKPRN}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Get_EstablishmentListByTrust_TrustExists_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustOne = CreateDataSet(context);
+
+            // Matches URNs in the census
+            trustOne.Establishments.ElementAt(0).Establishment.URN = 100601;
+            trustOne.Establishments.ElementAt(1).Establishment.URN = 100602;
+            trustOne.Establishments.ElementAt(2).Establishment.URN = 100604;
+
+            context.Establishments.UpdateRange(trustOne.Establishments.Select(x => x.Establishment));
+            context.SaveChanges();
+
+            var trustTwo = CreateDataSet(context);
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments/trust?trustUkPrn={trustOne.Trust.UKPRN}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Count.Should().Be(3);
+
+            trustOne.Establishments.ForEach(establishmentDataSet =>
+            {
+                var matchingEstablishment = establishmentContent.FirstOrDefault(x => x.Urn == establishmentDataSet.Establishment.URN.ToString());
+
+                AssertEstablishmentResponse(matchingEstablishment, establishmentDataSet.Establishment, establishmentDataSet.IfdPipeline);
+            });
+        }
+
+        private static TrustDataSet CreateDataSet(MstrContext context)
+        {
+            var trust = DatabaseModelBuilder.BuildTrust();
+            context.Add(trust);
+            context.SaveChanges();
+
+            var establishments = new List<EstablishmentDataSet>();
+
+            for (var idx = 0; idx < 3; idx++)
+            {
+                var establishment = DatabaseModelBuilder.BuildEstablishment();
+                var ifdPipeline = DatabaseModelBuilder.BuildIfdPipeline();
+                ifdPipeline.GeneralDetailsUrn = establishment.PK_GIAS_URN;
+
+                var establishmentDataSet = new EstablishmentDataSet()
+                {
+                    Establishment = establishment,
+                    IfdPipeline = ifdPipeline
+                };
+
+                context.Establishments.Add(establishment);
+                context.IfdPipelines.Add(ifdPipeline);
+
+                establishments.Add(establishmentDataSet);
+            }
+
+            context.SaveChanges();
+
+            var trustToEstablishmentLinks = LinkTrustToEstablishments(trust, establishments.Select(d => d.Establishment).ToList());
+
+            context.EducationEstablishmentTrusts.AddRange(trustToEstablishmentLinks);
+
+            context.SaveChanges();
+
+            var result = new TrustDataSet()
+            {
+                Trust = trust,
+                Establishments = establishments
+            };
+
+            return result;
+        }
+
+        private static List<EducationEstablishmentTrust> LinkTrustToEstablishments(Trust trust, List<Establishment> establishments)
+        {
+            var result = new List<EducationEstablishmentTrust>();
+
+            establishments.ForEach(establishment =>
+            {
+                var educationEstablishmentTrust = new EducationEstablishmentTrust()
+                {
+                    TrustId = (int)trust.SK,
+                    EducationEstablishmentId = (int)establishment.SK
+                };
+
+                result.Add(educationEstablishmentTrust);
+            });
+
+            return result;
+        }
+
+        private static void AssertEstablishmentResponse(EstablishmentDto actual, Establishment expected, IfdPipeline ifdPipeline)
+        {
+            actual.Ukprn.Should().Be(expected.UKPRN);
+            actual.Urn.Should().Be(expected.URN.ToString());
+            actual.Name.Should().Be(expected.EstablishmentName);
+            actual.OfstedRating.Should().Be(expected.OfstedRating);
+            actual.OfstedLastInspection.Should().Be(expected.OfstedLastInspection);
+            actual.StatutoryLowAge.Should().Be(expected.StatutoryLowAge);
+            actual.StatutoryHighAge.Should().Be(expected.StatutoryHighAge);
+            actual.SchoolCapacity.Should().Be(expected.SchoolCapacity);
+            actual.EstablishmentNumber.Should().Be(expected.EstablishmentNumber.ToString());
+            actual.GiasLastChangedDate.Should().Be(expected.GiasLastChangedDate.ToResponseDate());
+            actual.NoOfBoys.Should().Be(expected.NumberOfBoys.ToString());
+            actual.NoOfGirls.Should().Be(expected.NumberOfGirls.ToString());
+            actual.SenUnitCapacity.Should().Be(expected.SenUnitCapacity.ToString());
+            actual.SenUnitOnRoll.Should().Be(expected.SenUnitOnRoll.ToString());
+            actual.ReligousEthos.Should().Be(expected.ReligiousEthos);
+            actual.HeadteacherTitle.Should().Be(expected.HeadTitle);
+            actual.HeadteacherFirstName.Should().Be(expected.HeadFirstName);
+            actual.HeadteacherLastName.Should().Be(expected.HeadLastName);
+            actual.HeadteacherPreferredJobTitle.Should().Be(expected.HeadPreferredJobTitle);
+
+            actual.LocalAuthorityCode.Should().Be("202");
+            actual.LocalAuthorityName.Should().Be("Barnsley");
+
+            actual.Diocese.Code.Should().Be(expected.DioceseCode);
+            actual.Diocese.Name.Should().Be(expected.Diocese);
+
+            actual.EstablishmentType.Code.Should().Be("18");
+            actual.EstablishmentType.Name.Should().Be("Further education");
+
+            actual.Gor.Code.Should().Be(expected.GORregionCode);
+            actual.Gor.Name.Should().Be(expected.GORregion);
+
+            actual.PhaseOfEducation.Code.Should().Be(expected.PhaseOfEducationCode.ToString());
+            actual.PhaseOfEducation.Name.Should().Be(expected.PhaseOfEducation);
+
+            actual.ReligiousCharacter.Code.Should().Be(expected.ReligiousCharacterCode);
+            actual.ReligiousCharacter.Name.Should().Be(expected.ReligiousCharacter);
+
+            actual.ParliamentaryConstituency.Code.Should().Be(expected.ParliamentaryConstituencyCode);
+            actual.ParliamentaryConstituency.Name.Should().Be(expected.ParliamentaryConstituency);
+
+            actual.Address.Street.Should().Be(expected.AddressLine1);
+            actual.Address.Additional.Should().Be(expected.AddressLine2);
+            actual.Address.Locality.Should().Be(expected.AddressLine3);
+            actual.Address.Town.Should().Be(expected.Town);
+            actual.Address.County.Should().Be(expected.County);
+            actual.Address.Postcode.Should().Be(expected.Postcode);
+
+            actual.MISEstablishment.DateOfLatestSection8Inspection.Should().Be(expected.DateOfLatestShortInspection.ToResponseDate());
+            actual.MISEstablishment.InspectionEndDate.Should().Be(expected.InspectionEndDate.ToResponseDate());
+            actual.MISEstablishment.OverallEffectiveness.Should().Be(expected.OverallEffectiveness.ToString());
+            actual.MISEstablishment.QualityOfEducation.Should().Be(expected.QualityOfEducation.ToString());
+            actual.MISEstablishment.BehaviourAndAttitudes.Should().Be(expected.BehaviourAndAttitudes.ToString());
+            actual.MISEstablishment.PersonalDevelopment.Should().Be(expected.PersonalDevelopment.ToString());
+            actual.MISEstablishment.EffectivenessOfLeadershipAndManagement.Should().Be(expected.EffectivenessOfLeadershipAndManagement.ToString());
+            actual.MISEstablishment.EarlyYearsProvision.Should().Be(expected.EarlyYearsProvisionWhereApplicable.ToString());
+            actual.MISEstablishment.SixthFormProvision.Should().Be(expected.SixthFormProvisionWhereApplicable.ToString());
+            actual.MISEstablishment.Weblink.Should().Be(expected.Website);
+
+            actual.Pan.Should().Be(ifdPipeline.DeliveryProcessPAN);
+            actual.Pfi.Should().Be(ifdPipeline.DeliveryProcessPFI);
+            actual.Deficit.Should().Be(ifdPipeline.ProjectTemplateInformationDeficit);
+            actual.ViabilityIssue.Should().Be(ifdPipeline.ProjectTemplateInformationViabilityIssue);
+
+            actual.Census.NumberOfPupils.Should().Be(expected.NumberOfPupils);
+            actual.Census.PercentageFsm.Should().Be(expected.PercentageFSM);
+            actual.Census.PercentageFsmLastSixYears.Length.Should().BeGreaterThan(2);
+            actual.Census.PercentageEnglishAsSecondLanguage.Length.Should().BeGreaterThan(2);
+            actual.Census.PercentageSen.Length.Should().BeGreaterThan(2);
+        }
+    }
+
+    internal record TrustDataSet
+    {
+        public Trust Trust { get; set; }
+        public List<EstablishmentDataSet> Establishments { get; set; }
+    }
+
+    internal record EstablishmentDataSet
+    {
+        public Establishment Establishment { get; set; }
+        public IfdPipeline IfdPipeline { get; set; }
     }
 }

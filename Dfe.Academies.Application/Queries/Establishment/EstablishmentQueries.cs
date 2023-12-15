@@ -19,9 +19,10 @@ namespace Dfe.Academies.Application.Queries.Establishment
             _trustRepository = trustRepository;
             _censusDataRepository = censusDataRepository;
         }
+
         public async Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var establishment = await _establishmentRepository.GetEstablishmentByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
+            var establishment = await _establishmentRepository.GetEstablishmentByUkprn(ukprn, cancellationToken);
 
             if (establishment == null)
             {
@@ -32,31 +33,48 @@ namespace Dfe.Academies.Application.Queries.Establishment
 
             return MapToEstablishmentDto(establishment, censusData);
         }
+
         public async Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken)
         {
-            var establishment = await _establishmentRepository.GetEstablishmentByUrn(urn, cancellationToken).ConfigureAwait(false);
-            var censusData = this._censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
+            var establishment = await _establishmentRepository.GetEstablishmentByUrn(urn, cancellationToken);
 
-            return establishment == null ? null : MapToEstablishmentDto(establishment, censusData);
+            if (establishment == null)
+            {
+                return null;
+            }
+
+            var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
+
+            return MapToEstablishmentDto(establishment, censusData);
         }
+
         public async Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
             var establishments = await _establishmentRepository.Search(name, ukPrn, urn, cancellationToken).ConfigureAwait(false);
 
             return (establishments.Select(x => MapToEstablishmentDto(x, _censusDataRepository.GetCensusDataByURN(x.URN.Value))).ToList(), establishments.Count);
         }
+
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
             var URNs = await _establishmentRepository.GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);
 
             return URNs;
         }
+
         public async Task<List<EstablishmentDto>> GetByTrust(string trustUkprn, CancellationToken cancellationToken)
         {
             var trust = await _trustRepository.GetTrustByUkprn(trustUkprn, cancellationToken);
+
+            if (trust == null)
+            {
+                return new List<EstablishmentDto>();
+            }
+
             var establishments = await _establishmentRepository.GetByTrust(trust.SK, cancellationToken).ConfigureAwait(false);
             return establishments.Select(x => MapToEstablishmentDto(x, _censusDataRepository.GetCensusDataByURN(x.URN.Value))).ToList();
         }
+
         public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken)
         {
             var establishments = await _establishmentRepository.GetByUrns(Urns, cancellationToken).ConfigureAwait(false);

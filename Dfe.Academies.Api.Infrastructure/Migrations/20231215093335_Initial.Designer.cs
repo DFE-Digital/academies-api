@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dfe.Academies.Infrastructure.Migrations
 {
     [DbContext(typeof(MstrContext))]
-    [Migration("20231214115539_Initial")]
+    [Migration("20231215093335_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,23 +32,15 @@ namespace Dfe.Academies.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SK"), 1L, 1);
 
-                    b.Property<long>("EstablishmentSK")
-                        .HasColumnType("bigint");
+                    b.Property<int>("EducationEstablishmentId")
+                        .HasColumnType("int")
+                        .HasColumnName("FK_EducationEstablishment");
 
-                    b.Property<int>("FK_EducationEstablishment")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FK_Trust")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TrustSK")
-                        .HasColumnType("bigint");
+                    b.Property<int>("TrustId")
+                        .HasColumnType("int")
+                        .HasColumnName("FK_Trust");
 
                     b.HasKey("SK");
-
-                    b.HasIndex("EstablishmentSK");
-
-                    b.HasIndex("TrustSK");
 
                     b.ToTable("EducationEstablishmentTrust", "mstr");
                 });
@@ -413,13 +405,9 @@ namespace Dfe.Academies.Infrastructure.Migrations
 
                     b.HasKey("SK");
 
-                    b.HasIndex("FK_EstablishmentType")
-                        .IsUnique()
-                        .HasFilter("[FK_EstablishmentType] IS NOT NULL");
+                    b.HasIndex("FK_EstablishmentType");
 
-                    b.HasIndex("FK_LocalAuthority")
-                        .IsUnique()
-                        .HasFilter("[FK_LocalAuthority] IS NOT NULL");
+                    b.HasIndex("FK_LocalAuthority");
 
                     b.HasIndex("IfdPipelineSK");
 
@@ -461,11 +449,11 @@ namespace Dfe.Academies.Infrastructure.Migrations
 
             modelBuilder.Entity("Dfe.Academies.Domain.Establishment.IfdPipeline", b =>
                 {
-                    b.Property<long>("SK")
+                    b.Property<long?>("SK")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("SK"), 1L, 1);
 
                     b.Property<string>("DeliveryProcessPAN")
                         .HasColumnType("nvarchar(max)")
@@ -745,34 +733,15 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Dfe.Academies.Domain.Establishment.EducationEstablishmentTrust", b =>
-                {
-                    b.HasOne("Dfe.Academies.Domain.Establishment.Establishment", "Establishment")
-                        .WithMany()
-                        .HasForeignKey("EstablishmentSK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dfe.Academies.Domain.Trust.Trust", "Trust")
-                        .WithMany()
-                        .HasForeignKey("TrustSK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Establishment");
-
-                    b.Navigation("Trust");
-                });
-
             modelBuilder.Entity("Dfe.Academies.Domain.Establishment.Establishment", b =>
                 {
                     b.HasOne("Dfe.Academies.Domain.Establishment.EstablishmentType", "EstablishmentType")
-                        .WithOne()
-                        .HasForeignKey("Dfe.Academies.Domain.Establishment.Establishment", "FK_EstablishmentType");
+                        .WithMany()
+                        .HasForeignKey("FK_EstablishmentType");
 
                     b.HasOne("Dfe.Academies.Domain.Establishment.LocalAuthority", "LocalAuthority")
-                        .WithOne()
-                        .HasForeignKey("Dfe.Academies.Domain.Establishment.Establishment", "FK_LocalAuthority");
+                        .WithMany()
+                        .HasForeignKey("FK_LocalAuthority");
 
                     b.HasOne("Dfe.Academies.Domain.Establishment.IfdPipeline", "IfdPipeline")
                         .WithMany()
