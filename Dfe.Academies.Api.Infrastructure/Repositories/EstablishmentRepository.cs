@@ -41,23 +41,28 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
-            IQueryable<Establishment> query = DefaultIncludes().AsNoTracking();
+            IQueryable<EstablishmentQueryResult> query = BaseQuery();
+
             if (!string.IsNullOrEmpty(name))
             {
-                query = query.Where(e => e.EstablishmentName.Contains(name));
+                query = query.Where(r => r.Establishment.EstablishmentName.Contains(name));
             }
             if (!string.IsNullOrEmpty(ukPrn))
             {
-                query = query.Where(e => e.UKPRN == ukPrn);
+                query = query.Where(r => r.Establishment.UKPRN == ukPrn);
             }
             if (!string.IsNullOrEmpty(urn))
             {
                 if (int.TryParse(urn, out var urnAsNumber))
                 {
-                    query = query.Where(e => e.URN == urnAsNumber);
+                    query = query.Where(r => r.Establishment.URN == urnAsNumber);
                 }
             }
-            return await query.Take(100).ToListAsync(cancellationToken);
+            var queryResult = await query.Take(100).ToListAsync(cancellationToken);
+
+            var result = queryResult.Select(ToEstablishment).ToList();
+
+            return result;
         }
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)

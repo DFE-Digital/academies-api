@@ -64,6 +64,7 @@ namespace TramsDataApi.Test.Integration.V4
             AssertEstablishmentResponse(actual, establishment, ifdPipeline);
 
             // Check data from the census
+            AssertCensus(actual);
             actual.Census.PercentageFsmLastSixYears.Should().Be("5.70%");
             actual.Census.PercentageEnglishAsSecondLanguage.Should().Be("52.60%");
             actual.Census.PercentageSen.Should().Be("6.30%");
@@ -99,6 +100,7 @@ namespace TramsDataApi.Test.Integration.V4
             var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<EstablishmentDto>();
 
             AssertEstablishmentResponse(establishmentContent, establishment, ifdPipeline);
+            AssertCensus(establishmentContent);
         }
 
         [Fact]
@@ -158,7 +160,85 @@ namespace TramsDataApi.Test.Integration.V4
                 var matchingEstablishment = establishmentContent.FirstOrDefault(x => x.Urn == establishmentDataSet.Establishment.URN.ToString());
 
                 AssertEstablishmentResponse(matchingEstablishment, establishmentDataSet.Establishment, establishmentDataSet.IfdPipeline);
+                AssertCensus(matchingEstablishment);
             });
+        }
+
+        [Fact]
+        public async Task Get_Search_NoEstablishmentsExist_Returns_Empty()
+        {
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments?name=NotExist");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task Get_SearchEstablishmentsByName_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustOne = CreateDataSet(context);
+            var firstEstablishmentData = trustOne.Establishments.ElementAt(0);
+            var secondEstablishmentData = trustOne.Establishments.ElementAt(1);
+            firstEstablishmentData.Establishment.EstablishmentName = "West BANK queens School";
+            secondEstablishmentData.Establishment.EstablishmentName = "West bank primary";
+            context.Establishments.UpdateRange(trustOne.Establishments.Select(x => x.Establishment));
+            context.SaveChanges();
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments?name=west bank");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Count.Should().Be(2);
+
+            var expectedEstablishments = new List<EstablishmentDataSet> { firstEstablishmentData, secondEstablishmentData };
+
+            expectedEstablishments.ForEach(establishmentDataSet =>
+            {
+                var matchingEstablishment = establishmentContent.FirstOrDefault(x => x.Urn == establishmentDataSet.Establishment.URN.ToString());
+
+                AssertEstablishmentResponse(matchingEstablishment, establishmentDataSet.Establishment, establishmentDataSet.IfdPipeline);
+            });
+        }
+
+        [Fact]
+        public async Task Get_SearchEstablishmentByUkPrn_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustOne = CreateDataSet(context);
+            var firstEstablishmentData = trustOne.Establishments.ElementAt(0);
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments?ukPrn={firstEstablishmentData.Establishment.UKPRN}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Count.Should().Be(1);
+
+            establishmentContent.First().Ukprn.Should().Be(firstEstablishmentData.Establishment.UKPRN.ToString());
+        }
+
+        [Fact]
+        public async Task Get_SearchEstablishmentByUrn_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustOne = CreateDataSet(context);
+            var firstEstablishmentData = trustOne.Establishments.ElementAt(0);
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments?urn={firstEstablishmentData.Establishment.URN}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
+
+            establishmentContent.Count.Should().Be(1);
+
+            establishmentContent.First().Urn.Should().Be(firstEstablishmentData.Establishment.URN.ToString());
         }
 
         private static TrustDataSet CreateDataSet(MstrContext context)
@@ -290,6 +370,10 @@ namespace TramsDataApi.Test.Integration.V4
 
             actual.Census.NumberOfPupils.Should().Be(expected.NumberOfPupils);
             actual.Census.PercentageFsm.Should().Be(expected.PercentageFSM);
+        }
+
+        private static void AssertCensus(EstablishmentDto actual)
+        {
             actual.Census.PercentageFsmLastSixYears.Length.Should().BeGreaterThan(2);
             actual.Census.PercentageEnglishAsSecondLanguage.Length.Should().BeGreaterThan(2);
             actual.Census.PercentageSen.Length.Should().BeGreaterThan(2);
