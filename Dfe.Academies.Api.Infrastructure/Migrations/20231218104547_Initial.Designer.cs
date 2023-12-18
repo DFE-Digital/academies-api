@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dfe.Academies.Infrastructure.Migrations
 {
     [DbContext(typeof(MstrContext))]
-    [Migration("20231218095513_Initial")]
+    [Migration("20231218104547_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,9 +159,6 @@ namespace Dfe.Academies.Infrastructure.Migrations
                     b.Property<string>("HeadTitle")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("HeadTitle");
-
-                    b.Property<long?>("IfdPipelineSK")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("InspectionEndDate")
                         .HasColumnType("datetime2")
@@ -406,8 +403,6 @@ namespace Dfe.Academies.Infrastructure.Migrations
                     b.HasKey("SK");
 
                     b.HasIndex("EstablishmentTypeId");
-
-                    b.HasIndex("IfdPipelineSK");
 
                     b.HasIndex("LocalAuthorityId");
 
@@ -739,17 +734,11 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("EstablishmentTypeId");
 
-                    b.HasOne("Dfe.Academies.Domain.Establishment.IfdPipeline", "IfdPipeline")
-                        .WithMany()
-                        .HasForeignKey("IfdPipelineSK");
-
                     b.HasOne("Dfe.Academies.Domain.Establishment.LocalAuthority", "LocalAuthority")
                         .WithMany()
                         .HasForeignKey("LocalAuthorityId");
 
                     b.Navigation("EstablishmentType");
-
-                    b.Navigation("IfdPipeline");
 
                     b.Navigation("LocalAuthority");
                 });

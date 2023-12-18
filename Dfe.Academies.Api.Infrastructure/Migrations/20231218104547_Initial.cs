@@ -184,18 +184,11 @@ namespace Dfe.Academies.Infrastructure.Migrations
                     ParliamentaryConstituencycode = table.Column<string>(name: "ParliamentaryConstituency(code)", type: "nvarchar(max)", nullable: true),
                     PhaseOfEducationcode = table.Column<int>(name: "PhaseOfEducation(code)", type: "int", nullable: true),
                     SenUnitCapacity = table.Column<int>(type: "int", nullable: true),
-                    SenUnitOnRoll = table.Column<int>(type: "int", nullable: true),
-                    IfdPipelineSK = table.Column<long>(type: "bigint", nullable: true)
+                    SenUnitOnRoll = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EducationEstablishment", x => x.SK);
-                    table.ForeignKey(
-                        name: "FK_EducationEstablishment_IfdPipeline_IfdPipelineSK",
-                        column: x => x.IfdPipelineSK,
-                        principalSchema: "mstr",
-                        principalTable: "IfdPipeline",
-                        principalColumn: "SK");
                     table.ForeignKey(
                         name: "FK_EducationEstablishment_Ref_EducationEstablishmentType_FK_EstablishmentType",
                         column: x => x.FK_EstablishmentType,
@@ -314,12 +307,6 @@ namespace Dfe.Academies.Infrastructure.Migrations
                 column: "FK_LocalAuthority");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EducationEstablishment_IfdPipelineSK",
-                schema: "mstr",
-                table: "EducationEstablishment",
-                column: "IfdPipelineSK");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Trust_FK_TrustType",
                 schema: "mstr",
                 table: "Trust",
@@ -337,11 +324,11 @@ namespace Dfe.Academies.Infrastructure.Migrations
                 schema: "mstr");
 
             migrationBuilder.DropTable(
-                name: "Trust",
+                name: "IfdPipeline",
                 schema: "mstr");
 
             migrationBuilder.DropTable(
-                name: "IfdPipeline",
+                name: "Trust",
                 schema: "mstr");
 
             migrationBuilder.DropTable(

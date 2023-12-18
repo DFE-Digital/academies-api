@@ -157,6 +157,10 @@ public class MstrContext : DbContext
             .WithMany()
             .HasForeignKey(x => x.LocalAuthorityId)
             .IsRequired(false);
+
+        // No relationship exists yet
+        // Make sure entity framework doesn't generate one
+        establishmentConfiguration.Ignore(x => x.IfdPipeline);
     }
 
     /// <summary>

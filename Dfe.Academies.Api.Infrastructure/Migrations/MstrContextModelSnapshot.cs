@@ -158,9 +158,6 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("HeadTitle");
 
-                    b.Property<long?>("IfdPipelineSK")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("InspectionEndDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("Inspection end date");
@@ -404,8 +401,6 @@ namespace Dfe.Academies.Infrastructure.Migrations
                     b.HasKey("SK");
 
                     b.HasIndex("EstablishmentTypeId");
-
-                    b.HasIndex("IfdPipelineSK");
 
                     b.HasIndex("LocalAuthorityId");
 
@@ -737,17 +732,11 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("EstablishmentTypeId");
 
-                    b.HasOne("Dfe.Academies.Domain.Establishment.IfdPipeline", "IfdPipeline")
-                        .WithMany()
-                        .HasForeignKey("IfdPipelineSK");
-
                     b.HasOne("Dfe.Academies.Domain.Establishment.LocalAuthority", "LocalAuthority")
                         .WithMany()
                         .HasForeignKey("LocalAuthorityId");
 
                     b.Navigation("EstablishmentType");
-
-                    b.Navigation("IfdPipeline");
 
                     b.Navigation("LocalAuthority");
                 });
