@@ -1,15 +1,16 @@
 ﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Academisation.Data.Repositories;
-using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
-    public class TrustRepository : GenericRepository<Trust>, ITrustRepository
+    public class TrustRepository : ITrustRepository
     {
-        public TrustRepository(MstrContext context) : base(context)
+        private MstrContext _context;
+
+        public TrustRepository(MstrContext context)
         {
+            _context = context;
         }
 
         public async Task<Trust?> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken)
@@ -67,7 +68,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         private IQueryable<Trust> DefaultIncludes()
         {
-            var x = dbSet
+            var x = _context.Trusts
                 .Include(x => x.TrustType)
                 .AsQueryable();
 

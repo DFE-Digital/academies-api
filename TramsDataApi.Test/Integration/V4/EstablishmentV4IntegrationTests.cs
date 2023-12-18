@@ -71,6 +71,27 @@ namespace TramsDataApi.Test.Integration.V4
         }
 
         [Fact]
+        public async Task Get_EstablishmentByUkPrn_EstablishmentHasMinimumFields_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+            var establishment = new Establishment()
+            {
+                UKPRN = _autoFixture.Create<string>(),
+                URN = _autoFixture.Create<int>(),
+            };
+
+            context.Establishments.Add(establishment);
+            context.SaveChanges();
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishment/{establishment.UKPRN}");
+            getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var actual = await getEstablishmentResponse.Content.ReadFromJsonAsync<EstablishmentDto>();
+            actual.Ukprn.Should().Be(establishment.UKPRN);
+            actual.Urn.Should().Be(establishment.URN.ToString());
+        }
+
+        [Fact]
         public async Task Get_EstablishmentByUrn_EstablishmentDoesNotExist_Returns_NotFound()
         {
             var urn = _autoFixture.Create<int>();

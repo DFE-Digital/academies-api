@@ -109,12 +109,20 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         private IQueryable<EstablishmentQueryResult> BaseQuery()
         {
+            //var result =
+            //    _context.Establishments
+            //        .Include(x => x.EstablishmentType)
+            //        .Include(x => x.LocalAuthority)
+            //        // .Select(r => new EstablishmentQueryResult() { Establishment = r, IfdPipeline = null } )
+            //        .Join(_context.IfdPipelines, e => e.PK_GIAS_URN, i => i.GeneralDetailsUrn, (e, i) => new EstablishmentQueryResult { Establishment = e, IfdPipeline = i })
+            //        .AsNoTracking();
+
             var result =
-                _context.Establishments
-                    .Include(x => x.EstablishmentType)
-                    .Include(x => x.LocalAuthority)
-                    .Join(_context.IfdPipelines, e => e.PK_GIAS_URN, i => i.GeneralDetailsUrn, (e, i) => new EstablishmentQueryResult { Establishment = e, IfdPipeline = i })
-                    .AsNoTracking();
+                 from establishment in _context.Establishments
+                 from ifdPipeline in _context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
+                 from establishmentType in _context.EstablishmentTypes.Where(e => e.SK == establishment.FK_EstablishmentType).DefaultIfEmpty()
+                 from localAuthority in _context.LocalAuthorities.Where(l => l.SK == establishment.FK_LocalAuthority).DefaultIfEmpty()
+                 select new EstablishmentQueryResult { Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority, EstablishmentType = establishmentType };
 
             return result;
         }
@@ -123,6 +131,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
         {
             var result = queryResult.Establishment;
             result.IfdPipeline = queryResult.IfdPipeline;
+            result.LocalAuthority = queryResult.LocalAuthority;
+            result.EstablishmentType = queryResult.EstablishmentType;
 
             return result;
         }
@@ -132,5 +142,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
     {
         public Establishment Establishment { get; set; }
         public IfdPipeline IfdPipeline { get; set; }
+        public LocalAuthority LocalAuthority { get; set; }
+        public EstablishmentType EstablishmentType { get; set; }
     }
 }

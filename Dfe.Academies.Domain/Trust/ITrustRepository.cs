@@ -1,8 +1,6 @@
-﻿using Dfe.Academies.Academisation.Domain.SeedWork;
-
-namespace Dfe.Academies.Domain.Trust
+﻿namespace Dfe.Academies.Domain.Trust
 {
-    public interface ITrustRepository : IGenericRepository<Trust>
+    public interface ITrustRepository
     {
         Task<Trust?> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken);
         Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken);
