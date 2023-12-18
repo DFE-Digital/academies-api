@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
     <ProjectReference Include="..\Dfe.Academies.Domain\Dfe.Academies.Domain.csproj" />
+    <ProjectReference Include="..\Dfe.Academies.Utils\Dfe.Academies.Utils.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
 
-namespace Dfe.Academies.Application.Queries.Trust
+namespace Dfe.Academies.Application.Trust
 {
     public class TrustQueries : ITrustQueries
     {
@@ -50,7 +50,7 @@ namespace Dfe.Academies.Application.Queries.Trust
                 CompaniesHouseNumber = trust.CompaniesHouseNumber,
                 ReferenceNumber = trust.GroupID,
                 Ukprn = trust.UKPRN,
-                Type = new Contracts.V4.Establishments.NameAndCodeDto() { Code = trust.TrustType.Code, Name = trust.TrustType.Name },
+                Type = new Contracts.V4.Establishments.NameAndCodeDto() { Code = trust.TrustType?.Code, Name = trust.TrustType?.Name },
                 Address = new AddressDto()
                 {
                     Street = trust.AddressLine1,

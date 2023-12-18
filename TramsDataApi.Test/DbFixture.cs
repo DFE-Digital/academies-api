@@ -15,8 +15,8 @@ namespace TramsDataApi.Test
         private readonly IDbContextTransaction _legacyTransaction;
         private readonly IDbContextTransaction _tramsTransaction;
         public readonly string ConnString;
-        
-        
+
+
         public DbFixture()
         {
             var projectDir = Directory.GetCurrentDirectory();
@@ -38,10 +38,10 @@ namespace TramsDataApi.Test
 
             tramsContextBuilder.UseSqlServer(ConnString);
             _tramsDbContext = new TramsDbContext(tramsContextBuilder.Options);
-            
+
             _tramsDbContext.Database.EnsureCreated();
             _tramsDbContext.Database.Migrate();
-            
+
             _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
             _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
         }
@@ -55,7 +55,7 @@ namespace TramsDataApi.Test
             GC.SuppressFinalize(this);
         }
     }
-    
+
     [CollectionDefinition("Database", DisableParallelization = true)]
     public class DatabaseCollection : ICollectionFixture<DbFixture>
     {

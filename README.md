@@ -15,6 +15,22 @@ For this reason it is not recommended anymore and instead you should setup a Nug
 
 You can connect to the MSSQL Server on port `1433`.
 
+## API testing
+
+One of the problems we have is that this project doesn't control the migrations of the SIP database, that means it is really easy for the docker image to go out of date
+
+In the latest v4 endpoints, the decision was made to have a migration that enables us to rebuild the database for just the tables the API uses
+
+V2 and V3 tests will run against the docker image (legacy)
+
+V4 uses the migrations specified in `trams-data-api\Dfe.Academies.Api.Infrastructure/Migrations`
+
+Now we can easily rebuild the environment on each test run and also build an environment for testing, if we need to
+
+The trade off is that it might not be exactly accurate with the SIP database that is on DEV, but we can test that with some smoke tests when we deploy to dev
+
+Likely we might encounter some small differences very occasionally, but the benefit of being able to control a database environment, is too beneficial to worry about this
+
 ### EntityFramework and Migrations
 
 We currently have two database contexts defined: `LegacyTramsDbContext` and `TramsDbContext`. Both database contexts manage the same database, but are used to manage different sets of tables.

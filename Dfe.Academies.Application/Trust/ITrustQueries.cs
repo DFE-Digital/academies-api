@@ -1,6 +1,6 @@
 ﻿using Dfe.Academies.Contracts.V4.Trusts;
 
-namespace Dfe.Academies.Application.Queries.Trust
+namespace Dfe.Academies.Application.Trust
 {
     public interface ITrustQueries
     {

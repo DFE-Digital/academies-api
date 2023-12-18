@@ -9,7 +9,6 @@ using TramsDataApi.SerilogCustomEnrichers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 var startup = new Startup(builder.Configuration);
 
 startup.ConfigureServices(builder.Services);
@@ -19,11 +18,12 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) =>
     var enricher = services.GetRequiredService<ApiUserEnricher>();
 
     loggerConfiguration
-    .WriteTo.ApplicationInsights(services.GetRequiredService<TelemetryConfiguration>(), TelemetryConverter.Traces)
-    .Enrich.FromLogContext()
-    .Enrich.With(enricher)
-    .WriteTo.Console();
-    });
+        .ReadFrom.Configuration(context.Configuration)
+        .WriteTo.ApplicationInsights(services.GetRequiredService<TelemetryConfiguration>(), TelemetryConverter.Traces)
+        .Enrich.FromLogContext()
+        .Enrich.With(enricher)
+        .WriteTo.Console();
+});
 
 builder.Services.AddApplicationDependencyGroup(builder.Configuration);
 

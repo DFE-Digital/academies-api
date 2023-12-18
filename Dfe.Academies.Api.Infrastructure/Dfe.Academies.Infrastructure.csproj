@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Dfe.Academies.Domain\Dfe.Academies.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -3,13 +3,18 @@ using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dfe.Academies.Academisation.Data;
 
 public class MstrContext : DbContext
 {
     const string DEFAULT_SCHEMA = "mstr";
+
+    public MstrContext()
+    {
+
+    }
+
     public MstrContext(DbContextOptions<MstrContext> options) : base(options)
     {
 
@@ -23,6 +28,14 @@ public class MstrContext : DbContext
     public DbSet<LocalAuthority> LocalAuthorities { get; set; } = null!;
 
     public DbSet<IfdPipeline> IfdPipelines { get; set; } = null!;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Server=localhost;Database=sip;Integrated Security=true;TrustServerCertificate=True");
+        }
+    }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,7 +54,7 @@ public class MstrContext : DbContext
 
     private void ConfigureEstablishment(EntityTypeBuilder<Establishment> establishmentConfiguration)
     {
-        establishmentConfiguration.HasKey(e => e.SK).HasName("SK");
+        establishmentConfiguration.HasKey(e => e.SK);
 
         establishmentConfiguration.ToTable("EducationEstablishment", DEFAULT_SCHEMA);
 
@@ -64,11 +77,11 @@ public class MstrContext : DbContext
         establishmentConfiguration.Property(e => e.Email).HasColumnName("Email");
         establishmentConfiguration.Property(e => e.EstablishmentName).HasColumnName("EstablishmentName");
         establishmentConfiguration.Property(e => e.EstablishmentNumber).HasColumnName("EstablishmentNumber");
-        establishmentConfiguration.Property(e => e.FK_EstablishmentGroupType).HasColumnName("FK_EstablishmentGroupType");
-        establishmentConfiguration.Property(e => e.FK_EstablishmentStatus).HasColumnName("FK_EstablishmentStatus");
-        establishmentConfiguration.Property(e => e.FK_EstablishmentType).HasColumnName("FK_EstablishmentType");
-        establishmentConfiguration.Property(e => e.FK_LocalAuthority).HasColumnName("FK_LocalAuthority");
-        establishmentConfiguration.Property(e => e.FK_Region).HasColumnName("FK_Region");
+        establishmentConfiguration.Property(e => e.EstablishmentGroupTypeId).HasColumnName("FK_EstablishmentGroupType");
+        establishmentConfiguration.Property(e => e.EstablishmentStatusId).HasColumnName("FK_EstablishmentStatus");
+        establishmentConfiguration.Property(e => e.EstablishmentTypeId).HasColumnName("FK_EstablishmentType");
+        establishmentConfiguration.Property(e => e.LocalAuthorityId).HasColumnName("FK_LocalAuthority");
+        establishmentConfiguration.Property(e => e.RegionId).HasColumnName("FK_Region");
         establishmentConfiguration.Property(e => e.GORregion).HasColumnName("GORregion");
         establishmentConfiguration.Property(e => e.HeadFirstName).HasColumnName("HeadFirstName");
         establishmentConfiguration.Property(e => e.HeadLastName).HasColumnName("HeadLastName");
@@ -135,21 +148,14 @@ public class MstrContext : DbContext
 
         establishmentConfiguration
             .HasOne(x => x.EstablishmentType)
-            .WithOne()
-            .HasForeignKey<Establishment>(x => x.FK_EstablishmentType)
+            .WithMany()
+            .HasForeignKey(x => x.EstablishmentTypeId)
             .IsRequired(false);
 
         establishmentConfiguration
             .HasOne(x => x.LocalAuthority)
-            .WithOne()
-            .HasForeignKey<Establishment>(x => x.FK_LocalAuthority)
-            .IsRequired(false);
-
-        establishmentConfiguration
-            .HasOne(x => x.IfdPipeline)
-            .WithOne()
-            .HasForeignKey<Establishment>(x => x.PK_GIAS_URN)
-            .HasPrincipalKey<IfdPipeline>(x => x.GeneralDetailsUrn)
+            .WithMany()
+            .HasForeignKey(x => x.LocalAuthorityId)
             .IsRequired(false);
     }
 
@@ -160,14 +166,14 @@ public class MstrContext : DbContext
 
     void ConfigureTrust(EntityTypeBuilder<Trust> trustConfiguration)
     {
-        trustConfiguration.HasKey(e => e.SK).HasName("SK");
-
+        trustConfiguration.HasKey(e => e.SK);
+        
         trustConfiguration.ToTable("Trust", DEFAULT_SCHEMA);
 
-        trustConfiguration.Property(e => e.TrustsTrustType).HasColumnName("FK_TrustType");
-        trustConfiguration.Property(e => e.Region).HasColumnName("FK_Region");
-        trustConfiguration.Property(e => e.TrustBanding).HasColumnName("FK_TrustBanding");
-        trustConfiguration.Property(e => e.FK_TrustStatus).HasColumnName("FK_TrustStatus");
+        trustConfiguration.Property(e => e.TrustTypeId).HasColumnName("FK_TrustType");
+        trustConfiguration.Property(e => e.RegionId).HasColumnName("FK_Region");
+        trustConfiguration.Property(e => e.TrustBandingId).HasColumnName("FK_TrustBanding");
+        trustConfiguration.Property(e => e.TrustStatusId).HasColumnName("FK_TrustStatus");
         trustConfiguration.Property(e => e.GroupUID).HasColumnName("Group UID").IsRequired();
         trustConfiguration.Property(e => e.GroupID).HasColumnName("Group ID");
         trustConfiguration.Property(e => e.RID).HasColumnName("RID");
@@ -207,39 +213,51 @@ public class MstrContext : DbContext
         trustConfiguration.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
 
         trustConfiguration
-        .HasOne(x => x.TrustType)
-        .WithOne()
-        .HasForeignKey<Trust>(x => x.TrustsTrustType)
-        .IsRequired(true);
+            .HasOne(x => x.TrustType)
+            .WithMany()
+            .HasForeignKey(x => x.TrustTypeId);
     }
 
-    void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)
+    private void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)
     {
-        trustTypeConfiguration.HasKey(e => e.SK).HasName("SK");
+        trustTypeConfiguration.HasKey(e => e.SK);
 
         trustTypeConfiguration.ToTable("Ref_TrustType", DEFAULT_SCHEMA);
+
+        trustTypeConfiguration.HasData(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
+        trustTypeConfiguration.HasData(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
     }
     private void ConfigureEducationEstablishmentTrust(EntityTypeBuilder<EducationEstablishmentTrust> entityBuilder)
     {
         entityBuilder.HasKey(e => e.SK);
-        entityBuilder.ToTable("EducationEstablishmentTrust", DEFAULT_SCHEMA);        
-      
-    }
-    void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
-    {
-        localAuthorityConfiguration.HasKey(e => e.SK).HasName("SK");
-        localAuthorityConfiguration.ToTable("Ref_LocalAuthority", DEFAULT_SCHEMA);
+        entityBuilder.ToTable("EducationEstablishmentTrust", DEFAULT_SCHEMA);
+
+        entityBuilder.Property(e => e.EducationEstablishmentId).HasColumnName("FK_EducationEstablishment");
+        entityBuilder.Property(e => e.TrustId).HasColumnName("FK_Trust");
     }
 
-    void ConfigureEstablishmentType(EntityTypeBuilder<EstablishmentType> establishmentTypeConfiguration)
+    private void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
     {
-        establishmentTypeConfiguration.HasKey(e => e.SK).HasName("SK");
+        localAuthorityConfiguration.HasKey(e => e.SK);
+        localAuthorityConfiguration.ToTable("Ref_LocalAuthority", DEFAULT_SCHEMA);
+
+        localAuthorityConfiguration.HasData(new LocalAuthority() { SK = 1, Code = "202", Name = "Barnsley" });
+        localAuthorityConfiguration.HasData(new LocalAuthority() { SK = 2, Code = "203", Name = "Birmingham" });
+        localAuthorityConfiguration.HasData(new LocalAuthority() { SK = 3, Code = "204", Name = "Bradford" });
+    }
+
+    private void ConfigureEstablishmentType(EntityTypeBuilder<EstablishmentType> establishmentTypeConfiguration)
+    {
+        establishmentTypeConfiguration.HasKey(e => e.SK);
         establishmentTypeConfiguration.ToTable("Ref_EducationEstablishmentType", DEFAULT_SCHEMA);
+
+        establishmentTypeConfiguration.HasData(new EstablishmentType() { SK = 224, Code = "35", Name = "Free schools" });
+        establishmentTypeConfiguration.HasData(new EstablishmentType() { SK = 228, Code = "18", Name = "Further education" });
     }
 
     private void ConfigureIfdPipeline(EntityTypeBuilder<IfdPipeline> ifdPipelineConfiguration)
     {
-        ifdPipelineConfiguration.HasKey(e => e.SK).HasName("SK");
+        ifdPipelineConfiguration.HasKey(e => e.SK);
 
         ifdPipelineConfiguration.ToTable("IfdPipeline", DEFAULT_SCHEMA);
 

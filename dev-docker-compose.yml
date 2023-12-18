@@ -1,0 +1,14 @@
+version: "3.8"
+services:  
+  db:
+    image: ghcr.io/dfe-digital/trams-development-database:latest
+    env_file: .env.database
+    restart: always
+    ports:
+      - 1433:1433
+  test-db:
+    image: ghcr.io/dfe-digital/trams-development-database:latest
+    env_file: .env.database
+    restart: always
+    ports:
+      - 1434:1433

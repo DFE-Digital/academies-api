@@ -1,6 +1,6 @@
 ﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Application.Queries.Establishment;
-using Dfe.Academies.Application.Queries.Trust;
+using Dfe.Academies.Application.Establishment;
+using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;

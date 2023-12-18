@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Dfe.Academies.Application.Queries.Establishment;
+using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Contracts.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
