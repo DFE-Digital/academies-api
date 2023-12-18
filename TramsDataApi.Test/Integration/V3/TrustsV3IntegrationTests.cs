@@ -13,7 +13,7 @@ using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
 using Xunit;
 
-namespace TramsDataApi.Test.Integration
+namespace TramsDataApi.Test.Integration.V3
 {
     [Collection("Database")]
     public class TrustsV3IntegrationTests : IClassFixture<TramsDataApiFactory>
