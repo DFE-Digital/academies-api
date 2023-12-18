@@ -34,8 +34,8 @@ namespace TramsDataApi.Test.Helpers
             result.LocalAuthority = null;
             result.EstablishmentType = null;
             result.PK_GIAS_URN = _fixture.Create<int>().ToString();
-            result.FK_EstablishmentType = 228;
-            result.FK_LocalAuthority = 1;
+            result.EstablishmentTypeId = 228;
+            result.LocalAuthorityId = 1;
 
             return result;
         }

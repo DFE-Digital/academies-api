@@ -12,11 +12,11 @@ namespace Dfe.Academies.Domain.Establishment
         public string? PK_GIAS_URN { get; set; }
         public long? PK_CDM_ID { get; set; }
         public int? URN { get; set; }
-        public long? FK_LocalAuthority { get; set; }
-        public long? FK_EstablishmentType { get; set; }
-        public long? FK_EstablishmentGroupType { get; set; }
-        public long? FK_EstablishmentStatus { get; set; }
-        public long? FK_Region { get; set; }
+        public long? LocalAuthorityId { get; set; }
+        public long? EstablishmentTypeId { get; set; }
+        public long? EstablishmentGroupTypeId { get; set; }
+        public long? EstablishmentStatusId { get; set; }
+        public long? RegionId { get; set; }
         public int? EstablishmentNumber { get; set; }
         public string? EstablishmentName { get; set; }
         public double? Latitude { get; set; }

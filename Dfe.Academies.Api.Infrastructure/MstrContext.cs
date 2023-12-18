@@ -77,11 +77,11 @@ public class MstrContext : DbContext
         establishmentConfiguration.Property(e => e.Email).HasColumnName("Email");
         establishmentConfiguration.Property(e => e.EstablishmentName).HasColumnName("EstablishmentName");
         establishmentConfiguration.Property(e => e.EstablishmentNumber).HasColumnName("EstablishmentNumber");
-        establishmentConfiguration.Property(e => e.FK_EstablishmentGroupType).HasColumnName("FK_EstablishmentGroupType");
-        establishmentConfiguration.Property(e => e.FK_EstablishmentStatus).HasColumnName("FK_EstablishmentStatus");
-        establishmentConfiguration.Property(e => e.FK_EstablishmentType).HasColumnName("FK_EstablishmentType");
-        establishmentConfiguration.Property(e => e.FK_LocalAuthority).HasColumnName("FK_LocalAuthority");
-        establishmentConfiguration.Property(e => e.FK_Region).HasColumnName("FK_Region");
+        establishmentConfiguration.Property(e => e.EstablishmentGroupTypeId).HasColumnName("FK_EstablishmentGroupType");
+        establishmentConfiguration.Property(e => e.EstablishmentStatusId).HasColumnName("FK_EstablishmentStatus");
+        establishmentConfiguration.Property(e => e.EstablishmentTypeId).HasColumnName("FK_EstablishmentType");
+        establishmentConfiguration.Property(e => e.LocalAuthorityId).HasColumnName("FK_LocalAuthority");
+        establishmentConfiguration.Property(e => e.RegionId).HasColumnName("FK_Region");
         establishmentConfiguration.Property(e => e.GORregion).HasColumnName("GORregion");
         establishmentConfiguration.Property(e => e.HeadFirstName).HasColumnName("HeadFirstName");
         establishmentConfiguration.Property(e => e.HeadLastName).HasColumnName("HeadLastName");
@@ -149,13 +149,13 @@ public class MstrContext : DbContext
         establishmentConfiguration
             .HasOne(x => x.EstablishmentType)
             .WithMany()
-            .HasForeignKey(x => x.FK_EstablishmentType)
+            .HasForeignKey(x => x.EstablishmentTypeId)
             .IsRequired(false);
 
         establishmentConfiguration
             .HasOne(x => x.LocalAuthority)
             .WithMany()
-            .HasForeignKey(x => x.FK_LocalAuthority)
+            .HasForeignKey(x => x.LocalAuthorityId)
             .IsRequired(false);
     }
 

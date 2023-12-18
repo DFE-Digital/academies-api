@@ -112,8 +112,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
             var result =
                  from establishment in _context.Establishments
                  from ifdPipeline in _context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
-                 from establishmentType in _context.EstablishmentTypes.Where(e => e.SK == establishment.FK_EstablishmentType).DefaultIfEmpty()
-                 from localAuthority in _context.LocalAuthorities.Where(l => l.SK == establishment.FK_LocalAuthority).DefaultIfEmpty()
+                 from establishmentType in _context.EstablishmentTypes.Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
+                 from localAuthority in _context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId).DefaultIfEmpty()
                  select new EstablishmentQueryResult { Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority, EstablishmentType = establishmentType };
 
             return result;

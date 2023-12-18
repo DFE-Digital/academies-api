@@ -111,6 +111,10 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Email");
 
+                    b.Property<long?>("EstablishmentGroupTypeId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("FK_EstablishmentGroupType");
+
                     b.Property<string>("EstablishmentName")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("EstablishmentName");
@@ -119,25 +123,13 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("EstablishmentNumber");
 
-                    b.Property<long?>("FK_EstablishmentGroupType")
-                        .HasColumnType("bigint")
-                        .HasColumnName("FK_EstablishmentGroupType");
-
-                    b.Property<long?>("FK_EstablishmentStatus")
+                    b.Property<long?>("EstablishmentStatusId")
                         .HasColumnType("bigint")
                         .HasColumnName("FK_EstablishmentStatus");
 
-                    b.Property<long?>("FK_EstablishmentType")
+                    b.Property<long?>("EstablishmentTypeId")
                         .HasColumnType("bigint")
                         .HasColumnName("FK_EstablishmentType");
-
-                    b.Property<long?>("FK_LocalAuthority")
-                        .HasColumnType("bigint")
-                        .HasColumnName("FK_LocalAuthority");
-
-                    b.Property<long?>("FK_Region")
-                        .HasColumnType("bigint")
-                        .HasColumnName("FK_Region");
 
                     b.Property<string>("GORregion")
                         .HasColumnType("nvarchar(max)")
@@ -188,6 +180,10 @@ namespace Dfe.Academies.Infrastructure.Migrations
                     b.Property<double?>("Latitude")
                         .HasColumnType("float")
                         .HasColumnName("Latitude");
+
+                    b.Property<long?>("LocalAuthorityId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("FK_LocalAuthority");
 
                     b.Property<double?>("Longitude")
                         .HasColumnType("float")
@@ -319,6 +315,10 @@ namespace Dfe.Academies.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ReasonEstablishmentClosed");
 
+                    b.Property<long?>("RegionId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("FK_Region");
+
                     b.Property<string>("ReligiousCharacter")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ReligiousCharacter");
@@ -403,11 +403,11 @@ namespace Dfe.Academies.Infrastructure.Migrations
 
                     b.HasKey("SK");
 
-                    b.HasIndex("FK_EstablishmentType");
-
-                    b.HasIndex("FK_LocalAuthority");
+                    b.HasIndex("EstablishmentTypeId");
 
                     b.HasIndex("IfdPipelineSK");
+
+                    b.HasIndex("LocalAuthorityId");
 
                     b.ToTable("EducationEstablishment", "mstr");
                 });
@@ -735,15 +735,15 @@ namespace Dfe.Academies.Infrastructure.Migrations
                 {
                     b.HasOne("Dfe.Academies.Domain.Establishment.EstablishmentType", "EstablishmentType")
                         .WithMany()
-                        .HasForeignKey("FK_EstablishmentType");
-
-                    b.HasOne("Dfe.Academies.Domain.Establishment.LocalAuthority", "LocalAuthority")
-                        .WithMany()
-                        .HasForeignKey("FK_LocalAuthority");
+                        .HasForeignKey("EstablishmentTypeId");
 
                     b.HasOne("Dfe.Academies.Domain.Establishment.IfdPipeline", "IfdPipeline")
                         .WithMany()
                         .HasForeignKey("IfdPipelineSK");
+
+                    b.HasOne("Dfe.Academies.Domain.Establishment.LocalAuthority", "LocalAuthority")
+                        .WithMany()
+                        .HasForeignKey("LocalAuthorityId");
 
                     b.Navigation("EstablishmentType");
 
