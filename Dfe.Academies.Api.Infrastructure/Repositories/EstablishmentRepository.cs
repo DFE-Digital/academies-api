@@ -109,14 +109,6 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         private IQueryable<EstablishmentQueryResult> BaseQuery()
         {
-            //var result =
-            //    _context.Establishments
-            //        .Include(x => x.EstablishmentType)
-            //        .Include(x => x.LocalAuthority)
-            //        // .Select(r => new EstablishmentQueryResult() { Establishment = r, IfdPipeline = null } )
-            //        .Join(_context.IfdPipelines, e => e.PK_GIAS_URN, i => i.GeneralDetailsUrn, (e, i) => new EstablishmentQueryResult { Establishment = e, IfdPipeline = i })
-            //        .AsNoTracking();
-
             var result =
                  from establishment in _context.Establishments
                  from ifdPipeline in _context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
