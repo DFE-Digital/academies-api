@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Dfe.Academies.Application.Queries.Trust;
+using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Contracts.V4;
 using Dfe.Academies.Contracts.V4.Trusts;
 using Microsoft.AspNetCore.Mvc;

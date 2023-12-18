@@ -2,7 +2,7 @@
 using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
 
-namespace Dfe.Academies.Application.Queries.Trust
+namespace Dfe.Academies.Application.Trust
 {
     public class TrustQueries : ITrustQueries
     {

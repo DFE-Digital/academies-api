@@ -1,10 +1,9 @@
 ﻿using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Application.Builders;
-using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Domain.Census;
+using Dfe.Academies.Domain.Establishment;
+using Dfe.Academies.Domain.Trust;
 
-namespace Dfe.Academies.Application.Queries.Establishment
+namespace Dfe.Academies.Application.Establishment
 {
     public class EstablishmentQueries : IEstablishmentQueries
     {
@@ -74,7 +73,7 @@ namespace Dfe.Academies.Application.Queries.Establishment
         {
             var establishments = await _establishmentRepository.GetByUrns(Urns, cancellationToken).ConfigureAwait(false);
 
-            return (establishments.Select(x => MapToEstablishmentDto(x)).ToList());
+            return establishments.Select(x => MapToEstablishmentDto(x)).ToList();
         }
 
         private EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment establishment)

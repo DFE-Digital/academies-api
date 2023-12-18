@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using Dfe.Academies.Application.Queries.Establishment;
+using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Contracts.V4.Establishments;
 using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.Establishment;

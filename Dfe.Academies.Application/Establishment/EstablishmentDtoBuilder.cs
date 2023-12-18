@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using Dfe.Academies.Utils.Extensions;
 
-namespace Dfe.Academies.Application.Builders
+namespace Dfe.Academies.Application.Establishment
 {
     public class EstablishmentDtoBuilder
     {

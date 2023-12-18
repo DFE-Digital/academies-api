@@ -1,12 +1,9 @@
 ﻿using AutoFixture;
-using Dfe.Academies.Application.Queries.Trust;
+using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Dfe.Academies.Application.Tests.Queries.Trust
 {
