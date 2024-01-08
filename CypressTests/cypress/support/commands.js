@@ -26,6 +26,6 @@
 
 
 
-import { validateSchema } from "./validate-schema-command";
+import { validateSchema } from "./validate-schema-command"
 
-Cypress.Commands.add("validateSchema", validateSchema);
+Cypress.Commands.add("validateSchema", validateSchema)

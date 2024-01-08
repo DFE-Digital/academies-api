@@ -1,12 +1,12 @@
 /// <reference types="Cypress"/>
 describe("Free Schools Store endpoint", () => {
 
-  const apiKey = Cypress.env('apiKey');
-  const url = Cypress.env('url')
+  const apiKey = Cypress.env('apiKey')
+  const baseUrlV2 = `${Cypress.env('url')}/v2`
   
   it("Should return a valid 200 response", () => {
     cy.api({
-      url: url + "/v2/fss/projects",
+      url: `${baseUrlV2}/fss/projects`,
       headers: {
         ApiKey: apiKey,
       }
@@ -16,7 +16,7 @@ describe("Free Schools Store endpoint", () => {
   it("Should return a valid 401 response when omitting API key", () => {
     cy.api({
       failOnStatusCode: false,
-      url: url + "/v2/fss/projects",
+      url: `${baseUrlV2}/fss/projects`,
       headers: {
         ApiKey: '',
       }
