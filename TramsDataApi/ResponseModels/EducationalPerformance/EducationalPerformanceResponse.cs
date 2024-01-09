@@ -10,5 +10,8 @@ namespace TramsDataApi.ResponseModels.EducationalPerformance
         public List<KeyStage4PerformanceResponse> KeyStage4 { get; set; }
         
         public List<KeyStage5PerformanceResponse> KeyStage5 { get; set; }
+        public List<AbsenceDataResponse> AbsenceData { get; set; }
+
+
     }
 }
