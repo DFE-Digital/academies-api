@@ -1,3 +1,4 @@
+using Dfe.Academies.Application.EducationalPerformance;
 using System.Collections.Generic;
 
 namespace TramsDataApi.ResponseModels.EducationalPerformance
@@ -10,7 +11,7 @@ namespace TramsDataApi.ResponseModels.EducationalPerformance
         public List<KeyStage4PerformanceResponse> KeyStage4 { get; set; }
         
         public List<KeyStage5PerformanceResponse> KeyStage5 { get; set; }
-        public List<AbsenceDataResponse> AbsenceData { get; set; }
+        public List<SchoolAbsenceDataDto> AbsenceData { get; set; }
 
 
     }

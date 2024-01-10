@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Dfe.Academies.Domain.EducationalPerformance
 {
-    public interface IEducationPerformanceRepository
+    public interface IEducationalPerformanceRepository
     {
-        public Task<List<SchoolAbsence>> GetSchoolAbsencesByURN(int urn,  CancellationToken cancellationToken);
+        public Task<List<SchoolAbsence>> GetSchoolAbsencesByURN(string urn,  CancellationToken cancellationToken);
     }
 }

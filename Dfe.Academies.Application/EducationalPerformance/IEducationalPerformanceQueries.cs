@@ -9,6 +9,6 @@ namespace Dfe.Academies.Application.EducationalPerformance
 {
     public interface IEducationalPerformanceQueries
     {
-        Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken)
+        Task<List<SchoolAbsenceDataDto>> GetAchoolAbsenceDataByUrn(string urn, CancellationToken cancellationToken);
     }
 }

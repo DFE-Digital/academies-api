@@ -29,7 +29,7 @@ namespace TramsDataApi.Test.UseCases
             var urn = "mockurn";
             var mockEducationPerformanceGateway = new Mock<IEducationPerformanceGateway>();
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetAccountByUrn(urn)).Returns(() => null);
-            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object);
+            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object, null);
 
             useCase.Execute(urn).Should().BeNull();
         }
@@ -518,7 +518,7 @@ namespace TramsDataApi.Test.UseCases
                 KeyStage5 = new List<KeyStage5PerformanceResponse>{ expectedKS5 }
             };
             
-            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object);
+            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object, null);
             var result = useCase.Execute(urn);
             
             result.Should().BeEquivalentTo(expected);

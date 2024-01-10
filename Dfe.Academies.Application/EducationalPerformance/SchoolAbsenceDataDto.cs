@@ -1,9 +1,9 @@
-namespace TramsDataApi.ResponseModels.EducationalPerformance
+namespace Dfe.Academies.Application.EducationalPerformance
 {
     /// <summary>
     /// Absence Data Response 
     /// </summary>
-    public class AbsenceDataResponse
+    public class SchoolAbsenceDataDto
     {
         /// <summary>
         /// Acdemic Year
@@ -14,13 +14,13 @@ namespace TramsDataApi.ResponseModels.EducationalPerformance
         ///Percentage of possible mornings or afternoons recorded as an absence from school for whatever reason,
         ///whether authorised or unauthorised, across the full academic year.
         /// </summary>
-        public double? OverallAbsence { get; set; }
+        public string? OverallAbsence { get; set; }
 
         /// <summary>
         ///The percentage of pupils missing 10% or more of the mornings or afternoons they could attend, 
         ///meaning that if a pupil’s overall rate of absence is 10% or higher across the full academic 
         ///year they will be classified as persistently absent.
         /// </summary>
-        public double? PersistentAbsence { get; set; }
+        public string? PersistentAbsence { get; set; }
     }
 }
