@@ -30,9 +30,7 @@ namespace TramsDataApi.Controllers.V2
 
             var projects = await _getAllFssProjects.Execute();
 
-            _logger.LogInformation($"Found {0} projects, " , projects.Count);
-
-            _logger.LogDebug(JsonSerializer.Serialize(projects));
+            _logger.LogInformation("Found {0} projects, ", projects.Count);
 
             var response = new ApiResponseV2<FssProjectResponse>(projects, null);
             return new OkObjectResult(response);
