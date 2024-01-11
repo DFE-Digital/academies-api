@@ -1,14 +1,9 @@
-﻿using Dfe.Academies.Contracts.V4.Establishments;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dfe.Academies.Contracts.V1.EducationalPerformance;
 
 namespace Dfe.Academies.Application.EducationalPerformance
 {
     public interface IEducationalPerformanceQueries
     {
-        Task<List<SchoolAbsenceDataDto>> GetAchoolAbsenceDataByUrn(string urn, CancellationToken cancellationToken);
+        Task<List<SchoolAbsenceDataDto>> GetSchoolAbsenceDataByUrn(string urn, CancellationToken cancellationToken);
     }
 }

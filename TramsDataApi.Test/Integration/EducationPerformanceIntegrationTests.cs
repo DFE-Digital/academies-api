@@ -306,7 +306,8 @@ namespace TramsDataApi.Test.Integration
                 KeyStage1 = expectedKs1Response,
                 KeyStage2 = expectedKs2Response,
                 KeyStage4 = expectedKs4Response,
-                KeyStage5 = expectedKs5Response
+                KeyStage5 = expectedKs5Response,
+                AbsenceData = new List<Dfe.Academies.Contracts.V1.EducationalPerformance.SchoolAbsenceDataDto>()
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
@@ -758,7 +759,8 @@ namespace TramsDataApi.Test.Integration
                 KeyStage1 = new List<KeyStage1PerformanceResponse>(),
                 KeyStage2 = new List<KeyStage2PerformanceResponse> { expectedKeyStage2Response },
                 KeyStage4 = new List<KeyStage4PerformanceResponse> { expectedKeyStage4Response },
-                KeyStage5 = new List<KeyStage5PerformanceResponse> { expectedKeyStage5Response }
+                KeyStage5 = new List<KeyStage5PerformanceResponse> { expectedKeyStage5Response },
+                AbsenceData = new List<Dfe.Academies.Contracts.V1.EducationalPerformance.SchoolAbsenceDataDto>()
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");

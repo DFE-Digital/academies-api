@@ -1,4 +1,5 @@
-﻿using Dfe.Academies.Domain.EducationalPerformance;
+﻿using Dfe.Academies.Contracts.V1.EducationalPerformance;
+using Dfe.Academies.Domain.EducationalPerformance;
 
 namespace Dfe.Academies.Application.EducationalPerformance
 {
@@ -10,7 +11,7 @@ namespace Dfe.Academies.Application.EducationalPerformance
         {
             this._educationPerformanceRepository = educationPerformanceRepository;
         }
-        public async Task<List<SchoolAbsenceDataDto>> GetAchoolAbsenceDataByUrn(string urn, CancellationToken cancellationToken)
+        public async Task<List<SchoolAbsenceDataDto>> GetSchoolAbsenceDataByUrn(string urn, CancellationToken cancellationToken)
         {
             var absenceData = await _educationPerformanceRepository.GetSchoolAbsencesByURN(urn, cancellationToken);
 

@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Application.EducationalPerformance;
+using Dfe.Academies.Contracts.V1.EducationalPerformance;
 using Dfe.Academies.Domain.EducationalPerformance;
 using FluentAssertions;
 using Moq;
@@ -40,7 +41,7 @@ namespace Dfe.Academies.Application.Tests.Queries.EducationalPerformance
             var educationalPerformanceQueries = CreateEducationalPerformanceQueries();
 
             // Act
-            var result = await educationalPerformanceQueries.GetAchoolAbsenceDataByUrn(
+            var result = await educationalPerformanceQueries.GetSchoolAbsenceDataByUrn(
                 urn,
                 default);
 
@@ -59,7 +60,7 @@ namespace Dfe.Academies.Application.Tests.Queries.EducationalPerformance
             var educationalPerformanceQueries = CreateEducationalPerformanceQueries();
 
             // Act
-            var result = await educationalPerformanceQueries.GetAchoolAbsenceDataByUrn(
+            var result = await educationalPerformanceQueries.GetSchoolAbsenceDataByUrn(
                 urn,
                 default);
 

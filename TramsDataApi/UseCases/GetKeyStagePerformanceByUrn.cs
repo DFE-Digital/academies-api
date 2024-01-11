@@ -47,7 +47,7 @@ namespace TramsDataApi.UseCases
 
             var localAuthorityAverageEducationPerformances = GroupAverageEducationPerformances(groupedLaAverages);
 
-            var academyAbsenceData = _educationalPerformanceQueries.GetAchoolAbsenceDataByUrn(urn, default).Result;
+            var academyAbsenceData = _educationalPerformanceQueries.GetSchoolAbsenceDataByUrn(urn, default).Result;
 
             var response = new EducationalPerformanceResponse
             {

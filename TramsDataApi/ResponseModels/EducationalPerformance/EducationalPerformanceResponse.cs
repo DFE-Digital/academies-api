@@ -1,4 +1,5 @@
 using Dfe.Academies.Application.EducationalPerformance;
+using Dfe.Academies.Contracts.V1.EducationalPerformance;
 using System.Collections.Generic;
 
 namespace TramsDataApi.ResponseModels.EducationalPerformance
