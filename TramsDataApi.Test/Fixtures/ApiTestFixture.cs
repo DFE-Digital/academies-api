@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Mime;
+using TramsDataApi.Test.FakeApi;
 using Xunit;
 
 namespace TramsDataApi.Test.Fixtures
@@ -26,6 +27,8 @@ namespace TramsDataApi.Test.Fixtures
         private static bool _isInitialised = false;
 
         private const string ConnectionStringKey = "ConnectionStrings:DefaultConnection";
+
+        private FakeMfspApi _fakeMfspApi;
 
         public ApiTestFixture()
         {
@@ -63,6 +66,10 @@ namespace TramsDataApi.Test.Fixtures
                     using var context = GetMstrContext();
                     context.Database.EnsureDeleted();
                     context.Database.Migrate();
+
+                    _fakeMfspApi = new FakeMfspApi();
+                    _fakeMfspApi.Start();
+
                     _isInitialised = true;
                 }
             }
@@ -72,6 +79,7 @@ namespace TramsDataApi.Test.Fixtures
         {
             _application.Dispose();
             Client.Dispose();
+            _fakeMfspApi.Stop();
         }
 
         public MstrContext GetMstrContext() => new MstrContext(_dbContextOptions);
