@@ -1,3 +1,4 @@
+using Dfe.Academies.Application.EducationalPerformance;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace TramsDataApi.UseCases
     public class GetKeyStagePerformanceByUrn : IGetKeyStagePerformanceByUrn
     {
         private readonly IEducationPerformanceGateway _educationPerformanceGateway;
+        private readonly IEducationalPerformanceQueries _educationalPerformanceQueries;
 
-        public GetKeyStagePerformanceByUrn(IEducationPerformanceGateway educationPerformanceGateway)
+        public GetKeyStagePerformanceByUrn(IEducationPerformanceGateway educationPerformanceGateway, IEducationalPerformanceQueries educationalPerformanceQueries)
         {
             _educationPerformanceGateway = educationPerformanceGateway;
+            _educationalPerformanceQueries = educationalPerformanceQueries;
         }
 
         public EducationalPerformanceResponse Execute(string urn)
@@ -43,14 +46,17 @@ namespace TramsDataApi.UseCases
                 .GroupBy(epd => epd.SipName);
 
             var localAuthorityAverageEducationPerformances = GroupAverageEducationPerformances(groupedLaAverages);
-    
+
+            var academyAbsenceData = _educationalPerformanceQueries.GetSchoolAbsenceDataByUrn(urn, default).Result;
+
             var response = new EducationalPerformanceResponse
             {
                 SchoolName = academy.Name,
                 KeyStage1 = ks1Responses,
                 KeyStage2 = new List<KeyStage2PerformanceResponse>(),
                 KeyStage4 = new List<KeyStage4PerformanceResponse>(),
-                KeyStage5 = new List<KeyStage5PerformanceResponse>()
+                KeyStage5 = new List<KeyStage5PerformanceResponse>(),
+                AbsenceData = academyAbsenceData
             };
             
             educationPerformance.ForEach(epd =>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dfe.Academies.Application.EducationalPerformance;
 using FizzWare.NBuilder;
 using FizzWare.NBuilder.PropertyNaming;
 using FluentAssertions;
@@ -29,7 +30,7 @@ namespace TramsDataApi.Test.UseCases
             var urn = "mockurn";
             var mockEducationPerformanceGateway = new Mock<IEducationPerformanceGateway>();
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetAccountByUrn(urn)).Returns(() => null);
-            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object);
+            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object, null);
 
             useCase.Execute(urn).Should().BeNull();
         }
@@ -247,7 +248,10 @@ namespace TramsDataApi.Test.UseCases
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetNationalEducationalPerformanceData()).Returns(nationalEducationPerformanceDataList);
             mockEducationPerformanceGateway.Setup(gateway => gateway.GetLocalAuthorityEducationalPerformanceData(account)).Returns(localAuthorityPerformanceDataList);
 
-            
+            var expectedAbsenceData = new List<Dfe.Academies.Contracts.V1.EducationalPerformance.SchoolAbsenceDataDto>() { new Dfe.Academies.Contracts.V1.EducationalPerformance.SchoolAbsenceDataDto() { OverallAbsence = "1.2", PersistentAbsence = "3.1", Year="2019"} };
+            var mockEducationalPerformanceQueries = new Mock<IEducationalPerformanceQueries>();
+            mockEducationalPerformanceQueries.Setup(gateway => gateway.GetSchoolAbsenceDataByUrn(urn, default)).ReturnsAsync(expectedAbsenceData);
+
             var expectedKs1 = phonics.Select(ph => new KeyStage1PerformanceResponse
             {
                 Year = ph.SipYear,
@@ -515,10 +519,11 @@ namespace TramsDataApi.Test.UseCases
                 KeyStage1 = expectedKs1,
                 KeyStage2 = new List<KeyStage2PerformanceResponse>{ expectedKs2 },
                 KeyStage4 = new List<KeyStage4PerformanceResponse>{ expectedKs4 },
-                KeyStage5 = new List<KeyStage5PerformanceResponse>{ expectedKS5 }
+                KeyStage5 = new List<KeyStage5PerformanceResponse>{ expectedKS5 },
+                AbsenceData = expectedAbsenceData
             };
             
-            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object);
+            var useCase = new GetKeyStagePerformanceByUrn(mockEducationPerformanceGateway.Object, mockEducationalPerformanceQueries.Object);
             var result = useCase.Execute(urn);
             
             result.Should().BeEquivalentTo(expected);
