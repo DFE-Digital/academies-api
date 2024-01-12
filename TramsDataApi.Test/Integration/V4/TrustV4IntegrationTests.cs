@@ -436,7 +436,7 @@ namespace TramsDataApi.Test.Integration.V4
             var secondValue = _autoFixture.Create<string>();
 
             yield return new object[] { firstValue, firstValue };
-            yield return new object[] { secondValue, secondValue.Substring(0, 4) };
+            yield return new object[] { secondValue, secondValue.Substring(0, 12) };
         }
     }
 }

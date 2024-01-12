@@ -2,6 +2,8 @@ using Dfe.Academisation.CorrelationIdMiddleware;
 
 namespace TramsDataApi
 {
+    using DatabaseModels;
+    using Gateways;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -9,17 +11,18 @@ namespace TramsDataApi
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using Swashbuckle.AspNetCore.SwaggerUI;
-    using DatabaseModels;
-    using Gateways;
     using Middleware;
     using Swagger;
-    using UseCases;
-    using TramsDataApi.SerilogCustomEnrichers;
-    using TramsDataApi.ResponseModels;
+    using Swashbuckle.AspNetCore.SwaggerUI;
+    using System;
     using System.IO;
     using System.Reflection;
-    using System;
+    using TramsDataApi.Configuration;
+    using TramsDataApi.ResponseModels;
+    using TramsDataApi.SerilogCustomEnrichers;
+    using UseCases;
+    using Microsoft.FeatureManagement;
+    using TramsDataApi.Services;
 
     public class Startup
     {
@@ -35,12 +38,20 @@ namespace TramsDataApi
         {
             services.AddControllers();
             services.AddApiVersioning();
+            services.AddFeatureManagement();
 
             // EF setup
             services.AddDbContext<LegacyTramsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));// EF setup
             services.AddDbContext<TramsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add connnection to MFSP
+            services.AddHttpClient("MfspApiClient", (_, client) =>
+            {
+                MfspOptions mfspOptions =  GetTypedConfigurationFor<MfspOptions>();
+                client.BaseAddress = new Uri(mfspOptions.ApiEndpoint);
+            });
 
             services.AddScoped<ITrustGateway, TrustGateway>();
             services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
@@ -64,6 +75,7 @@ namespace TramsDataApi
 
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<ICorrelationContext, CorrelationContext>();
+            services.AddScoped<MfspApiClient, MfspApiClient>();
 
             services.AddApiVersioning(config =>
             {
@@ -128,6 +140,17 @@ namespace TramsDataApi
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        private IConfigurationSection GetConfigurationSectionFor<T>()
+        {
+            string sectionName = typeof(T).Name.Replace("Options", string.Empty);
+            return Configuration.GetRequiredSection(sectionName);
+        }
+
+        private T GetTypedConfigurationFor<T>()
+        {
+            return GetConfigurationSectionFor<T>().Get<T>();
         }
     }
 }

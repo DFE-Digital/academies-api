@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
@@ -23,17 +24,15 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet("projects")]
         [MapToApiVersion("2.0")]
-        public ActionResult<ApiResponseV2<FssProjectResponse>> GetAll()
+        public async Task<ActionResult<ApiResponseV2<FssProjectResponse>>> GetAll()
         {
             _logger.LogInformation($"Retreiving all FSS Projects ");
 
-            var projects = _getAllFssProjects.Execute().ToList();
+            var projects = await _getAllFssProjects.Execute();
 
-            _logger.LogInformation($"Found {0} projects, " , projects.Count);
+            _logger.LogInformation("Found {0} projects, ", projects.Count);
 
-            _logger.LogDebug(JsonSerializer.Serialize(projects));
-
-            var response = new ApiResponseV2<FssProjectResponse>(projects.ToList(), null);
+            var response = new ApiResponseV2<FssProjectResponse>(projects, null);
             return new OkObjectResult(response);
         }
     }
