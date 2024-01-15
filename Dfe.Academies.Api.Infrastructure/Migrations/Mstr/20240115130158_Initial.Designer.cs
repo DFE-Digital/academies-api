@@ -4,16 +4,18 @@ using Dfe.Academies.Academisation.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Dfe.Academies.Infrastructure.Migrations
+namespace Dfe.Academies.Infrastructure.Migrations.Mstr
 {
     [DbContext(typeof(MstrContext))]
-    partial class MstrContextModelSnapshot : ModelSnapshot
+    [Migration("20240115130158_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

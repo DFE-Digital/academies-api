@@ -23,7 +23,7 @@ In the latest v4 endpoints, the decision was made to have a migration that enabl
 
 V2 and V3 tests will run against the docker image (legacy)
 
-V4 uses the migrations specified in `trams-data-api\Dfe.Academies.Api.Infrastructure/Migrations`
+V4 uses the migrations specified in `trams-data-api\Dfe.Academies.Api.Infrastructure/Migrations/<SchemaName>`
 
 Now we can easily rebuild the environment on each test run and also build an environment for testing, if we need to
 
@@ -33,11 +33,19 @@ Likely we might encounter some small differences very occasionally, but the bene
 
 ### EntityFramework and Migrations
 
-We currently have two database contexts defined: `LegacyTramsDbContext` and `TramsDbContext`. Both database contexts manage the same database, but are used to manage different sets of tables.
+We currently have a number of database contexts:
+
+#### trams-data-api
 
 `LegacyTramsDbContext` is used to manage our models for tables which exist in the `sip` database and we have no control over - we treat these tables as read-only and don't commit migrations for them. If you do generate migrations for this context, it should not be commited to the repository.
 
 `TramsDbContext` is the db context for models that we _do_ control, and we can generate migrations for. These migrations will be applied to the database in `dev`, `pre-prod`, and `prod`, and so should be commited to the repository when changes are made to models.
+
+#### trams-data-api\Dfe.Academies.Api.Infrastructure
+
+`MstrContext` is used to create a database for all tables in the mstr schema, we use this for local development and automated testing, please note this is for local use only
+
+`EdperfContext` is used to create any updates to the edperf schema that do not exist in the docker image. Right now the majority of the schema exists in the docker image and only the latest changes do not. Since this context does not contain all the tables, it can only be used to update the docker image. In future if we have a clean break like the mstr schema, we could rebuild all objects in the schema.
 
 ### Generating Migrations
 
