@@ -41,9 +41,9 @@ We currently have a number of database contexts:
 
 `TramsDbContext` is the db context for models that we _do_ control, and we can generate migrations for. These migrations will be applied to the database in `dev`, `pre-prod`, and `prod`, and so should be commited to the repository when changes are made to models.
 
-#### trams-data-api\Dfe.Academies.Api.Infrastructure
+#### trams-data-api\Dfe.Academies.Api.Infrastructure (local development and testing only)
 
-`MstrContext` is used to create a database for all tables in the mstr schema, we use this for local development and automated testing, please note this is for local use only
+`MstrContext` is used to create a database for all tables in the mstr schema
 
 `EdperfContext` is used to create any updates to the edperf schema that do not exist in the docker image. Right now the majority of the schema exists in the docker image and only the latest changes do not. Since this context does not contain all the tables, it can only be used to update the docker image. In future if we have a clean break like the mstr schema, we could rebuild all objects in the schema.
 
