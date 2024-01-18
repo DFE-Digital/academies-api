@@ -4,6 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AutoFixture;
+using Dfe.Academies.Contracts.V1.EducationalPerformance;
+using Dfe.Academies.Domain.EducationalPerformance;
+using Dfe.Academies.Infrastructure;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,11 +20,13 @@ using Xunit;
 namespace TramsDataApi.Test.Integration
 {
     [Collection("Database")]
-    public class EducationPerformanceIntegrationTests : IClassFixture<TramsDataApiFactory>, IDisposable
+    public class EducationPerformanceIntegrationTests : IClassFixture<TramsDataApiFactory>
     {
         private readonly HttpClient _client;
         private readonly LegacyTramsDbContext _legacyDbContext;
+        private readonly EdperfContext _edperfContext;
         private readonly RandomGenerator _randomGenerator;
+        private static Fixture _autoFixture = new();
 
 
         public EducationPerformanceIntegrationTests(TramsDataApiFactory fixture)
@@ -29,12 +35,20 @@ namespace TramsDataApi.Test.Integration
             _client.DefaultRequestHeaders.Add("ApiKey", "testing-api-key");
             _legacyDbContext = fixture.Services.GetRequiredService<LegacyTramsDbContext>();
             _randomGenerator = new RandomGenerator();
+
+            _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
+            _legacyDbContext.SipPhonics.RemoveRange(_legacyDbContext.SipPhonics);
+            _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
+            _legacyDbContext.GlobalOptionSetMetadata.RemoveRange(_legacyDbContext.GlobalOptionSetMetadata);
+            _legacyDbContext.SaveChanges();
+
+            _edperfContext = fixture.Services.GetRequiredService<EdperfContext>();
+            _edperfContext.SchoolAbsences.RemoveRange(_edperfContext.SchoolAbsences);
         }
 
         [Fact]
         public async Task CanGetEducationPerformanceDataWithKeyStage1and2Data()
-        {
-
+        { 
             var accountGuid = Guid.NewGuid();
             var accountUrn = "147259";
 
@@ -205,6 +219,12 @@ namespace TramsDataApi.Test.Integration
                 });
             _legacyDbContext.SaveChanges();
 
+            var absenceData = _autoFixture.CreateMany<SchoolAbsence>().ToList();
+            absenceData.ForEach(a => a.URN = accountUrn);
+            _edperfContext.SchoolAbsences.AddRange(_autoFixture.Create<SchoolAbsence>());
+            _edperfContext.AddRange(absenceData);
+            _edperfContext.SaveChanges();
+
             var expectedKs1Response = phonics.Select(ph => new KeyStage1PerformanceResponse
             {
                 Year = ph.SipYear,
@@ -307,7 +327,12 @@ namespace TramsDataApi.Test.Integration
                 KeyStage2 = expectedKs2Response,
                 KeyStage4 = expectedKs4Response,
                 KeyStage5 = expectedKs5Response,
-                AbsenceData = new List<Dfe.Academies.Contracts.V1.EducationalPerformance.SchoolAbsenceDataDto>()
+                AbsenceData = absenceData.Select(a => new SchoolAbsenceDataDto
+                {
+                    Year = a.DownloadYear,
+                    PersistentAbsence = a.PPERSABS10,
+                    OverallAbsence = a.PERCTOT
+                }).ToList()
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
@@ -316,11 +341,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
-            _legacyDbContext.SipPhonics.RemoveRange(_legacyDbContext.SipPhonics);
-            _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
-            _legacyDbContext.GlobalOptionSetMetadata.RemoveRange(_legacyDbContext.GlobalOptionSetMetadata);
         }
         
         [Fact]
@@ -328,7 +348,7 @@ namespace TramsDataApi.Test.Integration
         {
 
             var accountGuid = Guid.NewGuid();
-            var accountUrn = "147259";
+            var accountUrn = "126559";
 
             var account = Builder<Account>.CreateNew()
                 .With(a => a.Name = "Gillshill Primary School")
@@ -760,7 +780,7 @@ namespace TramsDataApi.Test.Integration
                 KeyStage2 = new List<KeyStage2PerformanceResponse> { expectedKeyStage2Response },
                 KeyStage4 = new List<KeyStage4PerformanceResponse> { expectedKeyStage4Response },
                 KeyStage5 = new List<KeyStage5PerformanceResponse> { expectedKeyStage5Response },
-                AbsenceData = new List<Dfe.Academies.Contracts.V1.EducationalPerformance.SchoolAbsenceDataDto>()
+                AbsenceData = new List<SchoolAbsenceDataDto>()
             };
             
             var response = await _client.GetAsync($"/educationPerformance/{accountUrn}");
@@ -769,19 +789,6 @@ namespace TramsDataApi.Test.Integration
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             result.Should().BeEquivalentTo(expected);
-            
-            _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
-            _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
-            _legacyDbContext.GlobalOptionSetMetadata.RemoveRange(_legacyDbContext.GlobalOptionSetMetadata);
-        }
-        
-
-        public void Dispose()
-        {
-            _legacyDbContext.Account.RemoveRange(_legacyDbContext.Account);
-            _legacyDbContext.SipPhonics.RemoveRange(_legacyDbContext.SipPhonics);
-            _legacyDbContext.SipEducationalperformancedata.RemoveRange(_legacyDbContext.SipEducationalperformancedata);
-            _legacyDbContext.SaveChanges();
         }
     }
 }

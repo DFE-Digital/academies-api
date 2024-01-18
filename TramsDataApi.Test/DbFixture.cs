@@ -49,6 +49,7 @@ namespace TramsDataApi.Test
             _tramsDbContext.Database.Migrate();
 
             _edperfContext.Database.EnsureCreated();
+            _edperfContext.Database.Migrate();
 
             _legacyTransaction = _legacyTramsDbContext.Database.BeginTransaction();
             _tramsTransaction = _tramsDbContext.Database.BeginTransaction();
