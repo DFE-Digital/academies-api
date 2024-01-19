@@ -20,7 +20,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return trust;
         }
-        public async Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
+public async Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
         {
             var trust = await DefaultIncludes().AsNoTracking()
                 .SingleOrDefaultAsync(x => x.CompaniesHouseNumber == companiesHouseNumber, cancellationToken).ConfigureAwait(false);
@@ -43,7 +43,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return trusts;
         }
 
-        public async Task<(List<Trust>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
+        public async Task<(List<Trust>, int)> Search(int page, int count, string? name, string? ukPrn, string? companiesHouseNumber, string status, CancellationToken cancellationToken)
         {
             if (name == null && ukPrn == null && companiesHouseNumber == null)
             {
@@ -53,17 +53,21 @@ namespace Dfe.Academies.Infrastructure.Repositories
                    .Take(count).ToListAsync(cancellationToken).ConfigureAwait(false), allTrusts.Count());
             }
 
-            IOrderedQueryable<Trust> filteredGroups = DefaultIncludes().AsNoTracking()
+            IQueryable<Trust> filteredGroups = DefaultIncludes().AsNoTracking()
                .Where(trust => (trust.Name.Contains(name) ||
                             trust.UKPRN.Contains(ukPrn) ||
                             trust.CompaniesHouseNumber.Contains(companiesHouseNumber))
                            && (
                               trust.TrustType.Name == "Single-academy trust" ||
                               trust.TrustType.Name == "Multi-academy trust"
-                           ) && trust.TrustStatus == "Open")
-               .OrderBy(trust => trust.GroupUID);
+                           ));
+            
+            if (status == "Open")
+            {
+                filteredGroups = filteredGroups.Where(trust => trust.TrustStatus == "Open");
+            }
 
-            return (await filteredGroups.Skip((page - 1) * count).Take(count).ToListAsync(cancellationToken).ConfigureAwait(false), filteredGroups.Count());
+            return (await filteredGroups.OrderBy(trust => trust.GroupUID).Skip((page - 1) * count).Take(count).ToListAsync(cancellationToken).ConfigureAwait(false), filteredGroups.Count());
         }
 
         private IQueryable<Trust> DefaultIncludes()
