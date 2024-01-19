@@ -119,19 +119,20 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
+        /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>A list of Trusts that meet the search criteria.</returns>
         [HttpGet]
         [Route("trusts")]        
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
-        public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10)
+        public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10, string status = "Open")
         {
             _logger.LogInformation(
                 "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
                 groupName, ukPrn, companiesHouseNumber, page, count);
 
             var (trusts, recordCount) = await _trustQueries
-                .Search(page, count, groupName, ukPrn, companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+                .Search(page, count, groupName, ukPrn, companiesHouseNumber, status, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
                 "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
