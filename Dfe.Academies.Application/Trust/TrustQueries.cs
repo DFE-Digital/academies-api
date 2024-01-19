@@ -23,9 +23,9 @@ namespace Dfe.Academies.Application.Trust
             return trust == null ? null : MapToTrustDto(trust);
         }
 
-        public async Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken)
+        public async Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, string status, CancellationToken cancellationToken)
         {
-            var (trusts, recordCount) = await _trustRepository.Search(page, count, name, ukPrn, companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+            var (trusts, recordCount) = await _trustRepository.Search(page, count, name, ukPrn, companiesHouseNumber, status, cancellationToken).ConfigureAwait(false);
 
             return (trusts.Select(x => MapToTrustDto(x)).ToList(), recordCount);
         }
