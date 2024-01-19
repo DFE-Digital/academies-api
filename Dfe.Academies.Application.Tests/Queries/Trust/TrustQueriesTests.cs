@@ -54,7 +54,9 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
             // Arrange
             var trusts = _fixture.Create<List<Domain.Trust.Trust>>();
             var mockRepo = new Mock<ITrustRepository>();
-            mockRepo.Setup(x => x.Search(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult((trusts, trusts.Count)));
+            mockRepo.Setup(x => x.Search(
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult((trusts, trusts.Count))
+            );
 
             var trustQueries = new TrustQueries(mockRepo.Object);
             int page = 0;
@@ -62,6 +64,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
             string name = null;
             string ukPrn = null;
             string companiesHouseNumber = null;
+            string status = "Open";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
 
             // Act
@@ -71,6 +74,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
                 name,
                 ukPrn,
                 companiesHouseNumber,
+                status,
                 cancellationToken);
 
             // Assert
