@@ -197,7 +197,7 @@ namespace TramsDataApi.Test.Integration
             string TrustUKPRN = "123456789";
 
             var closedTrustGroup = _fixture.Build<Group>()
-                .With(f => f.GroupUid, "1")
+                .With(f => f.GroupUid, "234")
                 .With(f => f.GroupId, groupID)
                 .With(f=> f.GroupName, TrustName)
                 .With(f => f.Ukprn, TrustUKPRN)
@@ -208,14 +208,14 @@ namespace TramsDataApi.Test.Integration
                 .Create();
 
             var openTrustGroup = _fixture.Build<Group>()
-                .With(f => f.GroupUid, "2")
+                .With(f => f.GroupUid, "1234")
                 .With(f => f.GroupId, groupID)
-                 .With(f => f.GroupName, TrustName)
-                 .With(f => f.Ukprn, TrustUKPRN)
-                 .With(f => f.GroupStatus, "Open")
-                 .With(f => f.GroupStatusCode, "OPEN")
-                 .With(f => f.GroupType, "Multi-academy trust")
-                 .Create();
+                .With(f => f.GroupName, TrustName)
+                .With(f => f.Ukprn, TrustUKPRN)
+                .With(f => f.GroupStatus, "Open")
+                .With(f => f.GroupStatusCode, "OPEN")
+                .With(f => f.GroupType, "Multi-academy trust")
+                .Create();
 
             _legacyDbContext.Group.AddRange(closedTrustGroup, openTrustGroup);
 
