@@ -154,11 +154,13 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200)
-          // Response isn't in UKPRN order
-          expect(response.body[1].name).to.eq(groupName)
-          expect(response.body[1].ukprn).to.eq(ukprns[0])
-          expect(response.body[0].name).to.eq('THE BISHOP FRASER TRUST')
-          expect(response.body[0].ukprn).to.eq(ukprns[1])
+          expect(response.body).to.have.lengthOf(2)
+          // Response isn't neccessarily in UKPRN order
+          const resBody = JSON.stringify(response.body)
+          expect(resBody).to.have.string(groupName)
+          expect(resBody).to.have.string(ukprns[0])
+          expect(resBody).to.have.string('THE BISHOP FRASER TRUST')
+          expect(resBody).to.have.string(ukprns[1])
         })
     })
   })
