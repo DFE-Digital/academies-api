@@ -1,14 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.Extensions;
 
 namespace TramsDataApi.Gateways
 {
-   public class TrustGateway : ITrustGateway
+    public class TrustGateway : ITrustGateway
    {
       private readonly LegacyTramsDbContext _dbContext;
 
@@ -24,7 +23,11 @@ namespace TramsDataApi.Gateways
 
         public Group GetLatestGroupByUkPrn(string ukPrn)
         {
-            return _dbContext.Group.OrderByDescending(f=> f.GroupUid).FirstOrDefault(g => g.Ukprn == ukPrn);
+            var group = _dbContext.Group.Where(g => g.Ukprn == ukPrn).ToList();
+
+            var result = group.OrderByDescending(g => g.GroupUid.ToInt()).FirstOrDefault();
+
+            return result;
         }
 
         public Trust GetIfdTrustByGroupId(string groupId)
@@ -90,6 +93,9 @@ namespace TramsDataApi.Gateways
             return _dbContext.TrustMasterData.FirstOrDefault(t => t.GroupID == groupId);
         }
 
- 
+        private static int ToInt(string value)
+        {
+            return int.TryParse(value, out var parsed) ? parsed : 0;
+        }
     }
 }

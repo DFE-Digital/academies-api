@@ -265,7 +265,9 @@ namespace TramsDataApi.Test.Integration.V4
         [Fact]
         public async Task Get_BulkEstablishment_NoEstablishmentsExist_Returns_Empty()
         {
-            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments/bulk?request=123");
+            var id = 1000000;
+
+            var getEstablishmentResponse = await _client.GetAsync($"{_apiUrlPrefix}/establishments/bulk?request={id}");
             getEstablishmentResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var establishmentContent = await getEstablishmentResponse.Content.ReadFromJsonAsync<List<EstablishmentDto>>();
