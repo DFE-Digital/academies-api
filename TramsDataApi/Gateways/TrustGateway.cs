@@ -92,10 +92,5 @@ namespace TramsDataApi.Gateways
         {
             return _dbContext.TrustMasterData.FirstOrDefault(t => t.GroupID == groupId);
         }
-
-        private static int ToInt(string value)
-        {
-            return int.TryParse(value, out var parsed) ? parsed : 0;
-        }
     }
 }
