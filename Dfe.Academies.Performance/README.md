@@ -14,13 +14,14 @@ The variables you will need to set are defined below:
 
 | Variable | Description | Example |
 |---|---|---|
+| `API_KEY` | The API key used in headers for requests | `app-key` |
 | `BASE_URL` | The url of the service to be tested | `https//localhost:5001` |
 
 ## Running the tests
 
 To run an individual script, navigate to the correct directory and run
 
-`k6 run -e BASE_URL=<your-value> <your-script-name>`
+`k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> <your-script-name>`
 
 ## Results
 

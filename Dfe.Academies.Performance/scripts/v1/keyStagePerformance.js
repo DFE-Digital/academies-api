@@ -1,5 +1,6 @@
 import http from 'k6/http'
 import { check, sleep } from 'k6'
+import { isStatus200, getHeaders } from '../utils/utils.js'
 
 export const options = {
     vus: 20,
@@ -21,17 +22,4 @@ function getEducationPerformanceByUrn(urn) {
   })
 
   isStatus200(res)
-}
-
-function isStatus200(res) {
-  check(res, {
-      'status is 200': (r) => r.status === 200,
-  })
-}
-
-function getHeaders() {
-  return {
-      'ApiKey': 'app-key',
-      'Content-Type': 'application/json'
-  }
 }
