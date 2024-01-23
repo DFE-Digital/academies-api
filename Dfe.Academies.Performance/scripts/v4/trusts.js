@@ -3,11 +3,10 @@ import { check, sleep } from 'k6'
 
 export const options = {
     vus: 20,
-    duration: '30s',
-    // httpDebug: 'full',
+    duration: '30s'
 }
 
-const baseUrl = 'https://localhost:5001/v4'
+const baseUrl = `${__ENV.BASE_URL}/v4`
 
 export default function () {
 

@@ -6,7 +6,7 @@ export const options = {
     duration: '30s'
 }
 
-const baseUrl = 'https://localhost:5001'
+const baseUrl = __ENV.BASE_URL
 
 export default function () {
 

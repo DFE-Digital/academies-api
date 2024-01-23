@@ -6,7 +6,7 @@ export const options = {
     duration: '30s'
 }
 
-const baseUrl = 'https://localhost:5001/v2'
+const baseUrl = `${__ENV.BASE_URL}/v2`
 
 export default function () {
 
