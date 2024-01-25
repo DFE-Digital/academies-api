@@ -1,4 +1,5 @@
 ﻿using Dfe.Academies.Contracts.V4.Trusts;
+using Dfe.Academies.Domain.Trust;
 
 namespace Dfe.Academies.Application.Trust
 {
@@ -8,6 +9,6 @@ namespace Dfe.Academies.Application.Trust
         Task<TrustDto?> GetByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken);
         Task<TrustDto?> GetByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken);
         Task<List<TrustDto>> GetByUkprns(string[] ukprns, CancellationToken cancellationToken);
-        Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, string status, CancellationToken cancellationToken);
+        Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken);
     }
 }

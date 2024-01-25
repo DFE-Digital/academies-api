@@ -43,7 +43,7 @@ public async Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNu
             return trusts;
         }
 
-        public async Task<(List<Trust>, int)> Search(int page, int count, string? name, string? ukPrn, string? companiesHouseNumber, string status, CancellationToken cancellationToken)
+        public async Task<(List<Trust>, int)> Search(int page, int count, string? name, string? ukPrn, string? companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken)
         {
             if (name == null && ukPrn == null && companiesHouseNumber == null)
             {
@@ -62,7 +62,7 @@ public async Task<Trust?> GetTrustByCompaniesHouseNumber(string companiesHouseNu
                               trust.TrustType.Name == "Multi-academy trust"
                            ));
             
-            if (status == "Open")
+            if (status == TrustStatus.Open)
             {
                 filteredGroups = filteredGroups.Where(trust => trust.TrustStatus == "Open");
             }

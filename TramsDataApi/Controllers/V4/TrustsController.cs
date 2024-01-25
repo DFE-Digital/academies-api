@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Contracts.V4;
 using Dfe.Academies.Contracts.V4.Trusts;
+using Dfe.Academies.Domain.Trust;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -125,7 +126,7 @@ namespace TramsDataApi.Controllers.V4
         [Route("trusts")]        
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
-        public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10, string status = "Open")
+        public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10, TrustStatus status = TrustStatus.Open)
         {
             _logger.LogInformation(
                 "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
