@@ -346,6 +346,53 @@ namespace TramsDataApi.Test.Integration.V4
 
             actualTrust.Ukprn.Should().Be(selectedTrust.UKPRN);
         }
+        
+        [Fact]
+        public async Task Get_SearchByStatus_Returns_Ok()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustData = BuildSmallTrustSet();
+            var closedTrust = trustData.First();
+            closedTrust.TrustStatus = "Closed";
+
+            context.Trusts.AddRange(trustData);
+            await context.SaveChangesAsync();
+
+            var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts?groupName={closedTrust.Name}&status=Open");
+            trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var trustContent = await trustResponse.Content.ReadFromJsonAsync<PagedDataResponse<TrustDto>>();
+
+            trustContent.Data.Should().HaveCount(0);
+            trustContent.Data.Should().NotContain(trust => trust.Ukprn == closedTrust.UKPRN);
+            
+            var allTrustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts?groupName={closedTrust.Name}&status=All");
+            trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var allTrustContent = await allTrustResponse.Content.ReadFromJsonAsync<PagedDataResponse<TrustDto>>();
+
+            allTrustContent.Data.Should().HaveCount(1);
+            
+            allTrustContent.Data.Should().Contain(trust => trust.Ukprn == closedTrust.UKPRN);
+        }
+        
+        [Fact]
+        public async Task Get_SearchByStatus_WIthIncorrectStatus_Returns_400()
+        {
+            using var context = _apiFixture.GetMstrContext();
+
+            var trustData = BuildSmallTrustSet();
+            var closedTrust = trustData.First();
+            closedTrust.TrustStatus = "Closed";
+
+            context.Trusts.AddRange(trustData);
+            await context.SaveChangesAsync();
+
+            var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/trusts?groupName={closedTrust.Name}&status=Wrong");
+            trustResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+        }
 
         [Fact]
         public async Task Get_SearchByCriteria_NoTrustExists_Returns_Empty_Ok()
