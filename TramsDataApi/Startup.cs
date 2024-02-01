@@ -52,6 +52,7 @@ namespace TramsDataApi
             {
                 MfspOptions mfspOptions =  GetTypedConfigurationFor<MfspOptions>();
                 client.BaseAddress = new Uri(mfspOptions.ApiEndpoint);
+                client.DefaultRequestHeaders.Add("AppKey", mfspOptions.ApiKey);
             });
 
             services.AddScoped<ITrustGateway, TrustGateway>();

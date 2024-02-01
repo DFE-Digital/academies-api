@@ -12,7 +12,7 @@
     "DefaultConnection": "Server=127.0.0.1,1433;Database=sip;User Id=sa;TrustServerCertificate=True;Password=StrongPassword905"
   },
   "Mfsp": {
-    "ApiEndpoint": "http://localhost:5003"
+    "ApiEndpoint": "http://localhost:6784"
   },
   "FeatureManagement": {
     "IsGetProjectsFromMfspEnabled": true
