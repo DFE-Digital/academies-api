@@ -14,26 +14,29 @@ namespace TramsDataApi.Test.FakeApi
 
         public void Start()
         {
-            _server = new WebHostBuilder().UseKestrel(x => x.ListenLocalhost(5003)).Configure(app =>
+            _server = new WebHostBuilder().UseKestrel(x => x.ListenLocalhost(6784)).Configure(app =>
             {
                 app.Run(async context =>
                 {
-                    if (context.Request.Method == HttpMethods.Get && context.Request.Path == "/v2/fss/projects")
+                    if (context.Request.Method == HttpMethods.Get && context.Request.Path == "/api/v1/construct/projects")
                     {
-                        var response = new List<FssProjectResponse>()
+                        var response = new ApiResponseV2<FssProjectResponse>()
                         {
-                            new FssProjectResponse()
+                            Data = new List<FssProjectResponse>()
                             {
-                                CurrentFreeSchoolName = "This is my free school",
-                                AgeRange = "5-11",
-                                ProjectStatus = "Open",
-                            },
-                            new FssProjectResponse()
-                            {
-                                CurrentFreeSchoolName = "This is another free school",
-                                AgeRange = "11-16",
-                                ProjectStatus = "Open",
-                            },
+                                new FssProjectResponse()
+                                {
+                                    CurrentFreeSchoolName = "This is my free school",
+                                    AgeRange = "5-11",
+                                    ProjectStatus = "Open",
+                                },
+                                new FssProjectResponse()
+                                {
+                                    CurrentFreeSchoolName = "This is another free school",
+                                    AgeRange = "11-16",
+                                    ProjectStatus = "Open",
+                                },
+                            }
                         };
 
                         await context.Response.WriteAsJsonAsync(response);
