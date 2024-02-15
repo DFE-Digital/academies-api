@@ -91,7 +91,7 @@ jobs:
           git push origin ${{ needs.set-env.outputs.release }}
 
       - name: Create release
-        uses: "actions/github-script@v6"
+        uses: "actions/github-script@v7"
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           script: |
@@ -149,7 +149,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Setup node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
