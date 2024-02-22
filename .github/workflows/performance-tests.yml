@@ -1,15 +1,17 @@
 name: k6 Performance benchmark tests
 
 on:
-  wprkflow_dispatch:
-  # workflow_run:
-  #   workflows: ["Deploy to environment"]
-  #   types:
-  #     - completed
+  workflow_dispatch:
+    inputs:
+        environment:
+          type: environment
+          description: "Choose an environment to run against"
+          required: true
 
 jobs:
   run-k6-tests:
     runs-on: ubuntu-latest
+    if: github.event.inputs.environment == 'development' || github.event.inputs.environment == 'test'
     defaults:
       run:
         working-directory: Dfe.Academies.Performance/scripts
