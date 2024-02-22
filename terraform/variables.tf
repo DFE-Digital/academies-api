@@ -3,11 +3,6 @@ variable "environment" {
   type        = string
 }
 
-variable "key_vault_access_users" {
-  description = "List of users that require access to the Key Vault where tfvars are stored. This should be a list of User Principle Names (Found in Active Directory) that need to run terraform"
-  type        = list(string)
-}
-
 variable "key_vault_access_ipv4" {
   description = "List of IPv4 Addresses that are permitted to access the Key Vault"
   type        = list(string)
@@ -75,6 +70,12 @@ variable "container_secret_environment_variables" {
   description = "Container secret environment variables"
   type        = map(string)
   sensitive   = true
+}
+
+variable "container_scale_http_concurrency" {
+  description = "When the number of concurrent HTTP requests exceeds this value, then another replica is added. Replicas continue to add to the pool up to the max-replicas amount."
+  type        = number
+  default     = 10
 }
 
 variable "enable_dns_zone" {

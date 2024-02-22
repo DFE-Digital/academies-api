@@ -355,7 +355,7 @@ namespace TramsDataApi.Test.Integration.V3
 
         [Theory]
         [InlineData("123456789")]
-        [InlineData("123")]
+        [InlineData("12345")]
         public async Task ShouldReturnSubsetOfTrusts_WhenSearchingTrusts_ByCompaniesHouseNumber(string searchString)
         {
             var companiesHouseNumber = "123456789";

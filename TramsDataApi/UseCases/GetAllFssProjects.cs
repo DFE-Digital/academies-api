@@ -31,9 +31,9 @@ namespace TramsDataApi.UseCases
 
             if (useMfspApi)
             {
-                var mfspProjects = await _mfspApiClient.Get<List<FssProjectResponse>>("/v2/fss/projects");
+                var mfspProjects = await _mfspApiClient.Get<ApiResponseV2<FssProjectResponse>>("/api/v1/construct/projects");
 
-                return mfspProjects;
+                return mfspProjects.Data.ToList();
             }
 
             return _fssProjectGateway.GetAll().Select(fssProject => FssProjectResponseFactory.Create(fssProject)).ToList();
