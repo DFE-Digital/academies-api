@@ -39,14 +39,6 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return trust;
         }
-        
-        public async Task<Trust?> GetTrustByGroupUID(string groupUID, CancellationToken cancellationToken)
-        {
-            var trust = await DefaultIncludes().AsNoTracking()
-                .SingleOrDefaultAsync(x => x.GroupUID == groupUID, cancellationToken).ConfigureAwait(false);
-
-            return trust;
-        }
 
         public async Task<List<Trust>> GetTrustsByUkprns(string[] ukprns, CancellationToken cancellationToken)
         {

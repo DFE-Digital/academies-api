@@ -52,12 +52,6 @@ namespace Dfe.Academies.Application.Trust
             return trust == null ? null : MapToTrustDto(trust);
         }
 
-        public async Task<TrustDto?> GetByTrustGroupUID(string groupUID, CancellationToken cancellationToken)
-        {
-            var trust = await _trustRepository.GetTrustByGroupUID(groupUID, cancellationToken).ConfigureAwait(false);
-            return trust == null ? null : MapToTrustDto(trust);
-        }
-
         public async Task<List<TrustIdentifiers>?> GetTrustIdentifiers(string identifier,
             CancellationToken cancellationToken)
         {
