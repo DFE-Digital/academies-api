@@ -42,7 +42,7 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Retrieves a Trust's Identifiers based on one of its identifiers.", Description = "Returns a Trust identifiers found in the database.")]
         [SwaggerResponse(200, "Successfully found and returned the Trusts identifiers.")]
         [SwaggerResponse(404, "Trust with specified identifier not found.")]
-        public async Task<ActionResult<TrustDto>> GetTrustIdentifiers(string identifier, CancellationToken cancellationToken)
+        public async Task<ActionResult<TrustIdentifiers[]>> GetTrustIdentifiers(string identifier, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Attempting to get trust identifiers by identifier {identifier}");
             var trusts = await _trustQueries.GetTrustIdentifiers(identifier, cancellationToken).ConfigureAwait(false);
@@ -55,7 +55,7 @@ namespace TramsDataApi.Controllers.V4
             
             _logger.LogInformation($"Returning trusts found by identifier {identifier}");
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
-            return Ok(trusts);
+            return Ok(trusts.ToArray());
         }
     }
 }
