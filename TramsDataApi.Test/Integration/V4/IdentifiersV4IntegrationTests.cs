@@ -38,7 +38,7 @@ public class IdentifiersV4IntegrationTests
         var trustData = BuildSmallTrustSet();
 
         context.Trusts.AddRange(trustData);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         var selectedTrust = trustData.First();
 
@@ -69,7 +69,7 @@ public class IdentifiersV4IntegrationTests
         var trustData = BuildSmallDuplicateTrustSet(idType);
 
         context.Trusts.AddRange(trustData);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
 
         var selectedTrust = trustData.First();
         
@@ -87,6 +87,20 @@ public class IdentifiersV4IntegrationTests
         var trustContent = await trustResponse.Content.ReadFromJsonAsync<TrustIdentifiers[]>();
         trustContent.Length.Should().Be(3);
         AssertIdentifierResponse(trustContent.First(), selectedTrust);
+    }
+    
+    [Fact]
+    public async Task Get_TrustIdentifiers_AndTrustDoesNotExist_Returns_NotFound()
+    {
+        using var context = _apiFixture.GetMstrContext();
+
+        var trustData = BuildSmallTrustSet();
+
+        context.Trusts.AddRange(trustData);
+        await context.SaveChangesAsync();
+
+        var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/identifier/noTrustExists");
+        trustResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
     
     private static List<Trust> BuildSmallTrustSet()
