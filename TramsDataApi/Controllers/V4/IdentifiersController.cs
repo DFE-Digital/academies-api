@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Dfe.Academies.Application.Trust;
-using Dfe.Academies.Contracts.V4;
-using Dfe.Academies.Contracts.V4.Trusts;
-using Dfe.Academies.Domain.Trust;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4
 {
@@ -44,17 +41,18 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerResponse(404, "Trust with specified identifier not found.")]
         public async Task<ActionResult<TrustIdentifiers[]>> GetTrustIdentifiers(string identifier, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Attempting to get trust identifiers by identifier {identifier}");
+            var loggableIdentifier = Regex.Replace(identifier, "[^a-zA-Z0-9-]", "", RegexOptions.None, TimeSpan.FromSeconds(2));
+            _logger.LogInformation("Attempting to get trust identifiers by identifier {identifier}", loggableIdentifier);
             var trusts = await _trustQueries.GetTrustIdentifiers(identifier, cancellationToken).ConfigureAwait(false);
             
             if (trusts == null)
             {
-                _logger.LogInformation($"No trust with identifier {identifier}");
+                _logger.LogInformation("No trust with identifier {identifier}", loggableIdentifier);
                 return NotFound();
             }
             
-            _logger.LogInformation($"Returning trusts found by identifier {identifier}");
-            _logger.LogDebug(JsonSerializer.Serialize(trusts));
+            _logger.LogInformation("Returning trusts found by identifier {identifier}", loggableIdentifier);
+            _logger.LogDebug("{output}",JsonSerializer.Serialize(trusts));
             return Ok(trusts.ToArray());
         }
     }
