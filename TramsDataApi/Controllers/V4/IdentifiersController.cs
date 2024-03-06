@@ -14,7 +14,7 @@ using TramsDataApi.ResponseModels;
 namespace TramsDataApi.Controllers.V4
 {
     /// <summary>
-    /// Handles operations related to Idenitfiers.
+    /// Handles operations related to Identifiers.
     /// </summary>
     [ApiController]
     [ApiVersion("4.0")]
@@ -32,9 +32,9 @@ namespace TramsDataApi.Controllers.V4
         }
 
         /// <summary>
-        /// Retrieves a Trust's Identifiers based on one of its identifiers.
+        /// Retrieves a Trust's other identifiers based on one of its identifiers. Currently supports UKPRN, UID and Trust Reference
         /// </summary>
-        /// <param name="identifier">The identifier (UKPRN, Group UID or Trust Reference).</param>
+        /// <param name="identifier">The identifier (UKPRN, UID or Trust Reference).</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
