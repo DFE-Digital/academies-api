@@ -56,6 +56,14 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return trusts;
         }
 
+        public async Task<List<Trust>> GetTrustsByIdentifier(string identifier, CancellationToken cancellationToken)
+        {
+            var trusts = await DefaultIncludes().AsNoTracking().Where(x =>
+                    identifier.Equals(x.UKPRN) || identifier.Equals(x.GroupID) || identifier.Equals(x.GroupUID))
+                .ToListAsync(cancellationToken).ConfigureAwait(false);
+            return trusts;
+        }
+
         public async Task<(List<Trust>, int)> Search(int page, int count, string? name, string? ukPrn,
             string? companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken)
         {

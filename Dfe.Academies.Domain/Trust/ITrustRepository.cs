@@ -7,6 +7,7 @@
         Task<Trust?> GetTrustByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken);
         Task<Trust?> GetTrustByGroupUID(string groupUID, CancellationToken cancellationToken);
         Task<List<Trust>> GetTrustsByUkprns(string[] ukprns, CancellationToken cancellationToken);
+        Task<List<Trust>> GetTrustsByIdentifier(string identifier, CancellationToken cancellationToken);
         Task<(List<Trust>, int)> Search(int page, int count, string? name, string? ukPrn,
          string? companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken);
     }

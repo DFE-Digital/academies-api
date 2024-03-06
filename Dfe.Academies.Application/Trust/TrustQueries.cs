@@ -58,27 +58,10 @@ namespace Dfe.Academies.Application.Trust
             return trust == null ? null : MapToTrustDto(trust);
         }
 
-        public async Task<List<TrustIdentifiers>?> GetTrustIdentifiers(string identifer,
+        public async Task<List<TrustIdentifiers>?> GetTrustIdentifiers(string identifier,
             CancellationToken cancellationToken)
         {
-            var trusts = new List<Domain.Trust.Trust>();
-            
-            var ukprnTrust = await _trustRepository.GetTrustByUkprn(identifer, cancellationToken).ConfigureAwait(false);
-            if (ukprnTrust is not null)
-            {
-                trusts.Add(ukprnTrust);
-            }
-            var trustReferenceTrust = await _trustRepository.GetTrustByTrustReferenceNumber(identifer, cancellationToken)
-                .ConfigureAwait(false);
-            if (trustReferenceTrust is not null)
-            {
-                trusts.Add(trustReferenceTrust);
-            }
-            var groupUIDTrust = await _trustRepository.GetTrustByGroupUID(identifer, cancellationToken).ConfigureAwait(false);
-            if (groupUIDTrust is not null)
-            {
-                trusts.Add(groupUIDTrust);
-            }
+            var trusts = await _trustRepository.GetTrustsByIdentifier(identifier, cancellationToken);
 
             var trustIdentifiersList = trusts.Select(mapToIdentifiers).ToList();
 
