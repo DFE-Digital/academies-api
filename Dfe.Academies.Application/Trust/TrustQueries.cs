@@ -92,13 +92,13 @@ namespace Dfe.Academies.Application.Trust
         
         private static TrustIdentifiers mapToIdentifiers(Domain.Trust.Trust trust)
         {
-            return new TrustIdentifiers(UID: trust.GroupUID, UKPRN: trust.UKPRN, TR: trust.GroupID);
+            return new TrustIdentifiers(UID: trust.GroupUID, UKPRN: trust.UKPRN, TrustReference: trust.GroupID);
         }
     }
 
     public record TrustIdentifiers(
         string? UID,
         string? UKPRN,
-        string? TR
+        string? TrustReference
     );
 }
