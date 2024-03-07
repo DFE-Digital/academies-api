@@ -89,6 +89,50 @@ public class IdentifiersV4IntegrationTests
         AssertIdentifierResponse(trustContent.First(), selectedTrust);
     }
     
+    [Theory]
+    [InlineData(IdTypes.GroupID)]
+    [InlineData(IdTypes.UKPRN)]
+    [InlineData(IdTypes.GroupUID)]
+    public async Task Get_TrustIdentifiers_AndNoOtherIdentifiersExist_Returns_Ok(IdTypes idType)
+    {
+        using var context = _apiFixture.GetMstrContext();
+
+        var trustData = BuildSmallTrustSet();
+
+        var selectedTrust = trustData.First();
+        
+        // Group UID must be present so cannot be null
+        string identifier;
+        switch(idType) 
+        {
+            case IdTypes.GroupID:
+                identifier = selectedTrust.GroupID;
+                selectedTrust.UKPRN = null;
+                break;
+            case IdTypes.UKPRN:
+                identifier = selectedTrust.UKPRN;
+                selectedTrust.GroupID = null;
+                break;
+            case IdTypes.GroupUID:
+                identifier = selectedTrust.GroupUID;
+                selectedTrust.GroupID = null;
+                selectedTrust.UKPRN = null;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(idType), idType, null);
+        };
+        
+        context.Trusts.AddRange(trustData);
+        await context.SaveChangesAsync();
+        
+        var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/identifier/{identifier}");
+        trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var trustContent = await trustResponse.Content.ReadFromJsonAsync<TrustIdentifiers[]>();
+        trustContent.Length.Should().Be(1);
+        AssertIdentifierResponse(trustContent.First(), selectedTrust);
+    }
+    
     [Fact]
     public async Task Get_TrustIdentifiers_AndTrustDoesNotExist_Returns_NotFound()
     {
