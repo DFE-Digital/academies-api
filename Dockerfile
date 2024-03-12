@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim AS build
 WORKDIR /build
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -23,7 +23,7 @@ RUN dotnet build -c Release TramsDataApi.sln --no-restore
 RUN dotnet publish TramsDataApi -c Release -o /app --no-restore
 
 ARG ASPNET_IMAGE_TAG
-FROM mcr.microsoft.com/dotnet/aspnet:6.0.9-bullseye-slim AS final
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.17-bullseye-slim AS final
 
 RUN apt-get update
 RUN apt-get install unixodbc curl gnupg -y
