@@ -45,7 +45,7 @@ public class IdentifiersController : ControllerBase
         _logger.LogInformation("Attempting to get trust identifiers by identifier {identifier}", loggableIdentifier);
         var trusts = await _trustQueries.GetTrustIdentifiers(identifier, cancellationToken).ConfigureAwait(false);
             
-        if (trusts == null)
+        if (trusts.Count <= 0)
         {
             _logger.LogInformation("No trust with identifier {identifier}", loggableIdentifier);
             return NotFound();

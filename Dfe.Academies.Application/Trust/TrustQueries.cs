@@ -52,14 +52,14 @@ namespace Dfe.Academies.Application.Trust
             return trust == null ? null : MapToTrustDto(trust);
         }
 
-        public async Task<List<TrustIdentifiers>?> GetTrustIdentifiers(string identifier,
+        public async Task<List<TrustIdentifiers>> GetTrustIdentifiers(string identifier,
             CancellationToken cancellationToken)
         {
             var trusts = await _trustRepository.GetTrustsByIdentifier(identifier, cancellationToken);
 
             var trustIdentifiersList = trusts.Select(mapToIdentifiers).ToList();
 
-            return trustIdentifiersList.Count > 0 ? trustIdentifiersList : null;
+            return trustIdentifiersList.Count > 0 ? trustIdentifiersList : new List<TrustIdentifiers>();
         }
 
         private static TrustDto MapToTrustDto(Domain.Trust.Trust trust)
