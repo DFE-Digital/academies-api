@@ -87,6 +87,9 @@ public class IdentifiersV4IntegrationTests
         var trustContent = await trustResponse.Content.ReadFromJsonAsync<TrustIdentifiers[]>();
         trustContent.Length.Should().Be(3);
         AssertIdentifierResponse(trustContent.First(), selectedTrust);
+        AssertIdentifierResponse(trustContent[2], selectedTrust);
+        AssertIdentifierResponse(trustContent[3], selectedTrust);
+
     }
     
     [Theory]
@@ -145,6 +148,8 @@ public class IdentifiersV4IntegrationTests
 
         var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/identifier/noTrustExists");
         trustResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var trustContent = await trustResponse.Content.ReadFromJsonAsync<List<TrustIdentifiers>>();
+        trustContent.Count.Should().Be(0);
     }
     
     private static List<Trust> BuildSmallTrustSet()
