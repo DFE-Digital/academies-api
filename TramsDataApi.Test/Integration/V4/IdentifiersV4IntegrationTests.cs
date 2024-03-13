@@ -86,9 +86,9 @@ public class IdentifiersV4IntegrationTests
 
         var trustContent = await trustResponse.Content.ReadFromJsonAsync<TrustIdentifiers[]>();
         trustContent.Length.Should().Be(3);
-        AssertIdentifierResponse(trustContent.First(), selectedTrust);
-        AssertIdentifierResponse(trustContent[2], selectedTrust);
-        AssertIdentifierResponse(trustContent[3], selectedTrust);
+        AssertIdentifierResponse(trustContent.First(), trustData.First());
+        AssertIdentifierResponse(trustContent[1], trustData[1]);
+        AssertIdentifierResponse(trustContent[2], trustData[2]);
 
     }
     
