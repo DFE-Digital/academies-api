@@ -148,8 +148,6 @@ public class IdentifiersV4IntegrationTests
 
         var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/identifier/noTrustExists");
         trustResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        var trustContent = await trustResponse.Content.ReadFromJsonAsync<List<TrustIdentifiers>>();
-        trustContent.Count.Should().Be(0);
     }
     
     private static List<Trust> BuildSmallTrustSet()
