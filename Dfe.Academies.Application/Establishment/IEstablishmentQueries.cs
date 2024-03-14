@@ -10,5 +10,6 @@ namespace Dfe.Academies.Application.Establishment
         Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken);
         Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
         Task<List<EstablishmentDto>> GetByTrust(string trustUkprn, CancellationToken cancellationToken);
+        Task<List<EstablishmentIdentifiers>> GetEstablishmentIdentifiers(string identifier, CancellationToken cancellationToken);
     }
 }
