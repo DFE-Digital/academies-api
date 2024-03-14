@@ -88,6 +88,17 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
+        public async Task<List<Establishment>> GetEstablishmentsByIdentifier(string identifier,
+            CancellationToken cancellationToken)
+        {
+            var establishments = await BaseQuery().Where(item =>
+                    identifier.Equals(item.Establishment.UKPRN) || identifier.Equals(item.Establishment.URN.ToString()) || 
+                    identifier.EndsWith(item.Establishment.EstablishmentNumber.ToString()) && identifier.StartsWith(item.LocalAuthority.Code))
+                .ToListAsync(cancellationToken);
+            var results = establishments.Select(ToEstablishment).ToList();
+            return results;
+        }
+
         public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
         {
             var establishmentIds = 

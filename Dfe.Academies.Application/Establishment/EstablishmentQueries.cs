@@ -69,6 +69,15 @@ namespace Dfe.Academies.Application.Establishment
             return establishments.Select(x => MapToEstablishmentDto(x)).ToList();
         }
 
+        public async Task<List<EstablishmentIdentifiers>> GetEstablishmentIdentifiers(string identifier, CancellationToken cancellationToken)
+        {
+            var establishments = await _establishmentRepository.GetEstablishmentsByIdentifier(identifier, cancellationToken);
+
+            var trustIdentifiersList = establishments.Select(mapToIdentifiers).ToList();
+
+            return trustIdentifiersList.Count > 0 ? trustIdentifiersList : new List<EstablishmentIdentifiers>();
+        }
+
         public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken)
         {
             var establishments = await _establishmentRepository.GetByUrns(Urns, cancellationToken).ConfigureAwait(false);
@@ -96,5 +105,16 @@ namespace Dfe.Academies.Application.Establishment
 
             return result;
         }
+        
+        private static EstablishmentIdentifiers mapToIdentifiers(Domain.Establishment.Establishment establishment)
+        {
+            return new EstablishmentIdentifiers(UKPRN: establishment.UKPRN, URN: establishment.URN.ToString(), LAESTAB: $"{establishment.LocalAuthority.Code}/{establishment.EstablishmentNumber}");
+        }
     }
+    
+    public record EstablishmentIdentifiers(
+        string? LAESTAB,
+        string? UKPRN,
+        string? URN
+    );
 }
