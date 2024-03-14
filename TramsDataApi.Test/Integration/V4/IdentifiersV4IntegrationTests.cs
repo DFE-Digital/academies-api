@@ -137,7 +137,7 @@ public class IdentifiersV4IntegrationTests
     }
     
     [Fact]
-    public async Task Get_TrustIdentifiers_AndTrustDoesNotExist_Returns_NotFound()
+    public async Task Get_TrustIdentifiers_AndTrustDoesNotExist_Returns_EmptyList()
     {
         using var context = _apiFixture.GetMstrContext();
 
@@ -147,7 +147,9 @@ public class IdentifiersV4IntegrationTests
         await context.SaveChangesAsync();
 
         var trustResponse = await _client.GetAsync($"{_apiUrlPrefix}/identifier/noTrustExists");
-        trustResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        trustResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var trustContent = await trustResponse.Content.ReadFromJsonAsync<TrustIdentifiers[]>();
+        trustContent.Length.Should().Be(0);
     }
     
     private static List<Trust> BuildSmallTrustSet()
