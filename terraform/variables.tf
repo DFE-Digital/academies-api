@@ -124,6 +124,12 @@ variable "cdn_frontdoor_enable_rate_limiting" {
   type        = bool
 }
 
+variable "cdn_frontdoor_rate_limiting_threshold" {
+  description = "Maximum number of concurrent requests before Rate Limiting policy is applied"
+  type        = number
+  default     = 300
+}
+
 variable "cdn_frontdoor_host_add_response_headers" {
   description = "List of response headers to add at the CDN Front Door `[{ \"Name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
   type        = list(map(string))
