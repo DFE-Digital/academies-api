@@ -9,8 +9,8 @@ on:
     types: [ opened, synchronize, reopened ]
 
 env:
-  DOTNET_VERSION: '6.0.403'
-  EF_VERSION: '6.0.5'
+  DOTNET_VERSION: '8.0'
+  EF_VERSION: '8.0.4'
   JAVA_VERSION: '17'
   CONNECTION_STRING: 'Server=localhost,1433;Database=sip;TrustServerCertificate=True;User Id=sa;Password=StrongPassword905'
 
@@ -65,7 +65,7 @@ jobs:
 
     - name: Install dotnet reportgenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
-      
+
     - name: Add nuget package source
       run: dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
 
