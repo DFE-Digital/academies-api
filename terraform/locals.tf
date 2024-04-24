@@ -20,6 +20,7 @@ locals {
   dns_zone_domain_name                         = var.dns_zone_domain_name
   dns_ns_records                               = var.dns_ns_records
   dns_txt_records                              = var.dns_txt_records
+  dns_mx_records                               = var.dns_mx_records
   key_vault_access_ipv4                        = var.key_vault_access_ipv4
   tfvars_filename                              = var.tfvars_filename
   enable_monitoring                            = var.enable_monitoring
