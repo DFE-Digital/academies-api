@@ -44,6 +44,12 @@ variable "registry_admin_enabled" {
   default     = true
 }
 
+variable "registry_server" {
+  description = "Container registry server (required if `enable_container_registry` is false)"
+  type        = string
+  default     = ""
+}
+
 variable "registry_use_managed_identity" {
   description = "Create a User-Assigned Managed Identity for the Container App. Note: If you do not have 'Microsoft.Authorization/roleAssignments/write' permission, you will need to manually assign the 'AcrPull' Role to the identity"
   type        = bool

@@ -12,6 +12,7 @@ module "azure_container_apps_hosting" {
   registry_admin_enabled                = local.registry_admin_enabled
   registry_use_managed_identity         = local.registry_use_managed_identity
   registry_managed_identity_assign_role = local.registry_managed_identity_assign_role
+  registry_server                       = local.registry_server
 
   enable_dns_zone      = local.enable_dns_zone
   dns_zone_domain_name = local.dns_zone_domain_name
