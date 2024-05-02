@@ -158,6 +158,41 @@ namespace TramsDataApi.Test.UseCases
             }
         }
 
+        public class GetEstablishmentsByUkprns : GetEstablishmentsTests
+        {
+            [Fact]
+            public void WhenNoEstablishmentsFound_ReturnsNull()
+            {
+                var requestUkprns = new string[] { "12345" };
+                var request = new GetEstablishmentsByUkprnsRequest { Ukprns = requestUkprns };
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetByUkprns(requestUkprns)).Returns(() => new List<Establishment>());
+
+                var result = _useCase.Execute(request);
+
+                result.Should().BeNull();
+            }
+
+            [Fact]
+            public void WhenEstablishmentsAreFound_ReturnsListOfEstablishmentResponses()
+            {
+                var requestUkprns = new string[] { "12345", "23456" };
+                var request = new GetEstablishmentsByUkprnsRequest { Ukprns = requestUkprns };
+
+                var establishments = Builder<Establishment>.CreateListOfSize(requestUkprns.Length)
+                    .All()
+                    .With((e, i) => e.Ukprn = requestUkprns[i])
+                    .Build();
+                var establishmentResponses = establishments.Select((e) => EstablishmentResponseFactory
+                    .Create(e, null, null, null, null, null)).ToList();
+
+                _mockEstablishmentGateway.Setup(gateway => gateway.GetByUkprns(requestUkprns)).Returns(() => establishments);
+
+                var result = _useCase.Execute(request);
+
+                result.Should().BeEquivalentTo(establishmentResponses);
+            }
+        }
+
         public class GetEstablishmentsByTrustUids : GetEstablishmentsTests
         {
             [Fact]
