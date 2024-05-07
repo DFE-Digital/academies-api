@@ -200,19 +200,19 @@ namespace TramsDataApi.Controllers.V4
         /// <summary>
         /// Retrieves a list of establishments by their UKPRNs.
         /// </summary>
-        /// <param name="request">Contains UKPRNs of the establishments.</param>
+        /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>List of establishments or NotFound if none are available.</returns>
         [HttpGet]
         [Route("establishments/ukprn/bulk")]
         [SwaggerOperation(Summary = "Get Establishments by UKPRNs", Description = "Returns a list of establishments specified by UKPRNs.")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.")]
         [SwaggerResponse(404, "Establishments with specified UKPRNs not found.")]
-        public async Task<ActionResult<List<EstablishmentResponse>>> GetByUKPRNs([FromQuery] string[] request, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<EstablishmentResponse>>> GetByUKPRNs([FromQuery] string[] ukprn, CancellationToken cancellationToken)
         {
-            var commaSeparatedRequestUkprns = string.Join(",", request);
+            var commaSeparatedRequestUkprns = string.Join(",", ukprn);
             _logger.LogInformation($"Attemping to get establishments by UKPRNs: {commaSeparatedRequestUkprns}");
 
-            var establishments = await _establishmentQueries.GetByUkprns(request, cancellationToken);
+            var establishments = await _establishmentQueries.GetByUkprns(ukprn, cancellationToken);
 
             if (establishments == null)
             {
