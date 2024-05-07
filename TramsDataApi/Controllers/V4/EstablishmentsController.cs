@@ -7,6 +7,8 @@ using Dfe.Academies.Contracts.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using TramsDataApi.RequestModels;
+using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4
 {
@@ -193,6 +195,34 @@ namespace TramsDataApi.Controllers.V4
             _logger.LogInformation($"Returning Establishments for Trust with specific UKPRN : {commaSeparatedRequestTrust}");
             var response = new List<EstablishmentDto>(establishments);
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Retrieves a list of establishments by their UKPRNs.
+        /// </summary>
+        /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpGet]
+        [Route("establishments/ukprn/bulk")]
+        [SwaggerOperation(Summary = "Get Establishments by UKPRNs", Description = "Returns a list of establishments specified by UKPRNs.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(404, "Establishments with specified UKPRNs not found.")]
+        public async Task<ActionResult<List<EstablishmentResponse>>> GetByUKPRNs([FromQuery] string[] ukprn, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestUkprns = string.Join(",", ukprn);
+            _logger.LogInformation($"Attemping to get establishments by UKPRNs: {commaSeparatedRequestUkprns}");
+
+            var establishments = await _establishmentQueries.GetByUkprns(ukprn, cancellationToken);
+
+            if (establishments == null)
+            {
+                _logger.LogInformation($"No establishment was found any of the requested UKPRNs: {commaSeparatedRequestUkprns}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Establishments for UKPRNs: {commaSeparatedRequestUkprns}");
+
+            return Ok(establishments);
         }
     }
 }

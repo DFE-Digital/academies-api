@@ -158,34 +158,5 @@ namespace TramsDataApi.Controllers
             _logger.LogDebug(JsonSerializer.Serialize(establishments));
             return Ok(establishments);
         }
-
-
-        /// <summary>
-        /// Retrieves a list of establishments by their UKPRNs.
-        /// </summary>
-        /// <param name="request">Contains UKPRNs of the establishments.</param>
-        /// <returns>List of establishments or NotFound if none are available.</returns>
-        [HttpGet]
-        [Route("establishments/ukprn/bulk")]
-        [SwaggerOperation(Summary = "Get Establishments by UKPRNs", Description = "Returns a list of establishments specified by UKPRNs.")]
-        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
-        [SwaggerResponse(404, "Establishments with specified UKPRNs not found.")]
-        public ActionResult<List<EstablishmentResponse>> GetByUKPRNs([FromQuery] GetEstablishmentsByUkprnsRequest request)
-        {
-            var commaSeparatedRequestUrns = string.Join(",", request.Ukprns);
-            _logger.LogInformation($"Attemping to get establishments by UKPRNs: {commaSeparatedRequestUrns}");
-
-            var establishments = _getEstablishments.Execute(request);
-
-            if (establishments == null)
-            {
-                _logger.LogInformation($"No establishment was found any of the requested UKPRNs: {commaSeparatedRequestUrns}");
-                return NotFound();
-            }
-
-            _logger.LogInformation($"Returning Establishments for UKPRNs: {commaSeparatedRequestUrns}");
-            _logger.LogDebug(JsonSerializer.Serialize(establishments));
-            return Ok(establishments);
-        }
     }
 }

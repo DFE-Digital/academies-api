@@ -88,6 +88,18 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
+        public async Task<List<Establishment>> GetByUkprns(string[] ukprns, CancellationToken cancellationToken)
+        {
+            var ukprnsList = ukprns.ToList();
+            var queryResult = await BaseQuery()
+                .Where(r => ukprnsList.Contains(r.Establishment.UKPRN))
+                .ToListAsync(cancellationToken);
+
+            var result = queryResult.Select(ToEstablishment).ToList();
+
+            return result;
+        }
+
         public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
         {
             var establishmentIds = 

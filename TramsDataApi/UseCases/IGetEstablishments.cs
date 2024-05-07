@@ -7,7 +7,6 @@ namespace TramsDataApi.UseCases
     public interface IGetEstablishments
     {
         IList<EstablishmentResponse> Execute(GetEstablishmentsByUrnsRequest request);
-        IList<EstablishmentResponse> Execute(GetEstablishmentsByUkprnsRequest request);
         IList<EstablishmentResponse> Execute(string[] trustUids);
     }
 }
