@@ -39,11 +39,6 @@ namespace TramsDataApi.Gateways
             return _dbContext.Establishment.AsNoTracking().Where(e => urns.Contains(e.Urn)).ToList();
         }
 
-        public IList<Establishment> GetByUkprns(string[] ukprns)
-        {
-            return _dbContext.Establishment.AsNoTracking().Where(e => ukprns.Contains(e.Ukprn)).ToList();
-        }
-
         public IList<Establishment> GetByTrustUid(string trustUid)
         {
             return _dbContext.Establishment.Where(e => e.TrustsCode == trustUid)

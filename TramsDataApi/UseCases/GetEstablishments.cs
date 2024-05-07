@@ -29,18 +29,6 @@ namespace TramsDataApi.UseCases
             return BuildEstablishmentResponses(establishments);
         }
 
-        public IList<EstablishmentResponse> Execute(GetEstablishmentsByUkprnsRequest request)
-        {
-            var establishments = _establishmentGateway.GetByUkprns(request.Ukprns);
-
-            if (!establishments.Any())
-            {
-                return null;
-            }
-
-            return BuildEstablishmentResponses(establishments);
-        }
-
         public IList<EstablishmentResponse> Execute(GetEstablishmentsByUrnsRequest request)
         {
             var establishments = _establishmentGateway.GetByUrns(request.Urns);

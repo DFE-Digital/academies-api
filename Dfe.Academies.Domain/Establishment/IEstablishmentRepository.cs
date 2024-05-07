@@ -9,5 +9,6 @@
         Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken);        
         Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken);        
         Task<List<Establishment>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
+        Task<List<Establishment>> GetByUkprns(string[] Urns, CancellationToken cancellationToken);
     }
 }

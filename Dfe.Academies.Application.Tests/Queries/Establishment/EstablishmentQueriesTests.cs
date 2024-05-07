@@ -161,6 +161,67 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             }
         }
 
+        [Fact]
+        public async Task BulkGetByUkprns_WhenEstablishmentsAreNotFound_ReturnsEmptyListOfEstablishmentDtos()
+        {
+            // Arrange
+            var establishments = new List<Domain.Establishment.Establishment>();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
+
+            string[] ukprns = { "1010101", "111111" };
+
+            mockRepo.Setup(x => x.GetByUkprns(It.Is<string[]>(v => v == ukprns), It.IsAny<CancellationToken>())).ReturnsAsync(establishments);
+
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
+
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+
+            // Act
+            var result = await establishmentQueries.GetByUkprns(
+                ukprns,
+                cancellationToken);
+
+            // Assert
+            result.Should().BeOfType(typeof(List<EstablishmentDto>));
+            result.Should().HaveCount(0);
+            
+        }
+
+        [Fact]
+        public async Task BulkGetByUkprns_WhenEstablishmentsAreFound_ReturnsListOfEstablishmentDtos()
+        {
+            // Arrange
+            var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
+
+            string[] ukprns = { "1010101", "111111" };
+
+            mockRepo.Setup(x => x.GetByUkprns(It.Is<string[]>(v => v == ukprns), It.IsAny<CancellationToken>())).ReturnsAsync(establishments);
+
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
+
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+
+            // Act
+            var result = await establishmentQueries.GetByUkprns(
+                ukprns,
+                cancellationToken);
+
+            // Assert
+            result.Should().BeOfType(typeof(List<EstablishmentDto>));
+            
+            Assert.All(result, x => {
+                var establishment = establishments.Single(es => es.UKPRN == x.Ukprn);
+                Assert.True(HasMappedCorrectly(x, establishment));
+                });
+        }
+
 
         private bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment)
         {

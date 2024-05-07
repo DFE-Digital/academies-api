@@ -76,6 +76,13 @@ namespace Dfe.Academies.Application.Establishment
             return establishments.Select(x => MapToEstablishmentDto(x)).ToList();
         }
 
+        public async Task<List<EstablishmentDto>> GetByUkprns(string[] Ukprns, CancellationToken cancellationToken)
+        {
+            var establishments = await _establishmentRepository.GetByUkprns(Ukprns, cancellationToken).ConfigureAwait(false);
+
+            return establishments.Select(x => MapToEstablishmentDto(x)).ToList();
+        }
+
         private EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment establishment)
         {
             var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
