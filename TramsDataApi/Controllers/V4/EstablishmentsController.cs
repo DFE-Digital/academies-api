@@ -207,12 +207,12 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Get Establishments by UKPRNs", Description = "Returns a list of establishments specified by UKPRNs.")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.")]
         [SwaggerResponse(404, "Establishments with specified UKPRNs not found.")]
-        public ActionResult<List<EstablishmentResponse>> GetByUKPRNs([FromQuery] string[] request, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<EstablishmentResponse>>> GetByUKPRNs([FromQuery] string[] request, CancellationToken cancellationToken)
         {
             var commaSeparatedRequestUkprns = string.Join(",", request);
             _logger.LogInformation($"Attemping to get establishments by UKPRNs: {commaSeparatedRequestUkprns}");
 
-            var establishments = _establishmentQueries.GetByUkprns(request, cancellationToken);
+            var establishments = await _establishmentQueries.GetByUkprns(request, cancellationToken);
 
             if (establishments == null)
             {
@@ -221,7 +221,7 @@ namespace TramsDataApi.Controllers.V4
             }
 
             _logger.LogInformation($"Returning Establishments for UKPRNs: {commaSeparatedRequestUkprns}");
-            _logger.LogDebug(JsonSerializer.Serialize(establishments));
+
             return Ok(establishments);
         }
     }
