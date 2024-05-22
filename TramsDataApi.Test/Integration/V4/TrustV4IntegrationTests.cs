@@ -116,15 +116,11 @@ namespace TramsDataApi.Test.Integration.V4
         }
 
         [Fact]
-        public async Task Get_TrustBulk_AndTrustDoesNotExist_Returns_Empty_Ok()
+        public async Task Get_TrustBulk_AndTrustDoesNotExist_Returns_Empty_404()
         {
             var response = await _client.GetAsync($"{_apiUrlPrefix}/trusts/bulk?ukprns=mockukprn");
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-            var trusts = await response.Content.ReadFromJsonAsync<List<TrustDto>>();
-
-            trusts.Should().HaveCount(0);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);          
         }
 
         [Fact]

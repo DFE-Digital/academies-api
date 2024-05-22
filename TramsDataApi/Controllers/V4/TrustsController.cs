@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Contracts.V4;
 using Dfe.Academies.Contracts.V4.Trusts;
@@ -9,6 +5,11 @@ using Dfe.Academies.Domain.Trust;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4
@@ -38,7 +39,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
-        [Route("trust/{ukprn}")]        
+        [Route("trust/{ukprn}")]
         [SwaggerOperation(Summary = "Retrieve Trust by UK Provider Reference Number (UKPRN)", Description = "Returns a Trust identified by UK Provider Reference Number (UKPRN).")]
         [SwaggerResponse(200, "Successfully found and returned the Trust.")]
         [SwaggerResponse(404, "Trust with specified UK Provider Reference Number (UKPRN) not found.")]
@@ -123,7 +124,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>A list of Trusts that meet the search criteria.</returns>
         [HttpGet]
-        [Route("trusts")]        
+        [Route("trusts")]
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
         public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10, TrustStatus status = TrustStatus.Open)
@@ -154,7 +155,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <returns>A list of Trusts that match the ukprns.</returns>
         [HttpGet]
-        [Route("trusts/bulk")]        
+        [Route("trusts/bulk")]
         [SwaggerOperation(Summary = "Get Trusts By UK Provider Reference Numbers (UKPRNs)", Description = "Retrieve multiple trusts by their UK Provider Reference Numbers (UKPRNs).")]
         [SwaggerResponse(200, "Successfully retrieved the trusts.")]
         [SwaggerResponse(404, "The trusts were not found.")]
@@ -163,9 +164,9 @@ namespace TramsDataApi.Controllers.V4
             var commaSeparatedRequestUkprns = string.Join(",", ukprns);
             _logger.LogInformation($"Attempting to get Trusts by UKPRNs: {commaSeparatedRequestUkprns}");
 
-            var trusts = await _trustQueries.GetByUkprns(ukprns, cancellationToken);
+            List<TrustDto> trusts = await _trustQueries.GetByUkprns(ukprns, cancellationToken);
 
-            if (trusts == null)
+            if (trusts == null || !trusts.Any())
             {
                 _logger.LogInformation($"No Trust was found for any of the requested UKPRNs: {commaSeparatedRequestUkprns}");
                 return NotFound();
