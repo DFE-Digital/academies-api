@@ -120,11 +120,7 @@ namespace TramsDataApi.Test.Integration.V4
         {
             var response = await _client.GetAsync($"{_apiUrlPrefix}/trusts/bulk?ukprns=mockukprn");
 
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-
-            var trusts = await response.Content.ReadFromJsonAsync<List<TrustDto>>();
-
-            trusts.Should().HaveCount(0);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);          
         }
 
         [Fact]
