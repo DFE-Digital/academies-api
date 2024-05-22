@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TramsDataApi", "TramsDataApi\TramsDataApi.csproj", "{F7CE40F0-7EBB-4CCE-BA4A-0202B9CDB5CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TramsDataApi.Test", "TramsDataApi.Test\TramsDataApi.Test.csproj", "{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F674B382-CA0A-4411-9380-8F43EE573A11}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -34,10 +32,6 @@ Global
 		{F7CE40F0-7EBB-4CCE-BA4A-0202B9CDB5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7CE40F0-7EBB-4CCE-BA4A-0202B9CDB5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7CE40F0-7EBB-4CCE-BA4A-0202B9CDB5CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31853B73-01D9-44E4-A8B2-F3CB97AD62DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31853B73-01D9-44E4-A8B2-F3CB97AD62DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31853B73-01D9-44E4-A8B2-F3CB97AD62DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,7 +57,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1EE3816F-0D5A-4486-928F-7EE99D42EFAF} = {B3CDCA56-9765-4C2B-A4A4-2738C5A268EB}
 		{AF49D395-A01A-43E9-A643-6B2266BA62C5} = {B3CDCA56-9765-4C2B-A4A4-2738C5A268EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
