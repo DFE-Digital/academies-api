@@ -6,6 +6,11 @@ on:
       environment:
         required: true
         type: string
+    secrets:
+      TRAMS_API_KEY:
+        required: true
+      TRAMS_API_BASE_URL:
+        required: true
   workflow_dispatch:
     inputs:
       environment:

@@ -102,5 +102,9 @@ jobs:
     name: Run Cypress Tests
     needs: [ deploy-image, set-env ]
     if: needs.set-env.outputs.environment == 'test' || needs.set-env.outputs.environment == 'development'
+    uses: ./.github/workflows/cypress-tests.yml
     with:
       environment: ${{ needs.set-env.outputs.environment }}
+    secrets:
+      TRAMS_API_KEY: ${{ secrets.TRAMS_API_KEY }}
+      TRAMS_API_BASE_URL: ${{ secrets.TRAMS_API_BASE_URL }}
