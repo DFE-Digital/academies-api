@@ -8,7 +8,6 @@ on:
     - 'Dfe.Academies.*/**'
     - 'TramsDataApi*/**'
     - '!Dfe.Academies.Performance/**'
-    - '!**/*.csproj'
   pull_request:
     branches: [ main ]
     types: [ opened, synchronize, reopened ]
@@ -16,7 +15,6 @@ on:
     - 'Dfe.Academies.*/**'
     - 'TramsDataApi*/**'
     - '!Dfe.Academies.Performance/**'
-    - '!**/*.csproj'
 
 env:
   DOTNET_VERSION: '6.0.403'
