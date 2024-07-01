@@ -17,7 +17,7 @@ on:
     - '!Dfe.Academies.Performance/**'
 
 env:
-  DOTNET_VERSION: '6.0.403'
+  DOTNET_VERSION: '8.20.x'
   EF_VERSION: '6.0.5'
   JAVA_VERSION: '17'
   CONNECTION_STRING: 'Server=localhost,1433;Database=sip;TrustServerCertificate=True;User Id=sa;Password=StrongPassword905'
