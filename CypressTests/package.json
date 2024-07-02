@@ -6,7 +6,7 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "lint": "eslint . --ext .js,.cy.js,.jsx,.ts,.tsx"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "cypress": "^13.6.0",
     "cypress-plugin-api": "^2.11.1",
-    "eslint": "^8.43.0",
+    "eslint": "^9.0.0",
     "eslint-plugin-cypress": "^3.0.0",
     "zaproxy": "^2.0.0-rc.2"
   }

@@ -1,8 +1,9 @@
-{
-    "plugins": [
-      "cypress"
+module.exports = [
+  {
+    files: [
+      ".js",".jsx",".ts",".tsx"
     ],
-    "rules": {
+    rules: {
       "cypress/no-assigning-return-values": "error",
       "cypress/no-unnecessary-waiting": "error",
       "cypress/assertion-before-screenshot": "error",
@@ -10,10 +11,14 @@
       "cypress/no-async-tests": "error",
       "cypress/no-pause": "error"
     },
-    "env": {
+    plugins: [
+      "cypress"
+    ],
+    env: {
       "cypress/globals": true
     },
-    "extends": [
+    extends: [
       "plugin:cypress/recommended"
     ]
   }
+]
