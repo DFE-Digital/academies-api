@@ -12,20 +12,27 @@ namespace Dfe.Academies.Application.Trust
         {
             _trustRepository = trustRepository;
         }
+
         public async Task<TrustDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken)
         {
             var trust = await _trustRepository.GetTrustByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
             return trust == null ? null : MapToTrustDto(trust);
         }
-        public async Task<TrustDto?> GetByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
+
+        public async Task<TrustDto?> GetByCompaniesHouseNumber(string companiesHouseNumber,
+            CancellationToken cancellationToken)
         {
-            var trust = await _trustRepository.GetTrustByCompaniesHouseNumber(companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+            var trust = await _trustRepository.GetTrustByCompaniesHouseNumber(companiesHouseNumber, cancellationToken)
+                .ConfigureAwait(false);
             return trust == null ? null : MapToTrustDto(trust);
         }
 
-        public async Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn, string companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken)
+        public async Task<(List<TrustDto>, int)> Search(int page, int count, string name, string ukPrn,
+            string companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken)
         {
-            var (trusts, recordCount) = await _trustRepository.Search(page, count, name, ukPrn, companiesHouseNumber, status, cancellationToken).ConfigureAwait(false);
+            var (trusts, recordCount) = await _trustRepository
+                .Search(page, count, name, ukPrn, companiesHouseNumber, status, cancellationToken)
+                .ConfigureAwait(false);
 
             return (trusts.Select(x => MapToTrustDto(x)).ToList(), recordCount);
         }
@@ -36,10 +43,23 @@ namespace Dfe.Academies.Application.Trust
 
             return trusts.Select(x => MapToTrustDto(x)).ToList();
         }
-        public async Task<TrustDto?> GetByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
+
+        public async Task<TrustDto?> GetByTrustReferenceNumber(string trustReferenceNumber,
+            CancellationToken cancellationToken)
         {
-            var trust = await _trustRepository.GetTrustByTrustReferenceNumber(trustReferenceNumber, cancellationToken).ConfigureAwait(false);
+            var trust = await _trustRepository.GetTrustByTrustReferenceNumber(trustReferenceNumber, cancellationToken)
+                .ConfigureAwait(false);
             return trust == null ? null : MapToTrustDto(trust);
+        }
+
+        public async Task<List<TrustIdentifiers>> GetTrustIdentifiers(string identifier,
+            CancellationToken cancellationToken)
+        {
+            var trusts = await _trustRepository.GetTrustsByIdentifier(identifier, cancellationToken);
+
+            var trustIdentifiersList = trusts.Select(mapToIdentifiers).ToList();
+
+            return trustIdentifiersList.Count > 0 ? trustIdentifiersList : new List<TrustIdentifiers>();
         }
 
         private static TrustDto MapToTrustDto(Domain.Trust.Trust trust)
@@ -50,7 +70,8 @@ namespace Dfe.Academies.Application.Trust
                 CompaniesHouseNumber = trust.CompaniesHouseNumber,
                 ReferenceNumber = trust.GroupID,
                 Ukprn = trust.UKPRN,
-                Type = new Contracts.V4.Establishments.NameAndCodeDto() { Code = trust.TrustType?.Code, Name = trust.TrustType?.Name },
+                Type = new Contracts.V4.Establishments.NameAndCodeDto()
+                    { Code = trust.TrustType?.Code, Name = trust.TrustType?.Name },
                 Address = new AddressDto()
                 {
                     Street = trust.AddressLine1,
@@ -62,5 +83,16 @@ namespace Dfe.Academies.Application.Trust
                 }
             };
         }
+        
+        private static TrustIdentifiers mapToIdentifiers(Domain.Trust.Trust trust)
+        {
+            return new TrustIdentifiers(UID: trust.GroupUID, UKPRN: trust.UKPRN, TrustReference: trust.GroupID);
+        }
     }
+
+    public record TrustIdentifiers(
+        string? UID,
+        string? UKPRN,
+        string? TrustReference
+    );
 }
