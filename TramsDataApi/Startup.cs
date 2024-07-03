@@ -111,6 +111,12 @@ namespace TramsDataApi
 
             services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
             services.AddSingleton<ApiUserEnricher>();
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -169,6 +175,7 @@ namespace TramsDataApi
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseHsts();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
