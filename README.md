@@ -1,5 +1,7 @@
-# trams-data-api
-Simple api for getting data from the TRAMS system
+# academies-api
+Simple api for getting data from the central Academies Database datastore.
+
+NB: Historically this API was used to support the operations of the legacy TRAMS application, and references in legacy documentation will at times refer to it as the 'TRAMS API', etc.. This usage is entirely historical, however, and is now deprecated.
 
 ## Development Setup
 
