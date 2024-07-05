@@ -160,6 +160,7 @@ namespace TramsDataApi
                         builder.AddUsb().None();
                     });
             });
+            app.UseHsts();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -185,7 +186,6 @@ namespace TramsDataApi
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseHsts();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
