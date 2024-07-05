@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Dfe.Academisation.CorrelationIdMiddleware;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace TramsDataApi
 {
@@ -122,6 +123,15 @@ namespace TramsDataApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
+            // Ensure we do not lose X-Forwarded-* Headers when behind a Proxy
+            var forwardOptions = new ForwardedHeadersOptions {
+                ForwardedHeaders = ForwardedHeaders.All,
+                RequireHeaderSymmetry = false
+            };
+            forwardOptions.KnownNetworks.Clear();
+            forwardOptions.KnownProxies.Clear();
+            app.UseForwardedHeaders(forwardOptions);
+
             app.UseSecurityHeaders(options =>
             {
                 options.AddFrameOptionsDeny()
