@@ -20,6 +20,12 @@ namespace TramsDataApi.Middleware
         }
         public async Task InvokeAsync(HttpContext context, IUseCase<string, ApiUser> apiKeyService)
         {
+            // Bypass API Key requirement for health check route
+            if (context.Request.Path == "/HealthCheck") {
+                await _next(context);
+                return;
+            }
+
             if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))
             {
                 context.Response.StatusCode = 401;
