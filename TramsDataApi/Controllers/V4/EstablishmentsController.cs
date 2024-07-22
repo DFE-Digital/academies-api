@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Contracts.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
@@ -98,14 +99,14 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
-                "Searching for establishments by name \"{name}\", UKPRN \"{prn}\", urn \"{number}\"}",
+                "Searching for establishments by name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",
                 name, ukPrn, urn);
 
             var (establishments, recordCount) = await _establishmentQueries
                 .Search(name, ukPrn, urn, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
-                "Found {count} establishments for name \"{name}\", UKPRN \"{prn}\", urn \"{number}\"",
+                "Found {count} establishments for name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",
                 recordCount, name, ukPrn, urn);
 
             _logger.LogDebug(JsonSerializer.Serialize(establishments));
@@ -127,8 +128,8 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerResponse(404, "No establishments found for specified regions.")]
         public async Task<ActionResult<IEnumerable<int>>> GetURNsByRegion([FromQuery] string[] regions,  CancellationToken cancellationToken)
         {
-            _logger.LogInformation(
-                "Searching for establishment URNs by regions\"{regions}\"}",
+			_logger.LogInformation(
+				"Searching for establishment URNs by regions\"{regions}\"",
                 regions);
 
             var establishmentURNs = await _establishmentQueries
