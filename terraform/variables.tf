@@ -167,6 +167,12 @@ variable "cdn_frontdoor_enable_rate_limiting" {
   type        = bool
 }
 
+variable "cdn_frontdoor_rate_limiting_duration_in_minutes" {
+  description = "CDN Front Door rate limiting duration in minutes"
+  type        = number
+  default     = 5
+}
+
 variable "cdn_frontdoor_rate_limiting_threshold" {
   description = "Maximum number of concurrent requests before Rate Limiting policy is applied"
   type        = number
