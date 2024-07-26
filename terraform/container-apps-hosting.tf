@@ -1,5 +1,5 @@
 module "azure_container_apps_hosting" {
-  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.8.0"
+  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.10.1"
 
   environment    = local.environment
   project_name   = local.project_name
@@ -24,17 +24,19 @@ module "azure_container_apps_hosting" {
   container_command                      = local.container_command
   container_secret_environment_variables = local.container_secret_environment_variables
   container_scale_http_concurrency       = local.container_scale_http_concurrency
+  container_apps_allow_ips_inbound       = local.container_apps_allow_ips_inbound
 
-  enable_cdn_frontdoor                      = local.enable_cdn_frontdoor
-  cdn_frontdoor_forwarding_protocol         = local.cdn_frontdoor_forwarding_protocol
-  cdn_frontdoor_enable_rate_limiting        = local.cdn_frontdoor_enable_rate_limiting
-  cdn_frontdoor_rate_limiting_threshold     = local.cdn_frontdoor_rate_limiting_threshold
-  cdn_frontdoor_host_add_response_headers   = local.cdn_frontdoor_host_add_response_headers
-  cdn_frontdoor_custom_domains              = local.cdn_frontdoor_custom_domains
-  cdn_frontdoor_origin_fqdn_override        = local.cdn_frontdoor_origin_fqdn_override
-  cdn_frontdoor_origin_host_header_override = local.cdn_frontdoor_origin_host_header_override
-  enable_cdn_frontdoor_health_probe         = local.enable_cdn_frontdoor_health_probe
-  container_apps_allow_ips_inbound          = local.container_apps_allow_ips_inbound
+  enable_cdn_frontdoor                            = local.enable_cdn_frontdoor
+  cdn_frontdoor_forwarding_protocol               = local.cdn_frontdoor_forwarding_protocol
+  cdn_frontdoor_enable_rate_limiting              = local.cdn_frontdoor_enable_rate_limiting
+  cdn_frontdoor_rate_limiting_duration_in_minutes = local.cdn_frontdoor_rate_limiting_duration_in_minutes
+  cdn_frontdoor_rate_limiting_threshold           = local.cdn_frontdoor_rate_limiting_threshold
+  cdn_frontdoor_host_add_response_headers         = local.cdn_frontdoor_host_add_response_headers
+  cdn_frontdoor_custom_domains                    = local.cdn_frontdoor_custom_domains
+  cdn_frontdoor_origin_fqdn_override              = local.cdn_frontdoor_origin_fqdn_override
+  cdn_frontdoor_origin_host_header_override       = local.cdn_frontdoor_origin_host_header_override
+  cdn_frontdoor_waf_custom_rules                  = local.cdn_frontdoor_waf_custom_rules
+  enable_cdn_frontdoor_health_probe               = local.enable_cdn_frontdoor_health_probe
 
   enable_event_hub                          = local.enable_event_hub
   enable_logstash_consumer                  = local.enable_logstash_consumer
