@@ -27,6 +27,7 @@ namespace TramsDataApi
     using Microsoft.AspNetCore.Http;
     using System.Text;
     using NetEscapades.AspNetCore.SecurityHeaders;
+    using TramsDataApi.Swagger;
 
     public class Startup
     {
@@ -95,12 +96,6 @@ namespace TramsDataApi
             });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new()
-                {
-                    Title = "Academies API",
-                    Version = "v1"
-                });
-
                 string descriptions = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 string descriptionsPath = Path.Combine(AppContext.BaseDirectory, descriptions);
                 if (File.Exists(descriptionsPath)) c.IncludeXmlComments(descriptionsPath);
@@ -110,6 +105,7 @@ namespace TramsDataApi
                 c.IncludeXmlComments(xmlPath);
                 c.EnableAnnotations();
             });
+            services.ConfigureOptions<SwaggerOptions>();
             services.AddHttpContextAccessor();
 
             services
