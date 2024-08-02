@@ -1,6 +1,7 @@
 ﻿using Dfe.Academies.Academisation.Data;
 using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Application.Establishment;
+using Dfe.Academies.Application.Persons;
 using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.EducationalPerformance;
@@ -33,6 +34,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ITrustQueries, TrustQueries>();
             services.AddScoped<IEstablishmentQueries, EstablishmentQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
+            services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
+            services.AddScoped<IPersonsQueries, PersonsQueries>();
+            
 
             //Repos
             services.AddScoped<ITrustRepository, TrustRepository>();
