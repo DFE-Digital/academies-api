@@ -6,6 +6,7 @@ using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.EducationalPerformance;
 using Dfe.Academies.Domain.Establishment;
+using Dfe.Academies.Domain.Persons;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Infrastructure.Repositories;
@@ -43,12 +44,16 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
             services.AddSingleton<ICensusDataRepository, CensusDataRepository>();
             services.AddScoped<IEducationalPerformanceRepository, EducationalPerformanceRepository>();
+            services.AddScoped<IPersonsRepository, PersonsRepository>();
 
             //Db
             services.AddDbContext<MstrContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<EdperfContext>(options =>
+                options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<MopContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             return services;

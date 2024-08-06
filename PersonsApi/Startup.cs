@@ -45,34 +45,7 @@ namespace PersonsApi
             services.AddApiVersioning();
             services.AddFeatureManagement();
 
-            // EF setup
-            //services.AddDbContext<TramsDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-
-            //services.AddScoped<ITrustGateway, TrustGateway>();
-            //services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
-            //services.AddScoped<IGetTrustByUkprn, GetTrustByUkprn>();
-            //services.AddScoped<IGetMstrTrustByUkprn, GetMstrTrustByUkprn>();
-            //services.AddScoped<IGetTrustsByUkprns, GetTrustsByUkprns>();
-            //services.AddScoped<IGetEstablishmentByUkprn, GetEstablishment>();
-            //services.AddScoped<IGetEstablishmentURNsByRegion, GetEstablishmentURNsByRegion>();
-            //services.AddScoped<IGetEstablishmentsByTrustUid, GetEstablishmentsByTrustUid>();
-            //services.AddScoped<IGetEstablishments, GetEstablishments>();
-            //services.AddScoped<ISearchTrusts, SearchTrusts>();
-            //services.AddScoped<IMstrSearchTrusts, MasterSearchTrusts>();
-
-            //services.AddScoped<IGetKeyStagePerformanceByUrn, GetKeyStagePerformanceByUrn>();
-            //services.AddScoped<IEducationPerformanceGateway, EducationPerformanceGateway>();
-            //services.AddScoped<ICensusDataGateway, CensusDataGateway>();
-            //services.AddScoped<IIfdPipelineGateway, IfdPipelineGateway>();
-
-            //services.AddScoped<IFssProjectGateway, FssProjectGateway>();
-            //services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
-
-            //services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<ICorrelationContext, CorrelationContext>();
-            //services.AddScoped<MfspApiClient, MfspApiClient>();
 
             services.AddApiVersioning(config =>
             {
