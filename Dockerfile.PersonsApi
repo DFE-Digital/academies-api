@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 COPY . .
 
 RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
-RUN dotnet build -c Release PersonsApi.sln --no-restore
+RUN dotnet build -c Release PersonsApi
 RUN dotnet publish PersonsApi -c Release -o /app --no-restore
 
 RUN dotnet new tool-manifest
