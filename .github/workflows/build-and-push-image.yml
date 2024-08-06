@@ -49,18 +49,32 @@ jobs:
     name: Deploy '${{ needs.set-env.outputs.branch }}' to ${{ needs.set-env.outputs.environment }}
     needs: [ set-env ]
     uses: DFE-Digital/deploy-azure-container-apps-action/.github/workflows/build-push-deploy.yml@v2.2.0
+    strategy:
+        matrix:
+          image: [
+            "Dockerfile",
+            "Dockerfile.PersonsApi"
+          ]
+          include:
+            - image: "Dockerfile"
+              aca_name_secret: "AZURE_ACA_NAME"
+              name: "tramsapi-app"
+            - image: "Dockerfile.PersonsApi"
+              aca_name_secret: "AZURE_PERSONS_API_ACA_NAME"
+              name: "personsapi-app"
     with:
-      docker-image-name: 'tramsapi-app'
-      docker-build-file-name: './Dockerfile'
+      docker-image-name: '${{ matrix.name }}'
+      docker-build-file-name: './${{ matrix.image }}'
       environment: ${{ needs.set-env.outputs.environment }}
-      annotate-release: true
+      # Only annotate the release once, because both apps are deployed at the same time
+      annotate-release: ${{ matrix.name == 'tramsapi-app' }}
       docker-build-args: |
         COMMIT_SHA="${{ needs.set-env.outputs.checked-out-sha }}"
     secrets:
       azure-acr-name: ${{ secrets.ACR_NAME }}
       azure-acr-credentials: ${{ secrets.ACR_CREDENTIALS }}
       azure-aca-credentials: ${{ secrets.AZURE_ACA_CREDENTIALS }}
-      azure-aca-name: ${{ secrets.AZURE_ACA_NAME }}
+      azure-aca-name: ${{ secrets[matrix.aca_name_secret] }}
       azure-aca-resource-group: ${{ secrets.AZURE_ACA_RESOURCE_GROUP }}
 
   create-tag:
