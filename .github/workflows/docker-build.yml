@@ -4,11 +4,18 @@ on:
   pull_request:
     paths:
       - Dockerfile
+      - Dockerfile.PersonsApi
     types: [opened, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [
+          "Dockerfile",
+          "Dockerfile.PersonsApi"
+        ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,5 +26,6 @@ jobs:
       - name: Build docker image
         uses: docker/build-push-action@v6
         with:
+          file: './${{ matrix.image }}'
           secrets: github_token=${{ secrets.GITHUB_TOKEN }}
           push: false

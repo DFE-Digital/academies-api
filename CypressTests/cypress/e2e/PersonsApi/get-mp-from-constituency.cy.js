@@ -1,20 +1,24 @@
-describe('Trusts endpoints tests', () => {
+describe('Get MP From Constituency Test', () => {
 
   const apiKey = Cypress.env('apiKey')
-  const baseUrlV4 = `${Cypress.env('url')}/v4`
-  const companiesHouseNumber = '11082297'
-  const ukprns = ['10067112', '10067113']
-  const groupName = 'SOUTH YORK MULTI ACADEMY TRUST'
-  const trustReferenceNumber = 'TR03739'
+  const baseUrl = `${Cypress.env('personsUrl')}/v1`
+  const constituency = `Aberdeen%20North`
 
+  const firstName = `Kirsty`
+  const lastName = `Blackman`
+  const email = `kirsty.blackman.mp@parliament.uk`
+  const displayName = `Kirsty Blackman`
+  const displayNameWithTitle = `Kirsty Blackman MP`
+  const role = `Member of Parliament`
+  const constituencyName = `Aberdeen North`
 
   context('Get Person by Constituency', () => {
     
-    it('should return a single trust when UKPRN set', () => {
+    it('should return MP details when constituency set', () => {
 
       cy.api({
         method: 'GET',
-        url: `${baseUrlV4}/trust/${ukprns[0]}`,
+        url: `${baseUrl}/get-mp-from-constituency?Constituency=${constituency}`,
         headers: {
           ApiKey: apiKey,
           "Content-type": "application/json"
@@ -22,7 +26,13 @@ describe('Trusts endpoints tests', () => {
       })
         .then((response) => {
           expect(response.status).to.eq(200)
-          expect(response.body.name).to.eq(groupName)
+          expect(response.body.firstName).to.eq(firstName)
+          expect(response.body.lastName).to.eq(lastName)
+          expect(response.body.email).to.eq(email)
+          expect(response.body.displayName).to.eq(displayName)
+          expect(response.body.displayNameWithTitle).to.eq(displayNameWithTitle)
+          expect(response.body.role).to.eq(role)
+          expect(response.body.constituencyName).to.eq(constituencyName)
         })
     })
   })
