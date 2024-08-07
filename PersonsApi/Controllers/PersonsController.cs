@@ -1,5 +1,5 @@
+using Dfe.Academies.Application.Models;
 using Dfe.Academies.Application.Persons;
-using Dfe.Academies.Domain.Persons;
 using Microsoft.AspNetCore.Mvc;
 using PersonsApi.RequestModels;
 using Swashbuckle.AspNetCore.Annotations;
@@ -27,10 +27,14 @@ namespace PersonsApi.Controllers
         [SwaggerOperation(Summary = "Retrieve person information", Description = "Receives a string and returns a Person object.")]
         [SwaggerResponse(200, "A Person object.")]
         [SwaggerResponse(404, "Constituency not found")]
-        public async Task<Person> Get([FromQuery] GetMpFromConstituencyRequest request, CancellationToken cancellationToken)
+        public async Task<ActionResult<Person>> GetAsync([FromQuery] GetMpFromConstituencyRequest request, CancellationToken cancellationToken)
         {
-            var result = await _personQueries.GetMemberOfParlimentByConstituency(request.Constituency, cancellationToken);
-            return result;
+            var result = await _personQueries.GetMemberOfParliamentByConstituencyAsync(request.Constituency, cancellationToken);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
     }
 }

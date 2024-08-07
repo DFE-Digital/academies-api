@@ -28,6 +28,7 @@ namespace PersonsApi
     using System.Text;
     using NetEscapades.AspNetCore.SecurityHeaders;
     using PersonsApi.Swagger;
+    using Dfe.Academies.Application.MappingProfiles;
 
     public class Startup
     {
@@ -115,6 +116,9 @@ namespace PersonsApi
                 options.IncludeSubDomains = true;
                 options.MaxAge = TimeSpan.FromDays(365);
             });
+
+            services.AddAutoMapper(typeof(PersonProfile));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
