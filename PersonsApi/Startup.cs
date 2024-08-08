@@ -1,34 +1,29 @@
-using System.Text.Json.Serialization;
 using Dfe.Academisation.CorrelationIdMiddleware;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Text.Json.Serialization;
 
 namespace PersonsApi
 {
-    //using DatabaseModels;
-    //using Gateways;
+    using Dfe.Academies.Application.MappingProfiles;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.FeatureManagement;
     using Middleware;
+    using NetEscapades.AspNetCore.SecurityHeaders;
+    using PersonsApi.ResponseModels;
+    using PersonsApi.SerilogCustomEnrichers;
+    using PersonsApi.Swagger;
     using Swashbuckle.AspNetCore.SwaggerUI;
     using System;
     using System.IO;
     using System.Reflection;
-    //using PersonsApi.Configuration;
-    using PersonsApi.ResponseModels;
-    using PersonsApi.SerilogCustomEnrichers;
-    using UseCases;
-    using Microsoft.FeatureManagement;
-    using PersonsApi.Services;
-    using Microsoft.AspNetCore.Http;
     using System.Text;
-    using NetEscapades.AspNetCore.SecurityHeaders;
-    using PersonsApi.Swagger;
-    using Dfe.Academies.Application.MappingProfiles;
+    using UseCases;
 
     public class Startup
     {

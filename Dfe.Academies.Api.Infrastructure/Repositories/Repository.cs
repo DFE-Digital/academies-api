@@ -1,13 +1,13 @@
 ﻿using Dfe.Academies.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
+#pragma warning disable CS8603 // Possible null reference return, behaviour expected
     public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
-   where TEntity : class, new()
-   where TDbContext : DbContext
+        where TEntity : class, new()
+        where TDbContext : DbContext
     {
         /// <summary>
         /// The <typeparamref name="TDbContext" />
@@ -46,15 +46,15 @@ namespace Dfe.Academies.Infrastructure.Repositories
         public virtual TEntity Find(params object[] keyValues) => this.DbSet().Find(keyValues);
 
         /// <inheritdoc />
-        public virtual async Task<TEntity> FindAsync(params object[] keyValues)
-        {
-            return await this.DbSet().FindAsync(keyValues);
-        }
-
-        /// <inheritdoc />
         public virtual TEntity Find(Expression<Func<TEntity, bool>> predicate)
         {
             return ((IQueryable<TEntity>)this.DbSet()).FirstOrDefault<TEntity>(predicate);
+        }
+
+        /// <inheritdoc />
+        public virtual async Task<TEntity> FindAsync(params object[] keyValues)
+        {
+            return await this.DbSet().FindAsync(keyValues);
         }
 
         /// <inheritdoc />
@@ -66,27 +66,27 @@ namespace Dfe.Academies.Infrastructure.Repositories
         }
 
         /// <inheritdoc />
-        public virtual TEntity Get(params object[] keyValues)
-        {
-            return this.Find(keyValues) ?? throw new InvalidOperationException(string.Format("Entity type {0} is null for primary key {1}", (object)typeof(TEntity), (object)keyValues));
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<TEntity> GetAsync(params object[] keyValues)
-        {
-            return await this.FindAsync(keyValues) ?? throw new InvalidOperationException(string.Format("Entity type {0} is null for primary key {1}", (object)typeof(TEntity), (object)keyValues));
-        }
-
-        /// <inheritdoc />
         public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
         {
             return ((IQueryable<TEntity>)this.DbSet()).Single<TEntity>(predicate);
         }
 
         /// <inheritdoc />
+        public virtual TEntity Get(params object[] keyValues)
+        {
+            return this.Find(keyValues) ?? throw new InvalidOperationException(string.Format("Entity type {0} is null for primary key {1}", (object)typeof(TEntity), (object)keyValues));
+        }
+
+        /// <inheritdoc />
         public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await EntityFrameworkQueryableExtensions.SingleAsync<TEntity>((IQueryable<TEntity>)this.DbSet(), predicate, new CancellationToken());
+        }
+
+        /// <inheritdoc />
+        public virtual async Task<TEntity> GetAsync(params object[] keyValues)
+        {
+            return await this.FindAsync(keyValues) ?? throw new InvalidOperationException(string.Format("Entity type {0} is null for primary key {1}", (object)typeof(TEntity), (object)keyValues));
         }
 
         /// <inheritdoc />
@@ -100,8 +100,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
         /// <inheritdoc />
         public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            EntityEntry<TEntity> entityEntry = await this.DbContext.AddAsync<TEntity>(entity, cancellationToken);
-            int num = await this.DbContext.SaveChangesAsync(cancellationToken);
+            await this.DbContext.AddAsync<TEntity>(entity, cancellationToken);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
             return entity;
         }
 
@@ -119,7 +119,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
           CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.DbContext.AddRangeAsync((IEnumerable<object>)entities, cancellationToken);
-            int num = await this.DbContext.SaveChangesAsync(cancellationToken);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
             return (IEnumerable<TEntity>)entities;
         }
 
@@ -137,7 +137,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
           CancellationToken cancellationToken = default(CancellationToken))
         {
             this.DbContext.Remove<TEntity>(entity);
-            int num = await this.DbContext.SaveChangesAsync(cancellationToken);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
             return entity;
         }
 
@@ -161,7 +161,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
           CancellationToken cancellationToken = default(CancellationToken))
         {
             this.DbSet().RemoveRange((IEnumerable<TEntity>)entities);
-            int num = await this.DbContext.SaveChangesAsync(cancellationToken);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
             return (IEnumerable<TEntity>)entities;
         }
 
@@ -179,8 +179,9 @@ namespace Dfe.Academies.Infrastructure.Repositories
           CancellationToken cancellationToken = default(CancellationToken))
         {
             this.DbContext.Update<TEntity>(entity);
-            int num = await this.DbContext.SaveChangesAsync(cancellationToken);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
             return entity;
         }
     }
+    #pragma warning restore CS8603 // Possible null reference return
 }

@@ -1,6 +1,3 @@
-using System.Linq;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using PersonsApi.ResponseModels;
 
 namespace PersonsApi.UseCases
