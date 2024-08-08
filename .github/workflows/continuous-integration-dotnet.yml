@@ -7,6 +7,7 @@ on:
     paths:
     - 'Dfe.Academies.*/**'
     - 'TramsDataApi*/**'
+    - 'PersonsApi*/**'
     - '!Dfe.Academies.Performance/**'
   pull_request:
     branches: [ main ]
@@ -14,6 +15,7 @@ on:
     paths:
     - 'Dfe.Academies.*/**'
     - 'TramsDataApi*/**'
+    - 'PersonsApi*/**'
     - '!Dfe.Academies.Performance/**'
 
 env:
@@ -73,7 +75,7 @@ jobs:
 
     - name: Install dotnet reportgenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool
-      
+
     - name: Add nuget package source
       run: dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
 
@@ -81,7 +83,7 @@ jobs:
       run: dotnet tool restore
 
     - name: Restore dependencies
-      run: dotnet restore TramsDataApi.sln
+      run: dotnet restore
 
     - name: Build, Test and Analyze
       env:
@@ -97,4 +99,4 @@ jobs:
 
     - name: Stop containers
       if: always()
-      run: docker-compose -f "docker-compose.yml" down
+      run: docker compose -f "docker-compose.yml" down
