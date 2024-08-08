@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dfe.Academies.Domain.Persons
+﻿namespace Dfe.Academies.Domain.Persons
 {
     public class Constituency
     {
@@ -15,5 +9,6 @@ namespace Dfe.Academies.Domain.Persons
         public string NameDisplayAs { get; set; }
         public string NameFullTitle { get; set; }
         public DateTime LastRefresh { get; set; }
+        public DateOnly? EndDate { get; set; }
     }
 }

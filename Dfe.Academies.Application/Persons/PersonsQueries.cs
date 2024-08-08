@@ -28,7 +28,9 @@ namespace Dfe.Academies.Application.Persons
             var query = from constituencies in _constituencyRepository.Query()
                         join memberContactDetails in _MemberContactDetailsRepository.Query()
                             on constituencies.MemberID equals memberContactDetails.MemberID
-                        where constituencies.ConstituencyName == constituencyName && memberContactDetails.TypeId == 1
+                        where constituencies.ConstituencyName == constituencyName
+                        && memberContactDetails.TypeId == 1
+                        && !constituencies.EndDate.HasValue
                         select new ConstituencyWithMemberContactDetails(constituencies, memberContactDetails);
 
             var result = await query
