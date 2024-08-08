@@ -13,7 +13,7 @@ namespace PersonsApi.Swagger
 
         private const string ApiKeyName = "ApiKey";
         private const string ServiceTitle = "Persons API";
-        private const string ServiceDescription = "The Academies API provides users with access to a variety of data " +
+        private const string ServiceDescription = "The Persons API provides users with access to a variety of data " +
                                            "regarding academies and trusts in England.\n\n" +
                                            "The available data includes general data acadamy transfers and " +
                                            "applications to become an academy and is compiled from a variety of internal and " +
