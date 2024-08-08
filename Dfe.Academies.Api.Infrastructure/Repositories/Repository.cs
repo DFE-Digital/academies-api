@@ -1,10 +1,12 @@
 ﻿using Dfe.Academies.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
-#pragma warning disable CS8603 // Possible null reference return, behaviour expected
+    #pragma warning disable CS8603 // Possible null reference return, behaviour expected
+    [ExcludeFromCodeCoverage]
     public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         where TEntity : class, new()
         where TDbContext : DbContext
