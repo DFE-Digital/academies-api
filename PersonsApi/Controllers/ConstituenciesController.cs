@@ -22,11 +22,12 @@ namespace PersonsApi.Controllers
         [SwaggerOperation(Summary = "Retrieve Member of Parliament by constituency name", Description = "Receives a constituency name and returns a Person object representing the Member of Parliament.")]
         [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(Person))]
         [SwaggerResponse(404, "Constituency not found")]
+        [SwaggerResponse(400, "Constituency cannot be null or empty")]
         public async Task<IActionResult> GetAsync([FromRoute] string constituencyName, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(constituencyName))
             {
-                return BadRequest("Constituency cannot be null or empty");
+                return BadRequest();
             }
 
             var result = await _personQueries.GetMemberOfParliamentByConstituencyAsync(constituencyName, cancellationToken);

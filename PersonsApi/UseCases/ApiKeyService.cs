@@ -17,12 +17,9 @@ namespace PersonsApi.UseCases
         public ApiUser Execute(string request)
         {
  
-            var key = _configuration
-                .GetSection("ApiKeys")
-                .AsEnumerable()
-                .Where(k => k.Value != null)
-                .Select(k => JsonConvert.DeserializeObject<ApiUser>(k.Value))
-                .FirstOrDefault(user => user.ApiKey.Equals(request));
+            var keys = _configuration.GetSection("ApiKeys").Get<List<ApiUser>>();
+
+            var key = keys?.FirstOrDefault(user => user.ApiKey.Equals(request));
 
             return key;
         }
