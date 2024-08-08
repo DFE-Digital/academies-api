@@ -13,12 +13,9 @@ namespace PersonsApi.Controllers
     {
         private readonly IPersonsQueries _personQueries;
 
-        private readonly ILogger<ConstituenciesController> _logger;
-
-        public ConstituenciesController(IPersonsQueries personQueries, ILogger<ConstituenciesController> logger)
+        public ConstituenciesController(IPersonsQueries personQueries)
         {
             _personQueries = personQueries;
-            _logger = logger;
         }
 
         [HttpGet("{constituencyName}/mp")]
