@@ -1,11 +1,7 @@
-using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Serilog;
 using PersonsApi;
 using PersonsApi.SerilogCustomEnrichers;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,14 +12,6 @@ startup.ConfigureServices(builder.Services);
 builder.Host.UseSerilog((context, services, loggerConfiguration) =>
 {
     var enricher = services.GetRequiredService<ApiUserEnricher>();
-
-    // TODO EA
-    //loggerConfiguration
-    //    .ReadFrom.Configuration(context.Configuration)
-    //    .WriteTo.ApplicationInsights(services.GetRequiredService<TelemetryConfiguration>(), TelemetryConverter.Traces)
-    //    .Enrich.FromLogContext()
-    //    .Enrich.With(enricher)
-    //    .WriteTo.Console();
 });
 
 builder.Services.AddApplicationDependencyGroup(builder.Configuration);
