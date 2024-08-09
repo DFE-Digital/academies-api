@@ -28,6 +28,7 @@ namespace TramsDataApi
     using System.Text;
     using NetEscapades.AspNetCore.SecurityHeaders;
     using TramsDataApi.Swagger;
+    using Dfe.Academies.Application.MappingProfiles;
 
     public class Startup
     {
@@ -142,6 +143,8 @@ namespace TramsDataApi
                     opt.ConnectionString = appInsightsCnnStr;
                 });
             }
+
+            services.AddAutoMapper(typeof(PersonProfile));
 
             services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
             services.AddSingleton<ApiUserEnricher>();
