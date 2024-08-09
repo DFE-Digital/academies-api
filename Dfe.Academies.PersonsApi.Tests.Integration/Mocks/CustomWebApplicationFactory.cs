@@ -12,7 +12,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
     public class CustomWebApplicationFactory<TProgram>
         : WebApplicationFactory<TProgram> where TProgram : class
     {
-        private SqliteConnection _connection;
+        private SqliteConnection? _connection;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -69,7 +69,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
             return scope.ServiceProvider.GetRequiredService<MopContext>();
         }
 
-        private void SeedTestData(MopContext context)
+        private static void SeedTestData(MopContext context)
         {
             context.MemberContactDetails.Add(new MemberContactDetails
             {
