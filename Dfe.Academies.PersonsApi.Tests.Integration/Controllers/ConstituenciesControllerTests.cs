@@ -28,7 +28,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 
             var response = await client.GetAsync($"v1/Constituencies/{constituencyName}/mp");
 
-            var content = await response.Content.ReadAsStringAsync();
+            await response.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -40,7 +40,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 
             var response = await client.GetAsync($"v1/Constituencies/test/mp");
 
-            var content = await response.Content.ReadAsStringAsync();
+            await response.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

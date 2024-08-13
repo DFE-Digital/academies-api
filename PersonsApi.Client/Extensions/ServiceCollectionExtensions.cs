@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PersonsApi.Client.Settings;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PersonsApi.Client.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddPersonsApiClient<TClientInterface, TClientImplementation>(this IServiceCollection services, IConfiguration configuration)
