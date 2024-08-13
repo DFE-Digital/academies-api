@@ -1,6 +1,6 @@
 ﻿namespace Dfe.Academies.Application.Models
 {
-    public class Person
+    public class MemberOfParliament
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

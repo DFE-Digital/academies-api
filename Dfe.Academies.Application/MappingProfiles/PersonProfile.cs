@@ -7,7 +7,7 @@ namespace Dfe.Academies.Application.MappingProfiles
     {
         public PersonProfile()
         {
-            CreateMap<ConstituencyWithMemberContactDetails, Person>()
+            CreateMap<ConstituencyWithMemberContactDetails, MemberOfParliament>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Constituency.MemberID))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Constituency.NameList.Split(",", StringSplitOptions.None)[1].Trim()))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Constituency.NameList.Split(",", StringSplitOptions.None)[0].Trim()))

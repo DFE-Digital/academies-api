@@ -114,6 +114,11 @@ namespace PersonsApi
 
             services.AddAutoMapper(typeof(PersonProfile));
 
+            services.AddOpenApiDocument(configure =>
+            {
+                configure.Title = "PersonsApi";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
