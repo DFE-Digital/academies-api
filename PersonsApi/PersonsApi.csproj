@@ -42,7 +42,7 @@
     <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
   </ItemGroup>
 
-	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(TF_BUILD)'!='True'">
+	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='True'">
 		<Exec
 		 ConsoleToMSBuild="true"
 		 ContinueOnError="true"
