@@ -3,6 +3,9 @@ WORKDIR /build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG CI
+ENV CI=${CI}
+
 COPY . .
 
 RUN mkdir -p /app/SQL
@@ -19,7 +22,7 @@ RUN dotnet ef migrations script --output /app/SQL/DbMigrationScriptLegacy.sql --
 RUN dotnet ef migrations script --output /app/SQL/DbMigrationScript.sql --project TramsDataApi --context TramsDataApi.DatabaseModels.TramsDbContext --idempotent --no-build -v
 
 # this build has no effect on ef migrations because it is a "Release" configuration
-RUN dotnet build -c Release TramsDataApi.sln --no-restore
+RUN dotnet build -c Release TramsDataApi.sln --no-restore -p:CI=${CI}
 RUN dotnet publish TramsDataApi -c Release -o /app --no-restore
 
 ARG ASPNET_IMAGE_TAG
