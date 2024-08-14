@@ -73,6 +73,7 @@ jobs:
       annotate-release: ${{ matrix.name == 'tramsapi-app' }}
       docker-build-args: |
         COMMIT_SHA="${{ needs.set-env.outputs.checked-out-sha }}"
+        CI=true
     secrets:
       azure-acr-name: ${{ secrets.ACR_NAME }}
       azure-acr-credentials: ${{ secrets.ACR_CREDENTIALS }}
