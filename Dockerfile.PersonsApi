@@ -3,6 +3,9 @@ WORKDIR /build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG CI
+ENV CI=${CI}
+
 COPY . .
 
 RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
