@@ -20,7 +20,7 @@ namespace PersonsApi.Client.Extensions
                 httpClient.BaseAddress = new Uri(apiSettings.BaseUrl!);
                 httpClient.DefaultRequestHeaders.Add("ApiKey", apiSettings.ApiKey);
 
-                return ActivatorUtilities.CreateInstance<TClientImplementation>(serviceProvider, httpClient, apiSettings.BaseUrl);
+                return ActivatorUtilities.CreateInstance<TClientImplementation>(serviceProvider, httpClient, apiSettings.BaseUrl!);
             });
 
             return services;
