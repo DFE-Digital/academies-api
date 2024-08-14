@@ -111,7 +111,7 @@ jobs:
         dotnet build -c Release
         dotnet pack -c Release --no-build --output .
         dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
-      if: steps.person-api-changes.client.src == 'true'
+      if: steps.person-api-changes.outputs.client == 'true'
 
     - name: Stop containers
       if: always()
