@@ -46,7 +46,7 @@
 		<Message Text="CI variable value: '$(CI)'" Importance="high"/>
 	</Target>
 	
-	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'!$(CI)'">
+	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='true'">
 		<Exec
 		 ConsoleToMSBuild="true"
 		 ContinueOnError="true"
