@@ -26,8 +26,7 @@ jobs:
       - name: Build docker image
         uses: docker/build-push-action@v6
         with:
-          build-args: |
-            CI=true
+          build-args: CI=true
           file: './${{ matrix.image }}'
           secrets: github_token=${{ secrets.GITHUB_TOKEN }}
           push: false
