@@ -42,7 +42,11 @@
     <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
   </ItemGroup>
 
-	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='true'">
+	<Target Name="CheckCIValue" BeforeTargets="AfterBuild">
+		<Message Text="CI variable value: '$(CI)'" Importance="high"/>
+	</Target>
+	
+	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'!$(CI)'">
 		<Exec
 		 ConsoleToMSBuild="true"
 		 ContinueOnError="true"
