@@ -1,4 +1,4 @@
-﻿namespace PersonsApi.Client.Settings
+﻿namespace Dfe.PersonsApi.Client.Settings
 {
     public class PersonsApiClientSettings
     {

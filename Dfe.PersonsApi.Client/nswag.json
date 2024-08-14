@@ -1,6 +1,6 @@
 {
   "runtime": "Net80",
-  "defaultVariables": "CSharpOutputPath=../PersonsApi.Client",
+  "defaultVariables": "CSharpOutputPath=../Dfe.PersonsApi.Client",
   "documentGenerator": {
     "aspNetCoreToOpenApi": {
       "project": "../PersonsApi/PersonsApi.csproj",
@@ -78,7 +78,7 @@
       "clientClassAccessModifier": "public",
       "typeAccessModifier": "public",
       "generateContractsOutput": true,
-      "contractsNamespace": "PersonsApi.Client.Contracts",
+      "contractsNamespace": "Dfe.PersonsApi.Client.Contracts",
       "contractsOutputFilePath": "$(CSharpOutputPath)/Generated/Contracts.g.cs",
       "parameterDateTimeFormat": "s",
       "parameterDateFormat": "yyyy-MM-dd",
@@ -101,7 +101,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "PersonsApiResponse",
-      "namespace": "PersonsApi.Client",
+      "namespace": "Dfe.PersonsApi.Client",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTime",
       "jsonConverters": null,

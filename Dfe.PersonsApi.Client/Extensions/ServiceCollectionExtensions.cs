@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PersonsApi.Client.Settings;
+using Dfe.PersonsApi.Client.Settings;
 using System.Diagnostics.CodeAnalysis;
 
-namespace PersonsApi.Client.Extensions
+namespace Dfe.PersonsApi.Client.Extensions
 {
     [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions

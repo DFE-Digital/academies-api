@@ -46,7 +46,7 @@
 		<Exec
 		 ConsoleToMSBuild="true"
 		 ContinueOnError="true"
-		 Command="$(NSwagExe_Net80) run ../PersonsApi.Client/nswag.json">
+		 Command="$(NSwagExe_Net80) run ../Dfe.PersonsApi.Client/nswag.json">
 			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode"/>
 			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
 		</Exec>
