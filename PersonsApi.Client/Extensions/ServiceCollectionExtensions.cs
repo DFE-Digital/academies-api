@@ -17,7 +17,7 @@ namespace PersonsApi.Client.Extensions
 
             services.AddHttpClient<TClientInterface, TClientImplementation>((httpClient, serviceProvider) =>
             {
-                httpClient.BaseAddress = new Uri(apiSettings.BaseUrl);
+                httpClient.BaseAddress = new Uri(apiSettings.BaseUrl!);
                 httpClient.DefaultRequestHeaders.Add("ApiKey", apiSettings.ApiKey);
 
                 return ActivatorUtilities.CreateInstance<TClientImplementation>(serviceProvider, httpClient, apiSettings.BaseUrl);
