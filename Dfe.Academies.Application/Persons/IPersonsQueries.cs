@@ -4,6 +4,6 @@ namespace Dfe.Academies.Application.Persons
 {
     public interface IPersonsQueries
     {
-        Task<Person?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken);
+        Task<MemberOfParliament?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken);
     }
 }

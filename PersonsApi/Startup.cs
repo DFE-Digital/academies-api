@@ -61,8 +61,7 @@ namespace PersonsApi
                 if (File.Exists(descriptionsPath)) c.IncludeXmlComments(descriptionsPath);
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //c.IncludeXmlComments(xmlPath);
+                Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.EnableAnnotations();
             });
             services.ConfigureOptions<SwaggerOptions>();
@@ -113,6 +112,11 @@ namespace PersonsApi
             });
 
             services.AddAutoMapper(typeof(PersonProfile));
+
+            services.AddOpenApiDocument(configure =>
+            {
+                configure.Title = "PersonsApi";
+            });
 
         }
 

@@ -8,7 +8,6 @@ namespace PersonsApi.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
-    [SwaggerTag("Persons Endpoints")]
     public class ConstituenciesController : ControllerBase
     {
         private readonly IPersonsQueries _personQueries;
@@ -20,10 +19,10 @@ namespace PersonsApi.Controllers
 
         [HttpGet("{constituencyName}/mp")]
         [SwaggerOperation(Summary = "Retrieve Member of Parliament by constituency name", Description = "Receives a constituency name and returns a Person object representing the Member of Parliament.")]
-        [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(Person))]
+        [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(MemberOfParliament))]
         [SwaggerResponse(404, "Constituency not found")]
         [SwaggerResponse(400, "Constituency cannot be null or empty")]
-        public async Task<IActionResult> GetAsync([FromRoute] string constituencyName, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMemberOfParliamentByConstituencyAsync([FromRoute] string constituencyName, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(constituencyName))
             {

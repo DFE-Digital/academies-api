@@ -23,7 +23,7 @@ namespace Dfe.Academies.Application.Persons
             _mapper = mapper;
         }
 
-        public async Task<Person?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken)
+        public async Task<MemberOfParliament?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken)
         {
             var query = from constituencies in _constituencyRepository.Query()
                         join memberContactDetails in _MemberContactDetailsRepository.Query()
@@ -34,7 +34,7 @@ namespace Dfe.Academies.Application.Persons
                         select new ConstituencyWithMemberContactDetails(constituencies, memberContactDetails);
 
             var result = await query
-                .ProjectTo<Person>(_mapper.ConfigurationProvider)
+                .ProjectTo<MemberOfParliament>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(cancellationToken);
 
             return result;

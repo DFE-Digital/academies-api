@@ -25,10 +25,15 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
 	  <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.4.0" />
 	  <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.22.0" />
+	  <PackageReference Include="NSwag.AspNetCore" Version="14.1.0" />
+	  <PackageReference Include="NSwag.MSBuild" Version="14.1.0">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	  <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
 	  <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
-	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-	  <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.6.2" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.7.0" />
 	  <PackageReference Include="TimeZoneConverter" Version="6.1.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
@@ -37,4 +42,17 @@
     <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
   </ItemGroup>
 
+	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(TF_BUILD)'!='True'">
+		<Exec
+		 ConsoleToMSBuild="true"
+		 ContinueOnError="true"
+		 Command="$(NSwagExe_Net80) run ../Dfe.PersonsApi.Client/nswag.json">
+			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode"/>
+			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+		</Exec>
+
+		<Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low"/>
+		<Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'"/>
+	</Target>
+	
 </Project>
