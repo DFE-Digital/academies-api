@@ -97,6 +97,21 @@ jobs:
         reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./CoverageReport -reporttypes:SonarQube
         dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
+    - uses: dorny/paths-filter@v3
+      id: person-api-changes
+      with:
+        filters: |
+          client:
+            - 'Dfe.PersonsApi.Client/**'      
+
+    - name: Build, pack and publish
+      working-directory: Dfe.PersonsApi.Client
+      run: |
+        dotnet build -c Release
+        dotnet pack -c Release --no-build --output .
+        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
+      if: steps.person-api-changes.client.src == 'true'
+
     - name: Stop containers
       if: always()
       run: docker compose -f "docker-compose.yml" down
