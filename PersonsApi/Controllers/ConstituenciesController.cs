@@ -20,7 +20,7 @@ namespace PersonsApi.Controllers
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="constituencyName">The constituency name.</param>
+        /// <param name="constituencyName">The constituency name. </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         [HttpGet("{constituencyName}/mp")]
