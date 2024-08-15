@@ -105,6 +105,25 @@ jobs:
           client:
             - 'Dfe.PersonsApi.Client/**'
 
+    - name: Extract version from .csproj
+      working-directory: Dfe.PersonsApi.Client  
+      id: extract_version
+      run: |
+        VERSION=$(grep '<Version>' *.csproj | sed -E 's/.*<Version>([0-9]+\.[0-9]+\.[0-9]+)<\/Version>/\1/')
+        echo "Current version: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Increment version
+      id: increment_version
+      run: |
+        VERSION=${{ env.VERSION }}
+        IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+        PATCH_VERSION=${VERSION_PARTS[2]}
+        NEW_PATCH_VERSION=$((PATCH_VERSION + 1))
+        NEW_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$NEW_PATCH_VERSION"
+        echo "New version: $NEW_VERSION"
+        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
       run: |
