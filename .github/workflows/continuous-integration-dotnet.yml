@@ -130,6 +130,14 @@ jobs:
         NEW_VERSION=${{ env.NEW_VERSION }}
         sed -i "s/<Version>[0-9]\+\.[0-9]\+\.[0-9]\+<\/Version>/<Version>$NEW_VERSION<\/Version>/" *.csproj
 
+    - name: Commit updated .csproj
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add *.csproj
+        git commit -m "Increment PersonsApi.Client version to ${{ env.NEW_VERSION }}"
+        git push
+
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
       run: |
