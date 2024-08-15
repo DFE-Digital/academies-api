@@ -124,11 +124,17 @@ jobs:
         echo "New version: $NEW_VERSION"
         echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
+    - name: Update .csproj with new version
+      working-directory: Dfe.PersonsApi.Client 
+      run: |
+        NEW_VERSION=${{ env.NEW_VERSION }}
+        sed -i "s/<Version>[0-9]\+\.[0-9]\+\.[0-9]\+<\/Version>/<Version>$NEW_VERSION<\/Version>/" *.csproj
+
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
       run: |
         dotnet build -c Release
-        dotnet pack -c Release -p VersionPrefix=${{github.event.release.tag_name}} --output .
+        dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --output .
         dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
       if: steps.person-api-changes.outputs.client == 'true'
 
