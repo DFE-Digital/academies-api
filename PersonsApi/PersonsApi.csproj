@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,12 +44,7 @@
     <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
   </ItemGroup>
 
-	<Target Name="CheckCIValue" BeforeTargets="AfterBuild">
-		<Message Text="CI variable value: '$(CI)'" Importance="high"/>
-	</Target>
-	
 	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='true'">
-
 		<Exec
 		 ConsoleToMSBuild="true"
 		 ContinueOnError="true"

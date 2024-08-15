@@ -17,8 +17,13 @@ namespace PersonsApi.Controllers
             _personQueries = personQueries;
         }
 
+        /// <summary>
+        /// Retrieve Member of Parliament by constituency name
+        /// </summary>
+        /// <param name="constituencyName">The constituency name.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
         [HttpGet("{constituencyName}/mp")]
-        [SwaggerOperation(Summary = "Retrieve Member of Parliament by constituency name", Description = "Receives a constituency name and returns a Person object representing the Member of Parliament.")]
         [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(MemberOfParliament))]
         [SwaggerResponse(404, "Constituency not found")]
         [SwaggerResponse(400, "Constituency cannot be null or empty")]

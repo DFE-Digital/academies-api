@@ -11,12 +11,14 @@
         "tags": [
           "Constituencies"
         ],
+        "summary": "Retrieve Member of Parliament by constituency name",
         "operationId": "Constituencies_GetMemberOfParliamentByConstituency",
         "parameters": [
           {
             "name": "constituencyName",
             "in": "path",
             "required": true,
+            "description": "The constituency name.",
             "schema": {
               "type": "string"
             },

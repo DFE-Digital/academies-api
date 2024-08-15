@@ -72,6 +72,10 @@ namespace Dfe.PersonsApi.Client
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
+        /// <summary>
+        /// Retrieve Member of Parliament by constituency name
+        /// </summary>
+        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName)
@@ -80,6 +84,10 @@ namespace Dfe.PersonsApi.Client
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieve Member of Parliament by constituency name
+        /// </summary>
+        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName, System.Threading.CancellationToken cancellationToken)
