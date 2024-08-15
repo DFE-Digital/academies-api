@@ -18,7 +18,7 @@
             "name": "constituencyName",
             "in": "path",
             "required": true,
-            "description": "The constituency name.",
+            "description": "The constituency name. ",
             "schema": {
               "type": "string"
             },
