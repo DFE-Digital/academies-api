@@ -130,13 +130,23 @@ jobs:
         NEW_VERSION=${{ env.NEW_VERSION }}
         sed -i "s/<Version>[0-9]\+\.[0-9]\+\.[0-9]\+<\/Version>/<Version>$NEW_VERSION<\/Version>/" *.csproj
 
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with: 
+        ref: feature/173197-PersonsApi-Update-Nuget
+
+    - name: Extract the branch name
+      id: extract_branch
+      run: echo "branch_name=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+
     - name: Commit updated .csproj
+      working-directory: Dfe.PersonsApi.Client 
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add *.csproj
         git commit -m "Increment PersonsApi.Client version to ${{ env.NEW_VERSION }}"
-        git push
+        git push origin HEAD:${{ env.branch_name }}
 
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
