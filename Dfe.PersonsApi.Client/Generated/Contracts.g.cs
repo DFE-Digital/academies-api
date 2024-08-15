@@ -25,11 +25,19 @@ namespace Dfe.PersonsApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface IConstituenciesClient
     {
+        /// <summary>
+        /// Retrieve Member of Parliament by constituency name
+        /// </summary>
+        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieve Member of Parliament by constituency name
+        /// </summary>
+        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName, System.Threading.CancellationToken cancellationToken);

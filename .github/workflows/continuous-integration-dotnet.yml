@@ -109,7 +109,7 @@ jobs:
       working-directory: Dfe.PersonsApi.Client
       run: |
         dotnet build -c Release
-        dotnet pack -c Release --no-build --output .
+        dotnet pack -c Release --output .
         dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
       if: steps.person-api-changes.outputs.client == 'true'
 
