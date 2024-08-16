@@ -116,7 +116,7 @@ jobs:
       run: |
         PACKAGE_ID="Dfe.PersonsApi.Client"
         FEED_URL="https://nuget.pkg.github.com/DFE-Digital/index.json"
-        VERSION=$(dotnet list package --source $FEED_URL --verbosity normal | grep -oP "$PACKAGE_ID\s+\K([0-9]+\.[0-9]+\.[0-9]+)" | sort -V | tail -1)
+        VERSION=$(dotnet nuget search $PACKAGE_ID --source $FEED_URL --take 1 --json | jq -r '.[0].versions | last')
         echo "Latest version: $VERSION"
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
