@@ -105,12 +105,6 @@ jobs:
           client:
             - 'Dfe.PersonsApi.Client/**'
 
-    - name: Configure NuGet authentication
-      run: |
-        if ! dotnet nuget list source | grep -q "github"; then
-          dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name "github" "https://nuget.pkg.github.com/DFE-Digital/index.json"
-        fi
-
     - name: Set up curl and jq
       run: sudo apt-get install -y curl jq
 
@@ -120,15 +114,28 @@ jobs:
         FEED_URL="https://nuget.pkg.github.com/DFE-Digital/query?q=$PACKAGE_ID"
         LATEST_VERSION=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$FEED_URL" | jq -r '.data[0].version')
         echo "Latest version is $LATEST_VERSION"
-        echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+        echo "VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+      if: steps.person-api-changes.outputs.client == 'true'
 
-    # - name: Build, pack and publish
-    #   working-directory: Dfe.PersonsApi.Client
-    #   run: |
-    #     dotnet build -c Release
-    #     dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --output .
-    #     dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
-    #   if: steps.person-api-changes.outputs.client == 'true'
+    - name: Increment version
+      id: increment_version
+      run: |
+        VERSION=${{ env.VERSION }}
+        IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+        PATCH_VERSION=${VERSION_PARTS[2]}
+        NEW_PATCH_VERSION=$((PATCH_VERSION + 1))
+        NEW_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$NEW_PATCH_VERSION"
+        echo "New version: $NEW_VERSION"
+        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+      if: steps.person-api-changes.outputs.client == 'true'
+
+    - name: Build, pack and publish
+      working-directory: Dfe.PersonsApi.Client
+      run: |
+        dotnet build -c Release
+        dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --output .
+        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
+      if: steps.person-api-changes.outputs.client == 'true'
 
     - name: Stop containers
       if: always()
