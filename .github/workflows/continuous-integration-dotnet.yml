@@ -111,23 +111,20 @@ jobs:
     - name: Check for custom version in commit message or check the feed for the latest version and increment it
       id: check_custom_version
       run: |
-        # Retrieve the commit message based on the event type
-        if [[ -n "${{ github.event.head_commit.message }}" ]]; then
-          COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
-        elif [[ -n "${{ github.event.commits[0].message }}" ]]; then
-          COMMIT_MESSAGE="${{ github.event.commits[0].message }}"
-        else
-          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-        fi
+        # Retrieve the last 10 commit messages
+        COMMIT_MESSAGES=$(git log -n 10 --pretty=format:%B)
     
-        echo "Commit Message: $COMMIT_MESSAGE"
+        echo "Commit Messages:"
+        echo "$COMMIT_MESSAGES"
     
-        CUSTOM_VERSION=$(echo "$COMMIT_MESSAGE" | grep -oP '\(#update version to \K([0-9]+\.[0-9]+\.[0-9]+)')
+        # Search for custom version update pattern in the last 10 commits
+        CUSTOM_VERSION=$(echo "$COMMIT_MESSAGES" | grep -oP '\(#update version to \K([0-9]+\.[0-9]+\.[0-9]+)' | head -n 1)
+    
         if [[ -n "$CUSTOM_VERSION" ]]; then
           echo "Using custom version: $CUSTOM_VERSION"
           echo "NEW_VERSION=$CUSTOM_VERSION" >> $GITHUB_ENV
         else
-          echo "No custom version found in the commit message."
+          echo "No custom version found in the commit messages."
           # Fetch the latest version and increment the version
           PACKAGE_ID="Dfe.PersonsApi.Client"
           FEED_URL="https://nuget.pkg.github.com/DFE-Digital/query?q=$PACKAGE_ID"
@@ -146,7 +143,6 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
         fi
       shell: /usr/bin/bash -e {0}
-
 
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
