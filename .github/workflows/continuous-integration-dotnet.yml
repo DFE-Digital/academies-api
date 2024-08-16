@@ -28,7 +28,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     permissions:
-      packages: read
+      packages: write
       contents: read
     steps:
     - uses: actions/checkout@v4
@@ -103,15 +103,55 @@ jobs:
       with:
         filters: |
           client:
-            - 'Dfe.PersonsApi.Client/**'      
+            - 'Dfe.PersonsApi.Client/**'
+
+    - name: Set up curl and jq
+      run: sudo apt-get install -y curl jq
+
+    - name: Check for custom version in commit message or check the feed for the latest version and increment it
+      id: check_custom_version
+      run: |
+        # Retrieve the last 3 commit messages
+        COMMIT_MESSAGES=$(git log -n 3 --pretty=format:%B)
+    
+        echo "Commit Messages:"
+        echo "$COMMIT_MESSAGES"
+    
+        # Search for custom version update pattern in the last 10 commits
+        CUSTOM_VERSION=$(echo "$COMMIT_MESSAGES" | grep -oP '\(#update package version to \K([0-9]+\.[0-9]+\.[0-9]+)' | head -n 1)
+    
+        if [[ -n "$CUSTOM_VERSION" ]]; then
+          echo "Using custom version: $CUSTOM_VERSION"
+          echo "NEW_VERSION=$CUSTOM_VERSION" >> $GITHUB_ENV
+        else
+          echo "No custom version found in the commit messages."
+          # Fetch the latest version and increment the version
+          PACKAGE_ID="Dfe.PersonsApi.Client"
+          FEED_URL="https://nuget.pkg.github.com/DFE-Digital/query?q=$PACKAGE_ID"
+          LATEST_VERSION=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$FEED_URL" | jq -r '.data[0].version')
+
+          if [[ -z "$LATEST_VERSION" ]]; then
+            echo "No existing version found in the feed. Defaulting to version 1.0.0"
+            NEW_VERSION="1.0.0"
+          else
+            echo "Latest version is $LATEST_VERSION"
+            IFS='.' read -r -a VERSION_PARTS <<< "$LATEST_VERSION"
+            NEW_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$((VERSION_PARTS[2] + 1))"
+            echo "Incrementing to new version: $NEW_VERSION"
+          fi
+
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+        fi
+      shell: /usr/bin/bash -e {0}
+      if: steps.person-api-changes.outputs.client == 'true' && github.event_name != 'pull_request'
 
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
       run: |
         dotnet build -c Release
-        dotnet pack -c Release --output .
+        dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --output .
         dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
-      if: steps.person-api-changes.outputs.client == 'true'
+      if: steps.person-api-changes.outputs.client == 'true' && github.event_name != 'pull_request'
 
     - name: Stop containers
       if: always()
