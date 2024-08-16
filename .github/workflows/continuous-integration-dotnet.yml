@@ -111,20 +111,36 @@ jobs:
     - name: Check for custom version in commit message or check the feed for the latest version and increment it
       id: check_custom_version
       run: |
-        # Retrieve the last 3 commit messages
-        COMMIT_MESSAGES=$(git log -n 3 --pretty=format:%B)
-    
-        echo "Commit Messages:"
-        echo "$COMMIT_MESSAGES"
-    
-        # Search for custom version update pattern in the last 10 commits
-        CUSTOM_VERSION=$(echo "$COMMIT_MESSAGES" | grep -oP '\(#update package version to \K([0-9]+\.[0-9]+\.[0-9]+)' | head -n 1)
-    
-        if [[ -n "$CUSTOM_VERSION" ]]; then
-          echo "Using custom version: $CUSTOM_VERSION"
-          echo "NEW_VERSION=$CUSTOM_VERSION" >> $GITHUB_ENV
-        else
-          echo "No custom version found in the commit messages."
+        # Search the last 10 commits for the version update indicator
+        COMMIT_HASH=$(git log -n 10 --pretty=format:"%H %s" | grep -P '\(#update package version to \d+\.\d+\.\d+\)' | grep -oP '^\w+' | head -n 1)
+
+        if [[ -n "$COMMIT_HASH" ]]; then
+          echo "Found commit with version update indicator: $COMMIT_HASH"
+      
+          # Check if the commit is already tagged
+          if git rev-parse "processed-nuget-version-${COMMIT_HASH}" >/dev/null 2>&1; then
+            echo "This commit has already been processed for version update. Skipping."
+          else
+            # Extract the version from the commit message
+            CUSTOM_VERSION=$(git show -s --format=%s $COMMIT_HASH | grep -oP '\(#update package version to \K([0-9]+\.[0-9]+\.[0-9]+)')
+
+            if [[ -n "$CUSTOM_VERSION" ]]; then
+              echo "Using custom version: $CUSTOM_VERSION"
+              echo "NEW_VERSION=$CUSTOM_VERSION" >> $GITHUB_ENV
+
+              # Tag the commit to prevent reprocessing
+              git tag "processed-nuget-version-${COMMIT_HASH}"
+              git push origin "processed-nuget-version-${COMMIT_HASH}"
+            else
+              echo "Failed to extract version from commit message. Exiting."
+              exit 1
+            fi
+          fi
+        fi
+
+        if [[ -z "$CUSTOM_VERSION" ]]; then
+          echo "No unprocessed custom version found in the last 10 commits. Proceeding to fetch and increment the latest version from the feed."
+      
           # Fetch the latest version and increment the version
           PACKAGE_ID="Dfe.PersonsApi.Client"
           FEED_URL="https://nuget.pkg.github.com/DFE-Digital/query?q=$PACKAGE_ID"
@@ -143,7 +159,6 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
         fi
       shell: /usr/bin/bash -e {0}
-      if: steps.person-api-changes.outputs.client == 'true' && github.event_name != 'pull_request'
 
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
