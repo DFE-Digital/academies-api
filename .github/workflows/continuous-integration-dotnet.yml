@@ -111,14 +111,13 @@ jobs:
           dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name "github" "https://nuget.pkg.github.com/DFE-Digital/index.json"
         fi
 
-    - name: Query latest package version
-      id: query_version
+    - name: List all packages starting with Dfe.PersonsApi
       run: |
-        PACKAGE_ID="Dfe.PersonsApi.Client"
+        PACKAGE_PREFIX="Dfe.PersonsApi"
         FEED_URL="https://nuget.pkg.github.com/DFE-Digital/index.json"
-        VERSION=$(dotnet nuget search $PACKAGE_ID --source $FEED_URL --take 1 --json | jq -r '.[0].versions | last')
-        echo "Latest version: $VERSION"
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
+    
+        # Fetch package list from the feed
+        curl -s "$FEED_URL/query?q=$PACKAGE_PREFIX" | jq '.data[] | .id + ": " + .version'
 
     # - name: Build, pack and publish
     #   working-directory: Dfe.PersonsApi.Client
