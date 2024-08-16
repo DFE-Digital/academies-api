@@ -105,56 +105,27 @@ jobs:
           client:
             - 'Dfe.PersonsApi.Client/**'
 
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Extract the branch name
-      id: extract_branch
-      run: echo "branch_name=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
-
-    - name: Extract version from .csproj
-      working-directory: Dfe.PersonsApi.Client  
-      id: extract_version
+    - name: Configure NuGet authentication
       run: |
-        VERSION=$(grep '<Version>' *.csproj | sed -E 's/.*<Version>([0-9]+\.[0-9]+\.[0-9]+)<\/Version>/\1/')
-        echo "Current version: $VERSION"
+        echo "Setting up authentication for GitHub Package Registry"
+        dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
+
+    - name: Query latest package version
+      id: query_version
+      run: |
+        PACKAGE_ID="Dfe.PersonsApi.Client"
+        FEED_URL="https://nuget.pkg.github.com/DFE-Digital/index.json"
+        VERSION=$(dotnet list package --source $FEED_URL --verbosity normal | grep -oP "$PACKAGE_ID\s+\K([0-9]+\.[0-9]+\.[0-9]+)" | sort -V | tail -1)
+        echo "Latest version: $VERSION"
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-    - name: Increment version
-      id: increment_version
-      run: |
-        VERSION=${{ env.VERSION }}
-        IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
-        PATCH_VERSION=${VERSION_PARTS[2]}
-        NEW_PATCH_VERSION=$((PATCH_VERSION + 1))
-        NEW_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$NEW_PATCH_VERSION"
-        echo "New version: $NEW_VERSION"
-        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-
-    - name: Update .csproj with new version
-      working-directory: Dfe.PersonsApi.Client 
-      run: |
-        NEW_VERSION=${{ env.NEW_VERSION }}
-        sed -i "s/<Version>[0-9]\+\.[0-9]\+\.[0-9]\+<\/Version>/<Version>$NEW_VERSION<\/Version>/" *.csproj
-
-    - name: Commit updated .csproj
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git checkout -B ${{ env.branch_name }}
-        git add *.csproj
-        git commit -m "Increment version to ${{ env.NEW_VERSION }}" || echo "No changes to commit"
-        git push origin ${{ env.branch_name }}
-
-    - name: Build, pack and publish
-      working-directory: Dfe.PersonsApi.Client
-      run: |
-        dotnet build -c Release
-        dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --output .
-        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
-      if: steps.person-api-changes.outputs.client == 'true'
+    # - name: Build, pack and publish
+    #   working-directory: Dfe.PersonsApi.Client
+    #   run: |
+    #     dotnet build -c Release
+    #     dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --output .
+    #     dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
+    #   if: steps.person-api-changes.outputs.client == 'true'
 
     - name: Stop containers
       if: always()
