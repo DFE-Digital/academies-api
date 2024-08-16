@@ -118,7 +118,7 @@ jobs:
         echo "$COMMIT_MESSAGES"
     
         # Search for custom version update pattern in the last 10 commits
-        CUSTOM_VERSION=$(echo "$COMMIT_MESSAGES" | grep -oP '\(#update version to \K([0-9]+\.[0-9]+\.[0-9]+)' | head -n 1)
+        CUSTOM_VERSION=$(echo "$COMMIT_MESSAGES" | grep -oP '\(#update package version to \K([0-9]+\.[0-9]+\.[0-9]+)' | head -n 1)
     
         if [[ -n "$CUSTOM_VERSION" ]]; then
           echo "Using custom version: $CUSTOM_VERSION"
