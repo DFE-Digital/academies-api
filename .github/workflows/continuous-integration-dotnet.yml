@@ -111,7 +111,7 @@ jobs:
     - name: Check for custom version in commit message or check the feed for the latest version and increment it
       id: check_custom_version
       run: |
-        # Search the last 10 commits for the version update indicator
+        # Search the last 10 commits for the version update indicator 
         COMMIT_HASH=$(git log -n 10 --pretty=format:"%H %s" | grep -P '\(#update package version to \d+\.\d+\.\d+\)' | grep -oP '^\w+' | head -n 1)
 
         if [[ -n "$COMMIT_HASH" ]]; then
