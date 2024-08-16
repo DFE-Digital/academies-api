@@ -107,8 +107,9 @@ jobs:
 
     - name: Configure NuGet authentication
       run: |
-        echo "Setting up authentication for GitHub Package Registry"
-        dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
+        if ! dotnet nuget list source | grep -q "github"; then
+          dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name "github" "https://nuget.pkg.github.com/DFE-Digital/index.json"
+        fi
 
     - name: Query latest package version
       id: query_version
