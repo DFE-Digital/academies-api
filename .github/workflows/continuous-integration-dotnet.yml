@@ -111,8 +111,8 @@ jobs:
     - name: Check for custom version in commit message or check the feed for the latest version and increment it
       id: check_custom_version
       run: |
-        # Retrieve the last 2 commit messages
-        COMMIT_MESSAGES=$(git log -n 2 --pretty=format:%B)
+        # Retrieve the last 3 commit messages
+        COMMIT_MESSAGES=$(git log -n 3 --pretty=format:%B)
     
         echo "Commit Messages:"
         echo "$COMMIT_MESSAGES"
