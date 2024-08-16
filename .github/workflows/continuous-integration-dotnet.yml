@@ -143,6 +143,7 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
         fi
       shell: /usr/bin/bash -e {0}
+      if: steps.person-api-changes.outputs.client == 'true'
 
     - name: Build, pack and publish
       working-directory: Dfe.PersonsApi.Client
