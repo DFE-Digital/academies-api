@@ -37,10 +37,10 @@
             }
           },
           "404": {
-            "description": "Constituency not found."
+            "description": "Constituency not found"
           },
           "400": {
-            "description": "Constituency cannot be null or empty."
+            "description": "Constituency cannot be null or empty"
           }
         }
       }
