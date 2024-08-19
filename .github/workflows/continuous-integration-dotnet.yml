@@ -146,7 +146,7 @@ jobs:
           FEED_URL="https://nuget.pkg.github.com/DFE-Digital/query?q=$PACKAGE_ID"
           LATEST_VERSION=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$FEED_URL" | jq -r '.data[0].version')
 
-          if [[ -z "$LATEST_VERSION" ]]; then
+          if [[ -z "$LATEST_VERSION" || "$LATEST_VERSION" == "null" ]]; then
             echo "No existing version found in the feed. Defaulting to version 1.0.0"
             NEW_VERSION="1.0.0"
           else
