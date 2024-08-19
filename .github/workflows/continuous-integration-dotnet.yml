@@ -141,7 +141,7 @@ jobs:
         if [[ -z "$CUSTOM_VERSION" ]]; then
           echo "No unprocessed custom version found in the last 10 commits. Proceeding to fetch and increment the latest version from the feed."
       
-          # Fetch the latest version and increment the version
+          # Fetch the latest version and increment the  version
           PACKAGE_ID="Dfe.PersonsApi.Client"
           FEED_URL="https://nuget.pkg.github.com/DFE-Digital/query?q=$PACKAGE_ID"
           LATEST_VERSION=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$FEED_URL" | jq -r '.data[0].version')
