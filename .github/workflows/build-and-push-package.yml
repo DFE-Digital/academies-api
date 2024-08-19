@@ -1,4 +1,4 @@
-name: Build and Push NuGet Pacakage
+name: Build and Push NuGet Package
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
     - package/release.*
     paths:
     - 'Dfe.PersonsApi.Client*/**'
-    - '!Dfe.Academies.Performance/**'
 
 env:
   DOTNET_VERSION: '8.0.x'
