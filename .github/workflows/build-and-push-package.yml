@@ -5,7 +5,7 @@ on:
     branches:
     - package/release.*
     paths:
-    - 'PersonsApi*/**'
+    - 'Dfe.PersonsApi.Client*/**'
     - '!Dfe.Academies.Performance/**'
 
 env:
