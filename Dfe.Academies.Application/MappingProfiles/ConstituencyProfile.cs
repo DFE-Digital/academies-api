@@ -3,12 +3,12 @@ using Dfe.Academies.Application.Models;
 
 namespace Dfe.Academies.Application.MappingProfiles
 {
-    public class PersonProfile : Profile
+    public class ConstituencyProfile : Profile
     {
-        public PersonProfile()
+        public ConstituencyProfile()
         {
             CreateMap<ConstituencyWithMemberContactDetails, MemberOfParliament>()
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Constituency.MemberID))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Constituency.MemberID))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Constituency.NameList.Split(",", StringSplitOptions.None)[1].Trim()))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Constituency.NameList.Split(",", StringSplitOptions.None)[0].Trim()))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.MemberContactDetails.Email))

@@ -2,12 +2,12 @@
 using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Application.MappingProfiles;
-using Dfe.Academies.Application.Persons;
+using Dfe.Academies.Application.Constituencies;
 using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.EducationalPerformance;
 using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Persons;
+using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.Repositories;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Infrastructure;
@@ -38,15 +38,15 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEstablishmentQueries, EstablishmentQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
-            services.AddScoped<IPersonsQueries, PersonsQueries>();
+            services.AddScoped<IConstituencyQueries, ConstituencyQueries>();
             
-
             //Repos
             services.AddScoped<ITrustRepository, TrustRepository>();
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
             services.AddSingleton<ICensusDataRepository, CensusDataRepository>();
             services.AddScoped<IEducationalPerformanceRepository, EducationalPerformanceRepository>();
-            services.AddTransient(typeof(IRepository<>), typeof(MopRepository<>));
+            services.AddTransient(typeof(IMopRepository<>), typeof(MopRepository<>));
+            services.AddTransient(typeof(IMstrRepository<>), typeof(MstrRepository<>));
 
             //Db
             services.AddDbContext<MstrContext>(options =>

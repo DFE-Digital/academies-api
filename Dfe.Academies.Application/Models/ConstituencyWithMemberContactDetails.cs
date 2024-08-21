@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Domain.Persons;
+﻿using Dfe.Academies.Domain.Constituencies;
 
 namespace Dfe.Academies.Application.Models
 {

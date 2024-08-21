@@ -1,5 +1,5 @@
 ﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Domain.Persons;
+using Dfe.Academies.Domain.Constituencies;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;

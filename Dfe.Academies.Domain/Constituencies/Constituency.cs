@@ -1,4 +1,4 @@
-﻿namespace Dfe.Academies.Domain.Persons
+﻿namespace Dfe.Academies.Domain.Constituencies
 {
     public class Constituency
     {

@@ -1,5 +1,5 @@
 using Dfe.Academies.Application.Models;
-using Dfe.Academies.Application.Persons;
+using Dfe.Academies.Application.Constituencies;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -10,9 +10,9 @@ namespace PersonsApi.Controllers
     [Route("v{version:apiVersion}/[controller]")]
     public class ConstituenciesController : ControllerBase
     {
-        private readonly IPersonsQueries _personQueries;
+        private readonly IConstituencyQueries _personQueries;
 
-        public ConstituenciesController(IPersonsQueries personQueries)
+        public ConstituenciesController(IConstituencyQueries personQueries)
         {
             _personQueries = personQueries;
         }

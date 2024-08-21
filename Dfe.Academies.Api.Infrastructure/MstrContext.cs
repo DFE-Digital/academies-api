@@ -48,6 +48,8 @@ public class MstrContext : DbContext
         modelBuilder.Entity<EducationEstablishmentTrust>(ConfigureEducationEstablishmentTrust);
         modelBuilder.Entity<LocalAuthority>(ConfigureLocalAuthority);
         modelBuilder.Entity<IfdPipeline>(ConfigureIfdPipeline);
+        modelBuilder.Entity<EducationEstablishmentGovernance>(ConfigureEducationEstablishmentGovernance);
+        modelBuilder.Entity<GovernanceRoleType>(ConfigureGovernanceRoleType);
 
         base.OnModelCreating(modelBuilder);
     }
@@ -278,5 +280,48 @@ public class MstrContext : DbContext
         ifdPipelineConfiguration.Property(e => e.ProjectTemplateInformationViabilityIssue)
             .HasColumnName("Project template information.Viability issue?");
     }
+    void ConfigureEducationEstablishmentGovernance(EntityTypeBuilder<EducationEstablishmentGovernance> governanceConfiguration)
+    {
+        governanceConfiguration.HasKey(e => e.SK);
 
+        governanceConfiguration.ToTable("EducationEstablishmentGovernance", "mstr");
+
+        governanceConfiguration.Property(e => e.EducationEstablishmentId).HasColumnName("FK_EducationEstablishment");
+        governanceConfiguration.Property(e => e.GovernanceRoleTypeId).HasColumnName("FK_GovernanceRoleType");
+        governanceConfiguration.Property(e => e.GID).HasColumnName("GID").IsRequired();
+        governanceConfiguration.Property(e => e.Title).HasColumnName("Title");
+        governanceConfiguration.Property(e => e.Forename1).HasColumnName("Forename1");
+        governanceConfiguration.Property(e => e.Forename2).HasColumnName("Forename2");
+        governanceConfiguration.Property(e => e.Surname).HasColumnName("Surname");
+        governanceConfiguration.Property(e => e.Email).HasColumnName("Email");
+        governanceConfiguration.Property(e => e.DateOfAppointment).HasColumnName("Date of appointment");
+        governanceConfiguration.Property(e => e.DateTermOfOfficeEndsEnded).HasColumnName("Date term of office ends/ended");
+        governanceConfiguration.Property(e => e.AppointingBody).HasColumnName("Appointing body");
+        governanceConfiguration.Property(e => e.Modified).HasColumnName("Modified");
+        governanceConfiguration.Property(e => e.ModifiedBy).HasColumnName("Modified By");
+
+        // Foreign keys
+        governanceConfiguration
+            .HasOne(x => x.Establishment)
+            .WithMany()
+            .HasForeignKey(x => x.EducationEstablishmentId);
+
+        governanceConfiguration
+            .HasOne(x => x.GovernanceRoleType)
+            .WithMany()
+            .HasForeignKey(x => x.GovernanceRoleTypeId);
+    }
+
+
+    private void ConfigureGovernanceRoleType(EntityTypeBuilder<GovernanceRoleType> governanceRoleTypeConfiguration)
+    {
+        governanceRoleTypeConfiguration.HasKey(e => e.SK);
+
+        governanceRoleTypeConfiguration.ToTable("Ref_GovernanceRoleType", DEFAULT_SCHEMA);
+
+        governanceRoleTypeConfiguration.Property(e => e.SK).HasColumnName("SK");
+        governanceRoleTypeConfiguration.Property(e => e.Name).HasColumnName("Name").HasMaxLength(100);
+        governanceRoleTypeConfiguration.Property(e => e.Modified).HasColumnName("Modified");
+        governanceRoleTypeConfiguration.Property(e => e.ModifiedBy).HasColumnName("Modified By");
+    }
 }
