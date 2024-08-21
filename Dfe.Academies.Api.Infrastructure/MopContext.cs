@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Domain.Persons;
+﻿using Dfe.Academies.Domain.Constituencies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

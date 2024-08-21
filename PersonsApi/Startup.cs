@@ -5,6 +5,8 @@ using System.Text.Json.Serialization;
 namespace PersonsApi
 {
     using Dfe.Academies.Application.MappingProfiles;
+    using Dfe.Academies.Domain.Caching;
+    using Dfe.Academies.Infrastructure.Caching;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -40,6 +42,9 @@ namespace PersonsApi
             services.AddControllers().AddJsonOptions(c => {c.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());});
             services.AddApiVersioning();
             services.AddFeatureManagement();
+
+            services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
+            services.AddSingleton<ICacheService, MemoryCacheService>();
 
             services.AddScoped<ICorrelationContext, CorrelationContext>();
 
@@ -111,7 +116,7 @@ namespace PersonsApi
                 options.MaxAge = TimeSpan.FromDays(365);
             });
 
-            services.AddAutoMapper(typeof(PersonProfile));
+            services.AddAutoMapper(typeof(ConstituencyProfile));
 
             services.AddOpenApiDocument(configure =>
             {

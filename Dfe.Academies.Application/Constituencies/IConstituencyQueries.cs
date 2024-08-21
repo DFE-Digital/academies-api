@@ -1,8 +1,8 @@
 ﻿using Dfe.Academies.Application.Models;
 
-namespace Dfe.Academies.Application.Persons
+namespace Dfe.Academies.Application.Constituencies
 {
-    public interface IPersonsQueries
+    public interface IConstituencyQueries
     {
         Task<MemberOfParliament?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken);
     }

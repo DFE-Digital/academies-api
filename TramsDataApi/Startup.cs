@@ -29,6 +29,8 @@ namespace TramsDataApi
     using NetEscapades.AspNetCore.SecurityHeaders;
     using TramsDataApi.Swagger;
     using Dfe.Academies.Application.MappingProfiles;
+    using Dfe.Academies.Domain.Caching;
+    using Dfe.Academies.Infrastructure.Caching;
 
     public class Startup
     {
@@ -83,6 +85,8 @@ namespace TramsDataApi
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<ICorrelationContext, CorrelationContext>();
             services.AddScoped<MfspApiClient, MfspApiClient>();
+
+            services.AddSingleton<ICacheService, MemoryCacheService>();
 
             services.AddApiVersioning(config =>
             {
@@ -144,7 +148,7 @@ namespace TramsDataApi
                 });
             }
 
-            services.AddAutoMapper(typeof(PersonProfile));
+            services.AddAutoMapper(typeof(ConstituencyProfile));
 
             services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
             services.AddSingleton<ApiUserEnricher>();
