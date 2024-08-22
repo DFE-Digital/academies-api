@@ -49,6 +49,22 @@
   "components": {
     "schemas": {
       "MemberOfParliament": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Person"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "constituencyName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "Person": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -71,11 +87,11 @@
           "displayNameWithTitle": {
             "type": "string"
           },
-          "role": {
-            "type": "string"
-          },
-          "constituencyName": {
-            "type": "string"
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

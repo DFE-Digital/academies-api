@@ -1,5 +1,6 @@
+using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency;
 using Dfe.Academies.Application.Models;
-using Dfe.Academies.Application.Constituencies;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -10,11 +11,11 @@ namespace PersonsApi.Controllers
     [Route("v{version:apiVersion}/[controller]")]
     public class ConstituenciesController : ControllerBase
     {
-        private readonly IConstituencyQueries _personQueries;
+        private readonly ISender _sender;
 
-        public ConstituenciesController(IConstituencyQueries personQueries)
+        public ConstituenciesController(ISender sender)
         {
-            _personQueries = personQueries;
+            _sender = sender;
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace PersonsApi.Controllers
                 return BadRequest();
             }
 
-            var result = await _personQueries.GetMemberOfParliamentByConstituencyAsync(constituencyName, cancellationToken);
+            var result = await _sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
 
             return result is null ? NotFound() : Ok(result);
         }

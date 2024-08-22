@@ -1,23 +1,51 @@
 ﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
+using Dfe.PersonsApi.Client.Contracts;
+using Dfe.PersonsApi.Client;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using PersonsApi;
 using System.Net;
+using Dfe.PersonsApi.Client.Extensions;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
     public class When_Fetching_Mp_By_Constituency : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
+        private readonly IServiceProvider _serviceProvider;
 
         public When_Fetching_Mp_By_Constituency(CustomWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
+
+            var httpClient = _factory.CreateClient();
+
+            // Setup configuration
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string?>
+                {
+                { "PersonsApiClient:BaseUrl", httpClient.BaseAddress!.ToString() },
+                { "PersonsApiClient:ApiKey", "app-key" }
+                })
+                .Build();
+
+            // Setup service collection
+            var services = new ServiceCollection();
+            services.AddSingleton<IConfiguration>(config);
+
+            // Use the extension method with the provided HttpClient
+            services.AddPersonsApiClient<IConstituenciesClient, ConstituenciesClient>(config, httpClient);
+
+            // Build the service provider
+            _serviceProvider = services.BuildServiceProvider();
         }
 
         [Fact]
-        public async Task it_should_return_mp_when_constituency_exist()
+        public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnMp_WhenConstituencyExists()
         {
-            var client = _factory.CreateClient();
+            // Arrange
+            var constituenciesClient = _serviceProvider.GetRequiredService<IConstituenciesClient>();
 
             var dbcontext = _factory.GetDbContext();
 
@@ -26,23 +54,27 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 
             var constituencyName = Uri.EscapeDataString("NewConstituencyName");
 
-            var response = await client.GetAsync($"v1/Constituencies/{constituencyName}/mp");
+            // Act
+            var result = await constituenciesClient.GetMemberOfParliamentByConstituencyAsync(constituencyName);
 
-            await response.Content.ReadAsStringAsync();
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("NewConstituencyName", result.ConstituencyName);
         }
 
         [Fact]
-        public async Task it_should_return_notfound_when_constituency_doesnt_exist()
+        public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnNotFound_WhenConstituencyDoesNotExist()
         {
-            var client = _factory.CreateClient();
+            // Arrange
+            var constituenciesClient = _serviceProvider.GetRequiredService<IConstituenciesClient>();
 
-            var response = await client.GetAsync($"v1/Constituencies/test/mp");
+            var constituencyName = Uri.EscapeDataString("NonExistentConstituency");
 
-            await response.Content.ReadAsStringAsync();
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<PersonsApiException>(async () =>
+                await constituenciesClient.GetMemberOfParliamentByConstituencyAsync(constituencyName));
 
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);
         }
     }
 }
