@@ -14,7 +14,7 @@ namespace Dfe.Academies.Application.MappingProfiles
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.MemberContactDetails.Email))
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.Constituency.NameDisplayAs))
                 .ForMember(dest => dest.DisplayNameWithTitle, opt => opt.MapFrom(src => src.Constituency.NameFullTitle))
-                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => "Member of Parliament"))
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => new List<string> { "Member of Parliament" }))
                 .ForMember(dest => dest.ConstituencyName, opt => opt.MapFrom(src => src.Constituency.ConstituencyName));
         }
     }

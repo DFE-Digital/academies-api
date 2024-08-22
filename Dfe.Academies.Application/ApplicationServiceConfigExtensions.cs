@@ -1,19 +1,17 @@
 ﻿using Dfe.Academies.Academisation.Data;
 using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Application.Establishment;
-using Dfe.Academies.Application.MappingProfiles;
-using Dfe.Academies.Application.Constituencies;
 using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.EducationalPerformance;
 using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.Repositories;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -38,8 +36,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEstablishmentQueries, EstablishmentQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
-            services.AddScoped<IConstituencyQueries, ConstituencyQueries>();
-            
+
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
+
             //Repos
             services.AddScoped<ITrustRepository, TrustRepository>();
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
