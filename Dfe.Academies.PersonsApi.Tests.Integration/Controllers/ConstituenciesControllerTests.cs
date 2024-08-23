@@ -7,15 +7,16 @@ using Microsoft.Extensions.DependencyInjection;
 using PersonsApi;
 using System.Net;
 using Dfe.PersonsApi.Client.Extensions;
+using Dfe.Academies.Academisation.Data;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
-    public class When_Fetching_Mp_By_Constituency : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class ConstituenciesControllerTests : IClassFixture<CustomWebApplicationFactory<Startup, MopContext>>
     {
-        private readonly CustomWebApplicationFactory<Startup> _factory;
+        private readonly CustomWebApplicationFactory<Startup, MopContext> _factory;
         private readonly IServiceProvider _serviceProvider;
 
-        public When_Fetching_Mp_By_Constituency(CustomWebApplicationFactory<Startup> factory)
+        public ConstituenciesControllerTests(CustomWebApplicationFactory<Startup, MopContext> factory)
         {
             _factory = factory;
 

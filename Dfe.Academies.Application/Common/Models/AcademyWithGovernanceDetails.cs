@@ -1,6 +1,6 @@
 ﻿using Dfe.Academies.Domain.Establishment;
 
-namespace Dfe.Academies.Application.Models
+namespace Dfe.Academies.Application.Common.Models
 {
     public record AcademyWithGovernanceDetails(
         EducationEstablishmentGovernance EducationEstablishmentGovernance,

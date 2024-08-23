@@ -44,6 +44,46 @@
           }
         }
       }
+    },
+    "/v1/Establishments/{urn}/getAssociatedPersons": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieve All Members Associated With an Academy by Urn",
+        "operationId": "Establishments_GetAllPersonsAssociatedWithAcademyByUrn",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "description": "The URN.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A Collection of Persons Associated With the Academy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AcademyGovernance"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Academy not found."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -87,13 +127,44 @@
           "displayNameWithTitle": {
             "type": "string"
           },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
           "roles": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
+      },
+      "AcademyGovernance": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Person"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ukprn": {
+                "type": "string",
+                "nullable": true
+              },
+              "urn": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
       }
     }
   }

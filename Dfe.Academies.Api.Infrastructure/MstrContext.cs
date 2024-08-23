@@ -26,8 +26,10 @@ public class MstrContext : DbContext
     public DbSet<EstablishmentType> EstablishmentTypes { get; set; } = null!;
     public DbSet<EducationEstablishmentTrust> EducationEstablishmentTrusts { get; set; } = null!;
     public DbSet<LocalAuthority> LocalAuthorities { get; set; } = null!;
-
     public DbSet<IfdPipeline> IfdPipelines { get; set; } = null!;
+    public DbSet<GovernanceRoleType> GovernanceRoleTypes { get; set; } = null!;
+    public DbSet<EducationEstablishmentGovernance> EducationEstablishmentGovernances { get; set; } = null!;
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

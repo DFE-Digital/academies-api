@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Contracts.V1.EducationalPerformance;
 using Dfe.Academies.Domain.EducationalPerformance;

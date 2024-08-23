@@ -3,7 +3,8 @@
     public class MemberContactDetails
     {
         public int MemberID { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
         public int TypeId { get; set; }
     }
 }

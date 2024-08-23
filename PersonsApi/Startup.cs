@@ -5,8 +5,6 @@ using System.Text.Json.Serialization;
 namespace PersonsApi
 {
     using Dfe.Academies.Application.MappingProfiles;
-    using Dfe.Academies.Domain.Caching;
-    using Dfe.Academies.Infrastructure.Caching;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -43,8 +41,7 @@ namespace PersonsApi
             services.AddApiVersioning();
             services.AddFeatureManagement();
 
-            services.Configure<CacheSettings>(Configuration.GetSection("CacheSettings"));
-            services.AddSingleton<ICacheService, MemoryCacheService>();
+            services.AddInfrastructureDependencyGroup(Configuration);
 
             services.AddScoped<ICorrelationContext, CorrelationContext>();
 

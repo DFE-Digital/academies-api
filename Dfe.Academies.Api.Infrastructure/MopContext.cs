@@ -45,6 +45,7 @@ public class MopContext : DbContext
         memberContactDetailsConfiguration.ToTable("MemberContactDetails", DEFAULT_SCHEMA);
         memberContactDetailsConfiguration.Property(e => e.MemberID).HasColumnName("memberID");
         memberContactDetailsConfiguration.Property(e => e.Email).HasColumnName("email");
+        memberContactDetailsConfiguration.Property(e => e.Phone).HasColumnName("phone");
         memberContactDetailsConfiguration.Property(e => e.TypeId).HasColumnName("typeId");
     }
 

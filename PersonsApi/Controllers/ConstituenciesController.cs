@@ -1,5 +1,5 @@
 using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency;
-using Dfe.Academies.Application.Models;
+using Dfe.Academies.Application.Common.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

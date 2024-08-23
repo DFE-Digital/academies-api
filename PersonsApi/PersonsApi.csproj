@@ -20,7 +20,7 @@
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
 	  <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
     <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
   </ItemGroup>
 
