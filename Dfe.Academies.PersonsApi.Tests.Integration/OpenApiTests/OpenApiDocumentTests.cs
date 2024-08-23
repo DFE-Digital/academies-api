@@ -1,14 +1,15 @@
-﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
+﻿using Dfe.Academies.Academisation.Data;
+using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
 using PersonsApi;
 using System.Net;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.OpenApiTests;
 
-public class OpenApiDocumentTests : IClassFixture<CustomWebApplicationFactory<Startup>>
+public class OpenApiDocumentTests : IClassFixture<CustomWebApplicationFactory<Startup, MopContext>>
 {
     private readonly HttpClient _client;
 
-    public OpenApiDocumentTests(CustomWebApplicationFactory<Startup> factory)
+    public OpenApiDocumentTests(CustomWebApplicationFactory<Startup, MopContext> factory)
     {
         _client = factory.CreateClient();
     }

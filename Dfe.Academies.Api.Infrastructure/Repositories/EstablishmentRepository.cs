@@ -1,6 +1,8 @@
 ﻿using Dfe.Academies.Academisation.Data;
+using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Establishment;
 using Microsoft.EntityFrameworkCore;
+using Dfe.Academies.Application.Common.Interfaces;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
@@ -117,6 +119,25 @@ namespace Dfe.Academies.Infrastructure.Repositories
             var result = establishments.Select(ToEstablishment).ToList();
 
             return result;
+        }
+
+        public IQueryable<AcademyWithGovernanceDetails> GetPersonsAssociatedWithAcademyByUrn(int urn)
+        {
+            var establishmentExists = _context.Establishments.AsNoTracking().Any(e => e.URN == urn);
+            if (!establishmentExists)
+            {
+                return null;
+            }
+
+            var query = from ee in _context.Establishments.AsNoTracking()
+                        join eeg in _context.EducationEstablishmentGovernances.AsNoTracking()
+                            on ee.SK equals eeg.EducationEstablishmentId
+                        join grt in _context.GovernanceRoleTypes.AsNoTracking()
+                            on eeg.GovernanceRoleTypeId equals grt.SK
+                        where ee.URN == urn
+                        select new AcademyWithGovernanceDetails(eeg, grt, ee);
+
+            return query;
         }
 
         private IQueryable<EstablishmentQueryResult> BaseQuery()

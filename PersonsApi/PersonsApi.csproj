@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
     <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
   </ItemGroup>
 

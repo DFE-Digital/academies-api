@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Dfe.Academies.Application.Models;
+using Dfe.Academies.Application.Common.Models;
 
 namespace Dfe.Academies.Application.MappingProfiles
 {
@@ -15,6 +15,8 @@ namespace Dfe.Academies.Application.MappingProfiles
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.Constituency.NameDisplayAs))
                 .ForMember(dest => dest.DisplayNameWithTitle, opt => opt.MapFrom(src => src.Constituency.NameFullTitle))
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => new List<string> { "Member of Parliament" }))
+                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.Constituency.LastRefresh))
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.MemberContactDetails.Phone))
                 .ForMember(dest => dest.ConstituencyName, opt => opt.MapFrom(src => src.Constituency.ConstituencyName));
         }
     }

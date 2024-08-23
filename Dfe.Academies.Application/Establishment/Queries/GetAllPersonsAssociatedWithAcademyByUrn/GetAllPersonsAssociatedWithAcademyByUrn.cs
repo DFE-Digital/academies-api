@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Dfe.Academies.Application.Models;
-using Dfe.Academies.Domain.Caching;
-using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Repositories;
+using Dfe.Academies.Application.Common.Interfaces;
+using Dfe.Academies.Application.Common.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,40 +11,33 @@ namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociate
 
     public class GetAllPersonsAssociatedWithAcademyByUrnQueryHandler : IRequestHandler<GetAllPersonsAssociatedWithAcademyByUrnQuery, List<AcademyGovernance>>
     {
-        private readonly IMopRepository<Domain.Establishment.Establishment> _establishmentRepository;
-        private readonly IMopRepository<EducationEstablishmentGovernance> _governanceRepository;
-        private readonly IMopRepository<GovernanceRoleType> _governanceRoleTypeRepository;
+        private readonly IEstablishmentRepository _establishmentRepository;
         private readonly IMapper _mapper;
         private readonly ICacheService _cacheService;
 
         public GetAllPersonsAssociatedWithAcademyByUrnQueryHandler(
-            IMopRepository<Domain.Establishment.Establishment> establishmentRepository,
-            IMopRepository<EducationEstablishmentGovernance> governanceRepository,
-            IMopRepository<GovernanceRoleType> governanceRoleTypeRepository,
+            IEstablishmentRepository establishmentRepository,
             IMapper mapper,
             ICacheService cacheService)
         {
             _establishmentRepository = establishmentRepository;
-            _governanceRepository = governanceRepository;
-            _governanceRoleTypeRepository = governanceRoleTypeRepository;
             _mapper = mapper;
             _cacheService = cacheService;
         }
 
-        public async Task<List<AcademyGovernance>> Handle(GetAllPersonsAssociatedWithAcademyByUrnQuery request, CancellationToken cancellationToken)
+        public async Task<List<AcademyGovernance>?> Handle(GetAllPersonsAssociatedWithAcademyByUrnQuery request, CancellationToken cancellationToken)
         {
             string cacheKey = $"PersonsAssociatedWithAcademy_{request.Urn}";
-            string methodName = nameof(GetAllPersonsAssociatedWithAcademyByUrnQuery);
+            string methodName = nameof(GetAllPersonsAssociatedWithAcademyByUrnQueryHandler);
 
             return await _cacheService.GetOrAddAsync(cacheKey, async () =>
             {
-                var query = from ee in _establishmentRepository.Query()
-                            join eeg in _governanceRepository.Query()
-                                on ee.SK equals eeg.EducationEstablishmentId
-                            join grt in _governanceRoleTypeRepository.Query()
-                                on eeg.GovernanceRoleTypeId equals grt.SK
-                            where ee.URN == request.Urn
-                            select new AcademyWithGovernanceDetails(eeg, grt, ee);
+                var query = _establishmentRepository.GetPersonsAssociatedWithAcademyByUrn(request.Urn);
+
+                if (query == null)
+                {
+                    return null;
+                }
 
                 var result = await query
                     .ProjectTo<AcademyGovernance>(_mapper.ConfigurationProvider)

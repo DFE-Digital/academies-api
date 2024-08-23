@@ -1,4 +1,6 @@
-namespace Dfe.Academies.Domain.Census
+using Dfe.Academies.Domain.Census;
+
+namespace Dfe.Academies.Application.Common.Interfaces
 {
     public interface ICensusDataRepository
     {

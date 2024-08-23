@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Dfe.Academies.Application.Models;
-using Dfe.Academies.Domain.Caching;
-using Dfe.Academies.Domain.Constituencies;
-using Dfe.Academies.Domain.Repositories;
+using Dfe.Academies.Application.Common.Interfaces;
+using Dfe.Academies.Application.Common.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency
 {
@@ -13,19 +9,16 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
 
     public class GetMemberOfParliamentByConstituencyQueryHandler : IRequestHandler<GetMemberOfParliamentByConstituencyQuery, MemberOfParliament?>
     {
-        private readonly IMopRepository<Constituency> _constituencyRepository;
-        private readonly IMopRepository<MemberContactDetails> _memberContactDetailsRepository;
+        private readonly IConstituencyRepository _constituencyRepository;
         private readonly IMapper _mapper;
         private readonly ICacheService _cacheService;
 
         public GetMemberOfParliamentByConstituencyQueryHandler(
-            IMopRepository<Constituency> constituencyRepository,
-            IMopRepository<MemberContactDetails> memberContactDetailsRepository,
+            IConstituencyRepository constituencyRepository,
             IMapper mapper,
             ICacheService cacheService)
         {
             _constituencyRepository = constituencyRepository;
-            _memberContactDetailsRepository = memberContactDetailsRepository;
             _mapper = mapper;
             _cacheService = cacheService;
         }
@@ -33,21 +26,14 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
         public async Task<MemberOfParliament?> Handle(GetMemberOfParliamentByConstituencyQuery request, CancellationToken cancellationToken)
         {
             string cacheKey = $"MemberOfParliament_{request.ConstituencyName}";
-            string methodName = nameof(GetMemberOfParliamentByConstituencyQuery);
+            string methodName = nameof(GetMemberOfParliamentByConstituencyQueryHandler);
 
             return await _cacheService.GetOrAddAsync(cacheKey, async () =>
             {
-                var query = from constituencies in _constituencyRepository.Query()
-                            join memberContactDetails in _memberContactDetailsRepository.Query()
-                                on constituencies.MemberID equals memberContactDetails.MemberID
-                            where constituencies.ConstituencyName == request.ConstituencyName
-                            && memberContactDetails.TypeId == 1
-                            && !constituencies.EndDate.HasValue
-                            select new ConstituencyWithMemberContactDetails(constituencies, memberContactDetails);
+                var constituencyWithMember = await _constituencyRepository
+                    .GetMemberOfParliamentByConstituencyAsync(request.ConstituencyName, cancellationToken);
 
-                var result = await query
-                    .ProjectTo<MemberOfParliament>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync(cancellationToken);
+                var result = _mapper.Map<MemberOfParliament?>(constituencyWithMember);
 
                 return result;
             }, methodName);

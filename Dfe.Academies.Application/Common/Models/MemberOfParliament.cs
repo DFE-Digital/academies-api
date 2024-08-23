@@ -1,4 +1,4 @@
-﻿namespace Dfe.Academies.Application.Models
+﻿namespace Dfe.Academies.Application.Common.Models
 {
     public class MemberOfParliament : Person
     {

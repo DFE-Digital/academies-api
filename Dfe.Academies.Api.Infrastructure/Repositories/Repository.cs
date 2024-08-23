@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Domain.Repositories;
+﻿using Dfe.Academies.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;

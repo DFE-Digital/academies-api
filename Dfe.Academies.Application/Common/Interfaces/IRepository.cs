@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Dfe.Academies.Domain.Repositories
+namespace Dfe.Academies.Application.Common.Interfaces
 {
     /// <summary>Repository</summary>
     /// <typeparam name="TEntity"></typeparam>
