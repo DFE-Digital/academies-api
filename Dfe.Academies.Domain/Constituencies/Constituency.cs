@@ -1,9 +1,11 @@
-﻿namespace Dfe.Academies.Domain.Constituencies
+﻿using Dfe.Academies.Domain.ValueObjects;
+
+namespace Dfe.Academies.Domain.Constituencies
 {
     public class Constituency
     {
-        public int ConstituencyId { get; set; }
-        public int MemberID { get; set; }
+        public ConstituencyId ConstituencyId { get; set; }
+        public MemberId MemberID { get; set; }
         public string ConstituencyName { get; set; }
         public string NameList { get; set; }
         public string NameDisplayAs { get; set; }
