@@ -1,4 +1,5 @@
 ﻿using Dfe.Academies.Domain.Constituencies;
+using Dfe.Academies.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -37,13 +38,15 @@ public class MopContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-
     private void ConfigureMemberContactDetails(EntityTypeBuilder<MemberContactDetails> memberContactDetailsConfiguration)
     {
         memberContactDetailsConfiguration.HasKey(e => e.MemberID);
 
         memberContactDetailsConfiguration.ToTable("MemberContactDetails", DEFAULT_SCHEMA);
-        memberContactDetailsConfiguration.Property(e => e.MemberID).HasColumnName("memberID");
+        memberContactDetailsConfiguration.Property(e => e.MemberID).HasColumnName("memberID")
+                .HasConversion(
+                    v => v.Value,
+                    v => new MemberId(v));
         memberContactDetailsConfiguration.Property(e => e.Email).HasColumnName("email");
         memberContactDetailsConfiguration.Property(e => e.Phone).HasColumnName("phone");
         memberContactDetailsConfiguration.Property(e => e.TypeId).HasColumnName("typeId");
@@ -52,7 +55,14 @@ public class MopContext : DbContext
     private void ConfigureConstituency(EntityTypeBuilder<Constituency> constituencyConfiguration)
     {
         constituencyConfiguration.ToTable("Constituencies", DEFAULT_SCHEMA);
-        constituencyConfiguration.Property(e => e.ConstituencyId).HasColumnName("constituencyId");
+        constituencyConfiguration.Property(e => e.ConstituencyId).HasColumnName("constituencyId")
+            .HasConversion(
+                    v => v.Value,
+                    v => new ConstituencyId(v));
+        constituencyConfiguration.Property(e => e.MemberID)
+            .HasConversion(
+                    v => v.Value,
+                    v => new MemberId(v));
         constituencyConfiguration.Property(e => e.ConstituencyName).HasColumnName("constituencyName");
         constituencyConfiguration.Property(e => e.NameList).HasColumnName("nameListAs");
         constituencyConfiguration.Property(e => e.NameDisplayAs).HasColumnName("nameDisplayAs");
