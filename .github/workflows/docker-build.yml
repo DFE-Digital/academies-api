@@ -28,4 +28,6 @@ jobs:
         with:
           file: './${{ matrix.image }}'
           secrets: github_token=${{ secrets.GITHUB_TOKEN }}
+          cache-from: type=gha
+          cache-to: type=gha
           push: false
