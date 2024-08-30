@@ -1,0 +1,54 @@
+name: Scan Docker image
+
+on:
+  push:
+    branches: main
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.build.outputs.imageid }}
+    strategy:
+      matrix:
+        image: [
+          "Dockerfile",
+          "Dockerfile.PersonsApi"
+        ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build docker image
+        uses: docker/build-push-action@v6
+        id: build
+        with:
+          file: './${{ matrix.image }}'
+          secrets: github_token=${{ secrets.GITHUB_TOKEN }}
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha
+          push: false
+
+      - name: Export docker image as tar
+        run: docker save -o ${{ matrix.image }}.tar ${{ steps.build.outputs.imageid }}
+
+      - name: Scan Docker image for CVEs
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          input: ${{ matrix.image }}.tar
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          limit-severities-for-sarif: true
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+          github-pat: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
