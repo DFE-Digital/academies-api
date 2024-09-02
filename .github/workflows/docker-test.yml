@@ -27,6 +27,7 @@ jobs:
         id: build
         with:
           file: './${{ matrix.image }}'
+          build-args: CI=true
           secrets: github_token=${{ secrets.GITHUB_TOKEN }}
           load: true
           cache-from: type=gha
