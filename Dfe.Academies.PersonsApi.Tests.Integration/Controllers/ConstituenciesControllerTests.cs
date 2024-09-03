@@ -1,13 +1,14 @@
-﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
-using Dfe.PersonsApi.Client.Contracts;
+﻿using Dfe.Academies.Academisation.Data;
+using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
 using Dfe.PersonsApi.Client;
+using Dfe.PersonsApi.Client.Contracts;
+using Dfe.PersonsApi.Client.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PersonsApi;
 using System.Net;
-using Dfe.PersonsApi.Client.Extensions;
-using Dfe.Academies.Academisation.Data;
+using System.Security.Claims;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
@@ -20,25 +21,25 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         {
             _factory = factory;
 
+            _factory.TestClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Role, "API.Read")
+            };
+
             var httpClient = _factory.CreateClient();
 
-            // Setup configuration
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string?>
                 {
-                { "PersonsApiClient:BaseUrl", httpClient.BaseAddress!.ToString() },
-                { "PersonsApiClient:ApiKey", "app-key" }
+                    { "PersonsApiClient:BaseUrl", httpClient.BaseAddress!.ToString() }
                 })
                 .Build();
 
-            // Setup service collection
             var services = new ServiceCollection();
             services.AddSingleton<IConfiguration>(config);
 
-            // Use the extension method with the provided HttpClient
             services.AddPersonsApiClient<IConstituenciesClient, ConstituenciesClient>(config, httpClient);
 
-            // Build the service provider
             _serviceProvider = services.BuildServiceProvider();
         }
 
@@ -77,5 +78,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 
             Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);
         }
+
     }
+
 }

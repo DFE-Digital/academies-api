@@ -1,12 +1,14 @@
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PersonsApi.Controllers
 {
     [ApiController]
+    [Authorize(Policy = "API.Read")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     public class EstablishmentsController : ControllerBase
