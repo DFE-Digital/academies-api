@@ -3,10 +3,12 @@ using Dfe.Academies.Application.Common.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PersonsApi.Controllers
 {
     [ApiController]
+    [Authorize(Policy = "API.Read")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     public class ConstituenciesController : ControllerBase

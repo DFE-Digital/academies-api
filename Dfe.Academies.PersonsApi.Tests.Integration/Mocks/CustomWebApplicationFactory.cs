@@ -2,13 +2,15 @@
 using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data.Common;
-using System.Drawing;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
 {
@@ -16,6 +18,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
       : WebApplicationFactory<TProgram> where TProgram : class where TDbContext : DbContext
     {
         private SqliteConnection? _connection;
+        public List<Claim> TestClaims { get; set; } = new List<Claim>();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -55,6 +58,18 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
 
                     SeedTestData(db);
                 }
+
+                // Remove the existing authentication configuration
+                services.PostConfigure<AuthenticationOptions>(options =>
+                {
+                    options.DefaultAuthenticateScheme = "TestScheme";
+                    options.DefaultChallengeScheme = "TestScheme";
+                });
+
+                services.AddAuthentication("TestScheme")
+                    .AddScheme<AuthenticationSchemeOptions, MockJwtBearerHandler>("TestScheme", options => { });
+
+                services.AddSingleton<IEnumerable<Claim>>(sp => TestClaims);
             });
 
             builder.UseEnvironment("Development");
@@ -202,7 +217,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
 
         protected override void ConfigureClient(HttpClient client)
         {
-            client.DefaultRequestHeaders.Add("ApiKey", "app-key");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "mock-token");
 
             base.ConfigureClient(client);
         }

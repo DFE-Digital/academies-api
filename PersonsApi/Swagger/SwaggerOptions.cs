@@ -10,18 +10,9 @@ namespace PersonsApi.Swagger
     {
         private readonly IApiVersionDescriptionProvider _provider;
 
-        private const string ApiKeyName = "ApiKey";
         private const string ServiceTitle = "Persons API";
-        private const string ServiceDescription = "The Persons API provides users with access to a variety of data " +
-                                           "regarding academies and trusts in England.\n\n" +
-                                           "The available data includes general data acadamy transfers and " +
-                                           "applications to become an academy and is compiled from a variety of internal and " +
-                                           "external services.";
         private const string ContactName = "Support";
         private const string ContactEmail = "servicedelivery.rdd@education.gov.uk";
-
-        private const string SecuritySchemeDescription = "A valid ApiKey in the 'ApiKey' header is required to " +
-                                                         "access the Academies API.";
         private const string DepreciatedMessage = "- API version has been depreciated.";
         
         public SwaggerOptions(IApiVersionDescriptionProvider provider) => _provider = provider;
@@ -35,7 +26,6 @@ namespace PersonsApi.Swagger
                 var openApiInfo = new OpenApiInfo
                 {
                     Title = ServiceTitle,
-                    //TODO: EA Description = ServiceDescription,
                     Contact = new OpenApiContact
                     {
                         Name = ContactName,
@@ -47,15 +37,16 @@ namespace PersonsApi.Swagger
                 
                 options.SwaggerDoc(desc.GroupName, openApiInfo);
             }
-            
-            var securityScheme = new OpenApiSecurityScheme
+
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Name = ApiKeyName,
-                Description = SecuritySchemeDescription,
-                Type = SecuritySchemeType.ApiKey,
-                In = ParameterLocation.Header
-            };
-            options.AddSecurityDefinition(ApiKeyName, securityScheme);
+                Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer"
+            });
+
             options.OperationFilter<AuthenticationHeaderOperationFilter>();
         }
     }

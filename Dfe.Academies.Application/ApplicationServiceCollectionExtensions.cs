@@ -17,6 +17,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
 
+            return services;
+        }
+
+        public static IServiceCollection AddPersonsApiApplicationDependencyGroup(
+            this IServiceCollection services, IConfiguration config)
+        {
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());

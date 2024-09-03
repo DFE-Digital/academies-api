@@ -1,4 +1,5 @@
-﻿using Dfe.PersonsApi.Client.Settings;
+﻿using Dfe.PersonsApi.Client.Security;
+using Dfe.PersonsApi.Client.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -18,9 +19,11 @@ namespace Dfe.PersonsApi.Client.Extensions
             var apiSettings = new PersonsApiClientSettings();
             configuration.GetSection("PersonsApiClient").Bind(apiSettings);
 
+            services.AddSingleton(apiSettings);
+            services.AddSingleton<ITokenAcquisitionService, TokenAcquisitionService>();
+
             if (existingHttpClient != null)
             {
-                // Use the provided HttpClient
                 services.AddSingleton(existingHttpClient);
                 services.AddTransient<TClientInterface, TClientImplementation>(serviceProvider =>
                 {
@@ -30,17 +33,19 @@ namespace Dfe.PersonsApi.Client.Extensions
             }
             else
             {
-                // Default logic if HttpClient is not provided
                 services.AddHttpClient<TClientInterface, TClientImplementation>((httpClient, serviceProvider) =>
                 {
                     httpClient.BaseAddress = new Uri(apiSettings.BaseUrl!);
-                    httpClient.DefaultRequestHeaders.Add("ApiKey", apiSettings.ApiKey);
 
                     return ActivatorUtilities.CreateInstance<TClientImplementation>(
                         serviceProvider, httpClient, apiSettings.BaseUrl!);
+                })
+                .AddHttpMessageHandler(serviceProvider =>
+                {
+                    var tokenService = serviceProvider.GetRequiredService<ITokenAcquisitionService>();
+                    return new BearerTokenHandler(tokenService);
                 });
             }
-
             return services;
         }
     }

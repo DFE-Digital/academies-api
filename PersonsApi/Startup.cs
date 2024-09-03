@@ -16,14 +16,12 @@ namespace PersonsApi
     using Middleware;
     using NetEscapades.AspNetCore.SecurityHeaders;
     using PersonsApi.ResponseModels;
-    using PersonsApi.SerilogCustomEnrichers;
     using PersonsApi.Swagger;
     using Swashbuckle.AspNetCore.SwaggerUI;
     using System;
     using System.IO;
     using System.Reflection;
     using System.Text;
-    using UseCases;
 
     public class Startup
     {
@@ -41,7 +39,7 @@ namespace PersonsApi
             services.AddApiVersioning();
             services.AddFeatureManagement();
 
-            services.AddInfrastructureDependencyGroup(Configuration);
+            services.AddPersonsApiInfrastructureDependencyGroup(Configuration);
 
             services.AddScoped<ICorrelationContext, CorrelationContext>();
 
@@ -93,8 +91,6 @@ namespace PersonsApi
                     };
                 });
 
-            services.AddUseCases();
-
             var appInsightsCnnStr = Configuration?.GetSection("ApplicationInsights")?["ConnectionString"];
             if (!string.IsNullOrWhiteSpace(appInsightsCnnStr))
             {
@@ -104,8 +100,6 @@ namespace PersonsApi
                 });
             }
 
-            services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
-            services.AddSingleton<ApiUserEnricher>();
             services.AddHsts(options =>
             {
                 options.Preload = true;
@@ -189,7 +183,6 @@ namespace PersonsApi
             }
 
             app.UseMiddleware<CorrelationIdMiddleware>();
-            app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<UrlDecoderMiddleware>();
 
