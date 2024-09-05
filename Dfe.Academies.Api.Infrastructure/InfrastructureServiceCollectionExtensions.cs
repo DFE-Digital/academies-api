@@ -3,7 +3,7 @@ using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Infrastructure.Caching;
 using Dfe.Academies.Infrastructure.Repositories;
-using Dfe.Academies.Infrastructure.Security;
+using Dfe.Academies.Infrastructure.Security.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

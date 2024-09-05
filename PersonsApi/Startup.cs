@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 namespace PersonsApi
 {
     using Dfe.Academies.Application.MappingProfiles;
+    using Dfe.Academies.Infrastructure.Security;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -188,6 +189,8 @@ namespace PersonsApi
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
