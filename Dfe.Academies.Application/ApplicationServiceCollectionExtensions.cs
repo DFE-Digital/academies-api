@@ -1,8 +1,11 @@
-﻿using Dfe.Academies.Application.EducationalPerformance;
+﻿using Dfe.Academies.Application.Common.Behaviours;
+using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Application.Trust;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using FluentValidation;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -23,9 +26,14 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddPersonsApiApplicationDependencyGroup(
             this IServiceCollection services, IConfiguration config)
         {
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
             });
 
             return services;

@@ -79,6 +79,57 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
             Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);
         }
 
+        [Fact]
+        public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnMps_WhenConstituenciesExists()
+        {
+            // Arrange
+            var constituenciesClient = _serviceProvider.GetRequiredService<IConstituenciesClient>();
+
+            var dbcontext = _factory.GetDbContext();
+
+            await dbcontext.Constituencies.Where(x => x.ConstituencyName == "Test Constituency 1")
+                .ExecuteUpdateAsync(x => x.SetProperty(p => p.ConstituencyName, "NewConstituencyName"));
+
+            var constituencyName = Uri.EscapeDataString("NewConstituencyName");
+
+            // Act
+            var result = await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
+                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = new List<string> { constituencyName } });
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Single(result);
+        }
+
+        [Fact]
+        public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnEmpty_WhenConstituenciesDontExists()
+        {
+            // Arrange
+            var constituenciesClient = _serviceProvider.GetRequiredService<IConstituenciesClient>();
+
+            // Act
+            var result = await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
+                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = new List<string> { "constituencyName" } });
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldThrowAnException_WhenConstituenciesNotProvided()
+        {
+            // Arrange
+            var constituenciesClient = _serviceProvider.GetRequiredService<IConstituenciesClient>();
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<PersonsApiException>(async () =>
+                await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
+                    new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = new List<string> { } }));
+
+            Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.StatusCode);
+        }
     }
 
 }

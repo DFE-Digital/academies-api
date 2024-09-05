@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using PersonsApi.ResponseModels;
 using System.Net;
 using System.Text.Json;
+using ValidationException = Dfe.Academies.Application.Common.Exceptions.ValidationException;
 
 namespace PersonsApi.Middleware;
 
@@ -31,6 +34,11 @@ public class ExceptionHandlerMiddleware
                 await HandleForbiddenResponseAsync(context);
             }
         }
+        catch (ValidationException ex)
+        {
+            _logger.LogError($"Validation error: {ex.Message}");
+            await HandleValidationException(context, ex);
+        }
         catch (Exception ex)
         {
             _logger.LogError("An exception occurred: {Message}", ex.Message);
@@ -38,6 +46,20 @@ public class ExceptionHandlerMiddleware
 
             await HandleExceptionAsync(context, ex);
         }
+    }
+
+    // Handle validation exceptions
+    private async Task HandleValidationException(HttpContext httpContext, Exception ex)
+    {
+        var exception = (ValidationException)ex;
+
+        httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+        await httpContext.Response.WriteAsJsonAsync(new ValidationProblemDetails(exception.Errors)
+        {
+            Status = StatusCodes.Status400BadRequest,
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+        });
     }
 
     // Handle 401 Unauthorized

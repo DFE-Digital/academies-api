@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
+using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituencies;
 
 namespace PersonsApi.Controllers
 {
@@ -40,6 +41,16 @@ namespace PersonsApi.Controllers
             var result = await _sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
 
             return result is null ? NotFound() : Ok(result);
+        }
+
+        [HttpPost("mps")]
+        [SwaggerResponse(200, "A collection of MemberOfParliament objects.", typeof(IEnumerable<MemberOfParliament>))]
+        [SwaggerResponse(400, "Constituency names cannot be null or empty.")]
+        public async Task<IActionResult> GetMembersOfParliamentByConstituenciesAsync([FromBody] GetMembersOfParliamentByConstituenciesQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(request, cancellationToken);
+
+            return Ok(result ?? new List<MemberOfParliament>());
         }
     }
 }

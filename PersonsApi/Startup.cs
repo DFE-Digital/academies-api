@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 namespace PersonsApi
 {
     using Dfe.Academies.Application.MappingProfiles;
-    using Dfe.Academies.Infrastructure.Security;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -16,7 +15,6 @@ namespace PersonsApi
     using Microsoft.FeatureManagement;
     using Middleware;
     using NetEscapades.AspNetCore.SecurityHeaders;
-    using PersonsApi.ResponseModels;
     using PersonsApi.Swagger;
     using Swashbuckle.AspNetCore.SwaggerUI;
     using System;

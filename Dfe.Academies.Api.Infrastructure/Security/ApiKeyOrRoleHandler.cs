@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.Academies.Infrastructure.Security
 {
     /// <summary>
     /// Temporary workaround to allow API Key authentication, will be removed once all clients use Client Credentials
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class ApiKeyOrRoleHandler : AuthorizationHandler<ApiKeyOrRoleRequirement>
     {
         private const string ApiKeyHeaderName = "ApiKey";

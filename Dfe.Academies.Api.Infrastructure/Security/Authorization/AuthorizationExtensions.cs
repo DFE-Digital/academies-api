@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.Academies.Infrastructure.Security.Authorization
 {
+    [ExcludeFromCodeCoverage]
     public static class AuthorizationExtensions
     {
         public static IServiceCollection AddCustomAuthorization(this IServiceCollection services, IConfiguration configuration)

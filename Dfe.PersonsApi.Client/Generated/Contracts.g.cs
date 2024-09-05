@@ -42,6 +42,15 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName, System.Threading.CancellationToken cancellationToken);
 
+        /// <returns>A collection of MemberOfParliament objects.</returns>
+        /// <exception cref="PersonsApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<MemberOfParliament>> GetMembersOfParliamentByConstituenciesAsync(GetMembersOfParliamentByConstituenciesQuery request);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>A collection of MemberOfParliament objects.</returns>
+        /// <exception cref="PersonsApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<MemberOfParliament>> GetMembersOfParliamentByConstituenciesAsync(GetMembersOfParliamentByConstituenciesQuery request, System.Threading.CancellationToken cancellationToken);
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -112,7 +121,7 @@ namespace Dfe.PersonsApi.Client.Contracts
         public string Phone { get; set; }
 
         [Newtonsoft.Json.JsonProperty("roles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<string> Roles { get; set; }
+        public System.Collections.Generic.List<string> Roles { get; set; }
 
         [Newtonsoft.Json.JsonProperty("updatedAt", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTime? UpdatedAt { get; set; }
@@ -127,6 +136,27 @@ namespace Dfe.PersonsApi.Client.Contracts
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<Person>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetMembersOfParliamentByConstituenciesQuery
+    {
+        [Newtonsoft.Json.JsonProperty("constituencyNames", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<string> ConstituencyNames { get; set; }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static GetMembersOfParliamentByConstituenciesQuery FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<GetMembersOfParliamentByConstituenciesQuery>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

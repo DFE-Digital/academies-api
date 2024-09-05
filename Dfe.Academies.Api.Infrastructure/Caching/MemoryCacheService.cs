@@ -2,9 +2,11 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.Academies.Infrastructure.Caching
 {
+    [ExcludeFromCodeCoverage]
     public class MemoryCacheService : ICacheService
     {
         private readonly IMemoryCache _memoryCache;

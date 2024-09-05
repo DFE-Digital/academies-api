@@ -2,6 +2,7 @@
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
 using MediatR;
+using Dfe.Academies.Utils.Caching;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency
 {
@@ -25,8 +26,8 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
 
         public async Task<MemberOfParliament?> Handle(GetMemberOfParliamentByConstituencyQuery request, CancellationToken cancellationToken)
         {
-            string cacheKey = $"MemberOfParliament_{request.ConstituencyName}";
-            string methodName = nameof(GetMemberOfParliamentByConstituencyQueryHandler);
+            var cacheKey = $"MemberOfParliament_{CacheKeyHelper.GenerateHashedCacheKey(request.ConstituencyName)}";
+            var methodName = nameof(GetMemberOfParliamentByConstituencyQueryHandler);
 
             return await _cacheService.GetOrAddAsync(cacheKey, async () =>
             {

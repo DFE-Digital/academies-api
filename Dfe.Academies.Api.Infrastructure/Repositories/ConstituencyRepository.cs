@@ -26,5 +26,18 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return await query.FirstOrDefaultAsync(cancellationToken);
         }
+
+        public IQueryable<ConstituencyWithMemberContactDetails> GetMembersOfParliamentByConstituenciesQueryable(List<string> constituencyNames)
+        {
+            var query = from constituencies in _context.Constituencies.AsNoTracking()
+                        join memberContactDetails in _context.MemberContactDetails.AsNoTracking()
+                            on constituencies.MemberID equals memberContactDetails.MemberID
+                        where constituencyNames.Contains(constituencies.ConstituencyName)
+                        && memberContactDetails.TypeId == 1
+                        && !constituencies.EndDate.HasValue
+                        select new ConstituencyWithMemberContactDetails(constituencies, memberContactDetails);
+
+            return query;
+        }
     }
 }

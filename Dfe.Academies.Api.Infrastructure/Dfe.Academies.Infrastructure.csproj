@@ -21,12 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
-    <ProjectReference Include="..\Dfe.Academies.Domain\Dfe.Academies.Domain.csproj" />
+    <Folder Include="Migrations\Mop\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\Mop\" />
+    <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
+    <ProjectReference Include="..\Dfe.Academies.Domain\Dfe.Academies.Domain.csproj" />
   </ItemGroup>
 
 </Project>
