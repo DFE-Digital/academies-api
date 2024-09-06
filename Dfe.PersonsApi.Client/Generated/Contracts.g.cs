@@ -28,7 +28,6 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName);
@@ -37,16 +36,23 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName, System.Threading.CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Retrieve a collection of Member of Parliament by a collection of constituency names
+        /// </summary>
+        /// <param name="request">The request.</param>
         /// <returns>A collection of MemberOfParliament objects.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<MemberOfParliament>> GetMembersOfParliamentByConstituenciesAsync(GetMembersOfParliamentByConstituenciesQuery request);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieve a collection of Member of Parliament by a collection of constituency names
+        /// </summary>
+        /// <param name="request">The request.</param>
         /// <returns>A collection of MemberOfParliament objects.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<MemberOfParliament>> GetMembersOfParliamentByConstituenciesAsync(GetMembersOfParliamentByConstituenciesQuery request, System.Threading.CancellationToken cancellationToken);

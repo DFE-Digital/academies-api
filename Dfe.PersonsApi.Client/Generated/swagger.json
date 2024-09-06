@@ -15,10 +15,9 @@
         "operationId": "Constituencies_GetMemberOfParliamentByConstituency",
         "parameters": [
           {
-            "name": "constituencyName",
+            "name": "ConstituencyName",
             "in": "path",
             "required": true,
-            "description": "The constituency name.",
             "schema": {
               "type": "string"
             },
@@ -50,9 +49,11 @@
         "tags": [
           "Constituencies"
         ],
+        "summary": "Retrieve a collection of Member of Parliament by a collection of constituency names",
         "operationId": "Constituencies_GetMembersOfParliamentByConstituencies",
         "requestBody": {
           "x-name": "request",
+          "description": "The request.",
           "content": {
             "application/json": {
               "schema": {

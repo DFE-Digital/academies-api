@@ -75,7 +75,6 @@ namespace Dfe.PersonsApi.Client
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName)
@@ -87,7 +86,6 @@ namespace Dfe.PersonsApi.Client
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName, System.Threading.CancellationToken cancellationToken)
@@ -108,7 +106,6 @@ namespace Dfe.PersonsApi.Client
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "v1/Constituencies/{constituencyName}/mp"
                     urlBuilder_.Append("v1/Constituencies/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(constituencyName, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/mp");
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -175,6 +172,10 @@ namespace Dfe.PersonsApi.Client
             }
         }
 
+        /// <summary>
+        /// Retrieve a collection of Member of Parliament by a collection of constituency names
+        /// </summary>
+        /// <param name="request">The request.</param>
         /// <returns>A collection of MemberOfParliament objects.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<MemberOfParliament>> GetMembersOfParliamentByConstituenciesAsync(GetMembersOfParliamentByConstituenciesQuery request)
@@ -183,6 +184,10 @@ namespace Dfe.PersonsApi.Client
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieve a collection of Member of Parliament by a collection of constituency names
+        /// </summary>
+        /// <param name="request">The request.</param>
         /// <returns>A collection of MemberOfParliament objects.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<MemberOfParliament>> GetMembersOfParliamentByConstituenciesAsync(GetMembersOfParliamentByConstituenciesQuery request, System.Threading.CancellationToken cancellationToken)

@@ -24,25 +24,24 @@ namespace PersonsApi.Controllers
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="constituencyName">The constituency name.</param>
+        /// <param name="request">The request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
         [HttpGet("{constituencyName}/mp")]
         [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(MemberOfParliament))]
         [SwaggerResponse(404, "Constituency not found.")]
         [SwaggerResponse(400, "Constituency cannot be null or empty.")]
-        public async Task<IActionResult> GetMemberOfParliamentByConstituencyAsync([FromRoute] string constituencyName, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMemberOfParliamentByConstituencyAsync([FromRoute] GetMemberOfParliamentByConstituencyQuery request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(constituencyName))
-            {
-                return BadRequest();
-            }
-
-            var result = await _sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
+            var result = await _sender.Send(request, cancellationToken);
 
             return result is null ? NotFound() : Ok(result);
         }
 
+        /// <summary>
+        /// Retrieve a collection of Member of Parliament by a collection of constituency names
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         [HttpPost("mps")]
         [SwaggerResponse(200, "A collection of MemberOfParliament objects.", typeof(IEnumerable<MemberOfParliament>))]
         [SwaggerResponse(400, "Constituency names cannot be null or empty.")]
