@@ -1,6 +1,7 @@
 ﻿using Dfe.Academies.Academisation.Data;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
+using Dfe.Academies.Domain.Constituencies;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Infrastructure.Repositories
@@ -14,30 +15,25 @@ namespace Dfe.Academies.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<ConstituencyWithMemberContactDetails?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken)
+        public async Task<Constituency?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken)
         {
-            var query = from constituencies in _context.Constituencies.AsNoTracking()
-                        join memberContactDetails in _context.MemberContactDetails.AsNoTracking()
-                            on constituencies.MemberID equals memberContactDetails.MemberID
-                        where constituencies.ConstituencyName == constituencyName
-                        && memberContactDetails.TypeId == 1
-                        && !constituencies.EndDate.HasValue
-                        select new ConstituencyWithMemberContactDetails(constituencies, memberContactDetails);
-
-            return await query.FirstOrDefaultAsync(cancellationToken);
+            return await _context.Constituencies
+                .AsNoTracking()
+                .Include(c => c.MemberContactDetails)
+                .Where(c => c.ConstituencyName == constituencyName
+                            && c.MemberContactDetails.TypeId == 1
+                            && !c.EndDate.HasValue)
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public IQueryable<ConstituencyWithMemberContactDetails> GetMembersOfParliamentByConstituenciesQueryable(List<string> constituencyNames)
+        public IQueryable<Constituency> GetMembersOfParliamentByConstituenciesQueryable(List<string> constituencyNames)
         {
-            var query = from constituencies in _context.Constituencies.AsNoTracking()
-                        join memberContactDetails in _context.MemberContactDetails.AsNoTracking()
-                            on constituencies.MemberID equals memberContactDetails.MemberID
-                        where constituencyNames.Contains(constituencies.ConstituencyName)
-                        && memberContactDetails.TypeId == 1
-                        && !constituencies.EndDate.HasValue
-                        select new ConstituencyWithMemberContactDetails(constituencies, memberContactDetails);
-
-            return query;
+            return _context.Constituencies
+                .AsNoTracking()
+                .Include(c => c.MemberContactDetails) 
+                .Where(c => constituencyNames.Contains(c.ConstituencyName)
+                            && c.MemberContactDetails.TypeId == 1
+                            && !c.EndDate.HasValue);
         }
     }
 }

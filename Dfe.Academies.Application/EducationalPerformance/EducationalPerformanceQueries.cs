@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Application.Common.Interfaces;
+﻿using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Contracts.V1.EducationalPerformance;
 using Dfe.Academies.Domain.EducationalPerformance;
 

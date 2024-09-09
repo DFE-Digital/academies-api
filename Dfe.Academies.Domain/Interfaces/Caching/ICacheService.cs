@@ -1,4 +1,4 @@
-﻿namespace Dfe.Academies.Application.Common.Interfaces
+﻿namespace Dfe.Academies.Domain.Interfaces.Caching
 {
     public interface ICacheService
     {

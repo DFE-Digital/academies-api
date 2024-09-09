@@ -121,21 +121,28 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
-        public IQueryable<AcademyWithGovernanceDetails> GetPersonsAssociatedWithAcademyByUrn(int urn)
+        public async Task<Establishment?> GetPersonsAssociatedWithAcademyByUrnAsync(int urn, CancellationToken cancellationToken)
         {
-            var establishmentExists = _context.Establishments.AsNoTracking().Any(e => e.URN == urn);
-            if (!establishmentExists)
-            {
-                return null;
-            }
-
-            var query = from ee in _context.Establishments.AsNoTracking()
-                        join eeg in _context.EducationEstablishmentGovernances.AsNoTracking()
-                            on ee.SK equals eeg.EducationEstablishmentId
-                        join grt in _context.GovernanceRoleTypes.AsNoTracking()
-                            on eeg.GovernanceRoleTypeId equals grt.SK
-                        where ee.URN == urn
-                        select new AcademyWithGovernanceDetails(eeg, grt, ee);
+            var query = await _context.Establishments
+                .AsNoTracking()
+                .Where(e => e.URN == urn)
+                .Select(e => new Establishment
+                {
+                    URN = e.URN,
+                    UKPRN = e.UKPRN,
+                    EstablishmentName = e.EstablishmentName,
+                    EducationEstablishmentGovernances = e.EducationEstablishmentGovernances
+                        .Select(g => new EducationEstablishmentGovernance
+                        {
+                            SK = g.SK,
+                            Title = g.Title,
+                            Forename1 = g.Forename1,
+                            Surname = g.Surname,
+                            Modified = g.Modified,
+                            Email = g.Email,
+                            GovernanceRoleType = g.GovernanceRoleType
+                        }).ToList()
+                }).FirstOrDefaultAsync(cancellationToken);
 
             return query;
         }
@@ -161,6 +168,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return result;
         }
+
     }
 
     internal record EstablishmentQueryResult

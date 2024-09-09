@@ -4,13 +4,42 @@ namespace Dfe.Academies.Domain.Constituencies
 {
     public class Constituency
     {
-        public ConstituencyId ConstituencyId { get; set; }
-        public MemberId MemberID { get; set; }
-        public string ConstituencyName { get; set; }
-        public string NameList { get; set; }
-        public string NameDisplayAs { get; set; }
-        public string NameFullTitle { get; set; }
-        public DateTime LastRefresh { get; set; }
-        public DateOnly? EndDate { get; set; }
+        public ConstituencyId ConstituencyId { get; private set; }
+        public MemberId MemberID { get; private set; }
+        public string ConstituencyName { get; private set; }
+        public string NameList { get; private set; }
+        public string NameDisplayAs { get; private set; }
+        public string NameFullTitle { get; private set; }
+        public DateTime LastRefresh { get; private set; }
+        public DateOnly? EndDate { get; private set; }
+
+        public Constituency() { }
+
+        public virtual MemberContactDetails MemberContactDetails { get; private set; }
+
+        public Constituency(
+            ConstituencyId constituencyId,
+            MemberId memberId,
+            string constituencyName,
+            string nameList,
+            string nameDisplayAs,
+            string nameFullTitle,
+            DateTime lastRefresh,
+            DateOnly? endDate,
+            MemberContactDetails memberContactDetails)
+        {
+            if (string.IsNullOrEmpty(constituencyName)) throw new ArgumentNullException(nameof(constituencyName));
+            if (string.IsNullOrEmpty(nameDisplayAs)) throw new ArgumentNullException(nameof(nameDisplayAs));
+
+            ConstituencyId = constituencyId;
+            MemberID = memberId;
+            ConstituencyName = constituencyName;
+            NameList = nameList;
+            NameDisplayAs = nameDisplayAs;
+            NameFullTitle = nameFullTitle;
+            LastRefresh = lastRefresh;
+            EndDate = endDate;
+            MemberContactDetails = memberContactDetails;
+        }
     }
 }

@@ -4,7 +4,7 @@ using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
 using FluentAssertions;
 using Moq;
-using Dfe.Academies.Application.Common.Interfaces;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 
 namespace Dfe.Academies.Application.Tests.Queries.Trust
 {

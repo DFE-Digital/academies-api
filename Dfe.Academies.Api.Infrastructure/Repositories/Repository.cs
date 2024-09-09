@@ -1,7 +1,9 @@
-﻿using Dfe.Academies.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using Dfe.Academies.Domain.Interfaces.Repositories;
+using Dfe.Academies.Domain.Common;
+using Dfe.Academies.Domain.Interfaces;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {

@@ -6,6 +6,8 @@ using Dfe.Academies.Infrastructure.Repositories;
 using Dfe.Academies.Infrastructure.Security.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Dfe.Academies.Domain.Interfaces.Repositories;
+using Dfe.Academies.Domain.Interfaces.Caching;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -37,8 +39,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ITrustRepository, TrustRepository>();
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
             services.AddScoped<IConstituencyRepository, ConstituencyRepository>();
-            services.AddTransient(typeof(IMopRepository<>), typeof(MopRepository<>));
-            services.AddTransient(typeof(IMstrRepository<>), typeof(MstrRepository<>));
+            services.AddScoped(typeof(IMstrRepository<>), typeof(MstrRepository<>));
+            services.AddScoped(typeof(IMopRepository<>), typeof(MopRepository<>));
 
             //Cache service
             services.Configure<CacheSettings>(config.GetSection("CacheSettings"));

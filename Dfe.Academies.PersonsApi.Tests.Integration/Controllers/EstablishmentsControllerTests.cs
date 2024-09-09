@@ -1,13 +1,12 @@
-﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
-using Dfe.PersonsApi.Client.Contracts;
+﻿using Dfe.Academies.Academisation.Data;
+using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
 using Dfe.PersonsApi.Client;
+using Dfe.PersonsApi.Client.Contracts;
+using Dfe.PersonsApi.Client.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PersonsApi;
-using System.Net;
-using Dfe.PersonsApi.Client.Extensions;
-using Dfe.Academies.Academisation.Data;
 using System.Security.Claims;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers

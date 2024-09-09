@@ -54,6 +54,8 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
             await dbcontext.Constituencies.Where(x => x.ConstituencyName == "Test Constituency 1")
                 .ExecuteUpdateAsync(x => x.SetProperty(p => p.ConstituencyName, "NewConstituencyName"));
 
+            var ff = await dbcontext.Constituencies.ToListAsync();
+
             var constituencyName = Uri.EscapeDataString("NewConstituencyName");
 
             // Act

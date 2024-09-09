@@ -1,4 +1,6 @@
-﻿namespace Dfe.Academies.Domain.Establishment
+﻿using System.Collections.ObjectModel;
+
+namespace Dfe.Academies.Domain.Establishment
 {
     public class Establishment
     {
@@ -93,6 +95,7 @@
         public int? SenUnitCapacity { get; set; }
         public int? SenUnitOnRoll { get; set; }
 
+        public virtual ICollection<EducationEstablishmentGovernance> EducationEstablishmentGovernances { get; set; }
         public LocalAuthority? LocalAuthority { get; set; }
         public EstablishmentType? EstablishmentType{ get; set; }
 

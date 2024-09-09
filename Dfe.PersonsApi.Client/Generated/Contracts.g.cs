@@ -28,6 +28,7 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
+        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName);
@@ -36,6 +37,7 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
+        /// <param name="constituencyName">The constituency name.</param>
         /// <returns>A Person object representing the Member of Parliament.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentByConstituencyAsync(string constituencyName, System.Threading.CancellationToken cancellationToken);
@@ -65,7 +67,6 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <summary>
         /// Retrieve All Members Associated With an Academy by Urn
         /// </summary>
-        /// <param name="urn">The URN.</param>
         /// <returns>A Collection of Persons Associated With the Academy.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AcademyGovernance>> GetAllPersonsAssociatedWithAcademyByUrnAsync(int urn);
@@ -74,7 +75,6 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <summary>
         /// Retrieve All Members Associated With an Academy by Urn
         /// </summary>
-        /// <param name="urn">The URN.</param>
         /// <returns>A Collection of Persons Associated With the Academy.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AcademyGovernance>> GetAllPersonsAssociatedWithAcademyByUrnAsync(int urn, System.Threading.CancellationToken cancellationToken);

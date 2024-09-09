@@ -24,15 +24,15 @@ namespace PersonsApi.Controllers
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="constituencyName">The constituency name.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         [HttpGet("{constituencyName}/mp")]
         [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(MemberOfParliament))]
         [SwaggerResponse(404, "Constituency not found.")]
         [SwaggerResponse(400, "Constituency cannot be null or empty.")]
-        public async Task<IActionResult> GetMemberOfParliamentByConstituencyAsync([FromRoute] GetMemberOfParliamentByConstituencyQuery request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMemberOfParliamentByConstituencyAsync([FromRoute] string constituencyName, CancellationToken cancellationToken)
         {
-            var result = await _sender.Send(request, cancellationToken);
+            var result = await _sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
 
             return result is null ? NotFound() : Ok(result);
         }

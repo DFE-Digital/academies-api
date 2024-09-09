@@ -23,7 +23,7 @@ namespace PersonsApi.Controllers
         /// <summary>
         /// Retrieve All Members Associated With an Academy by Urn
         /// </summary>
-        /// <param name="urn">The URN.</param>
+        /// <param name="request">The request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         [HttpGet("{urn}/getAssociatedPersons")]

@@ -15,9 +15,10 @@
         "operationId": "Constituencies_GetMemberOfParliamentByConstituency",
         "parameters": [
           {
-            "name": "ConstituencyName",
+            "name": "constituencyName",
             "in": "path",
             "required": true,
+            "description": "The constituency name.",
             "schema": {
               "type": "string"
             },
@@ -96,7 +97,6 @@
             "name": "urn",
             "in": "path",
             "required": true,
-            "description": "The URN.",
             "schema": {
               "type": "integer",
               "format": "int32"

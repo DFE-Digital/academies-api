@@ -5,6 +5,7 @@ using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Utils.Caching;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Dfe.Academies.Domain.Interfaces.Caching;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituencies
 {

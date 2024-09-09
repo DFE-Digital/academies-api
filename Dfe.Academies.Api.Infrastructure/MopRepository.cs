@@ -1,5 +1,5 @@
 ﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Application.Common.Interfaces;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Infrastructure.Repositories;
 
 namespace Dfe.Academies.Infrastructure

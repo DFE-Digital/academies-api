@@ -1,6 +1,4 @@
-﻿using Dfe.Academies.Application.Common.Models;
-
-namespace Dfe.Academies.Application.Common.Interfaces
+﻿namespace Dfe.Academies.Application.Common.Interfaces
 {
     public interface IEstablishmentRepository
     {
@@ -12,6 +10,6 @@ namespace Dfe.Academies.Application.Common.Interfaces
         Task<List<Domain.Establishment.Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken);        
         Task<List<Domain.Establishment.Establishment>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
         Task<List<Domain.Establishment.Establishment>> GetByUkprns(string[] Urns, CancellationToken cancellationToken);
-        IQueryable<AcademyWithGovernanceDetails> GetPersonsAssociatedWithAcademyByUrn(int urn);
+        Task<Domain.Establishment.Establishment?> GetPersonsAssociatedWithAcademyByUrnAsync(int urn, CancellationToken cancellationToken);
     }
 }

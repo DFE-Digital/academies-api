@@ -1,6 +1,6 @@
 ﻿using Dfe.Academies.Domain.Trust;
 
-namespace Dfe.Academies.Application.Common.Interfaces
+namespace Dfe.Academies.Domain.Interfaces.Repositories
 {
     public interface ITrustRepository
     {

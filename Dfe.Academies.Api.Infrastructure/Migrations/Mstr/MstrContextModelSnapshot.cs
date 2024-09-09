@@ -20,7 +20,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                 .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Dfe.Academies.Domain.Establishment.EducationEstablishmentTrust", b =>
                 {
@@ -28,7 +28,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SK"));
 
                     b.Property<int>("EducationEstablishmentId")
                         .HasColumnType("int")
@@ -49,7 +49,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("SK"));
 
                     b.Property<string>("AddressLine1")
                         .HasColumnType("nvarchar(max)")
@@ -413,7 +413,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SK"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -446,7 +446,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("SK"));
 
                     b.Property<string>("DeliveryProcessPAN")
                         .HasColumnType("nvarchar(max)")
@@ -479,7 +479,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SK"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -518,7 +518,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("SK"));
 
                     b.Property<string>("AMSDTerritory")
                         .HasColumnType("nvarchar(max)")
@@ -699,7 +699,7 @@ namespace Dfe.Academies.Infrastructure.Migrations.Mstr
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SK"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SK"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");

@@ -35,7 +35,7 @@ public class MstrContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=sip;Integrated Security=true;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=sip;User Id=sa;TrustServerCertificate=True;Password=StrongPassword905");
         }
     }
 
@@ -50,8 +50,20 @@ public class MstrContext : DbContext
         modelBuilder.Entity<EducationEstablishmentTrust>(ConfigureEducationEstablishmentTrust);
         modelBuilder.Entity<LocalAuthority>(ConfigureLocalAuthority);
         modelBuilder.Entity<IfdPipeline>(ConfigureIfdPipeline);
-        modelBuilder.Entity<EducationEstablishmentGovernance>(ConfigureEducationEstablishmentGovernance);
-        modelBuilder.Entity<GovernanceRoleType>(ConfigureGovernanceRoleType);
+
+        if (Database.IsSqlite())
+        {
+            modelBuilder.Entity<EducationEstablishmentGovernance>(ConfigureEducationEstablishmentGovernance);
+            modelBuilder.Entity<EducationEstablishmentGovernance>().Metadata.SetIsTableExcludedFromMigrations(false);
+
+            modelBuilder.Entity<GovernanceRoleType>(ConfigureGovernanceRoleType);
+            modelBuilder.Entity<GovernanceRoleType>().Metadata.SetIsTableExcludedFromMigrations(false);
+        }
+        else
+        {
+            modelBuilder.Entity<EducationEstablishmentGovernance>(ConfigureEducationEstablishmentGovernance);
+            modelBuilder.Entity<GovernanceRoleType>(ConfigureGovernanceRoleType);
+        }
 
         base.OnModelCreating(modelBuilder);
     }
@@ -59,6 +71,8 @@ public class MstrContext : DbContext
     private void ConfigureEstablishment(EntityTypeBuilder<Establishment> establishmentConfiguration)
     {
         establishmentConfiguration.HasKey(e => e.SK);
+
+        establishmentConfiguration.Property(e => e.SK).HasColumnName("SK");
 
         establishmentConfiguration.ToTable("EducationEstablishment", DEFAULT_SCHEMA);
 
@@ -161,6 +175,13 @@ public class MstrContext : DbContext
             .WithMany()
             .HasForeignKey(x => x.LocalAuthorityId)
             .IsRequired(false);
+
+        establishmentConfiguration
+            .HasMany(e => e.EducationEstablishmentGovernances)
+            .WithOne(g => g.Establishment)
+            .HasForeignKey(g => g.EducationEstablishmentId)
+            .IsRequired(false);
+
 
         // No relationship exists yet
         // Make sure entity framework doesn't generate one
@@ -286,7 +307,7 @@ public class MstrContext : DbContext
     {
         governanceConfiguration.HasKey(e => e.SK);
 
-        governanceConfiguration.ToTable("EducationEstablishmentGovernance", "mstr");
+        governanceConfiguration.ToTable("EducationEstablishmentGovernance", DEFAULT_SCHEMA);
 
         governanceConfiguration.Property(e => e.EducationEstablishmentId).HasColumnName("FK_EducationEstablishment");
         governanceConfiguration.Property(e => e.GovernanceRoleTypeId).HasColumnName("FK_GovernanceRoleType");
@@ -305,13 +326,14 @@ public class MstrContext : DbContext
         // Foreign keys
         governanceConfiguration
             .HasOne(x => x.Establishment)
-            .WithMany()
+            .WithMany(e => e.EducationEstablishmentGovernances)
             .HasForeignKey(x => x.EducationEstablishmentId);
 
         governanceConfiguration
             .HasOne(x => x.GovernanceRoleType)
             .WithMany()
             .HasForeignKey(x => x.GovernanceRoleTypeId);
+
     }
 
 
@@ -325,5 +347,6 @@ public class MstrContext : DbContext
         governanceRoleTypeConfiguration.Property(e => e.Name).HasColumnName("Name").HasMaxLength(100);
         governanceRoleTypeConfiguration.Property(e => e.Modified).HasColumnName("Modified");
         governanceRoleTypeConfiguration.Property(e => e.ModifiedBy).HasColumnName("Modified By");
+
     }
 }

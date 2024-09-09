@@ -1,8 +1,6 @@
 ﻿using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.Academies.Domain.Census;
-using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Trust;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 
 namespace Dfe.Academies.Application.Establishment
 {

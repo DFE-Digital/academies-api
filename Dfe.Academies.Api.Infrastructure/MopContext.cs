@@ -69,6 +69,12 @@ public class MopContext : DbContext
         constituencyConfiguration.Property(e => e.NameFullTitle).HasColumnName("nameFullTitle");
         constituencyConfiguration.Property(e => e.NameFullTitle).HasColumnName("nameFullTitle");
         constituencyConfiguration.Property(e => e.LastRefresh).HasColumnName("lastRefresh");
+
+        constituencyConfiguration
+            .HasOne(c => c.MemberContactDetails)
+            .WithOne()
+            .HasForeignKey<Constituency>(c => c.MemberID)
+            .HasPrincipalKey<MemberContactDetails>(m => m.MemberID);
     }
 
 

@@ -3,6 +3,7 @@ using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
 using MediatR;
 using Dfe.Academies.Utils.Caching;
+using Dfe.Academies.Domain.Interfaces.Caching;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency
 {

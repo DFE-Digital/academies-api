@@ -2,6 +2,8 @@
 using AutoMapper.QueryableExtensions;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
+using Dfe.Academies.Domain.Establishment;
+using Dfe.Academies.Domain.Interfaces.Caching;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,16 +34,15 @@ namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociate
 
             return await _cacheService.GetOrAddAsync(cacheKey, async () =>
             {
-                var query = _establishmentRepository.GetPersonsAssociatedWithAcademyByUrn(request.Urn);
+                var establishment = await _establishmentRepository.GetPersonsAssociatedWithAcademyByUrnAsync(request.Urn, cancellationToken);
 
-                if (query == null)
+                if (establishment == null)
                 {
                     return null;
                 }
 
-                var result = await query
-                    .ProjectTo<AcademyGovernance>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                var result = _mapper.Map<List<AcademyGovernance>>(establishment);
+
 
                 return result;
             }, methodName);

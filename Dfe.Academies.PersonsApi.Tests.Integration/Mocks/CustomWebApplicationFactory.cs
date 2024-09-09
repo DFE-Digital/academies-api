@@ -2,6 +2,7 @@
 using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
+using Dfe.Academies.Domain.ValueObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -177,39 +178,46 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
 
             if (context is MopContext mopContext)
             {
-                mopContext.MemberContactDetails.Add(new MemberContactDetails
-                {
-                    MemberID = 1,
-                    Email = "test1@example.com",
-                    TypeId = 1
-                });
-                mopContext.MemberContactDetails.Add(new MemberContactDetails
-                {
-                    MemberID = 2,
-                    Email = "test2@example.com",
-                    TypeId = 2
-                });
+                var memberContact1 = new MemberContactDetails(
+                    new MemberId(1),
+                    1,
+                    "test1@example.com",
+                    null
+                );
 
-                mopContext.Constituencies.Add(new Constituency
-                {
-                    ConstituencyId = 1,
-                    ConstituencyName = "Test Constituency 1",
-                    NameList = "Wood, John",
-                    NameDisplayAs = "John Wood",
-                    NameFullTitle = "John Wood MP",
-                    LastRefresh = DateTime.UtcNow,
-                    MemberID = 1
-                });
-                mopContext.Constituencies.Add(new Constituency
-                {
-                    ConstituencyId = 2,
-                    ConstituencyName = "Test Constituency 2",
-                    NameList = "Wood, Joe",
-                    NameDisplayAs = "Joe Wood",
-                    NameFullTitle = "Joe Wood MP",
-                    LastRefresh = DateTime.UtcNow,
-                    MemberID = 2
-                });
+                var memberContact2 = new MemberContactDetails(
+                    new MemberId(2),
+                    2,
+                    "test2@example.com",
+                    null
+                );
+
+                var constituency1 = new Constituency(
+                    new ConstituencyId(1),
+                    new MemberId(1),
+                    "Test Constituency 1",
+                    "Wood, John",
+                    "John Wood",
+                    "John Wood MP",
+                    DateTime.UtcNow,
+                    null,
+                    memberContact1
+                );
+
+                var constituency2 = new Constituency(
+                    new ConstituencyId(2),
+                    new MemberId(2),
+                    "Test Constituency 2",
+                    "Wood, Joe",
+                    "Joe Wood",
+                    "Joe Wood MP",
+                    DateTime.UtcNow,
+                    null,
+                    memberContact2
+                );
+
+                mopContext.Constituencies.Add(constituency1);
+                mopContext.Constituencies.Add(constituency2);
 
                 mopContext.SaveChanges();
             }

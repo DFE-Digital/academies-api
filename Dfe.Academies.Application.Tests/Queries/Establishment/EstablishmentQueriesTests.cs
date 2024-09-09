@@ -2,9 +2,7 @@
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.Academies.Domain.Census;
-using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Trust;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 using FluentAssertions;
 using Moq;
 using System.Globalization;
@@ -19,6 +17,13 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
         public EstablishmentQueriesTests()
         {
             _fixture = new Fixture();
+
+            _fixture.Behaviors
+                .OfType<ThrowingRecursionBehavior>()
+                .ToList()
+                .ForEach(b => _fixture.Behaviors.Remove(b));
+
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
 
 
