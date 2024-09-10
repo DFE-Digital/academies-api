@@ -11,19 +11,12 @@ namespace PersonsApi.Controllers
     [Authorize(Policy = "API.Read")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
-    public class EstablishmentsController : ControllerBase
+    public class EstablishmentsController(ISender sender) : ControllerBase
     {
-        private readonly ISender _sender;
-
-        public EstablishmentsController(ISender sender)
-        {
-            _sender = sender;
-        }
-
         /// <summary>
         /// Retrieve All Members Associated With an Academy by Urn
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="urn">The URN.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         [HttpGet("{urn}/getAssociatedPersons")]
@@ -31,7 +24,7 @@ namespace PersonsApi.Controllers
         [SwaggerResponse(404, "Academy not found.")]
         public async Task<IActionResult> GetAllPersonsAssociatedWithAcademyByUrnAsync([FromRoute] int urn, CancellationToken cancellationToken)
         {
-            var result = await _sender.Send(new GetAllPersonsAssociatedWithAcademyByUrnQuery(urn), cancellationToken);
+            var result = await sender.Send(new GetAllPersonsAssociatedWithAcademyByUrnQuery(urn), cancellationToken);
 
             return result is null ? NotFound() : Ok(result);
         }

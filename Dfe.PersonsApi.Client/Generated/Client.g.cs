@@ -437,6 +437,7 @@ namespace Dfe.PersonsApi.Client
         /// <summary>
         /// Retrieve All Members Associated With an Academy by Urn
         /// </summary>
+        /// <param name="urn">The URN.</param>
         /// <returns>A Collection of Persons Associated With the Academy.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AcademyGovernance>> GetAllPersonsAssociatedWithAcademyByUrnAsync(int urn)
@@ -448,6 +449,7 @@ namespace Dfe.PersonsApi.Client
         /// <summary>
         /// Retrieve All Members Associated With an Academy by Urn
         /// </summary>
+        /// <param name="urn">The URN.</param>
         /// <returns>A Collection of Persons Associated With the Academy.</returns>
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AcademyGovernance>> GetAllPersonsAssociatedWithAcademyByUrnAsync(int urn, System.Threading.CancellationToken cancellationToken)

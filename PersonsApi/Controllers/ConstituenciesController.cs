@@ -12,15 +12,8 @@ namespace PersonsApi.Controllers
     [Authorize(Policy = "API.Read")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
-    public class ConstituenciesController : ControllerBase
+    public class ConstituenciesController(ISender sender) : ControllerBase
     {
-        private readonly ISender _sender;
-
-        public ConstituenciesController(ISender sender)
-        {
-            _sender = sender;
-        }
-
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
@@ -32,7 +25,7 @@ namespace PersonsApi.Controllers
         [SwaggerResponse(400, "Constituency cannot be null or empty.")]
         public async Task<IActionResult> GetMemberOfParliamentByConstituencyAsync([FromRoute] string constituencyName, CancellationToken cancellationToken)
         {
-            var result = await _sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
+            var result = await sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
 
             return result is null ? NotFound() : Ok(result);
         }
@@ -47,9 +40,9 @@ namespace PersonsApi.Controllers
         [SwaggerResponse(400, "Constituency names cannot be null or empty.")]
         public async Task<IActionResult> GetMembersOfParliamentByConstituenciesAsync([FromBody] GetMembersOfParliamentByConstituenciesQuery request, CancellationToken cancellationToken)
         {
-            var result = await _sender.Send(request, cancellationToken);
+            var result = await sender.Send(request, cancellationToken);
 
-            return Ok(result ?? new List<MemberOfParliament>());
+            return Ok(result ?? []);
         }
     }
 }

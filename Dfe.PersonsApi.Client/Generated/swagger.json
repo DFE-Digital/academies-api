@@ -97,6 +97,7 @@
             "name": "urn",
             "in": "path",
             "required": true,
+            "description": "The URN.",
             "schema": {
               "type": "integer",
               "format": "int32"

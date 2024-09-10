@@ -173,7 +173,7 @@ namespace PersonsApi
                     c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
                 }
 
-                c.SupportedSubmitMethods(SubmitMethod.Get);
+                c.SupportedSubmitMethods(SubmitMethod.Get, SubmitMethod.Post, SubmitMethod.Put, SubmitMethod.Delete);
             });
 
             if (env.IsDevelopment())
