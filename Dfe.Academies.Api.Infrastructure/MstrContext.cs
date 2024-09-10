@@ -62,7 +62,10 @@ public class MstrContext : DbContext
         else
         {
             modelBuilder.Entity<EducationEstablishmentGovernance>(ConfigureEducationEstablishmentGovernance);
+            modelBuilder.Entity<EducationEstablishmentGovernance>().Metadata.SetIsTableExcludedFromMigrations(true);
+
             modelBuilder.Entity<GovernanceRoleType>(ConfigureGovernanceRoleType);
+            modelBuilder.Entity<GovernanceRoleType>().Metadata.SetIsTableExcludedFromMigrations(true);
         }
 
         base.OnModelCreating(modelBuilder);
