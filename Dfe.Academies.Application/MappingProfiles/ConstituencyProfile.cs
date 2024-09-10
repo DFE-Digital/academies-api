@@ -9,7 +9,7 @@ namespace Dfe.Academies.Application.MappingProfiles
         public ConstituencyProfile()
         {
             CreateMap<Constituency, MemberOfParliament>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.MemberID.Value))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.MemberId.Value))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.NameList.Split(",", StringSplitOptions.None)[1].Trim()))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.NameList.Split(",", StringSplitOptions.None)[0].Trim()))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.MemberContactDetails.Email))

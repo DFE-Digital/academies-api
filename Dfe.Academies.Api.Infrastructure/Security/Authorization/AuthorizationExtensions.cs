@@ -35,13 +35,13 @@ namespace Dfe.Academies.Infrastructure.Security.Authorization
 
                 // Add claim-based policies
                 var claims = configuration.GetSection("Authorization:Claims").Get<Dictionary<string, string>>();
-                if (claims != null)
+
+                if (claims == null) return;
+
+                foreach (var claim in claims)
                 {
-                    foreach (var claim in claims)
-                    {
-                        options.AddPolicy($"{claim.Key}", policy =>
-                            policy.RequireClaim(claim.Key, claim.Value));
-                    }
+                    options.AddPolicy($"{claim.Key}", policy =>
+                        policy.RequireClaim(claim.Key, claim.Value));
                 }
             });
 

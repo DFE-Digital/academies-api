@@ -14,7 +14,7 @@
         public required ICollection<string> Roles
         {
             get => _roles ??= new List<string>();
-            set => _roles = value ?? new List<string>();
+            set => _roles = value ?? [];
         }
         public required DateTime? UpdatedAt { get; set; }
 

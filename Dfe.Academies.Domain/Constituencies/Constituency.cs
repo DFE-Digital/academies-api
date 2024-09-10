@@ -5,7 +5,7 @@ namespace Dfe.Academies.Domain.Constituencies
     public class Constituency
     {
         public ConstituencyId ConstituencyId { get; private set; }
-        public MemberId MemberID { get; private set; }
+        public MemberId MemberId { get; private set; }
         public string ConstituencyName { get; private set; }
         public string NameList { get; private set; }
         public string NameDisplayAs { get; private set; }
@@ -32,7 +32,7 @@ namespace Dfe.Academies.Domain.Constituencies
             if (string.IsNullOrEmpty(nameDisplayAs)) throw new ArgumentNullException(nameof(nameDisplayAs));
 
             ConstituencyId = constituencyId;
-            MemberID = memberId;
+            MemberId = memberId;
             ConstituencyName = constituencyName;
             NameList = nameList;
             NameDisplayAs = nameDisplayAs;

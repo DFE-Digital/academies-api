@@ -17,12 +17,10 @@ namespace Dfe.Academies.Utils.Caching
                 throw new ArgumentException("Input cannot be null or empty", nameof(input));
             }
 
-            using (var sha256 = SHA256.Create())
-            {
-                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+            using var sha256 = SHA256.Create();
+            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
 
-                return BitConverter.ToString(bytes).Replace("-", "").ToLower();
-            }
+            return BitConverter.ToString(bytes).Replace("-", "").ToLower();
         }
 
         /// <summary>

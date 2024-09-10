@@ -1,23 +1,15 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Application.Common.Interfaces;
+﻿using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Constituencies;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
-    public class ConstituencyRepository : IConstituencyRepository
+    public class ConstituencyRepository(MopContext context) : IConstituencyRepository
     {
-        private readonly MopContext _context;
-
-        public ConstituencyRepository(MopContext context)
-        {
-            _context = context;
-        }
-
         public async Task<Constituency?> GetMemberOfParliamentByConstituencyAsync(string constituencyName, CancellationToken cancellationToken)
         {
-            return await _context.Constituencies
+            return await context.Constituencies
                 .AsNoTracking()
                 .Include(c => c.MemberContactDetails)
                 .Where(c => c.ConstituencyName == constituencyName
@@ -28,7 +20,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public IQueryable<Constituency> GetMembersOfParliamentByConstituenciesQueryable(List<string> constituencyNames)
         {
-            return _context.Constituencies
+            return context.Constituencies
                 .AsNoTracking()
                 .Include(c => c.MemberContactDetails) 
                 .Where(c => constituencyNames.Contains(c.ConstituencyName)

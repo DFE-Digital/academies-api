@@ -7,20 +7,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace Dfe.Academies.Application.Common.Behaviours
 {
     [ExcludeFromCodeCoverage]
-    public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+    public class PerformanceBehaviour<TRequest, TResponse>(
+        ILogger<TRequest> logger,
+        IHttpContextAccessor httpContextAccessor)
+        : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : notnull
     {
-        private readonly Stopwatch _timer;
-        private readonly ILogger<TRequest> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public PerformanceBehaviour(
-            ILogger<TRequest> logger,
-            IHttpContextAccessor httpContextAccessor)
-        {
-            _timer = new Stopwatch();
-            _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
-        }
+        private readonly Stopwatch _timer = new();
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
@@ -32,16 +25,15 @@ namespace Dfe.Academies.Application.Common.Behaviours
 
             var elapsedMilliseconds = _timer.ElapsedMilliseconds;
 
-            if (elapsedMilliseconds > 500)
-            {
-                var user = _httpContextAccessor.HttpContext?.User;
+            if (elapsedMilliseconds <= 500) return response;
 
-                var requestName = typeof(TRequest).Name;
-                var identityName = user?.Identity?.Name;
+            var user = httpContextAccessor.HttpContext?.User;
 
-                _logger.LogWarning("PersonsAPI Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@IdentityName} {@Request}",
-                    requestName, elapsedMilliseconds, identityName, request);
-            }
+            var requestName = typeof(TRequest).Name;
+            var identityName = user?.Identity?.Name;
+
+            logger.LogWarning("PersonsAPI Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@IdentityName} {@Request}",
+                requestName, elapsedMilliseconds, identityName, request);
 
             return response;
         }

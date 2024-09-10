@@ -4,7 +4,7 @@ namespace Dfe.Academies.Domain.Constituencies
 {
     public class MemberContactDetails
     {
-        public MemberId MemberID { get; private set; }
+        public MemberId MemberId { get; private set; }
         public string? Email { get; private set; }
         public string? Phone { get; private set; }
         public int TypeId { get; private set; }
@@ -20,7 +20,7 @@ namespace Dfe.Academies.Domain.Constituencies
             if (memberId == null) throw new ArgumentNullException(nameof(memberId));
             if (typeId <= 0) throw new ArgumentException("TypeId must be positive", nameof(typeId));
 
-            MemberID = memberId;
+            MemberId = memberId;
             TypeId = typeId;
             Email = email;
             Phone = phone;

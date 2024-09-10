@@ -6,24 +6,17 @@ using System.Text.Encodings.Web;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
 {
-    public class MockJwtBearerHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+    public class MockJwtBearerHandler(
+        IOptionsMonitor<AuthenticationSchemeOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder,
+        ISystemClock clock,
+        IEnumerable<Claim> claims)
+        : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder, clock)
     {
-        private readonly IEnumerable<Claim> _claims;
-
-        public MockJwtBearerHandler(
-            IOptionsMonitor<AuthenticationSchemeOptions> options,
-            ILoggerFactory logger,
-            UrlEncoder encoder,
-            ISystemClock clock,
-            IEnumerable<Claim> claims)
-            : base(options, logger, encoder, clock)
-        {
-            _claims = claims;
-        }
-
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var identity = new ClaimsIdentity(_claims, "mock");
+            var identity = new ClaimsIdentity(claims, "mock");
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, "mock");
 

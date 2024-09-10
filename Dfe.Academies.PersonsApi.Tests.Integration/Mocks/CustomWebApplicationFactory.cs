@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Domain.Constituencies;
+﻿using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Domain.ValueObjects;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Data.Common;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using Dfe.Academies.Infrastructure;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
 {
@@ -19,7 +19,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
       : WebApplicationFactory<TProgram> where TProgram : class where TDbContext : DbContext
     {
         private SqliteConnection? _connection;
-        public List<Claim> TestClaims { get; set; } = new List<Claim>();
+        public List<Claim> TestClaims { get; set; } = [];
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -35,11 +35,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
 
                 services.AddSingleton<DbConnection>(container =>
                 {
-                    if (_connection == null)
-                    {
-                        _connection = new SqliteConnection("DataSource=:memory:");
-                        _connection.Open();
-                    }
+                    if (_connection != null) return _connection;
+                    _connection = new SqliteConnection("DataSource=:memory:");
+                    _connection.Open();
 
                     return _connection;
                 });
@@ -89,8 +87,8 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
             {
 
                     // Populate Trust
-                    var trust1 = new Trust { SK = 1, Name = "Trust A", TrustTypeId = mstrContext.TrustTypes.FirstOrDefault().SK, GroupUID = "G1", Modified = DateTime.UtcNow, ModifiedBy = "System" };
-                    var trust2 = new Trust { SK = 2, Name = "Trust B", TrustTypeId = mstrContext.TrustTypes.FirstOrDefault().SK, GroupUID = "G2", Modified = DateTime.UtcNow, ModifiedBy = "System" };
+                    var trust1 = new Trust { SK = 1, Name = "Trust A", TrustTypeId = mstrContext.TrustTypes.FirstOrDefault()?.SK, GroupUID = "G1", Modified = DateTime.UtcNow, ModifiedBy = "System" };
+                    var trust2 = new Trust { SK = 2, Name = "Trust B", TrustTypeId = mstrContext.TrustTypes.FirstOrDefault()?.SK, GroupUID = "G2", Modified = DateTime.UtcNow, ModifiedBy = "System" };
                     mstrContext.Trusts.AddRange(trust1, trust2);
 
                     // Populate Establishment
@@ -98,8 +96,8 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
                     {
                         SK = 1,
                         EstablishmentName = "School A",
-                        LocalAuthorityId = mstrContext.LocalAuthorities.FirstOrDefault().SK,
-                        EstablishmentTypeId = mstrContext.EstablishmentTypes.FirstOrDefault().SK,
+                        LocalAuthorityId = mstrContext.LocalAuthorities.FirstOrDefault()?.SK,
+                        EstablishmentTypeId = mstrContext.EstablishmentTypes.FirstOrDefault()?.SK,
                         Latitude = 54.9784,
                         Longitude = -1.6174,
                         MainPhone = "01234567890",
@@ -111,8 +109,8 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
                     {
                         SK = 2,
                         EstablishmentName = "School B",
-                        LocalAuthorityId = mstrContext.LocalAuthorities.FirstOrDefault().SK,
-                        EstablishmentTypeId = mstrContext.EstablishmentTypes.FirstOrDefault().SK,
+                        LocalAuthorityId = mstrContext.LocalAuthorities.FirstOrDefault()?.SK,
+                        EstablishmentTypeId = mstrContext.EstablishmentTypes.FirstOrDefault()?.SK,
                         Latitude = 50.3763,
                         Longitude = -4.1427,
                         MainPhone = "09876543210",

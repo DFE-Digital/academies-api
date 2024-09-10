@@ -12,22 +12,16 @@ namespace Dfe.Academies.Infrastructure.Security
     /// Temporary workaround to allow API Key authentication, will be removed once all clients use Client Credentials
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class ApiKeyOrRoleHandler : AuthorizationHandler<ApiKeyOrRoleRequirement>
+    public class ApiKeyOrRoleHandler(IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
+        : AuthorizationHandler<ApiKeyOrRoleRequirement>
     {
         private const string ApiKeyHeaderName = "ApiKey";
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly List<ApiUser>? _configuredApiKeys;
-
-        public ApiKeyOrRoleHandler(IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _configuredApiKeys = configuration.GetSection("ApiKeys").Get<List<ApiUser>>();
-        }
+        private readonly List<ApiUser>? _configuredApiKeys = configuration.GetSection("ApiKeys").Get<List<ApiUser>>();
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ApiKeyOrRoleRequirement requirement)
         {
             // Check API Key
-            if (_httpContextAccessor.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out StringValues apiKeyHeader))
+            if (httpContextAccessor.HttpContext!.Request.Headers.TryGetValue(ApiKeyHeaderName, out StringValues apiKeyHeader))
             {
 
                 var key = _configuredApiKeys?.FirstOrDefault(user => user.ApiKey.Equals(apiKeyHeader));
@@ -40,7 +34,7 @@ namespace Dfe.Academies.Infrastructure.Security
             }
 
             // Check Role-based authorization
-            if (context.User != null && context.User.IsInRole(requirement.RolePolicy))
+            if (context?.User != null && context.User.IsInRole(requirement.RolePolicy))
             {
                 context.Succeed(requirement);
             }

@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
+﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
 using Dfe.PersonsApi.Client;
 using Dfe.PersonsApi.Client.Contracts;
 using Dfe.PersonsApi.Client.Extensions;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PersonsApi;
 using System.Net;
 using System.Security.Claims;
+using Dfe.Academies.Infrastructure;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
@@ -21,10 +21,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         {
             _factory = factory;
 
-            _factory.TestClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Role, "API.Read")
-            };
+            _factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
             var httpClient = _factory.CreateClient();
 
@@ -96,7 +93,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 
             // Act
             var result = await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
-                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = new List<string> { constituencyName } });
+                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = [constituencyName] });
 
             // Assert
             Assert.NotNull(result);
@@ -112,7 +109,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 
             // Act
             var result = await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
-                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = new List<string> { "constituencyName" } });
+                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = ["constituencyName"] });
 
             // Assert
             Assert.NotNull(result);
@@ -128,7 +125,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
             // Act & Assert
             var exception = await Assert.ThrowsAsync<PersonsApiException>(async () =>
                 await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
-                    new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = new List<string> { } }));
+                    new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = [] }));
 
             Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.StatusCode);
         }

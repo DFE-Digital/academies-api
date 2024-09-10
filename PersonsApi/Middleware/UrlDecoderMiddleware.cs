@@ -4,15 +4,8 @@ using System.Web;
 
 namespace PersonsApi.Middleware
 {
-    public class UrlDecoderMiddleware
+    public class UrlDecoderMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        
-        public UrlDecoderMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
-
         public async Task InvokeAsync(HttpContext context)
         {
             var queryString = context.Request.QueryString.ToString();
@@ -23,7 +16,7 @@ namespace PersonsApi.Middleware
             var qb = new QueryBuilder(items);
             context.Request.QueryString = qb.ToQueryString();
             
-            await _next(context);
+            await next(context);
         }
     }
 }

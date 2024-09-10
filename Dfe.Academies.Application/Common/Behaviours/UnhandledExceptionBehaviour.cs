@@ -5,15 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace Dfe.Academies.Application.Common.Behaviours
 {
     [ExcludeFromCodeCoverage]
-    public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+    public class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<TRequest> logger)
+        : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : notnull
     {
-        private readonly ILogger<TRequest> _logger;
-
-        public UnhandledExceptionBehaviour(ILogger<TRequest> logger)
-        {
-            _logger = logger;
-        }
-
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             try
@@ -24,7 +19,7 @@ namespace Dfe.Academies.Application.Common.Behaviours
             {
                 var requestName = typeof(TRequest).Name;
 
-                _logger.LogError(ex, "PersonsAPI Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+                logger.LogError(ex, "PersonsAPI Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
 
                 throw;
             }

@@ -3,7 +3,7 @@ using Dfe.Academies.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dfe.Academies.Academisation.Data;
+namespace Dfe.Academies.Infrastructure;
 
 public class MopContext : DbContext
 {
@@ -40,10 +40,10 @@ public class MopContext : DbContext
 
     private void ConfigureMemberContactDetails(EntityTypeBuilder<MemberContactDetails> memberContactDetailsConfiguration)
     {
-        memberContactDetailsConfiguration.HasKey(e => e.MemberID);
+        memberContactDetailsConfiguration.HasKey(e => e.MemberId);
 
         memberContactDetailsConfiguration.ToTable("MemberContactDetails", DEFAULT_SCHEMA);
-        memberContactDetailsConfiguration.Property(e => e.MemberID).HasColumnName("memberID")
+        memberContactDetailsConfiguration.Property(e => e.MemberId).HasColumnName("memberID")
                 .HasConversion(
                     v => v.Value,
                     v => new MemberId(v));
@@ -59,7 +59,7 @@ public class MopContext : DbContext
             .HasConversion(
                     v => v.Value,
                     v => new ConstituencyId(v));
-        constituencyConfiguration.Property(e => e.MemberID)
+        constituencyConfiguration.Property(e => e.MemberId)
             .HasConversion(
                     v => v.Value,
                     v => new MemberId(v));
@@ -73,8 +73,8 @@ public class MopContext : DbContext
         constituencyConfiguration
             .HasOne(c => c.MemberContactDetails)
             .WithOne()
-            .HasForeignKey<Constituency>(c => c.MemberID)
-            .HasPrincipalKey<MemberContactDetails>(m => m.MemberID);
+            .HasForeignKey<Constituency>(c => c.MemberId)
+            .HasPrincipalKey<MemberContactDetails>(m => m.MemberId);
     }
 
 

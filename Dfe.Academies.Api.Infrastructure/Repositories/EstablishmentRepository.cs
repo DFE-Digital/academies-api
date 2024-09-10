@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Application.Common.Models;
+﻿using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Establishment;
 using Microsoft.EntityFrameworkCore;
 using Dfe.Academies.Application.Common.Interfaces;

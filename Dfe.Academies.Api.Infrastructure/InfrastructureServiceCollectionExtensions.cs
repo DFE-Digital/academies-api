@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Application.Common.Interfaces;
+﻿using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Infrastructure.Caching;
 using Dfe.Academies.Infrastructure.Repositories;
@@ -53,7 +52,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<MopContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-            // Authetication
+            // Authentication
             services.AddCustomAuthorization(config);
 
             return services;

@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Domain.Constituencies;
+﻿using Dfe.Academies.Domain.Constituencies;
 
 namespace Dfe.Academies.Application.Common.Interfaces
 {

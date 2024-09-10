@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
+﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
 using Dfe.PersonsApi.Client;
 using Dfe.PersonsApi.Client.Contracts;
 using Dfe.PersonsApi.Client.Extensions;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PersonsApi;
 using System.Security.Claims;
+using Dfe.Academies.Infrastructure;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
@@ -20,10 +20,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         {
             _factory = factory;
 
-            _factory.TestClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Role, "API.Read")
-            };
+            _factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
             var httpClient = _factory.CreateClient();
 

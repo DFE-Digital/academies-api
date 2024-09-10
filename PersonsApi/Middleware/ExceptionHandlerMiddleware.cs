@@ -7,22 +7,13 @@ using ValidationException = Dfe.Academies.Application.Common.Exceptions.Validati
 
 namespace PersonsApi.Middleware;
 
-public class ExceptionHandlerMiddleware
+public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionHandlerMiddleware> _logger;
-
-    public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
 
             // Check for 401 or 403 status codes after the request has been processed
             if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
@@ -36,13 +27,13 @@ public class ExceptionHandlerMiddleware
         }
         catch (ValidationException ex)
         {
-            _logger.LogError($"Validation error: {ex.Message}");
+            logger.LogError($"Validation error: {ex.Message}");
             await HandleValidationException(context, ex);
         }
         catch (Exception ex)
         {
-            _logger.LogError("An exception occurred: {Message}", ex.Message);
-            _logger.LogError("Stack Trace: {StackTrace}", ex.StackTrace);
+            logger.LogError("An exception occurred: {Message}", ex.Message);
+            logger.LogError("Stack Trace: {StackTrace}", ex.StackTrace);
 
             await HandleExceptionAsync(context, ex);
         }
@@ -65,7 +56,7 @@ public class ExceptionHandlerMiddleware
     // Handle 401 Unauthorized
     private async Task HandleUnauthorizedResponseAsync(HttpContext context)
     {
-        _logger.LogWarning("Unauthorized access attempt detected.");
+        logger.LogWarning("Unauthorized access attempt detected.");
         context.Response.ContentType = "application/json";
         var errorResponse = new ErrorResponse
         {
@@ -78,7 +69,7 @@ public class ExceptionHandlerMiddleware
     // Handle 403 Forbidden
     private async Task HandleForbiddenResponseAsync(HttpContext context)
     {
-        _logger.LogWarning("Forbidden access attempt detected.");
+        logger.LogWarning("Forbidden access attempt detected.");
         context.Response.ContentType = "application/json";
         var errorResponse = new ErrorResponse
         {
@@ -99,8 +90,8 @@ public class ExceptionHandlerMiddleware
             Message = "Internal Server Error: " + exception.Message
         };
 
-        _logger.LogError("Unhandled Exception: {Message}", exception.Message);
-        _logger.LogError("Stack Trace: {StackTrace}", exception.StackTrace);
+        logger.LogError("Unhandled Exception: {Message}", exception.Message);
+        logger.LogError("Stack Trace: {StackTrace}", exception.StackTrace);
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
     }

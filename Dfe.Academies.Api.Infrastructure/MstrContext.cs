@@ -1,10 +1,9 @@
-﻿
-using Dfe.Academies.Domain.Establishment;
+﻿using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dfe.Academies.Academisation.Data;
+namespace Dfe.Academies.Infrastructure;
 
 public class MstrContext : DbContext
 {

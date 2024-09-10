@@ -1,18 +1,14 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
+﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
 using PersonsApi;
 using System.Net;
+using Dfe.Academies.Infrastructure;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.OpenApiTests;
 
-public class OpenApiDocumentTests : IClassFixture<CustomWebApplicationFactory<Startup, MopContext>>
+public class OpenApiDocumentTests(CustomWebApplicationFactory<Startup, MopContext> factory)
+    : IClassFixture<CustomWebApplicationFactory<Startup, MopContext>>
 {
-    private readonly HttpClient _client;
-
-    public OpenApiDocumentTests(CustomWebApplicationFactory<Startup, MopContext> factory)
-    {
-        _client = factory.CreateClient();
-    }
+    private readonly HttpClient _client = factory.CreateClient();
 
     [Fact]
     public async Task SwaggerEndpoint_ReturnsSuccessAndCorrectContentType()

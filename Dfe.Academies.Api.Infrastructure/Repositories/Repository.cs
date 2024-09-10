@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dfe.Academies.Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Domain.Common;
-using Dfe.Academies.Domain.Interfaces;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
-    #pragma warning disable CS8603 // Possible null reference return, behaviour expected
+#pragma warning disable CS8603 // Possible null reference return, behaviour expected
     [ExcludeFromCodeCoverage]
     public abstract class Repository<TEntity, TDbContext> : IRepository<TEntity>
         where TEntity : class, new()
@@ -22,7 +20,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
         /// <param name="dbContext"></param>
         protected Repository(TDbContext dbContext) => this.DbContext = dbContext;
 
-        /// <summary>Short hand for _dbContext.Set</summary>
+        /// <summary>Shorthand for _dbContext.Set</summary>
         /// <returns></returns>
         protected virtual DbSet<TEntity> DbSet()
         {
@@ -78,7 +76,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
         /// <inheritdoc />
         public virtual TEntity Get(params object[] keyValues)
         {
-            return this.Find(keyValues) ?? throw new InvalidOperationException(string.Format("Entity type {0} is null for primary key {1}", (object)typeof(TEntity), (object)keyValues));
+            return this.Find(keyValues) ?? throw new InvalidOperationException(
+                $"Entity type {(object)typeof(TEntity)} is null for primary key {(object)keyValues}");
         }
 
         /// <inheritdoc />
@@ -90,7 +89,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
         /// <inheritdoc />
         public virtual async Task<TEntity> GetAsync(params object[] keyValues)
         {
-            return await this.FindAsync(keyValues) ?? throw new InvalidOperationException(string.Format("Entity type {0} is null for primary key {1}", (object)typeof(TEntity), (object)keyValues));
+            return await this.FindAsync(keyValues) ?? throw new InvalidOperationException(
+                $"Entity type {(object)typeof(TEntity)} is null for primary key {(object)keyValues}");
         }
 
         /// <inheritdoc />
