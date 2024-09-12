@@ -13,6 +13,7 @@ locals {
   container_command                               = var.container_command
   container_secret_environment_variables          = var.container_secret_environment_variables
   container_scale_http_concurrency                = var.container_scale_http_concurrency
+  container_min_replicas                          = var.container_min_replicas
   enable_cdn_frontdoor                            = var.enable_cdn_frontdoor
   enable_event_hub                                = var.enable_event_hub
   enable_logstash_consumer                        = var.enable_logstash_consumer
