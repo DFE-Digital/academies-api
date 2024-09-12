@@ -1,7 +1,8 @@
 ﻿using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Establishment;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Dfe.Academies.Application.Common.Interfaces;
+using Dfe.Academies.Infrastructure.Models;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
@@ -118,32 +119,6 @@ namespace Dfe.Academies.Infrastructure.Repositories
             var result = establishments.Select(ToEstablishment).ToList();
 
             return result;
-        }
-
-        public async Task<Establishment?> GetPersonsAssociatedWithAcademyByUrnAsync(int urn, CancellationToken cancellationToken)
-        {
-            var query = await _context.Establishments
-                .AsNoTracking()
-                .Where(e => e.URN == urn)
-                .Select(e => new Establishment
-                {
-                    URN = e.URN,
-                    UKPRN = e.UKPRN,
-                    EstablishmentName = e.EstablishmentName,
-                    EducationEstablishmentGovernances = e.EducationEstablishmentGovernances
-                        .Select(g => new EducationEstablishmentGovernance
-                        {
-                            SK = g.SK,
-                            Title = g.Title,
-                            Forename1 = g.Forename1,
-                            Surname = g.Surname,
-                            Modified = g.Modified,
-                            Email = g.Email,
-                            GovernanceRoleType = g.GovernanceRoleType
-                        }).ToList()
-                }).FirstOrDefaultAsync(cancellationToken);
-
-            return query;
         }
 
         private IQueryable<EstablishmentQueryResult> BaseQuery()

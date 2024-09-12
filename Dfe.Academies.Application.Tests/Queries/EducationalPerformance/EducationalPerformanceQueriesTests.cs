@@ -1,14 +1,10 @@
 ﻿using AutoFixture;
-using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Contracts.V1.EducationalPerformance;
 using Dfe.Academies.Domain.EducationalPerformance;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Dfe.Academies.Application.Tests.Queries.EducationalPerformance
 {

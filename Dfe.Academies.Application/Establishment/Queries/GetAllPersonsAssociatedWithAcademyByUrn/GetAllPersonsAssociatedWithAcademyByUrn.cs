@@ -1,19 +1,21 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Utils.Caching;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn
 {
-    public record GetAllPersonsAssociatedWithAcademyByUrnQuery(int Urn) : IRequest<List<AcademyGovernance>>;
+    public record GetAllPersonsAssociatedWithAcademyByUrnQuery(int Urn) : IRequest<List<AcademyGovernance>?>;
 
     public class GetAllPersonsAssociatedWithAcademyByUrnQueryHandler(
-        IEstablishmentRepository establishmentRepository,
+        IEstablishmentQueryService establishmentQueryService,
         IMapper mapper,
         ICacheService cacheService)
-        : IRequestHandler<GetAllPersonsAssociatedWithAcademyByUrnQuery, List<AcademyGovernance>>
+        : IRequestHandler<GetAllPersonsAssociatedWithAcademyByUrnQuery, List<AcademyGovernance>?>
     {
         public async Task<List<AcademyGovernance>?> Handle(GetAllPersonsAssociatedWithAcademyByUrnQuery request, CancellationToken cancellationToken)
         {
@@ -23,15 +25,16 @@ namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociate
 
             return await cacheService.GetOrAddAsync(cacheKey, async () =>
             {
-                var establishment = await establishmentRepository.GetPersonsAssociatedWithAcademyByUrnAsync(request.Urn, cancellationToken);
+                var query = establishmentQueryService.GetPersonsAssociatedWithAcademyByUrn(request.Urn);
 
-                if (establishment == null)
+                if (query == null)
                 {
                     return null;
                 }
 
-                var result = mapper.Map<List<AcademyGovernance>>(establishment);
-
+                var result = await query
+                    .ProjectTo<AcademyGovernance>(mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
 
                 return result;
             }, methodName);

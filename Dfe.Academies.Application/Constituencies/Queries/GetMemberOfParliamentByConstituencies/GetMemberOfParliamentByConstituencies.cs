@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Dfe.Academies.Application.Common.Interfaces;
 using MediatR;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Utils.Caching;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Dfe.Academies.Domain.Interfaces.Caching;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituencies
 {
