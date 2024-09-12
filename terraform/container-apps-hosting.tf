@@ -25,6 +25,7 @@ module "azure_container_apps_hosting" {
   container_secret_environment_variables = local.container_secret_environment_variables
   container_scale_http_concurrency       = local.container_scale_http_concurrency
   container_apps_allow_ips_inbound       = local.container_apps_allow_ips_inbound
+  container_min_replicas                 = local.container_min_replicas
 
   enable_cdn_frontdoor                            = local.enable_cdn_frontdoor
   cdn_frontdoor_forwarding_protocol               = local.cdn_frontdoor_forwarding_protocol
