@@ -3,7 +3,7 @@ name: Build and Push NuGet Package
 on:
   push:
     branches:
-    - release/package.*
+    - release/*
     paths:
     - 'Dfe.PersonsApi.Client*/**'
 
