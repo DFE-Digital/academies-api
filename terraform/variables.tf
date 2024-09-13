@@ -382,3 +382,9 @@ variable "custom_container_apps" {
   }))
   default = {}
 }
+
+variable "container_min_replicas" {
+  description = "Container min replicas"
+  type        = number
+  default     = 1
+}
