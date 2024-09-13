@@ -34,7 +34,7 @@ public class MstrContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=sip;User Id=sa;TrustServerCertificate=True;Password=StrongPassword905");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=sip;Integrated Security=true;TrustServerCertificate=True");
         }
     }
 
