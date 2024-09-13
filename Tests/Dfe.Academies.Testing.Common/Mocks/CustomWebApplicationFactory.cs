@@ -1,19 +1,20 @@
-﻿using Dfe.Academies.Domain.Constituencies;
+﻿using System.Data.Common;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Domain.ValueObjects;
+using Dfe.Academies.Infrastructure;
+using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.Common;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using Dfe.Academies.Infrastructure;
 
-namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
+namespace Dfe.Academies.Testing.Common.Mocks
 {
     public class CustomWebApplicationFactory<TProgram, TDbContext>
       : WebApplicationFactory<TProgram> where TProgram : class where TDbContext : DbContext
