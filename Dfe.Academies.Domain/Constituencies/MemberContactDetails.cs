@@ -2,6 +2,8 @@
 
 namespace Dfe.Academies.Domain.Constituencies
 {
+#pragma warning disable CS8618
+
     public class MemberContactDetails
     {
         public MemberId MemberId { get; private set; }
@@ -26,4 +28,6 @@ namespace Dfe.Academies.Domain.Constituencies
             Phone = phone;
         }
     }
+#pragma warning restore CS8618
+
 }

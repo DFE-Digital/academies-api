@@ -24,7 +24,7 @@ namespace Dfe.Academies.Infrastructure.Security
             if (httpContextAccessor.HttpContext!.Request.Headers.TryGetValue(ApiKeyHeaderName, out StringValues apiKeyHeader))
             {
 
-                var key = _configuredApiKeys?.Find(user => user.ApiKey.Equals(apiKeyHeader));
+                var key = _configuredApiKeys?.Find(user => user.ApiKey!.Equals(apiKeyHeader));
 
                 if (key != null)
                 {

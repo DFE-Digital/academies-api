@@ -26,7 +26,7 @@ namespace Dfe.Academies.Infrastructure.Caching
             logger.LogInformation("Cache miss for key: {CacheKey}. Fetching from source...", cacheKey);
             var result = await fetchFunction();
 
-            if (result == null) return result;
+            if (Equals(result, default(T))) return result;
             var cacheDuration = GetCacheDurationForMethod(methodName);
             memoryCache.Set(cacheKey, result, cacheDuration);
             logger.LogInformation("Cached result for key: {CacheKey} for duration: {CacheDuration}", cacheKey, cacheDuration);

@@ -2,6 +2,7 @@
 
 namespace Dfe.Academies.Domain.Constituencies
 {
+#pragma warning disable CS8618
     public class Constituency
     {
         public ConstituencyId ConstituencyId { get; private set; }
@@ -33,4 +34,6 @@ namespace Dfe.Academies.Domain.Constituencies
             MemberContactDetails = memberContactDetails;
         }
     }
+#pragma warning restore CS8618
+
 }
