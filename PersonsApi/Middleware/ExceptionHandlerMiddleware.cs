@@ -31,9 +31,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
         }
         catch (Exception ex)
         {
-            logger.LogError(ex,"An exception occurred: {Message}", ex.Message);
-            logger.LogError("Stack Trace: {StackTrace}", ex.StackTrace);
-
+            logger.LogError(ex, "An exception occurred: {Message}. Stack Trace: {StackTrace}", ex.Message, ex.StackTrace);
             await HandleExceptionAsync(context, ex);
         }
     }
