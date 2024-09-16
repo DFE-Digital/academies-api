@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System.Security.Claims;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
 
-namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
+namespace Dfe.Academies.Testing.Common.Mocks
 {
+#pragma warning disable CS0618 
     public class MockJwtBearerHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
@@ -23,4 +24,6 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Mocks
             return Task.FromResult(AuthenticateResult.Success(ticket));
         }
     }
+#pragma warning restore CS0618
+
 }

@@ -70,7 +70,7 @@ public class MstrContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    private void ConfigureEstablishment(EntityTypeBuilder<Establishment> establishmentConfiguration)
+    private static void ConfigureEstablishment(EntityTypeBuilder<Establishment> establishmentConfiguration)
     {
         establishmentConfiguration.HasKey(e => e.SK);
 
@@ -194,8 +194,7 @@ public class MstrContext : DbContext
     /// New mapping for refactoring
     /// </summary>
     /// <param name="trustConfiguration"></param>
-
-    void ConfigureTrust(EntityTypeBuilder<Trust> trustConfiguration)
+    private static void ConfigureTrust(EntityTypeBuilder<Trust> trustConfiguration)
     {
         trustConfiguration.HasKey(e => e.SK);
         
@@ -258,7 +257,7 @@ public class MstrContext : DbContext
         trustTypeConfiguration.HasData(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
         trustTypeConfiguration.HasData(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
     }
-    private void ConfigureEducationEstablishmentTrust(EntityTypeBuilder<EducationEstablishmentTrust> entityBuilder)
+    private static void ConfigureEducationEstablishmentTrust(EntityTypeBuilder<EducationEstablishmentTrust> entityBuilder)
     {
         entityBuilder.HasKey(e => e.SK);
         entityBuilder.ToTable("EducationEstablishmentTrust", DEFAULT_SCHEMA);
@@ -286,7 +285,7 @@ public class MstrContext : DbContext
         establishmentTypeConfiguration.HasData(new EstablishmentType() { SK = 228, Code = "18", Name = "Further education" });
     }
 
-    private void ConfigureIfdPipeline(EntityTypeBuilder<IfdPipeline> ifdPipelineConfiguration)
+    private static void ConfigureIfdPipeline(EntityTypeBuilder<IfdPipeline> ifdPipelineConfiguration)
     {
         ifdPipelineConfiguration.HasKey(e => e.SK);
 
@@ -305,7 +304,8 @@ public class MstrContext : DbContext
         ifdPipelineConfiguration.Property(e => e.ProjectTemplateInformationViabilityIssue)
             .HasColumnName("Project template information.Viability issue?");
     }
-    void ConfigureEducationEstablishmentGovernance(EntityTypeBuilder<EducationEstablishmentGovernance> governanceConfiguration)
+
+    private static void ConfigureEducationEstablishmentGovernance(EntityTypeBuilder<EducationEstablishmentGovernance> governanceConfiguration)
     {
         governanceConfiguration.HasKey(e => e.SK);
 
@@ -339,7 +339,7 @@ public class MstrContext : DbContext
     }
 
 
-    private void ConfigureGovernanceRoleType(EntityTypeBuilder<GovernanceRoleType> governanceRoleTypeConfiguration)
+    private static void ConfigureGovernanceRoleType(EntityTypeBuilder<GovernanceRoleType> governanceRoleTypeConfiguration)
     {
         governanceRoleTypeConfiguration.HasKey(e => e.SK);
 

@@ -11,6 +11,7 @@ namespace Dfe.Academies.Application.Common.Behaviours
     {
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
+#pragma warning disable S2139
             try
             {
                 return await next();
@@ -23,6 +24,7 @@ namespace Dfe.Academies.Application.Common.Behaviours
 
                 throw;
             }
+#pragma warning restore S2139
         }
     }
 

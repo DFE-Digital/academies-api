@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PersonsApi.ResponseModels;
 using System.Net;
@@ -27,12 +26,12 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
         }
         catch (ValidationException ex)
         {
-            logger.LogError($"Validation error: {ex.Message}");
+            logger.LogError(ex,"Validation error: {Message}", ex.Message);
             await HandleValidationException(context, ex);
         }
         catch (Exception ex)
         {
-            logger.LogError("An exception occurred: {Message}", ex.Message);
+            logger.LogError(ex,"An exception occurred: {Message}", ex.Message);
             logger.LogError("Stack Trace: {StackTrace}", ex.StackTrace);
 
             await HandleExceptionAsync(context, ex);
@@ -40,7 +39,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     }
 
     // Handle validation exceptions
-    private async Task HandleValidationException(HttpContext httpContext, Exception ex)
+    private static async Task HandleValidationException(HttpContext httpContext, Exception ex)
     {
         var exception = (ValidationException)ex;
 

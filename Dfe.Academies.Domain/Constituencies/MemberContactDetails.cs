@@ -19,10 +19,9 @@ namespace Dfe.Academies.Domain.Constituencies
             string? email = null,
             string? phone = null)
         {
-            if (memberId == null) throw new ArgumentNullException(nameof(memberId));
             if (typeId <= 0) throw new ArgumentException("TypeId must be positive", nameof(typeId));
 
-            MemberId = memberId;
+            MemberId = memberId ?? throw new ArgumentNullException(nameof(memberId));
             TypeId = typeId;
             Email = email;
             Phone = phone;
