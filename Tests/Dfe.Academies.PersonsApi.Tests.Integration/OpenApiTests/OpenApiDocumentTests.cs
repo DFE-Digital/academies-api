@@ -1,5 +1,5 @@
-﻿using Dfe.Academies.Infrastructure;
-using Dfe.Academies.Testing.Common.Attributes;
+﻿using Dfe.Academies.Testing.Common.Attributes;
+using Dfe.Academies.Testing.Common.Customizations;
 using Dfe.Academies.Testing.Common.Mocks;
 using PersonsApi;
 using System.Net;
@@ -9,9 +9,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.OpenApiTests;
 public class OpenApiDocumentTests
 {
     [Theory]
-    [CustomWebAppFactoryAutoData<MopContext>("Role:API.Read")]
+    [CustomAutoData(typeof(CustomWebApplicationFactoryCustomization<Startup>))]
     public async Task SwaggerEndpoint_ReturnsSuccessAndCorrectContentType(
-        CustomWebApplicationFactory<Startup, MopContext> factory,
+        CustomWebApplicationFactory<Startup> factory,
         HttpClient client)
     {
         var response = await client.GetAsync("/swagger/v1/swagger.json");

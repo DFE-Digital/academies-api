@@ -1,37 +1,24 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Testing.Common.Mocks;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using Dfe.PersonsApi.Client;
 using Dfe.PersonsApi.Client.Contracts;
 using Dfe.PersonsApi.Client.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security.Claims;
 
 namespace Dfe.Academies.Testing.Common.Customizations
 {
-    public class WebAppFactoryCustomization<TProgram, TDbContext> : ICustomization
-        where TProgram : class
-        where TDbContext : DbContext
-    {
+    public class CustomWebApplicationFactoryCustomization<TProgram> : ICustomization
+        where TProgram : class {
         private readonly List<Claim> _testClaims;
-        private CustomWebApplicationFactory<TProgram, TDbContext>? _factoryInstance;
-
-        public WebAppFactoryCustomization(List<Claim> testClaims)
-        {
-            _testClaims = testClaims;
-        }
 
         public void Customize(IFixture fixture)
         {
-            fixture.Customize<CustomWebApplicationFactory<TProgram, TDbContext>>(composer => composer.FromFactory(() =>
+            fixture.Customize<CustomWebApplicationFactory<TProgram>>(composer => composer.FromFactory(() =>
             {
-                if (_factoryInstance != null) return _factoryInstance;
 
-                var factory = new CustomWebApplicationFactory<TProgram, TDbContext>
-                {
-                    TestClaims = _testClaims
-                };
+                var factory = new CustomWebApplicationFactory<TProgram>(_testClaims); 
 
                 var client = factory.CreateClient();
 

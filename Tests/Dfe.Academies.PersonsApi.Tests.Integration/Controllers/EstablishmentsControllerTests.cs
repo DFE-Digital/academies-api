@@ -1,24 +1,28 @@
 ﻿using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Testing.Common.Attributes;
+using Dfe.Academies.Testing.Common.Customizations;
 using Dfe.Academies.Testing.Common.Mocks;
 using Dfe.PersonsApi.Client.Contracts;
 using Microsoft.EntityFrameworkCore;
 using PersonsApi;
+using System.Security.Claims;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
     public class EstablishmentsControllerTests
     {
         [Theory]
-        [CustomWebAppFactoryAutoData<MstrContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MstrContext>))]
         public async Task GetAllPersonsAssociatedWithAcademyAsync_ShouldReturnPeople_WhenAcademyExists(
-            CustomWebApplicationFactory<Startup, MstrContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
             IEstablishmentsClient establishmentsClient)
         {
             // Arrange
-            var dbcontext = factory.GetDbContext();
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
-            await dbcontext.Establishments.Where(x => x.SK == 1)
+            var dbContext = factory.GetDbContext();
+
+            await dbContext.Establishments.Where(x => x.SK == 1)
             .ExecuteUpdateAsync(x => x.SetProperty(p => p.URN, 22));
 
             // Act
@@ -34,15 +38,17 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomWebAppFactoryAutoData<MstrContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MstrContext>))]
         public async Task GetAllPersonsAssociatedWithAcademyAsync_ShouldReturnEmptyList_WhenAcademyExistWithNoPeople(
-        CustomWebApplicationFactory<Startup, MstrContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
             IEstablishmentsClient establishmentsClient)
+        {   
+            // Arrange
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
-        {   // Arrange
-            var dbcontext = factory.GetDbContext();
+            var dbContext = factory.GetDbContext();
 
-            await dbcontext.Establishments.Where(x => x.SK == 2)
+            await dbContext.Establishments.Where(x => x.SK == 2)
             .ExecuteUpdateAsync(x => x.SetProperty(p => p.URN, 33));
 
             // Act
@@ -54,11 +60,13 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomWebAppFactoryAutoData<MstrContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MstrContext>))]
         public async Task GetAllPersonsAssociatedWithAcademyAsync_ShouldThrowAnException_WhenAcademyDoesntExists(
-        CustomWebApplicationFactory<Startup, MstrContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
             IEstablishmentsClient establishmentsClient)
         {
+            // Arrange
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<PersonsApiException>(() =>

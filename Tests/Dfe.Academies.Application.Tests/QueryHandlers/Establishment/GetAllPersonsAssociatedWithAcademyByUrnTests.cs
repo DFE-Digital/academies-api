@@ -20,7 +20,7 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
         [CustomAutoData(
             typeof(AcademyGovernanceCustomization),
             typeof(AcademyGovernanceQueryModelCustomization),
-            typeof(AutoMapperCustomization<AcademyWithGovernanceProfile>))]
+            typeof(AutoMapperCustomization))]
         public async Task Handle_ShouldReturnPersonsAssociatedWithAcademy_WhenUrnExists(
             [Frozen] IEstablishmentQueryService mockEstablishmentQueryService,
             [Frozen] IMapper mockMapper,

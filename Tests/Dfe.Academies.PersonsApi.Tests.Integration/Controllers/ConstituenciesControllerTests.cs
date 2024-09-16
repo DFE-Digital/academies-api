@@ -1,21 +1,25 @@
-﻿using Dfe.Academies.Infrastructure;
+﻿using System.Net;
+using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Testing.Common.Attributes;
+using Dfe.Academies.Testing.Common.Customizations;
 using Dfe.Academies.Testing.Common.Mocks;
 using Dfe.PersonsApi.Client.Contracts;
 using Microsoft.EntityFrameworkCore;
 using PersonsApi;
-using System.Net;
+using System.Security.Claims;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
     public class ConstituenciesControllerTests
     {
         [Theory]
-        [CustomWebAppFactoryAutoData<MopContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
         public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnMp_WhenConstituencyExists(
-            CustomWebApplicationFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
             IConstituenciesClient constituenciesClient)
         {
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
+
             // Arrange
             var dbContext = factory.GetDbContext();
 
@@ -34,12 +38,14 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomWebAppFactoryAutoData<MopContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
         public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnNotFound_WhenConstituencyDoesNotExist(
-        CustomWebApplicationFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
             IConstituenciesClient constituenciesClient)
         {
             // Arrange
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
+
             var constituencyName = Uri.EscapeDataString("NonExistentConstituency");
 
             // Act & Assert
@@ -50,11 +56,13 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomWebAppFactoryAutoData<MopContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnMps_WhenConstituenciesExists(
-        CustomWebApplicationFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
             IConstituenciesClient constituenciesClient)
         {
+            // Arrange
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
             var dbcontext = factory.GetDbContext();
 
@@ -65,20 +73,23 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 
             // Act
             var result = await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
-                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = [constituencyName] });
+                new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = [constituencyName, "Test Constituency 2"] });
 
             // Assert
             Assert.NotNull(result);
             Assert.NotEmpty(result);
-            Assert.Single(result);
+            Assert.Equal(2, result.Count);
         }
 
         [Theory]
-        [CustomWebAppFactoryAutoData<MopContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnEmpty_WhenConstituenciesDontExists(
-        CustomWebApplicationFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
             IConstituenciesClient constituenciesClient)
         {
+            // Arrange
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
+
             // Act
             var result = await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(
                 new GetMembersOfParliamentByConstituenciesQuery() { ConstituencyNames = ["constituencyName"] });
@@ -89,11 +100,14 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomWebAppFactoryAutoData<MopContext>("Role:API.Read")]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldThrowAnException_WhenConstituenciesNotProvided(
-        CustomWebApplicationFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
             IConstituenciesClient constituenciesClient)
         {
+            // Arrange
+            factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
+
             // Act & Assert
             var exception = await Assert.ThrowsAsync<PersonsApiException>(async () =>
                 await constituenciesClient.GetMembersOfParliamentByConstituenciesAsync(

@@ -1,26 +1,26 @@
 ﻿using AutoFixture;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Dfe.Academies.Testing.Common.Helpers;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Dfe.Academies.Testing.Common.Customizations
 {
-    //public class DbContextCustomization<TContext> : ICustomization where TContext : DbContext
-    //{
-    //    //public void Customize(IFixture fixture)
-    //    //{
-    //    //    fixture.Customize<TContext>(composer => composer.FromFactory(() =>
-    //    //    {
-    //    //        var options = new DbContextOptionsBuilder<TContext>()
-    //    //            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-    //    //            .Options;
+    public class DbContextCustomization<TContext> : ICustomization where TContext : DbContext
+    {
+        private SqliteConnection? _connection;
 
-    //    //        return (TContext)Activator.CreateInstance(typeof(TContext), options);
-    //    //    }));
-    //    //}
-    //}
+        public void Customize(IFixture fixture)
+        {
+            fixture.Register<DbSet<object>>(() => null);
 
+            fixture.Customize<TContext>(composer => composer.FromFactory(() =>
+            {
+                var services = new ServiceCollection();
+                var dbContext = DbContextHelper<TContext>.CreateDbContext(services);
+                fixture.Inject(dbContext);
+                return dbContext;
+            }).OmitAutoProperties());
+        }
+    }
 }

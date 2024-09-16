@@ -20,7 +20,7 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
         [CustomAutoData(
             typeof(MemberOfParliamentCustomization),
             typeof(ConstituencyCustomization),
-            typeof(AutoMapperCustomization<ConstituencyProfile>))]
+            typeof(AutoMapperCustomization))]
         public async Task Handle_ShouldReturnMemberOfParliament_WhenConstituencyExists(
             [Frozen] IConstituencyRepository mockConstituencyRepository,
             [Frozen] IMapper mockMapper,
