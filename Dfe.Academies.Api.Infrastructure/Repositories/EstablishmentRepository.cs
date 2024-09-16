@@ -1,6 +1,8 @@
-﻿using Dfe.Academies.Academisation.Data;
+﻿using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Establishment;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Dfe.Academies.Infrastructure.Models;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
@@ -140,6 +142,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return result;
         }
+
     }
 
     internal record EstablishmentQueryResult

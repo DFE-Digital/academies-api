@@ -1,34 +1,34 @@
-using System.Text.Json.Serialization;
 using Dfe.Academisation.CorrelationIdMiddleware;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Text.Json.Serialization;
 
 namespace TramsDataApi
 {
     using DatabaseModels;
+    using Dfe.Academies.Application.MappingProfiles;
     using Gateways;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.FeatureManagement;
     using Middleware;
+    using NetEscapades.AspNetCore.SecurityHeaders;
     using Swashbuckle.AspNetCore.SwaggerUI;
     using System;
     using System.IO;
     using System.Reflection;
+    using System.Text;
     using TramsDataApi.Configuration;
     using TramsDataApi.ResponseModels;
     using TramsDataApi.SerilogCustomEnrichers;
-    using UseCases;
-    using Microsoft.FeatureManagement;
     using TramsDataApi.Services;
-    using Microsoft.AspNetCore.Http;
-    using System.Text;
-    using NetEscapades.AspNetCore.SecurityHeaders;
     using TramsDataApi.Swagger;
-    using Dfe.Academies.Application.MappingProfiles;
+    using UseCases;
 
     public class Startup
     {
@@ -83,6 +83,8 @@ namespace TramsDataApi
             services.AddScoped<IGetAllFssProjects, GetAllFssProjects>();
             services.AddScoped<ICorrelationContext, CorrelationContext>();
             services.AddScoped<MfspApiClient, MfspApiClient>();
+
+            services.AddInfrastructureDependencyGroup(Configuration);
 
             services.AddApiVersioning(config =>
             {
@@ -144,7 +146,7 @@ namespace TramsDataApi
                 });
             }
 
-            services.AddAutoMapper(typeof(PersonProfile));
+            services.AddAutoMapper(typeof(ConstituencyProfile));
 
             services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
             services.AddSingleton<ApiUserEnricher>();

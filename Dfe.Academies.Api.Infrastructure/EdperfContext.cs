@@ -1,14 +1,6 @@
-﻿using Dfe.Academies.Academisation.Data;
-using Dfe.Academies.Domain.EducationalPerformance;
-using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Trust;
+﻿using Dfe.Academies.Domain.EducationalPerformance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dfe.Academies.Infrastructure
 {

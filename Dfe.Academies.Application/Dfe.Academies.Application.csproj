@@ -9,12 +9,15 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.10" />
+    <PackageReference Include="FluentValidation" Version="11.9.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
     <ProjectReference Include="..\Dfe.Academies.Domain\Dfe.Academies.Domain.csproj" />
     <ProjectReference Include="..\Dfe.Academies.Utils\Dfe.Academies.Utils.csproj" />
   </ItemGroup>

@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<NoWarn>$(NoWarn);1591</NoWarn>
+	<UserSecretsId>8c1ad605-0dd4-443a-ad18-dd22bbb2a9d9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,20 +42,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
     <ProjectReference Include="..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
   </ItemGroup>
 
 	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='true'">
-		<Exec
-		 ConsoleToMSBuild="true"
-		 ContinueOnError="true"
-		 Command="$(NSwagExe_Net80) run ../Dfe.PersonsApi.Client/nswag.json">
-			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode"/>
+		<Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net80) run ../Dfe.PersonsApi.Client/nswag.json">
+			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
 			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
 		</Exec>
 
-		<Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low"/>
-		<Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'"/>
+		<Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
+		<Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
 	</Target>
 	
 </Project>

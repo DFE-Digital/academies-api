@@ -1,38 +1,21 @@
+using Dfe.Academies.Application.MappingProfiles;
 using Dfe.Academisation.CorrelationIdMiddleware;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.FeatureManagement;
+using NetEscapades.AspNetCore.SecurityHeaders;
+using PersonsApi.Middleware;
+using PersonsApi.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace PersonsApi
 {
-    using Dfe.Academies.Application.MappingProfiles;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.ApiExplorer;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.FeatureManagement;
-    using Middleware;
-    using NetEscapades.AspNetCore.SecurityHeaders;
-    using PersonsApi.ResponseModels;
-    using PersonsApi.SerilogCustomEnrichers;
-    using PersonsApi.Swagger;
-    using Swashbuckle.AspNetCore.SwaggerUI;
-    using System;
-    using System.IO;
-    using System.Reflection;
-    using System.Text;
-    using UseCases;
-
-    public class Startup
+    public class Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; } = configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,6 +23,8 @@ namespace PersonsApi
             services.AddControllers().AddJsonOptions(c => {c.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());});
             services.AddApiVersioning();
             services.AddFeatureManagement();
+
+            services.AddPersonsApiInfrastructureDependencyGroup(Configuration);
 
             services.AddScoped<ICorrelationContext, CorrelationContext>();
 
@@ -91,8 +76,6 @@ namespace PersonsApi
                     };
                 });
 
-            services.AddUseCases();
-
             var appInsightsCnnStr = Configuration?.GetSection("ApplicationInsights")?["ConnectionString"];
             if (!string.IsNullOrWhiteSpace(appInsightsCnnStr))
             {
@@ -102,8 +85,6 @@ namespace PersonsApi
                 });
             }
 
-            services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
-            services.AddSingleton<ApiUserEnricher>();
             services.AddHsts(options =>
             {
                 options.Preload = true;
@@ -111,7 +92,7 @@ namespace PersonsApi
                 options.MaxAge = TimeSpan.FromDays(365);
             });
 
-            services.AddAutoMapper(typeof(PersonProfile));
+            services.AddAutoMapper(typeof(ConstituencyProfile));
 
             services.AddOpenApiDocument(configure =>
             {
@@ -178,7 +159,7 @@ namespace PersonsApi
                     c.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
                 }
 
-                c.SupportedSubmitMethods(SubmitMethod.Get);
+                c.SupportedSubmitMethods(SubmitMethod.Get, SubmitMethod.Post, SubmitMethod.Put, SubmitMethod.Delete);
             });
 
             if (env.IsDevelopment())
@@ -187,12 +168,13 @@ namespace PersonsApi
             }
 
             app.UseMiddleware<CorrelationIdMiddleware>();
-            app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<UrlDecoderMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

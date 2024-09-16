@@ -44,11 +44,107 @@
           }
         }
       }
+    },
+    "/v1/Constituencies/mps": {
+      "post": {
+        "tags": [
+          "Constituencies"
+        ],
+        "summary": "Retrieve a collection of Member of Parliament by a collection of constituency names",
+        "operationId": "Constituencies_GetMembersOfParliamentByConstituencies",
+        "requestBody": {
+          "x-name": "request",
+          "description": "The request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetMembersOfParliamentByConstituenciesQuery"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "A collection of MemberOfParliament objects.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberOfParliament"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Constituency names cannot be null or empty."
+          }
+        }
+      }
+    },
+    "/v1/Establishments/{urn}/getAssociatedPersons": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieve All Members Associated With an Academy by Urn",
+        "operationId": "Establishments_GetAllPersonsAssociatedWithAcademyByUrn",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "description": "The URN.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A Collection of Persons Associated With the Academy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AcademyGovernance"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Academy not found."
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "MemberOfParliament": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Person"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "constituencyName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "Person": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -71,13 +167,56 @@
           "displayNameWithTitle": {
             "type": "string"
           },
-          "role": {
-            "type": "string"
+          "phone": {
+            "type": "string",
+            "nullable": true
           },
-          "constituencyName": {
-            "type": "string"
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
+      },
+      "GetMembersOfParliamentByConstituenciesQuery": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "constituencyNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AcademyGovernance": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Person"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ukprn": {
+                "type": "string",
+                "nullable": true
+              },
+              "urn": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
       }
     }
   }

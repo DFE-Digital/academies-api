@@ -1,8 +1,9 @@
-﻿using Dfe.Academies.Domain.Persons;
+﻿using Dfe.Academies.Domain.Constituencies;
+using Dfe.Academies.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dfe.Academies.Academisation.Data;
+namespace Dfe.Academies.Infrastructure;
 
 public class MopContext : DbContext
 {
@@ -37,27 +38,47 @@ public class MopContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-
-    private void ConfigureMemberContactDetails(EntityTypeBuilder<MemberContactDetails> memberContactDetailsConfiguration)
+    private static void ConfigureMemberContactDetails(EntityTypeBuilder<MemberContactDetails> memberContactDetailsConfiguration)
     {
-        memberContactDetailsConfiguration.HasKey(e => e.MemberID);
+        memberContactDetailsConfiguration.HasKey(e => e.MemberId);
 
         memberContactDetailsConfiguration.ToTable("MemberContactDetails", DEFAULT_SCHEMA);
-        memberContactDetailsConfiguration.Property(e => e.MemberID).HasColumnName("memberID");
+        memberContactDetailsConfiguration.Property(e => e.MemberId).HasColumnName("memberID")
+                .HasConversion(
+                    v => v.Value,
+                    v => new MemberId(v));
         memberContactDetailsConfiguration.Property(e => e.Email).HasColumnName("email");
+        memberContactDetailsConfiguration.Property(e => e.Phone).HasColumnName("phone");
         memberContactDetailsConfiguration.Property(e => e.TypeId).HasColumnName("typeId");
     }
 
     private void ConfigureConstituency(EntityTypeBuilder<Constituency> constituencyConfiguration)
     {
         constituencyConfiguration.ToTable("Constituencies", DEFAULT_SCHEMA);
-        constituencyConfiguration.Property(e => e.ConstituencyId).HasColumnName("constituencyId");
+        constituencyConfiguration.Property(e => e.ConstituencyId).HasColumnName("constituencyId")
+            .HasConversion(
+                    v => v.Value,
+                    v => new ConstituencyId(v));
+        constituencyConfiguration.Property(e => e.MemberId)
+            .HasConversion(
+                    v => v.Value,
+                    v => new MemberId(v));
         constituencyConfiguration.Property(e => e.ConstituencyName).HasColumnName("constituencyName");
-        constituencyConfiguration.Property(e => e.NameList).HasColumnName("nameListAs");
-        constituencyConfiguration.Property(e => e.NameDisplayAs).HasColumnName("nameDisplayAs");
-        constituencyConfiguration.Property(e => e.NameFullTitle).HasColumnName("nameFullTitle");
-        constituencyConfiguration.Property(e => e.NameFullTitle).HasColumnName("nameFullTitle");
+
+        constituencyConfiguration.OwnsOne(e => e.NameDetails, nameDetails =>
+        {
+            nameDetails.Property(nd => nd.NameListAs).HasColumnName("nameListAs");
+            nameDetails.Property(nd => nd.NameDisplayAs).HasColumnName("nameDisplayAs");
+            nameDetails.Property(nd => nd.NameFullTitle).HasColumnName("nameFullTitle");
+        });
+
         constituencyConfiguration.Property(e => e.LastRefresh).HasColumnName("lastRefresh");
+
+        constituencyConfiguration
+            .HasOne(c => c.MemberContactDetails)
+            .WithOne()
+            .HasForeignKey<Constituency>(c => c.MemberId)
+            .HasPrincipalKey<MemberContactDetails>(m => m.MemberId);
     }
 
 

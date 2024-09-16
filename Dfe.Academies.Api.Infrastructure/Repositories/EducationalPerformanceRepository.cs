@@ -1,5 +1,6 @@
 ﻿using Dfe.Academies.Domain.EducationalPerformance;
 using Microsoft.EntityFrameworkCore;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
