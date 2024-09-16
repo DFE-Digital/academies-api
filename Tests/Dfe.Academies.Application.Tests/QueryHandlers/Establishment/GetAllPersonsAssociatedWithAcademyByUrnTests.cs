@@ -1,9 +1,7 @@
 ﻿using AutoFixture.Xunit2;
-using AutoMapper;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn;
-using Dfe.Academies.Application.MappingProfiles;
 using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Infrastructure.Models;
 using Dfe.Academies.Testing.Common.Attributes;
@@ -23,7 +21,6 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
             typeof(AutoMapperCustomization))]
         public async Task Handle_ShouldReturnPersonsAssociatedWithAcademy_WhenUrnExists(
             [Frozen] IEstablishmentQueryService mockEstablishmentQueryService,
-            [Frozen] IMapper mockMapper,
             [Frozen] ICacheService mockCacheService,
             GetAllPersonsAssociatedWithAcademyByUrnQueryHandler handler,
             GetAllPersonsAssociatedWithAcademyByUrnQuery query,

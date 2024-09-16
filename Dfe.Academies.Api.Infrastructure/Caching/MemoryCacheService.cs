@@ -17,14 +17,14 @@ namespace Dfe.Academies.Infrastructure.Caching
 
         public async Task<T> GetOrAddAsync<T>(string cacheKey, Func<Task<T>> fetchFunction, string methodName)
         {
-            if (memoryCache.TryGetValue(cacheKey, out T cachedValue))
+            if (memoryCache.TryGetValue(cacheKey, out T? cachedValue))
             {
                 logger.LogInformation("Cache hit for key: {CacheKey}", cacheKey);
-                return cachedValue;
+                return cachedValue!;
             }
 
             logger.LogInformation("Cache miss for key: {CacheKey}. Fetching from source...", cacheKey);
-            T result = await fetchFunction();
+            var result = await fetchFunction();
 
             if (result == null) return result;
             var cacheDuration = GetCacheDurationForMethod(methodName);

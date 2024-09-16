@@ -18,18 +18,18 @@ namespace Dfe.Academies.Infrastructure.Security
         private const string ApiKeyHeaderName = "ApiKey";
         private readonly List<ApiUser>? _configuredApiKeys = configuration.GetSection("ApiKeys").Get<List<ApiUser>>();
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ApiKeyOrRoleRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ApiKeyOrRoleRequirement requirement)
         {
             // Check API Key
             if (httpContextAccessor.HttpContext!.Request.Headers.TryGetValue(ApiKeyHeaderName, out StringValues apiKeyHeader))
             {
 
-                var key = _configuredApiKeys?.FirstOrDefault(user => user.ApiKey.Equals(apiKeyHeader));
+                var key = _configuredApiKeys?.Find(user => user.ApiKey.Equals(apiKeyHeader));
 
                 if (key != null)
                 {
                     context.Succeed(requirement);
-                    return;
+                    return Task.CompletedTask;
                 }
             }
 
@@ -38,6 +38,8 @@ namespace Dfe.Academies.Infrastructure.Security
             {
                 context.Succeed(requirement);
             }
+
+            return Task.CompletedTask;
         }
     }
 }

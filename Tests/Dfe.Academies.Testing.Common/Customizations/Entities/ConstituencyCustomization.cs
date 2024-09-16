@@ -12,14 +12,17 @@ namespace Dfe.Academies.Testing.Common.Customizations.Entities
             {
                 var constituencyId = fixture.Create<ConstituencyId>();
                 var memberId = fixture.Create<MemberId>();
+                var nameDetails = new NameDetails(
+                    "Doe, John",
+                    "John Doe",
+                    "Mr. John Doe MP"
+                );
 
                 return new Constituency(
                     constituencyId,
                     memberId,
                     fixture.Create<string>(),
-                    "Doe, John",
-                    "John Doe",
-                    "Mr. John Doe MP",
+                    nameDetails,
                     fixture.Create<DateTime>(),
                     DateOnly.FromDateTime(fixture.Create<DateTime>().Date),
                     fixture.Create<MemberContactDetails>()

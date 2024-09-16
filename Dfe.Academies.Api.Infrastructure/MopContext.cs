@@ -38,7 +38,7 @@ public class MopContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    private void ConfigureMemberContactDetails(EntityTypeBuilder<MemberContactDetails> memberContactDetailsConfiguration)
+    private static void ConfigureMemberContactDetails(EntityTypeBuilder<MemberContactDetails> memberContactDetailsConfiguration)
     {
         memberContactDetailsConfiguration.HasKey(e => e.MemberId);
 
@@ -64,10 +64,14 @@ public class MopContext : DbContext
                     v => v.Value,
                     v => new MemberId(v));
         constituencyConfiguration.Property(e => e.ConstituencyName).HasColumnName("constituencyName");
-        constituencyConfiguration.Property(e => e.NameList).HasColumnName("nameListAs");
-        constituencyConfiguration.Property(e => e.NameDisplayAs).HasColumnName("nameDisplayAs");
-        constituencyConfiguration.Property(e => e.NameFullTitle).HasColumnName("nameFullTitle");
-        constituencyConfiguration.Property(e => e.NameFullTitle).HasColumnName("nameFullTitle");
+
+        constituencyConfiguration.OwnsOne(e => e.NameDetails, nameDetails =>
+        {
+            nameDetails.Property(nd => nd.NameListAs).HasColumnName("nameListAs");
+            nameDetails.Property(nd => nd.NameDisplayAs).HasColumnName("nameDisplayAs");
+            nameDetails.Property(nd => nd.NameFullTitle).HasColumnName("nameFullTitle");
+        });
+
         constituencyConfiguration.Property(e => e.LastRefresh).HasColumnName("lastRefresh");
 
         constituencyConfiguration

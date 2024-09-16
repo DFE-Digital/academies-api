@@ -1,8 +1,6 @@
 ﻿using AutoFixture.Xunit2;
-using AutoMapper;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency;
-using Dfe.Academies.Application.MappingProfiles;
 using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Testing.Common.Attributes;
@@ -23,7 +21,6 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
             typeof(AutoMapperCustomization))]
         public async Task Handle_ShouldReturnMemberOfParliament_WhenConstituencyExists(
             [Frozen] IConstituencyRepository mockConstituencyRepository,
-            [Frozen] IMapper mockMapper,
             [Frozen] ICacheService mockCacheService,
             GetMemberOfParliamentByConstituencyQueryHandler handler,
             GetMemberOfParliamentByConstituencyQuery query,

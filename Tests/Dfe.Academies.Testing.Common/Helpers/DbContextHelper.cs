@@ -148,9 +148,11 @@ namespace Dfe.Academies.Testing.Common.Helpers
                     new ConstituencyId(1),
                     new MemberId(1),
                     "Test Constituency 1",
-                    "Wood, John",
-                    "John Wood",
-                    "John Wood MP",
+                    new NameDetails(
+                        "Wood, John",
+                        "John Wood",
+                        "Mr. John Wood MP"
+                    ),
                     DateTime.UtcNow,
                     null,
                     memberContact1
@@ -160,9 +162,11 @@ namespace Dfe.Academies.Testing.Common.Helpers
                     new ConstituencyId(2),
                     new MemberId(2),
                     "Test Constituency 2",
-                    "Wood, Joe",
-                    "Joe Wood",
-                    "Joe Wood MP",
+                    new NameDetails(
+                        "Wood, Joe",
+                        "Joe Wood",
+                        "Mr. Joe Wood MP"
+                    ),
                     DateTime.UtcNow,
                     null,
                     memberContact2

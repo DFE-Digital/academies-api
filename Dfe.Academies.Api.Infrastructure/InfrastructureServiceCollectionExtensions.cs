@@ -23,11 +23,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEducationalPerformanceRepository, EducationalPerformanceRepository>();
 
             //Db
+            var connectionString = config.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<MstrContext>(options =>
-                options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString));
 
             services.AddDbContext<EdperfContext>(options =>
-                options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString));
 
             return services;
         }
@@ -50,11 +52,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICacheService, MemoryCacheService>();
 
             //Db
+            var connectionString = config.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<MstrContext>(options =>
-                options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString));
 
             services.AddDbContext<MopContext>(options =>
-                options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString));
 
             // Authentication
             services.AddCustomAuthorization(config);

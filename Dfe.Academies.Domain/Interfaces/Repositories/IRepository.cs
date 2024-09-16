@@ -42,6 +42,14 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         TEntity Find(params object[] keyValues);
 
         /// <summary>
+        /// Returns the first entity of a sequence that satisfies a specified condition
+        /// or a default value if no such entity is found.
+        /// </summary>
+        /// <param name="predicate">A function to test an entity for a condition</param>
+        /// <returns>The entity found, or null</returns>
+        TEntity Find(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
         /// Asynchronously finds an entity with the given primary key value.  If an entity with the
         /// given primary key values exists in the context, then it is returned immediately
         /// without making a request to the store. Otherwise, a request is made to the
@@ -52,14 +60,6 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <param name="keyValues">The key values.</param>
         /// <returns>The entity found, or null.</returns>
         Task<TEntity> FindAsync(params object[] keyValues);
-
-        /// <summary>
-        /// Returns the first entity of a sequence that satisfies a specified condition
-        /// or a default value if no such entity is found.
-        /// </summary>
-        /// <param name="predicate">A function to test an entity for a condition</param>
-        /// <returns>The entity found, or null</returns>
-        TEntity Find(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Asynchronously returns the first entity of a sequence that satisfies a specified condition
@@ -87,6 +87,16 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         TEntity Get(params object[] keyValues);
 
         /// <summary>
+        /// Gets an entity that satisfies a specified condition,
+        /// and throws an exception if more than one such element exists.
+        /// </summary>
+        /// <param name="predicate">A function to test an element for a condition.</param>
+        /// <exception cref="T:System.InvalidOperationException">
+        /// No entity satisfies the condition in predicate. -or- More than one entity satisfies the condition in predicate. -or- The source sequence is empty.
+        /// </exception>
+        TEntity Get(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
         /// Asynchronously gets an entity with the given primary key value.  If an entity with the
         /// given primary key values exists in the context, then it is returned immediately
         /// without making a request to the store. Otherwise, a request is made to the
@@ -99,16 +109,6 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <returns>The entity found</returns>
         /// <exception cref="T:System.InvalidOperationException">If no entity is found in the context or the store -or- more than one entity is found, then an</exception>
         Task<TEntity> GetAsync(params object[] keyValues);
-
-        /// <summary>
-        /// Gets an entity that satisfies a specified condition,
-        /// and throws an exception if more than one such element exists.
-        /// </summary>
-        /// <param name="predicate">A function to test an element for a condition.</param>
-        /// <exception cref="T:System.InvalidOperationException">
-        /// No entity satisfies the condition in predicate. -or- More than one entity satisfies the condition in predicate. -or- The source sequence is empty.
-        /// </exception>
-        TEntity Get(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Asynchronously gets an entity that satisfies a specified condition,
@@ -149,7 +149,6 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <param name="entities"></param>
         /// <returns></returns>
         IEnumerable<TEntity> AddRange(ICollection<TEntity> entities);
-
         
         /// <summary>
         /// 
