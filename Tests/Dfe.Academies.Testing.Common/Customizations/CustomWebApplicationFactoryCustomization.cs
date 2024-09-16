@@ -11,14 +11,13 @@ namespace Dfe.Academies.Testing.Common.Customizations
 {
     public class CustomWebApplicationFactoryCustomization<TProgram> : ICustomization
         where TProgram : class {
-        private readonly List<Claim> _testClaims;
 
         public void Customize(IFixture fixture)
         {
             fixture.Customize<CustomWebApplicationFactory<TProgram>>(composer => composer.FromFactory(() =>
             {
 
-                var factory = new CustomWebApplicationFactory<TProgram>(_testClaims); 
+                var factory = new CustomWebApplicationFactory<TProgram>(); 
 
                 var client = factory.CreateClient();
 
@@ -41,11 +40,11 @@ namespace Dfe.Academies.Testing.Common.Customizations
                 fixture.Inject(client);
                 fixture.Inject(serviceProvider.GetRequiredService<IConstituenciesClient>());
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsClient>());
+                fixture.Inject(new List<Claim>());
 
                 return factory;
             }));
 
-            fixture.Inject(_testClaims);
         }
     }
 }

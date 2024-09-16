@@ -12,9 +12,8 @@ namespace Dfe.Academies.Domain.Constituencies
         public DateTime LastRefresh { get; private set; }
         public DateOnly? EndDate { get; private set; }
 
-        public Constituency() { }
-
         public virtual MemberContactDetails MemberContactDetails { get; private set; }
+        public Constituency() { }
 
         public Constituency(
             ConstituencyId constituencyId,
@@ -35,5 +34,4 @@ namespace Dfe.Academies.Domain.Constituencies
         }
     }
 #pragma warning restore CS8618
-
 }

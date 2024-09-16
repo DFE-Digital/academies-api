@@ -1,7 +1,7 @@
-﻿using AutoFixture;
+﻿using System.Security.Claims;
+using AutoFixture;
 using Dfe.Academies.Testing.Common.Mocks;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using Dfe.PersonsApi.Client;
 using Dfe.PersonsApi.Client.Contracts;
 using Dfe.PersonsApi.Client.Extensions;
@@ -13,17 +13,12 @@ namespace Dfe.Academies.Testing.Common.Customizations
     public class CustomWebApplicationDbContextFactoryCustomization<TProgram, TDbContext> : ICustomization
         where TProgram : class where TDbContext : DbContext
     {
-        private readonly List<Claim> _testClaims;
-
         public void Customize(IFixture fixture)
         {
             fixture.Customize<CustomWebApplicationDbContextFactory<TProgram, TDbContext>>(composer => composer.FromFactory(() =>
             {
 
-                var factory = new CustomWebApplicationDbContextFactory<TProgram, TDbContext>()
-                {
-                    TestClaims = _testClaims
-                }; 
+                var factory = new CustomWebApplicationDbContextFactory<TProgram, TDbContext>();
 
                 var client = factory.CreateClient();
 
@@ -46,11 +41,10 @@ namespace Dfe.Academies.Testing.Common.Customizations
                 fixture.Inject(client);
                 fixture.Inject(serviceProvider.GetRequiredService<IConstituenciesClient>());
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsClient>());
+                fixture.Inject(new List<Claim>());
 
                 return factory;
             }));
-
-            fixture.Inject(_testClaims);
         }
     }
 }

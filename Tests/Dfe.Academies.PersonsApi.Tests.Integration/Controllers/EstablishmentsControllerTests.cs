@@ -31,8 +31,8 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
             // Assert
             Assert.NotNull(result);
             Assert.NotEmpty(result);
-            Assert.Equal(2, result.Count());
-            Assert.True(result.All(x => x.Roles.Any()));
+            Assert.Equal(2, result.Count);
+            Assert.True(result.All(x => x.Roles.Count > 0));
             Assert.Contains(result, x => x.FirstName == "Anna");
             Assert.Contains(result, x => x.FirstName == "John");
         }

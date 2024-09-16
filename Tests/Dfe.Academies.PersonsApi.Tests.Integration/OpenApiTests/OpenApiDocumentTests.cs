@@ -8,10 +8,13 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.OpenApiTests;
 
 public class OpenApiDocumentTests
 {
+#pragma warning disable xUnit1026
+
     [Theory]
     [CustomAutoData(typeof(CustomWebApplicationFactoryCustomization<Startup>))]
     public async Task SwaggerEndpoint_ReturnsSuccessAndCorrectContentType(
         CustomWebApplicationFactory<Startup> factory,
+
         HttpClient client)
     {
         var response = await client.GetAsync("/swagger/v1/swagger.json");
@@ -20,4 +23,5 @@ public class OpenApiDocumentTests
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
+#pragma warning restore xUnit1026
 }

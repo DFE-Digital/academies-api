@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.PersonsApi.Tests.Integration.Mocks;
-using Dfe.Academies.Testing.Common.Helpers;
+﻿using Dfe.Academies.Testing.Common.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -14,7 +13,7 @@ namespace Dfe.Academies.Testing.Common.Mocks
     public class CustomWebApplicationDbContextFactory<TProgram, TDbContext> : WebApplicationFactory<TProgram>
         where TProgram : class where TDbContext : DbContext
     {
-        public List<Claim> TestClaims { get; set; } = [];
+        public List<Claim>? TestClaims { get; set; } = [];
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -39,7 +38,7 @@ namespace Dfe.Academies.Testing.Common.Mocks
                 services.AddAuthentication("TestScheme")
                     .AddScheme<AuthenticationSchemeOptions, MockJwtBearerHandler>("TestScheme", options => { });
 
-                services.AddSingleton<IEnumerable<Claim>>(sp => TestClaims);
+                services.AddSingleton<IEnumerable<Claim>>(sp => TestClaims ?? []);
             });
 
             builder.UseEnvironment("Development");

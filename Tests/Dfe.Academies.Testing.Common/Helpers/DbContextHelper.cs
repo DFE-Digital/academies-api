@@ -12,8 +12,6 @@ namespace Dfe.Academies.Testing.Common.Helpers
 {
     public static class DbContextHelper<TContext> where TContext : DbContext
     {
-        private static SqliteConnection? _connection;
-
         public static TContext CreateDbContext(IServiceCollection services)
         {
             var connection = new SqliteConnection("DataSource=:memory:");
