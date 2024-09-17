@@ -1,4 +1,5 @@
 ﻿using Dfe.Academies.Application.Common.Interfaces;
+using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Infrastructure.Caching;
 using Dfe.Academies.Infrastructure.Repositories;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Infrastructure.QueryServices;
+using Dfe.Academies.Domain.ValueObjects;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -41,8 +43,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ITrustRepository, TrustRepository>();
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
             services.AddScoped<IConstituencyRepository, ConstituencyRepository>();
-            services.AddScoped(typeof(IMstrRepository<>), typeof(MstrRepository<>));
-            services.AddScoped(typeof(IMopRepository<>), typeof(MopRepository<>));
+            services.AddScoped(typeof(IMstrRepository<,>), typeof(MstrRepository<,>));
+            services.AddScoped(typeof(IMopRepository<,>), typeof(MopRepository<,>));
 
             // Query Services
             services.AddScoped<IEstablishmentQueryService, EstablishmentQueryService>();
