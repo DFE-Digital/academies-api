@@ -12,7 +12,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
     {
         /// <summary>Returns a queryable (un-resolved!!!!) list of objects.</summary>
         /// <returns>Do not expose IQueryable outside of the domain layer</returns>
-        IQueryable<TAggregate> Query() => throw new NotImplementedException();
+        IQueryable<TAggregate> Query();
 
         /// <summary>
         /// Returns an enumerated (resolved!) list of objects based on known query predicate.
@@ -20,7 +20,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <param name="predicate"></param>
         /// <returns></returns>
         /// <remarks>We know that its the same as doing IQueryable`T.Where(p=&gt; p.value=x).Enumerate but this limits the repo to only ever returning resolved lists.</remarks>
-        ICollection<TAggregate> Fetch(Expression<Func<TAggregate, bool>> predicate) => throw new NotImplementedException();
+        ICollection<TAggregate> Fetch(Expression<Func<TAggregate, bool>> predicate);
 
         /// <summary>
         /// Asynchronously returns an enumerated (resolved!) list of objects based on known query predicate.
@@ -31,7 +31,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <remarks>We know that its the same as doing IQueryable`T.Where(p=&gt; p.value=x).Enumerate but this limits the repo to only ever returning resolved lists.</remarks>
         Task<ICollection<TAggregate>> FetchAsync(
           Expression<Func<TAggregate, bool>> predicate,
-          CancellationToken cancellationToken = default(CancellationToken)) => throw new NotImplementedException();
+          CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Finds an entity with the given primary key value.  If an entity with the
@@ -43,7 +43,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// </summary>
         /// <param name="keyValues">The key values.</param>
         /// <returns>The entity found, or null.</returns>
-        TAggregate Find(params TId[] keyValues) => throw new NotImplementedException();
+        TAggregate Find(params TId[] keyValues);
 
         /// <summary>
         /// Returns the first entity of a sequence that satisfies a specified condition
@@ -51,7 +51,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// </summary>
         /// <param name="predicate">A function to test an entity for a condition</param>
         /// <returns>The entity found, or null</returns>
-        TAggregate Find(Expression<Func<TAggregate, bool>> predicate) => throw new NotImplementedException();
+        TAggregate Find(Expression<Func<TAggregate, bool>> predicate);
 
         /// <summary>
         /// Asynchronously finds an entity with the given primary key value.  If an entity with the
@@ -63,7 +63,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// </summary>
         /// <param name="keyValues">The key values.</param>
         /// <returns>The entity found, or null.</returns>
-        Task<TAggregate> FindAsync(params TId[] keyValues)=> throw new NotImplementedException();
+        Task<TAggregate> FindAsync(params TId[] keyValues);
 
         /// <summary>
         /// Asynchronously returns the first entity of a sequence that satisfies a specified condition
@@ -74,7 +74,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <returns>The entity found, or null</returns>
         Task<TAggregate> FindAsync(
           Expression<Func<TAggregate, bool>> predicate,
-          CancellationToken cancellationToken = default(CancellationToken))=> throw new NotImplementedException();
+          CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets an entity with the given primary key value.  If an entity with the
@@ -88,7 +88,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <param name="keyValues">The key values.</param>
         /// <returns>The entity found</returns>
         /// <exception cref="T:System.InvalidOperationException">If no entity is found in the context or the store -or- more than one entity is found, then an</exception>
-        TAggregate Get(params TId[] keyValues)=> throw new NotImplementedException();
+        TAggregate Get(params TId[] keyValues);
 
         /// <summary>
         /// Gets an entity that satisfies a specified condition,
@@ -98,7 +98,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <exception cref="T:System.InvalidOperationException">
         /// No entity satisfies the condition in predicate. -or- More than one entity satisfies the condition in predicate. -or- The source sequence is empty.
         /// </exception>
-        TAggregate Get(Expression<Func<TAggregate, bool>> predicate)=> throw new NotImplementedException();
+        TAggregate Get(Expression<Func<TAggregate, bool>> predicate);
 
         /// <summary>
         /// Asynchronously gets an entity with the given primary key value.  If an entity with the
@@ -112,7 +112,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <param name="keyValues">The key values.</param>
         /// <returns>The entity found</returns>
         /// <exception cref="T:System.InvalidOperationException">If no entity is found in the context or the store -or- more than one entity is found, then an</exception>
-        Task<TAggregate> GetAsync(params TId[] keyValues)=> throw new NotImplementedException();
+        Task<TAggregate> GetAsync(params TId[] keyValues);
 
         /// <summary>
         /// Asynchronously gets an entity that satisfies a specified condition,
@@ -122,7 +122,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <exception cref="T:System.InvalidOperationException">
         /// No entity satisfies the condition in predicate. -or- More than one entity satisfies the condition in predicate. -or- The source sequence is empty.
         /// </exception>
-        Task<TAggregate> GetAsync(Expression<Func<TAggregate, bool>> predicate)=> throw new NotImplementedException();
+        Task<TAggregate> GetAsync(Expression<Func<TAggregate, bool>> predicate);
 
         /// <summary>
         ///  Adds the given entity to the context underlying the set in the Added state
@@ -133,7 +133,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <remarks>Note that entities that are already in the context in some other state will
         /// have their state set to Added. Add is a no-op if the entity is already in
         /// the context in the Added state.</remarks>
-        TAggregate Add(TAggregate entity)=> throw new NotImplementedException();
+        TAggregate Add(TAggregate entity);
 
         /// <summary>
         ///  Asynchronously adds the given entity to the context underlying the set in the Added state
@@ -145,14 +145,14 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <remarks>Note that entities that are already in the context in some other state will
         /// have their state set to Added. Add is a no-op if the entity is already in
         /// the context in the Added state.</remarks>
-        Task<TAggregate> AddAsync(TAggregate entity, CancellationToken cancellationToken = default(CancellationToken))=> throw new NotImplementedException();
+        Task<TAggregate> AddAsync(TAggregate entity, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
-        IEnumerable<TAggregate> AddRange(ICollection<TAggregate> entities)=> throw new NotImplementedException();
+        IEnumerable<TAggregate> AddRange(ICollection<TAggregate> entities);
         
         /// <summary>
         /// 
@@ -162,7 +162,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <returns></returns>
         Task<IEnumerable<TAggregate>> AddRangeAsync(
           ICollection<TAggregate> entities,
-          CancellationToken cancellationToken = default(CancellationToken))=> throw new NotImplementedException();
+          CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         ///     Marks the given entity as Deleted such that it will be deleted from the database
@@ -175,7 +175,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// method will cause it to be detached from the context. This is because an
         /// Added entity is assumed not to exist in the database such that trying to
         /// delete it does not make sense.</remarks>
-        TAggregate Remove(TAggregate entity)=> throw new NotImplementedException();
+        TAggregate Remove(TAggregate entity);
 
         /// <summary>
         ///     Asynchronously marks the given entity as Deleted such that it will be deleted from the database
@@ -189,7 +189,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// method will cause it to be detached from the context. This is because an
         /// Added entity is assumed not to exist in the database such that trying to
         /// delete it does not make sense.</remarks>
-        Task<TAggregate> RemoveAsync(TAggregate entity, CancellationToken cancellationToken = default(CancellationToken))=> throw new NotImplementedException();
+        Task<TAggregate> RemoveAsync(TAggregate entity, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Executes a delete statement filtering the rows to be deleted.
@@ -202,13 +202,13 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// will not be reflected on any entities that have already been materialized
         /// in the current contex
         /// </remarks>
-        int Delete(Expression<Func<TAggregate, bool>> predicate)=> throw new NotImplementedException();
+        int Delete(Expression<Func<TAggregate, bool>> predicate);
 
         /// <summary>
         /// Removes the given collection of entities from the DbContext
         /// </summary>
         /// <param name="entities">The collection of entities to remove.</param>
-        IEnumerable<TAggregate> RemoveRange(ICollection<TAggregate> entities)=> throw new NotImplementedException();
+        IEnumerable<TAggregate> RemoveRange(ICollection<TAggregate> entities);
 
         /// <summary>
         /// Asynchronously removes the given collection of entities from the DbContext
@@ -217,19 +217,19 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         /// <param name="cancellationToken"></param>
         Task<IEnumerable<TAggregate>> RemoveRangeAsync(
           ICollection<TAggregate> entities,
-          CancellationToken cancellationToken = default(CancellationToken))=> throw new NotImplementedException();
+          CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Updates the given entity in the DbContext and executes SaveChanges()
         /// </summary>
         /// <param name="entity">The entity to update.</param>
-        TAggregate Update(TAggregate entity)=> throw new NotImplementedException();
+        TAggregate Update(TAggregate entity);
 
         /// <summary>
         /// Asynchronously updates the given entity in the DbContext and executes SaveChanges()
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <param name="cancellationToken"></param>
-        Task<TAggregate> UpdateAsync(TAggregate entity, CancellationToken cancellationToken = default(CancellationToken))=> throw new NotImplementedException();
+        Task<TAggregate> UpdateAsync(TAggregate entity, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

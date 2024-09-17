@@ -6,7 +6,8 @@ using System.Linq.Expressions;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
-#pragma warning disable CS8603 // Possible null reference return, behaviour expected
+#pragma warning disable CS8603, S2436
+
     [ExcludeFromCodeCoverage]
     public abstract class Repository<TAggregate, TId, TDbContext> : IRepository<TAggregate, TId>
         where TAggregate : class, IAggregateRoot<TId>
@@ -189,5 +190,5 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return entity;
         }
     }
-    #pragma warning restore CS8603 // Possible null reference return
+#pragma warning restore CS8603, S2436
 }

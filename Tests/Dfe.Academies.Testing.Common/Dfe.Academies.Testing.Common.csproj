@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Customizations\Handlers\" />
-    <Folder Include="Customizations\Repositories\" />
+    <Compile Remove="Customizations\Handlers\**" />
+    <Compile Remove="Customizations\Repositories\**" />
+    <EmbeddedResource Remove="Customizations\Handlers\**" />
+    <EmbeddedResource Remove="Customizations\Repositories\**" />
+    <None Remove="Customizations\Handlers\**" />
+    <None Remove="Customizations\Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>
