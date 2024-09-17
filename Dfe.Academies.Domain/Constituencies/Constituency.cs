@@ -1,11 +1,12 @@
-﻿using Dfe.Academies.Domain.ValueObjects;
+﻿using Dfe.Academies.Domain.Common;
+using Dfe.Academies.Domain.ValueObjects;
 
 namespace Dfe.Academies.Domain.Constituencies
 {
 #pragma warning disable CS8618
-    public class Constituency
+    public class Constituency : IAggregateRoot<ConstituencyId>
     {
-        public ConstituencyId ConstituencyId { get; private set; }
+        public ConstituencyId Id { get; }
         public MemberId MemberId { get; private set; }
         public string ConstituencyName { get; private set; }
         public NameDetails NameDetails { get; private set; }
@@ -24,7 +25,7 @@ namespace Dfe.Academies.Domain.Constituencies
             DateOnly? endDate,
             MemberContactDetails memberContactDetails)
         {
-            ConstituencyId = constituencyId ?? throw new ArgumentNullException(nameof(constituencyId));
+            Id = constituencyId ?? throw new ArgumentNullException(nameof(constituencyId));
             MemberId = memberId ?? throw new ArgumentNullException(nameof(memberId));
             ConstituencyName = constituencyName;
             NameDetails = nameDetails ?? throw new ArgumentNullException(nameof(nameDetails));

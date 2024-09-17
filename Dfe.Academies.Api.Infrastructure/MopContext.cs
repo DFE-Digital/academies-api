@@ -40,10 +40,10 @@ public class MopContext : DbContext
 
     private static void ConfigureMemberContactDetails(EntityTypeBuilder<MemberContactDetails> memberContactDetailsConfiguration)
     {
-        memberContactDetailsConfiguration.HasKey(e => e.MemberId);
+        memberContactDetailsConfiguration.HasKey(e => e.Id);
 
         memberContactDetailsConfiguration.ToTable("MemberContactDetails", DEFAULT_SCHEMA);
-        memberContactDetailsConfiguration.Property(e => e.MemberId).HasColumnName("memberID")
+        memberContactDetailsConfiguration.Property(e => e.Id).HasColumnName("memberID")
                 .HasConversion(
                     v => v.Value,
                     v => new MemberId(v));
@@ -55,7 +55,7 @@ public class MopContext : DbContext
     private void ConfigureConstituency(EntityTypeBuilder<Constituency> constituencyConfiguration)
     {
         constituencyConfiguration.ToTable("Constituencies", DEFAULT_SCHEMA);
-        constituencyConfiguration.Property(e => e.ConstituencyId).HasColumnName("constituencyId")
+        constituencyConfiguration.Property(e => e.Id).HasColumnName("constituencyId")
             .HasConversion(
                     v => v.Value,
                     v => new ConstituencyId(v));
@@ -78,7 +78,7 @@ public class MopContext : DbContext
             .HasOne(c => c.MemberContactDetails)
             .WithOne()
             .HasForeignKey<Constituency>(c => c.MemberId)
-            .HasPrincipalKey<MemberContactDetails>(m => m.MemberId);
+            .HasPrincipalKey<MemberContactDetails>(m => m.Id);
     }
 
 

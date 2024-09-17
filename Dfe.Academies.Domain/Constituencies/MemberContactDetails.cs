@@ -1,12 +1,13 @@
-﻿using Dfe.Academies.Domain.ValueObjects;
+﻿using Dfe.Academies.Domain.Common;
+using Dfe.Academies.Domain.ValueObjects;
 
 namespace Dfe.Academies.Domain.Constituencies
 {
 #pragma warning disable CS8618
 
-    public class MemberContactDetails
+    public class MemberContactDetails : IEntity<MemberId>
     {
-        public MemberId MemberId { get; private set; }
+        public MemberId Id { get; private set; }
         public string? Email { get; private set; }
         public string? Phone { get; private set; }
         public int TypeId { get; private set; }
@@ -21,7 +22,7 @@ namespace Dfe.Academies.Domain.Constituencies
         {
             if (typeId <= 0) throw new ArgumentException("TypeId must be positive", nameof(typeId));
 
-            MemberId = memberId ?? throw new ArgumentNullException(nameof(memberId));
+            Id = memberId ?? throw new ArgumentNullException(nameof(memberId));
             TypeId = typeId;
             Email = email;
             Phone = phone;

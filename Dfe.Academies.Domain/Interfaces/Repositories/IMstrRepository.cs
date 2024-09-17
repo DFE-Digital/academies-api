@@ -1,6 +1,10 @@
-﻿namespace Dfe.Academies.Domain.Interfaces.Repositories
+﻿using Dfe.Academies.Domain.Common;
+
+namespace Dfe.Academies.Domain.Interfaces.Repositories
 {
-    public interface IMstrRepository<TEntity> : IRepository<TEntity> where TEntity : class, new()
+    public interface IMstrRepository<TAggregate, TId> : IRepository<TAggregate, TId>
+        where TAggregate : IAggregateRoot<TId>
+        where TId : ValueObject
     {
     }
 }
