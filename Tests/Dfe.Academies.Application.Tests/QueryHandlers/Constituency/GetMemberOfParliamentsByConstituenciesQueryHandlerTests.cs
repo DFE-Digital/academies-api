@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+﻿using AutoFixture;
+using AutoFixture.Xunit2;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituencies;
 using Dfe.Academies.Domain.Interfaces.Caching;
@@ -8,8 +9,8 @@ using Dfe.Academies.Testing.Common.Customizations;
 using Dfe.Academies.Testing.Common.Customizations.Entities;
 using Dfe.Academies.Testing.Common.Customizations.Models;
 using Dfe.Academies.Utils.Caching;
+using MockQueryable;
 using NSubstitute;
-
 
 namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
 {
@@ -26,16 +27,30 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
             GetMembersOfParliamentByConstituenciesQueryHandler handler,
             GetMembersOfParliamentByConstituenciesQuery query,
             List<Domain.Constituencies.Constituency> constituencies,
-            List<MemberOfParliament> expectedMps)
+            IFixture fixture)
         {
             // Arrange
+            var expectedMps = constituencies.Select(constituency =>
+                fixture.Customize(new MemberOfParliamentCustomization()
+                {
+                    FirstName = constituency.NameDetails.NameListAs.Split(",")[1].Trim(),
+                    LastName = constituency.NameDetails.NameListAs.Split(",")[0].Trim(),
+                    ConstituencyName = constituency.ConstituencyName,
+                }).Create<MemberOfParliament>()).ToList();
+
             var cacheKey = $"MemberOfParliament_{CacheKeyHelper.GenerateHashedCacheKey(query.ConstituencyNames)}";
 
+            var mock = constituencies.BuildMock();
+
             mockConstituencyRepository.GetMembersOfParliamentByConstituenciesQueryable(query.ConstituencyNames)
-                .Returns(constituencies.AsQueryable());
+                .Returns(mock);
 
             mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<List<MemberOfParliament>>>>(), Arg.Any<string>())
-                .Returns(expectedMps);
+                .Returns(callInfo =>
+                {
+                    var callback = callInfo.ArgAt<Func<Task<List<MemberOfParliament>>>>(1);
+                    return callback();
+                });
 
             // Act
             var result = await handler.Handle(query, default);
@@ -50,7 +65,7 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
                 Assert.Equal(expectedMps[i].ConstituencyName, result[i].ConstituencyName);
             }
 
-            await mockCacheService.Received(1).GetOrAddAsync(cacheKey, Arg.Any<Func<Task<List<MemberOfParliament>>>>(), nameof(GetMembersOfParliamentByConstituenciesQueryHandler));
+            mockConstituencyRepository.Received(1).GetMembersOfParliamentByConstituenciesQueryable(query.ConstituencyNames);
         }
     }
 }

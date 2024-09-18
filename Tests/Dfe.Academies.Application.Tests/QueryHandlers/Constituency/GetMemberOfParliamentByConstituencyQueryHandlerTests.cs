@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+﻿using AutoFixture;
+using AutoFixture.Xunit2;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency;
 using Dfe.Academies.Domain.Interfaces.Caching;
@@ -25,15 +26,30 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
             GetMemberOfParliamentByConstituencyQueryHandler handler,
             GetMemberOfParliamentByConstituencyQuery query,
             Domain.Constituencies.Constituency constituency,
-            MemberOfParliament expectedMp)
+            IFixture fixture)
         {
             // Arrange
+            var expectedMp = fixture.Customize(new MemberOfParliamentCustomization()
+                {
+                    FirstName = constituency.NameDetails.NameListAs.Split(",")[1].Trim(),
+                    LastName = constituency.NameDetails.NameListAs.Split(",")[0].Trim(),
+                    ConstituencyName = constituency.ConstituencyName,
+            }).Create<MemberOfParliament>();
+
             var cacheKey = $"MemberOfParliament_{CacheKeyHelper.GenerateHashedCacheKey(query.ConstituencyName)}";
+
             mockConstituencyRepository.GetMemberOfParliamentByConstituencyAsync(query.ConstituencyName, default)
                 .Returns(constituency);
 
-            mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<MemberOfParliament>>>(), Arg.Any<string>())
-                .Returns(expectedMp);
+            mockCacheService.GetOrAddAsync(
+                    cacheKey,
+                    Arg.Any<Func<Task<MemberOfParliament>>>(),
+                    Arg.Any<string>())
+                .Returns(callInfo =>
+                {
+                    var callback = callInfo.ArgAt<Func<Task<MemberOfParliament>>>(1);
+                    return callback();
+                });
 
             // Act
             var result = await handler.Handle(query, default);
@@ -44,7 +60,7 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
             Assert.Equal(expectedMp.LastName, result.LastName);
             Assert.Equal(expectedMp.ConstituencyName, result.ConstituencyName);
 
-            await mockCacheService.Received(1).GetOrAddAsync(cacheKey, Arg.Any<Func<Task<MemberOfParliament>>>(), nameof(GetMemberOfParliamentByConstituencyQueryHandler));
+            await mockConstituencyRepository.Received(1).GetMemberOfParliamentByConstituencyAsync(query.ConstituencyName, default);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+﻿using AutoFixture;
+using AutoFixture.Xunit2;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn;
@@ -8,6 +9,7 @@ using Dfe.Academies.Testing.Common.Attributes;
 using Dfe.Academies.Testing.Common.Customizations;
 using Dfe.Academies.Testing.Common.Customizations.Models;
 using Dfe.Academies.Utils.Caching;
+using MockQueryable;
 using NSubstitute;
 
 namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
@@ -16,6 +18,7 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
     {
         [Theory]
         [CustomAutoData(
+            typeof(OmitCircularReferenceCustomization),
             typeof(AcademyGovernanceCustomization),
             typeof(AcademyGovernanceQueryModelCustomization),
             typeof(AutoMapperCustomization))]
@@ -24,17 +27,31 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
             [Frozen] ICacheService mockCacheService,
             GetAllPersonsAssociatedWithAcademyByUrnQueryHandler handler,
             GetAllPersonsAssociatedWithAcademyByUrnQuery query,
-            List<AcademyGovernance> expectedGovernances,
-            IQueryable<AcademyGovernanceQueryModel> governanceQueryModels)
+            List<AcademyGovernanceQueryModel> governanceQueryModels,
+            IFixture fixture)
+
         {
             // Arrange
+            var expectedGovernances = governanceQueryModels.Select(governance =>
+                fixture.Customize(new AcademyGovernanceCustomization
+                {
+                    FirstName = governance?.EducationEstablishmentGovernance?.Forename1,
+                    LastName = governance?.EducationEstablishmentGovernance?.Surname,
+                }).Create<AcademyGovernance>()).ToList();
+
             var cacheKey = $"PersonsAssociatedWithAcademy_{CacheKeyHelper.GenerateHashedCacheKey(query.Urn.ToString())}";
 
-            mockEstablishmentQueryService.GetPersonsAssociatedWithAcademyByUrn(query.Urn)
-                .Returns(governanceQueryModels);
+            var mock = governanceQueryModels.BuildMock();
 
-            mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<List<AcademyGovernance>?>>>(), Arg.Any<string>())
-                .Returns(expectedGovernances);
+            mockEstablishmentQueryService.GetPersonsAssociatedWithAcademyByUrn(query.Urn)
+                .Returns(mock);
+
+            mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<List<AcademyGovernance>>>>(), Arg.Any<string>())
+                .Returns(callInfo =>
+                {
+                    var callback = callInfo.ArgAt<Func<Task<List<AcademyGovernance>>>>(1);
+                    return callback();
+                });
 
             // Act
             var result = await handler.Handle(query, default);

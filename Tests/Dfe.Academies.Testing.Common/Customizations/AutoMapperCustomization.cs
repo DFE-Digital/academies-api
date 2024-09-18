@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoMapper;
+using Dfe.Academies.Application.MappingProfiles;
 using System.Reflection;
 
 namespace Dfe.Academies.Testing.Common.Customizations
@@ -10,7 +11,7 @@ namespace Dfe.Academies.Testing.Common.Customizations
         {
             fixture.Customize<IMapper>(composer => composer.FromFactory(() =>
             {
-                var profiles = Assembly.GetExecutingAssembly()
+                var profiles = typeof(ConstituencyProfile).Assembly
                     .GetTypes()
                     .Where(t => typeof(Profile).IsAssignableFrom(t) && !t.IsAbstract)
                     .ToList();
