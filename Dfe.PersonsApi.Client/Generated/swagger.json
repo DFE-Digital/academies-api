@@ -40,7 +40,7 @@
             "description": "Constituency not found."
           },
           "400": {
-            "description": "Constituency cannot be null or empty."
+            "description": "Constituency cannot be null or empty"
           }
         }
       }
@@ -80,7 +80,7 @@
             }
           },
           "400": {
-            "description": "Constituency names cannot be null or empty."
+            "description": "Constituency names cannot be null or empty"
           }
         }
       }

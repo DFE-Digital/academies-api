@@ -153,7 +153,7 @@ namespace Dfe.PersonsApi.Client
                         if (status_ == 400)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PersonsApiException("Constituency cannot be null or empty.", status_, responseText_, headers_, null);
+                            throw new PersonsApiException("Constituency cannot be null or empty", status_, responseText_, headers_, null);
                         }
                         else
                         {
@@ -252,7 +252,7 @@ namespace Dfe.PersonsApi.Client
                         if (status_ == 400)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PersonsApiException("Constituency names cannot be null or empty.", status_, responseText_, headers_, null);
+                            throw new PersonsApiException("Constituency names cannot be null or empty", status_, responseText_, headers_, null);
                         }
                         else
                         {

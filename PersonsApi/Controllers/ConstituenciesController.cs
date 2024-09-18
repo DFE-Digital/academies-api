@@ -15,14 +15,14 @@ namespace PersonsApi.Controllers
     public class ConstituenciesController(ISender sender) : ControllerBase
     {
         /// <summary>
-        /// Retrieve Member of Parliament by constituency name
+        /// Retrieve Member of Parliament by constituency name 
         /// </summary>
         /// <param name="constituencyName">The constituency name.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         [HttpGet("{constituencyName}/mp")]
         [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(MemberOfParliament))]
         [SwaggerResponse(404, "Constituency not found.")]
-        [SwaggerResponse(400, "Constituency cannot be null or empty.")]
+        [SwaggerResponse(400, "Constituency cannot be null or empty")]
         public async Task<IActionResult> GetMemberOfParliamentByConstituencyAsync([FromRoute] string constituencyName, CancellationToken cancellationToken)
         {
             var result = await sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
@@ -31,13 +31,13 @@ namespace PersonsApi.Controllers
         }
 
         /// <summary>
-        /// Retrieve a collection of Member of Parliament by a collection of constituency names
+        /// Retrieve a collection of Member of Parliament by a collection of constituency names 
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         [HttpPost("mps")]
         [SwaggerResponse(200, "A collection of MemberOfParliament objects.", typeof(IEnumerable<MemberOfParliament>))]
-        [SwaggerResponse(400, "Constituency names cannot be null or empty.")]
+        [SwaggerResponse(400, "Constituency names cannot be null or empty")]
         public async Task<IActionResult> GetMembersOfParliamentByConstituenciesAsync([FromBody] GetMembersOfParliamentByConstituenciesQuery request, CancellationToken cancellationToken)
         {
             var result = await sender.Send(request, cancellationToken);
