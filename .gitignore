@@ -179,3 +179,4 @@ terraform.rc*
 !terraform.tfvars.example
 .terraform/
 backend.vars
+/Benchmarks/Dfe.PersonsApi.Benchmarks/BenchmarkDotNet.Artifacts/results
