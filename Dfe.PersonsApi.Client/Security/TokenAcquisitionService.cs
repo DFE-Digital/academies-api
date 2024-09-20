@@ -23,7 +23,7 @@ namespace Dfe.PersonsApi.Client.Security
 
         public async Task<string> GetTokenAsync()
         {
-            // Check if the current token is about to expire
+            // Check if the current token is about to expire.
             if (_authResult == null || _authResult.ExpiresOn <= DateTimeOffset.UtcNow.AddMinutes(-1))
             {
                 _authResult = await _app.AcquireTokenForClient(new[] { _settings.Scope })

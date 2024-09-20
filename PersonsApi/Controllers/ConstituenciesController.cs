@@ -17,7 +17,7 @@ namespace PersonsApi.Controllers
         /// <summary>
         /// Retrieve Member of Parliament by constituency name
         /// </summary>
-        /// <param name="constituencyName">The constituency name.</param>
+        /// <param name="constituencyName">The constituency name. </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         [HttpGet("{constituencyName}/mp")]
         [SwaggerResponse(200, "A Person object representing the Member of Parliament.", typeof(MemberOfParliament))]
@@ -33,7 +33,7 @@ namespace PersonsApi.Controllers
         /// <summary>
         /// Retrieve a collection of Member of Parliament by a collection of constituency names
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="request">The request. </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         [HttpPost("mps")]
         [SwaggerResponse(200, "A collection of MemberOfParliament objects.", typeof(IEnumerable<MemberOfParliament>))]
