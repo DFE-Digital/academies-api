@@ -28,6 +28,7 @@ public class MstrContext : DbContext
     public DbSet<IfdPipeline> IfdPipelines { get; set; } = null!;
     public DbSet<GovernanceRoleType> GovernanceRoleTypes { get; set; } = null!;
     public DbSet<EducationEstablishmentGovernance> EducationEstablishmentGovernances { get; set; } = null!;
+    public DbSet<TrustGovernance> TrustGovernances { get; set; } = null!;
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -57,6 +58,9 @@ public class MstrContext : DbContext
 
             modelBuilder.Entity<GovernanceRoleType>(ConfigureGovernanceRoleType);
             modelBuilder.Entity<GovernanceRoleType>().Metadata.SetIsTableExcludedFromMigrations(false);
+
+            modelBuilder.Entity<TrustGovernance>(ConfigureTrustGovernance);
+            modelBuilder.Entity<TrustGovernance>().Metadata.SetIsTableExcludedFromMigrations(false);
         }
         else
         {
@@ -65,6 +69,9 @@ public class MstrContext : DbContext
 
             modelBuilder.Entity<GovernanceRoleType>(ConfigureGovernanceRoleType);
             modelBuilder.Entity<GovernanceRoleType>().Metadata.SetIsTableExcludedFromMigrations(true);
+
+            modelBuilder.Entity<TrustGovernance>(ConfigureTrustGovernance);
+            modelBuilder.Entity<TrustGovernance>().Metadata.SetIsTableExcludedFromMigrations(true);
         }
 
         base.OnModelCreating(modelBuilder);
@@ -338,7 +345,6 @@ public class MstrContext : DbContext
 
     }
 
-
     private static void ConfigureGovernanceRoleType(EntityTypeBuilder<GovernanceRoleType> governanceRoleTypeConfiguration)
     {
         governanceRoleTypeConfiguration.HasKey(e => e.SK);
@@ -350,5 +356,29 @@ public class MstrContext : DbContext
         governanceRoleTypeConfiguration.Property(e => e.Modified).HasColumnName("Modified");
         governanceRoleTypeConfiguration.Property(e => e.ModifiedBy).HasColumnName("Modified By");
 
+    }
+
+    private static void ConfigureTrustGovernance(EntityTypeBuilder<TrustGovernance> trustGovernanceConfiguration)
+    {
+        trustGovernanceConfiguration.HasKey(e => e.SK);
+        trustGovernanceConfiguration.ToTable("TrustGovernance", DEFAULT_SCHEMA);
+        trustGovernanceConfiguration.Property(e => e.SK).HasColumnName("SK");
+        trustGovernanceConfiguration.Property(e => e.TrustId).HasColumnName("FK_Trust");
+        trustGovernanceConfiguration.Property(e => e.GovernanceRoleTypeId).HasColumnName("FK_GovernanceRoleType");
+        trustGovernanceConfiguration.Property(e => e.GID)
+            .HasColumnName("GID")
+            .IsRequired()
+            .HasMaxLength(100);
+
+        trustGovernanceConfiguration.Property(e => e.Title).HasColumnName("Title");
+        trustGovernanceConfiguration.Property(e => e.Forename1).HasColumnName("Forename1");
+        trustGovernanceConfiguration.Property(e => e.Forename2).HasColumnName("Forename2");
+        trustGovernanceConfiguration.Property(e => e.Surname).HasColumnName("Surname");
+        trustGovernanceConfiguration.Property(e => e.Email).HasColumnName("Email").HasMaxLength(200);
+        trustGovernanceConfiguration.Property(e => e.DateOfAppointment).HasColumnName("Date of appointment");
+        trustGovernanceConfiguration.Property(e => e.DateTermOfOfficeEndsOrEnded).HasColumnName("Date term of office ends/ended");
+        trustGovernanceConfiguration.Property(e => e.AppointingBody).HasColumnName("Appointing body");
+        trustGovernanceConfiguration.Property(e => e.Modified).HasColumnName("Modified");
+        trustGovernanceConfiguration.Property(e => e.ModifiedBy).HasColumnName("Modified By");
     }
 }

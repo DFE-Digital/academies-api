@@ -33,7 +33,8 @@ namespace Dfe.Academies.Testing.Common.Customizations
                 services.AddSingleton<IConfiguration>(config);
                 services.AddPersonsApiClient<IConstituenciesClient, ConstituenciesClient>(config, client);
                 services.AddPersonsApiClient<IEstablishmentsClient, EstablishmentsClient>(config, client);
-                
+                services.AddPersonsApiClient<ITrustsClient, TrustsClient>(config, client);
+
                 var serviceProvider = services.BuildServiceProvider();
 
                 fixture.Inject(factory);
@@ -41,6 +42,8 @@ namespace Dfe.Academies.Testing.Common.Customizations
                 fixture.Inject(client);
                 fixture.Inject(serviceProvider.GetRequiredService<IConstituenciesClient>());
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsClient>());
+                fixture.Inject(serviceProvider.GetRequiredService<ITrustsClient>());
+
                 fixture.Inject(new List<Claim>());
 
                 return factory;

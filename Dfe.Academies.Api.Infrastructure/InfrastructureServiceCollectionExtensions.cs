@@ -48,6 +48,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Query Services
             services.AddScoped<IEstablishmentQueryService, EstablishmentQueryService>();
+            services.AddScoped<ITrustQueryService, TrustQueryService>();
+
 
             //Cache service
             services.Configure<CacheSettings>(config.GetSection("CacheSettings"));

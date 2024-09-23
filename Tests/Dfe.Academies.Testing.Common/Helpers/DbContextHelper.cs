@@ -38,10 +38,35 @@ namespace Dfe.Academies.Testing.Common.Helpers
         {
             if (context is MstrContext mstrContext)
             {
-                // Populate Trust
-                var trust1 = new Trust { SK = 1, Name = "Trust A", TrustTypeId = mstrContext.TrustTypes.FirstOrDefault()?.SK, GroupUID = "G1", Modified = DateTime.UtcNow, ModifiedBy = "System" };
-                var trust2 = new Trust { SK = 2, Name = "Trust B", TrustTypeId = mstrContext.TrustTypes.FirstOrDefault()?.SK, GroupUID = "G2", Modified = DateTime.UtcNow, ModifiedBy = "System" };
-                mstrContext.Trusts.AddRange(trust1, trust2);
+                if (!mstrContext.Trusts.Any() && !mstrContext.Establishments.Any() &&
+                    !mstrContext.EducationEstablishmentTrusts.Any() && !mstrContext.GovernanceRoleTypes.Any() &&
+                    !mstrContext.EducationEstablishmentGovernances.Any())
+                {
+
+                    // Populate Trust
+                    var trust1 = new Trust
+                    {
+                        SK = 1,
+                        Name = "Trust A", 
+                        TrustTypeId = mstrContext.TrustTypes.FirstOrDefault()?.SK,
+                        GroupUID = "G1", 
+                        Modified = DateTime.UtcNow, 
+                        ModifiedBy = "System", 
+                        UKPRN = "12345678",
+                        GroupID = "TR00024"
+                    };
+                    var trust2 = new Trust
+                    {
+                        SK = 2, 
+                        Name = "Trust B", 
+                        TrustTypeId = mstrContext.TrustTypes.FirstOrDefault()?.SK,
+                        GroupUID = "G2", 
+                        Modified = DateTime.UtcNow, 
+                        ModifiedBy = "System", 
+                        UKPRN = "87654321",
+                        GroupID = "TR00025"
+                    };
+                    mstrContext.Trusts.AddRange(trust1, trust2);
 
                 // Populate Establishment
                 var establishment1 = new Establishment
@@ -88,10 +113,14 @@ namespace Dfe.Academies.Testing.Common.Helpers
                 };
                 mstrContext.EducationEstablishmentTrusts.AddRange(educationEstablishmentTrust1, educationEstablishmentTrust2);
 
-                // Populate GovernanceRoleType
-                var governanceRoleType1 = new GovernanceRoleType { SK = 1, Name = "Chair of Governors", Modified = DateTime.UtcNow, ModifiedBy = "System" };
-                var governanceRoleType2 = new GovernanceRoleType { SK = 2, Name = "Vice Chair of Governors", Modified = DateTime.UtcNow, ModifiedBy = "System" };
-                mstrContext.GovernanceRoleTypes.AddRange(governanceRoleType1, governanceRoleType2);
+                    // Populate GovernanceRoleType
+                    var governanceRoleType1 = new GovernanceRoleType
+                        { SK = 1, Name = "Chair of Governors", Modified = DateTime.UtcNow, ModifiedBy = "System" };
+                    var governanceRoleType2 = new GovernanceRoleType
+                        { SK = 2, Name = "Vice Chair of Governors", Modified = DateTime.UtcNow, ModifiedBy = "System" };
+                    var governanceRoleType3 = new GovernanceRoleType
+                        { SK = 3, Name = "Trustee", Modified = DateTime.UtcNow, ModifiedBy = "System" };
+                    mstrContext.GovernanceRoleTypes.AddRange(governanceRoleType1, governanceRoleType2, governanceRoleType3);
 
                 // Populate EducationEstablishmentGovernance
                 var governance1 = new EducationEstablishmentGovernance
@@ -122,8 +151,38 @@ namespace Dfe.Academies.Testing.Common.Helpers
                 };
                 mstrContext.EducationEstablishmentGovernances.AddRange(governance1, governance3);
 
-                // Save changes
-                mstrContext.SaveChanges();
+                    // Populate TrustGovernance
+                    var trustGovernance1 = new TrustGovernance
+                    {
+                        SK = 1,
+                        TrustId = trust2.SK,
+                        GovernanceRoleTypeId = governanceRoleType3.SK,
+                        GID = "GID1",
+                        Title = "Mr.",
+                        Forename1 = "John",
+                        Surname = "Wood",
+                        Email = "johnWood@example.com",
+                        Modified = DateTime.UtcNow,
+                        ModifiedBy = "System"
+                    };
+                    var trustGovernance2 = new TrustGovernance
+                    {
+                        SK = 2,
+                        TrustId = trust2.SK,
+                        GovernanceRoleTypeId = governanceRoleType3.SK,
+                        GID = "GID1",
+                        Title = "Mr.",
+                        Forename1 = "Joe",
+                        Surname = "Wood",
+                        Email = "joeWood@example.com",
+                        Modified = DateTime.UtcNow,
+                        ModifiedBy = "System"
+                    };
+                    mstrContext.TrustGovernances.AddRange(trustGovernance1, trustGovernance2);
+
+                    // Save changes
+                    mstrContext.SaveChanges();
+                }
             }
 
             if (context is MopContext mopContext)

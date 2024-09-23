@@ -21,8 +21,6 @@ namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociate
         {
             var cacheKey = $"PersonsAssociatedWithAcademy_{CacheKeyHelper.GenerateHashedCacheKey(request.Urn.ToString())}";
 
-            var methodName = nameof(GetAllPersonsAssociatedWithAcademyByUrnQueryHandler);
-
             return await cacheService.GetOrAddAsync(cacheKey, async () =>
             {
                 var query = establishmentQueryService.GetPersonsAssociatedWithAcademyByUrn(request.Urn);
@@ -37,7 +35,7 @@ namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociate
                     .ToListAsync(cancellationToken);
 
                 return result;
-            }, methodName);
+            }, nameof(GetAllPersonsAssociatedWithAcademyByUrnQueryHandler));
         }
     }
 }
