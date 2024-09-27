@@ -1,8 +1,8 @@
-﻿using Dfe.Academies.Testing.Common.Attributes;
-using Dfe.Academies.Testing.Common.Customizations;
-using Dfe.Academies.Testing.Common.Mocks;
-using PersonsApi;
+﻿using PersonsApi;
 using System.Net;
+using Dfe.Academies.Tests.Common.Attributes;
+using Dfe.Academies.Tests.Common.Customizations;
+using Dfe.Academies.Tests.Common.Mocks;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.OpenApiTests;
 

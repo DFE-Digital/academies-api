@@ -2,7 +2,7 @@
 using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.ValueObjects;
 
-namespace Dfe.Academies.Testing.Common.Customizations.Entities
+namespace Dfe.Academies.Tests.Common.Customizations.Entities
 {
     public class ConstituencyCustomization : ICustomization
     {

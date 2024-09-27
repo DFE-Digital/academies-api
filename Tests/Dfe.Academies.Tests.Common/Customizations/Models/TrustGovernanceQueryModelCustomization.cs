@@ -1,7 +1,8 @@
 ﻿using AutoFixture;
+using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
-using Dfe.Academies.Infrastructure.Models;
+using TrustGovernance = Dfe.Academies.Domain.Trust.TrustGovernance;
 
 namespace Dfe.Academies.Testing.Common.Customizations.Models
 {

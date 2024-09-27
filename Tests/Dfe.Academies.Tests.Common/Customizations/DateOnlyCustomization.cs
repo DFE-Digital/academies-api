@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 
-namespace Dfe.Academies.Testing.Common.Customizations
+namespace Dfe.Academies.Tests.Common.Customizations
 {
     public class DateOnlyCustomization : ICustomization
     {

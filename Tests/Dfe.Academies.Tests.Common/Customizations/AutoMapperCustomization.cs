@@ -1,9 +1,8 @@
 ﻿using AutoFixture;
 using AutoMapper;
 using Dfe.Academies.Application.MappingProfiles;
-using System.Reflection;
 
-namespace Dfe.Academies.Testing.Common.Customizations
+namespace Dfe.Academies.Tests.Common.Customizations
 {
     public class AutoMapperCustomization : ICustomization
     {

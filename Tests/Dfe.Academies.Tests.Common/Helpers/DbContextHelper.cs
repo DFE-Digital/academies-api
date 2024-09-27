@@ -1,4 +1,5 @@
-﻿using Dfe.Academies.Domain.Constituencies;
+﻿using System.Data.Common;
+using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Trust;
 using Dfe.Academies.Domain.ValueObjects;
@@ -6,9 +7,8 @@ using Dfe.Academies.Infrastructure;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.Common;
 
-namespace Dfe.Academies.Testing.Common.Helpers
+namespace Dfe.Academies.Tests.Common.Helpers
 {
     public static class DbContextHelper<TContext> where TContext : DbContext
     {

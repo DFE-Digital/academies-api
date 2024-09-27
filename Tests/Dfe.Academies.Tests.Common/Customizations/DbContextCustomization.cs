@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
-using Dfe.Academies.Testing.Common.Helpers;
+using Dfe.Academies.Tests.Common.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dfe.Academies.Testing.Common.Customizations
+namespace Dfe.Academies.Tests.Common.Customizations
 {
     public class DbContextCustomization<TContext> : ICustomization where TContext : DbContext
     {

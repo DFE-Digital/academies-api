@@ -1,6 +1,6 @@
 namespace Dfe.Academies.Domain.Common
 {
-    public interface IAggregateRoot
+    public interface IStronglyTypedId
     {
     }
 }

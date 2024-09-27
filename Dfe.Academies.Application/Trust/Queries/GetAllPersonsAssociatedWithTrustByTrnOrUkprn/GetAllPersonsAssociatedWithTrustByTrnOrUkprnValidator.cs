@@ -1,8 +1,9 @@
-﻿using Dfe.Academies.Utils.Enums;
+﻿using Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn;
+using Dfe.Academies.Utils.Enums;
 using Dfe.Academies.Utils.Helpers;
 using FluentValidation;
 
-namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn
+namespace Dfe.Academies.Application.Trust.Queries.GetAllPersonsAssociatedWithTrustByTrnOrUkprn
 {
     public class GetAllPersonsAssociatedWithTrustByTrnOrUkprnValidator : AbstractValidator<GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery>
     {

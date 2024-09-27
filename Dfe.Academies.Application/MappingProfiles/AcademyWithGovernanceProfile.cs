@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Infrastructure.Models;
 
 namespace Dfe.Academies.Application.MappingProfiles
 {

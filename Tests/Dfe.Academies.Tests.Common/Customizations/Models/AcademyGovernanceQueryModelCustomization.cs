@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
+using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Infrastructure.Models;
 
 namespace Dfe.Academies.Testing.Common.Customizations.Models
 {

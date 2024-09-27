@@ -1,10 +1,10 @@
 ﻿using Dfe.Academies.Domain.Establishment;
 
-namespace Dfe.Academies.Infrastructure.Models
+namespace Dfe.Academies.Application.Common.Models
 {
     public record AcademyGovernanceQueryModel(
         EducationEstablishmentGovernance EducationEstablishmentGovernance,
         GovernanceRoleType GovernanceRoleType,
-        Establishment Establishment
+        Domain.Establishment.Establishment Establishment
     );
 }

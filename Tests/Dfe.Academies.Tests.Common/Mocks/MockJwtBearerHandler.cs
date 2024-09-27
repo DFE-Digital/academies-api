@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Dfe.Academies.Testing.Common.Mocks
+namespace Dfe.Academies.Tests.Common.Mocks
 {
 #pragma warning disable CS0618 
     public class MockJwtBearerHandler(

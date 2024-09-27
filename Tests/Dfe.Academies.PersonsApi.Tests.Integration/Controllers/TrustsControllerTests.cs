@@ -1,10 +1,10 @@
 ﻿using Dfe.Academies.Infrastructure;
-using Dfe.Academies.Testing.Common.Attributes;
-using Dfe.Academies.Testing.Common.Customizations;
-using Dfe.Academies.Testing.Common.Mocks;
 using Dfe.PersonsApi.Client.Contracts;
 using PersonsApi;
 using System.Security.Claims;
+using Dfe.Academies.Tests.Common.Attributes;
+using Dfe.Academies.Tests.Common.Customizations;
+using Dfe.Academies.Tests.Common.Mocks;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {
@@ -36,7 +36,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldReturnEmptyList_WhenTrustExistWithNoPeople(
             CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
             ITrustsClient trustsClient)
-        {   
+        {
             // Arrange
             factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 

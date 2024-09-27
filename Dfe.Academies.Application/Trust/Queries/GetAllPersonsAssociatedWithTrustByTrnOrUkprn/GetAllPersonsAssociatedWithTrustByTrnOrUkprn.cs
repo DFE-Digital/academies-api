@@ -9,7 +9,7 @@ using Dfe.Academies.Utils.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn
+namespace Dfe.Academies.Application.Trust.Queries.GetAllPersonsAssociatedWithTrustByTrnOrUkprn
 {
     public record GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery(string Id) : IRequest<List<TrustGovernance>?>;
 

@@ -1,11 +1,10 @@
 ﻿using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Domain.Trust;
 
-namespace Dfe.Academies.Infrastructure.Models
+namespace Dfe.Academies.Application.Common.Models
 {
     public record TrustGovernanceQueryModel(
-        Trust Trust,
+        Domain.Trust.Trust Trust,
         GovernanceRoleType GovernanceRoleType,
-        TrustGovernance TrustGovernance
+        Domain.Trust.TrustGovernance TrustGovernance
     );
 }

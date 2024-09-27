@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dfe.Academies.Testing.Common\Dfe.Academies.Testing.Common.csproj" />
+    <ProjectReference Include="..\Dfe.Academies.Tests.Common\Dfe.Academies.Tests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

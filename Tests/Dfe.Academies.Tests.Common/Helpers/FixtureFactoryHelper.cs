@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 
-namespace Dfe.Academies.Testing.Common.Helpers
+namespace Dfe.Academies.Tests.Common.Helpers
 {
     public static class FixtureFactoryHelper
     {

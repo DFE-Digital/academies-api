@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 
-namespace Dfe.Academies.Testing.Common.Customizations
+namespace Dfe.Academies.Tests.Common.Customizations
 {
     public class NSubstituteCustomization : ICustomization
     {

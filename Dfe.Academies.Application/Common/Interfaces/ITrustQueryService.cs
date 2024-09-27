@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Infrastructure.Models;
+﻿using Dfe.Academies.Application.Common.Models;
 
 namespace Dfe.Academies.Application.Common.Interfaces
 {

@@ -1,5 +1,5 @@
 ﻿using Dfe.Academies.Application.Common.Interfaces;
-using Dfe.Academies.Infrastructure.Models;
+using Dfe.Academies.Application.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Infrastructure.QueryServices

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
-    <ProjectReference Include="..\Dfe.Academies.Testing.Common\Dfe.Academies.Testing.Common.csproj" />
+    <ProjectReference Include="..\Dfe.Academies.Tests.Common\Dfe.Academies.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

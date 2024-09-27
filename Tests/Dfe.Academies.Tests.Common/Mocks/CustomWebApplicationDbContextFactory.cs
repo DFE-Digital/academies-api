@@ -1,14 +1,14 @@
-﻿using Dfe.Academies.Testing.Common.Helpers;
+﻿using System.Data.Common;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using Dfe.Academies.Tests.Common.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.Common;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 
-namespace Dfe.Academies.Testing.Common.Mocks
+namespace Dfe.Academies.Tests.Common.Mocks
 {
     public class CustomWebApplicationDbContextFactory<TProgram, TDbContext> : WebApplicationFactory<TProgram>
         where TProgram : class where TDbContext : DbContext
