@@ -8,29 +8,25 @@ namespace Dfe.PersonsApi.Client.Security
     public class TokenAcquisitionService : ITokenAcquisitionService
     {
         private readonly PersonsApiClientSettings _settings;
-        private readonly IConfidentialClientApplication _app;
-        private AuthenticationResult? _authResult;
+        private readonly Lazy<IConfidentialClientApplication> _app;
 
         public TokenAcquisitionService(PersonsApiClientSettings settings)
         {
-            _settings = settings;
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
-            _app = ConfidentialClientApplicationBuilder.Create(_settings.ClientId)
-                .WithClientSecret(_settings.ClientSecret)
-                .WithAuthority(new Uri(_settings.Authority!))
-                .Build();
+            _app = new Lazy<IConfidentialClientApplication>(() =>
+                ConfidentialClientApplicationBuilder.Create(_settings.ClientId)
+                    .WithClientSecret(_settings.ClientSecret)
+                    .WithAuthority(new Uri(_settings.Authority!))
+                    .Build());
         }
 
         public async Task<string> GetTokenAsync()
         {
-            // Check if the current token is about to expire
-            if (_authResult == null || _authResult.ExpiresOn <= DateTimeOffset.UtcNow.AddMinutes(-1))
-            {
-                _authResult = await _app.AcquireTokenForClient(new[] { _settings.Scope })
-                                        .ExecuteAsync();
-            }
+            var authResult = await _app.Value.AcquireTokenForClient(new[] { _settings.Scope })
+                .ExecuteAsync();
 
-            return _authResult.AccessToken;
+            return authResult.AccessToken;
         }
     }
 }
