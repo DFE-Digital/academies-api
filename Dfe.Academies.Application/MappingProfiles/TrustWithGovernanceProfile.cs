@@ -9,6 +9,8 @@ namespace Dfe.Academies.Application.MappingProfiles
         {
             CreateMap<TrustGovernanceQueryModel, TrustGovernance>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.TrustGovernance.SK))
+                .ForMember(dest => dest.UKPRN, opt => opt.MapFrom(src => src.Trust.UKPRN))
+                .ForMember(dest => dest.TRN, opt => opt.MapFrom(src => src.Trust.GroupID))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.TrustGovernance.Forename1))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.TrustGovernance.Surname))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.TrustGovernance.Email))
