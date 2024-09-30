@@ -2,7 +2,6 @@
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Dfe.Academies.Infrastructure.Models;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {

@@ -1,12 +1,12 @@
 ﻿using System.Net;
 using Dfe.Academies.Infrastructure;
-using Dfe.Academies.Testing.Common.Attributes;
-using Dfe.Academies.Testing.Common.Customizations;
-using Dfe.Academies.Testing.Common.Mocks;
 using Dfe.PersonsApi.Client.Contracts;
 using Microsoft.EntityFrameworkCore;
 using PersonsApi;
 using System.Security.Claims;
+using Dfe.Academies.Tests.Common.Attributes;
+using Dfe.Academies.Tests.Common.Customizations;
+using Dfe.Academies.Tests.Common.Mocks;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
 {

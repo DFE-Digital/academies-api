@@ -26,6 +26,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddPersonsApiApplicationDependencyGroup(
             this IServiceCollection services, IConfiguration config)
         {
+            var performanceLoggingEnabled = config.GetValue<bool>("Features:PerformanceLoggingEnabled");
+
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services.AddMediatR(cfg =>
@@ -33,7 +35,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+
+                if (performanceLoggingEnabled)
+                {
+                    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+                }
             });
 
             return services;

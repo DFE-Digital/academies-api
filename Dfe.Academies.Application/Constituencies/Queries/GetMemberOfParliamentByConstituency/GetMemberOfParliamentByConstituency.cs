@@ -19,8 +19,6 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
         {
             var cacheKey = $"MemberOfParliament_{CacheKeyHelper.GenerateHashedCacheKey(request.ConstituencyName)}";
 
-            var methodName = nameof(GetMemberOfParliamentByConstituencyQueryHandler);
-
             return await cacheService.GetOrAddAsync(cacheKey, async () =>
             {
                 var constituencyWithMember = await constituencyRepository
@@ -29,7 +27,7 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
                 var result = mapper.Map<MemberOfParliament?>(constituencyWithMember);
 
                 return result;
-            }, methodName);
+            }, nameof(GetMemberOfParliamentByConstituencyQueryHandler));
         }
     }
 }

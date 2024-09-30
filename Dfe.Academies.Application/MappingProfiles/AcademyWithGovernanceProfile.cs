@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Infrastructure.Models;
 
 namespace Dfe.Academies.Application.MappingProfiles
 {
@@ -15,7 +14,7 @@ namespace Dfe.Academies.Application.MappingProfiles
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.EducationEstablishmentGovernance.Email))
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => $"{src.EducationEstablishmentGovernance.Forename1} {src.EducationEstablishmentGovernance.Surname}"))
                 .ForMember(dest => dest.DisplayNameWithTitle, opt => opt.MapFrom(src => $"{src.EducationEstablishmentGovernance.Title} {src.EducationEstablishmentGovernance.Forename1} {src.EducationEstablishmentGovernance.Surname}"))
-                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => new List<string> { src.GovernanceRoleType.Name }))
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => new List<string?> { src.GovernanceRoleType.Name }))
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.EducationEstablishmentGovernance.Modified));
         }
     }
