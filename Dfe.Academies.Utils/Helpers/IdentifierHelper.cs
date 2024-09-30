@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dfe.Academies.Utils.Enums;
-
-namespace Dfe.Academies.Utils.Helpers
+﻿namespace Dfe.Academies.Utils.Helpers
 {
     public static class IdentifierHelper<TId, TEnum> where TEnum : Enum
     {
         public static TEnum DetermineIdType(TId id, Dictionary<TEnum, Func<TId, bool>> idValidators)
         {
-            foreach (var validator in idValidators)
+            var matchingValidator = idValidators.FirstOrDefault(validator => validator.Value(id));
+
+            if (!Equals(matchingValidator, default(KeyValuePair<TEnum, Func<TId, bool>>)))
             {
-                if (validator.Value(id))
-                {
-                    return validator.Key;
-                }
+                return matchingValidator.Key;
             }
 
             return (TEnum)Enum.Parse(typeof(TEnum), "Invalid");
