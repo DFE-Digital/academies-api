@@ -1,7 +1,7 @@
-﻿namespace Dfe.Academies.Domain.Common
+namespace Dfe.Academies.Domain.Common
 {
-    public interface IEntity<out TId> where TId : ValueObject
+    public interface IEntity<out TId> where TId : IStronglyTypedId
     {
-        TId Id { get; }
+        TId? Id { get; }
     }
 }

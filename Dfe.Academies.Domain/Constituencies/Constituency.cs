@@ -4,7 +4,7 @@ using Dfe.Academies.Domain.ValueObjects;
 namespace Dfe.Academies.Domain.Constituencies
 {
 #pragma warning disable CS8618
-    public class Constituency : IAggregateRoot<ConstituencyId>
+    public class Constituency : IAggregateRoot
     {
         public ConstituencyId Id { get; }
         public MemberId MemberId { get; private set; }

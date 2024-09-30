@@ -43,11 +43,11 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ITrustRepository, TrustRepository>();
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
             services.AddScoped<IConstituencyRepository, ConstituencyRepository>();
-            services.AddScoped(typeof(IMstrRepository<,>), typeof(MstrRepository<,>));
-            services.AddScoped(typeof(IMopRepository<,>), typeof(MopRepository<,>));
 
             // Query Services
             services.AddScoped<IEstablishmentQueryService, EstablishmentQueryService>();
+            services.AddScoped<ITrustQueryService, TrustQueryService>();
+
 
             //Cache service
             services.Configure<CacheSettings>(config.GetSection("CacheSettings"));

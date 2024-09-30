@@ -1,6 +1,6 @@
 ﻿using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.ValueObjects;
-using Dfe.Academies.Testing.Common.Attributes;
+using Dfe.Academies.Tests.Common.Attributes;
 
 namespace Dfe.Academies.Domain.Tests.Aggregates
 {

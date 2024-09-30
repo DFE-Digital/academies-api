@@ -1,6 +1,6 @@
-﻿namespace Dfe.Academies.Domain.Common
+namespace Dfe.Academies.Domain.Common
 {
-    public interface IAggregateRoot<out TId> : IEntity<TId> where TId : ValueObject
+    public interface IAggregateRoot
     {
     }
 }

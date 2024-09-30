@@ -4,10 +4,10 @@ using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency;
 using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Testing.Common.Attributes;
-using Dfe.Academies.Testing.Common.Customizations;
-using Dfe.Academies.Testing.Common.Customizations.Entities;
 using Dfe.Academies.Testing.Common.Customizations.Models;
+using Dfe.Academies.Tests.Common.Attributes;
+using Dfe.Academies.Tests.Common.Customizations;
+using Dfe.Academies.Tests.Common.Customizations.Entities;
 using Dfe.Academies.Utils.Caching;
 using NSubstitute;
 

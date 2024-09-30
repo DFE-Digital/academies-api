@@ -124,6 +124,45 @@
           }
         }
       }
+    },
+    "/v1/Trusts/{id}/getAssociatedPersons": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieve All Members Associated With a Trust by Either UKPRN or TRN",
+        "operationId": "Trusts_GetAllPersonsAssociatedWithTrustByTrnOrUkPrn",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The identifier (UKPRN or TRN).",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A Collection of Persons Associated With the Trust.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrustGovernance"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Trust not found."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -212,6 +251,27 @@
               "urn": {
                 "type": "integer",
                 "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "TrustGovernance": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Person"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ukprn": {
+                "type": "string",
+                "nullable": true
+              },
+              "trn": {
+                "type": "string",
                 "nullable": true
               }
             }
