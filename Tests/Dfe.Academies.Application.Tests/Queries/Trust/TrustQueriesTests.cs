@@ -1,10 +1,10 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Application.Trust;
-using Dfe.Academies.Contracts.V4.Trusts;
+using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Domain.Trust;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using FluentAssertions;
 using Moq;
-using Dfe.Academies.Domain.Interfaces.Repositories;
 
 namespace Dfe.Academies.Application.Tests.Queries.Trust
 {

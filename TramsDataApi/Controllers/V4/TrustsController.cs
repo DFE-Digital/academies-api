@@ -1,6 +1,4 @@
 using Dfe.Academies.Application.Trust;
-using Dfe.Academies.Contracts.V4;
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,6 +8,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using DfE.CoreLibs.Contracts.Academies.V4;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4

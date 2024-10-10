@@ -2,8 +2,8 @@
 using AutoMapper.QueryableExtensions;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Domain.Interfaces.Caching;
-using Dfe.Academies.Utils.Caching;
+using DfE.CoreLibs.Caching.Helpers;
+using DfE.CoreLibs.Caching.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +14,7 @@ namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociate
     public class GetAllPersonsAssociatedWithAcademyByUrnQueryHandler(
         IEstablishmentQueryService establishmentQueryService,
         IMapper mapper,
-        ICacheService cacheService)
+        ICacheService<IMemoryCacheType> cacheService)
         : IRequestHandler<GetAllPersonsAssociatedWithAcademyByUrnQuery, List<AcademyGovernance>?>
     {
         public async Task<List<AcademyGovernance>?> Handle(GetAllPersonsAssociatedWithAcademyByUrnQuery request, CancellationToken cancellationToken)

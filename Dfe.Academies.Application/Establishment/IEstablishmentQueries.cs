@@ -1,4 +1,4 @@
-﻿using Dfe.Academies.Contracts.V4.Establishments;
+﻿using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 
 namespace Dfe.Academies.Application.Establishment
 {

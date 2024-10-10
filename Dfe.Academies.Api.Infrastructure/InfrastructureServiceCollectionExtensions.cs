@@ -1,13 +1,11 @@
 ﻿using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Infrastructure;
-using Dfe.Academies.Infrastructure.Caching;
 using Dfe.Academies.Infrastructure.Repositories;
 using Dfe.Academies.Infrastructure.Security.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Infrastructure.QueryServices;
 using Dfe.Academies.Domain.ValueObjects;
 
@@ -48,10 +46,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEstablishmentQueryService, EstablishmentQueryService>();
             services.AddScoped<ITrustQueryService, TrustQueryService>();
 
-
             //Cache service
-            services.Configure<CacheSettings>(config.GetSection("CacheSettings"));
-            services.AddSingleton<ICacheService, MemoryCacheService>();
+            services.AddServiceCaching(config);
 
             //Db
             var connectionString = config.GetConnectionString("DefaultConnection");

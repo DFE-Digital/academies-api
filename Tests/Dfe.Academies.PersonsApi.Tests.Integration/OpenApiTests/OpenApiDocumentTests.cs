@@ -1,8 +1,8 @@
-﻿using PersonsApi;
+﻿using Dfe.Academies.Tests.Common.Customizations;
+using DfE.CoreLibs.Testing.AutoFixture.Attributes;
+using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
+using PersonsApi;
 using System.Net;
-using Dfe.Academies.Tests.Common.Attributes;
-using Dfe.Academies.Tests.Common.Customizations;
-using Dfe.Academies.Tests.Common.Mocks;
 
 namespace Dfe.Academies.PersonsApi.Tests.Integration.OpenApiTests;
 

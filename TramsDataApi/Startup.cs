@@ -1,6 +1,7 @@
-using Dfe.Academisation.CorrelationIdMiddleware;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Text.Json.Serialization;
+using DfE.CoreLibs.Http.Interfaces;
+using DfE.CoreLibs.Http.Middlewares.CorrelationId;
 
 namespace TramsDataApi
 {

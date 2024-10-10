@@ -1,14 +1,12 @@
+using Dfe.Academies.Application.Establishment;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Dfe.Academies.Application.Establishment;
-using Dfe.Academies.Contracts.V4.Establishments;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Annotations;
-using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4

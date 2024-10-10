@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoFixture;
-using Dfe.Academies.Tests.Common.Mocks;
+using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
 using Dfe.PersonsApi.Client;
 using Dfe.PersonsApi.Client.Contracts;
 using Dfe.PersonsApi.Client.Extensions;

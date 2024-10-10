@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Dfe.Academies.Application.Common.Models;
-using MediatR;
-using Dfe.Academies.Utils.Caching;
-using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Domain.Interfaces.Repositories;
+using DfE.CoreLibs.Caching.Helpers;
+using DfE.CoreLibs.Caching.Interfaces;
+using MediatR;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency
 {
@@ -12,7 +12,7 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
     public class GetMemberOfParliamentByConstituencyQueryHandler(
         IConstituencyRepository constituencyRepository,
         IMapper mapper,
-        ICacheService cacheService)
+        ICacheService<IMemoryCacheType> cacheService)
         : IRequestHandler<GetMemberOfParliamentByConstituencyQuery, MemberOfParliament?>
     {
         public async Task<MemberOfParliament?> Handle(GetMemberOfParliamentByConstituencyQuery request, CancellationToken cancellationToken)

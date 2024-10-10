@@ -1,7 +1,7 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Contracts.V4;
-using Dfe.Academies.Contracts.V4.Trusts;
 using Dfe.Academies.Domain.Trust;
+using DfE.CoreLibs.Contracts.Academies.V4;
+using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 
 namespace Dfe.Academies.Application.Trust
 {
@@ -51,7 +51,7 @@ namespace Dfe.Academies.Application.Trust
                 CompaniesHouseNumber = trust.CompaniesHouseNumber,
                 ReferenceNumber = trust.GroupID,
                 Ukprn = trust.UKPRN,
-                Type = new Contracts.V4.Establishments.NameAndCodeDto() { Code = trust.TrustType?.Code, Name = trust.TrustType?.Name },
+                Type = new DfE.CoreLibs.Contracts.Academies.V4.Establishments.NameAndCodeDto() { Code = trust.TrustType?.Code, Name = trust.TrustType?.Name },
                 Address = new AddressDto()
                 {
                     Street = trust.AddressLine1,
