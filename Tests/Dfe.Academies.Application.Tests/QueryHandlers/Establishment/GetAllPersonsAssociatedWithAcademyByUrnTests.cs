@@ -3,11 +3,12 @@ using AutoFixture.Xunit2;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn;
-using Dfe.Academies.Domain.Interfaces.Caching;
+using Dfe.Academies.Application.MappingProfiles;
 using Dfe.Academies.Testing.Common.Customizations.Models;
-using Dfe.Academies.Tests.Common.Attributes;
-using Dfe.Academies.Tests.Common.Customizations;
-using Dfe.Academies.Utils.Caching;
+using DfE.CoreLibs.Caching.Helpers;
+using DfE.CoreLibs.Caching.Interfaces;
+using DfE.CoreLibs.Testing.AutoFixture.Attributes;
+using DfE.CoreLibs.Testing.AutoFixture.Customizations;
 using MockQueryable;
 using NSubstitute;
 
@@ -20,10 +21,10 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
             typeof(OmitCircularReferenceCustomization),
             typeof(AcademyGovernanceCustomization),
             typeof(AcademyGovernanceQueryModelCustomization),
-            typeof(AutoMapperCustomization))]
+            typeof(AutoMapperCustomization<AcademyWithGovernanceProfile>))]
         public async Task Handle_ShouldReturnPersonsAssociatedWithAcademy_WhenUrnExists(
             [Frozen] IEstablishmentQueryService mockEstablishmentQueryService,
-            [Frozen] ICacheService mockCacheService,
+            [Frozen] ICacheService<IMemoryCacheType> mockCacheService,
             GetAllPersonsAssociatedWithAcademyByUrnQueryHandler handler,
             GetAllPersonsAssociatedWithAcademyByUrnQuery query,
             List<AcademyGovernanceQueryModel> governanceQueryModels,

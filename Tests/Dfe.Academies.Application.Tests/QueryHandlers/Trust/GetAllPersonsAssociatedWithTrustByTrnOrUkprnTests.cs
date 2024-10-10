@@ -2,13 +2,13 @@
 using AutoFixture.Xunit2;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn;
+using Dfe.Academies.Application.MappingProfiles;
 using Dfe.Academies.Application.Trust.Queries.GetAllPersonsAssociatedWithTrustByTrnOrUkprn;
-using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Testing.Common.Customizations.Models;
-using Dfe.Academies.Tests.Common.Attributes;
-using Dfe.Academies.Tests.Common.Customizations;
-using Dfe.Academies.Utils.Caching;
+using DfE.CoreLibs.Caching.Helpers;
+using DfE.CoreLibs.Caching.Interfaces;
+using DfE.CoreLibs.Testing.AutoFixture.Attributes;
+using DfE.CoreLibs.Testing.AutoFixture.Customizations;
 using MockQueryable;
 using NSubstitute;
 
@@ -21,10 +21,10 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Trust
             typeof(OmitCircularReferenceCustomization),
             typeof(TrustGovernanceCustomization),
             typeof(TrustGovernanceQueryModelCustomization),
-            typeof(AutoMapperCustomization))]
+            typeof(AutoMapperCustomization<TrustWithGovernanceProfile>))]
         public async Task Handle_ShouldReturnPersonsAssociatedWithTrust_WhenTrustExists(
             [Frozen] ITrustQueryService mockTrustQueryService,
-            [Frozen] ICacheService mockCacheService,
+            [Frozen] ICacheService<IMemoryCacheType> mockCacheService,
             GetAllPersonsAssociatedWithTrustByTrnOrUkprnQueryHandler handler,
             List<TrustGovernanceQueryModel> governanceQueryModels,
             IFixture fixture)

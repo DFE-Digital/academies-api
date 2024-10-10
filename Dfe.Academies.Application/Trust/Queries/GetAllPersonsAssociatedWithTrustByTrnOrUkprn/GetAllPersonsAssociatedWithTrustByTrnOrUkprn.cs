@@ -2,10 +2,10 @@
 using AutoMapper.QueryableExtensions;
 using Dfe.Academies.Application.Common.Interfaces;
 using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Domain.Interfaces.Caching;
-using Dfe.Academies.Utils.Caching;
 using Dfe.Academies.Utils.Enums;
 using Dfe.Academies.Utils.Helpers;
+using DfE.CoreLibs.Caching.Helpers;
+using DfE.CoreLibs.Caching.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +16,7 @@ namespace Dfe.Academies.Application.Trust.Queries.GetAllPersonsAssociatedWithTru
     public class GetAllPersonsAssociatedWithTrustByTrnOrUkprnQueryHandler(
         ITrustQueryService trustQueryService,
         IMapper mapper,
-        ICacheService cacheService)
+        ICacheService<IMemoryCacheType> cacheService)
         : IRequestHandler<GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery, List<TrustGovernance>?>
     {
         public async Task<List<TrustGovernance>?> Handle(GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery request, CancellationToken cancellationToken)

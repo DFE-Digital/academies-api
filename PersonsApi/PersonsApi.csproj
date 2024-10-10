@@ -10,9 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="CsvHelper" Version="33.0.1" />
-	  <PackageReference Include="Dfe.Academies.Contracts" Version="1.0.10" />
-	  <PackageReference Include="Dfe.Academisation.CorrelationIdMiddleware" Version="2.0.2" />
+	  <PackageReference Include="DfE.CoreLibs.Http" Version="1.0.5" />
 	  <PackageReference Include="FluentValidation" Version="11.9.2" />
 	  <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
@@ -37,6 +35,7 @@
 	  <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
 	  <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.7.3" />
+	  <PackageReference Include="System.Text.Json" Version="8.0.5" />
 	  <PackageReference Include="TimeZoneConverter" Version="6.1.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

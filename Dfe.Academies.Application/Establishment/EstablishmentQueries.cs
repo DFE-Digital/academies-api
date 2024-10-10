@@ -1,5 +1,5 @@
-﻿using Dfe.Academies.Contracts.V4.Establishments;
-using Dfe.Academies.Domain.Interfaces.Repositories;
+﻿using Dfe.Academies.Domain.Interfaces.Repositories;
+using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
 
 namespace Dfe.Academies.Application.Establishment
 {

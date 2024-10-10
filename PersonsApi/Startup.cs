@@ -1,5 +1,6 @@
 using Dfe.Academies.Application.MappingProfiles;
-using Dfe.Academisation.CorrelationIdMiddleware;
+using DfE.CoreLibs.Http.Interfaces;
+using DfE.CoreLibs.Http.Middlewares.CorrelationId;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.FeatureManagement;

@@ -2,13 +2,14 @@
 using AutoFixture.Xunit2;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency;
-using Dfe.Academies.Domain.Interfaces.Caching;
+using Dfe.Academies.Application.MappingProfiles;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Testing.Common.Customizations.Models;
-using Dfe.Academies.Tests.Common.Attributes;
-using Dfe.Academies.Tests.Common.Customizations;
 using Dfe.Academies.Tests.Common.Customizations.Entities;
-using Dfe.Academies.Utils.Caching;
+using DfE.CoreLibs.Caching.Helpers;
+using DfE.CoreLibs.Caching.Interfaces;
+using DfE.CoreLibs.Testing.AutoFixture.Attributes;
+using DfE.CoreLibs.Testing.AutoFixture.Customizations;
 using NSubstitute;
 
 namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
@@ -19,10 +20,10 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
         [CustomAutoData(
             typeof(MemberOfParliamentCustomization),
             typeof(ConstituencyCustomization),
-            typeof(AutoMapperCustomization))]
+            typeof(AutoMapperCustomization<ConstituencyProfile>))]
         public async Task Handle_ShouldReturnMemberOfParliament_WhenConstituencyExists(
             [Frozen] IConstituencyRepository mockConstituencyRepository,
-            [Frozen] ICacheService mockCacheService,
+            [Frozen] ICacheService<IMemoryCacheType> mockCacheService,
             GetMemberOfParliamentByConstituencyQueryHandler handler,
             GetMemberOfParliamentByConstituencyQuery query,
             Domain.Constituencies.Constituency constituency,

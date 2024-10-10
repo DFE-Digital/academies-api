@@ -1,8 +1,8 @@
 ﻿using Dfe.Academies.Domain.Constituencies;
 using Dfe.Academies.Domain.ValueObjects;
 using Dfe.Academies.Testing.Common.Customizations.Models;
-using Dfe.Academies.Tests.Common.Attributes;
-using Dfe.Academies.Tests.Common.Customizations;
+using DfE.CoreLibs.Testing.AutoFixture.Attributes;
+using DfE.CoreLibs.Testing.AutoFixture.Customizations;
 
 namespace Dfe.Academies.Domain.Tests.Aggregates
 {

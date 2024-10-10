@@ -1,6 +1,6 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Contracts.V1.EducationalPerformance;
 using Dfe.Academies.Domain.EducationalPerformance;
+using DfE.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
 
 namespace Dfe.Academies.Application.EducationalPerformance
 {

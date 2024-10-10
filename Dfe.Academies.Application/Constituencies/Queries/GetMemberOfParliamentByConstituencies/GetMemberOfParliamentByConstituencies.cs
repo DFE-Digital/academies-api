@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Domain.Interfaces.Caching;
 using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Utils.Caching;
+using DfE.CoreLibs.Caching.Helpers;
+using DfE.CoreLibs.Caching.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +14,7 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
     public class GetMembersOfParliamentByConstituenciesQueryHandler(
         IConstituencyRepository constituencyRepository,
         IMapper mapper,
-        ICacheService cacheService)
+        ICacheService<IMemoryCacheType> cacheService)
         : IRequestHandler<GetMembersOfParliamentByConstituenciesQuery, List<MemberOfParliament>>
     {
         public async Task<List<MemberOfParliament>> Handle(GetMembersOfParliamentByConstituenciesQuery request, CancellationToken cancellationToken)
