@@ -1,3 +1,4 @@
+using Dfe.Academies.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using PersonsApi.ResponseModels;
 using System.Net;
@@ -23,6 +24,10 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
             {
                 await HandleForbiddenResponseAsync(context);
             }
+            else if (context.Response.StatusCode == (int)HttpStatusCode.NotFound)
+            {
+                await HandleNotFoundResponseAsync(context);
+            }
         }
         catch (ValidationException ex)
         {
@@ -33,6 +38,20 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
         {
             logger.LogError(ex, "An exception occurred: {Message}. Stack Trace: {StackTrace}", ex.Message, ex.StackTrace);
             await HandleExceptionAsync(context, ex);
+        }
+    }
+
+    // Handle 404 Not Found
+    private static async Task HandleNotFoundResponseAsync(HttpContext context)
+    {
+        if (!context.Response.HasStarted)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+
+            var errorResponse = new CustomProblemDetails(HttpStatusCode.NotFound, "The requested resource could not be found.");
+
+            await context.Response.WriteAsJsonAsync(errorResponse);
         }
     }
 

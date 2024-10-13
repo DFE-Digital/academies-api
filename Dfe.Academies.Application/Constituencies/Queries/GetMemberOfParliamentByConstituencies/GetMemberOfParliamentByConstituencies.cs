@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituencies
 {
-    public record GetMembersOfParliamentByConstituenciesQuery(List<string> ConstituencyNames) : IRequest<List<MemberOfParliament>>;
+    public record GetMembersOfParliamentByConstituenciesQuery(List<string> ConstituencyNames) : IRequest<Result<List<MemberOfParliament>>>;
 
     public class GetMembersOfParliamentByConstituenciesQueryHandler(
         IConstituencyRepository constituencyRepository,
         IMapper mapper,
         ICacheService<IMemoryCacheType> cacheService)
-        : IRequestHandler<GetMembersOfParliamentByConstituenciesQuery, List<MemberOfParliament>>
+        : IRequestHandler<GetMembersOfParliamentByConstituenciesQuery, Result<List<MemberOfParliament>>>
     {
-        public async Task<List<MemberOfParliament>> Handle(GetMembersOfParliamentByConstituenciesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<MemberOfParliament>>> Handle(GetMembersOfParliamentByConstituenciesQuery request, CancellationToken cancellationToken)
         {
             var cacheKey = $"MemberOfParliament_{CacheKeyHelper.GenerateHashedCacheKey(request.ConstituencyNames)}";
 
@@ -28,9 +28,10 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
 
                 var membersOfParliament = await constituenciesQuery
                     .ProjectTo<MemberOfParliament>(mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                .ToListAsync(cancellationToken);
 
-                return membersOfParliament;
+                return Result<List<MemberOfParliament>>.Success(membersOfParliament);
+
             }, nameof(GetMembersOfParliamentByConstituenciesQueryHandler));
         }
     }

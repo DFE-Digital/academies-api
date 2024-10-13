@@ -509,7 +509,104 @@ namespace Dfe.PersonsApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PersonsApiException("Academy not found.", status_, responseText_, headers_, null);
+                            throw new PersonsApiException("Academy not found.\nor\nConstituency not found for the given establishment.", status_, responseText_, headers_, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PersonsApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get Member of Parliament by School (Urn)
+        /// </summary>
+        /// <param name="urn">The URN.</param>
+        /// <returns>Member of Parliament</returns>
+        /// <exception cref="PersonsApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentBySchoolUrnAsync(int urn)
+        {
+            return GetMemberOfParliamentBySchoolUrnAsync(urn, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get Member of Parliament by School (Urn)
+        /// </summary>
+        /// <param name="urn">The URN.</param>
+        /// <returns>Member of Parliament</returns>
+        /// <exception cref="PersonsApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentBySchoolUrnAsync(int urn, System.Threading.CancellationToken cancellationToken)
+        {
+            if (urn == null)
+                throw new System.ArgumentNullException("urn");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v1/Establishments/{urn}/getMpBySchool"
+                    urlBuilder_.Append("v1/Establishments/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(urn, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/getMpBySchool");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<MemberOfParliament>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PersonsApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PersonsApiException("School Not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {

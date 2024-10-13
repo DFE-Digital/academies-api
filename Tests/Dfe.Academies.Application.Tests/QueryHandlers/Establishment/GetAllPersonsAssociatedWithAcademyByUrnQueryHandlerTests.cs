@@ -46,10 +46,10 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
             mockEstablishmentQueryService.GetPersonsAssociatedWithAcademyByUrn(query.Urn)
                 .Returns(mock);
 
-            mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<List<AcademyGovernance>>>>(), Arg.Any<string>())
+            mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<Result<List<AcademyGovernance>>>>>(), Arg.Any<string>())
                 .Returns(callInfo =>
                 {
-                    var callback = callInfo.ArgAt<Func<Task<List<AcademyGovernance>>>>(1);
+                    var callback = callInfo.ArgAt<Func<Task<Result<List<AcademyGovernance>>>>>(1);
                     return callback();
                 });
 
@@ -57,15 +57,15 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Establishment
             var result = await handler.Handle(query, default);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(expectedGovernances.Count, result.Count);
-            for (int i = 0; i < result.Count; i++)
+            Assert.NotNull(result.Value);
+            Assert.Equal(expectedGovernances.Count, result.Value!.Count);
+            for (int i = 0; i < result.Value!.Count; i++)
             {
-                Assert.Equal(expectedGovernances[i].FirstName, result[i].FirstName);
-                Assert.Equal(expectedGovernances[i].LastName, result[i].LastName);
+                Assert.Equal(expectedGovernances[i].FirstName, result.Value![i].FirstName);
+                Assert.Equal(expectedGovernances[i].LastName, result.Value![i].LastName);
             }
 
-            await mockCacheService.Received(1).GetOrAddAsync(cacheKey, Arg.Any<Func<Task<List<AcademyGovernance>?>>>(), nameof(GetAllPersonsAssociatedWithAcademyByUrnQueryHandler));
+            await mockCacheService.Received(1).GetOrAddAsync(cacheKey, Arg.Any<Func<Task<Result<List<AcademyGovernance>?>>>>(), nameof(GetAllPersonsAssociatedWithAcademyByUrnQueryHandler));
         }
     }
 }

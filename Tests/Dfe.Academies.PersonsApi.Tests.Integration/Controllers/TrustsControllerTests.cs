@@ -11,9 +11,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
     public class TrustsControllerTests
     {
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MstrContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldReturnPeople_WhenTrustExists(
-            CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)
         {
             // Arrange
@@ -32,9 +32,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MstrContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldReturnEmptyList_WhenTrustExistWithNoPeople(
-            CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)
         {
             // Arrange
@@ -49,9 +49,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MstrContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldThrowAnException_WhenTrustDoesntExists(
-            CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)
         {
             // Arrange
@@ -65,9 +65,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MstrContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldThrowAnException_WhenInvalidIdProvided(
-            CustomWebApplicationDbContextFactory<Startup, MstrContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)
         {
             // Arrange
