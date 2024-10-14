@@ -9,6 +9,8 @@ namespace PersonsApi.Middleware;
 
 public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
 {
+    private static readonly string? _responseContentType = "application/json";
+
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -46,7 +48,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     {
         if (!context.Response.HasStarted)
         {
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = _responseContentType;
             context.Response.StatusCode = StatusCodes.Status404NotFound;
 
             var errorResponse = new CustomProblemDetails(HttpStatusCode.NotFound, "The requested resource could not be found.");
@@ -73,7 +75,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     private async Task HandleUnauthorizedResponseAsync(HttpContext context)
     {
         logger.LogWarning("Unauthorized access attempt detected.");
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = _responseContentType;
         var errorResponse = new ErrorResponse
         {
             StatusCode = context.Response.StatusCode,
@@ -86,7 +88,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     private async Task HandleForbiddenResponseAsync(HttpContext context)
     {
         logger.LogWarning("Forbidden access attempt detected.");
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = _responseContentType;
         var errorResponse = new ErrorResponse
         {
             StatusCode = context.Response.StatusCode,
@@ -98,7 +100,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     // Handle general exceptions (500 Internal Server Error)
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = _responseContentType;
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         var errorResponse = new ErrorResponse
         {
