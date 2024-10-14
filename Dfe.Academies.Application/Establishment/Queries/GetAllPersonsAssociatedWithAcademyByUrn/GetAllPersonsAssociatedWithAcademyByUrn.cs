@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociatedWithAcademyByUrn
 {
-    public record GetAllPersonsAssociatedWithAcademyByUrnQuery(int Urn) : IRequest<List<AcademyGovernance>?>;
+    public record GetAllPersonsAssociatedWithAcademyByUrnQuery(int Urn) : IRequest<Result<List<AcademyGovernance>?>>;
 
     public class GetAllPersonsAssociatedWithAcademyByUrnQueryHandler(
         IEstablishmentQueryService establishmentQueryService,
         IMapper mapper,
         ICacheService<IMemoryCacheType> cacheService)
-        : IRequestHandler<GetAllPersonsAssociatedWithAcademyByUrnQuery, List<AcademyGovernance>?>
+        : IRequestHandler<GetAllPersonsAssociatedWithAcademyByUrnQuery, Result<List<AcademyGovernance>?>>
     {
-        public async Task<List<AcademyGovernance>?> Handle(GetAllPersonsAssociatedWithAcademyByUrnQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<AcademyGovernance>?>> Handle(GetAllPersonsAssociatedWithAcademyByUrnQuery request, CancellationToken cancellationToken)
         {
             var cacheKey = $"PersonsAssociatedWithAcademy_{CacheKeyHelper.GenerateHashedCacheKey(request.Urn.ToString())}";
 
@@ -27,12 +27,12 @@ namespace Dfe.Academies.Application.Establishment.Queries.GetAllPersonsAssociate
 
                 if (query == null)
                 {
-                    return null;
+                    return Result<List<AcademyGovernance>?>.Failure("Academy not found.");
                 }
 
-                var result = await query
+                var result = Result<List<AcademyGovernance>?>.Success(await query
                     .ProjectTo<AcademyGovernance>(mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                    .ToListAsync(cancellationToken));
 
                 return result;
             }, nameof(GetAllPersonsAssociatedWithAcademyByUrnQueryHandler));

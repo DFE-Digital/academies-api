@@ -120,7 +120,44 @@
             }
           },
           "404": {
-            "description": "Academy not found."
+            "description": "Academy not found.\nor\nConstituency not found for the given establishment."
+          }
+        }
+      }
+    },
+    "/v1/Establishments/{urn}/getMpBySchool": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Get Member of Parliament by School (Urn)",
+        "operationId": "Establishments_GetMemberOfParliamentBySchoolUrn",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "description": "The URN.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member of Parliament",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberOfParliament"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "School Not found."
           }
         }
       }

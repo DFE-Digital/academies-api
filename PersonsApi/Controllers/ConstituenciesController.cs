@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituencies;
+using Dfe.Academies.Application.Common.Exceptions;
+using System.Net;
 
 namespace PersonsApi.Controllers
 {
@@ -27,7 +29,7 @@ namespace PersonsApi.Controllers
         {
             var result = await sender.Send(new GetMemberOfParliamentByConstituencyQuery(constituencyName), cancellationToken);
 
-            return result is null ? NotFound() : Ok(result);
+            return !result.IsSuccess ? NotFound(new CustomProblemDetails(HttpStatusCode.NotFound, result.Error)) : Ok(result.Value);
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace PersonsApi.Controllers
         {
             var result = await sender.Send(request, cancellationToken);
 
-            return Ok(result ?? []);
+            return Ok(result.Value);
         }
     }
 }

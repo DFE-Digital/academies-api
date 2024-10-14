@@ -7,15 +7,15 @@ using MediatR;
 
 namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliamentByConstituency
 {
-    public record GetMemberOfParliamentByConstituencyQuery(string ConstituencyName) : IRequest<MemberOfParliament>;
+    public record GetMemberOfParliamentByConstituencyQuery(string ConstituencyName) : IRequest<Result<MemberOfParliament?>>;
 
     public class GetMemberOfParliamentByConstituencyQueryHandler(
         IConstituencyRepository constituencyRepository,
         IMapper mapper,
         ICacheService<IMemoryCacheType> cacheService)
-        : IRequestHandler<GetMemberOfParliamentByConstituencyQuery, MemberOfParliament?>
+        : IRequestHandler<GetMemberOfParliamentByConstituencyQuery, Result<MemberOfParliament?>>
     {
-        public async Task<MemberOfParliament?> Handle(GetMemberOfParliamentByConstituencyQuery request, CancellationToken cancellationToken)
+        public async Task<Result<MemberOfParliament?>> Handle(GetMemberOfParliamentByConstituencyQuery request, CancellationToken cancellationToken)
         {
             var cacheKey = $"MemberOfParliament_{CacheKeyHelper.GenerateHashedCacheKey(request.ConstituencyName)}";
 
@@ -24,9 +24,15 @@ namespace Dfe.Academies.Application.Constituencies.Queries.GetMemberOfParliament
                 var constituencyWithMember = await constituencyRepository
                     .GetMemberOfParliamentByConstituencyAsync(request.ConstituencyName, cancellationToken);
 
+                if (constituencyWithMember == null)
+                {
+                    return Result<MemberOfParliament?>.Failure("Constituency not found.");
+                }
+
                 var result = mapper.Map<MemberOfParliament?>(constituencyWithMember);
 
-                return result;
+                return Result<MemberOfParliament?>.Success(result);
+
             }, nameof(GetMemberOfParliamentByConstituencyQueryHandler));
         }
     }

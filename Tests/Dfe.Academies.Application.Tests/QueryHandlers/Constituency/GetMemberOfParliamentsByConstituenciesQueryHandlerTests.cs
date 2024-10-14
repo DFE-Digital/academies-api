@@ -46,10 +46,10 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
             mockConstituencyRepository.GetMembersOfParliamentByConstituenciesQueryable(query.ConstituencyNames)
                 .Returns(mock);
 
-            mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<List<MemberOfParliament>>>>(), Arg.Any<string>())
+            mockCacheService.GetOrAddAsync(cacheKey, Arg.Any<Func<Task<Result<List<MemberOfParliament>>>>>(), Arg.Any<string>())
                 .Returns(callInfo =>
                 {
-                    var callback = callInfo.ArgAt<Func<Task<List<MemberOfParliament>>>>(1);
+                    var callback = callInfo.ArgAt<Func<Task<Result<List<MemberOfParliament>>>>>(1);
                     return callback();
                 });
 
@@ -58,12 +58,12 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(expectedMps.Count, result.Count);
-            for (int i = 0; i < result.Count; i++)
+            Assert.Equal(expectedMps.Count, result.Value!.Count);
+            for (int i = 0; i < result.Value!.Count; i++)
             {
-                Assert.Equal(expectedMps[i].FirstName, result[i].FirstName);
-                Assert.Equal(expectedMps[i].LastName, result[i].LastName);
-                Assert.Equal(expectedMps[i].ConstituencyName, result[i].ConstituencyName);
+                Assert.Equal(expectedMps[i].FirstName, result.Value![i].FirstName);
+                Assert.Equal(expectedMps[i].LastName, result.Value![i].LastName);
+                Assert.Equal(expectedMps[i].ConstituencyName, result.Value![i].ConstituencyName);
             }
 
             mockConstituencyRepository.Received(1).GetMembersOfParliamentByConstituenciesQueryable(query.ConstituencyNames);

@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Application.Trust.Queries.GetAllPersonsAssociatedWithTrustByTrnOrUkprn
 {
-    public record GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery(string Id) : IRequest<List<TrustGovernance>?>;
+    public record GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery(string Id) : IRequest<Result<List<TrustGovernance>?>>;
 
     public class GetAllPersonsAssociatedWithTrustByTrnOrUkprnQueryHandler(
         ITrustQueryService trustQueryService,
         IMapper mapper,
         ICacheService<IMemoryCacheType> cacheService)
-        : IRequestHandler<GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery, List<TrustGovernance>?>
+        : IRequestHandler<GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery, Result<List<TrustGovernance>?>>
     {
-        public async Task<List<TrustGovernance>?> Handle(GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<TrustGovernance>?>> Handle(GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery request, CancellationToken cancellationToken)
         {
             var idType = IdentifierHelper<string, TrustIdType>.DetermineIdType(request.Id, TrustIdValidator.GetTrustIdValidators());
 
@@ -31,12 +31,15 @@ namespace Dfe.Academies.Application.Trust.Queries.GetAllPersonsAssociatedWithTru
             return await cacheService.GetOrAddAsync(cacheKey, async () =>
             {
                 var query = trustQueryService.GetTrustGovernanceByGroupIdOrUkprn(groupId, ukPrn);
+                if (query == null)
+                {
+                    return Result<List<TrustGovernance>?>.Failure("Trust not found.");
+                }
 
-                return query == null
-                    ? null
-                    : await query
+                return Result<List<TrustGovernance>?>.Success(await query
                         .ProjectTo<TrustGovernance>(mapper.ConfigurationProvider)
-                        .ToListAsync(cancellationToken);
+                        .ToListAsync(cancellationToken));
+
             }, nameof(GetAllPersonsAssociatedWithTrustByTrnOrUkprnQueryHandler));
         }
     }

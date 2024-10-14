@@ -1,9 +1,11 @@
+using Dfe.Academies.Application.Common.Exceptions;
 using Dfe.Academies.Application.Common.Models;
 using Dfe.Academies.Application.Trust.Queries.GetAllPersonsAssociatedWithTrustByTrnOrUkprn;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace PersonsApi.Controllers
 {
@@ -18,7 +20,6 @@ namespace PersonsApi.Controllers
         /// </summary>
         /// <param name="id">The identifier (UKPRN or TRN).</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns></returns>
         [HttpGet("{id}/getAssociatedPersons")]
         [SwaggerResponse(200, "A Collection of Persons Associated With the Trust.", typeof(List<TrustGovernance>))]
         [SwaggerResponse(404, "Trust not found.")]
@@ -26,7 +27,7 @@ namespace PersonsApi.Controllers
         {
             var result = await sender.Send(new GetAllPersonsAssociatedWithTrustByTrnOrUkprnQuery(id), cancellationToken);
 
-            return result is null ? NotFound() : Ok(result);
+            return !result.IsSuccess ? NotFound(new CustomProblemDetails(HttpStatusCode.NotFound, result.Error)) : Ok(result.Value);
         }
     }
 }

@@ -81,6 +81,23 @@ namespace Dfe.PersonsApi.Client.Contracts
         /// <exception cref="PersonsApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AcademyGovernance>> GetAllPersonsAssociatedWithAcademyByUrnAsync(int urn, System.Threading.CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Get Member of Parliament by School (Urn)
+        /// </summary>
+        /// <param name="urn">The URN.</param>
+        /// <returns>Member of Parliament</returns>
+        /// <exception cref="PersonsApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentBySchoolUrnAsync(int urn);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get Member of Parliament by School (Urn)
+        /// </summary>
+        /// <param name="urn">The URN.</param>
+        /// <returns>Member of Parliament</returns>
+        /// <exception cref="PersonsApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<MemberOfParliament> GetMemberOfParliamentBySchoolUrnAsync(int urn, System.Threading.CancellationToken cancellationToken);
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]

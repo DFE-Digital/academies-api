@@ -13,15 +13,15 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
     public class ConstituenciesControllerTests
     {
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnMp_WhenConstituencyExists(
-            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
         {
             factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
             // Arrange
-            var dbContext = factory.GetDbContext();
+            var dbContext = factory.GetDbContext<MopContext>();
 
             await dbContext.Constituencies
                 .Where(x => x.ConstituencyName == "Test Constituency 1")
@@ -38,9 +38,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnNotFound_WhenConstituencyDoesNotExist(
-            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
         {
             // Arrange
@@ -56,15 +56,15 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnMps_WhenConstituenciesExists(
-            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
         {
             // Arrange
             factory.TestClaims = [new Claim(ClaimTypes.Role, "API.Read")];
 
-            var dbcontext = factory.GetDbContext();
+            var dbcontext = factory.GetDbContext<MopContext>();
 
             await dbcontext.Constituencies.Where(x => x.ConstituencyName == "Test Constituency 1")
                 .ExecuteUpdateAsync(x => x.SetProperty(p => p.ConstituencyName, "NewConstituencyName"));
@@ -82,9 +82,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnEmpty_WhenConstituenciesDontExists(
-            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
         {
             // Arrange
@@ -100,9 +100,9 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup, MopContext>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldThrowAnException_WhenConstituenciesNotProvided(
-            CustomWebApplicationDbContextFactory<Startup, MopContext> factory,
+            CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
         {
             // Arrange

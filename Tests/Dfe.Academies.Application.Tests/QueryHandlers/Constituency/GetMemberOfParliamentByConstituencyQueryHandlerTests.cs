@@ -44,11 +44,11 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
 
             mockCacheService.GetOrAddAsync(
                     cacheKey,
-                    Arg.Any<Func<Task<MemberOfParliament>>>(),
+                    Arg.Any<Func<Task<Result<MemberOfParliament>>>>(),
                     Arg.Any<string>())
                 .Returns(callInfo =>
                 {
-                    var callback = callInfo.ArgAt<Func<Task<MemberOfParliament>>>(1);
+                    var callback = callInfo.ArgAt<Func<Task<Result<MemberOfParliament>>>>(1);
                     return callback();
                 });
 
@@ -57,9 +57,9 @@ namespace Dfe.Academies.Application.Tests.QueryHandlers.Constituency
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(expectedMp.FirstName, result.FirstName);
-            Assert.Equal(expectedMp.LastName, result.LastName);
-            Assert.Equal(expectedMp.ConstituencyName, result.ConstituencyName);
+            Assert.Equal(expectedMp.FirstName, result.Value!.FirstName);
+            Assert.Equal(expectedMp.LastName, result.Value!.LastName);
+            Assert.Equal(expectedMp.ConstituencyName, result.Value!.ConstituencyName);
 
             await mockConstituencyRepository.Received(1).GetMemberOfParliamentByConstituencyAsync(query.ConstituencyName, default);
         }

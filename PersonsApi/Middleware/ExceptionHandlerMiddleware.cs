@@ -1,3 +1,4 @@
+using Dfe.Academies.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using PersonsApi.ResponseModels;
 using System.Net;
@@ -8,6 +9,8 @@ namespace PersonsApi.Middleware;
 
 public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
 {
+    private static readonly string? _responseContentType = "application/json";
+
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -23,6 +26,10 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
             {
                 await HandleForbiddenResponseAsync(context);
             }
+            else if (context.Response.StatusCode == (int)HttpStatusCode.NotFound)
+            {
+                await HandleNotFoundResponseAsync(context);
+            }
         }
         catch (ValidationException ex)
         {
@@ -33,6 +40,20 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
         {
             logger.LogError(ex, "An exception occurred: {Message}. Stack Trace: {StackTrace}", ex.Message, ex.StackTrace);
             await HandleExceptionAsync(context, ex);
+        }
+    }
+
+    // Handle 404 Not Found
+    private static async Task HandleNotFoundResponseAsync(HttpContext context)
+    {
+        if (!context.Response.HasStarted)
+        {
+            context.Response.ContentType = _responseContentType;
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+
+            var errorResponse = new CustomProblemDetails(HttpStatusCode.NotFound, "The requested resource could not be found.");
+
+            await context.Response.WriteAsJsonAsync(errorResponse);
         }
     }
 
@@ -54,7 +75,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     private async Task HandleUnauthorizedResponseAsync(HttpContext context)
     {
         logger.LogWarning("Unauthorized access attempt detected.");
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = _responseContentType;
         var errorResponse = new ErrorResponse
         {
             StatusCode = context.Response.StatusCode,
@@ -67,7 +88,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     private async Task HandleForbiddenResponseAsync(HttpContext context)
     {
         logger.LogWarning("Forbidden access attempt detected.");
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = _responseContentType;
         var errorResponse = new ErrorResponse
         {
             StatusCode = context.Response.StatusCode,
@@ -79,7 +100,7 @@ public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionH
     // Handle general exceptions (500 Internal Server Error)
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = _responseContentType;
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         var errorResponse = new ErrorResponse
         {
