@@ -35,6 +35,7 @@ namespace TramsDataApi.Controllers
         /// </summary>
         /// <returns>String message indicating health status.</returns>
         [HttpGet]
+        [HttpHead]
         [SwaggerOperation(Summary = "Performs a basic health check", Description = "Checks if the API is operational.")]
         [SwaggerResponse(200, "API is healthy.")]
         public string Get()
@@ -48,6 +49,7 @@ namespace TramsDataApi.Controllers
         /// </summary>
         /// <returns>Boolean indicating whether the database can be connected to.</returns>
         [HttpGet]
+        [HttpHead]
         [Route("/check_db")]
         [SwaggerOperation(Summary = "Performs a database health check", Description = "Checks if the database is reachable.")]
         [SwaggerResponse(200, "Database is healthy.")]
