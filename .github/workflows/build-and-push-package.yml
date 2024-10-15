@@ -2,10 +2,8 @@ name: Build and Push NuGet Package
 
 on:
   push:
-    branches:
-    - release/*
-    paths:
-    - 'Dfe.PersonsApi.Client*/**'
+    tags:
+    - 'production-*'
 
 env:
   DOTNET_VERSION: '8.0.x'
