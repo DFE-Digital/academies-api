@@ -9,6 +9,8 @@ namespace Dfe.Academies.Application.MappingProfiles
         {
             CreateMap<AcademyGovernanceQueryModel, AcademyGovernance>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.EducationEstablishmentGovernance.SK))
+                .ForMember(dest => dest.UKPRN, opt => opt.MapFrom(src => src.Establishment.UKPRN))
+                .ForMember(dest => dest.URN, opt => opt.MapFrom(src => src.Establishment.URN))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.EducationEstablishmentGovernance.Forename1))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.EducationEstablishmentGovernance.Surname))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.EducationEstablishmentGovernance.Email))
