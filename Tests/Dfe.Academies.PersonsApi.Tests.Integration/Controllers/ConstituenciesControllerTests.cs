@@ -13,7 +13,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
     public class ConstituenciesControllerTests
     {
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
         public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnMp_WhenConstituencyExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
@@ -38,7 +38,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
         public async Task GetMemberOfParliamentByConstituencyAsync_ShouldReturnNotFound_WhenConstituencyDoesNotExist(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
@@ -56,7 +56,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnMps_WhenConstituenciesExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
@@ -82,7 +82,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldReturnEmpty_WhenConstituenciesDontExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
@@ -100,7 +100,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
         public async Task GetMemberOfParliamentByConstituenciesAsync_ShouldThrowAnException_WhenConstituenciesNotProvided(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IConstituenciesClient constituenciesClient)
