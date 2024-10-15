@@ -49,4 +49,7 @@ locals {
   statuscake_contact_group_integrations           = var.statuscake_contact_group_integrations
   statuscake_contact_group_email_addresses        = var.statuscake_contact_group_email_addresses
   custom_container_apps                           = var.custom_container_apps
+  enable_health_insights_api                      = var.enable_health_insights_api
+  health_insights_api_cors_origins                = var.health_insights_api_cors_origins
+  health_insights_api_ipv4_allow_list             = var.health_insights_api_ipv4_allow_list
 }
