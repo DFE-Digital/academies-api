@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-bookworm-slim AS build
 WORKDIR /build
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -17,7 +17,7 @@ RUN dotnet tool install dotnet-ef --version 8.0.8
 ENV PATH="$PATH:/root/.dotnet/tools"
 
 ARG ASPNET_IMAGE_TAG
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-bookworm-slim AS final
 
 RUN apt-get update
 RUN apt-get install unixodbc curl gnupg -y

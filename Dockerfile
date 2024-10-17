@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-bookworm-slim AS build
 WORKDIR /build
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -26,7 +26,7 @@ RUN dotnet build -c Release TramsDataApi.sln --no-restore -p:CI=${CI}
 RUN dotnet publish TramsDataApi -c Release -o /app --no-restore
 
 ARG ASPNET_IMAGE_TAG
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-bookworm-slim AS final
 
 RUN apt-get update
 RUN apt-get install unixodbc curl gnupg -y
