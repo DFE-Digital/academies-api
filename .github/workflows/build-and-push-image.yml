@@ -61,11 +61,11 @@ jobs:
           ]
           include:
             - image: "Dockerfile"
-              aca_name_secret: "AZURE_ACA_NAME"
+              aca_name: "ACA_CONTAINERAPP_NAME"
               prefix: ""
               name: "tramsapi-app"
             - image: "Dockerfile.PersonsApi"
-              aca_name_secret: "AZURE_PERSONS_API_ACA_NAME"
+              aca_name: "ACA_CONTAINERAPP_PERSONS_API_NAME"
               prefix: "persons-api-"
               name: "personsapi-app"
     with:
@@ -84,7 +84,7 @@ jobs:
       azure-acr-client-id: ${{ secrets.ACR_CLIENT_ID }}
       azure-acr-name: ${{ secrets.ACR_NAME }}
       azure-aca-client-id: ${{ secrets.ACA_CLIENT_ID }}
-      azure-aca-name: ${{ secrets.ACA_CONTAINERAPP_NAME }}
+      azure-aca-name: ${{ secrets.[matrix.aca_name] }}
       azure-aca-resource-group: ${{ secrets.ACA_RESOURCE_GROUP }}
 
   create-tag:
