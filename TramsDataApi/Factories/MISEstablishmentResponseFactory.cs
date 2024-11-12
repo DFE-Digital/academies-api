@@ -92,7 +92,6 @@ namespace TramsDataApi.Factories
                 PreviousIsSafeguardingEffective = misEstablishments.PreviousSafeguardingIsEffective,
                 PreviousEarlyYearsProvision = misEstablishments.PreviousEarlyYearsProvisionWhereApplicable.ToString(),
                 PreviousSixthFormProvision = misEstablishments.PreviousSixthFormProvisionWhereApplicable,
-                UngradedInspectionOverallOutcome = misEstablishments.UngradedInspectionOverallOutcome
             };
         }
     }
