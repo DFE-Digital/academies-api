@@ -72,6 +72,5 @@
         public string PreviousSafeguardingIsEffective { get; set; }
         public int? PreviousEarlyYearsProvisionWhereApplicable { get; set; }
         public string PreviousSixthFormProvisionWhereApplicable { get; set; }
-        public string UngradedInspectionOverallOutcome { get; set; }
     }
 }
