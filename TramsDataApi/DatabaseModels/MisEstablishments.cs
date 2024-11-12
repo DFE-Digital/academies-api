@@ -45,7 +45,7 @@
         public int? LaestabAtTimeOfLatestFullInspection { get; set; }
         public string SchoolNameAtTimeOfLatestFullInspection { get; set; }
         public string SchoolTypeAtTimeOfLatestFullInspection { get; set; }
-        public int? OverallEffectiveness { get; set; }
+        public string OverallEffectiveness { get; set; }
         public string CategoryOfConcern { get; set; }
         public int? QualityOfEducation { get; set; }
         public int? BehaviourAndAttitudes { get; set; }
@@ -72,5 +72,6 @@
         public string PreviousSafeguardingIsEffective { get; set; }
         public int? PreviousEarlyYearsProvisionWhereApplicable { get; set; }
         public string PreviousSixthFormProvisionWhereApplicable { get; set; }
+        public string UngradedInspectionOverallOutcome { get; set; }
     }
 }
