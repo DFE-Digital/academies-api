@@ -68,5 +68,6 @@ namespace TramsDataApi.ResponseModels
         public string PreviousIsSafeguardingEffective { get; set; }
         public string PreviousEarlyYearsProvision { get; set; }
         public string PreviousSixthFormProvision { get; set; }
+        public string UngradedInspectionOverallOutcome { get; set; }
     }
 }
