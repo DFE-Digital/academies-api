@@ -1652,8 +1652,6 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("URN at time of the section 8 inspection");
 
                 entity.Property(e => e.WebLink).HasColumnName("Web link");
-
-                entity.Property(e => e.UngradedInspectionOverallOutcome).HasColumnName("Ungraded inspection overall outcome");
             });
 
             modelBuilder.Entity<FurtherEducationEstablishments>(entity =>
