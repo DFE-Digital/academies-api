@@ -58,7 +58,7 @@ namespace TramsDataApi.Factories
                 LAESTABAtTimeOfLastFullInspection = misEstablishments.LaestabAtTimeOfLatestFullInspection.ToString(),
                 SchoolNameAtTimeOfLastFullInspection = misEstablishments.SchoolNameAtTimeOfLatestFullInspection,
                 SchoolTypeAtTimeOfLastFullInspection = misEstablishments.SchoolTypeAtTimeOfLatestFullInspection,
-                OverallEffectiveness = misEstablishments.OverallEffectiveness.ToString(),
+                OverallEffectiveness = misEstablishments.OverallEffectiveness,
                 CategoryOfConcern = misEstablishments.CategoryOfConcern,
                 QualityOfEducation = misEstablishments.QualityOfEducation.ToString(),
                 BehaviourAndAttitudes = misEstablishments.BehaviourAndAttitudes.ToString(),
