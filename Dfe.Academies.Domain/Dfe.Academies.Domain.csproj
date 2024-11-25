@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="DfE.CoreLibs.Contracts" Version="1.0.5" />
-    <PackageReference Include="MediatR" Version="12.4.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
 </Project>
