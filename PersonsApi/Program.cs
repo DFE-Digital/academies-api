@@ -30,4 +30,6 @@ ILogger<Program> logger = app.Services.GetRequiredService<ILogger<Program>>();
 
 logger.LogInformation("Logger is working...");
 
+app.MapHealthChecks("/HealthCheck").AllowAnonymous();
+
 app.Run();
