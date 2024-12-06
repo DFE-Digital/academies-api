@@ -31,6 +31,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<EdperfContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            AddInfrastructureHealthChecks(services);
+
             return services;
         }
 
@@ -58,10 +60,17 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<MopContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            AddInfrastructureHealthChecks(services);
+
             // Authentication
             services.AddCustomAuthorization(config);
 
             return services;
+        }
+
+        public static void AddInfrastructureHealthChecks(this IServiceCollection services) {
+            services.AddHealthChecks()
+                .AddDbContextCheck<MstrContext>("Academies Database");
         }
     }
 }
