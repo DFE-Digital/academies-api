@@ -26,6 +26,7 @@ module "azure_container_apps_hosting" {
   container_scale_http_concurrency       = local.container_scale_http_concurrency
   container_apps_allow_ips_inbound       = local.container_apps_allow_ips_inbound
   container_min_replicas                 = local.container_min_replicas
+  container_port                         = local.container_port
   enable_health_insights_api             = local.enable_health_insights_api
   health_insights_api_cors_origins       = local.health_insights_api_cors_origins
   health_insights_api_ipv4_allow_list    = local.health_insights_api_ipv4_allow_list
