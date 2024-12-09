@@ -31,7 +31,7 @@ RUN ["dotnet", "publish", "TramsDataApi", "--no-build", "-o", "/app"]
 FROM "mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-azurelinux3.0" AS base
 RUN curl "https://packages.microsoft.com/config/rhel/9/prod.repo" | tee /etc/yum.repos.d/mssql-release.repo
 ENV ACCEPT_EULA=Y
-RUN ["tdnf", "update"]
+RUN ["tdnf", "update", "--security", "-y"]
 RUN ["tdnf", "install", "-y", "mssql-tools18"]
 RUN ["tdnf", "clean", "all"]
 
