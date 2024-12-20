@@ -16,7 +16,6 @@ namespace TramsDataApi.Controllers.V2
     [ApiVersion("2.0")]
     [ApiController]
     [Route("v{version:apiVersion}/basline-tracker")]
-    [SwaggerTag("Operations related to Baseline Tracking")]   
     public class BaselineTrackerController : ControllerBase
     {
         private readonly ILogger<BaselineTrackerController> _logger;
@@ -46,7 +45,7 @@ namespace TramsDataApi.Controllers.V2
             Summary = "Retrieve Baseline Trackers",
             Description = "Returns a paginated list of baseline trackers, optionally filtered by states."
         )]
-        [SwaggerResponse(200, "Successfully found and returned the list of baseline trackers.")]
+        [SwaggerResponse(200, "Successfully found and returned the list of baseline trackers.", typeof(ApiResponseV2<BaselineTrackerResponse>))]
         public ActionResult<ApiResponseV2<BaselineTrackerResponse>> Get(
             [FromQuery] string states = null,
             [FromQuery] int page = 1, 

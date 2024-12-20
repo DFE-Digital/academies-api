@@ -1278,9 +1278,10 @@ namespace TramsDataApi.DatabaseModels
                     .IsUnicode(false);
             });
 
-            modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
-                .StartsAt(10000000)
-                .HasMin(10000000);
+            if (!Database.IsSqlite())
+                modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
+                    .StartsAt(10000000)
+                    .HasMin(10000000);
         }
     }
 }

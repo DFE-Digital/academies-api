@@ -1,0 +1,4139 @@
+{
+  "x-generator": "NSwag v14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TramsDataApi",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/establishment/{ukprn}": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves an establishment by its UK Provider Reference Number (UKPRN).",
+        "operationId": "Establishments_GetByUkprn",
+        "parameters": [
+          {
+            "name": "ukprn",
+            "in": "path",
+            "required": true,
+            "description": "The UK Provider Reference Number (UKPRN) of the establishment.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstablishmentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishment with specified UK Provider Reference Number (UKPRN) not found."
+          }
+        }
+      }
+    },
+    "/establishment/regions": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishment Unique Reference Numbers (URNs) by region.",
+        "operationId": "Establishments_GetURNsByRegion",
+        "parameters": [
+          {
+            "name": "regions",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "description": "Array of regions.",
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "x-position": 1
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishment Unique Reference Numbers (URNs).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No establishments found for specified regions."
+          }
+        }
+      }
+    },
+    "/establishment/urn/{urn}": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves an establishment by its Unique Reference Number (URN).",
+        "operationId": "Establishments_GetByUrn",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "description": "The Unique Reference Number (URN) of the establishment.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstablishmentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishment with specified Unique Reference Number (URN) not found."
+          }
+        }
+      }
+    },
+    "/establishments": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Searches for establishments based on a query.",
+        "operationId": "Establishments_SearchEstablishments",
+        "parameters": [
+          {
+            "name": "Urn",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Ukprn",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/establishments/bulk": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
+        "operationId": "Establishments_GetByUrns",
+        "parameters": [
+          {
+            "name": "Urn",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "x-position": 1
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishments with specified Unique Reference Numbers (URNs) not found."
+          }
+        }
+      }
+    },
+    "/educationPerformance/{urn}": {
+      "get": {
+        "tags": [
+          "KeyStagePerformance"
+        ],
+        "summary": "Retrieves educational performance data for an establishment by its Unique Reference Number (URN).",
+        "operationId": "KeyStagePerformance_GetEducationPerformanceByUrn",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "description": "The Unique Reference Number (URN) identifier of the establishment.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the educational performance data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EducationalPerformanceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Educational performance data with the specified Unique Reference Number (URN) not found."
+          }
+        }
+      }
+    },
+    "/trust/{ukprn}": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieves a Trust by its UK Provider Reference Number (UKPRN).",
+        "operationId": "Trusts_GetTrustByUkprn",
+        "parameters": [
+          {
+            "name": "ukprn",
+            "in": "path",
+            "required": true,
+            "description": "The UK Provider Reference Number (UKPRN) identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the Trust.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrustResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Trust with specified UK Provider Reference Number (UKPRN) not found."
+          }
+        }
+      }
+    },
+    "/trusts": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Searches for Trusts based on query parameters.",
+        "operationId": "Trusts_SearchTrusts",
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "query",
+            "description": "Name of the group.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "ukPrn",
+            "in": "query",
+            "description": "UK Provider Reference Number (UKPRN) identifier.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "companiesHouseNumber",
+            "in": "query",
+            "description": "Companies House Number.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Pagination page.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 4
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of results per page.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "x-position": 5
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 6
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrustSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/basline-tracker": {
+      "get": {
+        "tags": [
+          "BaselineTracker"
+        ],
+        "summary": "Retrieves a paginated list of baseline trackers.",
+        "operationId": "BaselineTracker_Get",
+        "parameters": [
+          {
+            "name": "states",
+            "in": "query",
+            "description": "Comma-separated list of states to filter by.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to return.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 2
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "The number of items per page.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the list of baseline trackers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseV2OfBaselineTrackerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/fss/projects": {
+      "get": {
+        "tags": [
+          "FssProject"
+        ],
+        "operationId": "FssProject_GetAll",
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the list of Fss Projects.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseV2OfFssProjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/trusts": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Searches for trusts based on given criteria.",
+        "description": "Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.",
+        "operationId": "Trusts_SearchTrusts2",
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "ukPrn",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "companiesHouseNumber",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 4
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            },
+            "x-position": 5
+          },
+          {
+            "name": "includeEstablishments",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            },
+            "x-position": 6
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the list of trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseV2OfTrustSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/trust/{ukprn}": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieves a specific trust by UK Provider Reference Number (UKPRN).",
+        "operationId": "Trusts_GetTrustByUkPrn",
+        "parameters": [
+          {
+            "name": "ukprn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the trust.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSingleResponseV2OfTrustResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The trust was not found."
+          }
+        }
+      }
+    },
+    "/v2/trusts/bulk": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).",
+        "operationId": "Trusts_GetByUkprns",
+        "parameters": [
+          {
+            "name": "Ukprn",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Establishments",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseV2OfTrustResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The trusts were not found."
+          }
+        }
+      }
+    },
+    "/v3/trusts": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Searches for trusts based on given criteria.",
+        "description": "Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.",
+        "operationId": "Trusts_SearchTrusts22",
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "ukPrn",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "companiesHouseNumber",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 4
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            },
+            "x-position": 5
+          },
+          {
+            "name": "includeEstablishments",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            },
+            "x-position": 6
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the list of trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseV2OfTrustSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/trust/{ukprn}": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieves a specific trust by UKPRN.",
+        "operationId": "Trusts_GetTrustByUkPrn2",
+        "parameters": [
+          {
+            "name": "ukprn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the trust.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSingleResponseV2OfMasterTrustResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The trust was not found."
+          }
+        }
+      }
+    },
+    "/v4/establishment/{ukprn}": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves a Establishment by its UK Provider Reference Number (UKPRN).",
+        "operationId": "Establishments_GetEstablishmentByUkprn",
+        "parameters": [
+          {
+            "name": "ukprn",
+            "in": "path",
+            "required": true,
+            "description": "The UK Provider Reference Number (UKPRN) identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the Establishment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstablishmentDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishment with specified UK Provider Reference Number (UKPRN) not found."
+          }
+        }
+      }
+    },
+    "/v4/establishment/urn/{urn}": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves an establishment by its Unique Reference Number (URN).",
+        "operationId": "Establishments_GetEstablishmentByUrn",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "description": "The Unique Reference Number (URN) of the establishment.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstablishmentDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishment with specified Unique Reference Number (URN) not found."
+          }
+        }
+      }
+    },
+    "/v4/establishments": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Searches for Establishments based on query parameters.",
+        "operationId": "Establishments_SearchEstablishments2",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the establishment.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "ukPrn",
+            "in": "query",
+            "description": "UK Provider Reference Number (UKPRN) identifier.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "urn",
+            "in": "query",
+            "description": "Unique Reference Numbers (URN).",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v4/establishment/regions": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishment Unique Reference Numbers (URNs) by region.",
+        "operationId": "Establishments_GetURNsByRegion2",
+        "parameters": [
+          {
+            "name": "regions",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "description": "Array of regions.",
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishment Unique Reference Numbers (URNs).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No establishments found for specified regions."
+          }
+        }
+      }
+    },
+    "/v4/establishments/bulk": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
+        "operationId": "Establishments_GetByUrns2",
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "description": "Contains Unique Reference Number (URNs) of the establishments.",
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishments with specified Unique Reference Numbers (URNs) not found."
+          }
+        }
+      }
+    },
+    "/v4/establishments/trust": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.",
+        "operationId": "Establishments_GetByTrust",
+        "parameters": [
+          {
+            "name": "trustUkprn",
+            "in": "query",
+            "description": "Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishments with specified Trust UKPRN  not found."
+          }
+        }
+      }
+    },
+    "/v4/establishments/ukprn/bulk": {
+      "get": {
+        "tags": [
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishments by their UKPRNs.",
+        "operationId": "Establishments_GetByUKPRNs",
+        "parameters": [
+          {
+            "name": "ukprn",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "description": "Contains UKPRNs of the establishments.",
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishments with specified UKPRNs not found."
+          }
+        }
+      }
+    },
+    "/v4/trust/{ukprn}": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieves a Trust by its UK Provider Reference Number (UKPRN).",
+        "operationId": "Trusts_GetTrustByUkprn2",
+        "parameters": [
+          {
+            "name": "ukprn",
+            "in": "path",
+            "required": true,
+            "description": "The UK Provider Reference Number (UKPRN) identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the Trust.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrustDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Trust with specified UK Provider Reference Number (UKPRN) not found."
+          }
+        }
+      }
+    },
+    "/v4/trust/companiesHouseNumber/{companiesHouseNumber}": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieves a Trust by its Companies House Number.",
+        "operationId": "Trusts_GetTrustByCompaniesHouseNumber",
+        "parameters": [
+          {
+            "name": "companiesHouseNumber",
+            "in": "path",
+            "required": true,
+            "description": "The Companies House Number identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the Trust.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrustDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Trust with specified Companies House Number not found."
+          }
+        }
+      }
+    },
+    "/v4/trust/trustReferenceNumber/{trustReferenceNumber}": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Retrieves a Trust by its Companies House Number.",
+        "operationId": "Trusts_GetTrustByTrustReferenceNumber",
+        "parameters": [
+          {
+            "name": "trustReferenceNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the Trust.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrustDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Trust with specified Trust Reference Number not found."
+          }
+        }
+      }
+    },
+    "/v4/trusts": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Searches for Trusts based on query parameters.",
+        "operationId": "Trusts_SearchTrusts23",
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "query",
+            "description": "Name of the group.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "ukPrn",
+            "in": "query",
+            "description": "UK Provider Reference Number (UKPRN) identifier.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "companiesHouseNumber",
+            "in": "query",
+            "description": "Companies House Number.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Pagination page.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 4
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of results per page.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "x-position": 5
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The status of the trust, defaults to \"Open\"",
+            "schema": {
+              "default": "Open",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/TrustStatus"
+                }
+              ]
+            },
+            "x-position": 6
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedDataResponseOfTrustDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v4/trusts/bulk": {
+      "get": {
+        "tags": [
+          "Trusts"
+        ],
+        "summary": "Returns Trusts based on supplied list of Ukprns query parameter.",
+        "operationId": "Trusts_GetByUkprns2",
+        "parameters": [
+          {
+            "name": "ukprns",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "description": "List of ukprns to search for.",
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrustDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The trusts were not found."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EstablishmentResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urn": {
+            "type": "string",
+            "nullable": true
+          },
+          "localAuthorityCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "localAuthorityName": {
+            "type": "string",
+            "nullable": true
+          },
+          "establishmentNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "establishmentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "establishmentType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "establishmentTypeGroup": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "establishmentStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "reasonEstablishmentOpened": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "openDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "reasonEstablishmentClosed": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "closeDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "phaseOfEducation": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "statutoryLowAge": {
+            "type": "string",
+            "nullable": true
+          },
+          "statutoryHighAge": {
+            "type": "string",
+            "nullable": true
+          },
+          "boarders": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "nurseryProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "officialSixthForm": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "gender": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "religiousCharacter": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "religiousEthos": {
+            "type": "string",
+            "nullable": true
+          },
+          "diocese": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "admissionsPolicy": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "schoolCapacity": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialClasses": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "census": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CensusResponse"
+              }
+            ]
+          },
+          "trustSchoolFlag": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "trusts": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "schoolSponsorFlag": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolSponsors": {
+            "type": "string",
+            "nullable": true
+          },
+          "federationFlag": {
+            "type": "string",
+            "nullable": true
+          },
+          "federations": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "ukprn": {
+            "type": "string",
+            "nullable": true
+          },
+          "feheiIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "furtherEducationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "ofstedLastInspection": {
+            "type": "string",
+            "deprecated": true,
+            "nullable": true
+          },
+          "ofstedSpecialMeasures": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "lastChangedDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AddressResponse"
+              }
+            ]
+          },
+          "schoolWebsite": {
+            "type": "string",
+            "nullable": true
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "headteacherTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "headteacherFirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "headteacherLastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "headteacherPreferredJobTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectorateName": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectorateReport": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfLastInspectionVisit": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfNextInspectionVisit": {
+            "type": "string",
+            "nullable": true
+          },
+          "teenMoth": {
+            "type": "string",
+            "nullable": true
+          },
+          "teenMothPlaces": {
+            "type": "string",
+            "nullable": true
+          },
+          "ccf": {
+            "type": "string",
+            "nullable": true
+          },
+          "senpru": {
+            "type": "string",
+            "nullable": true
+          },
+          "ebd": {
+            "type": "string",
+            "nullable": true
+          },
+          "placesPRU": {
+            "type": "string",
+            "nullable": true
+          },
+          "ftProv": {
+            "type": "string",
+            "nullable": true
+          },
+          "edByOther": {
+            "type": "string",
+            "nullable": true
+          },
+          "section14Approved": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN1": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN2": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN3": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN4": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN5": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN6": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN7": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN8": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN9": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN10": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN11": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN12": {
+            "type": "string",
+            "nullable": true
+          },
+          "seN13": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeOfResourcedProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourcedProvisionOnRoll": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourcedProvisionOnCapacity": {
+            "type": "string",
+            "nullable": true
+          },
+          "senUnitOnRoll": {
+            "type": "string",
+            "nullable": true
+          },
+          "senUnitCapacity": {
+            "type": "string",
+            "nullable": true
+          },
+          "gor": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "districtAdministrative": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "administractiveWard": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "parliamentaryConstituency": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "urbanRural": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "gsslaCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "easting": {
+            "type": "string",
+            "nullable": true
+          },
+          "northing": {
+            "type": "string",
+            "nullable": true
+          },
+          "censusAreaStatisticWard": {
+            "type": "string",
+            "nullable": true
+          },
+          "msoa": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "lsoa": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "senStat": {
+            "type": "string",
+            "nullable": true
+          },
+          "senNoStat": {
+            "type": "string",
+            "nullable": true
+          },
+          "boardingEstablishment": {
+            "type": "string",
+            "nullable": true
+          },
+          "propsName": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousLocalAuthority": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NameAndCodeResponse"
+              }
+            ]
+          },
+          "previousEstablishmentNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "ofstedRating": {
+            "type": "string",
+            "deprecated": true,
+            "nullable": true
+          },
+          "rscRegion": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "uprn": {
+            "type": "string",
+            "nullable": true
+          },
+          "misEstablishment": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MISEstablishmentResponse"
+              }
+            ]
+          },
+          "misFurtherEducationEstablishment": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MISFEAResponse"
+              }
+            ]
+          },
+          "viewAcademyConversion": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ViewAcademyConversionResponse"
+              }
+            ]
+          },
+          "smartData": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SMARTDataResponse"
+              }
+            ]
+          },
+          "financial": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PlaceholderResponse"
+              }
+            ]
+          },
+          "concerns": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PlaceholderResponse"
+              }
+            ]
+          }
+        }
+      },
+      "NameAndCodeResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CensusResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "censusDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfPupils": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfBoys": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfGirls": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentageSen": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentageFsm": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentageEnglishNotFirstLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "perceantageEnglishFirstLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentageFirstLanguageUnclassified": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberEligableForFSM": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberEligableForFSM6Years": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentageEligableForFSM6Years": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AddressResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "locality": {
+            "type": "string",
+            "nullable": true
+          },
+          "additionalLine": {
+            "type": "string",
+            "nullable": true
+          },
+          "town": {
+            "type": "string",
+            "nullable": true
+          },
+          "county": {
+            "type": "string",
+            "nullable": true
+          },
+          "postcode": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "MISEstablishmentResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "siteName": {
+            "type": "string",
+            "nullable": true
+          },
+          "webLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "laestab": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ofstedPhase": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeOfEducation": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolOpenDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "sixthForm": {
+            "type": "string",
+            "nullable": true
+          },
+          "designatedReligiousCharacter": {
+            "type": "string",
+            "nullable": true
+          },
+          "religiousEthos": {
+            "type": "string",
+            "nullable": true
+          },
+          "faithGrouping": {
+            "type": "string",
+            "nullable": true
+          },
+          "ofstedRegion": {
+            "type": "string",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "localAuthority": {
+            "type": "string",
+            "nullable": true
+          },
+          "parliamentaryConstituency": {
+            "type": "string",
+            "nullable": true
+          },
+          "postcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "incomeDeprivationAffectingChildrenIndexQuintile": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalNumberOfPupils": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestSection8InspectionNumberSinceLastFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "section8InspectionRelatedToCurrentSchoolUrn": {
+            "type": "string",
+            "nullable": true
+          },
+          "urnAtTimeOfSection8Inspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolNameAtTimeOfSection8Inspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolTypeAtTimeOfSection8Inspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfSection8InspectionsSinceLastFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfLatestSection8Inspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "section8InspectionPublicationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestSection8InspectionConvertedToFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "section8InspectionOverallOutcome": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectionNumberOfLatestFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectionTypeGrouping": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectionStartDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectionEndDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "publicationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestFullInspectionRelatesToCurrentSchoolUrn": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolUrnAtTimeOfLastFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "laestabAtTimeOfLastFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolNameAtTimeOfLastFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolTypeAtTimeOfLastFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "overallEffectiveness": {
+            "type": "string",
+            "nullable": true
+          },
+          "categoryOfConcern": {
+            "type": "string",
+            "nullable": true
+          },
+          "qualityOfEducation": {
+            "type": "string",
+            "nullable": true
+          },
+          "behaviourAndAttitudes": {
+            "type": "string",
+            "nullable": true
+          },
+          "personalDevelopment": {
+            "type": "string",
+            "nullable": true
+          },
+          "effectivenessOfLeadershipAndManagement": {
+            "type": "string",
+            "nullable": true
+          },
+          "safeguardingIsEffective": {
+            "type": "string",
+            "nullable": true
+          },
+          "earlyYearsProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "sixthFormProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousFullInspectionNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousInspectionStartDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousInspectionEndDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousPublicationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousFullInspectionRelatesToUrnOfCurrentSchool": {
+            "type": "string",
+            "nullable": true
+          },
+          "urnAtTheTimeOfPreviousFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "laestabAtTheTimeOfPreviousFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolNameAtTheTimeOfPreviousFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolTypeAtTheTimeOfPreviousFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousFullInspectionOverallEffectiveness": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousCategoryOfConcern": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousQualityOfEducation": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousBehaviourAndAttitudes": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousPersonalDevelopment": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousEffectivenessOfLeadershipAndManagement": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousIsSafeguardingEffective": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousEarlyYearsProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousSixthFormProvision": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "MISFEAResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProviderResponse"
+              }
+            ]
+          },
+          "localAuthority": {
+            "type": "string",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "ofstedRegion": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfLatestShortInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfShortInspectionsSinceLastFullInspectionRAW": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfShortInspectionsSinceLastFullInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectionNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "inspectionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstDayOfInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastDayOfInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "datePublished": {
+            "type": "string",
+            "nullable": true
+          },
+          "overallEffectivenessRAW": {
+            "type": "string",
+            "nullable": true
+          },
+          "overallEffectiveness": {
+            "type": "string",
+            "nullable": true
+          },
+          "qualityOfEducationRAW": {
+            "type": "string",
+            "nullable": true
+          },
+          "qualityOfEducation": {
+            "type": "string",
+            "nullable": true
+          },
+          "behaviourAndAttitudesRAW": {
+            "type": "string",
+            "nullable": true
+          },
+          "behaviourAndAttitudes": {
+            "type": "string",
+            "nullable": true
+          },
+          "personalDevelopmentRAW": {
+            "type": "string",
+            "nullable": true
+          },
+          "personalDevelopment": {
+            "type": "string",
+            "nullable": true
+          },
+          "effectivenessOfLeadershipAndManagementRAW": {
+            "type": "string",
+            "nullable": true
+          },
+          "effectivenessOfLeadershipAndManagement": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSafeguardingEffective": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousInspectionNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousLastDayOfInspection": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousOverallEffectivenessRAW": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousOverallEffectiveness": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ProviderResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "group": {
+            "type": "string",
+            "nullable": true
+          },
+          "ukprn": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "ViewAcademyConversionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "viabilityIssue": {
+            "type": "string",
+            "nullable": true
+          },
+          "pfi": {
+            "type": "string",
+            "nullable": true
+          },
+          "pan": {
+            "type": "string",
+            "nullable": true
+          },
+          "deficit": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SMARTDataResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "probabilityOfDeclining": {
+            "type": "string",
+            "nullable": true
+          },
+          "probabilityOfStayingTheSame": {
+            "type": "string",
+            "nullable": true
+          },
+          "probabilityOfImproving": {
+            "type": "string",
+            "nullable": true
+          },
+          "predictedChangeInProgress8Score": {
+            "type": "string",
+            "nullable": true
+          },
+          "predictedChanceOfChangeOccurring": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalNumberOfRisks": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRiskScore": {
+            "type": "string",
+            "nullable": true
+          },
+          "riskRatingNum": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PlaceholderResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urn": {
+            "type": "string",
+            "nullable": true
+          },
+          "ukprn": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "group": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EstablishmentSummaryResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urn": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ukprn": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EducationalPerformanceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schoolName": {
+            "type": "string",
+            "nullable": true
+          },
+          "keyStage1": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/KeyStage1PerformanceResponse"
+            }
+          },
+          "keyStage2": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/KeyStage2PerformanceResponse"
+            }
+          },
+          "keyStage4": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/KeyStage4PerformanceResponse"
+            }
+          },
+          "keyStage5": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/KeyStage5PerformanceResponse"
+            }
+          },
+          "absenceData": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/SchoolAbsenceDataDto"
+            }
+          }
+        }
+      },
+      "KeyStage1PerformanceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "reading": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "writing": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maths": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "KeyStage2PerformanceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "percentageMeetingExpectedStdInRWM": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "percentageAchievingHigherStdInRWM": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "readingProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "writingProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "mathsProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAveragePercentageMeetingExpectedStdInRWM": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAveragePercentageAchievingHigherStdInRWM": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageReadingProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageWritingProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageMathsProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAveragePercentageMeetingExpectedStdInRWM": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAveragePercentageAchievingHigherStdInRWM": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageReadingProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageWritingProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageMathsProgressScore": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          }
+        }
+      },
+      "DisadvantagedPupilsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "notDisadvantaged": {
+            "type": "string",
+            "nullable": true
+          },
+          "disadvantaged": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "KeyStage4PerformanceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "sipAttainment8score": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipAttainment8scoreenglish": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipAttainment8scoremaths": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipAttainment8scoreebacc": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipNumberofpupilsprogress8": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipProgress8upperconfidence": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "sipProgress8lowerconfidence": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "sipProgress8english": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipProgress8maths": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipProgress8ebacc": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "sipProgress8Score": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageA8Score": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageA8English": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageA8Maths": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageA8EBacc": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageP8PupilsIncluded": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageP8Score": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageP8LowerConfidence": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "nationalAverageP8UpperConfidence": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "nationalAverageP8English": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageP8Maths": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "nationalAverageP8Ebacc": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageA8Score": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageA8English": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageA8Maths": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageA8EBacc": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageP8PupilsIncluded": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageP8Score": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageP8LowerConfidence": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "laAverageP8UpperConfidence": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "laAverageP8English": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageP8Maths": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laAverageP8Ebacc": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "laEnteringEbacc": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "enteringebacc": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "nationalEnteringEbacc": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          }
+        }
+      },
+      "KeyStage5PerformanceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "academicQualificationAverage": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "appliedGeneralQualificationAverage": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "nationalAcademicQualificationAverage": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "nationalAppliedGeneralQualificationAverage": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "laAcademicQualificationAverage": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "laAppliedGeneralQualificationAverage": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "appliedGeneralProgress": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          },
+          "academicProgress": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DisadvantagedPupilsResponse"
+              }
+            ]
+          }
+        }
+      },
+      "SchoolAbsenceDataDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "year": {
+            "type": "string"
+          },
+          "overallAbsence": {
+            "type": "string",
+            "nullable": true
+          },
+          "persistentAbsence": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TrustResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ifdData": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IFDDataResponse"
+              }
+            ]
+          },
+          "giasData": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GIASDataResponse"
+              }
+            ]
+          },
+          "establishments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EstablishmentResponse"
+            }
+          }
+        }
+      },
+      "IFDDataResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "trustOpenDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "leadRSCRegion": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustContactPhoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "performanceAndRiskDateOfMeeting": {
+            "type": "string",
+            "nullable": true
+          },
+          "prioritisedAreaOfReview": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentSingleListGrouping": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfGroupingDecision": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateEnteredOntoSingleList": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustReviewWriteup": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfTrustReviewMeeting": {
+            "type": "string",
+            "nullable": true
+          },
+          "followupLetterSent": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateActionPlannedFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "wipSummaryGoesToMinister": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalGovernanceReviewDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "efficiencyICFPreviewCompleted": {
+            "type": "string",
+            "nullable": true
+          },
+          "efficiencyICFPreviewOther": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkToWorkplaceForEfficiencyICFReview": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberInTrust": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustType": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustAddress": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AddressResponse"
+              }
+            ]
+          }
+        }
+      },
+      "GIASDataResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "groupId": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupType": {
+            "type": "string",
+            "nullable": true
+          },
+          "companiesHouseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupContactAddress": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AddressResponse"
+              }
+            ]
+          },
+          "ukprn": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TrustSummaryResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ukprn": {
+            "type": "string",
+            "nullable": true
+          },
+          "urn": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "companiesHouseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustType": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustAddress": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AddressResponse"
+              }
+            ]
+          },
+          "establishments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EstablishmentSummaryResponse"
+            }
+          }
+        }
+      },
+      "ApiResponseV2OfBaselineTrackerResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/BaselineTrackerResponse"
+            }
+          },
+          "paging": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PagingResponse"
+              }
+            ]
+          }
+        }
+      },
+      "BaselineTrackerResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urn": {
+            "type": "string",
+            "nullable": true
+          },
+          "routeOfProject": {
+            "type": "string",
+            "nullable": true
+          },
+          "pupilNumberMethodology": {
+            "type": "string",
+            "nullable": true
+          },
+          "academyFundingTypeCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "academyOrderApprovedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "currentConverionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "laestab": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "newAcademyUrn": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "newLAEstab": {
+            "type": "string",
+            "nullable": true
+          },
+          "newAcademyUKPRN": {
+            "type": "string",
+            "nullable": true
+          },
+          "ukPrn": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "newAcademyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolContactName": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolAddress1": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolAddress2": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolAddress3": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolAddress4": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolPostcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "sponsorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sponsorReferenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "leadSponsorId": {
+            "type": "string",
+            "nullable": true
+          },
+          "sponsorEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameOfTrust": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupId": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupType": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustUID": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustUKPRN": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustCompaniesHouseRef": {
+            "type": "string",
+            "nullable": true
+          },
+          "la": {
+            "type": "string",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "territory": {
+            "type": "string",
+            "nullable": true
+          },
+          "rsc": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolPhase": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolType": {
+            "type": "string",
+            "nullable": true
+          },
+          "academyProposedCapacityPrimary": {
+            "type": "string",
+            "nullable": true
+          },
+          "academyProposedCapacitySecondary": {
+            "type": "string",
+            "nullable": true
+          },
+          "academyProposedCapacityPost": {
+            "type": "string",
+            "nullable": true
+          },
+          "dfeProjectLead": {
+            "type": "string",
+            "nullable": true
+          },
+          "dfeGrade6": {
+            "type": "string",
+            "nullable": true
+          },
+          "dfeTeamLeder": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectLeadEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "upin": {
+            "type": "string",
+            "nullable": true
+          },
+          "rpa": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "PagingResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recordCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextPageUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ApiResponseV2OfFssProjectResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/FssProjectResponse"
+            }
+          },
+          "paging": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PagingResponse"
+              }
+            ]
+          }
+        }
+      },
+      "FssProjectResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actualOpeningDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ageRange": {
+            "type": "string",
+            "nullable": true
+          },
+          "applicationWave": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentFreeSchoolName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfEntryIntoPreOpening": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateSchoolClosed": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "residentialBoardingProvisionDetails": {
+            "type": "string",
+            "nullable": true
+          },
+          "faithStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "faithType": {
+            "type": "string",
+            "nullable": true
+          },
+          "otherFaithType": {
+            "type": "string",
+            "nullable": true
+          },
+          "freeSchoolPenPortrait": {
+            "type": "string",
+            "nullable": true
+          },
+          "fsgLeadContact": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "laesTab": {
+            "type": "string",
+            "nullable": true
+          },
+          "localAuthority": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfFormsOfEntry": {
+            "type": "string",
+            "nullable": true
+          },
+          "nursery": {
+            "type": "string",
+            "nullable": true
+          },
+          "postcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "provisionalOpeningDateAgreedWithTrust": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "residentialOrBoardingProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "rscRegion": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolPhase": {
+            "type": "string",
+            "nullable": true
+          },
+          "schoolType": {
+            "type": "string",
+            "nullable": true
+          },
+          "sixthForm": {
+            "type": "string",
+            "nullable": true
+          },
+          "sixthFormType": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialism": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustId": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustName": {
+            "type": "string",
+            "nullable": true
+          },
+          "urn": {
+            "type": "string",
+            "nullable": true
+          },
+          "faActualCompletionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "faForecastDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "kickOfMeetingHeldDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "realisticYearofOpening": {
+            "type": "string",
+            "nullable": true
+          },
+          "memberOfParliament": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfPupil": {
+            "type": "string",
+            "nullable": true
+          },
+          "geographicalRegion": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ApiResponseV2OfTrustSummaryResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/TrustSummaryResponse"
+            }
+          },
+          "paging": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PagingResponse"
+              }
+            ]
+          }
+        }
+      },
+      "ApiSingleResponseV2OfTrustResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TrustResponse"
+              }
+            ]
+          }
+        }
+      },
+      "ApiResponseV2OfTrustResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/TrustResponse"
+            }
+          },
+          "paging": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PagingResponse"
+              }
+            ]
+          }
+        }
+      },
+      "ApiSingleResponseV2OfMasterTrustResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MasterTrustResponse"
+              }
+            ]
+          }
+        }
+      },
+      "MasterTrustResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "trustData": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MasterTrustDataResponse"
+              }
+            ]
+          },
+          "giasData": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GIASDataResponse"
+              }
+            ]
+          },
+          "establishments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EstablishmentResponse"
+            }
+          }
+        }
+      },
+      "MasterTrustDataResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "trustContactPhoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "performanceAndRiskDateOfMeeting": {
+            "type": "string",
+            "nullable": true
+          },
+          "prioritisedAreaOfReview": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentSingleListGrouping": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfGroupingDecision": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateEnteredOntoSingleList": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustReviewWriteup": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfTrustReviewMeeting": {
+            "type": "string",
+            "nullable": true
+          },
+          "followupLetterSent": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateActionPlannedFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "wipSummaryGoesToMinister": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalGovernanceReviewDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "efficiencyICFPreviewCompleted": {
+            "type": "string",
+            "nullable": true
+          },
+          "efficiencyICFPreviewOther": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkToWorkplaceForEfficiencyICFReview": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberInTrust": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustType": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustAddress": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AddressResponse"
+              }
+            ]
+          }
+        }
+      },
+      "EstablishmentDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ukprn": {
+            "type": "string"
+          },
+          "urn": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "localAuthorityCode": {
+            "type": "string"
+          },
+          "localAuthorityName": {
+            "type": "string"
+          },
+          "ofstedRating": {
+            "type": "string"
+          },
+          "ofstedLastInspection": {
+            "type": "string"
+          },
+          "statutoryLowAge": {
+            "type": "string"
+          },
+          "statutoryHighAge": {
+            "type": "string"
+          },
+          "schoolCapacity": {
+            "type": "string"
+          },
+          "pfi": {
+            "type": "string"
+          },
+          "establishmentNumber": {
+            "type": "string"
+          },
+          "pan": {
+            "type": "string"
+          },
+          "deficit": {
+            "type": "string"
+          },
+          "viabilityIssue": {
+            "type": "string"
+          },
+          "giasLastChangedDate": {
+            "type": "string"
+          },
+          "noOfBoys": {
+            "type": "string"
+          },
+          "noOfGirls": {
+            "type": "string"
+          },
+          "senUnitCapacity": {
+            "type": "string"
+          },
+          "senUnitOnRoll": {
+            "type": "string"
+          },
+          "religousEthos": {
+            "type": "string"
+          },
+          "headteacherTitle": {
+            "type": "string"
+          },
+          "headteacherFirstName": {
+            "type": "string"
+          },
+          "headteacherLastName": {
+            "type": "string"
+          },
+          "headteacherPreferredJobTitle": {
+            "type": "string"
+          },
+          "diocese": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
+          "establishmentType": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
+          "gor": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
+          "phaseOfEducation": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
+          "religiousCharacter": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
+          "parliamentaryConstituency": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
+          "census": {
+            "$ref": "#/components/schemas/CensusDto"
+          },
+          "misEstablishment": {
+            "$ref": "#/components/schemas/MisEstablishmentDto"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressDto"
+          }
+        }
+      },
+      "NameAndCodeDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "CensusDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "numberOfPupils": {
+            "type": "string"
+          },
+          "percentageFsm": {
+            "type": "string"
+          },
+          "percentageFsmLastSixYears": {
+            "type": "string"
+          },
+          "percentageEnglishAsSecondLanguage": {
+            "type": "string"
+          },
+          "percentageSen": {
+            "type": "string"
+          }
+        }
+      },
+      "MisEstablishmentDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dateOfLatestSection8Inspection": {
+            "type": "string"
+          },
+          "inspectionEndDate": {
+            "type": "string"
+          },
+          "overallEffectiveness": {
+            "type": "string"
+          },
+          "qualityOfEducation": {
+            "type": "string"
+          },
+          "behaviourAndAttitudes": {
+            "type": "string"
+          },
+          "personalDevelopment": {
+            "type": "string"
+          },
+          "effectivenessOfLeadershipAndManagement": {
+            "type": "string"
+          },
+          "earlyYearsProvision": {
+            "type": "string"
+          },
+          "sixthFormProvision": {
+            "type": "string"
+          },
+          "weblink": {
+            "type": "string"
+          }
+        }
+      },
+      "AddressDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "town": {
+            "type": "string"
+          },
+          "county": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "locality": {
+            "type": "string"
+          },
+          "additional": {
+            "type": "string"
+          }
+        }
+      },
+      "TrustDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "ukprn": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
+          "companiesHouseNumber": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressDto"
+          }
+        }
+      },
+      "PagedDataResponseOfTrustDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrustDto"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/PagingResponse2"
+          }
+        }
+      },
+      "PagingResponse2": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recordCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextPageUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "TrustStatus": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Open",
+          "All"
+        ],
+        "enum": [
+          "Open",
+          "All"
+        ]
+      }
+    }
+  }
+}

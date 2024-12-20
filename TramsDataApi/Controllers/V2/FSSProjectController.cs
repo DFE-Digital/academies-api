@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.Annotations;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.UseCases;
 
@@ -24,6 +25,8 @@ namespace TramsDataApi.Controllers.V2
 
         [HttpGet("projects")]
         [MapToApiVersion("2.0")]
+        [SwaggerResponse(200, "Successfully found and returned the list of Fss Projects.", typeof(ApiResponseV2<FssProjectResponse>))]
+
         public async Task<ActionResult<ApiResponseV2<FssProjectResponse>>> GetAll()
         {
             _logger.LogInformation($"Retreiving all FSS Projects ");

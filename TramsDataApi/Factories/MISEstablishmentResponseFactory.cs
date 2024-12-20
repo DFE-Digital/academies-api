@@ -1,11 +1,11 @@
-using TramsDataApi.DatabaseModels;
+using Dfe.Academies.Domain.Establishment;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Factories
 {
     public class MISEstablishmentResponseFactory
     {
-        public static MISEstablishmentResponse Create(MisEstablishments misEstablishments)
+        public static MISEstablishmentResponse Create(MisEstablishment misEstablishments)
         {
             if (misEstablishments == null)
             {
@@ -50,7 +50,6 @@ namespace TramsDataApi.Factories
                 InspectionType = misEstablishments.InspectionType,
                 InspectionTypeGrouping = misEstablishments.InspectionTypeGrouping,
                 InspectionStartDate = misEstablishments.InspectionStartDate,
-                InspectionEndDate = misEstablishments.InspectionEndDate,
                 PublicationDate = misEstablishments.PublicationDate,
                 LatestFullInspectionRelatesToCurrentSchoolUrn =
                     misEstablishments.DoesTheLatestFullInspectionRelateToTheUrnOfTheCurrentSchool,
@@ -70,7 +69,6 @@ namespace TramsDataApi.Factories
                 SixthFormProvision = misEstablishments.SixthFormProvisionWhereApplicable.ToString(),
                 PreviousFullInspectionNumber = misEstablishments.PreviousFullInspectionNumber,
                 PreviousInspectionStartDate = misEstablishments.PreviousInspectionStartDate,
-                PreviousInspectionEndDate = misEstablishments.PreviousInspectionEndDate,
                 PreviousPublicationDate = misEstablishments.PreviousPublicationDate,
                 PreviousFullInspectionRelatesToUrnOfCurrentSchool =
                     misEstablishments.DoesThePreviousFullInspectionRelateToTheUrnOfTheCurrentSchool,

@@ -30,6 +30,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddDbContext<EdperfContext>(options =>
                 options.UseSqlServer(connectionString));
+            
+            services.AddDbContext<MisMstrContext>(options =>
+                options.UseSqlServer(connectionString));
 
             AddInfrastructureHealthChecks(services);
 
@@ -58,6 +61,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.UseSqlServer(connectionString));
 
             services.AddDbContext<MopContext>(options =>
+                options.UseSqlServer(connectionString));
+            
+            services.AddDbContext<MisMstrContext>(options =>
                 options.UseSqlServer(connectionString));
 
             AddInfrastructureHealthChecks(services);

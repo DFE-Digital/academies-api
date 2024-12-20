@@ -22,8 +22,6 @@ namespace TramsDataApi.DatabaseModels
         public virtual DbSet<GroupLink> GroupLink { get; set; }
         public virtual DbSet<Sponsor> Sponsor { get; set; }
         public virtual DbSet<Trust> Trust { get; set; }
-        public virtual DbSet<MisEstablishments> MisEstablishments { get; set; }
-        public virtual DbSet<FurtherEducationEstablishments> FurtherEducationEstablishments { get; set; }
         public virtual DbSet<SmartData> SmartData { get; set; }
         public virtual DbSet<SipPhonics> SipPhonics { get; set; }
         public virtual DbSet<Account> Account { get; set; }
@@ -40,7 +38,6 @@ namespace TramsDataApi.DatabaseModels
                     "Data Source=127.0.0.1;Initial Catalog=local_trams_test_db;persist security info=True;User id=sa; Password=StrongPassword905");
             }
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Establishment>(entity =>
@@ -1200,560 +1197,286 @@ namespace TramsDataApi.DatabaseModels
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
-
-            modelBuilder.Entity<Trust>(entity =>
-            {
-                entity.HasKey(e => e.Rid);
-
-                entity.ToTable("Trust", "ifd");
-
-                entity.Property(e => e.AcademiesInTrustOpen)
-                    .HasColumnName("Academies_in_trust_Open")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AcademiesInTrustRebrokered)
-                    .HasColumnName("Academies_in_trust_Rebrokered")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ChainId)
-                    .HasColumnName("ChainID")
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LeadRscRegion)
-                    .HasColumnName("Lead RSC Region")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LeadSponsor)
-                    .HasColumnName("Lead Sponsor")
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MatTemplateAccountabilityFramework)
-                    .HasColumnName("MAT Template.Accountability Framework")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MatTemplateFinancialAndResourceManagement)
-                    .HasColumnName("MAT Template.Financial and Resource Management")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MatTemplateFuturePlans)
-                    .HasColumnName("MAT Template.Future Plans")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MatTemplateGovernanceAndTrustBoard)
-                    .HasColumnName("MAT Template.Governance and Trust Board")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MatTemplateIssues)
-                    .HasColumnName("MAT Template.Issues")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MatTemplateMatOverview)
-                    .HasColumnName("MAT Template.MAT Overview")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MatTemplateSchoolImprovementStrategy)
-                    .HasColumnName("MAT Template.School Improvement Strategy")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NumberInChain).HasColumnName("Number_in_chain");
-
-                entity.Property(e => e.NumberInTrust).HasColumnName("Number_in_trust");
-
-                entity.Property(e => e.NumberInTrustOpen).HasColumnName("Number_in_trust_Open");
-
-                entity.Property(e => e.NumberInTrustPipeline).HasColumnName("Number_in_trust_Pipeline");
-
-                entity.Property(e => e.NumberInTrustPrePipeline).HasColumnName("Number_in_trust_Pre-Pipeline");
-
-                entity.Property(e => e.NumberInTrustRebrokered).HasColumnName("Number_in_trust_Rebrokered");
-
-                entity.Property(e => e.PRid)
-                    .HasColumnName("p_rid")
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Rid)
-                    .HasColumnName("RID")
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SchoolsInTrustPipeline)
-                    .HasColumnName("Schools_in_trust_Pipeline")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SchoolsInTrustPrePipeline)
-                    .HasColumnName("Schools_in_trust_Pre-Pipeline")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustAddressLine1)
-                    .HasColumnName("Trust Contact Details.Trust address line 1")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustAddressLine2)
-                    .HasColumnName("Trust Contact Details.Trust address line 2")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustAddressLine3)
-                    .HasColumnName("Trust Contact Details.Trust address line 3")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustContactEmail)
-                    .HasColumnName("Trust Contact Details.Trust contact email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustContactLa)
-                    .HasColumnName("Trust Contact Details.Trust contact LA")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustContactName)
-                    .HasColumnName("Trust Contact Details.Trust contact name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustContactPhoneNumber)
-                    .HasColumnName("Trust Contact Details.Trust contact phone number")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustContactPosition)
-                    .HasColumnName("Trust Contact Details.Trust contact position")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustCounty)
-                    .HasColumnName("Trust Contact Details.Trust county")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustPostcode)
-                    .HasColumnName("Trust Contact Details.Trust postcode")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustContactDetailsTrustTown)
-                    .HasColumnName("Trust Contact Details.Trust town")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskDateActionPlannedFor)
-                    .HasColumnName("Trust Performance and Risk.Date Action Planned For")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.TrustPerformanceAndRiskDateEnteredOntoSingleList)
-                    .HasColumnName("Trust Performance and Risk.Date Entered Onto Single List")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.TrustPerformanceAndRiskDateOfGroupingDecision)
-                    .HasColumnName("Trust Performance and Risk.Date of Grouping Decision")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.TrustPerformanceAndRiskDateOfMeeting)
-                    .HasColumnName("Trust Performance and Risk.Date of Meeting")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.TrustPerformanceAndRiskEfficiencyIcfpReviewCompleted)
-                    .HasColumnName("Trust Performance and Risk.Efficiency (& ICFP) Review Completed")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskEfficiencyIcfpReviewOther)
-                    .HasColumnName("Trust Performance and Risk.Efficiency (& ICFP) Review Other")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskExternalGovernanceReviewDate)
-                    .HasColumnName("Trust Performance and Risk.External Governance Review Date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.TrustPerformanceAndRiskFollowUpLetterSent)
-                    .HasColumnName("Trust Performance and Risk.Follow-up letter sent")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview)
-                    .HasColumnName("Trust Performance and Risk.Link to Workplace for Efficiency (& ICFP) Review")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskPrioritisedForAReview)
-                    .HasColumnName("Trust Performance and Risk.Prioritised for a review")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskSingleListGrouping)
-                    .HasColumnName("Trust Performance and Risk.Single List Grouping")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskTrustBanding)
-                    .HasColumnName("Trust Performance and Risk.Trust Banding")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskTrustReviewWriteUp)
-                    .HasColumnName("Trust Performance and Risk.Trust Review write-up")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustPerformanceAndRiskWipSummaryGoesToMinister)
-                    .HasColumnName("Trust Performance and Risk.WIP Summary - Goes to Minister")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustRef)
-                    .HasColumnName("Trust Ref")
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsChainId)
-                    .HasColumnName("Trusts.Chain id")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsCompaniesHouseNumber)
-                    .HasColumnName("Trusts.Companies House number")
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsLeadRscRegion)
-                    .HasColumnName("Trusts.Lead RSC Region")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsLeadSponsorId)
-                    .HasColumnName("Trusts.Lead sponsor id")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsLeadSponsorName)
-                    .HasColumnName("Trusts.Lead sponsor name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsLinkToWorkplace)
-                    .HasColumnName("Trusts.Link to workplace")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsLoadOpenAcademiesInThisTrust)
-                    .HasColumnName("Trusts.Load Open academies in this trust");
-
-                entity.Property(e => e.TrustsLoadOpenAcademiesProvisionallyWithThisTrustReBrokerage)
-                    .HasColumnName("Trusts.Load open academies provisionally with this trust (Re-brokerage)");
-
-                entity.Property(e => e.TrustsLoadPipelineProjectsInThisTrust)
-                    .HasColumnName("Trusts.Load pipeline projects in this trust");
-
-                entity.Property(e => e.TrustsTrustName)
-                    .HasColumnName("Trusts.Trust name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsTrustOpenDate)
-                    .HasColumnName("Trusts.Trust open date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.TrustsTrustRef)
-                    .HasColumnName("Trusts.Trust ref")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsTrustSecureAccessContactEmail)
-                    .HasColumnName("Trusts.Trust Secure Access Contact email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsTrustSecureAccessContactName)
-                    .HasColumnName("Trusts.Trust Secure Access Contact name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustsTrustType)
-                    .HasColumnName("Trusts.Trust type")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-            });
-            modelBuilder.Entity<MisEstablishments>(entity =>
-            {
-                entity.HasKey(e => e.Urn);
-
-                entity.ToTable("Establishments", "mis");
-
-                entity.Property(e => e.AdmissionsPolicy).HasColumnName("Admissions policy");
-
-                entity.Property(e => e.BehaviourAndAttitudes).HasColumnName("Behaviour and attitudes");
-
-                entity.Property(e => e.CategoryOfConcern).HasColumnName("Category of concern");
-
-                entity.Property(e => e.DateOfLatestSection8Inspection)
-                    .HasColumnName("Date of latest section 8 inspection");
-
-                entity.Property(e => e.DesignatedReligiousCharacter).HasColumnName("Designated religious character");
-
-                entity.Property(e => e.DidTheLatestSection8InspectionConvertToAFullInspection)
-                    .HasColumnName("Did the latest section 8 inspection convert to a full inspection?");
-
-                entity.Property(e => e.DoesTheLatestFullInspectionRelateToTheUrnOfTheCurrentSchool)
-                    .HasColumnName("Does the latest full inspection relate to the URN of the current school?");
-
-                entity.Property(e => e.DoesThePreviousFullInspectionRelateToTheUrnOfTheCurrentSchool)
-                    .HasColumnName("Does the previous full inspection relate to the URN of the current school?");
-
-                entity.Property(e => e.DoesTheSection8InspectionRelateToTheUrnOfTheCurrentSchool)
-                    .HasColumnName("Does the section 8 inspection relate to the URN of the current school?");
-
-                entity.Property(e => e.EarlyYearsProvisionWhereApplicable)
-                    .HasColumnName("Early years provision (where applicable)");
-
-                entity.Property(e => e.EffectivenessOfLeadershipAndManagement)
-                    .HasColumnName("Effectiveness of leadership and management");
-
-                entity.Property(e => e.EventTypeGrouping).HasColumnName("Event type grouping");
-
-                entity.Property(e => e.FaithGrouping).HasColumnName("Faith grouping");
-
-                entity.Property(e => e.InspectionEndDate).HasColumnName("Inspection end date");
-
-                entity.Property(e => e.InspectionNumberOfLatestFullInspection)
-                    .HasColumnName("Inspection number of latest full inspection");
-
-                entity.Property(e => e.InspectionStartDate).HasColumnName("Inspection start date");
-
-                entity.Property(e => e.InspectionType).HasColumnName("Inspection type");
-
-                entity.Property(e => e.InspectionTypeGrouping).HasColumnName("Inspection type grouping");
-
-                entity.Property(e => e.Laestab).HasColumnName("LAESTAB");
-
-                entity.Property(e => e.LaestabAtTimeOfLatestFullInspection)
-                    .HasColumnName("LAESTAB at time of latest full inspection");
-
-                entity.Property(e => e.LaestabAtTimeOfPreviousFullInspection)
-                    .HasColumnName("LAESTAB at time of previous full inspection");
-
-                entity.Property(e => e.LaestabAtTimeOfTheSection8Inspection)
-                    .HasColumnName("LAESTAB at time of the section 8 inspection");
-
-                entity.Property(e => e.LatestSection8InspectionNumberSinceLastFullInspection)
-                    .HasColumnName("Latest section 8 inspection number since last full inspection");
-
-                entity.Property(e => e.LocalAuthority).HasColumnName("Local authority");
-
-                entity.Property(e => e.NumberOfOtherSection8InspectionsSinceLastFullInspection)
-                    .HasColumnName("Number of other section 8 inspections since last full inspection");
-
-                entity.Property(e => e.NumberOfSection8InspectionsSinceTheLastFullInspection)
-                    .HasColumnName("Number of section 8 inspections since the last full inspection");
-
-                entity.Property(e => e.OfstedPhase).HasColumnName("Ofsted phase");
-
-                entity.Property(e => e.OfstedRegion).HasColumnName("Ofsted region");
-
-                entity.Property(e => e.OverallEffectiveness).HasColumnName("Overall effectiveness");
-
-                entity.Property(e => e.ParliamentaryConstituency).HasColumnName("Parliamentary constituency");
-
-                entity.Property(e => e.PersonalDevelopment).HasColumnName("Personal development");
-
-                entity.Property(e => e.PreviousBehaviourAndAttitudes).HasColumnName("Previous behaviour and attitudes");
-
-                entity.Property(e => e.PreviousCategoryOfConcern).HasColumnName("Previous category of concern");
-
-                entity.Property(e => e.PreviousEarlyYearsProvisionWhereApplicable)
-                    .HasColumnName("Previous early years provision (where applicable)");
-
-                entity.Property(e => e.PreviousEffectivenessOfLeadershipAndManagement)
-                    .HasColumnName("Previous effectiveness of leadership and management");
-
-                entity.Property(e => e.PreviousFullInspectionNumber).HasColumnName("Previous full inspection number");
-
-                entity.Property(e => e.PreviousFullInspectionOverallEffectiveness)
-                    .HasColumnName("Previous full inspection overall effectiveness");
-
-                entity.Property(e => e.PreviousInspectionEndDate).HasColumnName("Previous inspection end date");
-
-                entity.Property(e => e.PreviousInspectionStartDate).HasColumnName("Previous inspection start date");
-
-                entity.Property(e => e.PreviousPersonalDevelopment).HasColumnName("Previous personal development");
-
-                entity.Property(e => e.PreviousPublicationDate).HasColumnName("Previous publication date");
-
-                entity.Property(e => e.PreviousQualityOfEducation).HasColumnName("Previous quality of education");
-
-                entity.Property(e => e.PreviousSafeguardingIsEffective)
-                    .HasColumnName("Previous safeguarding is effective?");
-
-                entity.Property(e => e.PreviousSixthFormProvisionWhereApplicable)
-                    .HasColumnName("Previous sixth form provision (where applicable)");
-
-                entity.Property(e => e.PublicationDate).HasColumnName("Publication date");
-
-                entity.Property(e => e.QualityOfEducation).HasColumnName("Quality of education");
-
-                entity.Property(e => e.ReligiousEthos).HasColumnName("Religious ethos");
-
-                entity.Property(e => e.SafeguardingIsEffective).HasColumnName("Safeguarding is effective?");
-
-                entity.Property(e => e.SchoolName).HasColumnName("School name");
-
-                entity.Property(e => e.SchoolNameAtTimeOfLatestFullInspection)
-                    .HasColumnName("School name at time of latest full inspection");
-
-                entity.Property(e => e.SchoolNameAtTimeOfPreviousFullInspection)
-                    .HasColumnName("School name at time of previous full inspection");
-
-                entity.Property(e => e.SchoolNameAtTimeOfTheLatestSection8Inspection)
-                    .HasColumnName("School name at time of the latest section 8 inspection");
-
-                entity.Property(e => e.SchoolOpenDate).HasColumnName("School open date");
-
-                entity.Property(e => e.SchoolTypeAtTimeOfLatestFullInspection)
-                    .HasColumnName("School type at time of latest full inspection");
-
-                entity.Property(e => e.SchoolTypeAtTimeOfPreviousFullInspection)
-                    .HasColumnName("School type at time of previous full inspection");
-
-                entity.Property(e => e.SchoolTypeAtTimeOfTheLatestSection8Inspection)
-                    .HasColumnName("School type at time of the latest section 8 inspection");
-
-                entity.Property(e => e.Section8InspectionOverallOutcome)
-                    .HasColumnName("Section 8 inspection overall outcome");
-
-                entity.Property(e => e.Section8InspectionPublicationDate)
-                    .HasColumnName("Section 8 inspection publication date");
-
-                entity.Property(e => e.SixthForm).HasColumnName("Sixth form");
-
-                entity.Property(e => e.SixthFormProvisionWhereApplicable)
-                    .HasColumnName("Sixth form provision (where applicable)");
-
-                entity.Property(e => e.TheIncomeDeprivationAffectingChildrenIndexIdaciQuintile)
-                    .HasColumnName("The income deprivation affecting children index (IDACI) quintile");
-
-                entity.Property(e => e.TotalNumberOfPupils).HasColumnName("Total number of pupils");
-
-                entity.Property(e => e.TypeOfEducation).HasColumnName("Type of education");
-
-                entity.Property(e => e.Urn).HasColumnName("URN").ValueGeneratedNever();
-                ;
-
-                entity.Property(e => e.UrnAtTimeOfLatestFullInspection)
-                    .HasColumnName("URN at time of latest full inspection");
-
-                entity.Property(e => e.UrnAtTimeOfPreviousFullInspection)
-                    .HasColumnName("URN at time of previous full inspection");
-
-                entity.Property(e => e.UrnAtTimeOfTheSection8Inspection)
-                    .HasColumnName("URN at time of the section 8 inspection");
-
-                entity.Property(e => e.WebLink).HasColumnName("Web link");
-            });
-
-            modelBuilder.Entity<FurtherEducationEstablishments>(entity =>
-            {
-                entity.HasKey(e => e.ProviderUrn)
-                    .HasName("PK_ManagementInformationFurtherEducationSchoolTableData");
-
-                entity.ToTable("FurtherEducationEstablishments", "mis");
-
-                entity.Property(e => e.ProviderUrn)
-                    .HasColumnName("Provider URN")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.BehaviourAndAttitudes).HasColumnName("Behaviour and attitudes");
-
-                entity.Property(e => e.BehaviourAndAttitudesRaw).HasColumnName("Behaviour and attitudes RAW");
-
-                entity.Property(e => e.DateOfLatestShortInspection).HasColumnName("Date of latest short inspection");
-
-                entity.Property(e => e.DatePublished).HasColumnName("Date published");
-
-                entity.Property(e => e.EffectivenessOfLeadershipAndManagement)
-                    .HasColumnName("Effectiveness of leadership and management");
-
-                entity.Property(e => e.EffectivenessOfLeadershipAndManagementRaw)
-                    .HasColumnName("Effectiveness of leadership and management RAW");
-
-                entity.Property(e => e.FirstDayOfInspection).HasColumnName("First day of inspection");
-
-                entity.Property(e => e.ImprovedDeclinedStayedTheSame)
-                    .HasColumnName("Improved/ declined/ stayed the same");
-
-                entity.Property(e => e.InspectionNumber).HasColumnName("Inspection number");
-
-                entity.Property(e => e.InspectionType).HasColumnName("Inspection type");
-
-                entity.Property(e => e.IsSafeguardingEffective).HasColumnName("Is safeguarding effective?");
-
-                entity.Property(e => e.LastDayOfInspection).HasColumnName("Last day of Inspection");
-
-                entity.Property(e => e.LocalAuthority).HasColumnName("Local authority");
-
-                entity.Property(e => e.NumberOfShortInspectionsSinceLastFullInspection)
-                    .HasColumnName("Number of short inspections since last full inspection");
-
-                entity.Property(e => e.NumberOfShortInspectionsSinceLastFullInspectionRaw)
-                    .HasColumnName("Number of short inspections since last full inspection RAW");
-
-                entity.Property(e => e.OfstedRegion).HasColumnName("Ofsted region");
-
-                entity.Property(e => e.OverallEffectiveness).HasColumnName("Overall effectiveness");
-
-                entity.Property(e => e.OverallEffectivenessRaw).HasColumnName("Overall effectiveness RAW");
-
-                entity.Property(e => e.PersonalDevelopment).HasColumnName("Personal development");
-
-                entity.Property(e => e.PersonalDevelopmentRaw).HasColumnName("Personal development RAW");
-
-                entity.Property(e => e.PreviousBehaviourAndAttitudes).HasColumnName("Previous behaviour and attitudes");
-
-                entity.Property(e => e.PreviousBehaviourAndAttitudesRaw)
-                    .HasColumnName("Previous behaviour and attitudes RAW");
-
-                entity.Property(e => e.PreviousEffectivenessOfLeadershipAndManagement)
-                    .HasColumnName("Previous effectiveness of leadership and management");
-
-                entity.Property(e => e.PreviousEffectivenessOfLeadershipAndManagementRaw)
-                    .HasColumnName("Previous effectiveness of leadership and management RAW");
-
-                entity.Property(e => e.PreviousInspectionNumber).HasColumnName("Previous inspection number");
-
-                entity.Property(e => e.PreviousLastDayOfInspection).HasColumnName("Previous last day of inspection");
-
-                entity.Property(e => e.PreviousOverallEffectiveness).HasColumnName("Previous overall effectiveness");
-
-                entity.Property(e => e.PreviousOverallEffectivenessRaw)
-                    .HasColumnName("Previous overall effectiveness RAW");
-
-                entity.Property(e => e.PreviousPersonalDevelopment).HasColumnName("Previous personal development");
-
-                entity.Property(e => e.PreviousPersonalDevelopmentRaw)
-                    .HasColumnName("Previous personal development RAW");
-
-                entity.Property(e => e.PreviousQualityOfEducation).HasColumnName("Previous quality of education");
-
-                entity.Property(e => e.PreviousQualityOfEducationRaw)
-                    .HasColumnName("Previous quality of education RAW");
-
-                entity.Property(e => e.PreviousSafeguarding).HasColumnName("Previous safeguarding");
-
-                entity.Property(e => e.ProviderGroup).HasColumnName("Provider group");
-
-                entity.Property(e => e.ProviderName).HasColumnName("Provider name");
-
-                entity.Property(e => e.ProviderType).HasColumnName("Provider type");
-
-                entity.Property(e => e.ProviderUkprn).HasColumnName("Provider UKPRN");
-
-                entity.Property(e => e.QualityOfEducation).HasColumnName("Quality of education");
-
-                entity.Property(e => e.QualityOfEducationRaw).HasColumnName("Quality of education RAW");
-            });
+            
+                modelBuilder.Entity<Trust>(entity =>
+                {
+                    entity.HasKey(e => e.Rid);
+                    if (Database.IsSqlite())
+                        entity.ToTable("LegacyTrust");
+                    else
+                        entity.ToTable("Trust", "ifd");
+
+                    entity.Property(e => e.AcademiesInTrustOpen)
+                        .HasColumnName("Academies_in_trust_Open")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.AcademiesInTrustRebrokered)
+                        .HasColumnName("Academies_in_trust_Rebrokered")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ChainId)
+                        .HasColumnName("ChainID")
+                        .HasMaxLength(7)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.LeadRscRegion)
+                        .HasColumnName("Lead RSC Region")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.LeadSponsor)
+                        .HasColumnName("Lead Sponsor")
+                        .HasMaxLength(7)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.MatTemplateAccountabilityFramework)
+                        .HasColumnName("MAT Template.Accountability Framework")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.MatTemplateFinancialAndResourceManagement)
+                        .HasColumnName("MAT Template.Financial and Resource Management")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.MatTemplateFuturePlans)
+                        .HasColumnName("MAT Template.Future Plans")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.MatTemplateGovernanceAndTrustBoard)
+                        .HasColumnName("MAT Template.Governance and Trust Board")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.MatTemplateIssues)
+                        .HasColumnName("MAT Template.Issues")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.MatTemplateMatOverview)
+                        .HasColumnName("MAT Template.MAT Overview")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.MatTemplateSchoolImprovementStrategy)
+                        .HasColumnName("MAT Template.School Improvement Strategy")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.NumberInChain).HasColumnName("Number_in_chain");
+
+                    entity.Property(e => e.NumberInTrust).HasColumnName("Number_in_trust");
+
+                    entity.Property(e => e.NumberInTrustOpen).HasColumnName("Number_in_trust_Open");
+
+                    entity.Property(e => e.NumberInTrustPipeline).HasColumnName("Number_in_trust_Pipeline");
+
+                    entity.Property(e => e.NumberInTrustPrePipeline).HasColumnName("Number_in_trust_Pre-Pipeline");
+
+                    entity.Property(e => e.NumberInTrustRebrokered).HasColumnName("Number_in_trust_Rebrokered");
+
+                    entity.Property(e => e.PRid)
+                        .HasColumnName("p_rid")
+                        .HasMaxLength(11)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.Rid)
+                        .HasColumnName("RID")
+                        .HasMaxLength(11)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.SchoolsInTrustPipeline)
+                        .HasColumnName("Schools_in_trust_Pipeline")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.SchoolsInTrustPrePipeline)
+                        .HasColumnName("Schools_in_trust_Pre-Pipeline")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustAddressLine1)
+                        .HasColumnName("Trust Contact Details.Trust address line 1")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustAddressLine2)
+                        .HasColumnName("Trust Contact Details.Trust address line 2")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustAddressLine3)
+                        .HasColumnName("Trust Contact Details.Trust address line 3")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustContactEmail)
+                        .HasColumnName("Trust Contact Details.Trust contact email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustContactLa)
+                        .HasColumnName("Trust Contact Details.Trust contact LA")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustContactName)
+                        .HasColumnName("Trust Contact Details.Trust contact name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustContactPhoneNumber)
+                        .HasColumnName("Trust Contact Details.Trust contact phone number")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustContactPosition)
+                        .HasColumnName("Trust Contact Details.Trust contact position")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustCounty)
+                        .HasColumnName("Trust Contact Details.Trust county")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustPostcode)
+                        .HasColumnName("Trust Contact Details.Trust postcode")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustContactDetailsTrustTown)
+                        .HasColumnName("Trust Contact Details.Trust town")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskDateActionPlannedFor)
+                        .HasColumnName("Trust Performance and Risk.Date Action Planned For")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.TrustPerformanceAndRiskDateEnteredOntoSingleList)
+                        .HasColumnName("Trust Performance and Risk.Date Entered Onto Single List")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.TrustPerformanceAndRiskDateOfGroupingDecision)
+                        .HasColumnName("Trust Performance and Risk.Date of Grouping Decision")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.TrustPerformanceAndRiskDateOfMeeting)
+                        .HasColumnName("Trust Performance and Risk.Date of Meeting")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.TrustPerformanceAndRiskEfficiencyIcfpReviewCompleted)
+                        .HasColumnName("Trust Performance and Risk.Efficiency (& ICFP) Review Completed")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskEfficiencyIcfpReviewOther)
+                        .HasColumnName("Trust Performance and Risk.Efficiency (& ICFP) Review Other")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskExternalGovernanceReviewDate)
+                        .HasColumnName("Trust Performance and Risk.External Governance Review Date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.TrustPerformanceAndRiskFollowUpLetterSent)
+                        .HasColumnName("Trust Performance and Risk.Follow-up letter sent")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskLinkToWorkplaceForEfficiencyIcfpReview)
+                        .HasColumnName("Trust Performance and Risk.Link to Workplace for Efficiency (& ICFP) Review")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskPrioritisedForAReview)
+                        .HasColumnName("Trust Performance and Risk.Prioritised for a review")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskSingleListGrouping)
+                        .HasColumnName("Trust Performance and Risk.Single List Grouping")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskTrustBanding)
+                        .HasColumnName("Trust Performance and Risk.Trust Banding")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskTrustReviewWriteUp)
+                        .HasColumnName("Trust Performance and Risk.Trust Review write-up")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustPerformanceAndRiskWipSummaryGoesToMinister)
+                        .HasColumnName("Trust Performance and Risk.WIP Summary - Goes to Minister")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustRef)
+                        .HasColumnName("Trust Ref")
+                        .HasMaxLength(7)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsChainId)
+                        .HasColumnName("Trusts.Chain id")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsCompaniesHouseNumber)
+                        .HasColumnName("Trusts.Companies House number")
+                        .HasMaxLength(9)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsLeadRscRegion)
+                        .HasColumnName("Trusts.Lead RSC Region")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsLeadSponsorId)
+                        .HasColumnName("Trusts.Lead sponsor id")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsLeadSponsorName)
+                        .HasColumnName("Trusts.Lead sponsor name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsLinkToWorkplace)
+                        .HasColumnName("Trusts.Link to workplace")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsLoadOpenAcademiesInThisTrust)
+                        .HasColumnName("Trusts.Load Open academies in this trust");
+
+                    entity.Property(e => e.TrustsLoadOpenAcademiesProvisionallyWithThisTrustReBrokerage)
+                        .HasColumnName("Trusts.Load open academies provisionally with this trust (Re-brokerage)");
+
+                    entity.Property(e => e.TrustsLoadPipelineProjectsInThisTrust)
+                        .HasColumnName("Trusts.Load pipeline projects in this trust");
+
+                    entity.Property(e => e.TrustsTrustName)
+                        .HasColumnName("Trusts.Trust name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsTrustOpenDate)
+                        .HasColumnName("Trusts.Trust open date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.TrustsTrustRef)
+                        .HasColumnName("Trusts.Trust ref")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsTrustSecureAccessContactEmail)
+                        .HasColumnName("Trusts.Trust Secure Access Contact email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsTrustSecureAccessContactName)
+                        .HasColumnName("Trusts.Trust Secure Access Contact name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustsTrustType)
+                        .HasColumnName("Trusts.Trust type")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+                });
 
             modelBuilder.Entity<SmartData>(entity =>
             {
@@ -2148,1326 +1871,1333 @@ namespace TramsDataApi.DatabaseModels
 
                 entity.Property(e => e.LocalizedLabel).HasMaxLength(350);
             });
+
+            if(Database.IsSqlite())
+                modelBuilder.Ignore<IfdPipeline>();
+            else
+                modelBuilder.Entity<IfdPipeline>(entity =>
+                {
+                    entity.HasKey(e => e.Sk)
+                        .HasName("Sk");
+
+                    entity.ToTable("IfdPipeline", "mstr");
+
+                    entity.Property(e => e.ApprovalProcessAoDecisionMethod)
+                        .HasColumnName("Approval Process.AO Decision Method")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ApprovalProcessAoIssuedDate)
+                        .HasColumnName("Approval Process.AO Issued Date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.ApprovalProcessApplicationDate)
+                        .HasColumnName("Approval Process.Application Date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.ApprovalProcessAppliedOrBrokered)
+                        .HasColumnName("Approval Process.Applied or Brokered")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ApprovalProcessDateRscFundingAgreementApprovedInPrinciple)
+                        .HasColumnName("Approval Process.Date RSC funding agreement approved in principle")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.ApprovalProcessDateRscHtbApprovalGranted)
+                        .HasColumnName("Approval Process.Date RSC/HTB approval granted")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.ApprovalProcessDateSubmittedForAoDecision)
+                        .HasColumnName("Approval Process.Date Submitted for AO decision")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.ApprovalProcessFundingAgreementApprovedDate)
+                        .HasColumnName("Approval Process.Funding Agreement Approved Date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.ApprovalProcessReStartApplicationDate)
+                        .HasColumnName("Approval Process.Re-start application date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.ApprovalProcessRevokedDAoDate)
+                        .HasColumnName("Approval Process.Revoked dAO date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.CaseDataAcademyContactNumber)
+                        .HasColumnName("Case Data.Academy contact number")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataAcademyHeadPrincipal)
+                        .HasColumnName("Case Data.Academy head/principal")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataChangeOfLeadership)
+                        .HasColumnName("Case Data.Change of leadership")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataClosing)
+                        .HasColumnName("Case Data.Closing")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataClosureStatus)
+                        .HasColumnName("Case Data.Closure status")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataCommentsNextSteps)
+                        .HasColumnName("Case Data.Comments/next steps")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataConcernType)
+                        .HasColumnName("Case Data.Concern Type")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataCurrentConfidenceTerm)
+                        .HasColumnName("Case Data.Current Confidence Term")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataCurrentKs2ConfidenceMeasure)
+                        .HasColumnName("Case Data.Current KS2 Confidence Measure")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataCurrentKs2Rag)
+                        .HasColumnName("Case Data.Current KS2 RAG")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataCurrentKs4ConfidenceMeasure)
+                        .HasColumnName("Case Data.Current KS4 Confidence Measure")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataCurrentKs4Rag)
+                        .HasColumnName("Case Data.Current KS4 RAG")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataCurrentKs5Rag)
+                        .HasColumnName("Case Data.Current KS5 RAG")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataDateClosureCommenced)
+                        .HasColumnName("Case Data.Date closure commenced")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.CaseDataDateOfInitialContact)
+                        .HasColumnName("Case Data.Date of initial contact")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.CaseDataEducationAdviserTimingOfNextVisit)
+                        .HasColumnName("Case Data.Education adviser timing of next visit")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataEfaRagRating)
+                        .HasColumnName("Case Data.EFA RAG rating")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataExpectedClosureDate)
+                        .HasColumnName("Case Data.Expected Closure date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.CaseDataFntlIssued)
+                        .HasColumnName("Case Data.FNtl issued")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.CaseDataFntlRemoved)
+                        .HasColumnName("Case Data.FNtl removed")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.CaseDataIncreasedCapacityInTrustGb)
+                        .HasColumnName("Case Data.Increased capacity in Trust/GB")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataKs2BelowTheFloor)
+                        .HasColumnName("Case Data.KS2 below the floor?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataKs2CoastingAcademy)
+                        .HasColumnName("Case Data.KS2 Coasting Academy?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataKs4BelowTheFloor)
+                        .HasColumnName("Case Data.KS4 below the floor?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataKs4CoastingAcademy)
+                        .HasColumnName("Case Data.KS4 Coasting Academy?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataKs5BelowTheFloorAcademicCase)
+                        .HasColumnName("Case Data.KS5 below the floor? - Academic Case")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataKs5BelowTheFloorAppliedGeneralCase)
+                        .HasColumnName("Case Data.KS5 below the floor? - Applied General Case")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataLinkToWorkplaces)
+                        .HasColumnName("Case Data.Link to Workplaces")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataOtherActionTaken)
+                        .HasColumnName("Case Data.Other action taken")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataPlannedAction)
+                        .HasColumnName("Case Data.Planned Action")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataProjectProgress)
+                        .HasColumnName("Case Data.Project progress")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataReBrokeredDateCaseData)
+                        .HasColumnName("Case Data.Re-brokered date Case Data")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.CaseDataStatus)
+                        .HasColumnName("Case Data.Status")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.CaseDataTrustNotice)
+                        .HasColumnName("Case Data.Trust notice?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessAcknowledgementAndFollowUpSentToSchool)
+                        .HasColumnName("Delivery Process.Acknowledgement and follow-up sent to school")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessActualDateOfGbResolution)
+                        .HasColumnName("Delivery Process.Actual Date of GB Resolution")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessApplicationFormReference)
+                        .HasColumnName("Delivery Process.Application form reference")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessArticlesOfAssociationRelatedComments)
+                        .HasColumnName("Delivery Process.Articles of Association related comments")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessArticlesOfAssociations)
+                        .HasColumnName("Delivery Process.Articles of Associations")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessArticlesOfAssociationsReceivedCleared)
+                        .HasColumnName("Delivery Process.Articles of Associations received/cleared")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessBaselineDate)
+                        .HasColumnName("Delivery Process.Baseline Date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessCommentsForOfstedPreOpeningInspection)
+                        .HasColumnName("Delivery Process.Comments for Ofsted Pre–opening Inspection")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessCommercialTransferAgreement)
+                        .HasColumnName("Delivery Process.Commercial Transfer Agreement")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessCommercialTransferAgreementReceivedCleared)
+                        .HasColumnName("Delivery Process.Commercial Transfer Agreement received/cleared")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessCommercialTransferAgreementRelatedComments)
+                        .HasColumnName("Delivery Process.Commercial Transfer Agreement related comments")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessConsideringSoSIebStage)
+                        .HasColumnName("Delivery Process.Considering SoS IEB stage")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessDateChurchFoundationConsultationReceived)
+                        .HasColumnName("Delivery Process.Date Church/Foundation Consultation received")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateDAoDueDiligenceAnnexReceived)
+                        .HasColumnName("Delivery Process.Date dAO Due Diligence Annex received")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateDirectionToFacilitateConversionIssuedGbOrLa)
+                        .HasColumnName("Delivery Process.Date Direction to Facilitate Conversion Issued (GB or LA)")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateForDiscussionByRscHtb)
+                        .HasColumnName("Delivery Process.Date for discussion by RSC/HTB")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateForDiscussionByRscHtbForAgreeingPreOpeningGrant)
+                        .HasColumnName("Delivery Process.Date for Discussion by RSC/ HTB  for agreeing pre-opening grant")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateLaIebApplicationApproved)
+                        .HasColumnName("Delivery Process.Date LA IEB application approved")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateLaIebApplicationReceived)
+                        .HasColumnName("Delivery Process.Date LA IEB application received")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateOfInitialMeeting)
+                        .HasColumnName("Delivery Process.Date of Initial Meeting")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateParentInformedBySponsor)
+                        .HasColumnName("Delivery Process.Date Parent informed by Sponsor")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateSettlementAgreementApproved)
+                        .HasColumnName("Delivery Process.Date settlement agreement approved")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateSoSIebIssued)
+                        .HasColumnName("Delivery Process.Date SoS IEB issued")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDateSponsorMatchAgreed)
+                        .HasColumnName("Delivery Process.Date Sponsor Match agreed")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessDfEEfaContribution)
+                        .HasColumnName("Delivery Process.DfE/EFA contribution")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessDidSettlementExceedContractualTerms)
+                        .HasColumnName("Delivery Process.Did settlement exceed contractual terms?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessDirectionToFacilitateConversion)
+                        .HasColumnName("Delivery Process.Direction to Facilitate Conversion")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessEqualityImpactAssessmentsComplete)
+                        .HasColumnName("Delivery Process.Equality Impact Assessments Complete")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessExpectedDateForGb)
+                        .HasColumnName("Delivery Process.Expected Date for GB")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessFundingAgreement)
+                        .HasColumnName("Delivery Process.Funding Agreement")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessFundingAgreementConditionsMet)
+                        .HasColumnName("Delivery Process.Funding Agreement Conditions met")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessFundingAgreementReceivedCleared)
+                        .HasColumnName("Delivery Process.Funding Agreement received/cleared")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessFundingAgreementRelatedComments)
+                        .HasColumnName("Delivery Process.Funding Agreement related comments")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessGeneralComments)
+                        .HasColumnName("Delivery Process.General Comments")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessGrantPaymentProcessed)
+                        .HasColumnName("Delivery Process.Grant Payment processed")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessGrantPaymentType)
+                        .HasColumnName("Delivery Process.Grant Payment Type")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessLand)
+                        .HasColumnName("Delivery Process.Land")
+                        .HasMaxLength(1000)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessLetterSentWithDtFActionsGbLa)
+                        .HasColumnName("Delivery Process.Letter sent with DtF Actions (GB & LA)")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessLinkToWorkplaces)
+                        .HasColumnName("Delivery Process.Link to Workplaces")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessMainContactForConversion)
+                        .HasColumnName("Delivery Process.Main contact for conversion")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessMainContactForConversionEmail)
+                        .HasColumnName("Delivery Process.Main contact for conversion email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessMainContactForConversionName)
+                        .HasColumnName("Delivery Process.Main contact for conversion name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessMainContactForConversionPhone)
+                        .HasColumnName("Delivery Process.Main contact for conversion phone")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessMainIssueForDelay)
+                        .HasColumnName("Delivery Process.Main Issue for delay")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessNumberOfSettlementAgreements)
+                        .HasColumnName("Delivery Process.Number of settlement agreements")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessOfDfEEfaContributionToTotalPaidToEmployees)
+                        .HasColumnName("Delivery Process.% of DfE/EFA contribution to total paid to employees")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessPan)
+                        .HasColumnName("Delivery Process.PAN")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessPayRun)
+                        .HasColumnName("Delivery Process.Pay Run")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessPfi)
+                        .HasColumnName("Delivery Process.PFI")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessRagRating)
+                        .HasColumnName("Delivery Process.RAG Rating")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessReasonForNoRpa)
+                        .HasColumnName("Delivery Process.Reason for no RPA")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessRiskProtectionAgreementStartDate)
+                        .HasColumnName("Delivery Process.Risk protection agreement start date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.DeliveryProcessRiskProtectionArrangements)
+                        .HasColumnName("Delivery Process.Risk protection arrangements")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessRisksAssociatedToLand)
+                        .HasColumnName("Delivery Process.Risks associated to land")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessSecondaryIssueForDelay)
+                        .HasColumnName("Delivery Process.Secondary Issue for delay")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessSoSImposedIeb)
+                        .HasColumnName("Delivery Process.SoS imposed IEB")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessTotalAmountPaidToSchoolEmployees)
+                        .HasColumnName("Delivery Process.Total amount paid to school employees")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessViabilityClosureRoute)
+                        .HasColumnName("Delivery Process.Viability Closure Route")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessViabilityConcernEffectingSponsorMatch)
+                        .HasColumnName("Delivery Process.Viability Concern Effecting Sponsor Match")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.DeliveryProcessWhoPaidTheEnhancement)
+                        .HasColumnName("Delivery Process.Who paid the enhancement?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaFundingBankDetailsReceived)
+                        .HasColumnName("EFA Funding.Bank details received")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingDraftLetterSentDate)
+                        .HasColumnName("EFA Funding.Draft letter sent date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingDraftLetterTargetDate)
+                        .HasColumnName("EFA Funding.Draft letter target date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingEfaTerritory)
+                        .HasColumnName("EFA Funding.EFA territory")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaFundingEfaWelcomeLetterAndFinanceLetterSentDate)
+                        .HasColumnName("EFA Funding.EFA welcome letter and finance letter sent date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingExpectedPaymentDate)
+                        .HasColumnName("EFA Funding.Expected payment date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingFinalFundingLetterSentDate)
+                        .HasColumnName("EFA Funding.Final funding letter sent date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingFinalFundingLetterTargetDate)
+                        .HasColumnName("EFA Funding.Final funding letter target date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingNavCode)
+                        .HasColumnName("EFA Funding.NAV Code")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaFundingReminderLetterSentDate)
+                        .HasColumnName("EFA Funding.Reminder letter sent date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaFundingSugAvailable)
+                        .HasColumnName("EFA Funding.SUG available")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaFundingUpin)
+                        .HasColumnName("EFA Funding.UPIN")
+                        .HasMaxLength(6)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverFundingAgreementCopyToTheTrust)
+                        .HasColumnName("EFA Handover.Funding Agreement copy to the trust")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverFundingAgreementDocumentsRedactedAndSavedInWorkplaces)
+                        .HasColumnName("EFA Handover.Funding Agreement documents redacted and saved in workplaces")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverFundingAgreementOnGovUk)
+                        .HasColumnName("EFA Handover.Funding Agreement on Gov.UK")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverFundingAgreementToRemoteStorage)
+                        .HasColumnName("EFA Handover.Funding Agreement to remote storage")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverHandoverCompleteDate)
+                        .HasColumnName("EFA Handover.Handover complete date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverIssue1RequiringEfaAction)
+                        .HasColumnName("EFA Handover.Issue 1 (requiring EFA action)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverIssue1ToBeAwareOf)
+                        .HasColumnName("EFA Handover.Issue 1 (to be aware of)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverIssue2RequiringEfaAction)
+                        .HasColumnName("EFA Handover.Issue 2 (requiring EFA action)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverIssue2ToBeAwareOf)
+                        .HasColumnName("EFA Handover.Issue 2 (to be aware of)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverLiveIssueSComments)
+                        .HasColumnName("EFA Handover.Live issue(s) comments")
+                        .HasMaxLength(500)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverOtherIssueSComments)
+                        .HasColumnName("EFA Handover.Other issue(s) comments")
+                        .HasMaxLength(500)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverPdfFaSavedInWorkplace)
+                        .HasColumnName("EFA Handover.PDF FA saved in workplace")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverPreOpeningCertificateReceived)
+                        .HasColumnName("EFA Handover.Pre Opening certificate received")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverSacreExemptionExpiryDate)
+                        .HasColumnName("EFA Handover.SACRE exemption expiry date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverSacreExemptionGiven)
+                        .HasColumnName("EFA Handover.SACRE exemption given")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverSacreExemptionIssuedOn)
+                        .HasColumnName("EFA Handover.SACRE exemption issued on")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverSacreExemptionRenewalAppliedFor)
+                        .HasColumnName("EFA Handover.SACRE exemption renewal applied for")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.EfaHandoverSacreExemptionRenewalApproved)
+                        .HasColumnName("EFA Handover.SACRE exemption renewal approved")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverSacreExemptionRenewalRejected)
+                        .HasColumnName("EFA Handover.SACRE exemption renewal rejected")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverSacreNewExemptionExpiryDate)
+                        .HasColumnName("EFA Handover.SACRE new exemption expiry date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.EfaHandoverSupportGrantCertificateReceived)
+                        .HasColumnName("EFA Handover.Support Grant certificate received")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.GeneralDetailsAcademyLaestab)
+                        .HasColumnName("General Details.Academy LAESTAB")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsAcademyName)
+                        .HasColumnName("General Details.Academy Name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsAcademyStatus)
+                        .HasColumnName("General Details.Academy Status")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsAcademyUkprn)
+                        .HasColumnName("General Details.Academy UKPRN")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsAcademyUrn)
+                        .HasColumnName("General Details.Academy URN")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsActualDateOpened)
+                        .HasColumnName("General Details.Actual date opened")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.GeneralDetailsDAoProgress)
+                        .HasColumnName("General Details.dAO Progress")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsDivisionalLead)
+                        .HasColumnName("General Details.Divisional lead")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsExpectedOpeningDate)
+                        .HasColumnName("General Details.Expected opening date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.GeneralDetailsGrade6)
+                        .HasColumnName("General Details.Grade 6")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsInterestProjectLead)
+                        .HasColumnName("General Details.Interest project lead")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsInterestStatus)
+                        .HasColumnName("General Details.Interest  Status")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsLaestab)
+                        .HasColumnName("General Details.LAESTAB")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsLocalAuthority)
+                        .HasColumnName("General Details.Local Authority")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsPhase)
+                        .HasColumnName("General Details.Phase")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsProjectLead)
+                        .HasColumnName("General Details.Project lead")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsProjectName)
+                        .HasColumnName("General Details.Project Name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsProjectStatus)
+                        .HasColumnName("General Details.Project status")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsReBrokeredDate)
+                        .HasColumnName("General Details.Re-brokered date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.GeneralDetailsRecordStatus)
+                        .HasColumnName("General Details.Record Status")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsRouteOfProject)
+                        .HasColumnName("General Details.Route of Project")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsRscRegion)
+                        .HasColumnName("General Details.RSC Region")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsStage)
+                        .HasColumnName("General Details.Stage")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsTeamLeader)
+                        .HasColumnName("General Details.Team leader")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.GeneralDetailsUrn)
+                        .HasColumnName("General Details.URN")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.InterestComments)
+                        .HasColumnName("Interest.Comments")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.InterestContactEmail)
+                        .HasColumnName("Interest.Contact Email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.InterestContactName)
+                        .HasColumnName("Interest.Contact name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.InterestContactPhone)
+                        .HasColumnName("Interest.Contact phone")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.InterestDateOfInterest)
+                        .HasColumnName("Interest.Date of Interest")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.InterestResponseToInterestContactDate)
+                        .HasColumnName("Interest.Response to interest contact date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.Modified).HasColumnType("datetime");
+
+                    entity.Property(e => e.ModifiedBy).HasColumnName("Modified By");
+
+                    entity.Property(e => e.OfstedLatestOfstedSection5CategoryOfConcern)
+                        .HasColumnName("Ofsted.Latest Ofsted section 5 Category of Concern")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.OfstedLatestOfstedSection5DateInCategory4)
+                        .HasColumnName("Ofsted.Latest Ofsted section 5 Date in Category 4")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.OfstedLatestOfstedSection5InspectionDate)
+                        .HasColumnName("Ofsted.Latest Ofsted section 5 inspection date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.OfstedLatestOfstedSection5OverallEffectiveness)
+                        .HasColumnName("Ofsted.Latest Ofsted section 5 Overall Effectiveness")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.OfstedLatestOfstedSection8InspectionDate)
+                        .HasColumnName("Ofsted.Latest Ofsted section 8 inspection date")
+                        .HasColumnType("date");
+
+                    entity.Property(e => e.OfstedLatestOfstedSection8Judgement)
+                        .HasColumnName("Ofsted.Latest Ofsted section 8 judgement")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.OfstedNumberOfMonthsInCategory4)
+                        .HasColumnName("Ofsted.Number of months in category 4")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.PRid)
+                        .HasColumnName("p_rid")
+                        .HasMaxLength(11)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAcademicYear)
+                        .HasColumnName("Project template information.Academic year")
+                        .HasMaxLength(4)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAppointmentOfKeyStaffIncludingPrincipleDesignate)
+                        .HasColumnName("Project template information.Appointment of key staff, including Principle Designate")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAy1CapacityForecast)
+                        .HasColumnName("Project template information.<AY>+1 capacity forecast")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAy1TotalPupilNumberForecast)
+                        .HasColumnName("Project template information.<AY>+1 total pupil number forecast")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAy2CapacityForecast)
+                        .HasColumnName("Project template information.<AY>+2 capacity forecast")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAy2TotalPupilNumberForecast)
+                        .HasColumnName("Project template information.<AY>+2 total pupil number forecast")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAy3CapacityForecast)
+                        .HasColumnName("Project template information.<AY>+3 capacity forecast")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationAy3TotalPupilNumberForecast)
+                        .HasColumnName("Project template information.<AY>+3 total pupil number forecast")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationCapitalDeficitReasonsAndRemedialAction)
+                        .HasColumnName("Project template information.Capital deficit reasons and remedial action")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationCommunicationsAndMarketingSupport)
+                        .HasColumnName("Project template information.Communications and marketing support")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationConsultationServices)
+                        .HasColumnName("Project template information.Consultation services")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationDeficit)
+                        .HasColumnName("Project template information.Deficit?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationEducationAdviceDevelopmentOfEducationalPlanCurriculumStaffingStructureAndPolicies)
+                        .HasColumnName("Project template information.Education advice & development of educational plan, curriculum, staffing structure and policies")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationEigRationale)
+                        .HasColumnName("Project template information.EIG rationale")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFinancialInformationSystems)
+                        .HasColumnName("Project template information.Financial information systems")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFinancialManagementAndAdvice)
+                        .HasColumnName("Project template information.Financial management and advice")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFinancialYear)
+                        .HasColumnName("Project template information.Financial year")
+                        .HasMaxLength(4)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy1RevenueBalanceBroughtForward)
+                        .HasColumnName("Project template information.<FY>+1 Revenue balance brought forward")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy1RevenueBalanceCarriedForward)
+                        .HasColumnName("Project template information.<FY>+1 Revenue balance carried forward")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy1RevenueBalanceInYear)
+                        .HasColumnName("Project template information.<FY>+1 Revenue balance in year")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy1RevenueGrossExpenditure)
+                        .HasColumnName("Project template information.<FY>+1 Revenue gross expenditure ")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy1TotalAllocationAndIncome)
+                        .HasColumnName("Project template information.<FY>+1 Total allocation and income")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy2RevenueBalanceBroughtForward)
+                        .HasColumnName("Project template information.<FY>+2 Revenue balance brought forward")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy2RevenueBalanceCarriedForward)
+                        .HasColumnName("Project template information.<FY>+2 Revenue balance carried forward")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy2RevenueBalanceInYear)
+                        .HasColumnName("Project template information.<FY>+2 Revenue balance in year")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy2RevenueGrossExpenditure)
+                        .HasColumnName("Project template information.<FY>+2 Revenue gross expenditure ")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFy2TotalAllocationAndIncome)
+                        .HasColumnName("Project template information.<FY>+2 Total allocation and income")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFyRevenueBalanceBroughtForward)
+                        .HasColumnName("Project template information.<FY> Revenue balance brought forward")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFyRevenueBalanceCarriedForward)
+                        .HasColumnName("Project template information.<FY> Revenue balance carried forward")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFyRevenueBalanceInYear)
+                        .HasColumnName("Project template information.<FY> Revenue balance in year")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFyRevenueGrossExpenditure)
+                        .HasColumnName("Project template information.<FY> Revenue gross expenditure ")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationFyTotalAllocationAndIncome)
+                        .HasColumnName("Project template information.<FY> Total allocation and income")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationHrAndRecruitmentServicesInclTupe)
+                        .HasColumnName("Project template information.HR and recruitment services (incl. TUPE)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationLegalServices)
+                        .HasColumnName("Project template information.Legal services")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationOtherEGIctSystemsProjectContingencyAllocation)
+                        .HasColumnName("Project template information.Other (e.g. ICT systems, project contingency allocation)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationProjectManagementForecast)
+                        .HasColumnName("Project template information.Project management forecast (£)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationProjectedCapitalBalanceAtYearEnd)
+                        .HasColumnName("Project template information.Projected capital balance at year end")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationProjectedRevenueBalanceAtYearEnd)
+                        .HasColumnName("Project template information.Projected revenue balance at year end")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationRationaleForProject)
+                        .HasColumnName("Project template information.Rationale for project")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationRationaleForSponsor)
+                        .HasColumnName("Project template information.Rationale for sponsor")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationRelevantDistance)
+                        .HasColumnName("Project template information.Relevant distance")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationRevenueDeficitReasonsAndRemedialAction)
+                        .HasColumnName("Project template information.Revenue deficit reasons and remedial action")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationRisksAndIssues)
+                        .HasColumnName("Project template information.Risks and issues")
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProjectTemplateInformationViabilityIssue)
+                        .HasColumnName("Project template information.Viability issue?")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyLeadFinanceEmail)
+                        .HasColumnName("Proposed Academy Details.Academy Lead Finance Email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyLeadFinanceName)
+                        .HasColumnName("Proposed Academy Details.Academy Lead Finance Name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyLeadFinancePhone)
+                        .HasColumnName("Proposed Academy Details.Academy Lead Finance Phone")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactAddressLine1)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Address Line 1")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactAddressLine2)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Address Line 2")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactAddressLine3)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Address Line 3")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactCounty)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact County")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactEmail)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactName)
+                        .HasColumnName("Proposed Academy Details.Academy main contact name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactPhone)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Phone")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactPostcode)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Postcode")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactRole)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Role")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactTown)
+                        .HasColumnName("Proposed Academy Details.Academy Main Contact Town")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyPhaseProposed)
+                        .HasColumnName("Proposed Academy Details.Academy Phase Proposed")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyProposedCapacityPost16)
+                        .HasColumnName("Proposed Academy Details.Academy Proposed Capacity - Post 16")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyProposedCapacityPrimaryRYr6)
+                        .HasColumnName("Proposed Academy Details.Academy Proposed Capacity - Primary (R-Yr6)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademyProposedCapacitySecondaryYr7Yr11)
+                        .HasColumnName("Proposed Academy Details.Academy Proposed Capacity - Secondary (Yr7 - Yr11)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademySecureAccessContactEmail)
+                        .HasColumnName("Proposed Academy Details.Academy Secure Access Contact email")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsAcademySecureAccessContactName)
+                        .HasColumnName("Proposed Academy Details.Academy Secure Access Contact name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsGagFundingPupilNumbersType)
+                        .HasColumnName("Proposed Academy Details.GAG Funding Pupil Numbers Type")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsMatFaClauses3A3FOption1ConvSpons)
+                        .HasColumnName("Proposed Academy Details.MAT FA Clauses 3.A - 3.F Option 1(Conv & Spons)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsMatFaClauses3A3FOption2FsNewProv)
+                        .HasColumnName("Proposed Academy Details.MAT FA Clauses 3.A - 3.F Option 2(FS & New Prov)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsMatFaClauses3HIfApplicableNotConv)
+                        .HasColumnName("Proposed Academy Details.MAT FA Clauses 3.H (if applicable & not Conv)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsNewAcademyName)
+                        .HasColumnName("Proposed Academy Details.New Academy Name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsNewAcademyUrn)
+                        .HasColumnName("Proposed Academy Details.New Academy URN")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsPost16)
+                        .HasColumnName("Proposed Academy Details.Post 16")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsSatFaClause323IfApplicableNotConv)
+                        .HasColumnName("Proposed Academy Details.SAT FA Clause 3.23 (if applicable & not Conv)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsSatFaClauses316321Option1ConvSpons)
+                        .HasColumnName("Proposed Academy Details.SAT FA Clauses 3.16-3.21 Option 1 (Conv & Spons)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.ProposedAcademyDetailsSatFaClauses316321Option2FsNewProv)
+                        .HasColumnName("Proposed Academy Details.SAT FA Clauses 3.16-3.21 Option 2 (FS & New Prov)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.Rid)
+                        .HasColumnName("RID")
+                        .HasMaxLength(11)
+                        .IsUnicode(false);
+
+                    //entity.Property(e => e.Sk).HasColumnName("SK");
+
+                    entity.Property(e => e.TrustSponsorManagementCoSponsor1)
+                        .HasColumnName("Trust & Sponsor Management.Co-sponsor 1")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementCoSponsor1SponsorName)
+                        .HasColumnName("Trust & Sponsor Management.Co-sponsor 1 Sponsor Name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementCoSponsor2)
+                        .HasColumnName("Trust & Sponsor Management.Co-sponsor 2")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementCoSponsor2SponsorName)
+                        .HasColumnName("Trust & Sponsor Management.Co-sponsor 2 Sponsor Name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementCoSponsor3)
+                        .HasColumnName("Trust & Sponsor Management.Co-sponsor 3")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementCoSponsor3SponsorName)
+                        .HasColumnName("Trust & Sponsor Management.Co-sponsor 3 Sponsor Name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementPreviousSponsorId)
+                        .HasColumnName("Trust & Sponsor Management.Previous sponsor id")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementPreviousSponsorName)
+                        .HasColumnName("Trust & Sponsor Management.Previous sponsor name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementPreviousTrust)
+                        .HasColumnName("Trust & Sponsor Management.Previous Trust")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementPreviousTrustName)
+                        .HasColumnName("Trust & Sponsor Management.Previous Trust name")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementSponsor1NameProvisional)
+                        .HasColumnName("Trust & Sponsor Management.Sponsor 1 Name (Provisional)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementSponsor1Provisional)
+                        .HasColumnName("Trust & Sponsor Management.Sponsor 1 (Provisional)")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementSponsor2NameProvisional)
+                        .HasColumnName("Trust & Sponsor Management.Sponsor 2 Name (Provisional)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementSponsor2Provisional)
+                        .HasColumnName("Trust & Sponsor Management.Sponsor 2 (Provisional)")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementSponsor3NameProvisional)
+                        .HasColumnName("Trust & Sponsor Management.Sponsor 3 Name (Provisional)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementSponsor3Provisional)
+                        .HasColumnName("Trust & Sponsor Management.Sponsor 3 (Provisional)")
+                        .HasMaxLength(5)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.TrustSponsorManagementTrust)
+                        .HasColumnName("Trust & Sponsor Management.Trust")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+                });
+
+            if(Database.IsSqlite())
+                modelBuilder.Ignore<TrustMasterData>();
+            else
+                modelBuilder.Entity<TrustMasterData>(entity =>
+                {
+                    entity.HasKey(e => e.SK).HasName("SK");
+
+                    entity.ToTable("Trust", "mstr");
+
+                    entity.Property(e => e.TrustsTrustType).HasColumnName("FK_TrustType");
+                    entity.Property(e => e.Region).HasColumnName("FK_Region");
+                    entity.Property(e => e.TrustBanding).HasColumnName("FK_TrustBanding");
+                    entity.Property(e => e.FK_TrustStatus).HasColumnName("FK_TrustStatus");
+                    entity.Property(e => e.GroupUID).HasColumnName("Group UID").IsRequired();
+                    entity.Property(e => e.GroupID).HasColumnName("Group ID");
+                    entity.Property(e => e.RID).HasColumnName("RID");
+                    entity.Property(e => e.Name).HasColumnName("Name").IsRequired();
+                    entity.Property(e => e.CompaniesHouseNumber).HasColumnName("Companies House Number");
+                    entity.Property(e => e.ClosedDate).HasColumnName("Closed Date");
+                    entity.Property(e => e.TrustStatus).HasColumnName("Trust Status");
+                    entity.Property(e => e.JoinedDate).HasColumnName("Joined Date");
+                    entity.Property(e => e.MainPhone).HasColumnName("Main Phone");
+                    entity.Property(e => e.AddressLine1).HasColumnName("Address Line1");
+                    entity.Property(e => e.AddressLine2).HasColumnName("Address Line2");
+                    entity.Property(e => e.AddressLine3).HasColumnName("Address Line3");
+                    entity.Property(e => e.Town).HasColumnName("Town");
+                    entity.Property(e => e.County).HasColumnName("County");
+                    entity.Property(e => e.Postcode).HasColumnName("Postcode");
+                    entity.Property(e => e.PrioritisedForReview).HasColumnName("Prioritised for Review");
+                    entity.Property(e => e.CurrentSingleListGrouping).HasColumnName("Current Single List Grouping");
+                    entity.Property(e => e.DateOfGroupingDecision).HasColumnName("Date of Grouping Decision");
+                    entity.Property(e => e.DateEnteredOntoSingleList).HasColumnName("Date Entered Onto Single List");
+                    entity.Property(e => e.TrustReviewWriteUp).HasColumnName("Trust Review Write Up");
+                    entity.Property(e => e.DateOfTrustReviewMeeting).HasColumnName("Date of Trust Review Meeting");
+                    entity.Property(e => e.FollowUpLetterSent).HasColumnName("Follow Up Letter Sent");
+                    entity.Property(e => e.DateActionPlannedFor).HasColumnName("Date Action Planned For");
+                    entity.Property(e => e.WIPSummaryGoesToMinister).HasColumnName("WIP Summary Goes To Minister");
+                    entity.Property(e => e.ExternalGovernanceReviewDate).HasColumnName("External Governance Review Date");
+                    entity.Property(e => e.EfficiencyICFPReviewCompleted).HasColumnName("Efficiency ICFP Review Completed");
+                    entity.Property(e => e.EfficiencyICFPReviewOther).HasColumnName("Efficiency ICFP Review Other");
+                    entity.Property(e => e.LinkToWorkplaceForEfficiencyICFPReview).HasColumnName("Link To Workplace For Efficiency ICFP Review");
+                    entity.Property(e => e.NumberInTrust).HasColumnName("Number In Trust");
+                    entity.Property(e => e.Modified).HasColumnName("Modified");
+                    entity.Property(e => e.ModifiedBy).HasColumnName("Modified By");
+                    entity.Property(e => e.AMSDTerritory).HasColumnName("AMSD Territory");
+                    entity.Property(e => e.LeadAMSDTerritory).HasColumnName("Lead AMSD Territory");
+                    entity.Property(e => e.UKPRN).HasColumnName("UKPRN");
+                    entity.Property(e => e.TrustPerformanceAndRiskDateOfMeeting).HasColumnName("Trust Performance And Risk Date Of Meeting");
+                    entity.Property(e => e.UPIN).HasColumnName("UPIN");
+                    entity.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
+                });
             
-            modelBuilder.Entity<IfdPipeline>(entity =>
-            {
-                entity.HasKey(e => e.Sk)
-                    .HasName("Sk");
-
-                entity.ToTable("IfdPipeline", "mstr");
-
-                entity.Property(e => e.ApprovalProcessAoDecisionMethod)
-                    .HasColumnName("Approval Process.AO Decision Method")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalProcessAoIssuedDate)
-                    .HasColumnName("Approval Process.AO Issued Date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ApprovalProcessApplicationDate)
-                    .HasColumnName("Approval Process.Application Date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ApprovalProcessAppliedOrBrokered)
-                    .HasColumnName("Approval Process.Applied or Brokered")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApprovalProcessDateRscFundingAgreementApprovedInPrinciple)
-                    .HasColumnName("Approval Process.Date RSC funding agreement approved in principle")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ApprovalProcessDateRscHtbApprovalGranted)
-                    .HasColumnName("Approval Process.Date RSC/HTB approval granted")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ApprovalProcessDateSubmittedForAoDecision)
-                    .HasColumnName("Approval Process.Date Submitted for AO decision")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ApprovalProcessFundingAgreementApprovedDate)
-                    .HasColumnName("Approval Process.Funding Agreement Approved Date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ApprovalProcessReStartApplicationDate)
-                    .HasColumnName("Approval Process.Re-start application date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.ApprovalProcessRevokedDAoDate)
-                    .HasColumnName("Approval Process.Revoked dAO date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CaseDataAcademyContactNumber)
-                    .HasColumnName("Case Data.Academy contact number")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataAcademyHeadPrincipal)
-                    .HasColumnName("Case Data.Academy head/principal")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataChangeOfLeadership)
-                    .HasColumnName("Case Data.Change of leadership")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataClosing)
-                    .HasColumnName("Case Data.Closing")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataClosureStatus)
-                    .HasColumnName("Case Data.Closure status")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataCommentsNextSteps)
-                    .HasColumnName("Case Data.Comments/next steps")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataConcernType)
-                    .HasColumnName("Case Data.Concern Type")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataCurrentConfidenceTerm)
-                    .HasColumnName("Case Data.Current Confidence Term")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataCurrentKs2ConfidenceMeasure)
-                    .HasColumnName("Case Data.Current KS2 Confidence Measure")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataCurrentKs2Rag)
-                    .HasColumnName("Case Data.Current KS2 RAG")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataCurrentKs4ConfidenceMeasure)
-                    .HasColumnName("Case Data.Current KS4 Confidence Measure")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataCurrentKs4Rag)
-                    .HasColumnName("Case Data.Current KS4 RAG")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataCurrentKs5Rag)
-                    .HasColumnName("Case Data.Current KS5 RAG")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataDateClosureCommenced)
-                    .HasColumnName("Case Data.Date closure commenced")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CaseDataDateOfInitialContact)
-                    .HasColumnName("Case Data.Date of initial contact")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CaseDataEducationAdviserTimingOfNextVisit)
-                    .HasColumnName("Case Data.Education adviser timing of next visit")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataEfaRagRating)
-                    .HasColumnName("Case Data.EFA RAG rating")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataExpectedClosureDate)
-                    .HasColumnName("Case Data.Expected Closure date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CaseDataFntlIssued)
-                    .HasColumnName("Case Data.FNtl issued")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CaseDataFntlRemoved)
-                    .HasColumnName("Case Data.FNtl removed")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CaseDataIncreasedCapacityInTrustGb)
-                    .HasColumnName("Case Data.Increased capacity in Trust/GB")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataKs2BelowTheFloor)
-                    .HasColumnName("Case Data.KS2 below the floor?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataKs2CoastingAcademy)
-                    .HasColumnName("Case Data.KS2 Coasting Academy?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataKs4BelowTheFloor)
-                    .HasColumnName("Case Data.KS4 below the floor?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataKs4CoastingAcademy)
-                    .HasColumnName("Case Data.KS4 Coasting Academy?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataKs5BelowTheFloorAcademicCase)
-                    .HasColumnName("Case Data.KS5 below the floor? - Academic Case")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataKs5BelowTheFloorAppliedGeneralCase)
-                    .HasColumnName("Case Data.KS5 below the floor? - Applied General Case")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataLinkToWorkplaces)
-                    .HasColumnName("Case Data.Link to Workplaces")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataOtherActionTaken)
-                    .HasColumnName("Case Data.Other action taken")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataPlannedAction)
-                    .HasColumnName("Case Data.Planned Action")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataProjectProgress)
-                    .HasColumnName("Case Data.Project progress")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataReBrokeredDateCaseData)
-                    .HasColumnName("Case Data.Re-brokered date Case Data")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CaseDataStatus)
-                    .HasColumnName("Case Data.Status")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CaseDataTrustNotice)
-                    .HasColumnName("Case Data.Trust notice?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessAcknowledgementAndFollowUpSentToSchool)
-                    .HasColumnName("Delivery Process.Acknowledgement and follow-up sent to school")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessActualDateOfGbResolution)
-                    .HasColumnName("Delivery Process.Actual Date of GB Resolution")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessApplicationFormReference)
-                    .HasColumnName("Delivery Process.Application form reference")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessArticlesOfAssociationRelatedComments)
-                    .HasColumnName("Delivery Process.Articles of Association related comments")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessArticlesOfAssociations)
-                    .HasColumnName("Delivery Process.Articles of Associations")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessArticlesOfAssociationsReceivedCleared)
-                    .HasColumnName("Delivery Process.Articles of Associations received/cleared")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessBaselineDate)
-                    .HasColumnName("Delivery Process.Baseline Date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessCommentsForOfstedPreOpeningInspection)
-                    .HasColumnName("Delivery Process.Comments for Ofsted Pre–opening Inspection")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessCommercialTransferAgreement)
-                    .HasColumnName("Delivery Process.Commercial Transfer Agreement")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessCommercialTransferAgreementReceivedCleared)
-                    .HasColumnName("Delivery Process.Commercial Transfer Agreement received/cleared")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessCommercialTransferAgreementRelatedComments)
-                    .HasColumnName("Delivery Process.Commercial Transfer Agreement related comments")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessConsideringSoSIebStage)
-                    .HasColumnName("Delivery Process.Considering SoS IEB stage")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessDateChurchFoundationConsultationReceived)
-                    .HasColumnName("Delivery Process.Date Church/Foundation Consultation received")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateDAoDueDiligenceAnnexReceived)
-                    .HasColumnName("Delivery Process.Date dAO Due Diligence Annex received")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateDirectionToFacilitateConversionIssuedGbOrLa)
-                    .HasColumnName("Delivery Process.Date Direction to Facilitate Conversion Issued (GB or LA)")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateForDiscussionByRscHtb)
-                    .HasColumnName("Delivery Process.Date for discussion by RSC/HTB")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateForDiscussionByRscHtbForAgreeingPreOpeningGrant)
-                    .HasColumnName("Delivery Process.Date for Discussion by RSC/ HTB  for agreeing pre-opening grant")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateLaIebApplicationApproved)
-                    .HasColumnName("Delivery Process.Date LA IEB application approved")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateLaIebApplicationReceived)
-                    .HasColumnName("Delivery Process.Date LA IEB application received")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateOfInitialMeeting)
-                    .HasColumnName("Delivery Process.Date of Initial Meeting")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateParentInformedBySponsor)
-                    .HasColumnName("Delivery Process.Date Parent informed by Sponsor")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateSettlementAgreementApproved)
-                    .HasColumnName("Delivery Process.Date settlement agreement approved")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateSoSIebIssued)
-                    .HasColumnName("Delivery Process.Date SoS IEB issued")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDateSponsorMatchAgreed)
-                    .HasColumnName("Delivery Process.Date Sponsor Match agreed")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessDfEEfaContribution)
-                    .HasColumnName("Delivery Process.DfE/EFA contribution")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessDidSettlementExceedContractualTerms)
-                    .HasColumnName("Delivery Process.Did settlement exceed contractual terms?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessDirectionToFacilitateConversion)
-                    .HasColumnName("Delivery Process.Direction to Facilitate Conversion")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessEqualityImpactAssessmentsComplete)
-                    .HasColumnName("Delivery Process.Equality Impact Assessments Complete")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessExpectedDateForGb)
-                    .HasColumnName("Delivery Process.Expected Date for GB")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessFundingAgreement)
-                    .HasColumnName("Delivery Process.Funding Agreement")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessFundingAgreementConditionsMet)
-                    .HasColumnName("Delivery Process.Funding Agreement Conditions met")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessFundingAgreementReceivedCleared)
-                    .HasColumnName("Delivery Process.Funding Agreement received/cleared")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessFundingAgreementRelatedComments)
-                    .HasColumnName("Delivery Process.Funding Agreement related comments")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessGeneralComments)
-                    .HasColumnName("Delivery Process.General Comments")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessGrantPaymentProcessed)
-                    .HasColumnName("Delivery Process.Grant Payment processed")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessGrantPaymentType)
-                    .HasColumnName("Delivery Process.Grant Payment Type")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessLand)
-                    .HasColumnName("Delivery Process.Land")
-                    .HasMaxLength(1000)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessLetterSentWithDtFActionsGbLa)
-                    .HasColumnName("Delivery Process.Letter sent with DtF Actions (GB & LA)")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessLinkToWorkplaces)
-                    .HasColumnName("Delivery Process.Link to Workplaces")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessMainContactForConversion)
-                    .HasColumnName("Delivery Process.Main contact for conversion")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessMainContactForConversionEmail)
-                    .HasColumnName("Delivery Process.Main contact for conversion email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessMainContactForConversionName)
-                    .HasColumnName("Delivery Process.Main contact for conversion name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessMainContactForConversionPhone)
-                    .HasColumnName("Delivery Process.Main contact for conversion phone")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessMainIssueForDelay)
-                    .HasColumnName("Delivery Process.Main Issue for delay")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessNumberOfSettlementAgreements)
-                    .HasColumnName("Delivery Process.Number of settlement agreements")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessOfDfEEfaContributionToTotalPaidToEmployees)
-                    .HasColumnName("Delivery Process.% of DfE/EFA contribution to total paid to employees")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessPan)
-                    .HasColumnName("Delivery Process.PAN")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessPayRun)
-                    .HasColumnName("Delivery Process.Pay Run")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessPfi)
-                    .HasColumnName("Delivery Process.PFI")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessRagRating)
-                    .HasColumnName("Delivery Process.RAG Rating")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessReasonForNoRpa)
-                    .HasColumnName("Delivery Process.Reason for no RPA")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessRiskProtectionAgreementStartDate)
-                    .HasColumnName("Delivery Process.Risk protection agreement start date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DeliveryProcessRiskProtectionArrangements)
-                    .HasColumnName("Delivery Process.Risk protection arrangements")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessRisksAssociatedToLand)
-                    .HasColumnName("Delivery Process.Risks associated to land")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessSecondaryIssueForDelay)
-                    .HasColumnName("Delivery Process.Secondary Issue for delay")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessSoSImposedIeb)
-                    .HasColumnName("Delivery Process.SoS imposed IEB")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessTotalAmountPaidToSchoolEmployees)
-                    .HasColumnName("Delivery Process.Total amount paid to school employees")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessViabilityClosureRoute)
-                    .HasColumnName("Delivery Process.Viability Closure Route")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessViabilityConcernEffectingSponsorMatch)
-                    .HasColumnName("Delivery Process.Viability Concern Effecting Sponsor Match")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DeliveryProcessWhoPaidTheEnhancement)
-                    .HasColumnName("Delivery Process.Who paid the enhancement?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaFundingBankDetailsReceived)
-                    .HasColumnName("EFA Funding.Bank details received")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingDraftLetterSentDate)
-                    .HasColumnName("EFA Funding.Draft letter sent date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingDraftLetterTargetDate)
-                    .HasColumnName("EFA Funding.Draft letter target date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingEfaTerritory)
-                    .HasColumnName("EFA Funding.EFA territory")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaFundingEfaWelcomeLetterAndFinanceLetterSentDate)
-                    .HasColumnName("EFA Funding.EFA welcome letter and finance letter sent date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingExpectedPaymentDate)
-                    .HasColumnName("EFA Funding.Expected payment date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingFinalFundingLetterSentDate)
-                    .HasColumnName("EFA Funding.Final funding letter sent date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingFinalFundingLetterTargetDate)
-                    .HasColumnName("EFA Funding.Final funding letter target date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingNavCode)
-                    .HasColumnName("EFA Funding.NAV Code")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaFundingReminderLetterSentDate)
-                    .HasColumnName("EFA Funding.Reminder letter sent date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaFundingSugAvailable)
-                    .HasColumnName("EFA Funding.SUG available")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaFundingUpin)
-                    .HasColumnName("EFA Funding.UPIN")
-                    .HasMaxLength(6)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverFundingAgreementCopyToTheTrust)
-                    .HasColumnName("EFA Handover.Funding Agreement copy to the trust")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverFundingAgreementDocumentsRedactedAndSavedInWorkplaces)
-                    .HasColumnName("EFA Handover.Funding Agreement documents redacted and saved in workplaces")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverFundingAgreementOnGovUk)
-                    .HasColumnName("EFA Handover.Funding Agreement on Gov.UK")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverFundingAgreementToRemoteStorage)
-                    .HasColumnName("EFA Handover.Funding Agreement to remote storage")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverHandoverCompleteDate)
-                    .HasColumnName("EFA Handover.Handover complete date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverIssue1RequiringEfaAction)
-                    .HasColumnName("EFA Handover.Issue 1 (requiring EFA action)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverIssue1ToBeAwareOf)
-                    .HasColumnName("EFA Handover.Issue 1 (to be aware of)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverIssue2RequiringEfaAction)
-                    .HasColumnName("EFA Handover.Issue 2 (requiring EFA action)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverIssue2ToBeAwareOf)
-                    .HasColumnName("EFA Handover.Issue 2 (to be aware of)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverLiveIssueSComments)
-                    .HasColumnName("EFA Handover.Live issue(s) comments")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverOtherIssueSComments)
-                    .HasColumnName("EFA Handover.Other issue(s) comments")
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverPdfFaSavedInWorkplace)
-                    .HasColumnName("EFA Handover.PDF FA saved in workplace")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverPreOpeningCertificateReceived)
-                    .HasColumnName("EFA Handover.Pre Opening certificate received")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverSacreExemptionExpiryDate)
-                    .HasColumnName("EFA Handover.SACRE exemption expiry date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverSacreExemptionGiven)
-                    .HasColumnName("EFA Handover.SACRE exemption given")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverSacreExemptionIssuedOn)
-                    .HasColumnName("EFA Handover.SACRE exemption issued on")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverSacreExemptionRenewalAppliedFor)
-                    .HasColumnName("EFA Handover.SACRE exemption renewal applied for")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EfaHandoverSacreExemptionRenewalApproved)
-                    .HasColumnName("EFA Handover.SACRE exemption renewal approved")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverSacreExemptionRenewalRejected)
-                    .HasColumnName("EFA Handover.SACRE exemption renewal rejected")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverSacreNewExemptionExpiryDate)
-                    .HasColumnName("EFA Handover.SACRE new exemption expiry date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EfaHandoverSupportGrantCertificateReceived)
-                    .HasColumnName("EFA Handover.Support Grant certificate received")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.GeneralDetailsAcademyLaestab)
-                    .HasColumnName("General Details.Academy LAESTAB")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsAcademyName)
-                    .HasColumnName("General Details.Academy Name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsAcademyStatus)
-                    .HasColumnName("General Details.Academy Status")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsAcademyUkprn)
-                    .HasColumnName("General Details.Academy UKPRN")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsAcademyUrn)
-                    .HasColumnName("General Details.Academy URN")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsActualDateOpened)
-                    .HasColumnName("General Details.Actual date opened")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.GeneralDetailsDAoProgress)
-                    .HasColumnName("General Details.dAO Progress")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsDivisionalLead)
-                    .HasColumnName("General Details.Divisional lead")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsExpectedOpeningDate)
-                    .HasColumnName("General Details.Expected opening date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.GeneralDetailsGrade6)
-                    .HasColumnName("General Details.Grade 6")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsInterestProjectLead)
-                    .HasColumnName("General Details.Interest project lead")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsInterestStatus)
-                    .HasColumnName("General Details.Interest  Status")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsLaestab)
-                    .HasColumnName("General Details.LAESTAB")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsLocalAuthority)
-                    .HasColumnName("General Details.Local Authority")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsPhase)
-                    .HasColumnName("General Details.Phase")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsProjectLead)
-                    .HasColumnName("General Details.Project lead")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsProjectName)
-                    .HasColumnName("General Details.Project Name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsProjectStatus)
-                    .HasColumnName("General Details.Project status")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsReBrokeredDate)
-                    .HasColumnName("General Details.Re-brokered date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.GeneralDetailsRecordStatus)
-                    .HasColumnName("General Details.Record Status")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsRouteOfProject)
-                    .HasColumnName("General Details.Route of Project")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsRscRegion)
-                    .HasColumnName("General Details.RSC Region")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsStage)
-                    .HasColumnName("General Details.Stage")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsTeamLeader)
-                    .HasColumnName("General Details.Team leader")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GeneralDetailsUrn)
-                    .HasColumnName("General Details.URN")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.InterestComments)
-                    .HasColumnName("Interest.Comments")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.InterestContactEmail)
-                    .HasColumnName("Interest.Contact Email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.InterestContactName)
-                    .HasColumnName("Interest.Contact name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.InterestContactPhone)
-                    .HasColumnName("Interest.Contact phone")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.InterestDateOfInterest)
-                    .HasColumnName("Interest.Date of Interest")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.InterestResponseToInterestContactDate)
-                    .HasColumnName("Interest.Response to interest contact date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.Modified).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedBy).HasColumnName("Modified By");
-
-                entity.Property(e => e.OfstedLatestOfstedSection5CategoryOfConcern)
-                    .HasColumnName("Ofsted.Latest Ofsted section 5 Category of Concern")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OfstedLatestOfstedSection5DateInCategory4)
-                    .HasColumnName("Ofsted.Latest Ofsted section 5 Date in Category 4")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.OfstedLatestOfstedSection5InspectionDate)
-                    .HasColumnName("Ofsted.Latest Ofsted section 5 inspection date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.OfstedLatestOfstedSection5OverallEffectiveness)
-                    .HasColumnName("Ofsted.Latest Ofsted section 5 Overall Effectiveness")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OfstedLatestOfstedSection8InspectionDate)
-                    .HasColumnName("Ofsted.Latest Ofsted section 8 inspection date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.OfstedLatestOfstedSection8Judgement)
-                    .HasColumnName("Ofsted.Latest Ofsted section 8 judgement")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OfstedNumberOfMonthsInCategory4)
-                    .HasColumnName("Ofsted.Number of months in category 4")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PRid)
-                    .HasColumnName("p_rid")
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAcademicYear)
-                    .HasColumnName("Project template information.Academic year")
-                    .HasMaxLength(4)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAppointmentOfKeyStaffIncludingPrincipleDesignate)
-                    .HasColumnName("Project template information.Appointment of key staff, including Principle Designate")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAy1CapacityForecast)
-                    .HasColumnName("Project template information.<AY>+1 capacity forecast")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAy1TotalPupilNumberForecast)
-                    .HasColumnName("Project template information.<AY>+1 total pupil number forecast")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAy2CapacityForecast)
-                    .HasColumnName("Project template information.<AY>+2 capacity forecast")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAy2TotalPupilNumberForecast)
-                    .HasColumnName("Project template information.<AY>+2 total pupil number forecast")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAy3CapacityForecast)
-                    .HasColumnName("Project template information.<AY>+3 capacity forecast")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationAy3TotalPupilNumberForecast)
-                    .HasColumnName("Project template information.<AY>+3 total pupil number forecast")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationCapitalDeficitReasonsAndRemedialAction)
-                    .HasColumnName("Project template information.Capital deficit reasons and remedial action")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationCommunicationsAndMarketingSupport)
-                    .HasColumnName("Project template information.Communications and marketing support")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationConsultationServices)
-                    .HasColumnName("Project template information.Consultation services")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationDeficit)
-                    .HasColumnName("Project template information.Deficit?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationEducationAdviceDevelopmentOfEducationalPlanCurriculumStaffingStructureAndPolicies)
-                    .HasColumnName("Project template information.Education advice & development of educational plan, curriculum, staffing structure and policies")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationEigRationale)
-                    .HasColumnName("Project template information.EIG rationale")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFinancialInformationSystems)
-                    .HasColumnName("Project template information.Financial information systems")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFinancialManagementAndAdvice)
-                    .HasColumnName("Project template information.Financial management and advice")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFinancialYear)
-                    .HasColumnName("Project template information.Financial year")
-                    .HasMaxLength(4)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy1RevenueBalanceBroughtForward)
-                    .HasColumnName("Project template information.<FY>+1 Revenue balance brought forward")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy1RevenueBalanceCarriedForward)
-                    .HasColumnName("Project template information.<FY>+1 Revenue balance carried forward")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy1RevenueBalanceInYear)
-                    .HasColumnName("Project template information.<FY>+1 Revenue balance in year")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy1RevenueGrossExpenditure)
-                    .HasColumnName("Project template information.<FY>+1 Revenue gross expenditure ")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy1TotalAllocationAndIncome)
-                    .HasColumnName("Project template information.<FY>+1 Total allocation and income")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy2RevenueBalanceBroughtForward)
-                    .HasColumnName("Project template information.<FY>+2 Revenue balance brought forward")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy2RevenueBalanceCarriedForward)
-                    .HasColumnName("Project template information.<FY>+2 Revenue balance carried forward")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy2RevenueBalanceInYear)
-                    .HasColumnName("Project template information.<FY>+2 Revenue balance in year")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy2RevenueGrossExpenditure)
-                    .HasColumnName("Project template information.<FY>+2 Revenue gross expenditure ")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFy2TotalAllocationAndIncome)
-                    .HasColumnName("Project template information.<FY>+2 Total allocation and income")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFyRevenueBalanceBroughtForward)
-                    .HasColumnName("Project template information.<FY> Revenue balance brought forward")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFyRevenueBalanceCarriedForward)
-                    .HasColumnName("Project template information.<FY> Revenue balance carried forward")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFyRevenueBalanceInYear)
-                    .HasColumnName("Project template information.<FY> Revenue balance in year")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFyRevenueGrossExpenditure)
-                    .HasColumnName("Project template information.<FY> Revenue gross expenditure ")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationFyTotalAllocationAndIncome)
-                    .HasColumnName("Project template information.<FY> Total allocation and income")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationHrAndRecruitmentServicesInclTupe)
-                    .HasColumnName("Project template information.HR and recruitment services (incl. TUPE)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationLegalServices)
-                    .HasColumnName("Project template information.Legal services")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationOtherEGIctSystemsProjectContingencyAllocation)
-                    .HasColumnName("Project template information.Other (e.g. ICT systems, project contingency allocation)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationProjectManagementForecast)
-                    .HasColumnName("Project template information.Project management forecast (£)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationProjectedCapitalBalanceAtYearEnd)
-                    .HasColumnName("Project template information.Projected capital balance at year end")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationProjectedRevenueBalanceAtYearEnd)
-                    .HasColumnName("Project template information.Projected revenue balance at year end")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationRationaleForProject)
-                    .HasColumnName("Project template information.Rationale for project")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationRationaleForSponsor)
-                    .HasColumnName("Project template information.Rationale for sponsor")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationRelevantDistance)
-                    .HasColumnName("Project template information.Relevant distance")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationRevenueDeficitReasonsAndRemedialAction)
-                    .HasColumnName("Project template information.Revenue deficit reasons and remedial action")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationRisksAndIssues)
-                    .HasColumnName("Project template information.Risks and issues")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProjectTemplateInformationViabilityIssue)
-                    .HasColumnName("Project template information.Viability issue?")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyLeadFinanceEmail)
-                    .HasColumnName("Proposed Academy Details.Academy Lead Finance Email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyLeadFinanceName)
-                    .HasColumnName("Proposed Academy Details.Academy Lead Finance Name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyLeadFinancePhone)
-                    .HasColumnName("Proposed Academy Details.Academy Lead Finance Phone")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactAddressLine1)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Address Line 1")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactAddressLine2)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Address Line 2")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactAddressLine3)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Address Line 3")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactCounty)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact County")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactEmail)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactName)
-                    .HasColumnName("Proposed Academy Details.Academy main contact name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactPhone)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Phone")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactPostcode)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Postcode")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactRole)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Role")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyMainContactTown)
-                    .HasColumnName("Proposed Academy Details.Academy Main Contact Town")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyPhaseProposed)
-                    .HasColumnName("Proposed Academy Details.Academy Phase Proposed")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyProposedCapacityPost16)
-                    .HasColumnName("Proposed Academy Details.Academy Proposed Capacity - Post 16")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyProposedCapacityPrimaryRYr6)
-                    .HasColumnName("Proposed Academy Details.Academy Proposed Capacity - Primary (R-Yr6)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademyProposedCapacitySecondaryYr7Yr11)
-                    .HasColumnName("Proposed Academy Details.Academy Proposed Capacity - Secondary (Yr7 - Yr11)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademySecureAccessContactEmail)
-                    .HasColumnName("Proposed Academy Details.Academy Secure Access Contact email")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsAcademySecureAccessContactName)
-                    .HasColumnName("Proposed Academy Details.Academy Secure Access Contact name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsGagFundingPupilNumbersType)
-                    .HasColumnName("Proposed Academy Details.GAG Funding Pupil Numbers Type")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsMatFaClauses3A3FOption1ConvSpons)
-                    .HasColumnName("Proposed Academy Details.MAT FA Clauses 3.A - 3.F Option 1(Conv & Spons)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsMatFaClauses3A3FOption2FsNewProv)
-                    .HasColumnName("Proposed Academy Details.MAT FA Clauses 3.A - 3.F Option 2(FS & New Prov)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsMatFaClauses3HIfApplicableNotConv)
-                    .HasColumnName("Proposed Academy Details.MAT FA Clauses 3.H (if applicable & not Conv)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsNewAcademyName)
-                    .HasColumnName("Proposed Academy Details.New Academy Name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsNewAcademyUrn)
-                    .HasColumnName("Proposed Academy Details.New Academy URN")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsPost16)
-                    .HasColumnName("Proposed Academy Details.Post 16")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsSatFaClause323IfApplicableNotConv)
-                    .HasColumnName("Proposed Academy Details.SAT FA Clause 3.23 (if applicable & not Conv)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsSatFaClauses316321Option1ConvSpons)
-                    .HasColumnName("Proposed Academy Details.SAT FA Clauses 3.16-3.21 Option 1 (Conv & Spons)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProposedAcademyDetailsSatFaClauses316321Option2FsNewProv)
-                    .HasColumnName("Proposed Academy Details.SAT FA Clauses 3.16-3.21 Option 2 (FS & New Prov)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Rid)
-                    .HasColumnName("RID")
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                //entity.Property(e => e.Sk).HasColumnName("SK");
-
-                entity.Property(e => e.TrustSponsorManagementCoSponsor1)
-                    .HasColumnName("Trust & Sponsor Management.Co-sponsor 1")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementCoSponsor1SponsorName)
-                    .HasColumnName("Trust & Sponsor Management.Co-sponsor 1 Sponsor Name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementCoSponsor2)
-                    .HasColumnName("Trust & Sponsor Management.Co-sponsor 2")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementCoSponsor2SponsorName)
-                    .HasColumnName("Trust & Sponsor Management.Co-sponsor 2 Sponsor Name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementCoSponsor3)
-                    .HasColumnName("Trust & Sponsor Management.Co-sponsor 3")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementCoSponsor3SponsorName)
-                    .HasColumnName("Trust & Sponsor Management.Co-sponsor 3 Sponsor Name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementPreviousSponsorId)
-                    .HasColumnName("Trust & Sponsor Management.Previous sponsor id")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementPreviousSponsorName)
-                    .HasColumnName("Trust & Sponsor Management.Previous sponsor name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementPreviousTrust)
-                    .HasColumnName("Trust & Sponsor Management.Previous Trust")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementPreviousTrustName)
-                    .HasColumnName("Trust & Sponsor Management.Previous Trust name")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementSponsor1NameProvisional)
-                    .HasColumnName("Trust & Sponsor Management.Sponsor 1 Name (Provisional)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementSponsor1Provisional)
-                    .HasColumnName("Trust & Sponsor Management.Sponsor 1 (Provisional)")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementSponsor2NameProvisional)
-                    .HasColumnName("Trust & Sponsor Management.Sponsor 2 Name (Provisional)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementSponsor2Provisional)
-                    .HasColumnName("Trust & Sponsor Management.Sponsor 2 (Provisional)")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementSponsor3NameProvisional)
-                    .HasColumnName("Trust & Sponsor Management.Sponsor 3 Name (Provisional)")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementSponsor3Provisional)
-                    .HasColumnName("Trust & Sponsor Management.Sponsor 3 (Provisional)")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TrustSponsorManagementTrust)
-                    .HasColumnName("Trust & Sponsor Management.Trust")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<TrustMasterData>(entity =>
-            {
-                entity.HasKey(e => e.SK).HasName("SK");
-
-                entity.ToTable("Trust", "mstr");
-
-                entity.Property(e => e.TrustsTrustType).HasColumnName("FK_TrustType");
-                entity.Property(e => e.Region).HasColumnName("FK_Region");
-                entity.Property(e => e.TrustBanding).HasColumnName("FK_TrustBanding");
-                entity.Property(e => e.FK_TrustStatus).HasColumnName("FK_TrustStatus");
-                entity.Property(e => e.GroupUID).HasColumnName("Group UID").IsRequired();
-                entity.Property(e => e.GroupID).HasColumnName("Group ID");
-                entity.Property(e => e.RID).HasColumnName("RID");
-                entity.Property(e => e.Name).HasColumnName("Name").IsRequired();
-                entity.Property(e => e.CompaniesHouseNumber).HasColumnName("Companies House Number");
-                entity.Property(e => e.ClosedDate).HasColumnName("Closed Date");
-                entity.Property(e => e.TrustStatus).HasColumnName("Trust Status");
-                entity.Property(e => e.JoinedDate).HasColumnName("Joined Date");
-                entity.Property(e => e.MainPhone).HasColumnName("Main Phone");
-                entity.Property(e => e.AddressLine1).HasColumnName("Address Line1");
-                entity.Property(e => e.AddressLine2).HasColumnName("Address Line2");
-                entity.Property(e => e.AddressLine3).HasColumnName("Address Line3");
-                entity.Property(e => e.Town).HasColumnName("Town");
-                entity.Property(e => e.County).HasColumnName("County");
-                entity.Property(e => e.Postcode).HasColumnName("Postcode");
-                entity.Property(e => e.PrioritisedForReview).HasColumnName("Prioritised for Review");
-                entity.Property(e => e.CurrentSingleListGrouping).HasColumnName("Current Single List Grouping");
-                entity.Property(e => e.DateOfGroupingDecision).HasColumnName("Date of Grouping Decision");
-                entity.Property(e => e.DateEnteredOntoSingleList).HasColumnName("Date Entered Onto Single List");
-                entity.Property(e => e.TrustReviewWriteUp).HasColumnName("Trust Review Write Up");
-                entity.Property(e => e.DateOfTrustReviewMeeting).HasColumnName("Date of Trust Review Meeting");
-                entity.Property(e => e.FollowUpLetterSent).HasColumnName("Follow Up Letter Sent");
-                entity.Property(e => e.DateActionPlannedFor).HasColumnName("Date Action Planned For");
-                entity.Property(e => e.WIPSummaryGoesToMinister).HasColumnName("WIP Summary Goes To Minister");
-                entity.Property(e => e.ExternalGovernanceReviewDate).HasColumnName("External Governance Review Date");
-                entity.Property(e => e.EfficiencyICFPReviewCompleted).HasColumnName("Efficiency ICFP Review Completed");
-                entity.Property(e => e.EfficiencyICFPReviewOther).HasColumnName("Efficiency ICFP Review Other");
-                entity.Property(e => e.LinkToWorkplaceForEfficiencyICFPReview).HasColumnName("Link To Workplace For Efficiency ICFP Review");
-                entity.Property(e => e.NumberInTrust).HasColumnName("Number In Trust");
-                entity.Property(e => e.Modified).HasColumnName("Modified");
-                entity.Property(e => e.ModifiedBy).HasColumnName("Modified By");
-                entity.Property(e => e.AMSDTerritory).HasColumnName("AMSD Territory");
-                entity.Property(e => e.LeadAMSDTerritory).HasColumnName("Lead AMSD Territory");
-                entity.Property(e => e.UKPRN).HasColumnName("UKPRN");
-                entity.Property(e => e.TrustPerformanceAndRiskDateOfMeeting).HasColumnName("Trust Performance And Risk Date Of Meeting");
-                entity.Property(e => e.UPIN).HasColumnName("UPIN");
-                entity.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
-            });
-
-            modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
-                .StartsAt(10000000)
-                .HasMin(10000000);
+            if (!Database.IsSqlite())
+                modelBuilder.HasSequence<int>("AcademyTransferProjectUrns")
+                    .StartsAt(10000000)
+                    .HasMin(10000000);
             
             OnModelCreatingEducationPerformancedata(modelBuilder);
             OnModelCreatingPartial(modelBuilder);

@@ -14,7 +14,6 @@ namespace TramsDataApi.Controllers
     /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
-    [SwaggerTag("Establishment Endpoints")]
     public class EstablishmentsController : ControllerBase
     {
         private readonly IGetEstablishmentByUkprn _getEstablishmentByUkprn;
@@ -48,7 +47,7 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("establishment/{ukprn}")]
         [SwaggerOperation(Summary = "Get Establishment by UK Provider Reference Number (UKPRN)", Description = "Returns an establishment specified by UK Provider Reference Number (UKPRN).")]
-        [SwaggerResponse(200, "Successfully found and returned the establishment.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment.", typeof(EstablishmentResponse))]
         [SwaggerResponse(404, "Establishment with specified UK Provider Reference Number (UKPRN) not found.")]
         public ActionResult<EstablishmentResponse> GetByUkprn(string ukprn)
         {
@@ -72,7 +71,7 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("establishment/regions")]
         [SwaggerOperation(Summary = "Get Establishment Unique Reference Numbers (URNs) by Region", Description = "Returns a list of establishment Unique Reference Numbers (URNs) by specified regions.")]
-        [SwaggerResponse(200, "Successfully found and returned the establishment Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment Unique Reference Numbers (URNs).", typeof(IEnumerable<int>))]
         [SwaggerResponse(404, "No establishments found for specified regions.")]
         public ActionResult<IEnumerable<int>> GetURNsByRegion([FromQuery] string[] regions)
         {
@@ -97,7 +96,7 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("establishment/urn/{urn}")]
         [SwaggerOperation(Summary = "Get Establishment by Unique Reference Number (URN)", Description = "Returns an establishment specified by Unique Reference Number (URN).")]
-        [SwaggerResponse(200, "Successfully found and returned the establishment.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment.", typeof(EstablishmentResponse))]
         [SwaggerResponse(404, "Establishment with specified Unique Reference Number (URN) not found.")]
         public ActionResult<EstablishmentResponse> GetByUrn(int urn)
         {
@@ -122,7 +121,7 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("establishments")]
         [SwaggerOperation(Summary = "Search for Establishments", Description = "Returns a list of establishments based on search criteria.")]
-        [SwaggerResponse(200, "Successfully executed the search and returned establishments.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned establishments.", typeof(List<EstablishmentSummaryResponse>))]
         public ActionResult<List<EstablishmentSummaryResponse>> SearchEstablishments([FromQuery] SearchEstablishmentsRequest request)
         {
             _logger.LogInformation($"Searching for Establishments");
@@ -139,7 +138,7 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("establishments/bulk")]
         [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
-        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentResponse>))]
         [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
         public ActionResult<List<EstablishmentResponse>> GetByUrns([FromQuery] GetEstablishmentsByUrnsRequest request)
         {

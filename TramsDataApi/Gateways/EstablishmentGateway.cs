@@ -1,18 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dfe.Academies.Domain.Establishment;
+using Dfe.Academies.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using TramsDataApi.DatabaseModels;
+using Establishment = TramsDataApi.DatabaseModels.Establishment;
 
 namespace TramsDataApi.Gateways
 {
     public class EstablishmentGateway : IEstablishmentGateway
     {
         private readonly LegacyTramsDbContext _dbContext;
+        private readonly MisMstrContext _misMstrContext;
 
-        public EstablishmentGateway(LegacyTramsDbContext dbContext)
+        public EstablishmentGateway(LegacyTramsDbContext dbContext, MisMstrContext misMstrContext)
         {
             _dbContext = dbContext;
+            _misMstrContext = misMstrContext;
         }
 
         public Establishment GetByUkprn(string ukprn)
@@ -50,24 +55,24 @@ namespace TramsDataApi.Gateways
             return _dbContext.Establishment.AsNoTracking().Where(e => trustUids.Contains(e.TrustsCode)).ToList();
         }
 
-        public MisEstablishments GetMisEstablishmentByUrn(int establishmentUrn)
+        public MisEstablishment GetMisEstablishmentByUrn(int establishmentUrn)
         {
-            return _dbContext.MisEstablishments.FirstOrDefault(m => m.Urn == establishmentUrn);
+            return _misMstrContext.Establishments.FirstOrDefault(m => m.Urn == establishmentUrn);
         }
 
-        public IList<MisEstablishments> GetMisEstablishmentsByUrns(int[] establishmentUrns)
+        public IList<MisEstablishment> GetMisEstablishmentsByUrns(int[] establishmentUrns)
         {
-            return _dbContext.MisEstablishments.AsNoTracking().Where(e => establishmentUrns.Contains((int)e.Urn)).ToList();
+            return _misMstrContext.Establishments.AsNoTracking().Where(e => establishmentUrns.Contains((int)e.Urn)).ToList();
         }
 
-        public FurtherEducationEstablishments GetFurtherEducationEstablishmentByUrn(int establishmentUrn)
+        public FurtherEducationEstablishment GetFurtherEducationEstablishmentByUrn(int establishmentUrn)
         {
-            return _dbContext.FurtherEducationEstablishments.FirstOrDefault(m => m.ProviderUrn == establishmentUrn);
+            return _misMstrContext.FurtherEducationEstablishments.FirstOrDefault(m => m.ProviderUrn == establishmentUrn);
         }
 
-        public IList<FurtherEducationEstablishments> GetFurtherEducationEstablishmentsByUrns(int[] establishmentUrns)
+        public IList<FurtherEducationEstablishment> GetFurtherEducationEstablishmentsByUrns(int[] establishmentUrns)
         {
-            return _dbContext.FurtherEducationEstablishments.AsNoTracking().Where(e => establishmentUrns.Contains(e.ProviderUrn)).ToList();
+            return _misMstrContext.FurtherEducationEstablishments.AsNoTracking().Where(e => establishmentUrns.Contains(e.ProviderUrn)).ToList();
         }
 
         public SmartData GetSmartDataByUrn(int establishmentUrn)
