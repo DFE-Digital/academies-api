@@ -39,6 +39,9 @@ namespace TramsDataApi.ResponseModels
         public string Ukprn { get; set; }
         public string FeheiIdentifier { get; set; }
         public string FurtherEducationType { get; set; }
+        
+        //Deprecated
+        [Obsolete] 
         public string OfstedLastInspection { get; set; }
         public NameAndCodeResponse OfstedSpecialMeasures { get; set; }
         public string LastChangedDate { get; set; }
@@ -97,15 +100,21 @@ namespace TramsDataApi.ResponseModels
         public string PropsName { get; set; }
         public NameAndCodeResponse PreviousLocalAuthority { get; set; }
         public string PreviousEstablishmentNumber { get; set; }
+        //Deprecated
+        [Obsolete]
         public string OfstedRating { get; set; }
         public string RSCRegion { get; set; }
         public string Country { get; set; }
         public string UPRN { get; set; }
         public MISEstablishmentResponse MISEstablishment { get; set; }
         public MISFEAResponse MISFurtherEducationEstablishment { get; set; }
+
         public ViewAcademyConversionResponse ViewAcademyConversion { get; set; }
         public SMARTDataResponse SMARTData { get; set; }
         public PlaceholderResponse Financial { get; set; }
         public PlaceholderResponse  Concerns { get; set; }
+
+
+
     }
 }

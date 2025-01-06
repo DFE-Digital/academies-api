@@ -11,6 +11,7 @@ public class TrustsControllerTests
     [Theory]
     [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
     public async Task GetTrustsByUkprnAsync_ShouldReturnTrustsData_WhenUkprnExists(
+        CustomWebApplicationDbContextFactory<Startup> factory,
         ITrustsClient trustsClient)
     {
         // Arrange
