@@ -59,5 +59,8 @@ module "azure_container_apps_hosting" {
   existing_network_watcher_name                = local.existing_network_watcher_name
   existing_network_watcher_resource_group_name = local.existing_network_watcher_resource_group_name
 
-  custom_container_apps = local.custom_container_apps
+  custom_container_apps  = local.custom_container_apps
+  enable_init_container  = local.enable_init_container
+  init_container_image   = local.init_container_image
+  init_container_command = local.init_container_command
 }
