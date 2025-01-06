@@ -16,6 +16,12 @@ jobs:
           "Dockerfile",
           "Dockerfile.PersonsApi"
         ]
+        stage: [
+          "final"
+        ]
+        include:
+          - image: "Dockerfile"
+            stage: "initcontainer"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,4 +37,5 @@ jobs:
           secrets: github_token=${{ secrets.GITHUB_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha
+          target: ${{ matrix.stage }}
           push: false
