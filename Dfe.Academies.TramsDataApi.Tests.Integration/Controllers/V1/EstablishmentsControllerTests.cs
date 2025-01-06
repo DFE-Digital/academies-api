@@ -12,7 +12,6 @@ public class EstablishmentsControllerTests
     [Theory]
     [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
     public async Task GetEstablishmentByUkprnAsync_ShouldReturnEstablishments_WhenUkprnExists(
-        CustomWebApplicationDbContextFactory<Startup> factory,
         IEstablishmentsClient establishmentsClient)
     {
         // Arrange
