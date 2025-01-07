@@ -59,11 +59,21 @@ jobs:
             "Dockerfile",
             "Dockerfile.PersonsApi"
           ]
+          stage: [
+            "final"
+          ]
           include:
             - image: "Dockerfile"
               aca_name: "ACA_CONTAINERAPP_NAME"
               prefix: ""
               name: "tramsapi-app"
+
+            - image: "Dockerfile"
+              aca_name: "ACA_CONTAINERAPP_NAME"
+              prefix: "init-"
+              name: "tramsapi-app"
+              stage: initcontainer
+
             - image: "Dockerfile.PersonsApi"
               aca_name: "ACA_CONTAINERAPP_PERSONS_API_NAME"
               prefix: "persons-api-"
@@ -71,10 +81,12 @@ jobs:
     with:
       docker-image-name: '${{ matrix.name }}'
       docker-build-file-name: './${{ matrix.image }}'
+      docker-build-target: ${{ matrix.stage }}
       docker-tag-prefix: ${{ matrix.prefix }}
       environment: ${{ needs.set-env.outputs.environment }}
       # Only annotate the release once, because both apps are deployed at the same time
-      annotate-release: ${{ matrix.name == 'tramsapi-app' }}
+      annotate-release: ${{ matrix.name == 'tramsapi-app' && matrix.stage == 'final' }}
+      import-without-deploy: ${{ matrix.stage == 'initcontainer' }}
       docker-build-args: |
         COMMIT_SHA="${{ needs.set-env.outputs.checked-out-sha }}"
         CI=true
