@@ -49,6 +49,8 @@ RUN ["mkdir", "/sql"]
 RUN ["dotnet", "tool", "install", "--global", "dotnet-ef"]
 RUN ["dotnet", "ef", "migrations", "bundle", "-r", "linux-x64", "--configuration", "Release", "-p", "TramsDataApi", "--context", "TramsDataApi.DatabaseModels.LegacyTramsDbContext", "--no-build", "-o", "/sql/migratelegacydb"]
 RUN ["dotnet", "ef", "migrations", "bundle", "-r", "linux-x64", "--configuration", "Release", "-p", "TramsDataApi", "--context", "TramsDataApi.DatabaseModels.TramsDbContext", "--no-build", "-o", "/sql/migratedb"]
+COPY ./script/init-docker-entrypoint.sh /sql/entrypoint.sh
+RUN ["chmod", "+x", "/sql/entrypoint.sh"]
 
 # ==============================================
 # Entity Framework: Migration Runner
