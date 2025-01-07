@@ -4,10 +4,10 @@
 set -e
 set -o pipefail
 
-while getopts "c" opt; do
+while getopts "c:" opt; do
   case $opt in
     c)
-      CONNECTION_STRING=$opt
+      CONNECTION_STRING=$OPTARG
       ;;
     *)
       usage
