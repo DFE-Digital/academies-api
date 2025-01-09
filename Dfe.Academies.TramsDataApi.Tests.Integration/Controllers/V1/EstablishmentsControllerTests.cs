@@ -16,6 +16,7 @@ public class EstablishmentsControllerTests
         IEstablishmentsClient establishmentsClient)
     {
         // Arrange
+        factory.TestClaims = default;
 
         // Act
         var result = await establishmentsClient.GetByUkprnAsync("100", "1");

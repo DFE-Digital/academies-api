@@ -15,7 +15,8 @@ public class TrustsControllerTests
         ITrustsClient trustsClient)
     {
         // Arrange
-
+        factory.TestClaims = default;
+        
         // Act
         var result = await trustsClient.GetTrustByUkprnAsync("1", "1");
 
