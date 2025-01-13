@@ -1,6 +1,8 @@
+using Dfe.Academies.Domain.Establishment;
 using TramsDataApi.CensusData;
 using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
+using Establishment = TramsDataApi.DatabaseModels.Establishment;
 
 namespace TramsDataApi.Factories
 {
@@ -8,9 +10,9 @@ namespace TramsDataApi.Factories
     {
         public static EstablishmentResponse Create(
             Establishment establishment, 
-            MisEstablishments misEstablishment, 
+            MisEstablishment misEstablishment, 
             SmartData smartData, 
-            FurtherEducationEstablishments furtherEducationEstablishments,
+            FurtherEducationEstablishment furtherEducationEstablishments,
             ViewAcademyConversions viewAcademyConversions,
             CensusDataModel censusData)
         {
@@ -94,7 +96,7 @@ namespace TramsDataApi.Factories
                 Ukprn = establishment.Ukprn,
                 FeheiIdentifier = establishment.Feheidentifier,
                 FurtherEducationType = establishment.FurtherEducationTypeName,
-                OfstedLastInspection = establishment.OfstedLastInsp,
+                OfstedLastInspection = string.Empty,
                 OfstedSpecialMeasures = new NameAndCodeResponse
                 { Name = establishment.OfstedSpecialMeasuresName, Code = establishment.OfstedSpecialMeasuresCode },
                 LastChangedDate = establishment.LastChangedDate,
@@ -176,7 +178,7 @@ namespace TramsDataApi.Factories
                 PreviousLocalAuthority = new NameAndCodeResponse
                 { Name = establishment.PreviousLaName, Code = establishment.PreviousLaCode },
                 PreviousEstablishmentNumber = establishment.PreviousEstablishmentNumber,
-                OfstedRating = establishment.OfstedRatingName,
+                OfstedRating = string.Empty,
                 RSCRegion = establishment.RscregionName,
                 Country = establishment.CountryName,
                 UPRN = establishment.Uprn,

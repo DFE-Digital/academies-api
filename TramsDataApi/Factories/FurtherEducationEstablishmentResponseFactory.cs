@@ -1,11 +1,12 @@
-﻿using TramsDataApi.DatabaseModels;
+﻿using Dfe.Academies.Domain.Establishment;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Factories
 {
     public class FurtherEducationEstablishmentResponseFactory
     {
-        public static MISFEAResponse Create(FurtherEducationEstablishments furtherEducationEstablishments)
+        public static MISFEAResponse Create(FurtherEducationEstablishment furtherEducationEstablishments)
         {
             if (furtherEducationEstablishments == null)
             {
@@ -27,27 +28,27 @@ namespace TramsDataApi.Factories
                 OfstedRegion = furtherEducationEstablishments.OfstedRegion,
                 DateOfLatestShortInspection = furtherEducationEstablishments.DateOfLatestShortInspection,
                 NumberOfShortInspectionsSinceLastFullInspection = furtherEducationEstablishments.NumberOfShortInspectionsSinceLastFullInspection.ToString(),
-                NumberOfShortInspectionsSinceLastFullInspectionRAW = furtherEducationEstablishments.NumberOfShortInspectionsSinceLastFullInspectionRaw,
+                NumberOfShortInspectionsSinceLastFullInspectionRAW = string.Empty,
                 InspectionNumber = furtherEducationEstablishments.InspectionNumber,
                 FirstDayOfInspection = furtherEducationEstablishments.FirstDayOfInspection,
                 LastDayOfInspection = furtherEducationEstablishments.LastDayOfInspection,
                 InspectionType = furtherEducationEstablishments.InspectionType,
                 DatePublished = furtherEducationEstablishments.DatePublished,
-                OverallEffectiveness = furtherEducationEstablishments.OverallEffectiveness.ToString(),
-                OverallEffectivenessRAW = furtherEducationEstablishments.OverallEffectivenessRaw,
+                OverallEffectiveness = furtherEducationEstablishments.OverallEffectiveness,
+                OverallEffectivenessRAW = string.Empty,
                 QualityOfEducation = furtherEducationEstablishments.QualityOfEducation.ToString(),
-                QualityOfEducationRAW = furtherEducationEstablishments.QualityOfEducationRaw,
+                QualityOfEducationRAW = string.Empty,
                 BehaviourAndAttitudes = furtherEducationEstablishments.BehaviourAndAttitudes.ToString(),
-                BehaviourAndAttitudesRAW = furtherEducationEstablishments.BehaviourAndAttitudesRaw,
+                BehaviourAndAttitudesRAW = string.Empty,
                 PersonalDevelopment = furtherEducationEstablishments.PersonalDevelopment.ToString(),
-                PersonalDevelopmentRAW = furtherEducationEstablishments.PersonalDevelopmentRaw,
+                PersonalDevelopmentRAW = string.Empty,
                 EffectivenessOfLeadershipAndManagement = furtherEducationEstablishments.EffectivenessOfLeadershipAndManagement.ToString(),
-                EffectivenessOfLeadershipAndManagementRAW = furtherEducationEstablishments.EffectivenessOfLeadershipAndManagementRaw,
+                EffectivenessOfLeadershipAndManagementRAW = string.Empty,
                 IsSafeguardingEffective = furtherEducationEstablishments.IsSafeguardingEffective,
                 PreviousInspectionNumber = furtherEducationEstablishments.PreviousInspectionNumber,
                 PreviousLastDayOfInspection = furtherEducationEstablishments.PreviousLastDayOfInspection,
-                PreviousOverallEffectiveness = furtherEducationEstablishments.PreviousOverallEffectiveness.ToString(),
-                PreviousOverallEffectivenessRAW = furtherEducationEstablishments.PreviousOverallEffectivenessRaw,
+                PreviousOverallEffectiveness = furtherEducationEstablishments.PreviousOverallEffectiveness,
+                PreviousOverallEffectivenessRAW = string.Empty,
             };
         }
     }

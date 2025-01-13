@@ -14,7 +14,6 @@ namespace TramsDataApi.Controllers
     /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
-    [SwaggerTag("Trust Endpoints")]
     public class TrustsController : ControllerBase
     {
         private readonly IGetTrustByUkprn _getTrustByUkprn;
@@ -36,7 +35,7 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("trust/{ukprn}")]
         [SwaggerOperation(Summary = "Retrieve Trust by UK Provider Reference Number (UKPRN)", Description = "Returns a Trust identified by UK Provider Reference Number (UKPRN).")]
-        [SwaggerResponse(200, "Successfully found and returned the Trust.")]
+        [SwaggerResponse(200, "Successfully found and returned the Trust.", typeof(TrustResponse))]
         [SwaggerResponse(404, "Trust with specified UK Provider Reference Number (UKPRN) not found.")]
         public ActionResult<TrustResponse> GetTrustByUkprn(string ukprn)
         {
@@ -66,7 +65,7 @@ namespace TramsDataApi.Controllers
         [HttpGet]
         [Route("trusts")]
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
-        [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned Trusts.", typeof(List<TrustSummaryResponse>))]
         public ActionResult<List<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, int page = 1, int count = 10)
         {
             _logger.LogInformation(

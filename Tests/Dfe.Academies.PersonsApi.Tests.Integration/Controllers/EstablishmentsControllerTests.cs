@@ -13,7 +13,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
     public class EstablishmentsControllerTests
     {
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithAcademyAsync_ShouldReturnPeople_WhenAcademyExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IEstablishmentsClient establishmentsClient)
@@ -39,7 +39,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithAcademyAsync_ShouldReturnEmptyList_WhenAcademyExistWithNoPeople(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IEstablishmentsClient establishmentsClient)
@@ -61,7 +61,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithAcademyAsync_ShouldThrowAnException_WhenAcademyDoesntExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IEstablishmentsClient establishmentsClient)
@@ -77,7 +77,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetGetMemberOfParliamentBySchoolUrnAsync_ShouldReturnMP_WhenSchoolExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IEstablishmentsClient establishmentsClient)
@@ -106,7 +106,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetGetMemberOfParliamentBySchoolUrnAsync_ShouldReturnNull_WhenSchoolDoesntExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             IEstablishmentsClient establishmentsClient)

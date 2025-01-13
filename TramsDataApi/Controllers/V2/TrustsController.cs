@@ -16,7 +16,6 @@ namespace TramsDataApi.Controllers.V2
     [ApiVersion("2.0")]
     [ApiController]
     [Route("v{version:apiVersion}/")]
-    [SwaggerTag("Operations related to Trusts")]
     public class TrustsController : ControllerBase
     {
         private readonly IGetTrustByUkprn _getTrustByUkPrn;
@@ -41,7 +40,7 @@ namespace TramsDataApi.Controllers.V2
         [HttpGet("trusts")]
         [MapToApiVersion("2.0")]
         [SwaggerOperation(Summary = "Search Trusts", Description = "Search for trusts using the specified parameters.")]
-        [SwaggerResponse(200, "Successfully found and returned the list of trusts.")]
+        [SwaggerResponse(200, "Successfully found and returned the list of trusts.", typeof(ApiResponseV2<TrustSummaryResponse>))]
         public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, 
             int page = 1, int count = 50, bool includeEstablishments = true)
         {
@@ -74,7 +73,7 @@ namespace TramsDataApi.Controllers.V2
         [Route("trust/{ukprn}")]
         [MapToApiVersion("2.0")]
         [SwaggerOperation(Summary = "Get Trust By UK Provider Reference Number (UKPRN)", Description = "Retrieve a single trust by its UK Provider Reference Number (UKPRN).")]
-        [SwaggerResponse(200, "Successfully retrieved the trust.")]
+        [SwaggerResponse(200, "Successfully retrieved the trust.", typeof(ApiSingleResponseV2<TrustResponse>))]
         [SwaggerResponse(404, "The trust was not found.")]
         public ActionResult<ApiSingleResponseV2<TrustResponse>> GetTrustByUkPrn(string ukprn)
         {
@@ -101,7 +100,7 @@ namespace TramsDataApi.Controllers.V2
         [Route("trusts/bulk")]
         [MapToApiVersion("2.0")]
         [SwaggerOperation(Summary = "Get Trusts By UK Provider Reference Numbers (UKPRNs)", Description = "Retrieve multiple trusts by their UK Provider Reference Numbers (UKPRNs).")]
-        [SwaggerResponse(200, "Successfully retrieved the trusts.")]
+        [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(ApiResponseV2<TrustResponse>))]
         [SwaggerResponse(404, "The trusts were not found.")]
         public ActionResult<ApiResponseV2<TrustResponse>> GetByUkprns([FromQuery] GetTrustsByUkprnsRequest request)
         {

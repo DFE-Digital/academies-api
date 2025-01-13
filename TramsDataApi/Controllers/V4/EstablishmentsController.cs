@@ -17,7 +17,6 @@ namespace TramsDataApi.Controllers.V4
     [ApiController]
     [ApiVersion("4.0")]
     [Route("v{version:apiVersion}/")]
-    [SwaggerTag("Establishment Endpoints")]
     public class EstablishmentsController : ControllerBase
     {
         private readonly IEstablishmentQueries _establishmentQueries;
@@ -38,7 +37,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("establishment/{ukprn}")]
         [SwaggerOperation(Summary = "Retrieve Establishment by UK Provider Reference Number (UKPRN)", Description = "Returns a Establishment identified by UK Provider Reference Number (UKPRN).")]
-        [SwaggerResponse(200, "Successfully found and returned the Establishment.")]
+        [SwaggerResponse(200, "Successfully found and returned the Establishment.", typeof(EstablishmentDto))]
         [SwaggerResponse(404, "Establishment with specified UK Provider Reference Number (UKPRN) not found.")]
         public async Task<ActionResult<EstablishmentDto>> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken)
         {
@@ -64,7 +63,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("establishment/urn/{urn}")]
         [SwaggerOperation(Summary = "Get Establishment by Unique Reference Number (URN)", Description = "Returns an establishment specified by Unique Reference Number (URN).")]
-        [SwaggerResponse(200, "Successfully found and returned the establishment.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment.", typeof(EstablishmentDto))]
         [SwaggerResponse(404, "Establishment with specified Unique Reference Number (URN) not found.")]
         public async Task<ActionResult<EstablishmentDto>> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken)
         {
@@ -93,7 +92,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("establishments")]
         [SwaggerOperation(Summary = "Search Establishments", Description = "Returns a list of Establishments based on search criteria.")]
-        [SwaggerResponse(200, "Successfully executed the search and returned Establishments.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
         public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
@@ -122,7 +121,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("establishment/regions")]
         [SwaggerOperation(Summary = "Get Establishment Unique Reference Numbers (URNs) by Region", Description = "Returns a list of establishment Unique Reference Numbers (URNs) by specified regions.")]
-        [SwaggerResponse(200, "Successfully found and returned the establishment Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(200, "Successfully found and returned the establishment Unique Reference Numbers (URNs).", typeof(IEnumerable<int>))]
         [SwaggerResponse(404, "No establishments found for specified regions.")]
         public async Task<ActionResult<IEnumerable<int>>> GetURNsByRegion([FromQuery] string[] regions,  CancellationToken cancellationToken)
         {
@@ -148,7 +147,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("establishments/bulk")]
         [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
-        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
         [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
         public async Task<ActionResult<List<EstablishmentDto>>> GetByUrns([FromQuery] int[] request, CancellationToken cancellationToken)
         {
@@ -176,7 +175,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("establishments/trust")]
         [SwaggerOperation(Summary = "Get Establishments by Trust", Description = "Returns a list of establishments specified by Trust UKPRN.")]
-        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
         [SwaggerResponse(404, "Establishments with specified Trust UKPRN  not found.")]
         public async Task<ActionResult<List<EstablishmentDto>>> GetByTrust([FromQuery] string trustUkprn, CancellationToken cancellationToken)
         {
@@ -204,7 +203,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("establishments/ukprn/bulk")]
         [SwaggerOperation(Summary = "Get Establishments by UKPRNs", Description = "Returns a list of establishments specified by UKPRNs.")]
-        [SwaggerResponse(200, "Successfully found and returned the establishments.")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentResponse>))]
         [SwaggerResponse(404, "Establishments with specified UKPRNs not found.")]
         public async Task<ActionResult<List<EstablishmentResponse>>> GetByUKPRNs([FromQuery] string[] ukprn, CancellationToken cancellationToken)
         {

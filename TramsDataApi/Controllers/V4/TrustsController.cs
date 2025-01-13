@@ -20,7 +20,6 @@ namespace TramsDataApi.Controllers.V4
     [ApiController]
     [ApiVersion("4.0")]
     [Route("v{version:apiVersion}/")]
-    [SwaggerTag("Trust Endpoints")]
     public class TrustsController : ControllerBase
     {
         private readonly ITrustQueries _trustQueries;
@@ -41,7 +40,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("trust/{ukprn}")]
         [SwaggerOperation(Summary = "Retrieve Trust by UK Provider Reference Number (UKPRN)", Description = "Returns a Trust identified by UK Provider Reference Number (UKPRN).")]
-        [SwaggerResponse(200, "Successfully found and returned the Trust.")]
+        [SwaggerResponse(200, "Successfully found and returned the Trust.", typeof(TrustDto))]
         [SwaggerResponse(404, "Trust with specified UK Provider Reference Number (UKPRN) not found.")]
         public async Task<ActionResult<TrustDto>> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken)
         {
@@ -67,7 +66,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("trust/companiesHouseNumber/{companiesHouseNumber}")]
         [SwaggerOperation(Summary = "Retrieve Trust by Companies House Number", Description = "Returns a Trust identified by Companies House Number.")]
-        [SwaggerResponse(200, "Successfully found and returned the Trust.")]
+        [SwaggerResponse(200, "Successfully found and returned the Trust.", typeof(TrustDto))]
         [SwaggerResponse(404, "Trust with specified Companies House Number not found.")]
         public async Task<ActionResult<TrustDto>> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
         {
@@ -94,7 +93,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("trust/trustReferenceNumber/{trustReferenceNumber}")]
         [SwaggerOperation(Summary = "Retrieve Trust by Trust Reference Number also know as the GIAS Group ID", Description = "Retrieve Trust by Trust Reference Number also know as the GIAS Group ID.")]
-        [SwaggerResponse(200, "Successfully found and returned the Trust.")]
+        [SwaggerResponse(200, "Successfully found and returned the Trust.", typeof(TrustDto))]
         [SwaggerResponse(404, "Trust with specified Trust Reference Number not found.")]
         public async Task<ActionResult<TrustDto>> GetTrustByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
         {
@@ -126,7 +125,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("trusts")]
         [SwaggerOperation(Summary = "Search Trusts", Description = "Returns a list of Trusts based on search criteria.")]
-        [SwaggerResponse(200, "Successfully executed the search and returned Trusts.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned Trusts.", typeof(PagedDataResponse<TrustDto>))]
         public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10, TrustStatus status = TrustStatus.Open)
         {
             _logger.LogInformation(
@@ -157,7 +156,7 @@ namespace TramsDataApi.Controllers.V4
         [HttpGet]
         [Route("trusts/bulk")]
         [SwaggerOperation(Summary = "Get Trusts By UK Provider Reference Numbers (UKPRNs)", Description = "Retrieve multiple trusts by their UK Provider Reference Numbers (UKPRNs).")]
-        [SwaggerResponse(200, "Successfully retrieved the trusts.")]
+        [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(List<TrustDto>))]
         [SwaggerResponse(404, "The trusts were not found.")]
         public async Task<ActionResult<List<TrustDto>>> GetByUkprns([FromQuery] string[] ukprns, CancellationToken cancellationToken)
         {

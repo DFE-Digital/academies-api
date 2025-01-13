@@ -14,7 +14,6 @@ namespace TramsDataApi.Controllers.V3
     [ApiVersion("3.0")]
     [ApiController]
     [Route("v{version:apiVersion}/")]
-    [SwaggerTag("Operations related to Trusts using the Master schema")]
     public class TrustsController : ControllerBase
     {
         private readonly IGetMstrTrustByUkprn _getMstrTrustByUkPrn;
@@ -37,7 +36,7 @@ namespace TramsDataApi.Controllers.V3
         [HttpGet("trusts")]
         [MapToApiVersion("3.0")]
         [SwaggerOperation(Summary = "Search Trusts", Description = "Search for trusts using the specified parameters, within the Master schema.")]
-        [SwaggerResponse(200, "Successfully found and returned the list of trusts.")]
+        [SwaggerResponse(200, "Successfully found and returned the list of trusts.", typeof(ApiResponseV2<TrustSummaryResponse>))]
         public ActionResult<ApiResponseV2<TrustSummaryResponse>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, 
             int page = 1, int count = 50, bool includeEstablishments = true)
         {
@@ -70,7 +69,7 @@ namespace TramsDataApi.Controllers.V3
         [Route("trust/{ukprn}")]
         [MapToApiVersion("3.0")]
         [SwaggerOperation(Summary = "Get Trust By UKPRN", Description = "Retrieve a single trust by its UKPRN.")]
-        [SwaggerResponse(200, "Successfully retrieved the trust.")]
+        [SwaggerResponse(200, "Successfully retrieved the trust.", typeof(ApiSingleResponseV2<MasterTrustResponse>))]
         [SwaggerResponse(404, "The trust was not found.")]
         public ActionResult<ApiSingleResponseV2<MasterTrustResponse>> GetTrustByUkPrn(string ukprn)
         {

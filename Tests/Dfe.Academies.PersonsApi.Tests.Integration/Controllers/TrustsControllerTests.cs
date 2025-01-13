@@ -11,7 +11,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
     public class TrustsControllerTests
     {
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldReturnPeople_WhenTrustExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)
@@ -32,7 +32,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldReturnEmptyList_WhenTrustExistWithNoPeople(
             CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)
@@ -49,7 +49,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldThrowAnException_WhenTrustDoesntExists(
             CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)
@@ -65,7 +65,7 @@ namespace Dfe.Academies.PersonsApi.Tests.Integration.Controllers
         }
 
         [Theory]
-        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization))]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetAllPersonsAssociatedWithTrustAsync_ShouldThrowAnException_WhenInvalidIdProvided(
             CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsClient trustsClient)

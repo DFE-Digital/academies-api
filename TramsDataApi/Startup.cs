@@ -157,6 +157,11 @@ namespace TramsDataApi
                 options.IncludeSubDomains = true;
                 options.MaxAge = TimeSpan.FromDays(365);
             });
+            
+            services.AddOpenApiDocument(configure =>
+            {
+                configure.Title = "TramsDataApi";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

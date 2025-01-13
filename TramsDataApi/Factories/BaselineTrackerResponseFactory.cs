@@ -1,11 +1,14 @@
-﻿using TramsDataApi.DatabaseModels;
+﻿using Dfe.Academies.Domain.Establishment;
+using TramsDataApi.DatabaseModels;
 using TramsDataApi.ResponseModels;
+using Establishment = TramsDataApi.DatabaseModels.Establishment;
+using IfdPipeline = TramsDataApi.DatabaseModels.IfdPipeline;
 
 namespace TramsDataApi.Factories
 {
     public class BaselineTrackerResponseFactory
     {
-		public static BaselineTrackerResponse Create(IfdPipeline ifd = null, Trust trust = null, Establishment establishment = null, Group group = null, MisEstablishments misEstablishment = null)
+		public static BaselineTrackerResponse Create(IfdPipeline ifd = null, Trust trust = null, Establishment establishment = null, Group group = null, MisEstablishment misEstablishment = null)
 		{
 			var response = new BaselineTrackerResponse();
 

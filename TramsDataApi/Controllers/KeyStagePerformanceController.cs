@@ -14,7 +14,6 @@ namespace TramsDataApi.Controllers
     /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
-    [SwaggerTag("Key Stage Performance Data Endpoints")]
     public class KeyStagePerformanceController : ControllerBase
     {
         private readonly IGetKeyStagePerformanceByUrn _getKeyStagePerformanceByUrn;
@@ -39,7 +38,7 @@ namespace TramsDataApi.Controllers
             Summary = "Retrieve Educational Performance by Unique Reference Number (URN)",
             Description = "Returns educational performance data identified by Unique Reference Number (URN)."
         )]
-        [SwaggerResponse(200, "Successfully found and returned the educational performance data.")]
+        [SwaggerResponse(200, "Successfully found and returned the educational performance data.", typeof(EducationalPerformanceResponse))]
         [SwaggerResponse(404, "Educational performance data with the specified Unique Reference Number (URN) not found.")]
         public ActionResult<EducationalPerformanceResponse> GetEducationPerformanceByUrn(string urn)
         {
