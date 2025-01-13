@@ -79,14 +79,4 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
-
-    <Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='true'">
-        <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net80) run ../Dfe.TramsDataApi.Client/nswag.json">
-            <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
-            <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
-        </Exec>
-
-        <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
-        <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
-    </Target>
 </Project>
