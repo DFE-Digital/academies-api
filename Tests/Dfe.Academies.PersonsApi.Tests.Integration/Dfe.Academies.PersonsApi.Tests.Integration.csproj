@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\PersonsApi\PersonsApi.csproj" />
     <ProjectReference Include="..\Dfe.Academies.Tests.Common\Dfe.Academies.Tests.Common.csproj" />
   </ItemGroup>
 
