@@ -34,9 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Dfe.Academies.Api.Infrastructure\Dfe.Academies.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Dfe.Academies.Application\Dfe.Academies.Application.csproj" />
-    <ProjectReference Include="..\..\Dfe.PersonsApi.Client\Dfe.PersonsApi.Client.csproj" />
     <ProjectReference Include="..\..\Dfe.TramsDataApi.Client\Dfe.TramsDataApi.Client.csproj" />
-    <ProjectReference Include="..\..\PersonsApi\PersonsApi.csproj" />
     <ProjectReference Include="..\..\TramsDataApi\TramsDataApi.csproj" />
   </ItemGroup>
 
