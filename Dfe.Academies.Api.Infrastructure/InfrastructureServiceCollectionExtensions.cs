@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Application.Common.Interfaces;
-using Dfe.Academies.Domain.Interfaces.Repositories;
+﻿using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
