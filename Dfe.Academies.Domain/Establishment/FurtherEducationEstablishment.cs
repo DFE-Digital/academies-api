@@ -11,7 +11,7 @@ public class FurtherEducationEstablishment
     public string? Region { get; set; }
     public string? OfstedRegion { get; set; }
     public string? DateOfLatestShortInspection { get; set; }
-    public int NumberOfShortInspectionsSinceLastFullInspection { get; set; }
+    public int? NumberOfShortInspectionsSinceLastFullInspection { get; set; }
     public string? InspectionNumber { get; set; }
     public string? InspectionType { get; set; }
     public string? FirstDayOfInspection { get; set; }
