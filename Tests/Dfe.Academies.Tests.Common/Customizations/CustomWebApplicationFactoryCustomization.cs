@@ -1,9 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoFixture;
 using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
-using Dfe.PersonsApi.Client;
-using Dfe.PersonsApi.Client.Contracts;
-using Dfe.PersonsApi.Client.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,16 +27,12 @@ namespace Dfe.Academies.Tests.Common.Customizations
 
                 var services = new ServiceCollection();
                 services.AddSingleton<IConfiguration>(config);
-                services.AddPersonsApiClient<IConstituenciesClient, ConstituenciesClient>(config, client);
-                services.AddPersonsApiClient<IEstablishmentsClient, EstablishmentsClient>(config, client);
-                
+
                 var serviceProvider = services.BuildServiceProvider();
 
                 fixture.Inject(factory);
                 fixture.Inject(serviceProvider);
                 fixture.Inject(client);
-                fixture.Inject(serviceProvider.GetRequiredService<IConstituenciesClient>());
-                fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsClient>());
                 fixture.Inject(new List<Claim>());
 
                 return factory;

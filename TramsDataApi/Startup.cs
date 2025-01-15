@@ -6,7 +6,6 @@ using DfE.CoreLibs.Http.Middlewares.CorrelationId;
 namespace TramsDataApi
 {
     using DatabaseModels;
-    using Dfe.Academies.Application.MappingProfiles;
     using Gateways;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -146,9 +145,6 @@ namespace TramsDataApi
                     opt.ConnectionString = appInsightsCnnStr;
                 });
             }
-
-            services.AddAutoMapper(typeof(ConstituencyProfile));
-
             services.AddSingleton<IUseCase<string, ApiUser>, ApiKeyService>();
             services.AddSingleton<ApiUserEnricher>();
             services.AddHsts(options =>
