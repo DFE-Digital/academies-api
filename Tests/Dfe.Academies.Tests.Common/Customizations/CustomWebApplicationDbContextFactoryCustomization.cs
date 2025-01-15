@@ -1,9 +1,6 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Tests.Common.Seeders;
-using Dfe.PersonsApi.Client;
-using Dfe.PersonsApi.Client.Contracts;
-using Dfe.PersonsApi.Client.Extensions;
 using DfE.CoreLibs.Testing.Mocks.Authentication;
 using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
 using Microsoft.AspNetCore.Authentication;
@@ -12,8 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using Dfe.TramsDataApi.Client.Contracts;
 using Dfe.TramsDataApi.Client.Extensions;
-using PersonsApi;
 using TramsDataApi.DatabaseModels;
 
 namespace Dfe.Academies.Tests.Common.Customizations
@@ -30,7 +27,6 @@ namespace Dfe.Academies.Tests.Common.Customizations
                     SeedData = new Dictionary<Type, Action<DbContext>>
                     {
                         { typeof(MstrContext), context => MstrContextSeeder.Seed((MstrContext)context) },
-                        { typeof(MopContext), context => MopContextSeeder.Seed((MopContext)context) },
                         { typeof(MisMstrContext), context => MisMstrContextSeeder.Seed((MisMstrContext)context) },
                         { typeof(LegacyTramsDbContext), context => LegacyTramsDbContextSeeder.Seed((LegacyTramsDbContext)context) }
                     },
@@ -63,9 +59,6 @@ namespace Dfe.Academies.Tests.Common.Customizations
 
                 var services = new ServiceCollection();
                 services.AddSingleton<IConfiguration>(config);
-                services.AddPersonsApiClient<IConstituenciesClient, ConstituenciesClient>(config, client);
-                services.AddPersonsApiClient<IEstablishmentsClient, EstablishmentsClient>(config, client);
-                services.AddPersonsApiClient<ITrustsClient, TrustsClient>(config, client);
                 services.AddTramsDataApiClient<TramsDataApi.Client.Contracts.IEstablishmentsClient, TramsDataApi.Client.EstablishmentsClient>(config, client);
                 services.AddTramsDataApiClient<TramsDataApi.Client.Contracts.ITrustsClient, TramsDataApi.Client.TrustsClient>(config, client);
                 
@@ -76,7 +69,6 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 fixture.Inject(factory);
                 fixture.Inject(serviceProvider);
                 fixture.Inject(client);
-                fixture.Inject(serviceProvider.GetRequiredService<IConstituenciesClient>());
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsClient>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsClient>());
                 fixture.Inject(serviceProvider.GetRequiredService<TramsDataApi.Client.Contracts.IEstablishmentsClient>());
