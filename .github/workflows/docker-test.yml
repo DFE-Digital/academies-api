@@ -13,14 +13,11 @@ jobs:
       matrix:
         image: [
           "Dockerfile",
-          "Dockerfile.PersonsApi"
         ]
         stage: [
-          "final"
+          "final",
+          "initcontainer"
         ]
-        include:
-          - image: "Dockerfile"
-            stage: "initcontainer"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

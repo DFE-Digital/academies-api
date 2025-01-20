@@ -10,7 +10,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     defaults:
-      working-directory: CypressTests
+      run:
+        working-directory: CypressTests
     steps:
       - name: checkout code
         uses: actions/checkout@v4
@@ -18,4 +19,4 @@ jobs:
       - name: lint cypress tests
         run: |
           npm ci
-          npm run lint        
+          npm run lint
