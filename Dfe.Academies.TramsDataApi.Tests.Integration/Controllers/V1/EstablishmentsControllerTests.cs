@@ -1,8 +1,8 @@
-using Dfe.Academies.Tests.Common.Customizations;
 using DfE.CoreLibs.Testing.AutoFixture.Attributes;
 using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
 using Dfe.TramsDataApi.Client.Contracts;
 using TramsDataApi;
+using Dfe.Academies.Tests.Common.Customizations;
 
 namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V1;
 

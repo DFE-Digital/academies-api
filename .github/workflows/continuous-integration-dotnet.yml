@@ -8,8 +8,6 @@ on:
     - 'Dfe.Academies.*/**'
     - 'TramsDataApi/**'
     - 'TramsDataApi.*/**'
-    - 'PersonsApi/**'
-    - 'PersonsApi.*/**'
     - '!Dfe.Academies.Performance/**'
   pull_request:
     branches: [ main ]
@@ -18,8 +16,6 @@ on:
     - 'Dfe.Academies.*/**'
     - 'TramsDataApi/**'
     - 'TramsDataApi.*/**'
-    - 'PersonsApi/**'
-    - 'PersonsApi.*/**'
     - '!Dfe.Academies.Performance/**'
 
 env:
