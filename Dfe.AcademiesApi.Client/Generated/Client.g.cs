@@ -4,7 +4,7 @@
 // </auto-generated>
 //----------------------
 
-using Dfe.TramsDataApi.Client.Contracts;
+using Dfe.AcademiesApi.Client.Contracts;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
@@ -20,7 +20,7 @@ using Dfe.TramsDataApi.Client.Contracts;
 #pragma warning disable 8625 // Disable "CS8625 Cannot convert null literal to non-nullable reference type"
 #pragma warning disable 8765 // Disable "CS8765 Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes)."
 
-namespace Dfe.TramsDataApi.Client
+namespace Dfe.AcademiesApi.Client
 {
     using System = global::System;
 
@@ -77,7 +77,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, string api_version)
         {
             return GetByUkprnAsync(ukprn, api_version, System.Threading.CancellationToken.None);
@@ -89,7 +89,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
@@ -144,7 +144,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<EstablishmentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -152,12 +152,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishment with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishment with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -179,7 +179,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version)
         {
             return GetURNsByRegionAsync(regions, api_version, System.Threading.CancellationToken.None);
@@ -191,7 +191,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -246,7 +246,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<int>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -254,12 +254,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("No establishments found for specified regions.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("No establishments found for specified regions.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -281,7 +281,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, string api_version)
         {
             return GetByUrnAsync(urn, api_version, System.Threading.CancellationToken.None);
@@ -293,7 +293,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             if (urn == null)
@@ -348,7 +348,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<EstablishmentResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -356,12 +356,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishment with specified Unique Reference Number (URN) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishment with specified Unique Reference Number (URN) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -382,7 +382,7 @@ namespace Dfe.TramsDataApi.Client
         /// Searches for establishments based on a query.
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version)
         {
             return SearchEstablishmentsAsync(urn, ukprn, name, api_version, System.Threading.CancellationToken.None);
@@ -393,7 +393,7 @@ namespace Dfe.TramsDataApi.Client
         /// Searches for establishments based on a query.
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -456,14 +456,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -484,7 +484,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version)
         {
             return GetByUrnsAsync(urn, api_version, System.Threading.CancellationToken.None);
@@ -495,7 +495,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -550,7 +550,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -558,12 +558,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishments with specified Unique Reference Numbers (URNs) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishments with specified Unique Reference Numbers (URNs) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -585,7 +585,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUkprnAsync(string ukprn)
         {
             return GetEstablishmentByUkprnAsync(ukprn, System.Threading.CancellationToken.None);
@@ -597,7 +597,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
@@ -646,7 +646,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<EstablishmentDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -654,12 +654,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishment with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishment with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -681,7 +681,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUrnAsync(string urn)
         {
             return GetEstablishmentByUrnAsync(urn, System.Threading.CancellationToken.None);
@@ -693,7 +693,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUrnAsync(string urn, System.Threading.CancellationToken cancellationToken)
         {
             if (urn == null)
@@ -742,7 +742,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<EstablishmentDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -750,12 +750,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishment with specified Unique Reference Number (URN) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishment with specified Unique Reference Number (URN) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -779,7 +779,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn)
         {
             return SearchEstablishments2Async(name, ukPrn, urn, System.Threading.CancellationToken.None);
@@ -793,7 +793,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -852,14 +852,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -881,7 +881,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions)
         {
             return GetURNsByRegion2Async(regions, System.Threading.CancellationToken.None);
@@ -893,7 +893,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -944,7 +944,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<int>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -952,12 +952,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("No establishments found for specified regions.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("No establishments found for specified regions.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -979,7 +979,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request)
         {
             return GetByUrns2Async(request, System.Threading.CancellationToken.None);
@@ -991,7 +991,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -1042,7 +1042,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -1050,12 +1050,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishments with specified Unique Reference Numbers (URNs) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishments with specified Unique Reference Numbers (URNs) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -1077,7 +1077,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn)
         {
             return GetByTrustAsync(trustUkprn, System.Threading.CancellationToken.None);
@@ -1089,7 +1089,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -1140,7 +1140,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -1148,12 +1148,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishments with specified Trust UKPRN  not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishments with specified Trust UKPRN  not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -1175,7 +1175,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn)
         {
             return GetByUKPRNsAsync(ukprn, System.Threading.CancellationToken.None);
@@ -1187,7 +1187,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -1238,7 +1238,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -1246,12 +1246,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Establishments with specified UKPRNs not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Establishments with specified UKPRNs not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -1301,7 +1301,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -1320,7 +1320,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }
@@ -1433,7 +1433,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
         /// <returns>Successfully found and returned the educational performance data.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, string api_version)
         {
             return GetEducationPerformanceByUrnAsync(urn, api_version, System.Threading.CancellationToken.None);
@@ -1445,7 +1445,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
         /// <returns>Successfully found and returned the educational performance data.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             if (urn == null)
@@ -1500,7 +1500,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<EducationalPerformanceResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -1508,12 +1508,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Educational performance data with the specified Unique Reference Number (URN) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Educational performance data with the specified Unique Reference Number (URN) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -1563,7 +1563,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -1582,7 +1582,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }
@@ -1695,7 +1695,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, string api_version)
         {
             return GetTrustByUkprnAsync(ukprn, api_version, System.Threading.CancellationToken.None);
@@ -1707,7 +1707,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
@@ -1762,7 +1762,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<TrustResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -1770,12 +1770,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Trust with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Trust with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -1801,7 +1801,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version)
         {
             return SearchTrustsAsync(groupName, ukPrn, companiesHouseNumber, page, count, api_version, System.Threading.CancellationToken.None);
@@ -1817,7 +1817,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -1888,14 +1888,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -1919,7 +1919,7 @@ namespace Dfe.TramsDataApi.Client
         /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments)
         {
             return SearchTrusts2Async(groupName, ukPrn, companiesHouseNumber, page, count, includeEstablishments, System.Threading.CancellationToken.None);
@@ -1933,7 +1933,7 @@ namespace Dfe.TramsDataApi.Client
         /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -2004,14 +2004,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<ApiResponseV2OfTrustSummaryResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2032,7 +2032,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn)
         {
             return GetTrustByUkPrnAsync(ukprn, System.Threading.CancellationToken.None);
@@ -2043,7 +2043,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
@@ -2092,7 +2092,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<ApiSingleResponseV2OfTrustResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -2100,12 +2100,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The trust was not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("The trust was not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2126,7 +2126,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments)
         {
             return GetByUkprnsAsync(ukprn, establishments, System.Threading.CancellationToken.None);
@@ -2137,7 +2137,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -2192,7 +2192,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<ApiResponseV2OfTrustResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -2200,12 +2200,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The trusts were not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("The trusts were not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2229,7 +2229,7 @@ namespace Dfe.TramsDataApi.Client
         /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts22Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments)
         {
             return SearchTrusts22Async(groupName, ukPrn, companiesHouseNumber, page, count, includeEstablishments, System.Threading.CancellationToken.None);
@@ -2243,7 +2243,7 @@ namespace Dfe.TramsDataApi.Client
         /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts22Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -2314,14 +2314,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<ApiResponseV2OfTrustSummaryResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2342,7 +2342,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a specific trust by UKPRN.
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn)
         {
             return GetTrustByUkPrn2Async(ukprn, System.Threading.CancellationToken.None);
@@ -2353,7 +2353,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a specific trust by UKPRN.
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
@@ -2402,7 +2402,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<ApiSingleResponseV2OfMasterTrustResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -2410,12 +2410,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The trust was not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("The trust was not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2437,7 +2437,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn)
         {
             return GetTrustByUkprn2Async(ukprn, System.Threading.CancellationToken.None);
@@ -2449,7 +2449,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
@@ -2498,7 +2498,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<TrustDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -2506,12 +2506,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Trust with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Trust with specified UK Provider Reference Number (UKPRN) not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2533,7 +2533,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber)
         {
             return GetTrustByCompaniesHouseNumberAsync(companiesHouseNumber, System.Threading.CancellationToken.None);
@@ -2545,7 +2545,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber, System.Threading.CancellationToken cancellationToken)
         {
             if (companiesHouseNumber == null)
@@ -2594,7 +2594,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<TrustDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -2602,12 +2602,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Trust with specified Companies House Number not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Trust with specified Companies House Number not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2628,7 +2628,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a Trust by its Companies House Number.
         /// </summary>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber)
         {
             return GetTrustByTrustReferenceNumberAsync(trustReferenceNumber, System.Threading.CancellationToken.None);
@@ -2639,7 +2639,7 @@ namespace Dfe.TramsDataApi.Client
         /// Retrieves a Trust by its Companies House Number.
         /// </summary>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber, System.Threading.CancellationToken cancellationToken)
         {
             if (trustReferenceNumber == null)
@@ -2688,7 +2688,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<TrustDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -2696,12 +2696,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("Trust with specified Trust Reference Number not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("Trust with specified Trust Reference Number not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2728,7 +2728,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="count">Number of results per page.</param>
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts23Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status)
         {
             return SearchTrusts23Async(groupName, ukPrn, companiesHouseNumber, page, count, status, System.Threading.CancellationToken.None);
@@ -2745,7 +2745,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="count">Number of results per page.</param>
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts23Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -2816,14 +2816,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<PagedDataResponseOfTrustDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2845,7 +2845,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprns2Async(System.Collections.Generic.IEnumerable<string> ukprns)
         {
             return GetByUkprns2Async(ukprns, System.Threading.CancellationToken.None);
@@ -2857,7 +2857,7 @@ namespace Dfe.TramsDataApi.Client
         /// </summary>
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprns2Async(System.Collections.Generic.IEnumerable<string> ukprns, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -2908,7 +2908,7 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<TrustDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -2916,12 +2916,12 @@ namespace Dfe.TramsDataApi.Client
                         if (status_ == 404)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The trusts were not found.", status_, responseText_, headers_, null);
+                            throw new AcademiesApiException("The trusts were not found.", status_, responseText_, headers_, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -2971,7 +2971,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -2990,7 +2990,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }
@@ -3105,7 +3105,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="page">The page number to return.</param>
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count)
         {
             return GetAsync(states, page, count, System.Threading.CancellationToken.None);
@@ -3119,7 +3119,7 @@ namespace Dfe.TramsDataApi.Client
         /// <param name="page">The page number to return.</param>
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -3178,14 +3178,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<ApiResponseV2OfBaselineTrackerResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -3235,7 +3235,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -3254,7 +3254,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }
@@ -3363,7 +3363,7 @@ namespace Dfe.TramsDataApi.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <returns>Successfully found and returned the list of Fss Projects.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync()
         {
             return GetAllAsync(System.Threading.CancellationToken.None);
@@ -3371,7 +3371,7 @@ namespace Dfe.TramsDataApi.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Successfully found and returned the list of Fss Projects.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -3416,14 +3416,14 @@ namespace Dfe.TramsDataApi.Client
                             var objectResponse_ = await ReadObjectResponseAsync<ApiResponseV2OfFssProjectResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new TramsDataApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new TramsDataApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -3473,7 +3473,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -3492,7 +3492,7 @@ namespace Dfe.TramsDataApi.Client
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new TramsDataApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }
