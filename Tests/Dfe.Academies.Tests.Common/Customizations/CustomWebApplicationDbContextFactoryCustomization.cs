@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Tests.Common.Seeders;
+using Dfe.AcademiesApi.Client.Contracts;
 using DfE.CoreLibs.Testing.Mocks.Authentication;
 using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
 using Microsoft.AspNetCore.Authentication;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using Dfe.TramsDataApi.Client.Contracts;
+using Dfe.AcademiesApi.Client;
 using Dfe.TramsDataApi.Client.Extensions;
 using TramsDataApi.DatabaseModels;
 
@@ -53,14 +54,14 @@ namespace Dfe.Academies.Tests.Common.Customizations
                     .AddInMemoryCollection(new Dictionary<string, string?>
                     {
                         { "PersonsApiClient:BaseUrl", client.BaseAddress!.ToString() },
-                        { "TramsDataApiClient:BaseUrl", client.BaseAddress!.ToString() }
+                        { "AcademiesApiClient:BaseUrl", client.BaseAddress!.ToString() }
                     })
                     .Build();
 
                 var services = new ServiceCollection();
                 services.AddSingleton<IConfiguration>(config);
-                services.AddTramsDataApiClient<TramsDataApi.Client.Contracts.IEstablishmentsClient, TramsDataApi.Client.EstablishmentsClient>(config, client);
-                services.AddTramsDataApiClient<TramsDataApi.Client.Contracts.ITrustsClient, TramsDataApi.Client.TrustsClient>(config, client);
+                services.AddAcademiesApiClient<IEstablishmentsClient, EstablishmentsClient>(config, client);
+                services.AddAcademiesApiClient<ITrustsClient, TrustsClient>(config, client);
                 
                 services.AddDbContext<LegacyTramsDbContext>(options =>
                     options.UseSqlServer("DataSource=:memory:"));
@@ -71,8 +72,6 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 fixture.Inject(client);
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsClient>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsClient>());
-                fixture.Inject(serviceProvider.GetRequiredService<TramsDataApi.Client.Contracts.IEstablishmentsClient>());
-                fixture.Inject(serviceProvider.GetRequiredService<TramsDataApi.Client.Contracts.ITrustsClient>());
 
                 fixture.Inject(new List<Claim>());
 
