@@ -37,7 +37,7 @@ COPY ./${PROJECT_NAME}.Application/        ./${PROJECT_NAME}.Application/
 COPY ./${PROJECT_NAME}.Domain/             ./${PROJECT_NAME}.Domain/
 COPY ./${PROJECT_NAME}.Utils/              ./${PROJECT_NAME}.Utils/
 
-RUN ["dotnet", "publish", "TramsDataApi", "-c", "Release", "-o", "/app", "/p:CI=${CI}", "--no-restore"]
+RUN ["dotnet", "publish", "TramsDataApi", "-c", "Release", "-o", "/app", "--no-restore"]
 
 # ==============================================
 # Entity Framework: Migration Builder
