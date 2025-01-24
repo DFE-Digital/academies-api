@@ -9,13 +9,17 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Version>1.0.0</Version>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <Title>DfE Trams Data API Client</Title>
+        <Title>DfE Academies API Client</Title>
         <Description>The Trams Data API Client Library provides a convenient and straightforward way to interact with the Trams Data API, a service that delivers contact and basic personal details of key individuals responsible within various organizations associated with the DfE.</Description>
         <Authors>DFE-Digital</Authors>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="bin\$(Configuration)\$(TargetFramework)\Dfe.TramsDataApi.Client.xml" Pack="true" PackagePath="\" />
+      <None Remove="bin\Debug\net8.0\Dfe.TramsDataApi.Client.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="bin\$(Configuration)\$(TargetFramework)\Dfe.AcademiesApi.Client.xml" Pack="true" PackagePath="\" />
         <None Update="readme.md">
           <Pack>true</Pack>
           <PackagePath>\</PackagePath>

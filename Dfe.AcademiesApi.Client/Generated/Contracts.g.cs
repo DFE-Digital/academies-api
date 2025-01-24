@@ -18,7 +18,7 @@
 #pragma warning disable 8625 // Disable "CS8625 Cannot convert null literal to non-nullable reference type"
 #pragma warning disable 8765 // Disable "CS8765 Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes)."
 
-namespace Dfe.TramsDataApi.Client.Contracts
+namespace Dfe.AcademiesApi.Client.Contracts
 {
     using System = global::System;
 
@@ -30,7 +30,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -39,7 +39,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -56,7 +56,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -73,14 +73,14 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, string api_version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Searches for establishments based on a query.
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -88,14 +88,14 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Searches for establishments based on a query.
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -103,7 +103,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUkprnAsync(string ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -120,7 +120,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUrnAsync(string urn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -137,7 +137,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUrnAsync(string urn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -158,7 +158,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -175,7 +175,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -192,7 +192,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -209,7 +209,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -226,7 +226,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn, System.Threading.CancellationToken cancellationToken);
 
     }
@@ -239,7 +239,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
         /// <returns>Successfully found and returned the educational performance data.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -248,7 +248,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
         /// <returns>Successfully found and returned the educational performance data.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, string api_version, System.Threading.CancellationToken cancellationToken);
 
     }
@@ -261,7 +261,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -270,7 +270,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -295,7 +295,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -316,14 +316,14 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -331,14 +331,14 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -346,7 +346,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts22Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -367,14 +367,14 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts22Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a specific trust by UKPRN.
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -382,7 +382,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Retrieves a specific trust by UKPRN.
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -399,7 +399,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -416,14 +416,14 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a Trust by its Companies House Number.
         /// </summary>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -431,7 +431,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// Retrieves a Trust by its Companies House Number.
         /// </summary>
         /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="count">Number of results per page.</param>
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts23Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -458,7 +458,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="count">Number of results per page.</param>
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts23Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprns2Async(System.Collections.Generic.IEnumerable<string> ukprns);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -475,7 +475,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// </summary>
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprns2Async(System.Collections.Generic.IEnumerable<string> ukprns, System.Threading.CancellationToken cancellationToken);
 
     }
@@ -490,7 +490,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="page">The page number to return.</param>
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -501,7 +501,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
         /// <param name="page">The page number to return.</param>
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count, System.Threading.CancellationToken cancellationToken);
 
     }
@@ -510,12 +510,12 @@ namespace Dfe.TramsDataApi.Client.Contracts
     public partial interface IFssProjectClient
     {
         /// <returns>Successfully found and returned the list of Fss Projects.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Successfully found and returned the list of Fss Projects.</returns>
-        /// <exception cref="TramsDataApiException">A server side error occurred.</exception>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken);
 
     }
@@ -629,7 +629,6 @@ namespace Dfe.TramsDataApi.Client.Contracts
         public string FurtherEducationType { get; set; }
 
         [Newtonsoft.Json.JsonProperty("ofstedLastInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.Obsolete]
         public string OfstedLastInspection { get; set; }
 
         [Newtonsoft.Json.JsonProperty("ofstedSpecialMeasures", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -804,7 +803,6 @@ namespace Dfe.TramsDataApi.Client.Contracts
         public string PreviousEstablishmentNumber { get; set; }
 
         [Newtonsoft.Json.JsonProperty("ofstedRating", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.Obsolete]
         public string OfstedRating { get; set; }
 
         [Newtonsoft.Json.JsonProperty("rscRegion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -2898,7 +2896,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
 
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TramsDataApiException : System.Exception
+    public partial class AcademiesApiException : System.Exception
     {
         public int StatusCode { get; private set; }
 
@@ -2906,7 +2904,7 @@ namespace Dfe.TramsDataApi.Client.Contracts
 
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
 
-        public TramsDataApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
+        public AcademiesApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
             : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
         {
             StatusCode = statusCode;
@@ -2921,11 +2919,11 @@ namespace Dfe.TramsDataApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TramsDataApiException<TResult> : TramsDataApiException
+    public partial class AcademiesApiException<TResult> : AcademiesApiException
     {
         public TResult Result { get; private set; }
 
-        public TramsDataApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
+        public AcademiesApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
             : base(message, statusCode, response, headers, innerException)
         {
             Result = result;

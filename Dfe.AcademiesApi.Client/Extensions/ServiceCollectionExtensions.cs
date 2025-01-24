@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Dfe.TramsDataApi.Client.Security;
-using Dfe.TramsDataApi.Client.Settings;
+using Dfe.AcademiesApi.Client.Security;
+using Dfe.AcademiesApi.Client.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,18 +9,17 @@ namespace Dfe.TramsDataApi.Client.Extensions
     [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddTramsDataApiClient<TClientInterface, TClientImplementation>(
+        public static IServiceCollection AddAcademiesApiClient<TClientInterface, TClientImplementation>(
             this IServiceCollection services,
             IConfiguration configuration,
             HttpClient? existingHttpClient = null)
             where TClientInterface : class
             where TClientImplementation : class, TClientInterface
         {
-            var apiSettings = new TramsDataApiClientSettings();
-            configuration.GetSection("TramsDataApiClient").Bind(apiSettings);
+            var apiSettings = new AcademiesApiClientSettings();
+            configuration.GetSection("AcademiesApiClient").Bind(apiSettings);
 
             services.AddSingleton(apiSettings);
-            services.AddSingleton<ITokenAcquisitionService, TokenAcquisitionService>();
 
             if (existingHttpClient != null)
             {
@@ -42,8 +41,8 @@ namespace Dfe.TramsDataApi.Client.Extensions
                 })
                 .AddHttpMessageHandler(serviceProvider =>
                 {
-                    var tokenService = serviceProvider.GetRequiredService<ITokenAcquisitionService>();
-                    return new BearerTokenHandler(tokenService);
+                    var apiSettings = serviceProvider.GetRequiredService<AcademiesApiClientSettings>();
+                    return new ApiKeyHandler(apiSettings);
                 });
             }
             return services;
