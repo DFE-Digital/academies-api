@@ -1555,7 +1555,6 @@
           },
           "ofstedLastInspection": {
             "type": "string",
-            "deprecated": true,
             "nullable": true
           },
           "ofstedSpecialMeasures": {
@@ -1828,7 +1827,6 @@
           },
           "ofstedRating": {
             "type": "string",
-            "deprecated": true,
             "nullable": true
           },
           "rscRegion": {
