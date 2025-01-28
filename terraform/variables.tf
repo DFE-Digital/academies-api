@@ -154,6 +154,7 @@ variable "dns_mx_records" {
 variable "enable_cdn_frontdoor" {
   description = "Enable Azure CDN FrontDoor. This will use the Container Apps endpoint as the origin."
   type        = bool
+  default     = false
 }
 
 variable "container_apps_allow_ips_inbound" {
@@ -165,6 +166,7 @@ variable "container_apps_allow_ips_inbound" {
 variable "cdn_frontdoor_enable_rate_limiting" {
   description = "Enable CDN Front Door Rate Limiting. This will create a WAF policy, and CDN security policy. For pricing reasons, there will only be one WAF policy created."
   type        = bool
+  default     = false
 }
 
 variable "cdn_frontdoor_rate_limiting_duration_in_minutes" {
@@ -182,6 +184,7 @@ variable "cdn_frontdoor_rate_limiting_threshold" {
 variable "cdn_frontdoor_host_add_response_headers" {
   description = "List of response headers to add at the CDN Front Door `[{ \"Name\" = \"Strict-Transport-Security\", \"value\" = \"max-age=31536000\" }]`"
   type        = list(map(string))
+  default     = []
 }
 
 variable "cdn_frontdoor_forwarding_protocol" {
@@ -220,11 +223,13 @@ variable "cdn_frontdoor_origin_host_header_override" {
 variable "cdn_frontdoor_health_probe_path" {
   description = "Specifies the path relative to the origin that is used to determine the health of the origin."
   type        = string
+  default     = "/"
 }
 
 variable "cdn_frontdoor_custom_domains" {
   description = "Azure CDN Front Door custom domains. If they are within the DNS zone (optionally created), the Validation TXT records and ALIAS/CNAME records will be created"
   type        = list(string)
+  default     = []
 }
 
 variable "monitor_endpoint_healthcheck" {
@@ -410,7 +415,7 @@ variable "health_insights_api_ipv4_allow_list" {
 variable "enable_cdn_frontdoor_vdp_redirects" {
   description = "Deploy redirects for security.txt and thanks.txt to an external Vulnerability Disclosure Program service"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "cdn_frontdoor_vdp_destination_hostname" {
@@ -441,4 +446,21 @@ variable "init_container_command" {
   description = "Container command for the Init Container"
   type        = list(any)
   default     = []
+}
+
+variable "monitor_http_availability_fqdn" {
+  description = "Specify a FQDN to monitor for HTTP Availability. Leave unset to dynamically calculate the correct FQDN"
+  type        = string
+  default     = ""
+}
+
+variable "dns_alias_records" {
+  description = "DNS ALIAS records to add to the DNS Zone"
+  type = map(
+    object({
+      ttl : optional(number, 300),
+      target_resource_id : string
+    })
+  )
+  default = {}
 }

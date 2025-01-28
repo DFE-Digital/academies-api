@@ -10,7 +10,7 @@
         <Version>1.0.0</Version>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <Title>DfE Academies API Client</Title>
-        <Description>The Trams Data API Client Library provides a convenient and straightforward way to interact with the Trams Data API, a service that delivers contact and basic personal details of key individuals responsible within various organizations associated with the DfE.</Description>
+        <Description>The DfE Academies API Client Library provides a convenient and straightforward way to interact with the DfE Academies API.</Description>
         <Authors>DFE-Digital</Authors>
     </PropertyGroup>
 
