@@ -120,6 +120,24 @@ jobs:
               core.setFailed(error.message);
             }
 
+      - name: Trigger Build and Push NuGet Package workflow
+        uses: "actions/github-script@v7"
+        if: needs.set-env.outputs.environment == 'production'
+        with:
+            github-token: "${{ secrets.GITHUB_TOKEN }}"
+            script: |
+              const tagName = "${{ needs.set-env.outputs.release }}"
+              console.log("Triggering Build and Push NuGet Package workflow with tag:", tagName);
+              github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: "build-and-push-package.yml",
+                ref: "main",
+                inputs: {
+                  tag_name: tagName
+                }
+              });
+
   cypress-tests:
     name: Run Cypress Tests
     needs: [ deploy-image, set-env ]

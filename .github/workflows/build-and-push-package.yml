@@ -1,9 +1,11 @@
 name: Build and Push NuGet Package
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "The production tag name to process"
+        required: true
 
 env:
   DOTNET_VERSION: '8.0.x'
@@ -14,11 +16,14 @@ jobs:
     permissions:
       packages: write
       contents: write
+    if: startsWith(github.event.inputs.tag_name, 'production-')
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Check Out Tag
+      uses: actions/checkout@v4
       with:
-        ref: ${{ github.ref }}
-        fetch-depth: 0 # Shallow clones disabled for a better relevancy of SC analysis
+        ref: ${{ github.event.inputs.tag_name }}
+        fetch-depth: 0 # Ensure full history and tags are available
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
