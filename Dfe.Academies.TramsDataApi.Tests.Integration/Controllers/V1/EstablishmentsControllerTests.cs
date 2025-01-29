@@ -13,13 +13,13 @@ public class EstablishmentsControllerTests
     [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
     public async Task GetEstablishmentByUkprnAsync_ShouldReturnEstablishments_WhenUkprnExists(
         CustomWebApplicationDbContextFactory<Startup> factory,
-        IEstablishmentsClient establishmentsClient)
+        IEstablishmentsV1Client establishmentsClient)
     {
         // Arrange
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.GetByUkprnAsync("100", "1");
+        var result = await establishmentsClient.GetByUkprnAsync("100");
 
         // Assert
         Assert.NotNull(result);

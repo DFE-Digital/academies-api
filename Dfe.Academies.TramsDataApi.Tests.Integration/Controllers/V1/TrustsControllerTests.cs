@@ -12,13 +12,13 @@ public class TrustsControllerTests
     [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
     public async Task GetTrustsByUkprnAsync_ShouldReturnTrustsData_WhenUkprnExists(
         CustomWebApplicationDbContextFactory<Startup> factory,
-        ITrustsClient trustsClient)
+        ITrustsV1Client trustsClient)
     {
         // Arrange
         factory.TestClaims = default;
         
         // Act
-        var result = await trustsClient.GetTrustByUkprnAsync("1", "1");
+        var result = await trustsClient.GetTrustByUkprnAsync("1");
 
         // Assert
         Assert.NotNull(result);
