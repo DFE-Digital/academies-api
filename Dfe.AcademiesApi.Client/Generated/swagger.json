@@ -12,7 +12,7 @@
           "Establishments"
         ],
         "summary": "Retrieves an establishment by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Establishments_GetByUkprn",
+        "operationId": "V1GetByUkprn",
         "parameters": [
           {
             "name": "ukprn",
@@ -57,7 +57,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishment Unique Reference Numbers (URNs) by region.",
-        "operationId": "Establishments_GetURNsByRegion",
+        "operationId": "V1GetURNsByRegion",
         "parameters": [
           {
             "name": "regions",
@@ -111,7 +111,7 @@
           "Establishments"
         ],
         "summary": "Retrieves an establishment by its Unique Reference Number (URN).",
-        "operationId": "Establishments_GetByUrn",
+        "operationId": "V1GetByUrn",
         "parameters": [
           {
             "name": "urn",
@@ -157,7 +157,7 @@
           "Establishments"
         ],
         "summary": "Searches for establishments based on a query.",
-        "operationId": "Establishments_SearchEstablishments",
+        "operationId": "V1SearchEstablishments",
         "parameters": [
           {
             "name": "Urn",
@@ -220,7 +220,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "Establishments_GetByUrns",
+        "operationId": "V1GetByUrns",
         "parameters": [
           {
             "name": "Urn",
@@ -273,7 +273,7 @@
           "KeyStagePerformance"
         ],
         "summary": "Retrieves educational performance data for an establishment by its Unique Reference Number (URN).",
-        "operationId": "KeyStagePerformance_GetEducationPerformanceByUrn",
+        "operationId": "V1GetEducationPerformanceByUrn",
         "parameters": [
           {
             "name": "urn",
@@ -318,7 +318,7 @@
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Trusts_GetTrustByUkprn",
+        "operationId": "V1GetTrustByUkprn",
         "parameters": [
           {
             "name": "ukprn",
@@ -363,7 +363,7 @@
           "Trusts"
         ],
         "summary": "Searches for Trusts based on query parameters.",
-        "operationId": "Trusts_SearchTrusts",
+        "operationId": "V1SearchTrusts",
         "parameters": [
           {
             "name": "groupName",
@@ -450,7 +450,7 @@
           "BaselineTracker"
         ],
         "summary": "Retrieves a paginated list of baseline trackers.",
-        "operationId": "BaselineTracker_Get",
+        "operationId": "V2Get",
         "parameters": [
           {
             "name": "states",
@@ -504,7 +504,7 @@
         "tags": [
           "FssProject"
         ],
-        "operationId": "FssProject_GetAll",
+        "operationId": "V2GetAll",
         "responses": {
           "200": {
             "description": "Successfully found and returned the list of Fss Projects.",
@@ -526,7 +526,7 @@
         ],
         "summary": "Searches for trusts based on given criteria.",
         "description": "Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.",
-        "operationId": "Trusts_SearchTrusts2",
+        "operationId": "V2SearchTrusts",
         "parameters": [
           {
             "name": "groupName",
@@ -605,7 +605,7 @@
           "Trusts"
         ],
         "summary": "Retrieves a specific trust by UK Provider Reference Number (UKPRN).",
-        "operationId": "Trusts_GetTrustByUkPrn",
+        "operationId": "V2GetTrustByUkPrn",
         "parameters": [
           {
             "name": "ukprn",
@@ -640,7 +640,7 @@
           "Trusts"
         ],
         "summary": "Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).",
-        "operationId": "Trusts_GetByUkprns",
+        "operationId": "V2GetByUkprns",
         "parameters": [
           {
             "name": "Ukprn",
@@ -689,7 +689,7 @@
         ],
         "summary": "Searches for trusts based on given criteria.",
         "description": "Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.",
-        "operationId": "Trusts_SearchTrusts22",
+        "operationId": "V3SearchTrusts",
         "parameters": [
           {
             "name": "groupName",
@@ -768,7 +768,7 @@
           "Trusts"
         ],
         "summary": "Retrieves a specific trust by UKPRN.",
-        "operationId": "Trusts_GetTrustByUkPrn2",
+        "operationId": "V3GetTrustByUkPrn",
         "parameters": [
           {
             "name": "ukprn",
@@ -803,7 +803,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a Establishment by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Establishments_GetEstablishmentByUkprn",
+        "operationId": "V4GetEstablishmentByUkprn",
         "parameters": [
           {
             "name": "ukprn",
@@ -839,7 +839,7 @@
           "Establishments"
         ],
         "summary": "Retrieves an establishment by its Unique Reference Number (URN).",
-        "operationId": "Establishments_GetEstablishmentByUrn",
+        "operationId": "V4GetEstablishmentByUrn",
         "parameters": [
           {
             "name": "urn",
@@ -875,7 +875,7 @@
           "Establishments"
         ],
         "summary": "Searches for Establishments based on query parameters.",
-        "operationId": "Establishments_SearchEstablishments2",
+        "operationId": "V4SearchEstablishments",
         "parameters": [
           {
             "name": "name",
@@ -931,7 +931,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishment Unique Reference Numbers (URNs) by region.",
-        "operationId": "Establishments_GetURNsByRegion2",
+        "operationId": "V4GetURNsByRegion",
         "parameters": [
           {
             "name": "regions",
@@ -976,7 +976,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "Establishments_GetByUrns2",
+        "operationId": "V4GetByUrns",
         "parameters": [
           {
             "name": "request",
@@ -1021,7 +1021,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.",
-        "operationId": "Establishments_GetByTrust",
+        "operationId": "V4GetByTrust",
         "parameters": [
           {
             "name": "trustUkprn",
@@ -1060,7 +1060,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their UKPRNs.",
-        "operationId": "Establishments_GetByUKPRNs",
+        "operationId": "V4GetByUKPRNs",
         "parameters": [
           {
             "name": "ukprn",
@@ -1104,7 +1104,7 @@
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Trusts_GetTrustByUkprn2",
+        "operationId": "V4GetTrustByUkprn",
         "parameters": [
           {
             "name": "ukprn",
@@ -1140,7 +1140,7 @@
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its Companies House Number.",
-        "operationId": "Trusts_GetTrustByCompaniesHouseNumber",
+        "operationId": "V4GetTrustByCompaniesHouseNumber",
         "parameters": [
           {
             "name": "companiesHouseNumber",
@@ -1176,7 +1176,7 @@
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its Companies House Number.",
-        "operationId": "Trusts_GetTrustByTrustReferenceNumber",
+        "operationId": "V4GetTrustByTrustReferenceNumber",
         "parameters": [
           {
             "name": "trustReferenceNumber",
@@ -1211,7 +1211,7 @@
           "Trusts"
         ],
         "summary": "Searches for Trusts based on query parameters.",
-        "operationId": "Trusts_SearchTrusts23",
+        "operationId": "V4SearchTrusts",
         "parameters": [
           {
             "name": "groupName",
@@ -1300,7 +1300,7 @@
           "Trusts"
         ],
         "summary": "Returns Trusts based on supplied list of Ukprns query parameter.",
-        "operationId": "Trusts_GetByUkprns2",
+        "operationId": "V4GetByUkprns",
         "parameters": [
           {
             "name": "ukprns",
