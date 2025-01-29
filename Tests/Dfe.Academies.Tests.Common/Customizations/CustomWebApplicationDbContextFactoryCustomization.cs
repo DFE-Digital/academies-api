@@ -60,8 +60,8 @@ namespace Dfe.Academies.Tests.Common.Customizations
 
                 var services = new ServiceCollection();
                 services.AddSingleton<IConfiguration>(config);
-                services.AddAcademiesApiClient<IEstablishmentsClient, EstablishmentsClient>(config, client);
-                services.AddAcademiesApiClient<ITrustsClient, TrustsClient>(config, client);
+                services.AddAcademiesApiClient<IEstablishmentsV1Client, EstablishmentsV1Client>(config, client);
+                services.AddAcademiesApiClient<ITrustsV1Client, TrustsV1Client>(config, client);
                 
                 services.AddDbContext<LegacyTramsDbContext>(options =>
                     options.UseSqlServer("DataSource=:memory:"));
@@ -70,8 +70,8 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 fixture.Inject(factory);
                 fixture.Inject(serviceProvider);
                 fixture.Inject(client);
-                fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsClient>());
-                fixture.Inject(serviceProvider.GetRequiredService<ITrustsClient>());
+                fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsV1Client>());
+                fixture.Inject(serviceProvider.GetRequiredService<ITrustsV1Client>());
 
                 fixture.Inject(new List<Claim>());
 
