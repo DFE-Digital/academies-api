@@ -23,7 +23,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IEstablishmentsClient
+    public partial interface IEstablishmentsV1Client
     {
         /// <summary>
         /// Retrieves an establishment by its UK Provider Reference Number (UKPRN).
@@ -31,7 +31,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, string api_version);
+        System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -40,7 +40,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishment Unique Reference Numbers (URNs) by region.
@@ -48,7 +48,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -57,7 +57,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves an establishment by its Unique Reference Number (URN).
@@ -65,7 +65,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, string api_version);
+        System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -74,14 +74,14 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Searches for establishments based on a query.
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -89,14 +89,14 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -104,8 +104,219 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, System.Threading.CancellationToken cancellationToken);
 
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IKeyStagePerformanceV1Client
+    {
+        /// <summary>
+        /// Retrieves educational performance data for an establishment by its Unique Reference Number (URN).
+        /// </summary>
+        /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
+        /// <returns>Successfully found and returned the educational performance data.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves educational performance data for an establishment by its Unique Reference Number (URN).
+        /// </summary>
+        /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
+        /// <returns>Successfully found and returned the educational performance data.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface ITrustsV1Client
+    {
+        /// <summary>
+        /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
+        /// </summary>
+        /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <returns>Successfully found and returned the Trust.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
+        /// </summary>
+        /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <returns>Successfully found and returned the Trust.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Searches for Trusts based on query parameters.
+        /// </summary>
+        /// <param name="groupName">Name of the group.</param>
+        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <param name="companiesHouseNumber">Companies House Number.</param>
+        /// <param name="page">Pagination page.</param>
+        /// <param name="count">Number of results per page.</param>
+        /// <returns>Successfully executed the search and returned Trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches for Trusts based on query parameters.
+        /// </summary>
+        /// <param name="groupName">Name of the group.</param>
+        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <param name="companiesHouseNumber">Companies House Number.</param>
+        /// <param name="page">Pagination page.</param>
+        /// <param name="count">Number of results per page.</param>
+        /// <returns>Successfully executed the search and returned Trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IBaselineTrackerV2Client
+    {
+        /// <summary>
+        /// Retrieves a paginated list of baseline trackers.
+        /// </summary>
+        /// <param name="states">Comma-separated list of states to filter by.</param>
+        /// <param name="page">The page number to return.</param>
+        /// <param name="count">The number of items per page.</param>
+        /// <returns>Successfully found and returned the list of baseline trackers.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a paginated list of baseline trackers.
+        /// </summary>
+        /// <param name="states">Comma-separated list of states to filter by.</param>
+        /// <param name="page">The page number to return.</param>
+        /// <param name="count">The number of items per page.</param>
+        /// <returns>Successfully found and returned the list of baseline trackers.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IFssProjectV2Client
+    {
+        /// <returns>Successfully found and returned the list of Fss Projects.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Successfully found and returned the list of Fss Projects.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface ITrustsV2Client
+    {
+        /// <summary>
+        /// Searches for trusts based on given criteria.
+        /// </summary>
+        /// <remarks>
+        /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
+        /// </remarks>
+        /// <returns>Successfully found and returned the list of trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches for trusts based on given criteria.
+        /// </summary>
+        /// <remarks>
+        /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
+        /// </remarks>
+        /// <returns>Successfully found and returned the list of trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
+        /// </summary>
+        /// <returns>Successfully retrieved the trust.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
+        /// </summary>
+        /// <returns>Successfully retrieved the trust.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
+        /// </summary>
+        /// <returns>Successfully retrieved the trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
+        /// </summary>
+        /// <returns>Successfully retrieved the trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface ITrustsV3Client
+    {
+        /// <summary>
+        /// Searches for trusts based on given criteria.
+        /// </summary>
+        /// <remarks>
+        /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
+        /// </remarks>
+        /// <returns>Successfully found and returned the list of trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches for trusts based on given criteria.
+        /// </summary>
+        /// <remarks>
+        /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
+        /// </remarks>
+        /// <returns>Successfully found and returned the list of trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Retrieves a specific trust by UKPRN.
+        /// </summary>
+        /// <returns>Successfully retrieved the trust.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a specific trust by UKPRN.
+        /// </summary>
+        /// <returns>Successfully retrieved the trust.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IEstablishmentsV4Client
+    {
         /// <summary>
         /// Retrieves a Establishment by its UK Provider Reference Number (UKPRN).
         /// </summary>
@@ -232,159 +443,8 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IKeyStagePerformanceClient
+    public partial interface ITrustsV4Client
     {
-        /// <summary>
-        /// Retrieves educational performance data for an establishment by its Unique Reference Number (URN).
-        /// </summary>
-        /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
-        /// <returns>Successfully found and returned the educational performance data.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, string api_version);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Retrieves educational performance data for an establishment by its Unique Reference Number (URN).
-        /// </summary>
-        /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
-        /// <returns>Successfully found and returned the educational performance data.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, string api_version, System.Threading.CancellationToken cancellationToken);
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface ITrustsClient
-    {
-        /// <summary>
-        /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
-        /// </summary>
-        /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
-        /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, string api_version);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
-        /// </summary>
-        /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
-        /// <returns>Successfully found and returned the Trust.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Searches for Trusts based on query parameters.
-        /// </summary>
-        /// <param name="groupName">Name of the group.</param>
-        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
-        /// <param name="companiesHouseNumber">Companies House Number.</param>
-        /// <param name="page">Pagination page.</param>
-        /// <param name="count">Number of results per page.</param>
-        /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Searches for Trusts based on query parameters.
-        /// </summary>
-        /// <param name="groupName">Name of the group.</param>
-        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
-        /// <param name="companiesHouseNumber">Companies House Number.</param>
-        /// <param name="page">Pagination page.</param>
-        /// <param name="count">Number of results per page.</param>
-        /// <returns>Successfully executed the search and returned Trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Searches for trusts based on given criteria.
-        /// </summary>
-        /// <remarks>
-        /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
-        /// </remarks>
-        /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Searches for trusts based on given criteria.
-        /// </summary>
-        /// <remarks>
-        /// Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.
-        /// </remarks>
-        /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
-        /// </summary>
-        /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
-        /// </summary>
-        /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
-        /// </summary>
-        /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).
-        /// </summary>
-        /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Searches for trusts based on given criteria.
-        /// </summary>
-        /// <remarks>
-        /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
-        /// </remarks>
-        /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts22Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Searches for trusts based on given criteria.
-        /// </summary>
-        /// <remarks>
-        /// Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.
-        /// </remarks>
-        /// <returns>Successfully found and returned the list of trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts22Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Retrieves a specific trust by UKPRN.
-        /// </summary>
-        /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Retrieves a specific trust by UKPRN.
-        /// </summary>
-        /// <returns>Successfully retrieved the trust.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn, System.Threading.CancellationToken cancellationToken);
-
         /// <summary>
         /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
         /// </summary>
@@ -445,7 +505,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts23Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status);
+        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -459,7 +519,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts23Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns Trusts based on supplied list of Ukprns query parameter.
@@ -467,7 +527,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprns2Async(System.Collections.Generic.IEnumerable<string> ukprns);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string> ukprns);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -476,47 +536,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprns2Async(System.Collections.Generic.IEnumerable<string> ukprns, System.Threading.CancellationToken cancellationToken);
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IBaselineTrackerClient
-    {
-        /// <summary>
-        /// Retrieves a paginated list of baseline trackers.
-        /// </summary>
-        /// <param name="states">Comma-separated list of states to filter by.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="count">The number of items per page.</param>
-        /// <returns>Successfully found and returned the list of baseline trackers.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Retrieves a paginated list of baseline trackers.
-        /// </summary>
-        /// <param name="states">Comma-separated list of states to filter by.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="count">The number of items per page.</param>
-        /// <returns>Successfully found and returned the list of baseline trackers.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count, System.Threading.CancellationToken cancellationToken);
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IFssProjectClient
-    {
-        /// <returns>Successfully found and returned the list of Fss Projects.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync();
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Successfully found and returned the list of Fss Projects.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string> ukprns, System.Threading.CancellationToken cancellationToken);
 
     }
 

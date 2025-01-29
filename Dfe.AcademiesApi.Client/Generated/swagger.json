@@ -9,10 +9,11 @@
     "/establishment/{ukprn}": {
       "get": {
         "tags": [
+          "EstablishmentsV1",
           "Establishments"
         ],
         "summary": "Retrieves an establishment by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Establishments_GetByUkprn",
+        "operationId": "GetByUkprn",
         "parameters": [
           {
             "name": "ukprn",
@@ -23,15 +24,6 @@
               "type": "string"
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -54,10 +46,11 @@
     "/establishment/regions": {
       "get": {
         "tags": [
+          "EstablishmentsV1",
           "Establishments"
         ],
         "summary": "Retrieves a list of establishment Unique Reference Numbers (URNs) by region.",
-        "operationId": "Establishments_GetURNsByRegion",
+        "operationId": "GetURNsByRegion",
         "parameters": [
           {
             "name": "regions",
@@ -73,15 +66,6 @@
               }
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -108,10 +92,11 @@
     "/establishment/urn/{urn}": {
       "get": {
         "tags": [
+          "EstablishmentsV1",
           "Establishments"
         ],
         "summary": "Retrieves an establishment by its Unique Reference Number (URN).",
-        "operationId": "Establishments_GetByUrn",
+        "operationId": "GetByUrn",
         "parameters": [
           {
             "name": "urn",
@@ -123,15 +108,6 @@
               "format": "int32"
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -154,10 +130,11 @@
     "/establishments": {
       "get": {
         "tags": [
+          "EstablishmentsV1",
           "Establishments"
         ],
         "summary": "Searches for establishments based on a query.",
-        "operationId": "Establishments_SearchEstablishments",
+        "operationId": "SearchEstablishments",
         "parameters": [
           {
             "name": "Urn",
@@ -186,15 +163,6 @@
               "nullable": true
             },
             "x-position": 3
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 4
           }
         ],
         "responses": {
@@ -217,10 +185,11 @@
     "/establishments/bulk": {
       "get": {
         "tags": [
+          "EstablishmentsV1",
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "Establishments_GetByUrns",
+        "operationId": "GetByUrns",
         "parameters": [
           {
             "name": "Urn",
@@ -236,15 +205,6 @@
               }
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -270,10 +230,11 @@
     "/educationPerformance/{urn}": {
       "get": {
         "tags": [
+          "KeyStagePerformanceV1",
           "KeyStagePerformance"
         ],
         "summary": "Retrieves educational performance data for an establishment by its Unique Reference Number (URN).",
-        "operationId": "KeyStagePerformance_GetEducationPerformanceByUrn",
+        "operationId": "GetEducationPerformanceByUrn",
         "parameters": [
           {
             "name": "urn",
@@ -284,15 +245,6 @@
               "type": "string"
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -315,10 +267,11 @@
     "/trust/{ukprn}": {
       "get": {
         "tags": [
+          "TrustsV1",
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Trusts_GetTrustByUkprn",
+        "operationId": "GetTrustByUkprn",
         "parameters": [
           {
             "name": "ukprn",
@@ -329,15 +282,6 @@
               "type": "string"
             },
             "x-position": 1
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -360,10 +304,11 @@
     "/trusts": {
       "get": {
         "tags": [
+          "TrustsV1",
           "Trusts"
         ],
         "summary": "Searches for Trusts based on query parameters.",
-        "operationId": "Trusts_SearchTrusts",
+        "operationId": "SearchTrustsAll",
         "parameters": [
           {
             "name": "groupName",
@@ -416,15 +361,6 @@
               "default": 10
             },
             "x-position": 5
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 6
           }
         ],
         "responses": {
@@ -447,10 +383,11 @@
     "/v2/basline-tracker": {
       "get": {
         "tags": [
+          "BaselineTrackerV2",
           "BaselineTracker"
         ],
         "summary": "Retrieves a paginated list of baseline trackers.",
-        "operationId": "BaselineTracker_Get",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "states",
@@ -502,9 +439,10 @@
     "/v2/fss/projects": {
       "get": {
         "tags": [
+          "FssProjectV2",
           "FssProject"
         ],
-        "operationId": "FssProject_GetAll",
+        "operationId": "GetAll",
         "responses": {
           "200": {
             "description": "Successfully found and returned the list of Fss Projects.",
@@ -522,11 +460,12 @@
     "/v2/trusts": {
       "get": {
         "tags": [
+          "TrustsV2",
           "Trusts"
         ],
         "summary": "Searches for trusts based on given criteria.",
         "description": "Search can be performed using the groupName, UK Provider Reference Number (UKPRN), and companiesHouseNumber parameters.",
-        "operationId": "Trusts_SearchTrusts2",
+        "operationId": "SearchTrusts",
         "parameters": [
           {
             "name": "groupName",
@@ -602,10 +541,11 @@
     "/v2/trust/{ukprn}": {
       "get": {
         "tags": [
+          "TrustsV2",
           "Trusts"
         ],
         "summary": "Retrieves a specific trust by UK Provider Reference Number (UKPRN).",
-        "operationId": "Trusts_GetTrustByUkPrn",
+        "operationId": "GetTrustByUkPrn",
         "parameters": [
           {
             "name": "ukprn",
@@ -637,10 +577,11 @@
     "/v2/trusts/bulk": {
       "get": {
         "tags": [
+          "TrustsV2",
           "Trusts"
         ],
         "summary": "Retrieves multiple trusts by their UK Provider Reference Numbers (UKPRNs).",
-        "operationId": "Trusts_GetByUkprns",
+        "operationId": "GetByUkprns",
         "parameters": [
           {
             "name": "Ukprn",
@@ -685,11 +626,12 @@
     "/v3/trusts": {
       "get": {
         "tags": [
+          "TrustsV3",
           "Trusts"
         ],
         "summary": "Searches for trusts based on given criteria.",
         "description": "Search can be performed using the groupName, ukPrn, and companiesHouseNumber parameters.",
-        "operationId": "Trusts_SearchTrusts22",
+        "operationId": "SearchTrusts2",
         "parameters": [
           {
             "name": "groupName",
@@ -765,10 +707,11 @@
     "/v3/trust/{ukprn}": {
       "get": {
         "tags": [
+          "TrustsV3",
           "Trusts"
         ],
         "summary": "Retrieves a specific trust by UKPRN.",
-        "operationId": "Trusts_GetTrustByUkPrn2",
+        "operationId": "GetTrustByUkPrn2",
         "parameters": [
           {
             "name": "ukprn",
@@ -800,10 +743,11 @@
     "/v4/establishment/{ukprn}": {
       "get": {
         "tags": [
+          "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Retrieves a Establishment by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Establishments_GetEstablishmentByUkprn",
+        "operationId": "GetEstablishmentByUkprn",
         "parameters": [
           {
             "name": "ukprn",
@@ -836,10 +780,11 @@
     "/v4/establishment/urn/{urn}": {
       "get": {
         "tags": [
+          "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Retrieves an establishment by its Unique Reference Number (URN).",
-        "operationId": "Establishments_GetEstablishmentByUrn",
+        "operationId": "GetEstablishmentByUrn",
         "parameters": [
           {
             "name": "urn",
@@ -872,10 +817,11 @@
     "/v4/establishments": {
       "get": {
         "tags": [
+          "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Searches for Establishments based on query parameters.",
-        "operationId": "Establishments_SearchEstablishments2",
+        "operationId": "SearchEstablishments2",
         "parameters": [
           {
             "name": "name",
@@ -928,10 +874,11 @@
     "/v4/establishment/regions": {
       "get": {
         "tags": [
+          "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Retrieves a list of establishment Unique Reference Numbers (URNs) by region.",
-        "operationId": "Establishments_GetURNsByRegion2",
+        "operationId": "GetURNsByRegion2",
         "parameters": [
           {
             "name": "regions",
@@ -973,10 +920,11 @@
     "/v4/establishments/bulk": {
       "get": {
         "tags": [
+          "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "Establishments_GetByUrns2",
+        "operationId": "GetByUrns2",
         "parameters": [
           {
             "name": "request",
@@ -1018,10 +966,11 @@
     "/v4/establishments/trust": {
       "get": {
         "tags": [
+          "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.",
-        "operationId": "Establishments_GetByTrust",
+        "operationId": "GetByTrust",
         "parameters": [
           {
             "name": "trustUkprn",
@@ -1057,10 +1006,11 @@
     "/v4/establishments/ukprn/bulk": {
       "get": {
         "tags": [
+          "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their UKPRNs.",
-        "operationId": "Establishments_GetByUKPRNs",
+        "operationId": "GetByUKPRNs",
         "parameters": [
           {
             "name": "ukprn",
@@ -1101,10 +1051,11 @@
     "/v4/trust/{ukprn}": {
       "get": {
         "tags": [
+          "TrustsV4",
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its UK Provider Reference Number (UKPRN).",
-        "operationId": "Trusts_GetTrustByUkprn2",
+        "operationId": "GetTrustByUkprn2",
         "parameters": [
           {
             "name": "ukprn",
@@ -1137,10 +1088,11 @@
     "/v4/trust/companiesHouseNumber/{companiesHouseNumber}": {
       "get": {
         "tags": [
+          "TrustsV4",
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its Companies House Number.",
-        "operationId": "Trusts_GetTrustByCompaniesHouseNumber",
+        "operationId": "GetTrustByCompaniesHouseNumber",
         "parameters": [
           {
             "name": "companiesHouseNumber",
@@ -1173,10 +1125,11 @@
     "/v4/trust/trustReferenceNumber/{trustReferenceNumber}": {
       "get": {
         "tags": [
+          "TrustsV4",
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its Companies House Number.",
-        "operationId": "Trusts_GetTrustByTrustReferenceNumber",
+        "operationId": "GetTrustByTrustReferenceNumber",
         "parameters": [
           {
             "name": "trustReferenceNumber",
@@ -1208,10 +1161,11 @@
     "/v4/trusts": {
       "get": {
         "tags": [
+          "TrustsV4",
           "Trusts"
         ],
         "summary": "Searches for Trusts based on query parameters.",
-        "operationId": "Trusts_SearchTrusts23",
+        "operationId": "SearchTrusts3",
         "parameters": [
           {
             "name": "groupName",
@@ -1297,10 +1251,11 @@
     "/v4/trusts/bulk": {
       "get": {
         "tags": [
+          "TrustsV4",
           "Trusts"
         ],
         "summary": "Returns Trusts based on supplied list of Ukprns query parameter.",
-        "operationId": "Trusts_GetByUkprns2",
+        "operationId": "GetByUkprnsAll",
         "parameters": [
           {
             "name": "ukprns",
