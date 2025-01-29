@@ -65,6 +65,9 @@ jobs:
       azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       azure-acr-client-id: ${{ secrets.ACR_CLIENT_ID }}
       azure-acr-name: ${{ secrets.ACR_NAME }}
+      azure-aca-client-id: ${{ secrets.ACA_CLIENT_ID }}
+      azure-aca-name: ${{ secrets.ACA_CONTAINERAPP_NAME }}
+      azure-aca-resource-group: ${{ secrets.ACA_RESOURCE_GROUP }}
 
   build-import-deploy-app:
     permissions:
