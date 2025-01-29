@@ -9,21 +9,36 @@ namespace TramsDataApi.Swagger
     {
         public bool Process(OperationProcessorContext context)
         {
-            var version = "V1"; // Default version
-            var apiVersionAttr = context.ControllerType
-                ?.GetCustomAttributes(typeof(ApiVersionAttribute), true)
-                .FirstOrDefault() as ApiVersionAttribute;
+            var version = "V1"; // Default
 
-            if (apiVersionAttr != null && apiVersionAttr.Versions.Count > 0)
+            if (context.ControllerType?
+                    .GetCustomAttributes(typeof(ApiVersionAttribute), true)
+                    .FirstOrDefault() is ApiVersionAttribute apiVersionAttr && apiVersionAttr.Versions.Count > 0)
             {
                 version = $"V{apiVersionAttr.Versions[0].MajorVersion}";
             }
 
+            var controllerName = context.ControllerType?.Name.Replace("Controller", "") ?? "Unknown";
+
             var actionName = context.MethodInfo.Name;
+            context.OperationDescription.Operation.OperationId = actionName;
 
-            context.OperationDescription.Operation.OperationId = $"{version}{actionName}";
+            var apiVersionParam = context.OperationDescription.Operation.Parameters
+                .FirstOrDefault(p => p.Name == "api-version");
 
-            return true;
+            if (apiVersionParam != null)
+            {
+                context.OperationDescription.Operation.Parameters.Remove(apiVersionParam);
+            }
+
+            var clientTag = $"{controllerName}{version}";
+
+            if (!context.OperationDescription.Operation.Tags.Any(t => t == clientTag))
+            {
+                context.OperationDescription.Operation.Tags.Insert(0, clientTag);
+            }
+
+            return true; 
         }
     }
 }

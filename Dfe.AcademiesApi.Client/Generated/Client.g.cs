@@ -25,7 +25,7 @@ namespace Dfe.AcademiesApi.Client
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AcademiesApiClient : IAcademiesApiClient
+    public partial class EstablishmentsV1Client : IEstablishmentsV1Client
     {
         #pragma warning disable 8618
         private string _baseUrl;
@@ -36,7 +36,7 @@ namespace Dfe.AcademiesApi.Client
         private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
 
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public AcademiesApiClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public EstablishmentsV1Client(string baseUrl, System.Net.Http.HttpClient httpClient)
     #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             BaseUrl = baseUrl;
@@ -78,9 +78,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<EstablishmentResponse> V1GetByUkprnAsync(string ukprn, string api_version)
+        public virtual System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn)
         {
-            return V1GetByUkprnAsync(ukprn, api_version, System.Threading.CancellationToken.None);
+            return GetByUkprnAsync(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -90,7 +90,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<EstablishmentResponse> V1GetByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<EstablishmentResponse> GetByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
                 throw new System.ArgumentNullException("ukprn");
@@ -109,12 +109,6 @@ namespace Dfe.AcademiesApi.Client
                     // Operation Path: "establishment/{ukprn}"
                     urlBuilder_.Append("establishment/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(ukprn, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('?');
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -180,9 +174,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> V1GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions)
         {
-            return V1GetURNsByRegionAsync(regions, api_version, System.Threading.CancellationToken.None);
+            return GetURNsByRegionAsync(regions, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -192,7 +186,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> V1GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -211,10 +205,6 @@ namespace Dfe.AcademiesApi.Client
                     if (regions != null)
                     {
                         foreach (var item_ in regions) { urlBuilder_.Append(System.Uri.EscapeDataString("regions")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
-                    }
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
@@ -282,9 +272,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<EstablishmentResponse> V1GetByUrnAsync(int urn, string api_version)
+        public virtual System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn)
         {
-            return V1GetByUrnAsync(urn, api_version, System.Threading.CancellationToken.None);
+            return GetByUrnAsync(urn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -294,7 +284,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<EstablishmentResponse> V1GetByUrnAsync(int urn, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<EstablishmentResponse> GetByUrnAsync(int urn, System.Threading.CancellationToken cancellationToken)
         {
             if (urn == null)
                 throw new System.ArgumentNullException("urn");
@@ -313,12 +303,6 @@ namespace Dfe.AcademiesApi.Client
                     // Operation Path: "establishment/urn/{urn}"
                     urlBuilder_.Append("establishment/urn/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(urn, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('?');
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -383,9 +367,9 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> V1SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name)
         {
-            return V1SearchEstablishmentsAsync(urn, ukprn, name, api_version, System.Threading.CancellationToken.None);
+            return SearchEstablishmentsAsync(urn, ukprn, name, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -394,7 +378,7 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> V1SearchEstablishmentsAsync(int? urn, string ukprn, string name, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -421,10 +405,6 @@ namespace Dfe.AcademiesApi.Client
                     if (name != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("Name")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
@@ -485,9 +465,9 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> V1GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn)
         {
-            return V1GetByUrnsAsync(urn, api_version, System.Threading.CancellationToken.None);
+            return GetByUrnsAsync(urn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -496,7 +476,7 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> V1GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -515,10 +495,6 @@ namespace Dfe.AcademiesApi.Client
                     if (urn != null)
                     {
                         foreach (var item_ in urn) { urlBuilder_.Append(System.Uri.EscapeDataString("Urn")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
-                    }
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
@@ -580,15 +556,175 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class KeyStagePerformanceV1Client : IKeyStagePerformanceV1Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public KeyStagePerformanceV1Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <summary>
         /// Retrieves educational performance data for an establishment by its Unique Reference Number (URN).
         /// </summary>
         /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
         /// <returns>Successfully found and returned the educational performance data.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<EducationalPerformanceResponse> V1GetEducationPerformanceByUrnAsync(string urn, string api_version)
+        public virtual System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn)
         {
-            return V1GetEducationPerformanceByUrnAsync(urn, api_version, System.Threading.CancellationToken.None);
+            return GetEducationPerformanceByUrnAsync(urn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -598,7 +734,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">The Unique Reference Number (URN) identifier of the establishment.</param>
         /// <returns>Successfully found and returned the educational performance data.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<EducationalPerformanceResponse> V1GetEducationPerformanceByUrnAsync(string urn, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<EducationalPerformanceResponse> GetEducationPerformanceByUrnAsync(string urn, System.Threading.CancellationToken cancellationToken)
         {
             if (urn == null)
                 throw new System.ArgumentNullException("urn");
@@ -617,12 +753,6 @@ namespace Dfe.AcademiesApi.Client
                     // Operation Path: "educationPerformance/{urn}"
                     urlBuilder_.Append("educationPerformance/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(urn, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('?');
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -682,15 +812,175 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TrustsV1Client : ITrustsV1Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public TrustsV1Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <summary>
         /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TrustResponse> V1GetTrustByUkprnAsync(string ukprn, string api_version)
+        public virtual System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn)
         {
-            return V1GetTrustByUkprnAsync(ukprn, api_version, System.Threading.CancellationToken.None);
+            return GetTrustByUkprnAsync(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -700,7 +990,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TrustResponse> V1GetTrustByUkprnAsync(string ukprn, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TrustResponse> GetTrustByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
                 throw new System.ArgumentNullException("ukprn");
@@ -719,12 +1009,6 @@ namespace Dfe.AcademiesApi.Client
                     // Operation Path: "trust/{ukprn}"
                     urlBuilder_.Append("trust/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(ukprn, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('?');
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -794,9 +1078,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> V1SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count)
         {
-            return V1SearchTrustsAsync(groupName, ukPrn, companiesHouseNumber, page, count, api_version, System.Threading.CancellationToken.None);
+            return SearchTrustsAllAsync(groupName, ukPrn, companiesHouseNumber, page, count, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -810,7 +1094,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> V1SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, string api_version, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -845,10 +1129,6 @@ namespace Dfe.AcademiesApi.Client
                     if (count != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("count")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(count, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-                    }
-                    if (api_version != null)
-                    {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("api-version")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(api_version, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
@@ -904,6 +1184,166 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BaselineTrackerV2Client : IBaselineTrackerV2Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public BaselineTrackerV2Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <summary>
         /// Retrieves a paginated list of baseline trackers.
         /// </summary>
@@ -912,9 +1352,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> V2GetAsync(string states, int? page, int? count)
+        public virtual System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count)
         {
-            return V2GetAsync(states, page, count, System.Threading.CancellationToken.None);
+            return GetAsync(states, page, count, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -926,7 +1366,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> V2GetAsync(string states, int? page, int? count, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1008,17 +1448,177 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FssProjectV2Client : IFssProjectV2Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public FssProjectV2Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <returns>Successfully found and returned the list of Fss Projects.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> V2GetAllAsync()
+        public virtual System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync()
         {
-            return V2GetAllAsync(System.Threading.CancellationToken.None);
+            return GetAllAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Successfully found and returned the list of Fss Projects.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> V2GetAllAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfFssProjectResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1086,6 +1686,166 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TrustsV2Client : ITrustsV2Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public TrustsV2Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <summary>
         /// Searches for trusts based on given criteria.
         /// </summary>
@@ -1094,9 +1854,9 @@ namespace Dfe.AcademiesApi.Client
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> V2SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments)
+        public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments)
         {
-            return V2SearchTrustsAsync(groupName, ukPrn, companiesHouseNumber, page, count, includeEstablishments, System.Threading.CancellationToken.None);
+            return SearchTrustsAsync(groupName, ukPrn, companiesHouseNumber, page, count, includeEstablishments, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1108,7 +1868,7 @@ namespace Dfe.AcademiesApi.Client
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> V2SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1207,9 +1967,9 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> V2GetTrustByUkPrnAsync(string ukprn)
+        public virtual System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn)
         {
-            return V2GetTrustByUkPrnAsync(ukprn, System.Threading.CancellationToken.None);
+            return GetTrustByUkPrnAsync(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1218,7 +1978,7 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> V2GetTrustByUkPrnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApiSingleResponseV2OfTrustResponse> GetTrustByUkPrnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
                 throw new System.ArgumentNullException("ukprn");
@@ -1301,9 +2061,9 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> V2GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments)
+        public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments)
         {
-            return V2GetByUkprnsAsync(ukprn, establishments, System.Threading.CancellationToken.None);
+            return GetByUkprnsAsync(ukprn, establishments, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1312,7 +2072,7 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> V2GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1396,6 +2156,166 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TrustsV3Client : ITrustsV3Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public TrustsV3Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <summary>
         /// Searches for trusts based on given criteria.
         /// </summary>
@@ -1404,9 +2324,9 @@ namespace Dfe.AcademiesApi.Client
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> V3SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments)
+        public virtual System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments)
         {
-            return V3SearchTrustsAsync(groupName, ukPrn, companiesHouseNumber, page, count, includeEstablishments, System.Threading.CancellationToken.None);
+            return SearchTrusts2Async(groupName, ukPrn, companiesHouseNumber, page, count, includeEstablishments, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1418,7 +2338,7 @@ namespace Dfe.AcademiesApi.Client
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> V3SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1517,9 +2437,9 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> V3GetTrustByUkPrnAsync(string ukprn)
+        public virtual System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn)
         {
-            return V3GetTrustByUkPrnAsync(ukprn, System.Threading.CancellationToken.None);
+            return GetTrustByUkPrn2Async(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1528,7 +2448,7 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully retrieved the trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> V3GetTrustByUkPrnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ApiSingleResponseV2OfMasterTrustResponse> GetTrustByUkPrn2Async(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
                 throw new System.ArgumentNullException("ukprn");
@@ -1606,15 +2526,175 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class EstablishmentsV4Client : IEstablishmentsV4Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public EstablishmentsV4Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <summary>
         /// Retrieves a Establishment by its UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<EstablishmentDto> V4GetEstablishmentByUkprnAsync(string ukprn)
+        public virtual System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUkprnAsync(string ukprn)
         {
-            return V4GetEstablishmentByUkprnAsync(ukprn, System.Threading.CancellationToken.None);
+            return GetEstablishmentByUkprnAsync(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1624,7 +2704,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<EstablishmentDto> V4GetEstablishmentByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
                 throw new System.ArgumentNullException("ukprn");
@@ -1708,9 +2788,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<EstablishmentDto> V4GetEstablishmentByUrnAsync(string urn)
+        public virtual System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUrnAsync(string urn)
         {
-            return V4GetEstablishmentByUrnAsync(urn, System.Threading.CancellationToken.None);
+            return GetEstablishmentByUrnAsync(urn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1720,7 +2800,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">The Unique Reference Number (URN) of the establishment.</param>
         /// <returns>Successfully found and returned the establishment.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<EstablishmentDto> V4GetEstablishmentByUrnAsync(string urn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<EstablishmentDto> GetEstablishmentByUrnAsync(string urn, System.Threading.CancellationToken cancellationToken)
         {
             if (urn == null)
                 throw new System.ArgumentNullException("urn");
@@ -1806,9 +2886,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> V4SearchEstablishmentsAsync(string name, string ukPrn, string urn)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn)
         {
-            return V4SearchEstablishmentsAsync(name, ukPrn, urn, System.Threading.CancellationToken.None);
+            return SearchEstablishments2Async(name, ukPrn, urn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1820,7 +2900,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> V4SearchEstablishmentsAsync(string name, string ukPrn, string urn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1908,9 +2988,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> V4GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions)
         {
-            return V4GetURNsByRegionAsync(regions, System.Threading.CancellationToken.None);
+            return GetURNsByRegion2Async(regions, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1920,7 +3000,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> V4GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2006,9 +3086,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> V4GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> request)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request)
         {
-            return V4GetByUrnsAsync(request, System.Threading.CancellationToken.None);
+            return GetByUrns2Async(request, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2018,7 +3098,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> V4GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> request, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2104,9 +3184,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> V4GetByTrustAsync(string trustUkprn)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn)
         {
-            return V4GetByTrustAsync(trustUkprn, System.Threading.CancellationToken.None);
+            return GetByTrustAsync(trustUkprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2116,7 +3196,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> V4GetByTrustAsync(string trustUkprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2202,9 +3282,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> V4GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn)
         {
-            return V4GetByUKPRNsAsync(ukprn, System.Threading.CancellationToken.None);
+            return GetByUKPRNsAsync(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2214,7 +3294,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> V4GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2294,15 +3374,175 @@ namespace Dfe.AcademiesApi.Client
             }
         }
 
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new AcademiesApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TrustsV4Client : ITrustsV4Client
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+        private Newtonsoft.Json.JsonSerializerSettings _instanceSettings;
+
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public TrustsV4Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+    #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+
+        partial void Initialize();
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
         /// <summary>
         /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
         /// </summary>
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TrustDto> V4GetTrustByUkprnAsync(string ukprn)
+        public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn)
         {
-            return V4GetTrustByUkprnAsync(ukprn, System.Threading.CancellationToken.None);
+            return GetTrustByUkprn2Async(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2312,7 +3552,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TrustDto> V4GetTrustByUkprnAsync(string ukprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
                 throw new System.ArgumentNullException("ukprn");
@@ -2396,9 +3636,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TrustDto> V4GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber)
+        public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber)
         {
-            return V4GetTrustByCompaniesHouseNumberAsync(companiesHouseNumber, System.Threading.CancellationToken.None);
+            return GetTrustByCompaniesHouseNumberAsync(companiesHouseNumber, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2408,7 +3648,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TrustDto> V4GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber, System.Threading.CancellationToken cancellationToken)
         {
             if (companiesHouseNumber == null)
                 throw new System.ArgumentNullException("companiesHouseNumber");
@@ -2491,9 +3731,9 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TrustDto> V4GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber)
+        public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber)
         {
-            return V4GetTrustByTrustReferenceNumberAsync(trustReferenceNumber, System.Threading.CancellationToken.None);
+            return GetTrustByTrustReferenceNumberAsync(trustReferenceNumber, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2502,7 +3742,7 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TrustDto> V4GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber, System.Threading.CancellationToken cancellationToken)
         {
             if (trustReferenceNumber == null)
                 throw new System.ArgumentNullException("trustReferenceNumber");
@@ -2591,9 +3831,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> V4SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status)
+        public virtual System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status)
         {
-            return V4SearchTrustsAsync(groupName, ukPrn, companiesHouseNumber, page, count, status, System.Threading.CancellationToken.None);
+            return SearchTrusts3Async(groupName, ukPrn, companiesHouseNumber, page, count, status, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2608,7 +3848,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> V4SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2708,9 +3948,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> V4GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprns)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string> ukprns)
         {
-            return V4GetByUkprnsAsync(ukprns, System.Threading.CancellationToken.None);
+            return GetByUkprnsAllAsync(ukprns, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2720,7 +3960,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> V4GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprns, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string> ukprns, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
