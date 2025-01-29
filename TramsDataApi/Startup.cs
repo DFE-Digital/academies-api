@@ -157,6 +157,7 @@ namespace TramsDataApi
             services.AddOpenApiDocument(configure =>
             {
                 configure.Title = "TramsDataApi";
+                configure.OperationProcessors.Add(new VersionedOperationIdProcessor());
             });
         }
 
