@@ -17,7 +17,7 @@ concurrency:
 jobs:
   set-env:
     name: Determine environment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       environment: ${{ steps.var.outputs.environment }}
       branch: ${{ steps.var.outputs.branch }}
@@ -94,7 +94,7 @@ jobs:
   create-tag:
     name: Tag and release
     needs: [ set-env, build-import-deploy-app ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
