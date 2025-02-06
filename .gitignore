@@ -151,6 +151,8 @@ CypressTests/node_modules
 # screenshots and videos
 CypressTests/cypress/screenshots
 CypressTests/cypress/videos
+CypressTests/cypress/reports
+*/cypress.env.json
 
 # ZAP
 .ZAP
