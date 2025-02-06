@@ -4,6 +4,8 @@
 // </auto-generated>
 //----------------------
 
+#nullable enable
+
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -48,7 +50,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string>? regions);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -57,7 +59,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegionAsync(System.Collections.Generic.IEnumerable<string>? regions, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves an establishment by its Unique Reference Number (URN).
@@ -81,7 +83,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string? ukprn, string? name);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -89,14 +91,14 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully executed the search and returned establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string ukprn, string name, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentSummaryResponse>> SearchEstablishmentsAsync(int? urn, string? ukprn, string? name, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int>? urn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -104,7 +106,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int> urn, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int>? urn, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -160,7 +162,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -173,7 +175,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustSummaryResponse>> SearchTrustsAllAsync(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -188,7 +190,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count);
+        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string? states, int? page, int? count);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -199,7 +201,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="count">The number of items per page.</param>
         /// <returns>Successfully found and returned the list of baseline trackers.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string states, int? page, int? count, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponseV2OfBaselineTrackerResponse> GetAsync(string? states, int? page, int? count, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -228,7 +230,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -239,7 +241,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrustsAsync(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a specific trust by UK Provider Reference Number (UKPRN).
@@ -261,7 +263,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments);
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string>? ukprn, bool? establishments);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -269,7 +271,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustResponse> GetByUkprnsAsync(System.Collections.Generic.IEnumerable<string>? ukprn, bool? establishments, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -284,7 +286,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count, bool? includeEstablishments);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -295,7 +297,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </remarks>
         /// <returns>Successfully found and returned the list of trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiResponseV2OfTrustSummaryResponse> SearchTrusts2Async(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count, bool? includeEstablishments, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a specific trust by UKPRN.
@@ -359,7 +361,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -370,7 +372,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string name, string ukPrn, string urn, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishment Unique Reference Numbers (URNs) by region.
@@ -378,7 +380,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string>? regions);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -387,7 +389,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="regions">Array of regions.</param>
         /// <returns>Successfully found and returned the establishment Unique Reference Numbers (URNs).</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string> regions, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<int>> GetURNsByRegion2Async(System.Collections.Generic.IEnumerable<string>? regions, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
@@ -395,7 +397,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -404,7 +406,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int> request, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.
@@ -412,7 +414,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string? trustUkprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -421,7 +423,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string trustUkprn, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string? trustUkprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishments by their UKPRNs.
@@ -429,7 +431,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string>? ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -438,7 +440,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string> ukprn, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string>? ukprn, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -505,7 +507,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status);
+        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count, TrustStatus? status);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -519,7 +521,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="status">The status of the trust, defaults to "Open"</param>
         /// <returns>Successfully executed the search and returned Trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string groupName, string ukPrn, string companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedDataResponseOfTrustDto> SearchTrusts3Async(string? groupName, string? ukPrn, string? companiesHouseNumber, int? page, int? count, TrustStatus? status, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns Trusts based on supplied list of Ukprns query parameter.
@@ -527,7 +529,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string> ukprns);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string>? ukprns);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -536,7 +538,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprns">List of ukprns to search for.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string> ukprns, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string>? ukprns, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -544,313 +546,313 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class EstablishmentResponse
     {
         [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Urn { get; set; }
+        public string? Urn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("localAuthorityCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LocalAuthorityCode { get; set; }
+        public string? LocalAuthorityCode { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("localAuthorityName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LocalAuthorityName { get; set; }
+        public string? LocalAuthorityName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishmentNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EstablishmentNumber { get; set; }
+        public string? EstablishmentNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishmentName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EstablishmentName { get; set; }
+        public string? EstablishmentName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishmentType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse EstablishmentType { get; set; }
+        public NameAndCodeResponse? EstablishmentType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishmentTypeGroup", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse EstablishmentTypeGroup { get; set; }
+        public NameAndCodeResponse? EstablishmentTypeGroup { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishmentStatus", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse EstablishmentStatus { get; set; }
+        public NameAndCodeResponse? EstablishmentStatus { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("reasonEstablishmentOpened", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse ReasonEstablishmentOpened { get; set; }
+        public NameAndCodeResponse? ReasonEstablishmentOpened { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("openDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OpenDate { get; set; }
+        public string? OpenDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("reasonEstablishmentClosed", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse ReasonEstablishmentClosed { get; set; }
+        public NameAndCodeResponse? ReasonEstablishmentClosed { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("closeDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CloseDate { get; set; }
+        public string? CloseDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("phaseOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse PhaseOfEducation { get; set; }
+        public NameAndCodeResponse? PhaseOfEducation { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("statutoryLowAge", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string StatutoryLowAge { get; set; }
+        public string? StatutoryLowAge { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("statutoryHighAge", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string StatutoryHighAge { get; set; }
+        public string? StatutoryHighAge { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("boarders", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Boarders { get; set; }
+        public NameAndCodeResponse? Boarders { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nurseryProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NurseryProvision { get; set; }
+        public string? NurseryProvision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("officialSixthForm", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse OfficialSixthForm { get; set; }
+        public NameAndCodeResponse? OfficialSixthForm { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("gender", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Gender { get; set; }
+        public NameAndCodeResponse? Gender { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("religiousCharacter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse ReligiousCharacter { get; set; }
+        public NameAndCodeResponse? ReligiousCharacter { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("religiousEthos", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ReligiousEthos { get; set; }
+        public string? ReligiousEthos { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("diocese", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Diocese { get; set; }
+        public NameAndCodeResponse? Diocese { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("admissionsPolicy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse AdmissionsPolicy { get; set; }
+        public NameAndCodeResponse? AdmissionsPolicy { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolCapacity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolCapacity { get; set; }
+        public string? SchoolCapacity { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("specialClasses", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse SpecialClasses { get; set; }
+        public NameAndCodeResponse? SpecialClasses { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("census", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CensusResponse Census { get; set; }
+        public CensusResponse? Census { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustSchoolFlag", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse TrustSchoolFlag { get; set; }
+        public NameAndCodeResponse? TrustSchoolFlag { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trusts", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Trusts { get; set; }
+        public NameAndCodeResponse? Trusts { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolSponsorFlag", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolSponsorFlag { get; set; }
+        public string? SchoolSponsorFlag { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolSponsors", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolSponsors { get; set; }
+        public string? SchoolSponsors { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("federationFlag", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FederationFlag { get; set; }
+        public string? FederationFlag { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("federations", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Federations { get; set; }
+        public NameAndCodeResponse? Federations { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ukprn { get; set; }
+        public string? Ukprn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("feheiIdentifier", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FeheiIdentifier { get; set; }
+        public string? FeheiIdentifier { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("furtherEducationType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FurtherEducationType { get; set; }
+        public string? FurtherEducationType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ofstedLastInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OfstedLastInspection { get; set; }
+        public string? OfstedLastInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ofstedSpecialMeasures", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse OfstedSpecialMeasures { get; set; }
+        public NameAndCodeResponse? OfstedSpecialMeasures { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("lastChangedDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LastChangedDate { get; set; }
+        public string? LastChangedDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressResponse Address { get; set; }
+        public AddressResponse? Address { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolWebsite", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolWebsite { get; set; }
+        public string? SchoolWebsite { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("telephoneNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TelephoneNumber { get; set; }
+        public string? TelephoneNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("headteacherTitle", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherTitle { get; set; }
+        public string? HeadteacherTitle { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("headteacherFirstName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherFirstName { get; set; }
+        public string? HeadteacherFirstName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("headteacherLastName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherLastName { get; set; }
+        public string? HeadteacherLastName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("headteacherPreferredJobTitle", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherPreferredJobTitle { get; set; }
+        public string? HeadteacherPreferredJobTitle { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectorateName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectorateName { get; set; }
+        public string? InspectorateName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectorateReport", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectorateReport { get; set; }
+        public string? InspectorateReport { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfLastInspectionVisit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfLastInspectionVisit { get; set; }
+        public string? DateOfLastInspectionVisit { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfNextInspectionVisit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfNextInspectionVisit { get; set; }
+        public string? DateOfNextInspectionVisit { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("teenMoth", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TeenMoth { get; set; }
+        public string? TeenMoth { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("teenMothPlaces", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TeenMothPlaces { get; set; }
+        public string? TeenMothPlaces { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ccf", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ccf { get; set; }
+        public string? Ccf { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("senpru", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Senpru { get; set; }
+        public string? Senpru { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ebd", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ebd { get; set; }
+        public string? Ebd { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("placesPRU", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PlacesPRU { get; set; }
+        public string? PlacesPRU { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ftProv", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FtProv { get; set; }
+        public string? FtProv { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("edByOther", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EdByOther { get; set; }
+        public string? EdByOther { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("section14Approved", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Section14Approved { get; set; }
+        public string? Section14Approved { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN1", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN1 { get; set; }
+        public string? SeN1 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN2", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN2 { get; set; }
+        public string? SeN2 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN3", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN3 { get; set; }
+        public string? SeN3 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN4", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN4 { get; set; }
+        public string? SeN4 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN5", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN5 { get; set; }
+        public string? SeN5 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN6", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN6 { get; set; }
+        public string? SeN6 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN7", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN7 { get; set; }
+        public string? SeN7 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN8", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN8 { get; set; }
+        public string? SeN8 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN9", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN9 { get; set; }
+        public string? SeN9 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN10", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN10 { get; set; }
+        public string? SeN10 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN11", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN11 { get; set; }
+        public string? SeN11 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN12", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN12 { get; set; }
+        public string? SeN12 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("seN13", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SeN13 { get; set; }
+        public string? SeN13 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("typeOfResourcedProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TypeOfResourcedProvision { get; set; }
+        public string? TypeOfResourcedProvision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("resourcedProvisionOnRoll", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ResourcedProvisionOnRoll { get; set; }
+        public string? ResourcedProvisionOnRoll { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("resourcedProvisionOnCapacity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ResourcedProvisionOnCapacity { get; set; }
+        public string? ResourcedProvisionOnCapacity { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("senUnitOnRoll", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SenUnitOnRoll { get; set; }
+        public string? SenUnitOnRoll { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("senUnitCapacity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SenUnitCapacity { get; set; }
+        public string? SenUnitCapacity { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("gor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Gor { get; set; }
+        public NameAndCodeResponse? Gor { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("districtAdministrative", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse DistrictAdministrative { get; set; }
+        public NameAndCodeResponse? DistrictAdministrative { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("administractiveWard", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse AdministractiveWard { get; set; }
+        public NameAndCodeResponse? AdministractiveWard { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("parliamentaryConstituency", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse ParliamentaryConstituency { get; set; }
+        public NameAndCodeResponse? ParliamentaryConstituency { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("urbanRural", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse UrbanRural { get; set; }
+        public NameAndCodeResponse? UrbanRural { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("gsslaCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GsslaCode { get; set; }
+        public string? GsslaCode { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("easting", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Easting { get; set; }
+        public string? Easting { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("northing", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Northing { get; set; }
+        public string? Northing { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("censusAreaStatisticWard", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CensusAreaStatisticWard { get; set; }
+        public string? CensusAreaStatisticWard { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("msoa", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Msoa { get; set; }
+        public NameAndCodeResponse? Msoa { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("lsoa", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse Lsoa { get; set; }
+        public NameAndCodeResponse? Lsoa { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("senStat", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SenStat { get; set; }
+        public string? SenStat { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("senNoStat", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SenNoStat { get; set; }
+        public string? SenNoStat { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("boardingEstablishment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BoardingEstablishment { get; set; }
+        public string? BoardingEstablishment { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("propsName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PropsName { get; set; }
+        public string? PropsName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousLocalAuthority", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeResponse PreviousLocalAuthority { get; set; }
+        public NameAndCodeResponse? PreviousLocalAuthority { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousEstablishmentNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousEstablishmentNumber { get; set; }
+        public string? PreviousEstablishmentNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ofstedRating", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OfstedRating { get; set; }
+        public string? OfstedRating { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("rscRegion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RscRegion { get; set; }
+        public string? RscRegion { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("country", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Country { get; set; }
+        public string? Country { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("uprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Uprn { get; set; }
+        public string? Uprn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("misEstablishment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MISEstablishmentResponse MisEstablishment { get; set; }
+        public MISEstablishmentResponse? MisEstablishment { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("misFurtherEducationEstablishment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MISFEAResponse MisFurtherEducationEstablishment { get; set; }
+        public MISFEAResponse? MisFurtherEducationEstablishment { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("viewAcademyConversion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ViewAcademyConversionResponse ViewAcademyConversion { get; set; }
+        public ViewAcademyConversionResponse? ViewAcademyConversion { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("smartData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public SMARTDataResponse SmartData { get; set; }
+        public SMARTDataResponse? SmartData { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("financial", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PlaceholderResponse Financial { get; set; }
+        public PlaceholderResponse? Financial { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("concerns", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PlaceholderResponse Concerns { get; set; }
+        public PlaceholderResponse? Concerns { get; set; } = default!;
 
         public string ToJson()
         {
@@ -871,10 +873,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class NameAndCodeResponse
     {
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Code { get; set; }
+        public string? Code { get; set; } = default!;
 
         public string ToJson()
         {
@@ -895,40 +897,40 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class CensusResponse
     {
         [Newtonsoft.Json.JsonProperty("censusDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CensusDate { get; set; }
+        public string? CensusDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfPupils", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfPupils { get; set; }
+        public string? NumberOfPupils { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfBoys", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfBoys { get; set; }
+        public string? NumberOfBoys { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfGirls", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfGirls { get; set; }
+        public string? NumberOfGirls { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("percentageSen", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageSen { get; set; }
+        public string? PercentageSen { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("percentageFsm", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageFsm { get; set; }
+        public string? PercentageFsm { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("percentageEnglishNotFirstLanguage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageEnglishNotFirstLanguage { get; set; }
+        public string? PercentageEnglishNotFirstLanguage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("perceantageEnglishFirstLanguage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PerceantageEnglishFirstLanguage { get; set; }
+        public string? PerceantageEnglishFirstLanguage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("percentageFirstLanguageUnclassified", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageFirstLanguageUnclassified { get; set; }
+        public string? PercentageFirstLanguageUnclassified { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberEligableForFSM", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberEligableForFSM { get; set; }
+        public string? NumberEligableForFSM { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberEligableForFSM6Years", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberEligableForFSM6Years { get; set; }
+        public string? NumberEligableForFSM6Years { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("percentageEligableForFSM6Years", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageEligableForFSM6Years { get; set; }
+        public string? PercentageEligableForFSM6Years { get; set; } = default!;
 
         public string ToJson()
         {
@@ -949,22 +951,22 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class AddressResponse
     {
         [Newtonsoft.Json.JsonProperty("street", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Street { get; set; }
+        public string? Street { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("locality", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Locality { get; set; }
+        public string? Locality { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("additionalLine", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AdditionalLine { get; set; }
+        public string? AdditionalLine { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("town", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Town { get; set; }
+        public string? Town { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("county", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string County { get; set; }
+        public string? County { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("postcode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Postcode { get; set; }
+        public string? Postcode { get; set; } = default!;
 
         public string ToJson()
         {
@@ -985,202 +987,202 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class MISEstablishmentResponse
     {
         [Newtonsoft.Json.JsonProperty("siteName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SiteName { get; set; }
+        public string? SiteName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("webLink", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WebLink { get; set; }
+        public string? WebLink { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laestab", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Laestab { get; set; }
+        public string? Laestab { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolName { get; set; }
+        public string? SchoolName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ofstedPhase", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OfstedPhase { get; set; }
+        public string? OfstedPhase { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("typeOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TypeOfEducation { get; set; }
+        public string? TypeOfEducation { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolOpenDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolOpenDate { get; set; }
+        public string? SchoolOpenDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sixthForm", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SixthForm { get; set; }
+        public string? SixthForm { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("designatedReligiousCharacter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DesignatedReligiousCharacter { get; set; }
+        public string? DesignatedReligiousCharacter { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("religiousEthos", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ReligiousEthos { get; set; }
+        public string? ReligiousEthos { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("faithGrouping", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FaithGrouping { get; set; }
+        public string? FaithGrouping { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ofstedRegion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OfstedRegion { get; set; }
+        public string? OfstedRegion { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("region", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Region { get; set; }
+        public string? Region { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("localAuthority", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LocalAuthority { get; set; }
+        public string? LocalAuthority { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("parliamentaryConstituency", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ParliamentaryConstituency { get; set; }
+        public string? ParliamentaryConstituency { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("postcode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Postcode { get; set; }
+        public string? Postcode { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("incomeDeprivationAffectingChildrenIndexQuintile", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string IncomeDeprivationAffectingChildrenIndexQuintile { get; set; }
+        public string? IncomeDeprivationAffectingChildrenIndexQuintile { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("totalNumberOfPupils", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TotalNumberOfPupils { get; set; }
+        public string? TotalNumberOfPupils { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("latestSection8InspectionNumberSinceLastFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LatestSection8InspectionNumberSinceLastFullInspection { get; set; }
+        public string? LatestSection8InspectionNumberSinceLastFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("section8InspectionRelatedToCurrentSchoolUrn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Section8InspectionRelatedToCurrentSchoolUrn { get; set; }
+        public string? Section8InspectionRelatedToCurrentSchoolUrn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("urnAtTimeOfSection8Inspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UrnAtTimeOfSection8Inspection { get; set; }
+        public string? UrnAtTimeOfSection8Inspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolNameAtTimeOfSection8Inspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolNameAtTimeOfSection8Inspection { get; set; }
+        public string? SchoolNameAtTimeOfSection8Inspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolTypeAtTimeOfSection8Inspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolTypeAtTimeOfSection8Inspection { get; set; }
+        public string? SchoolTypeAtTimeOfSection8Inspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfSection8InspectionsSinceLastFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfSection8InspectionsSinceLastFullInspection { get; set; }
+        public string? NumberOfSection8InspectionsSinceLastFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfLatestSection8Inspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfLatestSection8Inspection { get; set; }
+        public string? DateOfLatestSection8Inspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("section8InspectionPublicationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Section8InspectionPublicationDate { get; set; }
+        public string? Section8InspectionPublicationDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("latestSection8InspectionConvertedToFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LatestSection8InspectionConvertedToFullInspection { get; set; }
+        public string? LatestSection8InspectionConvertedToFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("section8InspectionOverallOutcome", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Section8InspectionOverallOutcome { get; set; }
+        public string? Section8InspectionOverallOutcome { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionNumberOfLatestFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionNumberOfLatestFullInspection { get; set; }
+        public string? InspectionNumberOfLatestFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionType { get; set; }
+        public string? InspectionType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionTypeGrouping", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionTypeGrouping { get; set; }
+        public string? InspectionTypeGrouping { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionStartDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionStartDate { get; set; }
+        public string? InspectionStartDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionEndDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionEndDate { get; set; }
+        public string? InspectionEndDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("publicationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PublicationDate { get; set; }
+        public string? PublicationDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("latestFullInspectionRelatesToCurrentSchoolUrn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LatestFullInspectionRelatesToCurrentSchoolUrn { get; set; }
+        public string? LatestFullInspectionRelatesToCurrentSchoolUrn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolUrnAtTimeOfLastFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolUrnAtTimeOfLastFullInspection { get; set; }
+        public string? SchoolUrnAtTimeOfLastFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laestabAtTimeOfLastFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LaestabAtTimeOfLastFullInspection { get; set; }
+        public string? LaestabAtTimeOfLastFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolNameAtTimeOfLastFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolNameAtTimeOfLastFullInspection { get; set; }
+        public string? SchoolNameAtTimeOfLastFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolTypeAtTimeOfLastFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolTypeAtTimeOfLastFullInspection { get; set; }
+        public string? SchoolTypeAtTimeOfLastFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("overallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OverallEffectiveness { get; set; }
+        public string? OverallEffectiveness { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("categoryOfConcern", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CategoryOfConcern { get; set; }
+        public string? CategoryOfConcern { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("qualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string QualityOfEducation { get; set; }
+        public string? QualityOfEducation { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("behaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BehaviourAndAttitudes { get; set; }
+        public string? BehaviourAndAttitudes { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("personalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PersonalDevelopment { get; set; }
+        public string? PersonalDevelopment { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("effectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EffectivenessOfLeadershipAndManagement { get; set; }
+        public string? EffectivenessOfLeadershipAndManagement { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("safeguardingIsEffective", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SafeguardingIsEffective { get; set; }
+        public string? SafeguardingIsEffective { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("earlyYearsProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EarlyYearsProvision { get; set; }
+        public string? EarlyYearsProvision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sixthFormProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SixthFormProvision { get; set; }
+        public string? SixthFormProvision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousFullInspectionNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousFullInspectionNumber { get; set; }
+        public string? PreviousFullInspectionNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousInspectionStartDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousInspectionStartDate { get; set; }
+        public string? PreviousInspectionStartDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousInspectionEndDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousInspectionEndDate { get; set; }
+        public string? PreviousInspectionEndDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousPublicationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousPublicationDate { get; set; }
+        public string? PreviousPublicationDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousFullInspectionRelatesToUrnOfCurrentSchool", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousFullInspectionRelatesToUrnOfCurrentSchool { get; set; }
+        public string? PreviousFullInspectionRelatesToUrnOfCurrentSchool { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("urnAtTheTimeOfPreviousFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UrnAtTheTimeOfPreviousFullInspection { get; set; }
+        public string? UrnAtTheTimeOfPreviousFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laestabAtTheTimeOfPreviousFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LaestabAtTheTimeOfPreviousFullInspection { get; set; }
+        public string? LaestabAtTheTimeOfPreviousFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolNameAtTheTimeOfPreviousFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolNameAtTheTimeOfPreviousFullInspection { get; set; }
+        public string? SchoolNameAtTheTimeOfPreviousFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolTypeAtTheTimeOfPreviousFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolTypeAtTheTimeOfPreviousFullInspection { get; set; }
+        public string? SchoolTypeAtTheTimeOfPreviousFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousFullInspectionOverallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousFullInspectionOverallEffectiveness { get; set; }
+        public string? PreviousFullInspectionOverallEffectiveness { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousCategoryOfConcern", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousCategoryOfConcern { get; set; }
+        public string? PreviousCategoryOfConcern { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousQualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousQualityOfEducation { get; set; }
+        public string? PreviousQualityOfEducation { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousBehaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousBehaviourAndAttitudes { get; set; }
+        public string? PreviousBehaviourAndAttitudes { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousPersonalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousPersonalDevelopment { get; set; }
+        public string? PreviousPersonalDevelopment { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousEffectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousEffectivenessOfLeadershipAndManagement { get; set; }
+        public string? PreviousEffectivenessOfLeadershipAndManagement { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousIsSafeguardingEffective", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousIsSafeguardingEffective { get; set; }
+        public string? PreviousIsSafeguardingEffective { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousEarlyYearsProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousEarlyYearsProvision { get; set; }
+        public string? PreviousEarlyYearsProvision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousSixthFormProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousSixthFormProvision { get; set; }
+        public string? PreviousSixthFormProvision { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1201,85 +1203,85 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class MISFEAResponse
     {
         [Newtonsoft.Json.JsonProperty("provider", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ProviderResponse Provider { get; set; }
+        public ProviderResponse? Provider { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("localAuthority", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LocalAuthority { get; set; }
+        public string? LocalAuthority { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("region", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Region { get; set; }
+        public string? Region { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ofstedRegion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OfstedRegion { get; set; }
+        public string? OfstedRegion { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfLatestShortInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfLatestShortInspection { get; set; }
+        public string? DateOfLatestShortInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfShortInspectionsSinceLastFullInspectionRAW", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfShortInspectionsSinceLastFullInspectionRAW { get; set; }
+        public string? NumberOfShortInspectionsSinceLastFullInspectionRAW { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfShortInspectionsSinceLastFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfShortInspectionsSinceLastFullInspection { get; set; }
+        public string? NumberOfShortInspectionsSinceLastFullInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionNumber { get; set; }
+        public string? InspectionNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionType { get; set; }
+        public string? InspectionType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("firstDayOfInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FirstDayOfInspection { get; set; }
+        public string? FirstDayOfInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("lastDayOfInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LastDayOfInspection { get; set; }
+        public string? LastDayOfInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("datePublished", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DatePublished { get; set; }
+        public string? DatePublished { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("overallEffectivenessRAW", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OverallEffectivenessRAW { get; set; }
+        public string? OverallEffectivenessRAW { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("overallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OverallEffectiveness { get; set; }
+        public string? OverallEffectiveness { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("qualityOfEducationRAW", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string QualityOfEducationRAW { get; set; }
+        public string? QualityOfEducationRAW { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("qualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string QualityOfEducation { get; set; }
+        public string? QualityOfEducation { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("behaviourAndAttitudesRAW", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BehaviourAndAttitudesRAW { get; set; }
+        public string? BehaviourAndAttitudesRAW { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("behaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BehaviourAndAttitudes { get; set; }
+        public string? BehaviourAndAttitudes { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("personalDevelopmentRAW", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PersonalDevelopmentRAW { get; set; }
+        public string? PersonalDevelopmentRAW { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("personalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PersonalDevelopment { get; set; }
+        public string? PersonalDevelopment { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("effectivenessOfLeadershipAndManagementRAW", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EffectivenessOfLeadershipAndManagementRAW { get; set; }
+        public string? EffectivenessOfLeadershipAndManagementRAW { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("effectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EffectivenessOfLeadershipAndManagement { get; set; }
+        public string? EffectivenessOfLeadershipAndManagement { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("isSafeguardingEffective", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string IsSafeguardingEffective { get; set; }
+        public string? IsSafeguardingEffective { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousInspectionNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousInspectionNumber { get; set; }
+        public string? PreviousInspectionNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousLastDayOfInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousLastDayOfInspection { get; set; }
+        public string? PreviousLastDayOfInspection { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousOverallEffectivenessRAW", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousOverallEffectivenessRAW { get; set; }
+        public string? PreviousOverallEffectivenessRAW { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("previousOverallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PreviousOverallEffectiveness { get; set; }
+        public string? PreviousOverallEffectiveness { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1299,20 +1301,20 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProviderResponse
     {
-        [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Urn { get; set; }
+        [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Urn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Type { get; set; }
+        public string? Type { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("group", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Group { get; set; }
+        public string? Group { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Ukprn { get; set; }
+        public int? Ukprn { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1333,16 +1335,16 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class ViewAcademyConversionResponse
     {
         [Newtonsoft.Json.JsonProperty("viabilityIssue", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ViabilityIssue { get; set; }
+        public string? ViabilityIssue { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("pfi", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Pfi { get; set; }
+        public string? Pfi { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("pan", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Pan { get; set; }
+        public string? Pan { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("deficit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Deficit { get; set; }
+        public string? Deficit { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1363,28 +1365,28 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class SMARTDataResponse
     {
         [Newtonsoft.Json.JsonProperty("probabilityOfDeclining", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProbabilityOfDeclining { get; set; }
+        public string? ProbabilityOfDeclining { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("probabilityOfStayingTheSame", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProbabilityOfStayingTheSame { get; set; }
+        public string? ProbabilityOfStayingTheSame { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("probabilityOfImproving", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProbabilityOfImproving { get; set; }
+        public string? ProbabilityOfImproving { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("predictedChangeInProgress8Score", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PredictedChangeInProgress8Score { get; set; }
+        public string? PredictedChangeInProgress8Score { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("predictedChanceOfChangeOccurring", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PredictedChanceOfChangeOccurring { get; set; }
+        public string? PredictedChanceOfChangeOccurring { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("totalNumberOfRisks", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TotalNumberOfRisks { get; set; }
+        public string? TotalNumberOfRisks { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("totalRiskScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TotalRiskScore { get; set; }
+        public string? TotalRiskScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("riskRatingNum", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RiskRatingNum { get; set; }
+        public string? RiskRatingNum { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1405,19 +1407,19 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class PlaceholderResponse
     {
         [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Urn { get; set; }
+        public string? Urn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ukprn { get; set; }
+        public string? Ukprn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Type { get; set; }
+        public string? Type { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("group", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Group { get; set; }
+        public string? Group { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1438,13 +1440,13 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class EstablishmentSummaryResponse
     {
         [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Urn { get; set; }
+        public string? Urn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string? Name { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ukprn { get; set; }
+        public string? Ukprn { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1465,22 +1467,22 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class EducationalPerformanceResponse
     {
         [Newtonsoft.Json.JsonProperty("schoolName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolName { get; set; }
+        public string? SchoolName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("keyStage1", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<KeyStage1PerformanceResponse> KeyStage1 { get; set; }
+        public System.Collections.Generic.List<KeyStage1PerformanceResponse>? KeyStage1 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("keyStage2", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<KeyStage2PerformanceResponse> KeyStage2 { get; set; }
+        public System.Collections.Generic.List<KeyStage2PerformanceResponse>? KeyStage2 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("keyStage4", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<KeyStage4PerformanceResponse> KeyStage4 { get; set; }
+        public System.Collections.Generic.List<KeyStage4PerformanceResponse>? KeyStage4 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("keyStage5", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<KeyStage5PerformanceResponse> KeyStage5 { get; set; }
+        public System.Collections.Generic.List<KeyStage5PerformanceResponse>? KeyStage5 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("absenceData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<SchoolAbsenceDataDto> AbsenceData { get; set; }
+        public System.Collections.Generic.List<SchoolAbsenceDataDto>? AbsenceData { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1501,16 +1503,16 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class KeyStage1PerformanceResponse
     {
         [Newtonsoft.Json.JsonProperty("year", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Year { get; set; }
+        public string? Year { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("reading", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Reading { get; set; }
+        public int? Reading { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("writing", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Writing { get; set; }
+        public int? Writing { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("maths", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Maths { get; set; }
+        public int? Maths { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1531,52 +1533,52 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class KeyStage2PerformanceResponse
     {
         [Newtonsoft.Json.JsonProperty("year", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Year { get; set; }
+        public string? Year { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("percentageMeetingExpectedStdInRWM", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse PercentageMeetingExpectedStdInRWM { get; set; }
+        public DisadvantagedPupilsResponse? PercentageMeetingExpectedStdInRWM { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("percentageAchievingHigherStdInRWM", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse PercentageAchievingHigherStdInRWM { get; set; }
+        public DisadvantagedPupilsResponse? PercentageAchievingHigherStdInRWM { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("readingProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse ReadingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? ReadingProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("writingProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse WritingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? WritingProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("mathsProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse MathsProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? MathsProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAveragePercentageMeetingExpectedStdInRWM", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAveragePercentageMeetingExpectedStdInRWM { get; set; }
+        public DisadvantagedPupilsResponse? NationalAveragePercentageMeetingExpectedStdInRWM { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAveragePercentageAchievingHigherStdInRWM", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAveragePercentageAchievingHigherStdInRWM { get; set; }
+        public DisadvantagedPupilsResponse? NationalAveragePercentageAchievingHigherStdInRWM { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageReadingProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageReadingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageReadingProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageWritingProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageWritingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageWritingProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageMathsProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageMathsProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageMathsProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAveragePercentageMeetingExpectedStdInRWM", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAveragePercentageMeetingExpectedStdInRWM { get; set; }
+        public DisadvantagedPupilsResponse? LaAveragePercentageMeetingExpectedStdInRWM { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAveragePercentageAchievingHigherStdInRWM", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAveragePercentageAchievingHigherStdInRWM { get; set; }
+        public DisadvantagedPupilsResponse? LaAveragePercentageAchievingHigherStdInRWM { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageReadingProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageReadingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageReadingProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageWritingProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageWritingProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageWritingProgressScore { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageMathsProgressScore", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageMathsProgressScore { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageMathsProgressScore { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1597,10 +1599,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class DisadvantagedPupilsResponse
     {
         [Newtonsoft.Json.JsonProperty("notDisadvantaged", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NotDisadvantaged { get; set; }
+        public string? NotDisadvantaged { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("disadvantaged", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Disadvantaged { get; set; }
+        public string? Disadvantaged { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1621,115 +1623,115 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class KeyStage4PerformanceResponse
     {
         [Newtonsoft.Json.JsonProperty("year", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Year { get; set; }
+        public string? Year { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipAttainment8score", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipAttainment8score { get; set; }
+        public DisadvantagedPupilsResponse? SipAttainment8score { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipAttainment8scoreenglish", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipAttainment8scoreenglish { get; set; }
+        public DisadvantagedPupilsResponse? SipAttainment8scoreenglish { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipAttainment8scoremaths", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipAttainment8scoremaths { get; set; }
+        public DisadvantagedPupilsResponse? SipAttainment8scoremaths { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipAttainment8scoreebacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipAttainment8scoreebacc { get; set; }
+        public DisadvantagedPupilsResponse? SipAttainment8scoreebacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipNumberofpupilsprogress8", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipNumberofpupilsprogress8 { get; set; }
+        public DisadvantagedPupilsResponse? SipNumberofpupilsprogress8 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipProgress8upperconfidence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? SipProgress8upperconfidence { get; set; }
+        public decimal? SipProgress8upperconfidence { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipProgress8lowerconfidence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? SipProgress8lowerconfidence { get; set; }
+        public decimal? SipProgress8lowerconfidence { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipProgress8english", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipProgress8english { get; set; }
+        public DisadvantagedPupilsResponse? SipProgress8english { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipProgress8maths", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipProgress8maths { get; set; }
+        public DisadvantagedPupilsResponse? SipProgress8maths { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipProgress8ebacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipProgress8ebacc { get; set; }
+        public DisadvantagedPupilsResponse? SipProgress8ebacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sipProgress8Score", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse SipProgress8Score { get; set; }
+        public DisadvantagedPupilsResponse? SipProgress8Score { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageA8Score", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageA8Score { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageA8Score { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageA8English", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageA8English { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageA8English { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageA8Maths", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageA8Maths { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageA8Maths { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageA8EBacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageA8EBacc { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageA8EBacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageP8PupilsIncluded", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageP8PupilsIncluded { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageP8PupilsIncluded { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageP8Score", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageP8Score { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageP8Score { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageP8LowerConfidence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? NationalAverageP8LowerConfidence { get; set; }
+        public decimal? NationalAverageP8LowerConfidence { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageP8UpperConfidence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? NationalAverageP8UpperConfidence { get; set; }
+        public decimal? NationalAverageP8UpperConfidence { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageP8English", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageP8English { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageP8English { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageP8Maths", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageP8Maths { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageP8Maths { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAverageP8Ebacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse NationalAverageP8Ebacc { get; set; }
+        public DisadvantagedPupilsResponse? NationalAverageP8Ebacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageA8Score", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageA8Score { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageA8Score { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageA8English", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageA8English { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageA8English { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageA8Maths", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageA8Maths { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageA8Maths { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageA8EBacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageA8EBacc { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageA8EBacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageP8PupilsIncluded", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageP8PupilsIncluded { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageP8PupilsIncluded { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageP8Score", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageP8Score { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageP8Score { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageP8LowerConfidence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? LaAverageP8LowerConfidence { get; set; }
+        public decimal? LaAverageP8LowerConfidence { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageP8UpperConfidence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? LaAverageP8UpperConfidence { get; set; }
+        public decimal? LaAverageP8UpperConfidence { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageP8English", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageP8English { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageP8English { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageP8Maths", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageP8Maths { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageP8Maths { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAverageP8Ebacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse LaAverageP8Ebacc { get; set; }
+        public DisadvantagedPupilsResponse? LaAverageP8Ebacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laEnteringEbacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? LaEnteringEbacc { get; set; }
+        public decimal? LaEnteringEbacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("enteringebacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? Enteringebacc { get; set; }
+        public decimal? Enteringebacc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalEnteringEbacc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? NationalEnteringEbacc { get; set; }
+        public decimal? NationalEnteringEbacc { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1750,31 +1752,31 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class KeyStage5PerformanceResponse
     {
         [Newtonsoft.Json.JsonProperty("year", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Year { get; set; }
+        public string? Year { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("academicQualificationAverage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? AcademicQualificationAverage { get; set; }
+        public decimal? AcademicQualificationAverage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("appliedGeneralQualificationAverage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? AppliedGeneralQualificationAverage { get; set; }
+        public decimal? AppliedGeneralQualificationAverage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAcademicQualificationAverage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? NationalAcademicQualificationAverage { get; set; }
+        public decimal? NationalAcademicQualificationAverage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nationalAppliedGeneralQualificationAverage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? NationalAppliedGeneralQualificationAverage { get; set; }
+        public decimal? NationalAppliedGeneralQualificationAverage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAcademicQualificationAverage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? LaAcademicQualificationAverage { get; set; }
+        public decimal? LaAcademicQualificationAverage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laAppliedGeneralQualificationAverage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public decimal? LaAppliedGeneralQualificationAverage { get; set; }
+        public decimal? LaAppliedGeneralQualificationAverage { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("appliedGeneralProgress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse AppliedGeneralProgress { get; set; }
+        public DisadvantagedPupilsResponse? AppliedGeneralProgress { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("academicProgress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public DisadvantagedPupilsResponse AcademicProgress { get; set; }
+        public DisadvantagedPupilsResponse? AcademicProgress { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1794,14 +1796,14 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SchoolAbsenceDataDto
     {
-        [Newtonsoft.Json.JsonProperty("year", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Year { get; set; }
+        [Newtonsoft.Json.JsonProperty("year", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Year { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("overallAbsence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OverallAbsence { get; set; }
+        public string? OverallAbsence { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("persistentAbsence", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PersistentAbsence { get; set; }
+        public string? PersistentAbsence { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1822,13 +1824,13 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class TrustResponse
     {
         [Newtonsoft.Json.JsonProperty("ifdData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IFDDataResponse IfdData { get; set; }
+        public IFDDataResponse? IfdData { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("giasData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public GIASDataResponse GiasData { get; set; }
+        public GIASDataResponse? GiasData { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishments", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<EstablishmentResponse> Establishments { get; set; }
+        public System.Collections.Generic.List<EstablishmentResponse>? Establishments { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1849,64 +1851,64 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class IFDDataResponse
     {
         [Newtonsoft.Json.JsonProperty("trustOpenDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustOpenDate { get; set; }
+        public string? TrustOpenDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("leadRSCRegion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LeadRSCRegion { get; set; }
+        public string? LeadRSCRegion { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustContactPhoneNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustContactPhoneNumber { get; set; }
+        public string? TrustContactPhoneNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("performanceAndRiskDateOfMeeting", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PerformanceAndRiskDateOfMeeting { get; set; }
+        public string? PerformanceAndRiskDateOfMeeting { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("prioritisedAreaOfReview", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PrioritisedAreaOfReview { get; set; }
+        public string? PrioritisedAreaOfReview { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("currentSingleListGrouping", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CurrentSingleListGrouping { get; set; }
+        public string? CurrentSingleListGrouping { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfGroupingDecision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfGroupingDecision { get; set; }
+        public string? DateOfGroupingDecision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateEnteredOntoSingleList", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateEnteredOntoSingleList { get; set; }
+        public string? DateEnteredOntoSingleList { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustReviewWriteup", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustReviewWriteup { get; set; }
+        public string? TrustReviewWriteup { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfTrustReviewMeeting", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfTrustReviewMeeting { get; set; }
+        public string? DateOfTrustReviewMeeting { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("followupLetterSent", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FollowupLetterSent { get; set; }
+        public string? FollowupLetterSent { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateActionPlannedFor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateActionPlannedFor { get; set; }
+        public string? DateActionPlannedFor { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("wipSummaryGoesToMinister", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WipSummaryGoesToMinister { get; set; }
+        public string? WipSummaryGoesToMinister { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("externalGovernanceReviewDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ExternalGovernanceReviewDate { get; set; }
+        public string? ExternalGovernanceReviewDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("efficiencyICFPreviewCompleted", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EfficiencyICFPreviewCompleted { get; set; }
+        public string? EfficiencyICFPreviewCompleted { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("efficiencyICFPreviewOther", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EfficiencyICFPreviewOther { get; set; }
+        public string? EfficiencyICFPreviewOther { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("linkToWorkplaceForEfficiencyICFReview", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LinkToWorkplaceForEfficiencyICFReview { get; set; }
+        public string? LinkToWorkplaceForEfficiencyICFReview { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberInTrust", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberInTrust { get; set; }
+        public string? NumberInTrust { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustType { get; set; }
+        public string? TrustType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustAddress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressResponse TrustAddress { get; set; }
+        public AddressResponse? TrustAddress { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1927,22 +1929,22 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class GIASDataResponse
     {
         [Newtonsoft.Json.JsonProperty("groupId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GroupId { get; set; }
+        public string? GroupId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("groupName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GroupName { get; set; }
+        public string? GroupName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("groupType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GroupType { get; set; }
+        public string? GroupType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("companiesHouseNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CompaniesHouseNumber { get; set; }
+        public string? CompaniesHouseNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("groupContactAddress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressResponse GroupContactAddress { get; set; }
+        public AddressResponse? GroupContactAddress { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ukprn { get; set; }
+        public string? Ukprn { get; set; } = default!;
 
         public string ToJson()
         {
@@ -1963,25 +1965,25 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class TrustSummaryResponse
     {
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ukprn { get; set; }
+        public string? Ukprn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Urn { get; set; }
+        public string? Urn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("groupName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GroupName { get; set; }
+        public string? GroupName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("companiesHouseNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CompaniesHouseNumber { get; set; }
+        public string? CompaniesHouseNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustType { get; set; }
+        public string? TrustType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustAddress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressResponse TrustAddress { get; set; }
+        public AddressResponse? TrustAddress { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishments", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<EstablishmentSummaryResponse> Establishments { get; set; }
+        public System.Collections.Generic.List<EstablishmentSummaryResponse>? Establishments { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2002,10 +2004,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class ApiResponseV2OfBaselineTrackerResponse
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<BaselineTrackerResponse> Data { get; set; }
+        public System.Collections.Generic.List<BaselineTrackerResponse>? Data { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("paging", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PagingResponse Paging { get; set; }
+        public PagingResponse? Paging { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2026,142 +2028,142 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class BaselineTrackerResponse
     {
         [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Urn { get; set; }
+        public string? Urn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("routeOfProject", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RouteOfProject { get; set; }
+        public string? RouteOfProject { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("pupilNumberMethodology", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PupilNumberMethodology { get; set; }
+        public string? PupilNumberMethodology { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("academyFundingTypeCategory", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AcademyFundingTypeCategory { get; set; }
+        public string? AcademyFundingTypeCategory { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("academyOrderApprovedDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? AcademyOrderApprovedDate { get; set; }
+        public System.DateTime? AcademyOrderApprovedDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("currentConverionDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? CurrentConverionDate { get; set; }
+        public System.DateTime? CurrentConverionDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("laestab", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Laestab { get; set; }
+        [Newtonsoft.Json.JsonProperty("laestab", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Laestab { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("newAcademyUrn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NewAcademyUrn { get; set; }
+        public string? NewAcademyUrn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("projectStatus", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProjectStatus { get; set; }
+        public string? ProjectStatus { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("newLAEstab", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NewLAEstab { get; set; }
+        public string? NewLAEstab { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("newAcademyUKPRN", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NewAcademyUKPRN { get; set; }
+        public string? NewAcademyUKPRN { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ukPrn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UkPrn { get; set; }
+        public string? UkPrn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("projectName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProjectName { get; set; }
+        public string? ProjectName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("newAcademyName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NewAcademyName { get; set; }
+        public string? NewAcademyName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolContactName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolContactName { get; set; }
+        public string? SchoolContactName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolAddress1", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolAddress1 { get; set; }
+        public string? SchoolAddress1 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolAddress2", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolAddress2 { get; set; }
+        public string? SchoolAddress2 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolAddress3", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolAddress3 { get; set; }
+        public string? SchoolAddress3 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolAddress4", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolAddress4 { get; set; }
+        public string? SchoolAddress4 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolPostcode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolPostcode { get; set; }
+        public string? SchoolPostcode { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolEmail", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolEmail { get; set; }
+        public string? SchoolEmail { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sponsorName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SponsorName { get; set; }
+        public string? SponsorName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sponsorReferenceNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SponsorReferenceNumber { get; set; }
+        public string? SponsorReferenceNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("leadSponsorId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LeadSponsorId { get; set; }
+        public string? LeadSponsorId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sponsorEmail", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SponsorEmail { get; set; }
+        public string? SponsorEmail { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nameOfTrust", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NameOfTrust { get; set; }
+        public string? NameOfTrust { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("groupId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GroupId { get; set; }
+        public string? GroupId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("groupType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GroupType { get; set; }
+        public string? GroupType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustUID", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustUID { get; set; }
+        public string? TrustUID { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustUKPRN", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustUKPRN { get; set; }
+        public string? TrustUKPRN { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustCompaniesHouseRef", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustCompaniesHouseRef { get; set; }
+        public string? TrustCompaniesHouseRef { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("la", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string La { get; set; }
+        public string? La { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("region", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Region { get; set; }
+        public string? Region { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("territory", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Territory { get; set; }
+        public string? Territory { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("rsc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Rsc { get; set; }
+        public string? Rsc { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolPhase", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolPhase { get; set; }
+        public string? SchoolPhase { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolType { get; set; }
+        public string? SchoolType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("academyProposedCapacityPrimary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AcademyProposedCapacityPrimary { get; set; }
+        public string? AcademyProposedCapacityPrimary { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("academyProposedCapacitySecondary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AcademyProposedCapacitySecondary { get; set; }
+        public string? AcademyProposedCapacitySecondary { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("academyProposedCapacityPost", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AcademyProposedCapacityPost { get; set; }
+        public string? AcademyProposedCapacityPost { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dfeProjectLead", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DfeProjectLead { get; set; }
+        public string? DfeProjectLead { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dfeGrade6", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DfeGrade6 { get; set; }
+        public string? DfeGrade6 { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dfeTeamLeder", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DfeTeamLeder { get; set; }
+        public string? DfeTeamLeder { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("projectLeadEmail", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProjectLeadEmail { get; set; }
+        public string? ProjectLeadEmail { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("upin", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Upin { get; set; }
+        public string? Upin { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("rpa", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? Rpa { get; set; }
+        public System.DateTime? Rpa { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2181,14 +2183,14 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PagingResponse
     {
-        [Newtonsoft.Json.JsonProperty("page", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Page { get; set; }
+        [Newtonsoft.Json.JsonProperty("page", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Page { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("recordCount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int RecordCount { get; set; }
+        [Newtonsoft.Json.JsonProperty("recordCount", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? RecordCount { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nextPageUrl", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NextPageUrl { get; set; }
+        public string? NextPageUrl { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2209,10 +2211,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class ApiResponseV2OfFssProjectResponse
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<FssProjectResponse> Data { get; set; }
+        public System.Collections.Generic.List<FssProjectResponse>? Data { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("paging", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PagingResponse Paging { get; set; }
+        public PagingResponse? Paging { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2233,121 +2235,121 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class FssProjectResponse
     {
         [Newtonsoft.Json.JsonProperty("actualOpeningDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? ActualOpeningDate { get; set; }
+        public System.DateTime? ActualOpeningDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("ageRange", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AgeRange { get; set; }
+        public string? AgeRange { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("applicationWave", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ApplicationWave { get; set; }
+        public string? ApplicationWave { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("currentFreeSchoolName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CurrentFreeSchoolName { get; set; }
+        public string? CurrentFreeSchoolName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfEntryIntoPreOpening", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? DateOfEntryIntoPreOpening { get; set; }
+        public System.DateTime? DateOfEntryIntoPreOpening { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateSchoolClosed", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? DateSchoolClosed { get; set; }
+        public System.DateTime? DateSchoolClosed { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("residentialBoardingProvisionDetails", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ResidentialBoardingProvisionDetails { get; set; }
+        public string? ResidentialBoardingProvisionDetails { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("faithStatus", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FaithStatus { get; set; }
+        public string? FaithStatus { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("faithType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FaithType { get; set; }
+        public string? FaithType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("otherFaithType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OtherFaithType { get; set; }
+        public string? OtherFaithType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("freeSchoolPenPortrait", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FreeSchoolPenPortrait { get; set; }
+        public string? FreeSchoolPenPortrait { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("fsgLeadContact", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FsgLeadContact { get; set; }
+        public string? FsgLeadContact { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("gender", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Gender { get; set; }
+        public string? Gender { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("laesTab", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LaesTab { get; set; }
+        public string? LaesTab { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("localAuthority", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LocalAuthority { get; set; }
+        public string? LocalAuthority { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfFormsOfEntry", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfFormsOfEntry { get; set; }
+        public string? NumberOfFormsOfEntry { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("nursery", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Nursery { get; set; }
+        public string? Nursery { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("postcode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Postcode { get; set; }
+        public string? Postcode { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("projectId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProjectId { get; set; }
+        public string? ProjectId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("projectStatus", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ProjectStatus { get; set; }
+        public string? ProjectStatus { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("provisionalOpeningDateAgreedWithTrust", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? ProvisionalOpeningDateAgreedWithTrust { get; set; }
+        public System.DateTime? ProvisionalOpeningDateAgreedWithTrust { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("residentialOrBoardingProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ResidentialOrBoardingProvision { get; set; }
+        public string? ResidentialOrBoardingProvision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("rscRegion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RscRegion { get; set; }
+        public string? RscRegion { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolAddress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolAddress { get; set; }
+        public string? SchoolAddress { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolPhase", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolPhase { get; set; }
+        public string? SchoolPhase { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("schoolType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolType { get; set; }
+        public string? SchoolType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sixthForm", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SixthForm { get; set; }
+        public string? SixthForm { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("sixthFormType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SixthFormType { get; set; }
+        public string? SixthFormType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("specialism", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Specialism { get; set; }
+        public string? Specialism { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustId { get; set; }
+        public string? TrustId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustName { get; set; }
+        public string? TrustName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Urn { get; set; }
+        public string? Urn { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("faActualCompletionDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? FaActualCompletionDate { get; set; }
+        public System.DateTime? FaActualCompletionDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("faForecastDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? FaForecastDate { get; set; }
+        public System.DateTime? FaForecastDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("kickOfMeetingHeldDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? KickOfMeetingHeldDate { get; set; }
+        public System.DateTime? KickOfMeetingHeldDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("realisticYearofOpening", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RealisticYearofOpening { get; set; }
+        public string? RealisticYearofOpening { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("memberOfParliament", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string MemberOfParliament { get; set; }
+        public string? MemberOfParliament { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberOfPupil", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfPupil { get; set; }
+        public string? NumberOfPupil { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("geographicalRegion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GeographicalRegion { get; set; }
+        public string? GeographicalRegion { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2368,10 +2370,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class ApiResponseV2OfTrustSummaryResponse
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<TrustSummaryResponse> Data { get; set; }
+        public System.Collections.Generic.List<TrustSummaryResponse>? Data { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("paging", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PagingResponse Paging { get; set; }
+        public PagingResponse? Paging { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2392,7 +2394,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class ApiSingleResponseV2OfTrustResponse
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public TrustResponse Data { get; set; }
+        public TrustResponse? Data { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2413,10 +2415,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class ApiResponseV2OfTrustResponse
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<TrustResponse> Data { get; set; }
+        public System.Collections.Generic.List<TrustResponse>? Data { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("paging", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PagingResponse Paging { get; set; }
+        public PagingResponse? Paging { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2437,7 +2439,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class ApiSingleResponseV2OfMasterTrustResponse
     {
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MasterTrustResponse Data { get; set; }
+        public MasterTrustResponse? Data { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2458,13 +2460,13 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class MasterTrustResponse
     {
         [Newtonsoft.Json.JsonProperty("trustData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MasterTrustDataResponse TrustData { get; set; }
+        public MasterTrustDataResponse? TrustData { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("giasData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public GIASDataResponse GiasData { get; set; }
+        public GIASDataResponse? GiasData { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("establishments", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<EstablishmentResponse> Establishments { get; set; }
+        public System.Collections.Generic.List<EstablishmentResponse>? Establishments { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2485,58 +2487,58 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial class MasterTrustDataResponse
     {
         [Newtonsoft.Json.JsonProperty("trustContactPhoneNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustContactPhoneNumber { get; set; }
+        public string? TrustContactPhoneNumber { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("performanceAndRiskDateOfMeeting", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PerformanceAndRiskDateOfMeeting { get; set; }
+        public string? PerformanceAndRiskDateOfMeeting { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("prioritisedAreaOfReview", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PrioritisedAreaOfReview { get; set; }
+        public string? PrioritisedAreaOfReview { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("currentSingleListGrouping", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CurrentSingleListGrouping { get; set; }
+        public string? CurrentSingleListGrouping { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfGroupingDecision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfGroupingDecision { get; set; }
+        public string? DateOfGroupingDecision { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateEnteredOntoSingleList", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateEnteredOntoSingleList { get; set; }
+        public string? DateEnteredOntoSingleList { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustReviewWriteup", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustReviewWriteup { get; set; }
+        public string? TrustReviewWriteup { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateOfTrustReviewMeeting", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfTrustReviewMeeting { get; set; }
+        public string? DateOfTrustReviewMeeting { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("followupLetterSent", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FollowupLetterSent { get; set; }
+        public string? FollowupLetterSent { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateActionPlannedFor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateActionPlannedFor { get; set; }
+        public string? DateActionPlannedFor { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("wipSummaryGoesToMinister", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string WipSummaryGoesToMinister { get; set; }
+        public string? WipSummaryGoesToMinister { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("externalGovernanceReviewDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ExternalGovernanceReviewDate { get; set; }
+        public string? ExternalGovernanceReviewDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("efficiencyICFPreviewCompleted", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EfficiencyICFPreviewCompleted { get; set; }
+        public string? EfficiencyICFPreviewCompleted { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("efficiencyICFPreviewOther", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EfficiencyICFPreviewOther { get; set; }
+        public string? EfficiencyICFPreviewOther { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("linkToWorkplaceForEfficiencyICFReview", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LinkToWorkplaceForEfficiencyICFReview { get; set; }
+        public string? LinkToWorkplaceForEfficiencyICFReview { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("numberInTrust", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberInTrust { get; set; }
+        public string? NumberInTrust { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TrustType { get; set; }
+        public string? TrustType { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("trustAddress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressResponse TrustAddress { get; set; }
+        public AddressResponse? TrustAddress { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2556,107 +2558,107 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class EstablishmentDto
     {
-        [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ukprn { get; set; }
+        [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Ukprn { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Urn { get; set; }
+        [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Urn { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("localAuthorityCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LocalAuthorityCode { get; set; }
+        [Newtonsoft.Json.JsonProperty("localAuthorityCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LocalAuthorityCode { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("localAuthorityName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LocalAuthorityName { get; set; }
+        [Newtonsoft.Json.JsonProperty("localAuthorityName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LocalAuthorityName { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("ofstedRating", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OfstedRating { get; set; }
+        [Newtonsoft.Json.JsonProperty("ofstedRating", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? OfstedRating { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("ofstedLastInspection", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OfstedLastInspection { get; set; }
+        [Newtonsoft.Json.JsonProperty("ofstedLastInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? OfstedLastInspection { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("statutoryLowAge", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string StatutoryLowAge { get; set; }
+        [Newtonsoft.Json.JsonProperty("statutoryLowAge", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? StatutoryLowAge { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("statutoryHighAge", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string StatutoryHighAge { get; set; }
+        [Newtonsoft.Json.JsonProperty("statutoryHighAge", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? StatutoryHighAge { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("schoolCapacity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SchoolCapacity { get; set; }
+        [Newtonsoft.Json.JsonProperty("schoolCapacity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? SchoolCapacity { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pfi", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Pfi { get; set; }
+        [Newtonsoft.Json.JsonProperty("pfi", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Pfi { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("establishmentNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EstablishmentNumber { get; set; }
+        [Newtonsoft.Json.JsonProperty("establishmentNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? EstablishmentNumber { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("pan", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Pan { get; set; }
+        [Newtonsoft.Json.JsonProperty("pan", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Pan { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("deficit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Deficit { get; set; }
+        [Newtonsoft.Json.JsonProperty("deficit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Deficit { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("viabilityIssue", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ViabilityIssue { get; set; }
+        [Newtonsoft.Json.JsonProperty("viabilityIssue", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? ViabilityIssue { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("giasLastChangedDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GiasLastChangedDate { get; set; }
+        [Newtonsoft.Json.JsonProperty("giasLastChangedDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? GiasLastChangedDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("noOfBoys", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NoOfBoys { get; set; }
+        [Newtonsoft.Json.JsonProperty("noOfBoys", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NoOfBoys { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("noOfGirls", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NoOfGirls { get; set; }
+        [Newtonsoft.Json.JsonProperty("noOfGirls", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NoOfGirls { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("senUnitCapacity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SenUnitCapacity { get; set; }
+        [Newtonsoft.Json.JsonProperty("senUnitCapacity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? SenUnitCapacity { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("senUnitOnRoll", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SenUnitOnRoll { get; set; }
+        [Newtonsoft.Json.JsonProperty("senUnitOnRoll", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? SenUnitOnRoll { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("religousEthos", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ReligousEthos { get; set; }
+        [Newtonsoft.Json.JsonProperty("religousEthos", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? ReligousEthos { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("headteacherTitle", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherTitle { get; set; }
+        [Newtonsoft.Json.JsonProperty("headteacherTitle", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? HeadteacherTitle { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("headteacherFirstName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherFirstName { get; set; }
+        [Newtonsoft.Json.JsonProperty("headteacherFirstName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? HeadteacherFirstName { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("headteacherLastName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherLastName { get; set; }
+        [Newtonsoft.Json.JsonProperty("headteacherLastName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? HeadteacherLastName { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("headteacherPreferredJobTitle", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string HeadteacherPreferredJobTitle { get; set; }
+        [Newtonsoft.Json.JsonProperty("headteacherPreferredJobTitle", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? HeadteacherPreferredJobTitle { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("diocese", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeDto Diocese { get; set; }
+        [Newtonsoft.Json.JsonProperty("diocese", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? Diocese { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("establishmentType", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeDto EstablishmentType { get; set; }
+        [Newtonsoft.Json.JsonProperty("establishmentType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? EstablishmentType { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("gor", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeDto Gor { get; set; }
+        [Newtonsoft.Json.JsonProperty("gor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? Gor { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("phaseOfEducation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeDto PhaseOfEducation { get; set; }
+        [Newtonsoft.Json.JsonProperty("phaseOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? PhaseOfEducation { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("religiousCharacter", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeDto ReligiousCharacter { get; set; }
+        [Newtonsoft.Json.JsonProperty("religiousCharacter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? ReligiousCharacter { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("parliamentaryConstituency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeDto ParliamentaryConstituency { get; set; }
+        [Newtonsoft.Json.JsonProperty("parliamentaryConstituency", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? ParliamentaryConstituency { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("census", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public CensusDto Census { get; set; }
+        [Newtonsoft.Json.JsonProperty("census", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public CensusDto? Census { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("misEstablishment", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MisEstablishmentDto MisEstablishment { get; set; }
+        [Newtonsoft.Json.JsonProperty("misEstablishment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MisEstablishmentDto? MisEstablishment { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressDto Address { get; set; }
+        [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public AddressDto? Address { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2676,11 +2678,11 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class NameAndCodeDto
     {
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Code { get; set; }
+        [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Code { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2700,20 +2702,20 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CensusDto
     {
-        [Newtonsoft.Json.JsonProperty("numberOfPupils", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NumberOfPupils { get; set; }
+        [Newtonsoft.Json.JsonProperty("numberOfPupils", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NumberOfPupils { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("percentageFsm", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageFsm { get; set; }
+        [Newtonsoft.Json.JsonProperty("percentageFsm", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PercentageFsm { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("percentageFsmLastSixYears", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageFsmLastSixYears { get; set; }
+        [Newtonsoft.Json.JsonProperty("percentageFsmLastSixYears", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PercentageFsmLastSixYears { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("percentageEnglishAsSecondLanguage", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageEnglishAsSecondLanguage { get; set; }
+        [Newtonsoft.Json.JsonProperty("percentageEnglishAsSecondLanguage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PercentageEnglishAsSecondLanguage { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("percentageSen", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PercentageSen { get; set; }
+        [Newtonsoft.Json.JsonProperty("percentageSen", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PercentageSen { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2733,35 +2735,35 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class MisEstablishmentDto
     {
-        [Newtonsoft.Json.JsonProperty("dateOfLatestSection8Inspection", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string DateOfLatestSection8Inspection { get; set; }
+        [Newtonsoft.Json.JsonProperty("dateOfLatestSection8Inspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? DateOfLatestSection8Inspection { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("inspectionEndDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string InspectionEndDate { get; set; }
+        [Newtonsoft.Json.JsonProperty("inspectionEndDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? InspectionEndDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("overallEffectiveness", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string OverallEffectiveness { get; set; }
+        [Newtonsoft.Json.JsonProperty("overallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? OverallEffectiveness { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("qualityOfEducation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string QualityOfEducation { get; set; }
+        [Newtonsoft.Json.JsonProperty("qualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? QualityOfEducation { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("behaviourAndAttitudes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string BehaviourAndAttitudes { get; set; }
+        [Newtonsoft.Json.JsonProperty("behaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? BehaviourAndAttitudes { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("personalDevelopment", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PersonalDevelopment { get; set; }
+        [Newtonsoft.Json.JsonProperty("personalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PersonalDevelopment { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("effectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EffectivenessOfLeadershipAndManagement { get; set; }
+        [Newtonsoft.Json.JsonProperty("effectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? EffectivenessOfLeadershipAndManagement { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("earlyYearsProvision", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string EarlyYearsProvision { get; set; }
+        [Newtonsoft.Json.JsonProperty("earlyYearsProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? EarlyYearsProvision { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("sixthFormProvision", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string SixthFormProvision { get; set; }
+        [Newtonsoft.Json.JsonProperty("sixthFormProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? SixthFormProvision { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("weblink", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Weblink { get; set; }
+        [Newtonsoft.Json.JsonProperty("weblink", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Weblink { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2781,23 +2783,23 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AddressDto
     {
-        [Newtonsoft.Json.JsonProperty("street", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Street { get; set; }
+        [Newtonsoft.Json.JsonProperty("street", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Street { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("town", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Town { get; set; }
+        [Newtonsoft.Json.JsonProperty("town", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Town { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("county", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string County { get; set; }
+        [Newtonsoft.Json.JsonProperty("county", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? County { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("postcode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Postcode { get; set; }
+        [Newtonsoft.Json.JsonProperty("postcode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Postcode { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("locality", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Locality { get; set; }
+        [Newtonsoft.Json.JsonProperty("locality", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Locality { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("additional", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Additional { get; set; }
+        [Newtonsoft.Json.JsonProperty("additional", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Additional { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2817,23 +2819,23 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class TrustDto
     {
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Ukprn { get; set; }
+        [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Ukprn { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public NameAndCodeDto Type { get; set; }
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? Type { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("companiesHouseNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CompaniesHouseNumber { get; set; }
+        [Newtonsoft.Json.JsonProperty("companiesHouseNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? CompaniesHouseNumber { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("referenceNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ReferenceNumber { get; set; }
+        [Newtonsoft.Json.JsonProperty("referenceNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? ReferenceNumber { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public AddressDto Address { get; set; }
+        [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public AddressDto? Address { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2853,11 +2855,11 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PagedDataResponseOfTrustDto
     {
-        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<TrustDto> Data { get; set; }
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<TrustDto>? Data { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("paging", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PagingResponse2 Paging { get; set; }
+        [Newtonsoft.Json.JsonProperty("paging", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PagingResponse2? Paging { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2877,14 +2879,14 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PagingResponse2
     {
-        [Newtonsoft.Json.JsonProperty("page", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int Page { get; set; }
+        [Newtonsoft.Json.JsonProperty("page", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Page { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("recordCount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int RecordCount { get; set; }
+        [Newtonsoft.Json.JsonProperty("recordCount", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? RecordCount { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("nextPageUrl", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string NextPageUrl { get; set; }
+        [Newtonsoft.Json.JsonProperty("nextPageUrl", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NextPageUrl { get; set; } = default!;
 
         public string ToJson()
         {
@@ -2920,11 +2922,11 @@ namespace Dfe.AcademiesApi.Client.Contracts
     {
         public int StatusCode { get; private set; }
 
-        public string Response { get; private set; }
+        public string? Response { get; private set; }
 
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
 
-        public AcademiesApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
+        public AcademiesApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception? innerException)
             : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
         {
             StatusCode = statusCode;
@@ -2943,7 +2945,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     {
         public TResult Result { get; private set; }
 
-        public AcademiesApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
+        public AcademiesApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception? innerException)
             : base(message, statusCode, response, headers, innerException)
         {
             Result = result;
