@@ -1,5 +1,4 @@
-﻿using Dfe.Academies.Application.Common.Models;
-using Dfe.Academies.Domain.Establishment;
+﻿using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,7 +41,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
+        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken)
         {
             IQueryable<EstablishmentQueryResult> query = BaseQuery();
 
@@ -61,6 +60,11 @@ namespace Dfe.Academies.Infrastructure.Repositories
                     query = query.Where(r => r.Establishment.URN == urnAsNumber);
                 }
             }
+            if (excludeClosed.HasValue && excludeClosed.Value)
+            {
+                query = query.Where(r => !r.Establishment.CloseDate.HasValue);
+            }
+
             var queryResult = await query.Take(100).ToListAsync(cancellationToken);
 
             var result = queryResult.Select(ToEstablishment).ToList();
@@ -103,14 +107,14 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
         {
-            var establishmentIds = 
+            var establishmentIds =
                 await _context.EducationEstablishmentTrusts
-                        .AsNoTracking()             
+                        .AsNoTracking()
                         .Where(eet => eet.TrustId == Convert.ToInt32(trustId))
                         .Select(eet => (long)eet.EducationEstablishmentId)
                         .ToListAsync(cancellationToken);
 
-            var establishments = 
+            var establishments =
                     await BaseQuery()
                         .Where(r => establishmentIds.Contains(r.Establishment.SK.Value))
                         .ToListAsync(cancellationToken);

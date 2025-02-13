@@ -2888,9 +2888,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, bool? excludeClosed)
         {
-            return SearchEstablishments2Async(name, ukPrn, urn, System.Threading.CancellationToken.None);
+            return SearchEstablishments2Async(name, ukPrn, urn, excludeClosed, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2902,7 +2902,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="urn">Unique Reference Numbers (URN).</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, bool? excludeClosed, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2929,6 +2929,10 @@ namespace Dfe.AcademiesApi.Client
                     if (urn != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("urn")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(urn, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (excludeClosed != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("excludeClosed")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(excludeClosed, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 

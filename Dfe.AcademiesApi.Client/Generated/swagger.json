@@ -852,6 +852,15 @@
               "nullable": true
             },
             "x-position": 3
+          },
+          {
+            "name": "excludeClosed",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 4
           }
         ],
         "responses": {
