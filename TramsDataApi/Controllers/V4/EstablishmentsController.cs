@@ -93,14 +93,14 @@ namespace TramsDataApi.Controllers.V4
         [Route("establishments")]
         [SwaggerOperation(Summary = "Search Establishments", Description = "Returns a list of Establishments based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
-        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
                 "Searching for establishments by name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",
                 name, ukPrn, urn);
 
             var (establishments, recordCount) = await _establishmentQueries
-                .Search(name, ukPrn, urn, cancellationToken).ConfigureAwait(false);
+                .Search(name, ukPrn, urn, excludeClosed, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
                 "Found {count} establishments for name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",
@@ -123,14 +123,14 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Get Establishment Unique Reference Numbers (URNs) by Region", Description = "Returns a list of establishment Unique Reference Numbers (URNs) by specified regions.")]
         [SwaggerResponse(200, "Successfully found and returned the establishment Unique Reference Numbers (URNs).", typeof(IEnumerable<int>))]
         [SwaggerResponse(404, "No establishments found for specified regions.")]
-        public async Task<ActionResult<IEnumerable<int>>> GetURNsByRegion([FromQuery] string[] regions,  CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<int>>> GetURNsByRegion([FromQuery] string[] regions, CancellationToken cancellationToken)
         {
-			_logger.LogInformation(
-				"Searching for establishment URNs by regions\"{regions}\"",
+            _logger.LogInformation(
+                "Searching for establishment URNs by regions\"{regions}\"",
                 regions);
 
             var establishmentURNs = await _establishmentQueries
-                .GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);          
+                .GetURNsByRegion(regions, cancellationToken).ConfigureAwait(false);
 
             _logger.LogDebug(JsonSerializer.Serialize(establishmentURNs));
 
@@ -154,7 +154,7 @@ namespace TramsDataApi.Controllers.V4
             var commaSeparatedRequestUrns = string.Join(",", request);
             _logger.LogInformation($"Attemping to get establishments by Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}");
 
-            var establishments = await _establishmentQueries.GetByUrns(request, cancellationToken).ConfigureAwait(false);         
+            var establishments = await _establishmentQueries.GetByUrns(request, cancellationToken).ConfigureAwait(false);
 
             if (establishments == null)
             {

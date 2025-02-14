@@ -52,7 +52,8 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     Email = "schoolA@example.com",
                     Modified = DateTime.UtcNow,
                     ModifiedBy = "System",
-                    ParliamentaryConstituency = "Test Constituency 1"
+                    ParliamentaryConstituency = "Test Constituency 1",
+                    CloseDate = null,
                 };
                 var establishment2 = new Establishment
                 {
@@ -67,9 +68,26 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     Email = "schoolB@example.com",
                     Modified = DateTime.UtcNow,
                     ModifiedBy = "System",
-                    ParliamentaryConstituency = "Test Constituency 2"
+                    ParliamentaryConstituency = "Test Constituency 2",
+                    CloseDate = null,
                 };
-                mstrContext.Establishments.AddRange(establishment1, establishment2);
+                var establishment3 = new Establishment
+                {
+                    SK = 3,
+                    URN = 44,
+                    EstablishmentName = "School C",
+                    LocalAuthorityId = mstrContext.LocalAuthorities.FirstOrDefault()?.SK,
+                    EstablishmentTypeId = mstrContext.EstablishmentTypes.FirstOrDefault()?.SK,
+                    Latitude = 53.3763,
+                    Longitude = -3.1427,
+                    MainPhone = "09876542211",
+                    Email = "schoolC@example.com",
+                    Modified = DateTime.UtcNow,
+                    ModifiedBy = "System",
+                    ParliamentaryConstituency = "Test Constituency 3",
+                    CloseDate = DateTime.UtcNow,
+                };
+                mstrContext.Establishments.AddRange(establishment1, establishment2, establishment3);
 
                 // Populate EducationEstablishmentTrust
                 var educationEstablishmentTrust1 = new EducationEstablishmentTrust

@@ -1,7 +1,9 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Tests.Common.Seeders;
+using Dfe.AcademiesApi.Client;
 using Dfe.AcademiesApi.Client.Contracts;
+using Dfe.TramsDataApi.Client.Extensions;
 using DfE.CoreLibs.Testing.Mocks.Authentication;
 using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
 using Microsoft.AspNetCore.Authentication;
@@ -10,8 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using Dfe.AcademiesApi.Client;
-using Dfe.TramsDataApi.Client.Extensions;
 using TramsDataApi.DatabaseModels;
 
 namespace Dfe.Academies.Tests.Common.Customizations
@@ -61,8 +61,9 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 var services = new ServiceCollection();
                 services.AddSingleton<IConfiguration>(config);
                 services.AddAcademiesApiClient<IEstablishmentsV1Client, EstablishmentsV1Client>(config, client);
+                services.AddAcademiesApiClient<IEstablishmentsV4Client, EstablishmentsV4Client>(config, client);
                 services.AddAcademiesApiClient<ITrustsV1Client, TrustsV1Client>(config, client);
-                
+
                 services.AddDbContext<LegacyTramsDbContext>(options =>
                     options.UseSqlServer("DataSource=:memory:"));
                 var serviceProvider = services.BuildServiceProvider();
@@ -71,6 +72,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 fixture.Inject(serviceProvider);
                 fixture.Inject(client);
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsV1Client>());
+                fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsV4Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsV1Client>());
 
                 fixture.Inject(new List<Claim>());

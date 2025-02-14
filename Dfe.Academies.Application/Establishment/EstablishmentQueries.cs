@@ -40,9 +40,9 @@ namespace Dfe.Academies.Application.Establishment
             return MapToEstablishmentDto(establishment);
         }
 
-        public async Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, CancellationToken cancellationToken)
+        public async Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken)
         {
-            var establishments = await _establishmentRepository.Search(name, ukPrn, urn, cancellationToken);
+            var establishments = await _establishmentRepository.Search(name, ukPrn, urn, excludeClosed, cancellationToken);
 
             return (establishments.Select(x => MapToEstablishmentDto(x)).ToList(), establishments.Count);
         }

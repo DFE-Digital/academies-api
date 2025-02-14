@@ -91,7 +91,8 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             string urn = "1010101";
             string name = "Test name";
             string ukPrn = "Test UkPrn";
-            mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
+            bool? excludeClosed = null;
+            mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.Is<bool?>(x => x == excludeClosed), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
 
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
@@ -103,11 +104,13 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 name,
                 ukPrn,
                 urn,
+                excludeClosed,
                 cancellationToken);
 
             // Assert
             result.Should().BeOfType(typeof((List<EstablishmentDto>, int)));
-            foreach (var establishmentDto in result.Item1) {
+            foreach (var establishmentDto in result.Item1)
+            {
                 var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
                 Assert.True(HasMappedCorrectly(establishmentDto, establishment));
             }
@@ -192,7 +195,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             // Assert
             result.Should().BeOfType(typeof(List<EstablishmentDto>));
             result.Should().HaveCount(0);
-            
+
         }
 
         [Fact]
@@ -220,11 +223,12 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
 
             // Assert
             result.Should().BeOfType(typeof(List<EstablishmentDto>));
-            
-            Assert.All(result, x => {
+
+            Assert.All(result, x =>
+            {
                 var establishment = establishments.Single(es => es.UKPRN == x.Ukprn);
                 Assert.True(HasMappedCorrectly(x, establishment));
-                });
+            });
         }
 
 
