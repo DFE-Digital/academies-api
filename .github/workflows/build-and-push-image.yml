@@ -182,3 +182,4 @@ jobs:
     secrets:
       TRAMS_API_KEY: ${{ secrets.TRAMS_API_KEY }}
       TRAMS_API_BASE_URL: ${{ secrets.TRAMS_API_BASE_URL }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
