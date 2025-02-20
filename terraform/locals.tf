@@ -60,4 +60,5 @@ locals {
   init_container_command                          = var.init_container_command
   monitor_http_availability_fqdn                  = var.monitor_http_availability_fqdn
   dns_alias_records                               = var.dns_alias_records
+  enable_monitoring_traces                        = var.enable_monitoring_traces
 }

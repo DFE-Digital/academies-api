@@ -66,4 +66,6 @@ module "azure_container_apps_hosting" {
 
   monitor_http_availability_fqdn = local.monitor_http_availability_fqdn
   dns_alias_records              = local.dns_alias_records
+
+  enable_monitoring_traces = local.enable_monitoring_traces
 }
