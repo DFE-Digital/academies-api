@@ -150,20 +150,20 @@ namespace Dfe.Academies.Application.Establishment
             return this;
         }
 
-        public EstablishmentDtoBuilder WithMISEstablishment(Domain.Establishment.Establishment establishment)
+        public EstablishmentDtoBuilder WithMISEstablishment(Domain.Establishment.MisEstablishment establishment)
         {
             _dto.MISEstablishment = new MisEstablishmentDto
             {
-                DateOfLatestSection8Inspection = establishment?.DateOfLatestShortInspection.ToResponseDate(),
-                InspectionEndDate = establishment?.InspectionEndDate.ToResponseDate(),
+                DateOfLatestSection8Inspection = establishment?.DateOfLatestSection8Inspection?.ToString(),
+                InspectionEndDate = null!,
                 OverallEffectiveness = establishment?.OverallEffectiveness?.ToString(),
                 QualityOfEducation = establishment?.QualityOfEducation?.ToString(),
                 BehaviourAndAttitudes = establishment?.BehaviourAndAttitudes?.ToString(),
                 PersonalDevelopment = establishment?.PersonalDevelopment?.ToString(),
                 EffectivenessOfLeadershipAndManagement = establishment?.EffectivenessOfLeadershipAndManagement?.ToString(),
                 EarlyYearsProvision = establishment?.EarlyYearsProvisionWhereApplicable?.ToString(),
-                SixthFormProvision = establishment?.SixthFormProvisionWhereApplicable?.ToString(),
-                Weblink = establishment?.Website
+                SixthFormProvision = establishment?.SixthFormProvisionWhereApplicable.ToString(),
+                Weblink = establishment?.WebLink
             };
 
             return this;
