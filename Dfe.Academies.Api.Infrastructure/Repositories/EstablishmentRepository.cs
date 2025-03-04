@@ -7,11 +7,19 @@ namespace Dfe.Academies.Infrastructure.Repositories
     public class EstablishmentRepository : IEstablishmentRepository
     {
         private MstrContext _context;
+        private MisMstrContext _misMstrContext;
 
-        public EstablishmentRepository(MstrContext context)
+        public EstablishmentRepository(MstrContext context, MisMstrContext misMstrContext)
         {
             _context = context;
+            _misMstrContext = misMstrContext;
         }
+
+        public MisEstablishment? GetMisEstablishmentByURN(int? urn)
+        {
+            return _misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn); 
+        }
+
 
         public async Task<Establishment?> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken)
         {

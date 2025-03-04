@@ -35,29 +35,29 @@ namespace Dfe.Academies.Domain.Establishment
         public string? OpenDate { get; set; }
         public DateTime? Modified { get; set; }
         public string? ModifiedBy { get; set; }
-        public int? TheIncomeDeprivationAffectingChildrenIndexIDACIQuintile { get; set; }
-        public int? NumberOfShortInspectionsSinceLastFullInspection { get; set; }
-        public DateTime? DateOfLatestShortInspection { get; set; }
-        public DateTime? ShortInspectionPublicationDate { get; set; }
-        public string? DidTheLatestShortInspectionConvertToAFullInspection { get; set; }
-        public string? ShortInspectionOverallOutcome { get; set; }
-        public int? NumberOfOtherSection8InspectionsSinceLastFullInspection { get; set; }
-        public string? InspectionType { get; set; }
-        public DateTime? InspectionStartDate { get; set; }
-        public DateTime? InspectionEndDate { get; set; }
-        public DateTime? PublicationDate { get; set; }
-        public int? OverallEffectiveness { get; set; }
-        public string? CategoryOfConcern { get; set; }
-        public int? EarlyYearsProvisionWhereApplicable { get; set; }
-        public int? EffectivenessOfLeadershipAndManagement { get; set; }
-        public string? IsSafeguardingEffective { get; set; }
-        public DateTime? PreviousInspectionStartDate { get; set; }
-        public DateTime? PreviousInspectionEndDate { get; set; }
-        public DateTime? PreviousPublicationDate { get; set; }
-        public int? PreviousFullInspectionOverallEffectiveness { get; set; }
-        public string? PreviousCategoryOfConcern { get; set; }
-        public int? PreviousEarlyYearsProvisionWhereApplicable { get; set; }
-        public string? PreviousIsSafeguardingEffective { get; set; }
+       // public int? TheIncomeDeprivationAffectingChildrenIndexIDACIQuintile { get; set; }
+        //public int? NumberOfShortInspectionsSinceLastFullInspection { get; set; }
+        //public DateTime? DateOfLatestShortInspection { get; set; }  // investigate
+        //public DateTime? ShortInspectionPublicationDate { get; set; }
+        //public string? DidTheLatestShortInspectionConvertToAFullInspection { get; set; }
+        //public string? ShortInspectionOverallOutcome { get; set; }
+        //public int? NumberOfOtherSection8InspectionsSinceLastFullInspection { get; set; }
+        //public string? InspectionType { get; set; }
+        //public DateTime? InspectionStartDate { get; set; }
+        //public DateTime? InspectionEndDate { get; set; }  // investigate
+        //public DateTime? PublicationDate { get; set; }
+        //public int? OverallEffectiveness { get; set; } // investigate
+        //public string? CategoryOfConcern { get; set; }
+        //public int? EarlyYearsProvisionWhereApplicable { get; set; } // investigate
+        //public int? EffectivenessOfLeadershipAndManagement { get; set; } // investigate
+        //public string? IsSafeguardingEffective { get; set; }
+        //public DateTime? PreviousInspectionStartDate { get; set; }
+        //public DateTime? PreviousInspectionEndDate { get; set; }
+        //public DateTime? PreviousPublicationDate { get; set; }
+        //public int? PreviousFullInspectionOverallEffectiveness { get; set; }
+        //public string? PreviousCategoryOfConcern { get; set; }
+        //public int? PreviousEarlyYearsProvisionWhereApplicable { get; set; }
+        //public string? PreviousIsSafeguardingEffective { get; set; }
         public string? HeadTitle { get; set; }
         public string? HeadFirstName { get; set; }
         public string? HeadLastName { get; set; }
@@ -72,13 +72,13 @@ namespace Dfe.Academies.Domain.Establishment
         public DateTime? CloseDate { get; set; }
         public string? ProjectLead { get; set; }
         public string? ParliamentaryConstituency { get; set; }
-        public int? QualityOfEducation { get; set; }
-        public int? BehaviourAndAttitudes { get; set; }
-        public int? PersonalDevelopment { get; set; }
-        public int? SixthFormProvisionWhereApplicable { get; set; }
-        public int? URNAtCurrentFullInspection { get; set; }
-        public int? URNAtPreviousFullInspection { get; set; }
-        public int? URNAtSection8Inspection { get; set; }
+        //public int? QualityOfEducation { get; set; }  // investigate
+        //public int? BehaviourAndAttitudes { get; set; }  // investigate
+        //public int? PersonalDevelopment { get; set; }  // investigate
+        //public int? SixthFormProvisionWhereApplicable { get; set; }  // investigate
+        //public int? URNAtCurrentFullInspection { get; set; }
+        //public int? URNAtPreviousFullInspection { get; set; }
+        //public int? URNAtSection8Inspection { get; set; }
         public string? AdministrativeDistrict { get; set; }
         public string? RouteOfProject { get; set; }
         public string? GORregion { get; set; }

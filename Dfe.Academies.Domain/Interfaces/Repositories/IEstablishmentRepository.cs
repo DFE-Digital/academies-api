@@ -1,4 +1,6 @@
-﻿namespace Dfe.Academies.Domain.Interfaces.Repositories
+﻿using Dfe.Academies.Domain.Establishment;
+
+namespace Dfe.Academies.Domain.Interfaces.Repositories
 {
     public interface IEstablishmentRepository
     {
@@ -10,5 +12,6 @@
         Task<List<Domain.Establishment.Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken);
         Task<List<Domain.Establishment.Establishment>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
         Task<List<Domain.Establishment.Establishment>> GetByUkprns(string[] Urns, CancellationToken cancellationToken);
+        MisEstablishment? GetMisEstablishmentByURN(int? urn);
     }
 }
