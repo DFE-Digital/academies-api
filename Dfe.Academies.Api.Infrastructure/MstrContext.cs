@@ -86,21 +86,21 @@ public class MstrContext : DbContext
         establishmentConfiguration.ToTable("EducationEstablishment", DEFAULT_SCHEMA);
 
         establishmentConfiguration.Property(e => e.Diocese).HasColumnName("Diocese");
-        establishmentConfiguration.Property(e => e.OverallEffectiveness).HasColumnName("Overall effectiveness");
+        //establishmentConfiguration.Property(e => e.OverallEffectiveness).HasColumnName("Overall effectiveness");
         //establishmentConfiguration.Property(e => e.IsSafeguardingEffective).HasColumnName("Is safeguarding effective?");
         //establishmentConfiguration.Property(e => e.InspectionType).HasColumnName("Inspection type");
         establishmentConfiguration.Property(e => e.AddressLine1).HasColumnName("Address Line1");
         establishmentConfiguration.Property(e => e.AddressLine2).HasColumnName("Address Line2");
         establishmentConfiguration.Property(e => e.AddressLine3).HasColumnName("Address Line3");
         establishmentConfiguration.Property(e => e.AdministrativeDistrict).HasColumnName("Administrative District");
-        establishmentConfiguration.Property(e => e.BehaviourAndAttitudes).HasColumnName("Behaviour and attitudes");
+        //establishmentConfiguration.Property(e => e.BehaviourAndAttitudes).HasColumnName("Behaviour and attitudes");
         //establishmentConfiguration.Property(e => e.CategoryOfConcern).HasColumnName("Category of concern");
         establishmentConfiguration.Property(e => e.CloseDate).HasColumnName("CloseDate");
         establishmentConfiguration.Property(e => e.County).HasColumnName("County");
-        establishmentConfiguration.Property(e => e.DateOfLatestShortInspection).HasColumnName("Date of latest short inspection");
+        //establishmentConfiguration.Property(e => e.DateOfLatestShortInspection).HasColumnName("Date of latest short inspection");
         //establishmentConfiguration.Property(e => e.DidTheLatestShortInspectionConvertToAFullInspection).HasColumnName("Did the latest short inspection convert to a full inspection?");
-        establishmentConfiguration.Property(e => e.EarlyYearsProvisionWhereApplicable).HasColumnName("Early years provision (where applicable)");
-        establishmentConfiguration.Property(e => e.EffectivenessOfLeadershipAndManagement).HasColumnName("Effectiveness of leadership and management");
+        //establishmentConfiguration.Property(e => e.EarlyYearsProvisionWhereApplicable).HasColumnName("Early years provision (where applicable)");
+        //establishmentConfiguration.Property(e => e.EffectivenessOfLeadershipAndManagement).HasColumnName("Effectiveness of leadership and management");
         establishmentConfiguration.Property(e => e.Email).HasColumnName("Email");
         establishmentConfiguration.Property(e => e.EstablishmentName).HasColumnName("EstablishmentName");
         establishmentConfiguration.Property(e => e.EstablishmentNumber).HasColumnName("EstablishmentNumber");
@@ -114,7 +114,7 @@ public class MstrContext : DbContext
         establishmentConfiguration.Property(e => e.HeadLastName).HasColumnName("HeadLastName");
         establishmentConfiguration.Property(e => e.HeadPreferredJobTitle).HasColumnName("HeadPreferredJobTitle");
         establishmentConfiguration.Property(e => e.HeadTitle).HasColumnName("HeadTitle");
-        establishmentConfiguration.Property(e => e.InspectionEndDate).HasColumnName("Inspection end date");
+        //establishmentConfiguration.Property(e => e.InspectionEndDate).HasColumnName("Inspection end date");
         // establishmentConfiguration.Property(e => e.InspectionStartDate).HasColumnName("Inspection start date");
         //establishmentConfiguration.Property(e => e.InspectionType).HasColumnName("Inspection type");
         // establishmentConfiguration.Property(e => e.IsSafeguardingEffective).HasColumnName("Is safeguarding effective?");
@@ -129,10 +129,10 @@ public class MstrContext : DbContext
         establishmentConfiguration.Property(e => e.OfstedLastInspection).HasColumnName("OfstedLastInspection");
         establishmentConfiguration.Property(e => e.OfstedRating).HasColumnName("OfstedRating");
         establishmentConfiguration.Property(e => e.OpenDate).HasColumnName("OpenDate");
-        establishmentConfiguration.Property(e => e.OverallEffectiveness).HasColumnName("Overall effectiveness");
+        //establishmentConfiguration.Property(e => e.OverallEffectiveness).HasColumnName("Overall effectiveness");
         establishmentConfiguration.Property(e => e.ParliamentaryConstituency).HasColumnName("Parliamentary constituency");
         establishmentConfiguration.Property(e => e.PercentageFSM).HasColumnName("PercentageFSM");
-        establishmentConfiguration.Property(e => e.PersonalDevelopment).HasColumnName("Personal development");
+        //establishmentConfiguration.Property(e => e.PersonalDevelopment).HasColumnName("Personal development");
         establishmentConfiguration.Property(e => e.PhaseOfEducation).HasColumnName("PhaseOfEducation");
         establishmentConfiguration.Property(e => e.PK_CDM_ID).HasColumnName("PK_CDM_ID");
         establishmentConfiguration.Property(e => e.PK_GIAS_URN).HasColumnName("PK_GIAS_URN").HasConversion<int?>();
@@ -146,7 +146,7 @@ public class MstrContext : DbContext
         //establishmentConfiguration.Property(e => e.PreviousPublicationDate).HasColumnName("Previous publication date");
         establishmentConfiguration.Property(e => e.ProjectLead).HasColumnName("Project Lead");
         //establishmentConfiguration.Property(e => e.PublicationDate).HasColumnName("Publication date");
-        establishmentConfiguration.Property(e => e.QualityOfEducation).HasColumnName("Quality of education");
+        //establishmentConfiguration.Property(e => e.QualityOfEducation).HasColumnName("Quality of education");
         establishmentConfiguration.Property(e => e.ReasonEstablishmentClosed).HasColumnName("ReasonEstablishmentClosed");
         establishmentConfiguration.Property(e => e.ReligiousCharacter).HasColumnName("ReligiousCharacter");
         establishmentConfiguration.Property(e => e.ReligiousEthos).HasColumnName("ReligiousEthos");
@@ -155,7 +155,7 @@ public class MstrContext : DbContext
         establishmentConfiguration.Property(e => e.SFSOTerritory).HasColumnName("SFSO Territory");
         //establishmentConfiguration.Property(e => e.ShortInspectionOverallOutcome).HasColumnName("Short inspection overall outcome");
         //establishmentConfiguration.Property(e => e.ShortInspectionPublicationDate).HasColumnName("Short inspection publication date");
-        establishmentConfiguration.Property(e => e.SixthFormProvisionWhereApplicable).HasColumnName("Sixth form provision (where applicable)");
+        //establishmentConfiguration.Property(e => e.SixthFormProvisionWhereApplicable).HasColumnName("Sixth form provision (where applicable)");
         establishmentConfiguration.Property(e => e.StatutoryHighAge).HasColumnName("StatutoryHighAge");
         establishmentConfiguration.Property(e => e.StatutoryLowAge).HasColumnName("StatutoryLowAge");
         //establishmentConfiguration.Property(e => e.TheIncomeDeprivationAffectingChildrenIndexIDACIQuintile).HasColumnName("The income deprivation affecting children index (IDACI) quintile");
