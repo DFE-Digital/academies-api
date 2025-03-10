@@ -40,7 +40,7 @@ namespace TramsDataApi.SerilogCustomEnrichers
             var httpContextModel = new HttpContextModel
             {
                 Method = httpContext.Request.Method,
-                User = user?.UserName ?? "Unknow or not applicable"
+                User = user?.UserName ?? "Unknown"
 
             };
 
