@@ -4,40 +4,39 @@ ARG DOTNET_VERSION=8.0
 # ==============================================
 # .NET: SDK Builder
 # ==============================================
-FROM "mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-azurelinux3.0" AS builder
+FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-azurelinux3.0 AS builder
 WORKDIR /build
-RUN ["tdnf", "update", "--security", "-y"]
-RUN ["tdnf", "clean", "all"]
+
+# Update and install dependencies
+RUN tdnf update --security -y && \
+    tdnf clean all
+
 ARG CI
 ENV CI=${CI}
+
+# Copy entrypoint script
 COPY ./script/web-docker-entrypoint.sh /app/docker-entrypoint.sh
 
-## START: Restore Packages
-ARG PROJECT_NAME="TramsDataApi"
-COPY ./${PROJECT_NAME}.sln  ./
-COPY ./${PROJECT_NAME}/${PROJECT_NAME}.csproj           ./${PROJECT_NAME}/
+# Restore Packages
+COPY ./TramsDataApi.sln ./
+COPY ./TramsDataApi/TramsDataApi.csproj ./TramsDataApi/
+COPY ./Dfe.Academies.Api.Infrastructure/Dfe.Academies.Infrastructure.csproj ./Dfe.Academies.Api.Infrastructure/
+COPY ./Dfe.Academies.Application/Dfe.Academies.Application.csproj ./Dfe.Academies.Application/
+COPY ./Dfe.Academies.Domain/Dfe.Academies.Domain.csproj ./Dfe.Academies.Domain/
+COPY ./Dfe.Academies.Utils/Dfe.Academies.Utils.csproj ./Dfe.Academies.Utils/
 
-ARG PROJECT_NAME="Dfe.Academies"
-COPY ./${PROJECT_NAME}.Api.Infrastructure/${PROJECT_NAME}.Infrastructure.csproj ./${PROJECT_NAME}.Api.Infrastructure/
-COPY ./${PROJECT_NAME}.Application/${PROJECT_NAME}.Application.csproj           ./${PROJECT_NAME}.Application/
-COPY ./${PROJECT_NAME}.Domain/${PROJECT_NAME}.Domain.csproj                     ./${PROJECT_NAME}.Domain/
-COPY ./${PROJECT_NAME}.Utils/${PROJECT_NAME}.Utils.csproj                       ./${PROJECT_NAME}.Utils/
+# Mount GitHub Token and restore
+RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json" && \
+    dotnet restore TramsDataApi
 
-# Mount GitHub Token as a Docker secret so that NuGet Feed can be accessed
-RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json"
-RUN ["dotnet", "restore", "TramsDataApi"]
-## END: Restore Packages
+# Copy remaining source and publish
+COPY ./TramsDataApi/ ./TramsDataApi/
+COPY ./Dfe.Academies.Api.Infrastructure/ ./Dfe.Academies.Api.Infrastructure/
+COPY ./Dfe.Academies.Application/ ./Dfe.Academies.Application/
+COPY ./Dfe.Academies.Domain/ ./Dfe.Academies.Domain/
+COPY ./Dfe.Academies.Utils/ ./Dfe.Academies.Utils/
 
-ARG PROJECT_NAME="TramsDataApi"
-COPY ./${PROJECT_NAME}/ ./${PROJECT_NAME}/
-
-ARG PROJECT_NAME="Dfe.Academies"
-COPY ./${PROJECT_NAME}.Api.Infrastructure/ ./${PROJECT_NAME}.Api.Infrastructure/
-COPY ./${PROJECT_NAME}.Application/        ./${PROJECT_NAME}.Application/
-COPY ./${PROJECT_NAME}.Domain/             ./${PROJECT_NAME}.Domain/
-COPY ./${PROJECT_NAME}.Utils/              ./${PROJECT_NAME}.Utils/
-
-RUN ["dotnet", "publish", "TramsDataApi", "-c", "Release", "-o", "/app", "--no-restore"]
+RUN dotnet publish TramsDataApi -c Release -o /app --no-restore
 
 # ==============================================
 # Entity Framework: Migration Builder
@@ -45,32 +44,53 @@ RUN ["dotnet", "publish", "TramsDataApi", "-c", "Release", "-o", "/app", "--no-r
 FROM builder AS efbuilder
 WORKDIR /build
 ENV PATH=$PATH:/root/.dotnet/tools
-RUN ["mkdir", "/sql"]
-RUN ["dotnet", "tool", "install", "--global", "dotnet-ef"]
-RUN ["dotnet", "ef", "migrations", "bundle", "-r", "linux-x64", "--configuration", "Release", "-p", "TramsDataApi", "--context", "TramsDataApi.DatabaseModels.LegacyTramsDbContext", "--no-build", "-o", "/sql/migratelegacydb"]
-RUN ["dotnet", "ef", "migrations", "bundle", "-r", "linux-x64", "--configuration", "Release", "-p", "TramsDataApi", "--context", "TramsDataApi.DatabaseModels.TramsDbContext", "--no-build", "-o", "/sql/migratedb"]
+
+# Install dotnet-ef and create migration bundles
+RUN mkdir /sql && \
+    dotnet tool install --global dotnet-ef && \
+    dotnet ef migrations bundle \
+        -r linux-x64 \
+        --configuration Release \
+        -p TramsDataApi \
+        --context TramsDataApi.DatabaseModels.LegacyTramsDbContext \
+        --no-build \
+        -o /sql/migratelegacydb && \
+    dotnet ef migrations bundle \
+        -r linux-x64 \
+        --configuration Release \
+        -p TramsDataApi \
+        --context TramsDataApi.DatabaseModels.TramsDbContext \
+        --no-build \
+        -o /sql/migratedb
+
+# Copy and set permissions for init script
 COPY ./script/init-docker-entrypoint.sh /sql/entrypoint.sh
-RUN ["chmod", "+x", "/sql/entrypoint.sh"]
+RUN chmod +x /sql/entrypoint.sh
 
 # ==============================================
 # Entity Framework: Migration Runner
 # ==============================================
-FROM "mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-azurelinux3.0" AS initcontainer
+FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-azurelinux3.0 AS initcontainer
 WORKDIR /sql
+
+# Copy migration bundles and appsettings
 COPY --from=efbuilder /sql /sql
 COPY --from=builder /app/appsettings* /TramsDataApi/
-RUN chown "$APP_UID" "/sql" -R
-RUN chown "$APP_UID" "/TramsDataApi" -R
+
+# Set ownership and switch user
+RUN chown "$APP_UID" /sql -R && \
+    chown "$APP_UID" /TramsDataApi -R
 USER $APP_UID
 
 # ==============================================
 # .NET: Runtime
 # ==============================================
-FROM "mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-azurelinux3.0" AS final
+FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-azurelinux3.0 AS final
 WORKDIR /app
 LABEL org.opencontainers.image.source="https://github.com/DFE-Digital/academies-api"
 LABEL org.opencontainers.image.description="Academies API"
 
+# Copy published app and set permissions
 COPY --from=builder /app /app
-RUN ["chmod", "+x", "./docker-entrypoint.sh"]
+RUN chmod +x ./docker-entrypoint.sh
 USER $APP_UID
