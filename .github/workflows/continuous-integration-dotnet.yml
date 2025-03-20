@@ -2,26 +2,13 @@ name: .NET Build and Test
 
 on:
   push:
-    branches:
-    - main
-    paths:
-    - 'Dfe.Academies.*/**'
-    - 'TramsDataApi/**'
-    - 'TramsDataApi.*/**'
-    - '!Dfe.Academies.Performance/**'
-  pull_request:
     branches: [ main ]
-    types: [ opened, synchronize, reopened ]
-    paths:
-    - 'Dfe.Academies.*/**'
-    - 'TramsDataApi/**'
-    - 'TramsDataApi.*/**'
-    - '!Dfe.Academies.Performance/**'
+  pull_request:
 
 env:
   DOTNET_VERSION: '8.0.x'
-  EF_VERSION: '6.0.5'
-  JAVA_VERSION: '17'
+  EF_VERSION: '8.0.13'
+  JAVA_VERSION: '21'
   CONNECTION_STRING: 'Server=localhost,1433;Database=sip;TrustServerCertificate=True;User Id=sa;Password=StrongPassword905'
 
 jobs:
@@ -92,7 +79,7 @@ jobs:
         ConnectionStrings__DefaultConnection: ${{ env.CONNECTION_STRING }}
         CI: true
       run: |
-        dotnet-sonarscanner begin /k:"DFE-Digital_academies-api" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=CoverageReport/SonarQube.xml
+        dotnet-sonarscanner begin /d:sonar.scanner.skipJreProvisioning=true /k:"DFE-Digital_academies-api" /o:"dfe-digital" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=CoverageReport/SonarQube.xml
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
         reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./CoverageReport -reporttypes:SonarQube
