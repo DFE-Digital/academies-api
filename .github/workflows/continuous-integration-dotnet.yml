@@ -2,26 +2,13 @@ name: .NET Build and Test
 
 on:
   push:
-    branches:
-    - main
-    paths:
-    - 'Dfe.Academies.*/**'
-    - 'TramsDataApi/**'
-    - 'TramsDataApi.*/**'
-    - '!Dfe.Academies.Performance/**'
-  pull_request:
     branches: [ main ]
-    types: [ opened, synchronize, reopened ]
-    paths:
-    - 'Dfe.Academies.*/**'
-    - 'TramsDataApi/**'
-    - 'TramsDataApi.*/**'
-    - '!Dfe.Academies.Performance/**'
+  pull_request:
 
 env:
   DOTNET_VERSION: '8.0.x'
-  EF_VERSION: '6.0.5'
-  JAVA_VERSION: '17'
+  EF_VERSION: '8.0.13'
+  JAVA_VERSION: '21'
   CONNECTION_STRING: 'Server=localhost,1433;Database=sip;TrustServerCertificate=True;User Id=sa;Password=StrongPassword905'
 
 jobs:
