@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="DfE.CoreLibs.Caching" Version="1.0.7" />
-    <PackageReference Include="DfE.CoreLibs.Contracts" Version="1.0.9" />
+    <PackageReference Include="DfE.CoreLibs.Contracts" Version="1.0.10" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
