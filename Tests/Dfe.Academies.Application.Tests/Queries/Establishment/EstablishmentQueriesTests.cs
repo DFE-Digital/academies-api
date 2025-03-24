@@ -55,7 +55,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
 
             // Assert
             result.Should().BeOfType(typeof(EstablishmentDto));
-            Assert.True(HasMappedCorrectly(result, establishment, _misEstablishment, _educationEstablishmentLink));
+            Assert.True(HasMappedCorrectly(result!, establishment!, _misEstablishment, _educationEstablishmentLink));
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
 
             // Assert
             result.Should().BeOfType(typeof(EstablishmentDto));
-            Assert.True(HasMappedCorrectly(result, establishment, _misEstablishment, _educationEstablishmentLink));
+            Assert.True(HasMappedCorrectly(result!, establishment!, _misEstablishment, _educationEstablishmentLink));
         }
 
         [Fact]
@@ -244,7 +244,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
         }
 
 
-        private bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink)
+        private static bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink)
         {
             return (
                 dto.Name == establishment.EstablishmentName &&
