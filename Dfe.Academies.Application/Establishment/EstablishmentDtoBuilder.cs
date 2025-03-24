@@ -3,7 +3,6 @@ using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Utils.Extensions;
 using DfE.CoreLibs.Contracts.Academies.V4;
 using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
-using System;
 
 namespace Dfe.Academies.Application.Establishment
 {
