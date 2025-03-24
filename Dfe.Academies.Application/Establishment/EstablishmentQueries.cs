@@ -83,8 +83,9 @@ namespace Dfe.Academies.Application.Establishment
 
         private EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment establishment)
         {
-            var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.Value);
+            var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.GetValueOrDefault());
             var misEstablishment = _establishmentRepository.GetMisEstablishmentByURN(establishment.URN);
+            var previousEstablishment = _establishmentRepository.GetEducationEstablishmentLinksByURN(establishment.SK);
             var result = new EstablishmentDtoBuilder()
                 .WithBasicDetails(establishment)
                 .WithLocalAuthority(establishment)
@@ -97,6 +98,7 @@ namespace Dfe.Academies.Application.Establishment
                 .WithCensus(establishment, censusData)
                 .WithMISEstablishment(misEstablishment)
                 .WithAddress(establishment)
+                .WithPreviousEstablishment(previousEstablishment)
                 .Build();
 
             return result;
