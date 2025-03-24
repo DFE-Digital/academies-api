@@ -296,7 +296,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 dto.Address.Postcode == establishment.Postcode &&
                 dto.Address.County == establishment.County &&
                 dto.Address.Additional == establishment.AddressLine2 &&
-                dto.PreviousEstablishment.Urn == educationEstablishmentLink.LinkURN.ToString()
+                dto.PreviousEstablishment!.Urn == educationEstablishmentLink.LinkURN.ToString()
                 );
         }
 
