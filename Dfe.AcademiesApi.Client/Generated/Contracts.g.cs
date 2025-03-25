@@ -2660,6 +2660,9 @@ namespace Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public AddressDto? Address { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("previousEstablishment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PreviousEstablishmentDto? PreviousEstablishment { get; set; } = default!;
+
         public string ToJson()
         {
 
@@ -2811,6 +2814,27 @@ namespace Dfe.AcademiesApi.Client.Contracts
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<AddressDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PreviousEstablishmentDto
+    {
+        [Newtonsoft.Json.JsonProperty("urn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Urn { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static PreviousEstablishmentDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PreviousEstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

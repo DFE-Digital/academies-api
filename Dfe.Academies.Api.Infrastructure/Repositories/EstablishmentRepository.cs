@@ -17,7 +17,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public MisEstablishment? GetMisEstablishmentByURN(int? urn)
         {
-            return _misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn); 
+            return _misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn);
         }
 
 
@@ -33,6 +33,13 @@ namespace Dfe.Academies.Infrastructure.Repositories
             var result = ToEstablishment(queryResult);
 
             return result;
+
+        }
+        public EducationEstablishmentLink? GetEducationEstablishmentLinksByURN(long? urn)
+        {
+            var result = _context.EducationEstablishmentLinks
+                .FirstOrDefault(e => e.FK_EducationEstablishmentURN == urn && e.LinkType == "Predecessor");
+            return result; 
         }
 
         public async Task<Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken)

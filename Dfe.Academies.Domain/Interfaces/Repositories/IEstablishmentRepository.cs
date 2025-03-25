@@ -13,5 +13,6 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         Task<List<Domain.Establishment.Establishment>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
         Task<List<Domain.Establishment.Establishment>> GetByUkprns(string[] Urns, CancellationToken cancellationToken);
         MisEstablishment? GetMisEstablishmentByURN(int? urn);
+        EducationEstablishmentLink? GetEducationEstablishmentLinksByURN(long? urn);
     }
 }

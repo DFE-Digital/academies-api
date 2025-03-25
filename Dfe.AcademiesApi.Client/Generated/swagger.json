@@ -3932,6 +3932,9 @@
           },
           "address": {
             "$ref": "#/components/schemas/AddressDto"
+          },
+          "previousEstablishment": {
+            "$ref": "#/components/schemas/PreviousEstablishmentDto"
           }
         }
       },
@@ -4024,6 +4027,15 @@
             "type": "string"
           },
           "additional": {
+            "type": "string"
+          }
+        }
+      },
+      "PreviousEstablishmentDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urn": {
             "type": "string"
           }
         }

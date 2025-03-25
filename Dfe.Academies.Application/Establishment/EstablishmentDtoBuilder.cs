@@ -1,4 +1,5 @@
 ﻿using Dfe.Academies.Domain.Census;
+using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Utils.Extensions;
 using DfE.CoreLibs.Contracts.Academies.V4;
 using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
@@ -179,6 +180,15 @@ namespace Dfe.Academies.Application.Establishment
                 County = establishment?.County,
                 Additional = establishment?.AddressLine2,
                 Locality = establishment?.AddressLine3
+            };
+
+            return this;
+        }
+        public EstablishmentDtoBuilder WithPreviousEstablishment(EducationEstablishmentLink? educationEstablishmentLink)
+        {
+            _dto.PreviousEstablishment = new PreviousEstablishmentDto()
+            {
+                Urn = educationEstablishmentLink?.LinkURN?.ToString()
             };
 
             return this;
