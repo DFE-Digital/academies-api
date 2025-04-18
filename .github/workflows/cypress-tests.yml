@@ -34,12 +34,12 @@ jobs:
           "edge"
         ]
     container:
-      image: cypress/browsers:22.14.0
+      image: cypress/browsers:22.14.0@sha256:3084594eee3d84af9bd4eb88b4fd65e41a88e6e5336afe31b565bc5b3988ef04
     defaults:
       run:
         working-directory: CypressTests/
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           ref: ${{ github.ref }}
 
@@ -54,7 +54,7 @@ jobs:
 
       - name: Upload screenshots
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: screenshots-${{ inputs.environment }}-${{ matrix.browser }}
           path: screenshots
@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: reports-${{ inputs.environment }}-${{ matrix.browser }}
           path: CypressTests/cypress/reports/mocha
