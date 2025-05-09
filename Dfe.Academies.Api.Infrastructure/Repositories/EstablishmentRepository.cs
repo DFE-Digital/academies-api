@@ -23,7 +23,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Establishment?> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var queryResult = await BaseQuery().SingleOrDefaultAsync(r => r.Establishment.UKPRN == ukprn);
+            var queryResult = await BaseQuery().FirstOrDefaultAsync(r => r.Establishment.UKPRN == ukprn, cancellationToken: cancellationToken);
 
             if (queryResult == null)
             {
@@ -44,7 +44,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken)
         {
-            var queryResult = await BaseQuery().SingleOrDefaultAsync(r => r.Establishment.URN.ToString() == urn);
+            var queryResult = await BaseQuery().FirstOrDefaultAsync(r => r.Establishment.URN.ToString() == urn, cancellationToken: cancellationToken);
 
             if (queryResult == null)
             {
