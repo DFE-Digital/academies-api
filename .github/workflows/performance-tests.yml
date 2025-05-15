@@ -17,10 +17,10 @@ jobs:
         working-directory: Dfe.Academies.Performance/scripts
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Run k6 test
-        uses: grafana/k6-action@v0.3.1
+        uses: grafana/k6-action@e4714b734f2b0afaabeb7b4a69142745548ab9ec # v0.3.1
         with:
           filename: suite.js
         env:
@@ -29,7 +29,7 @@ jobs:
 
       - name: Upload report
         if: ${{ success() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: summary
           path: summary.html

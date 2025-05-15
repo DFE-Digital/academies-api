@@ -20,13 +20,13 @@ jobs:
         ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3
 
       - name: Build docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1 # v6
         id: build
         with:
           file: './${{ matrix.image }}'
@@ -42,7 +42,7 @@ jobs:
         run: docker save -o ${{ matrix.image }}-${{ matrix.stage }}.tar ${{ steps.build.outputs.imageid }}
 
       - name: Scan Docker image for CVEs
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
         with:
           input: ${{ matrix.image }}-${{ matrix.stage }}.tar
           format: 'sarif'
@@ -53,7 +53,7 @@ jobs:
           github-pat: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload scan results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@60168efe1c415ce0f5521ea06d5c2062adbeed1b # v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
