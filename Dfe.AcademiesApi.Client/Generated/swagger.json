@@ -980,6 +980,7 @@
         "operationId": "EstablishmentsByUrns",
         "requestBody": {
           "x-name": "urns",
+          "description": "Contains Unique Reference Number (URNs) of the establishments.",
           "content": {
             "application/json": {
               "schema": {

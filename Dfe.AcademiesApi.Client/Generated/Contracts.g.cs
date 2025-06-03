@@ -411,6 +411,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
+        /// <param name="urns">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> EstablishmentsByUrnsAsync(System.Collections.Generic.IEnumerable<int> urns);
@@ -419,6 +420,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
+        /// <param name="urns">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> EstablishmentsByUrnsAsync(System.Collections.Generic.IEnumerable<int> urns, System.Threading.CancellationToken cancellationToken);
