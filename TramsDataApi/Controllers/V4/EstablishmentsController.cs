@@ -182,21 +182,18 @@ namespace TramsDataApi.Controllers.V4
         {
             var commaSeparatedRequestUrns = string.Join(",", urns);
 
-            var message = $"Attemping to get establishments by Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}";
-            _logger.LogInformation(message);
+            _logger.LogInformation("Attemping to get establishments by Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns);
 
             var establishments = await _establishmentQueries.GetByUrns(urns, cancellationToken).ConfigureAwait(false);
 
             if (establishments == null || establishments.Count == 0)
             {
-                message = $"No establishment was found any of the requested Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}";
-                _logger.LogInformation(message);
+                _logger.LogInformation("No establishment was found any of the requested Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns);
 
                 return NotFound();
             }
 
-            message = $"Returning Establishments for Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}";
-            _logger.LogInformation(message);
+            _logger.LogInformation("Returning Establishments for Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns);
 
             var response = new List<EstablishmentDto>(establishments);
 
@@ -274,20 +271,18 @@ namespace TramsDataApi.Controllers.V4
         {
             var commaSeparatedRequestUkprns = string.Join(",", ukprn);
 
-            var message = $"Attemping to get establishments by UKPRNs: {commaSeparatedRequestUkprns}";
-            _logger.LogInformation(message);
+            _logger.LogInformation("Attemping to get establishments by UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
 
             var establishments = await _establishmentQueries.GetByUkprns(ukprn, cancellationToken);
 
             if (establishments == null || establishments.Count == 0)
             {
-                message = $"No establishment was found any of the requested UKPRNs: {commaSeparatedRequestUkprns}";
-                _logger.LogInformation(message);
+                _logger.LogInformation("No establishment was found any of the requested UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
+                _logger.LogInformation("No establishment was found any of the requested UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
                 return NotFound();
             }
 
-            message = $"Returning Establishments for UKPRNs: {commaSeparatedRequestUkprns}";
-            _logger.LogInformation(message);
+            _logger.LogInformation("Returning Establishments for UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
 
             var response = new List<EstablishmentDto>(establishments);
 
