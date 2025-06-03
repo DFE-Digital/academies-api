@@ -149,7 +149,6 @@ public class EstablishmentsControllerTests
     {
         // Arrange
         factory.TestClaims = default;
-        string[] ukprns = ["10000000", "4634523"]; // those UKPRN do not exist
 
         var request = new UkprnRequestModel
         {
