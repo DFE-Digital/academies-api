@@ -409,6 +409,21 @@ namespace Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> EstablishmentsByUrnsAsync(System.Collections.Generic.IEnumerable<int> urns);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> EstablishmentsByUrnsAsync(System.Collections.Generic.IEnumerable<int> urns, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.
         /// </summary>
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
@@ -441,6 +456,23 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string>? ukprn, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Retrieves a list of establishments by their UKPRNs.
+        /// </summary>
+        /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> EstablishmentsByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a list of establishments by their UKPRNs.
+        /// </summary>
+        /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> EstablishmentsByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, System.Threading.CancellationToken cancellationToken);
 
     }
 

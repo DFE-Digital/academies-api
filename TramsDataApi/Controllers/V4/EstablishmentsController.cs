@@ -1,5 +1,6 @@
 using Dfe.Academies.Application.Establishment;
 using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -166,6 +167,42 @@ namespace TramsDataApi.Controllers.V4
             var response = new List<EstablishmentDto>(establishments);
             return Ok(response);
         }
+
+        /// <summary>
+        /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="urns">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// /// <param name="cancellationToken"></param>
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpPost("establishments/bulk", Name = "EstablishmentsByUrns")]
+        [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
+        [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
+        public async Task<ActionResult<List<EstablishmentDto>>> EstablishmentsByUrns(int[] urns, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestUrns = string.Join(",", urns);
+
+            var message = $"Attemping to get establishments by Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}";
+            _logger.LogInformation(message);
+
+            var establishments = await _establishmentQueries.GetByUrns(urns, cancellationToken).ConfigureAwait(false);
+
+            if (establishments == null || establishments.Count == 0)
+            {
+                message = $"No establishment was found any of the requested Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}";
+                _logger.LogInformation(message);
+
+                return NotFound();
+            }
+
+            message = $"Returning Establishments for Unique Reference Numbers (URNs): {commaSeparatedRequestUrns}";
+            _logger.LogInformation(message);
+
+            var response = new List<EstablishmentDto>(establishments);
+
+            return Ok(response);
+        }
+
         /// <summary>
         /// Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.
         /// </summary>
@@ -221,6 +258,40 @@ namespace TramsDataApi.Controllers.V4
             _logger.LogInformation($"Returning Establishments for UKPRNs: {commaSeparatedRequestUkprns}");
 
             return Ok(establishments);
+        }
+
+        /// <summary>
+        /// Retrieves a list of establishments by their UKPRNs.
+        /// </summary>
+        /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
+        /// /// <param name="cancellationToken"></param> 
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpPost("establishments/ukprn/bulk", Name = "EstablishmentsByUkprns")]
+        [SwaggerOperation(Summary = "Get Establishments by UKPRNs", Description = "Returns a list of establishments specified by UKPRNs.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Successfully found and returned the establishments.", typeof(List<EstablishmentResponse>))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Establishments with specified UKPRNs not found.")]
+        public async Task<ActionResult<List<EstablishmentDto>>> EstablishmentsByUkprns(string[] ukprn, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestUkprns = string.Join(",", ukprn);
+
+            var message = $"Attemping to get establishments by UKPRNs: {commaSeparatedRequestUkprns}";
+            _logger.LogInformation(message);
+
+            var establishments = await _establishmentQueries.GetByUkprns(ukprn, cancellationToken);
+
+            if (establishments == null || establishments.Count == 0)
+            {
+                message = $"No establishment was found any of the requested UKPRNs: {commaSeparatedRequestUkprns}";
+                _logger.LogInformation(message);
+                return NotFound();
+            }
+
+            message = $"Returning Establishments for UKPRNs: {commaSeparatedRequestUkprns}";
+            _logger.LogInformation(message);
+
+            var response = new List<EstablishmentDto>(establishments);
+
+            return Ok(response);
         }
     }
 }

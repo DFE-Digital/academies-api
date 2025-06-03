@@ -55,6 +55,7 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     ParliamentaryConstituency = "Test Constituency 1",
                     CloseDate = null,
                 };
+
                 var establishment2 = new Establishment
                 {
                     SK = 2,
@@ -71,6 +72,7 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     ParliamentaryConstituency = "Test Constituency 2",
                     CloseDate = null,
                 };
+
                 var establishment3 = new Establishment
                 {
                     SK = 3,
@@ -87,7 +89,42 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     ParliamentaryConstituency = "Test Constituency 3",
                     CloseDate = DateTime.UtcNow,
                 };
-                mstrContext.Establishments.AddRange(establishment1, establishment2, establishment3);
+
+                var establishment4 = new Establishment
+                {
+                    SK = 4,
+                    UKPRN = "10060367",
+                    EstablishmentName = "Dan's Plymouth Trust",
+                    LocalAuthorityId = mstrContext.LocalAuthorities.FirstOrDefault()?.SK,
+                    EstablishmentTypeId = mstrContext.EstablishmentTypes.FirstOrDefault()?.SK,
+                    Latitude = 53.3763,
+                    Longitude = -3.1427,
+                    MainPhone = "09876542211",
+                    Email = "schoolC@example.com",
+                    Modified = DateTime.UtcNow,
+                    ModifiedBy = "System",
+                    ParliamentaryConstituency = "Test Constituencyv 4",
+                    CloseDate = DateTime.UtcNow,
+                };
+
+                var establishment5 = new Establishment
+                {
+                    SK = 5,
+                    UKPRN = "10067112",
+                    EstablishmentName = "The Bishop Fraser Trust",
+                    LocalAuthorityId = mstrContext.LocalAuthorities.FirstOrDefault()?.SK,
+                    EstablishmentTypeId = mstrContext.EstablishmentTypes.FirstOrDefault()?.SK,
+                    Latitude = 53.3763,
+                    Longitude = -3.1427,
+                    MainPhone = "09876542211",
+                    Email = "schoolC@example.com",
+                    Modified = DateTime.UtcNow,
+                    ModifiedBy = "System",
+                    ParliamentaryConstituency = "Test Constituencyv 5",
+                    CloseDate = DateTime.UtcNow,
+                };
+
+                mstrContext.Establishments.AddRange(establishment1, establishment2, establishment3, establishment4, establishment5);
 
                 // Populate EducationEstablishmentTrust
                 var educationEstablishmentTrust1 = new EducationEstablishmentTrust
