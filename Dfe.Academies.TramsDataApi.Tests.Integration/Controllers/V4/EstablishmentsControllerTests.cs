@@ -74,19 +74,23 @@ public class EstablishmentsControllerTests
     {
         // Arrange
         factory.TestClaims = default;
-        int[] urns = [22, 33];
+
+        var request = new UrnRequestModel
+        {
+            Urns = [22, 33]
+        };
 
         // Act
-        var result = await establishmentsClient.EstablishmentsByUrnsAsync(urns);
+        var result = await establishmentsClient.GetEstablishmentsByUrnsAsync(request);
 
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
 
-        var establishment = result.SingleOrDefault(x => x.Urn == urns[0].ToString());
+        var establishment = result.SingleOrDefault(x => x.Urn == request.Urns[0].ToString());
         Assert.NotNull(establishment);
 
-        establishment = result.SingleOrDefault(x => x.Urn == urns[1].ToString());
+        establishment = result.SingleOrDefault(x => x.Urn == request.Urns[1].ToString());
         Assert.NotNull(establishment);
     }
 
@@ -98,9 +102,13 @@ public class EstablishmentsControllerTests
     {
         // Arrange
         factory.TestClaims = default;
-        int[] urns = [10001, 10002]; // those URNs do not exist
 
-        AcademiesApiException exception = await Assert.ThrowsAsync<AcademiesApiException>(() => establishmentsClient.EstablishmentsByUrnsAsync(urns));
+        var request = new UrnRequestModel
+        {
+            Urns = [10001, 10002] // those URNs do not exist
+        };
+
+        AcademiesApiException exception = await Assert.ThrowsAsync<AcademiesApiException>(() => establishmentsClient.GetEstablishmentsByUrnsAsync(request));
 
         Assert.Equal(404, exception.StatusCode);
     }
@@ -113,19 +121,23 @@ public class EstablishmentsControllerTests
     {
         // Arrange
         factory.TestClaims = default;
-        string[] ukprns = ["10060367", "10067112"];
+
+        var request = new UkprnRequestModel
+        {
+            Ukprns = ["10060367", "10067112"]
+        };
 
         // Act
-        var result = await establishmentsClient.EstablishmentsByUkprnsAsync(ukprns);
+        var result = await establishmentsClient.GetEstablishmentsByUkprnsAsync(request);
 
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
 
-        var establishment = result.SingleOrDefault(x => x.Ukprn == ukprns[0]);
+        var establishment = result.SingleOrDefault(x => x.Ukprn == request.Ukprns[0]);
         Assert.NotNull(establishment);
 
-        establishment = result.SingleOrDefault(x => x.Ukprn == ukprns[1]);
+        establishment = result.SingleOrDefault(x => x.Ukprn == request.Ukprns[1]);
         Assert.NotNull(establishment);
     }
 
@@ -139,7 +151,12 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
         string[] ukprns = ["10000000", "4634523"]; // those UKPRN do not exist
 
-        AcademiesApiException exception = await Assert.ThrowsAsync<AcademiesApiException>(() => establishmentsClient.EstablishmentsByUkprnsAsync(ukprns));
+        var request = new UkprnRequestModel
+        {
+            Ukprns = ["10000000", "4634523"] // those UKPRN do not exist
+        };
+
+        AcademiesApiException exception = await Assert.ThrowsAsync<AcademiesApiException>(() => establishmentsClient.GetEstablishmentsByUkprnsAsync(request));
 
         Assert.Equal(404, exception.StatusCode);
     }
