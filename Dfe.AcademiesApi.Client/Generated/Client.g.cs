@@ -3117,8 +3117,8 @@ namespace Dfe.AcademiesApi.Client
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v4/establishments/bulk"
-                    urlBuilder_.Append("v4/establishments/bulk");
+                    // Operation Path: "v4/establishments/bulk/urn"
+                    urlBuilder_.Append("v4/establishments/bulk/urn");
                     urlBuilder_.Append('?');
                     if (request != null)
                     {
@@ -3187,25 +3187,25 @@ namespace Dfe.AcademiesApi.Client
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
-        /// <param name="urns">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> EstablishmentsByUrnsAsync(System.Collections.Generic.IEnumerable<int> urns)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetEstablishmentsByUrnsAsync(UrnRequestModel model)
         {
-            return EstablishmentsByUrnsAsync(urns, System.Threading.CancellationToken.None);
+            return GetEstablishmentsByUrnsAsync(model, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
         /// </summary>
-        /// <param name="urns">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> EstablishmentsByUrnsAsync(System.Collections.Generic.IEnumerable<int> urns, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetEstablishmentsByUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken)
         {
-            if (urns == null)
-                throw new System.ArgumentNullException("urns");
+            if (model == null)
+                throw new System.ArgumentNullException("model");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3213,7 +3213,7 @@ namespace Dfe.AcademiesApi.Client
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(urns, JsonSerializerSettings);
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
@@ -3222,8 +3222,8 @@ namespace Dfe.AcademiesApi.Client
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v4/establishments/bulk"
-                    urlBuilder_.Append("v4/establishments/bulk");
+                    // Operation Path: "v4/establishments/bulk/urns"
+                    urlBuilder_.Append("v4/establishments/bulk/urns");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3482,25 +3482,25 @@ namespace Dfe.AcademiesApi.Client
         /// <summary>
         /// Retrieves a list of establishments by their UKPRNs.
         /// </summary>
-        /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
+        /// <param name="model">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> EstablishmentsByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetEstablishmentsByUkprnsAsync(UkprnRequestModel model)
         {
-            return EstablishmentsByUkprnsAsync(ukprn, System.Threading.CancellationToken.None);
+            return GetEstablishmentsByUkprnsAsync(model, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Retrieves a list of establishments by their UKPRNs.
         /// </summary>
-        /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
+        /// <param name="model">Contains UKPRNs of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> EstablishmentsByUkprnsAsync(System.Collections.Generic.IEnumerable<string> ukprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetEstablishmentsByUkprnsAsync(UkprnRequestModel model, System.Threading.CancellationToken cancellationToken)
         {
-            if (ukprn == null)
-                throw new System.ArgumentNullException("ukprn");
+            if (model == null)
+                throw new System.ArgumentNullException("model");
 
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3508,7 +3508,7 @@ namespace Dfe.AcademiesApi.Client
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(ukprn, JsonSerializerSettings);
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
@@ -3517,8 +3517,8 @@ namespace Dfe.AcademiesApi.Client
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v4/establishments/ukprn/bulk"
-                    urlBuilder_.Append("v4/establishments/ukprn/bulk");
+                    // Operation Path: "v4/establishments/bulk/ukprns"
+                    urlBuilder_.Append("v4/establishments/bulk/ukprns");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
