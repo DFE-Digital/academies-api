@@ -278,7 +278,6 @@ namespace TramsDataApi.Controllers.V4
             if (establishments == null || establishments.Count == 0)
             {
                 _logger.LogInformation("No establishment was found any of the requested UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
-                _logger.LogInformation("No establishment was found any of the requested UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
                 return NotFound();
             }
 
