@@ -25,7 +25,7 @@ public class EstablishmentsControllerTests
 
         // Assert
         Assert.NotNull(establishmentDtos);
-        Assert.Equal(3, establishmentDtos.Count);
+        Assert.Equal(5, establishmentDtos.Count);
     }
 
     [Theory]
@@ -44,7 +44,7 @@ public class EstablishmentsControllerTests
 
         // Assert
         Assert.NotNull(establishmentDtos);
-        Assert.Equal(3, establishmentDtos.Count);
+        Assert.Equal(5, establishmentDtos.Count);
     }
 
     [Theory]
@@ -64,5 +64,99 @@ public class EstablishmentsControllerTests
         // Assert
         Assert.NotNull(establishmentDtos);
         Assert.Equal(2, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task EstablishmentsByUrnsAsync_ShouldReturnAllEstablishments_By_UKPRN(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var request = new UrnRequestModel
+        {
+            Urns = [22, 33]
+        };
+
+        // Act
+        var result = await establishmentsClient.GetEstablishmentsByUrnsAsync(request);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count);
+
+        var establishment = result.SingleOrDefault(x => x.Urn == request.Urns[0].ToString());
+        Assert.NotNull(establishment);
+
+        establishment = result.SingleOrDefault(x => x.Urn == request.Urns[1].ToString());
+        Assert.NotNull(establishment);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task EstablishmentsByUrnsAsync_ShouldReturnNotFound(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var request = new UrnRequestModel
+        {
+            Urns = [10001, 10002] // those URNs do not exist
+        };
+
+        AcademiesApiException exception = await Assert.ThrowsAsync<AcademiesApiException>(() => establishmentsClient.GetEstablishmentsByUrnsAsync(request));
+
+        Assert.Equal(404, exception.StatusCode);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task EstablishmentsByUkprnsAsync_ShouldReturnAllEstablishments_By_UKPRNs(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var request = new UkprnRequestModel
+        {
+            Ukprns = ["10060367", "10067112"]
+        };
+
+        // Act
+        var result = await establishmentsClient.GetEstablishmentsByUkprnsAsync(request);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count);
+
+        var establishment = result.SingleOrDefault(x => x.Ukprn == request.Ukprns[0]);
+        Assert.NotNull(establishment);
+
+        establishment = result.SingleOrDefault(x => x.Ukprn == request.Ukprns[1]);
+        Assert.NotNull(establishment);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task EstablishmentsByUkprnsAsync_ShouldReturnNotFound(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var request = new UkprnRequestModel
+        {
+            Ukprns = ["10000000", "4634523"] // those UKPRN do not exist
+        };
+
+        AcademiesApiException exception = await Assert.ThrowsAsync<AcademiesApiException>(() => establishmentsClient.GetEstablishmentsByUkprnsAsync(request));
+
+        Assert.Equal(404, exception.StatusCode);
     }
 }

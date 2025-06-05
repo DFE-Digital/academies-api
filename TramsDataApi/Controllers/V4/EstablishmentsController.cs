@@ -1,5 +1,6 @@
 using Dfe.Academies.Application.Establishment;
 using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using TramsDataApi.RequestModels;
 using TramsDataApi.ResponseModels;
 
 namespace TramsDataApi.Controllers.V4
@@ -166,6 +168,39 @@ namespace TramsDataApi.Controllers.V4
             var response = new List<EstablishmentDto>(establishments);
             return Ok(response);
         }
+
+        /// <summary>
+        /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// /// <param name="cancellationToken"></param>
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpPost("establishments/bulk/urns", Name = "EstablishmentsByUrns")]
+        [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
+        [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
+        public async Task<ActionResult<List<EstablishmentDto>>> GetEstablishmentsByUrns([FromBody] UrnRequestModel model, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestUrns = string.Join(",", model.Urns);
+
+            _logger.LogInformation("Attemping to get establishments by Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns);
+
+            var establishments = await _establishmentQueries.GetByUrns([..model.Urns], cancellationToken).ConfigureAwait(false);
+
+            if (establishments == null || establishments.Count == 0)
+            {
+                _logger.LogInformation("No establishment was found any of the requested Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns);
+
+                return NotFound();
+            }
+
+            _logger.LogInformation("Returning Establishments for Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns);
+
+            var response = new List<EstablishmentDto>(establishments);
+
+            return Ok(response);
+        }
+
         /// <summary>
         /// Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.
         /// </summary>
@@ -221,6 +256,37 @@ namespace TramsDataApi.Controllers.V4
             _logger.LogInformation($"Returning Establishments for UKPRNs: {commaSeparatedRequestUkprns}");
 
             return Ok(establishments);
+        }
+
+        /// <summary>
+        /// Retrieves a list of establishments by their UKPRNs.
+        /// </summary>
+        /// <param name="model">Contains UKPRNs of the establishments.</param>
+        /// /// <param name="cancellationToken"></param> 
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpPost("establishments/bulk/ukprns", Name = "EstablishmentsByUkprns")]
+        [SwaggerOperation(Summary = "Get Establishments by UKPRNs", Description = "Returns a list of establishments specified by UKPRNs.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Successfully found and returned the establishments.", typeof(List<EstablishmentResponse>))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Establishments with specified UKPRNs not found.")]
+        public async Task<ActionResult<List<EstablishmentDto>>> GetEstablishmentsByUkprns([FromBody] UkprnRequestModel model, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestUkprns = string.Join(",", model.Ukprns);
+
+            _logger.LogInformation("Attemping to get establishments by UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
+
+            var establishments = await _establishmentQueries.GetByUkprns([..model.Ukprns], cancellationToken);
+
+            if (establishments == null || establishments.Count == 0)
+            {
+                _logger.LogInformation("No establishment was found any of the requested UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
+                return NotFound();
+            }
+
+            _logger.LogInformation("Returning Establishments for UKPRNs: {UKPRNs}", commaSeparatedRequestUkprns);
+
+            var response = new List<EstablishmentDto>(establishments);
+
+            return Ok(response);
         }
     }
 }

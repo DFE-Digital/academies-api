@@ -972,6 +972,47 @@
         }
       }
     },
+    "/v4/establishments/bulk/urns": {
+      "post": {
+        "tags": [
+          "EstablishmentsV4",
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
+        "operationId": "GetEstablishmentsByUrns",
+        "requestBody": {
+          "x-name": "model",
+          "description": "Contains Unique Reference Number (URNs) of the establishments.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrnRequestModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishments with specified Unique Reference Numbers (URNs) not found."
+          }
+        }
+      }
+    },
     "/v4/establishments/trust": {
       "get": {
         "tags": [
@@ -1037,6 +1078,47 @@
             "x-position": 1
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishments with specified UKPRNs not found."
+          }
+        }
+      }
+    },
+    "/v4/establishments/bulk/ukprns": {
+      "post": {
+        "tags": [
+          "EstablishmentsV4",
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishments by their UKPRNs.",
+        "operationId": "GetEstablishmentsByUkprns",
+        "requestBody": {
+          "x-name": "model",
+          "description": "Contains UKPRNs of the establishments.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UkprnRequestModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
             "description": "Successfully found and returned the establishments.",
@@ -4043,6 +4125,33 @@
           "urn": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "UrnRequestModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "urns": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "UkprnRequestModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ukprns": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

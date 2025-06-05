@@ -409,6 +409,23 @@ namespace Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetEstablishmentsByUrnsAsync(UrnRequestModel model);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetEstablishmentsByUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Retrieves a list of establishments by their Trust UK Provider Reference Number (UKPRN) identifier.
         /// </summary>
         /// <param name="trustUkprn">Contains the Trust UK Provider Reference Number (UKPRN) identifier of the establishments.</param>
@@ -441,6 +458,23 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUKPRNsAsync(System.Collections.Generic.IEnumerable<string>? ukprn, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Retrieves a list of establishments by their UKPRNs.
+        /// </summary>
+        /// <param name="model">Contains UKPRNs of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetEstablishmentsByUkprnsAsync(UkprnRequestModel model);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a list of establishments by their UKPRNs.
+        /// </summary>
+        /// <param name="model">Contains UKPRNs of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetEstablishmentsByUkprnsAsync(UkprnRequestModel model, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -2835,6 +2869,48 @@ namespace Dfe.AcademiesApi.Client.Contracts
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<PreviousEstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UrnRequestModel
+    {
+        [Newtonsoft.Json.JsonProperty("urns", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<int>? Urns { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static UrnRequestModel FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<UrnRequestModel>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UkprnRequestModel
+    {
+        [Newtonsoft.Json.JsonProperty("ukprns", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<string>? Ukprns { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static UkprnRequestModel FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<UkprnRequestModel>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
