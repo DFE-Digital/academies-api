@@ -147,7 +147,7 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>List of establishments or NotFound if none are available.</returns>
         [HttpGet]
-        [Route("establishments/bulk/urn")]
+        [Route("establishments/bulk")]
         [SwaggerOperation(Summary = "Get Establishments by Unique Reference Number (URNs)", Description = "Returns a list of establishments specified by Unique Reference Numbers (URNs).")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
         [SwaggerResponse(404, "Establishments with specified Unique Reference Numbers (URNs) not found.")]
