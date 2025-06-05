@@ -926,7 +926,7 @@
         }
       }
     },
-    "/v4/establishments/bulk/urn": {
+    "/v4/establishments/bulk": {
       "get": {
         "tags": [
           "EstablishmentsV4",

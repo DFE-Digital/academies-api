@@ -3117,8 +3117,8 @@ namespace Dfe.AcademiesApi.Client
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v4/establishments/bulk/urn"
-                    urlBuilder_.Append("v4/establishments/bulk/urn");
+                    // Operation Path: "v4/establishments/bulk"
+                    urlBuilder_.Append("v4/establishments/bulk");
                     urlBuilder_.Append('?');
                     if (request != null)
                     {
