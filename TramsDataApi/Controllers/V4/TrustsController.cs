@@ -172,31 +172,31 @@ namespace TramsDataApi.Controllers.V4
         }
 
         /// <summary>
-        /// Returns Trusts based on supplied list of URNs in the request body.
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
         /// </summary>
         /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A dictionary of URNs and their associated Trusts.</returns>
         [HttpPost]
-        [Route("trusts/bulkByUrns")]
-        [SwaggerOperation(Summary = "Get Trusts By Unique Numbers (URNs)", Description = "Retrieve multiple trusts by their Unique Reference Numbers (URNs).")]
+        [Route("trusts/establishments/urns")]
+        [SwaggerOperation(Summary = "Get Trusts By Unique Numbers (URNs)", Description = "Retrieve multiple trusts by establishments Unique Reference Numbers (URNs).")]
         [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(Dictionary<int, List<TrustDto>>))]
         [SwaggerResponse(404, "The trusts were not found.")]
-        public async Task<ActionResult<Dictionary<int, TrustDto>>> GetByUrns(
+        public async Task<ActionResult<Dictionary<int, TrustDto>>> GetTrustsByEstablishmentUrnsAsync(
             [FromBody] UrnRequestModel model,
             CancellationToken cancellationToken)
         {
             if (model?.Urns?.Count == 0)
             {
-                return BadRequest("URN list cannot be empty.");
+                return BadRequest("Establishments URN list cannot be empty.");
             }
 
             var commaSeparatedRequestUrns = string.Join(",", model.Urns);
-            _logger.LogInformation("Attempting to get Trusts by URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
+            _logger.LogInformation("Attempting to get Trusts by establishments URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
 
-            var trusts = await trustQueries.GetByUrns(model.Urns, cancellationToken); 
+            var trusts = await trustQueries.GetTrustsByEstablishmentUrns(model.Urns, cancellationToken); 
 
-            _logger.LogInformation("Returning Trusts for URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
+            _logger.LogInformation("Returning Trusts for establishmentsURNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
             _logger.LogDebug("Trust details: {Trust}", JsonSerializer.Serialize(trusts));
 
             return Ok(trusts);

@@ -98,7 +98,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAllAsync(System.Collections.Generic.IEnumerable<int>? urn);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int>? urn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -106,7 +106,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAllAsync(System.Collections.Generic.IEnumerable<int>? urn, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int>? urn, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -397,7 +397,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrnsAll2Async(System.Collections.Generic.IEnumerable<int>? request);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -406,7 +406,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrnsAll2Async(System.Collections.Generic.IEnumerable<int>? request, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishments by their Unique Reference Numbers (URNs).
@@ -577,21 +577,21 @@ namespace Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string>? ukprns, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Returns Trusts based on supplied list of URNs in the request body.
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
         /// </summary>
         /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetByUrnsAsync(UrnRequestModel model);
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Returns Trusts based on supplied list of URNs in the request body.
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
         /// </summary>
         /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetByUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken);
 
     }
 

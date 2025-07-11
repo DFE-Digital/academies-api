@@ -10,6 +10,6 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         Task<List<Trust.Trust>> GetTrustsByUkprns(string[] ukprns, CancellationToken cancellationToken);
         Task<(List<Trust.Trust>, int)> Search(int page, int count, string? name, string? ukPrn,
          string? companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken);
-        Task<Dictionary<int, Trust.Trust>> GetTrustsByUrns(List<int> urns, CancellationToken cancellationToken);
+        Task<Dictionary<int, Trust.Trust>> GetTrustsByEstablishmentUrns(List<int> urns, CancellationToken cancellationToken);
     }
 }

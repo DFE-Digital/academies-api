@@ -467,9 +467,9 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAllAsync(System.Collections.Generic.IEnumerable<int>? urn)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int>? urn)
         {
-            return GetByUrnsAllAsync(urn, System.Threading.CancellationToken.None);
+            return GetByUrnsAsync(urn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -478,7 +478,7 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAllAsync(System.Collections.Generic.IEnumerable<int>? urn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentResponse>> GetByUrnsAsync(System.Collections.Generic.IEnumerable<int>? urn, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3092,9 +3092,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrnsAll2Async(System.Collections.Generic.IEnumerable<int>? request)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request)
         {
-            return GetByUrnsAll2Async(request, System.Threading.CancellationToken.None);
+            return GetByUrns2Async(request, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3104,7 +3104,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="request">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully found and returned the establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrnsAll2Async(System.Collections.Generic.IEnumerable<int>? request, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByUrns2Async(System.Collections.Generic.IEnumerable<int>? request, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -4247,24 +4247,24 @@ namespace Dfe.AcademiesApi.Client
         }
 
         /// <summary>
-        /// Returns Trusts based on supplied list of URNs in the request body.
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
         /// </summary>
         /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetByUrnsAsync(UrnRequestModel model)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model)
         {
-            return GetByUrnsAsync(model, System.Threading.CancellationToken.None);
+            return GetTrustsByEstablishmentUrnsAsync(model, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Returns Trusts based on supplied list of URNs in the request body.
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
         /// </summary>
         /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetByUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -4284,8 +4284,8 @@ namespace Dfe.AcademiesApi.Client
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v4/trusts/bulkByUrns"
-                    urlBuilder_.Append("v4/trusts/bulkByUrns");
+                    // Operation Path: "v4/trusts/establishments/urns"
+                    urlBuilder_.Append("v4/trusts/establishments/urns");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 

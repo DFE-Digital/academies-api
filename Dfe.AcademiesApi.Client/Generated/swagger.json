@@ -189,7 +189,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "GetByUrnsAll",
+        "operationId": "GetByUrns",
         "parameters": [
           {
             "name": "Urn",
@@ -933,7 +933,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "GetByUrnsAll2",
+        "operationId": "GetByUrns2",
         "parameters": [
           {
             "name": "request",
@@ -1385,14 +1385,14 @@
         }
       }
     },
-    "/v4/trusts/bulkByUrns": {
+    "/v4/trusts/establishments/urns": {
       "post": {
         "tags": [
           "TrustsV4",
           "Trusts"
         ],
-        "summary": "Returns Trusts based on supplied list of URNs in the request body.",
-        "operationId": "GetByUrns",
+        "summary": "Returns Trusts based on supplied list of establishments URNs in the request body.",
+        "operationId": "GetTrustsByEstablishmentUrnsAsync",
         "requestBody": {
           "x-name": "model",
           "description": "Contains Unique Reference Number (URNs) of the establishments.",

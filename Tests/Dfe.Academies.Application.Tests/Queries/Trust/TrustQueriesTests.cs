@@ -136,5 +136,50 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
                 trust.Ukprn.Should().Be(domainTrust.UKPRN);
             }  
         }
+
+        [Fact]
+        public async Task GetTrustsByEstablishmentUrns_ReturnsMappedDictionary()
+        {
+            // Arrange 
+            var urns = new List<int> { _fixture.Create<int>() % 1000000, _fixture.Create<int>() % 1000000 };
+            var cancellationToken = CancellationToken.None;
+            var trustsData = _fixture.CreateMany<Domain.Trust.Trust>(2).ToList();
+
+            var trusts = new Dictionary<int, Domain.Trust.Trust>
+            {
+                [urns[0]] = trustsData.First(),
+                [urns[1]] = trustsData.Last(), 
+            };
+
+            var mockRepo = new Mock<ITrustRepository>();
+            mockRepo
+            .Setup(repo => repo.GetTrustsByEstablishmentUrns(urns, cancellationToken))
+            .ReturnsAsync(trusts);
+            var trustQueries = new TrustQueries(mockRepo.Object);
+
+            // Act
+            var result = await trustQueries.GetTrustsByEstablishmentUrns(urns, cancellationToken);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Count.Should().Be(trusts.Count);
+            foreach (var trust in result)
+            {
+                trust.Value.Should().NotBeNull();
+                var trustData = trust.Value;
+                var dbTrust = trusts.Select(x => x.Value).Single(x => x.UKPRN == trustData.Ukprn);
+
+                trustData.Name.Should().Be(dbTrust.Name);
+                trustData.Address.Street.Should().Be(dbTrust.AddressLine1);
+                trustData.Address.Additional.Should().Be(dbTrust.AddressLine2);
+                trustData.Address.Locality.Should().Be(dbTrust.AddressLine3);
+                trustData.Address.Town.Should().Be(dbTrust.Town);
+                trustData.Address.Postcode.Should().Be(dbTrust.Postcode);
+                trustData.Address.County.Should().Be(dbTrust.County);
+                trustData.ReferenceNumber.Should().Be(dbTrust.GroupID);
+                trustData.CompaniesHouseNumber.Should().Be(dbTrust.CompaniesHouseNumber);
+                trustData.Ukprn.Should().Be(dbTrust.UKPRN);
+            }
+        }
     }
 }
