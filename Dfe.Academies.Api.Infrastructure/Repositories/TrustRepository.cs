@@ -48,6 +48,46 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return trusts;
         }
 
+        public async Task<Dictionary<int, Trust>> GetTrustsByUrns(List<int> urns, CancellationToken cancellationToken)
+        {
+            var trustData = await (
+                from e in _context.Establishments.AsNoTracking()
+                join eet in _context.EducationEstablishmentTrusts.AsNoTracking() on e.SK equals eet.EducationEstablishmentId
+                join t in _context.Trusts.AsNoTracking() on eet.TrustId equals t.SK
+                join tt in _context.TrustTypes.AsNoTracking() on t.TrustTypeId equals tt.SK
+                where e.URN != null && urns.Contains(e.URN.Value)
+                select new
+                {
+                    URN = e.URN!.Value,
+                    Trust = new Trust
+                    {
+                        Name = t.Name!,
+                        CompaniesHouseNumber = t.CompaniesHouseNumber,
+                        GroupID = t.GroupID,
+                        UKPRN = t.UKPRN,
+                        TrustType = t.TrustType,
+                        AddressLine1 = t.AddressLine1,
+                        Town = t.Town,
+                        Postcode = t.Postcode,
+                        County = t.County,
+                        AddressLine2 = t.AddressLine2,
+                        AddressLine3 = t.AddressLine3
+                    }
+                }
+            ).ToListAsync(cancellationToken);
+
+            var grouped = trustData
+                .GroupBy(x => x.URN)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.Select(x => x.Trust).First()
+                );
+
+            return grouped;
+        }
+
+
+
         public async Task<(List<Trust>, int)> Search(int page, int count, string? name, string? ukPrn,
             string? companiesHouseNumber, TrustStatus status, CancellationToken cancellationToken)
         {

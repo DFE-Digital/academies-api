@@ -189,7 +189,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "GetByUrns",
+        "operationId": "GetByUrnsAll",
         "parameters": [
           {
             "name": "Urn",
@@ -933,7 +933,7 @@
           "Establishments"
         ],
         "summary": "Retrieves a list of establishments by their Unique Reference Numbers (URNs).",
-        "operationId": "GetByUrns2",
+        "operationId": "GetByUrnsAll2",
         "parameters": [
           {
             "name": "request",
@@ -1219,13 +1219,14 @@
           "TrustsV4",
           "Trusts"
         ],
-        "summary": "Retrieves a Trust by its Companies House Number.",
+        "summary": "Retrieves a Trust by its Trust Reference Number.",
         "operationId": "GetTrustByTrustReferenceNumber",
         "parameters": [
           {
             "name": "trustReferenceNumber",
             "in": "path",
             "required": true,
+            "description": "The Trust Number identifier.",
             "schema": {
               "type": "string"
             },
@@ -1373,6 +1374,50 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/TrustDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The trusts were not found."
+          }
+        }
+      }
+    },
+    "/v4/trusts/bulkByUrns": {
+      "post": {
+        "tags": [
+          "TrustsV4",
+          "Trusts"
+        ],
+        "summary": "Returns Trusts based on supplied list of URNs in the request body.",
+        "operationId": "GetByUrns",
+        "requestBody": {
+          "x-name": "model",
+          "description": "Contains Unique Reference Number (URNs) of the establishments.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrnRequestModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TrustDto"
+                    }
                   }
                 }
               }

@@ -37,6 +37,18 @@ namespace Dfe.Academies.Application.Trust
 
             return trusts.Select(x => MapToTrustDto(x)).ToList();
         }
+        public async Task<Dictionary<int, TrustDto>> GetByUrns(List<int> urns, CancellationToken cancellationToken)
+        {
+            var trustsByUrns = await _trustRepository.GetTrustsByUrns(urns, cancellationToken).ConfigureAwait(false);
+             
+            var result = trustsByUrns.ToDictionary(
+                kvp => kvp.Key,
+                kvp => MapToTrustDto(kvp.Value)
+            );
+
+            return result;
+        }
+
         public async Task<TrustDto?> GetByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
         {
             var trust = await _trustRepository.GetTrustByTrustReferenceNumber(trustReferenceNumber, cancellationToken).ConfigureAwait(false);
@@ -47,19 +59,19 @@ namespace Dfe.Academies.Application.Trust
         {
             return new TrustDto()
             {
-                Name = trust.Name,
-                CompaniesHouseNumber = trust.CompaniesHouseNumber,
-                ReferenceNumber = trust.GroupID,
-                Ukprn = trust.UKPRN,
-                Type = new DfE.CoreLibs.Contracts.Academies.V4.Establishments.NameAndCodeDto() { Code = trust.TrustType?.Code, Name = trust.TrustType?.Name },
+                Name = trust.Name!,
+                CompaniesHouseNumber = trust.CompaniesHouseNumber!,
+                ReferenceNumber = trust.GroupID!,
+                Ukprn = trust.UKPRN!,
+                Type = new DfE.CoreLibs.Contracts.Academies.V4.Establishments.NameAndCodeDto() { Code = trust.TrustType?.Code!, Name = trust.TrustType?.Name! },
                 Address = new AddressDto()
                 {
-                    Street = trust.AddressLine1,
-                    Town = trust.Town,
-                    Postcode = trust.Postcode,
-                    County = trust.County,
-                    Additional = trust.AddressLine2,
-                    Locality = trust.AddressLine3
+                    Street = trust.AddressLine1!,
+                    Town = trust.Town!,
+                    Postcode = trust.Postcode!,
+                    County = trust.County!,
+                    Additional = trust.AddressLine2!,
+                    Locality = trust.AddressLine3!
                 }
             };
         }
