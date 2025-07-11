@@ -123,15 +123,15 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10, TrustStatus status = TrustStatus.Open)
         {
             _logger.LogInformation(
-                "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-                groupName, ukPrn, companiesHouseNumber, page, count);
+               "Searching for trusts by groupName \"{GroupName}\", UKPRN \"{UkPrn}\", companiesHouseNumber \"{CompaniesHouseNumber}\", page {Page}, count {Count}",
+               groupName, ukPrn, companiesHouseNumber, page, count);
 
             var (trusts, recordCount) = await trustQueries
                 .Search(page, count, groupName, ukPrn, companiesHouseNumber, status, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
-                "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-                recordCount, groupName, ukPrn, companiesHouseNumber, page, count);
+               "Found {Count} trusts for groupName \"{GroupName}\", UKPRN \"{UkPrn}\", companiesHouseNumber \"{CompaniesHouseNumber}\", page {Page}, count {Count}",
+               recordCount, groupName, ukPrn, companiesHouseNumber, page, count);
 
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
 
@@ -183,18 +183,18 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(Dictionary<int, List<TrustDto>>))]
         [SwaggerResponse(404, "The trusts were not found.")]
         public async Task<ActionResult<Dictionary<int, TrustDto>>> GetTrustsByEstablishmentUrnsAsync(
-            [FromBody] UrnRequestModel model,
-            CancellationToken cancellationToken)
+           [FromBody] UrnRequestModel model,
+           CancellationToken cancellationToken)
         {
-            if (model?.Urns?.Count == 0)
+            if (model == null || model.Urns == null || model.Urns.Count == 0)
             {
-                return BadRequest("Establishments URN list cannot be empty.");
+                return BadRequest("Establishments URN list cannot be null or empty.");
             }
 
             var commaSeparatedRequestUrns = string.Join(",", model.Urns);
             _logger.LogInformation("Attempting to get Trusts by establishments URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
 
-            var trusts = await trustQueries.GetTrustsByEstablishmentUrns(model.Urns, cancellationToken); 
+            var trusts = await trustQueries.GetTrustsByEstablishmentUrns(model.Urns, cancellationToken);
 
             _logger.LogInformation("Returning Trusts for establishmentsURNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
             _logger.LogDebug("Trust details: {Trust}", JsonSerializer.Serialize(trusts));
