@@ -516,16 +516,18 @@ namespace Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<TrustDto> GetTrustByCompaniesHouseNumberAsync(string companiesHouseNumber, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Retrieves a Trust by its Companies House Number.
+        /// Retrieves a Trust by its Trust Reference Number.
         /// </summary>
+        /// <param name="trustReferenceNumber">The Trust Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Retrieves a Trust by its Companies House Number.
+        /// Retrieves a Trust by its Trust Reference Number.
         /// </summary>
+        /// <param name="trustReferenceNumber">The Trust Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber, System.Threading.CancellationToken cancellationToken);
@@ -573,6 +575,23 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string>? ukprns, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully retrieved the trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, TrustDto>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully retrieved the trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, TrustDto>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken);
 
     }
 

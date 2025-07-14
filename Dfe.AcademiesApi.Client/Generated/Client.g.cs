@@ -3931,8 +3931,9 @@ namespace Dfe.AcademiesApi.Client
         }
 
         /// <summary>
-        /// Retrieves a Trust by its Companies House Number.
+        /// Retrieves a Trust by its Trust Reference Number.
         /// </summary>
+        /// <param name="trustReferenceNumber">The Trust Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber)
@@ -3942,8 +3943,9 @@ namespace Dfe.AcademiesApi.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Retrieves a Trust by its Companies House Number.
+        /// Retrieves a Trust by its Trust Reference Number.
         /// </summary>
+        /// <param name="trustReferenceNumber">The Trust Number identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByTrustReferenceNumberAsync(string trustReferenceNumber, System.Threading.CancellationToken cancellationToken)
@@ -4217,6 +4219,111 @@ namespace Dfe.AcademiesApi.Client
                                 throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new AcademiesApiException("The trusts were not found.", status_, responseText_, headers_, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new AcademiesApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully retrieved the trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, TrustDto>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model)
+        {
+            return GetTrustsByEstablishmentUrnsAsync(model, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully retrieved the trusts.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, TrustDto>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken)
+        {
+            if (model == null)
+                throw new System.ArgumentNullException("model");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v4/trusts/establishments/urns"
+                    urlBuilder_.Append("v4/trusts/establishments/urns");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.Dictionary<string, TrustDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new AcademiesApiException("Establishments URN list cannot be null or empty.", status_, responseText_, headers_, null);
                         }
                         else
                         if (status_ == 404)
