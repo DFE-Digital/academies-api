@@ -8,35 +8,57 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
 {
     public class TrustsControllersTests
     {
-
         [Theory]
         [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task GetTrustsByEstablishmentUrnsAsync_ShouldReturnTrustsByEstablishmentUrns(
-            CustomWebApplicationDbContextFactory<Startup> factory, 
+            CustomWebApplicationDbContextFactory<Startup> factory,
             ITrustsV4Client trustsV4Client)
         {
-            // Arrange
+            // Arrange  
             factory.TestClaims = default;
-            var requestModel = new UrnRequestModel { Urns = new List<int> { 22, 33 } };
+            var requestModel = new UrnRequestModel { Urns = [22, 33] };
 
-            // Act
+            // Act  
             var result = await trustsV4Client.GetTrustsByEstablishmentUrnsAsync(requestModel, default);
 
-            // Flatten all TrustDto results from the dictionary
-            var establishmentDtos = result.Values.SelectMany(x => x).ToList();
+            // Assert  
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);
 
-            // Assert
-            Assert.NotNull(establishmentDtos);
-            Assert.Equal(2, establishmentDtos.Count);
+            var trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[0].ToString()); 
+            Assert.Equal(requestModel.Urns[0].ToString(), trust.Key);
 
-            var trust = result.SingleOrDefault(x => x.Urn == requestModel.Urns[0].ToString());
-            Assert.NotNull(trust);
-
-            trust = result.SingleOrDefault(x => x.Urn == requestModel.Urns[1].ToString());
-            Assert.NotNull(trust);
-
-
+            trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[1].ToString());
+            Assert.Equal(requestModel.Urns[1].ToString(), trust.Key);
         }
 
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task GetTrustsByEstablishmentUrnsAsync_ShouldReturnBadRequest_WhenNoURN(
+           CustomWebApplicationDbContextFactory<Startup> factory,
+           ITrustsV4Client trustsV4Client)
+        {
+            // Arrange  
+            factory.TestClaims = default;
+            var requestModel = new UrnRequestModel { Urns = [] };
+
+            // Act & Assert  
+            var exception = await Assert.ThrowsAsync<AcademiesApiException>(() => trustsV4Client.GetTrustsByEstablishmentUrnsAsync(requestModel, default));
+            Assert.Equal(400, exception.StatusCode);
+        }
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task GetTrustsByEstablishmentUrnsAsync_ShouldReturnNotFound_WhenURNDoesNotMatch(
+           CustomWebApplicationDbContextFactory<Startup> factory,
+           ITrustsV4Client trustsV4Client)
+        {
+            // Arrange  
+            factory.TestClaims = default;
+            var requestModel = new UrnRequestModel { Urns = [111] };
+
+            // Act & Assert  
+            var exception = await Assert.ThrowsAsync<AcademiesApiException>(() => trustsV4Client.GetTrustsByEstablishmentUrnsAsync(requestModel, default));
+            Assert.Equal(404, exception.StatusCode);
+        }
     }
 }

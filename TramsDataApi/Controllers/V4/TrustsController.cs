@@ -180,7 +180,8 @@ namespace TramsDataApi.Controllers.V4
         [HttpPost]
         [Route("trusts/establishments/urns")]
         [SwaggerOperation(Summary = "Get Trusts By Unique Numbers (URNs)", Description = "Retrieve multiple trusts by establishments Unique Reference Numbers (URNs).")]
-        [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(Dictionary<int, List<TrustDto>>))]
+        [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(Dictionary<int, TrustDto>))]
+        [SwaggerResponse(400, "Establishments URN list cannot be null or empty.")]
         [SwaggerResponse(404, "The trusts were not found.")]
         public async Task<ActionResult<Dictionary<int, TrustDto>>> GetTrustsByEstablishmentUrnsAsync(
            [FromBody] UrnRequestModel model,
@@ -195,12 +196,15 @@ namespace TramsDataApi.Controllers.V4
             _logger.LogInformation("Attempting to get Trusts by establishments URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
 
             var trusts = await trustQueries.GetTrustsByEstablishmentUrns(model.Urns, cancellationToken);
-
+            if (trusts == null || trusts.Count == 0)
+            {
+                _logger.LogInformation("No Trust was found for any of the requested URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
+                return NotFound();
+            }
             _logger.LogInformation("Returning Trusts for establishmentsURNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
             _logger.LogDebug("Trust details: {Trust}", JsonSerializer.Serialize(trusts));
 
             return Ok(trusts);
-        }
-
+        } 
     }
 }

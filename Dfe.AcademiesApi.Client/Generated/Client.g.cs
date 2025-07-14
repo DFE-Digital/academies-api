@@ -4252,7 +4252,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model)
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, TrustDto>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model)
         {
             return GetTrustsByEstablishmentUrnsAsync(model, System.Threading.CancellationToken.None);
         }
@@ -4264,7 +4264,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, TrustDto>> GetTrustsByEstablishmentUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -4312,12 +4312,18 @@ namespace Dfe.AcademiesApi.Client
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.Dictionary<string, System.Collections.ObjectModel.ObservableCollection<TrustDto>>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.Dictionary<string, TrustDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new AcademiesApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new AcademiesApiException("Establishments URN list cannot be null or empty.", status_, responseText_, headers_, null);
                         }
                         else
                         if (status_ == 404)

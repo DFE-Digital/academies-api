@@ -1414,14 +1414,14 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/TrustDto"
-                    }
+                    "$ref": "#/components/schemas/TrustDto"
                   }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Establishments URN list cannot be null or empty."
           },
           "404": {
             "description": "The trusts were not found."
