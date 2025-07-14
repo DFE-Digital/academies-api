@@ -130,7 +130,7 @@ namespace TramsDataApi.Controllers.V4
                 .Search(page, count, groupName, ukPrn, companiesHouseNumber, status, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
-               "Found {Count} trusts for groupName \"{GroupName}\", UKPRN \"{UkPrn}\", companiesHouseNumber \"{CompaniesHouseNumber}\", page {Page}, count {Count}",
+               "Found {RecordCount} trusts for groupName \"{GroupName}\", UKPRN \"{UkPrn}\", companiesHouseNumber \"{CompaniesHouseNumber}\", page {Page}, count {Count}",
                recordCount, groupName, ukPrn, companiesHouseNumber, page, count);
 
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
