@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using DfE.CoreLibs.Contracts.Academies.V4;
 using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
 using TramsDataApi.ResponseModels;
+using TramsDataApi.RequestModels;
 
 namespace TramsDataApi.Controllers.V4
 {
@@ -20,16 +21,9 @@ namespace TramsDataApi.Controllers.V4
     [ApiController]
     [ApiVersion("4.0")]
     [Route("v{version:apiVersion}/")]
-    public class TrustsController : ControllerBase
+    public class TrustsController(ITrustQueries trustQueries, ILogger<TrustsController> logger) : ControllerBase
     {
-        private readonly ITrustQueries _trustQueries;
-        private readonly ILogger<TrustsController> _logger;
-
-        public TrustsController(ITrustQueries trustQueries, ILogger<TrustsController> logger)
-        {
-            _trustQueries = trustQueries;
-            _logger = logger;
-        }
+        private readonly ILogger<TrustsController> _logger = logger;
 
         /// <summary>
         /// Retrieves a Trust by its UK Provider Reference Number (UKPRN).
@@ -45,7 +39,7 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<TrustDto>> GetTrustByUkprn(string ukprn, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Attempting to get trust by UK Provider Reference Number (UKPRN) {ukprn}");
-            var trust = await _trustQueries.GetByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
+            var trust = await trustQueries.GetByUkprn(ukprn, cancellationToken).ConfigureAwait(false);
 
             if (trust == null)
             {
@@ -71,7 +65,7 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<TrustDto>> GetTrustByCompaniesHouseNumber(string companiesHouseNumber, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Attempting to get trust by Companies House Number {companiesHouseNumber}");
-            var trust = await _trustQueries.GetByCompaniesHouseNumber(companiesHouseNumber, cancellationToken).ConfigureAwait(false);
+            var trust = await trustQueries.GetByCompaniesHouseNumber(companiesHouseNumber, cancellationToken).ConfigureAwait(false);
 
             if (trust == null)
             {
@@ -85,9 +79,9 @@ namespace TramsDataApi.Controllers.V4
         }
 
         /// <summary>
-        /// Retrieves a Trust by its Companies House Number.
+        /// Retrieves a Trust by its Trust Reference Number.
         /// </summary>
-        /// <param name="companiesHouseNumber">The Companies House Number identifier.</param>
+        /// <param name="trustReferenceNumber">The Trust Number identifier.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A Trust or NotFound if not available.</returns>
         [HttpGet]
@@ -98,7 +92,7 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<TrustDto>> GetTrustByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Attempting to get trust by Trust Reference Number {trustReferenceNumber}");
-            var trust = await _trustQueries.GetByTrustReferenceNumber(trustReferenceNumber, cancellationToken).ConfigureAwait(false);
+            var trust = await trustQueries.GetByTrustReferenceNumber(trustReferenceNumber, cancellationToken).ConfigureAwait(false);
 
             if (trust == null)
             {
@@ -129,15 +123,15 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<PagedDataResponse<TrustDto>>> SearchTrusts(string groupName, string ukPrn, string companiesHouseNumber, CancellationToken cancellationToken, int page = 1, int count = 10, TrustStatus status = TrustStatus.Open)
         {
             _logger.LogInformation(
-                "Searching for trusts by groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-                groupName, ukPrn, companiesHouseNumber, page, count);
+               "Searching for trusts by groupName \"{GroupName}\", UKPRN \"{UkPrn}\", companiesHouseNumber \"{CompaniesHouseNumber}\", page {Page}, count {Count}",
+               groupName, ukPrn, companiesHouseNumber, page, count);
 
-            var (trusts, recordCount) = await _trustQueries
+            var (trusts, recordCount) = await trustQueries
                 .Search(page, count, groupName, ukPrn, companiesHouseNumber, status, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
-                "Found {count} trusts for groupName \"{name}\", UKPRN \"{prn}\", companiesHouseNumber \"{number}\", page {page}, count {count}",
-                recordCount, groupName, ukPrn, companiesHouseNumber, page, count);
+               "Found {RecordCount} trusts for groupName \"{GroupName}\", UKPRN \"{UkPrn}\", companiesHouseNumber \"{CompaniesHouseNumber}\", page {Page}, count {Count}",
+               recordCount, groupName, ukPrn, companiesHouseNumber, page, count);
 
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
 
@@ -163,7 +157,7 @@ namespace TramsDataApi.Controllers.V4
             var commaSeparatedRequestUkprns = string.Join(",", ukprns);
             _logger.LogInformation($"Attempting to get Trusts by UKPRNs: {commaSeparatedRequestUkprns}");
 
-            List<TrustDto> trusts = await _trustQueries.GetByUkprns(ukprns, cancellationToken);
+            List<TrustDto> trusts = await trustQueries.GetByUkprns(ukprns, cancellationToken);
 
             if (trusts == null || !trusts.Any())
             {
@@ -176,5 +170,41 @@ namespace TramsDataApi.Controllers.V4
 
             return Ok(trusts);
         }
+
+        /// <summary>
+        /// Returns Trusts based on supplied list of establishments URNs in the request body.
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A dictionary of URNs and their associated Trusts.</returns>
+        [HttpPost]
+        [Route("trusts/establishments/urns")]
+        [SwaggerOperation(Summary = "Get Trusts By Unique Numbers (URNs)", Description = "Retrieve multiple trusts by establishments Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(Dictionary<int, TrustDto>))]
+        [SwaggerResponse(400, "Establishments URN list cannot be null or empty.")]
+        [SwaggerResponse(404, "The trusts were not found.")]
+        public async Task<ActionResult<Dictionary<int, TrustDto>>> GetTrustsByEstablishmentUrnsAsync(
+           [FromBody] UrnRequestModel model,
+           CancellationToken cancellationToken)
+        {
+            if (model == null || model.Urns == null || model.Urns.Count == 0)
+            {
+                return BadRequest("Establishments URN list cannot be null or empty.");
+            }
+
+            var commaSeparatedRequestUrns = string.Join(",", model.Urns);
+            _logger.LogInformation("Attempting to get Trusts by establishments URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
+
+            var trusts = await trustQueries.GetTrustsByEstablishmentUrns(model.Urns, cancellationToken);
+            if (trusts == null || trusts.Count == 0)
+            {
+                _logger.LogInformation("No Trust was found for any of the requested URNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
+                return NotFound();
+            }
+            _logger.LogInformation("Returning Trusts for establishmentsURNs: {CommaSeparatedRequestUrns}", commaSeparatedRequestUrns);
+            _logger.LogDebug("Trust details: {Trust}", JsonSerializer.Serialize(trusts));
+
+            return Ok(trusts);
+        } 
     }
 }

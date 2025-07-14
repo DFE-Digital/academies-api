@@ -1219,13 +1219,14 @@
           "TrustsV4",
           "Trusts"
         ],
-        "summary": "Retrieves a Trust by its Companies House Number.",
+        "summary": "Retrieves a Trust by its Trust Reference Number.",
         "operationId": "GetTrustByTrustReferenceNumber",
         "parameters": [
           {
             "name": "trustReferenceNumber",
             "in": "path",
             "required": true,
+            "description": "The Trust Number identifier.",
             "schema": {
               "type": "string"
             },
@@ -1377,6 +1378,50 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "The trusts were not found."
+          }
+        }
+      }
+    },
+    "/v4/trusts/establishments/urns": {
+      "post": {
+        "tags": [
+          "TrustsV4",
+          "Trusts"
+        ],
+        "summary": "Returns Trusts based on supplied list of establishments URNs in the request body.",
+        "operationId": "GetTrustsByEstablishmentUrnsAsync",
+        "requestBody": {
+          "x-name": "model",
+          "description": "Contains Unique Reference Number (URNs) of the establishments.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrnRequestModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/TrustDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Establishments URN list cannot be null or empty."
           },
           "404": {
             "description": "The trusts were not found."
