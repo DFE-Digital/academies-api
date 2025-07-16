@@ -6,7 +6,7 @@ namespace Dfe.Academies.Application.Establishment
     {
         Task<EstablishmentDto?> GetByUkprn(string ukprn, CancellationToken cancellationToken);
         Task<EstablishmentDto?> GetByUrn(string urn, CancellationToken cancellationToken);
-        Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken);
+        Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken);
         Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken);
         Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
         Task<List<EstablishmentDto>> GetByUkprns(string[] Ukprns, CancellationToken cancellationToken);

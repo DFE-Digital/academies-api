@@ -56,25 +56,35 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken)
+        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
         {
             IQueryable<EstablishmentQueryResult> query = BaseQuery();
 
-            if (!string.IsNullOrEmpty(name))
+            if (matchAny.HasValue && matchAny.Value)
             {
-                query = query.Where(r => r.Establishment.EstablishmentName.Contains(name));
+                query = query.Where(r => r.Establishment.EstablishmentName.Contains(name) || r.Establishment.UKPRN.Contains(ukPrn) || r.Establishment.URN.ToString().Contains(urn));
+
             }
-            if (!string.IsNullOrEmpty(ukPrn))
+
+            else
             {
-                query = query.Where(r => r.Establishment.UKPRN == ukPrn);
-            }
-            if (!string.IsNullOrEmpty(urn))
-            {
-                if (int.TryParse(urn, out var urnAsNumber))
+                if (!string.IsNullOrEmpty(name))
                 {
-                    query = query.Where(r => r.Establishment.URN == urnAsNumber);
+                    query = query.Where(r => r.Establishment.EstablishmentName.Contains(name));
+                }
+                if (!string.IsNullOrEmpty(ukPrn))
+                {
+                    query = query.Where(r => r.Establishment.UKPRN == ukPrn);
+                }
+                if (!string.IsNullOrEmpty(urn))
+                {
+                    if (int.TryParse(urn, out var urnAsNumber))
+                    {
+                        query = query.Where(r => r.Establishment.URN == urnAsNumber);
+                    }
                 }
             }
+
             if (excludeClosed.HasValue && excludeClosed.Value)
             {
                 query = query.Where(r => !r.Establishment.CloseDate.HasValue);

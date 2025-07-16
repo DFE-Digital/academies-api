@@ -95,14 +95,14 @@ namespace TramsDataApi.Controllers.V4
         [Route("establishments")]
         [SwaggerOperation(Summary = "Search Establishments", Description = "Returns a list of Establishments based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
-        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
                 "Searching for establishments by name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",
                 name, ukPrn, urn);
 
             var (establishments, recordCount) = await _establishmentQueries
-                .Search(name, ukPrn, urn, excludeClosed, cancellationToken).ConfigureAwait(false);
+                .Search(name, ukPrn, urn, excludeClosed, matchAny, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
                 "Found {count} establishments for name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",

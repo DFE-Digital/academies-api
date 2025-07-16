@@ -861,6 +861,15 @@
               "nullable": true
             },
             "x-position": 4
+          },
+          {
+            "name": "matchAny",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 5
           }
         ],
         "responses": {
