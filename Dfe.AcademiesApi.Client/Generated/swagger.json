@@ -856,6 +856,7 @@
           {
             "name": "excludeClosed",
             "in": "query",
+            "description": "When true, exclude closed establishments.",
             "schema": {
               "type": "boolean",
               "nullable": true
@@ -865,6 +866,7 @@
           {
             "name": "matchAny",
             "in": "query",
+            "description": "When true, return results where either of name, ukPrn or urn match.",
             "schema": {
               "type": "boolean",
               "nullable": true

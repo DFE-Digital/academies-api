@@ -120,7 +120,7 @@ public class EstablishmentsControllerTests
 
         // Assert
         Assert.NotNull(establishmentDtos);
-        Assert.Equal(0, establishmentDtos.Count);
+        Assert.Empty(establishmentDtos);
     }
 
     [Theory]
@@ -139,7 +139,7 @@ public class EstablishmentsControllerTests
 
         // Assert
         Assert.NotNull(establishmentDtos);
-        Assert.Equal(0, establishmentDtos.Count);
+        Assert.Empty(establishmentDtos);
     }
 
     [Theory]
