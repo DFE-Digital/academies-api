@@ -19,7 +19,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishments2Async(null, null, null, null, default);
+        var result = await establishmentsClient.SearchEstablishments2Async(null, null, null, null, null, default);
 
         var establishmentDtos = result.ToList();
 
@@ -38,7 +38,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishments2Async(null, null, null, false, default);
+        var result = await establishmentsClient.SearchEstablishments2Async(null, null, null, false, null, default);
 
         var establishmentDtos = result.ToList();
 
@@ -57,13 +57,108 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishments2Async(null, null, null, true, default);
+        var result = await establishmentsClient.SearchEstablishments2Async(null, null, null, true, null, default);
 
         var establishmentDtos = result.ToList();
 
         // Assert
         Assert.NotNull(establishmentDtos);
         Assert.Equal(2, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsAsync_ShouldReturnMatchingEstablishments_WhenMatchAnyIsNullAndOnlyNameProvided(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishments2Async("Scho", null, null, null, null, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(3, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsAsync_ShouldReturnMatchingEstablishments_WhenMatchAnyIsFalseAndOnlyNameProvided(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishments2Async("Scho",  null, null, null, false, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(3, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsAsync_ShouldReturnNoEstablishments_WhenMatchAnyIsNullAndAllParamsProvided(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishments2Async("Scho", "Scho", "Scho", null, null, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(0, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsAsync_ShouldReturnNoEstablishments_WhenMatchAnyIsFalseAndAllParamsProvided(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishments2Async("Scho", "Scho", "Scho", null, false, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(0, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsAsync_ShouldReturnMatchingEstablishments_WhenMatchAnyIsTrue(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishments2Async("Scho", "Scho", "Scho", null, true, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(3, establishmentDtos.Count);
     }
 
     [Theory]
