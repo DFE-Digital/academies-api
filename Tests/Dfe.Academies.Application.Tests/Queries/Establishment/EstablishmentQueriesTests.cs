@@ -98,7 +98,8 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             string name = "Test name";
             string ukPrn = "Test UkPrn";
             bool? excludeClosed = null;
-            mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.Is<bool?>(x => x == excludeClosed), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
+            bool? matchAny = null;
+            mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.Is<bool?>(x => x == excludeClosed), It.Is<bool?>(x => x == matchAny), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
 
@@ -113,6 +114,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 ukPrn,
                 urn,
                 excludeClosed,
+                matchAny,
                 cancellationToken);
 
             // Assert
