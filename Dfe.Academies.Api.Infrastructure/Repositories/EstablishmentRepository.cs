@@ -153,7 +153,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
-        private IQueryable<EstablishmentQueryResult> ApplyMatchAnyFilter(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
+        private static IQueryable<EstablishmentQueryResult> ApplyMatchAnyFilter(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
         {
             return query.Where(r =>
                 (!string.IsNullOrEmpty(name) && r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.Contains(name)) ||
@@ -162,7 +162,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             ;
         }
 
-        private IQueryable<EstablishmentQueryResult> ApplyAllFilters(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
+        private static IQueryable<EstablishmentQueryResult> ApplyAllFilters(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -186,7 +186,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return query;
         }
 
-        private bool IsValidUrn(string? urn) =>
+        private static bool IsValidUrn(string? urn) =>
             !string.IsNullOrEmpty(urn) && urn.All(char.IsDigit);
 
     }
