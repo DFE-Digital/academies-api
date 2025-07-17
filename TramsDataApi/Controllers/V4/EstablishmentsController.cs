@@ -89,20 +89,22 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
+        /// <param name="excludeClosed">When true, exclude closed establishments.</param>
+        /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A list of Establishments that meet the search criteria.</returns>
         [HttpGet]
         [Route("establishments")]
         [SwaggerOperation(Summary = "Search Establishments", Description = "Returns a list of Establishments based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
-        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishments(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
                 "Searching for establishments by name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",
                 name, ukPrn, urn);
 
             var (establishments, recordCount) = await _establishmentQueries
-                .Search(name, ukPrn, urn, excludeClosed, cancellationToken).ConfigureAwait(false);
+                .Search(name, ukPrn, urn, excludeClosed, matchAny, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
                 "Found {count} establishments for name \"{name}\", UKPRN \"{ukPrn}\", urn \"{number}\"",

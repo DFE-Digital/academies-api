@@ -56,35 +56,27 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, bool? excludeClosed, CancellationToken cancellationToken)
+        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
         {
             IQueryable<EstablishmentQueryResult> query = BaseQuery();
 
-            if (!string.IsNullOrEmpty(name))
+            if (matchAny == true)
             {
-                query = query.Where(r => r.Establishment.EstablishmentName.Contains(name));
+                query = ApplyMatchAnyFilter(query, name, ukPrn, urn);
             }
-            if (!string.IsNullOrEmpty(ukPrn))
+            else
             {
-                query = query.Where(r => r.Establishment.UKPRN == ukPrn);
+                query = ApplyAllFilters(query, name, ukPrn, urn);
             }
-            if (!string.IsNullOrEmpty(urn))
-            {
-                if (int.TryParse(urn, out var urnAsNumber))
-                {
-                    query = query.Where(r => r.Establishment.URN == urnAsNumber);
-                }
-            }
-            if (excludeClosed.HasValue && excludeClosed.Value)
+
+            if (excludeClosed == true)
             {
                 query = query.Where(r => !r.Establishment.CloseDate.HasValue);
             }
 
             var queryResult = await query.Take(100).ToListAsync(cancellationToken);
 
-            var result = queryResult.Select(ToEstablishment).ToList();
-
-            return result;
+            return queryResult.Select(ToEstablishment).ToList();
         }
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
@@ -161,6 +153,42 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
+        private static IQueryable<EstablishmentQueryResult> ApplyMatchAnyFilter(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
+        {
+            return query.Where(r =>
+                (!string.IsNullOrEmpty(name) && r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.Contains(name)) ||
+                (!string.IsNullOrEmpty(ukPrn) && r.Establishment.UKPRN != null && r.Establishment.UKPRN.Contains(ukPrn)) ||
+                (IsValidUrn(urn) && r.Establishment.URN.HasValue && r.Establishment.URN.Value.ToString().Contains(urn!)))
+            ;
+        }
+
+        private static IQueryable<EstablishmentQueryResult> ApplyAllFilters(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(r =>
+                    r.Establishment.EstablishmentName != null &&
+                    r.Establishment.EstablishmentName.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(ukPrn))
+            {
+                query = query.Where(r =>
+                    r.Establishment.UKPRN != null &&
+                    r.Establishment.UKPRN == ukPrn);
+            }
+
+            if (int.TryParse(urn, out var urnAsNumber))
+            {
+                query = query.Where(r => r.Establishment.URN == urnAsNumber);
+            }
+
+            return query;
+        }
+
+        private static bool IsValidUrn(string? urn) =>
+            !string.IsNullOrEmpty(urn) && urn.All(char.IsDigit);
+
     }
 
     internal record EstablishmentQueryResult
@@ -170,4 +198,5 @@ namespace Dfe.Academies.Infrastructure.Repositories
         public LocalAuthority LocalAuthority { get; set; }
         public EstablishmentType EstablishmentType { get; set; }
     }
+
 }

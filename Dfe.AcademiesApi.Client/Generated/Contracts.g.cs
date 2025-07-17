@@ -359,9 +359,11 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
+        /// <param name="excludeClosed">When true, exclude closed establishments.</param>
+        /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, bool? excludeClosed);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -370,9 +372,11 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
+        /// <param name="excludeClosed">When true, exclude closed establishments.</param>
+        /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, bool? excludeClosed, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishment Unique Reference Numbers (URNs) by region.
