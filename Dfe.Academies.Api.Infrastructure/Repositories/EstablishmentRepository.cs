@@ -62,7 +62,11 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             if (matchAny.HasValue && matchAny.Value)
             {
-                query = query.Where(r => r.Establishment.EstablishmentName.Contains(name) || r.Establishment.UKPRN.Contains(ukPrn) || r.Establishment.URN.ToString().Contains(urn));
+                query = query.Where(
+                    r => (r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.Contains(name)) ||
+                    (r.Establishment.UKPRN != null && r.Establishment.UKPRN.Contains(ukPrn)) ||
+                    (r.Establishment.URN != null && r.Establishment.URN.Value.ToString().Contains(urn))
+                );
 
             }
 
@@ -70,7 +74,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    query = query.Where(r => r.Establishment.EstablishmentName.Contains(name));
+                    query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.Contains(name));
                 }
                 if (!string.IsNullOrEmpty(ukPrn))
                 {
