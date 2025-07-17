@@ -89,6 +89,8 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
         /// <param name="urn">Unique Reference Numbers (URN).</param>
+        /// <param name="excludeClosed">When true, exclude closed establishments.</param>
+        /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A list of Establishments that meet the search criteria.</returns>
         [HttpGet]
