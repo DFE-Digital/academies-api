@@ -8,8 +8,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using DfE.CoreLibs.Contracts.Academies.V4;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using TramsDataApi.ResponseModels;
 using TramsDataApi.RequestModels;
 

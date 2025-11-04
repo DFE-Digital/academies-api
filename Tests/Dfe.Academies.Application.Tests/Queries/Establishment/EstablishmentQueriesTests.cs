@@ -2,7 +2,7 @@
 using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Interfaces.Repositories;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using FluentAssertions;
 using Moq;
 using System.Globalization; 
