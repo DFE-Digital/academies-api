@@ -19,6 +19,8 @@ public class MisMstrContext : DbContext
     public DbSet<MisEstablishment> Establishments { get; set; } = null!;
     public DbSet<FurtherEducationEstablishment> FurtherEducationEstablishments { get; set; } = null!;
 
+    public DbSet<ReportCardMock> MockReportCards { get; set; } = null!; 
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -34,6 +36,7 @@ public class MisMstrContext : DbContext
     {
         modelBuilder.Entity<MisEstablishment>(ConfigureEstablishment);
         modelBuilder.Entity<FurtherEducationEstablishment>(ConfigureFurtherEducationEstablishment);
+        modelBuilder.Entity<ReportCardMock>(ConfigureMockReportCard);
         base.OnModelCreating(modelBuilder);
     }
 
@@ -204,5 +207,31 @@ public class MisMstrContext : DbContext
         furtherEducationEstablishmentConfiguration.Property(e => e.ProviderUkprn).HasColumnName("provider_ukprn");
         furtherEducationEstablishmentConfiguration.Property(e => e.QualityOfEducation)
             .HasColumnName("quality_of_education");
+    }
+    private static void ConfigureMockReportCard(
+        EntityTypeBuilder<ReportCardMock> reportCardMockConfiguration)
+    {
+        reportCardMockConfiguration.HasKey(e => e.Urn).HasName("PK_report_cards_MOCK");
+        reportCardMockConfiguration.ToTable("report_cards_MOCK", DEFAULT_SCHEMA);
+        reportCardMockConfiguration.Property(e => e.WebLink).HasColumnName("web_link");
+        reportCardMockConfiguration.Property(e => e.Urn).HasColumnName("urn");
+        reportCardMockConfiguration.Property(e => e.LatestInspectionDate).HasColumnName("latest_inspection_date");
+        reportCardMockConfiguration.Property(e => e.LatestCurriculumAndTeaching).HasColumnName("latest_curriculum_and_teaching");
+        reportCardMockConfiguration.Property(e => e.LatestAttendanceAndBehaviour).HasColumnName("latest_attendance_and_behaviour");
+        reportCardMockConfiguration.Property(e => e.LatestPersonalDevelopmentAndWellbeing).HasColumnName("latest_personal_development_and_wellbeing");
+        reportCardMockConfiguration.Property(e => e.LatestLeadershipAndGovernance).HasColumnName("latest_leadership_and_governance");
+        reportCardMockConfiguration.Property(e => e.LatestInclusion).HasColumnName("latest_inclusion");
+        reportCardMockConfiguration.Property(e => e.LatestAchievement).HasColumnName("latest_achievement");
+        reportCardMockConfiguration.Property(e => e.LatestEarlyYearsProvision).HasColumnName("latest_early_years_provision");
+        reportCardMockConfiguration.Property(e => e.LatestSafeguarding).HasColumnName("latest_safeguarding");
+        reportCardMockConfiguration.Property(e => e.PreviousInspectionDate).HasColumnName("previous_inspection_date");
+        reportCardMockConfiguration.Property(e => e.PreviousCurriculumAndTeaching).HasColumnName("previous_curriculum_and_teaching");
+        reportCardMockConfiguration.Property(e => e.PreviousAttendanceAndBehaviour).HasColumnName("previous_attendance_and_behaviour");
+        reportCardMockConfiguration.Property(e => e.PreviousPersonalDevelopmentAndWellbeing).HasColumnName("previous_personal_development_and_wellbeing");
+        reportCardMockConfiguration.Property(e => e.PreviousLeadershipAndGovernance).HasColumnName("previous_leadership_and_governance");
+        reportCardMockConfiguration.Property(e => e.PreviousInclusion).HasColumnName("previous_inclusion");
+        reportCardMockConfiguration.Property(e => e.PreviousAchievement).HasColumnName("previous_achievement");
+        reportCardMockConfiguration.Property(e => e.PreviousEarlyYearsProvision).HasColumnName("previous_early_years_provision");
+        reportCardMockConfiguration.Property(e => e.PreviousSafeguarding).HasColumnName("previous_safeguarding");
     }
 }

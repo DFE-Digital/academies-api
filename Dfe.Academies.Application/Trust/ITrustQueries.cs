@@ -1,5 +1,5 @@
 ﻿using Dfe.Academies.Domain.Trust;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 
 namespace Dfe.Academies.Application.Trust
 {

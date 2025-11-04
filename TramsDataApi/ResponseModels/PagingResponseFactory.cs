@@ -32,9 +32,9 @@ namespace TramsDataApi.ResponseModels
             return pagingResponse;
         }
 
-        public static DfE.CoreLibs.Contracts.Academies.V4.PagingResponse CreateV4PagingResponse(int page, int count, int recordCount, HttpRequest request)
+        public static GovUK.Dfe.CoreLibs.Contracts.Academies.V4.PagingResponse CreateV4PagingResponse(int page, int count, int recordCount, HttpRequest request)
         {
-            var pagingResponse = new DfE.CoreLibs.Contracts.Academies.V4.PagingResponse
+            var pagingResponse = new GovUK.Dfe.CoreLibs.Contracts.Academies.V4.PagingResponse
             {
                 RecordCount = recordCount,
                 Page = page

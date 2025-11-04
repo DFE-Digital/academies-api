@@ -599,6 +599,36 @@ namespace Dfe.AcademiesApi.Client.Contracts
 
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IEstablishmentsV5Client
+    {
+        /// <summary>
+        /// Searches for Establishments with mock report cards based on query parameters.
+        /// </summary>
+        /// <param name="name">Name of the establishment.</param>
+        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <param name="urn">Unique Reference Numbers (URN).</param>
+        /// <param name="excludeClosed">When true, exclude closed establishments.</param>
+        /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
+        /// <returns>Successfully executed the search and returned Establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithMockReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches for Establishments with mock report cards based on query parameters.
+        /// </summary>
+        /// <param name="name">Name of the establishment.</param>
+        /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
+        /// <param name="urn">Unique Reference Numbers (URN).</param>
+        /// <param name="excludeClosed">When true, exclude closed establishments.</param>
+        /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
+        /// <returns>Successfully executed the search and returned Establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithMockReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken);
+
+    }
+
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class EstablishmentResponse
     {
@@ -2613,7 +2643,26 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class EstablishmentDto
+    public partial class EstablishmentDto : EstablishmentBaseDto
+    {
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static EstablishmentDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<EstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class EstablishmentBaseDto
     {
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Ukprn { get; set; } = default!;
@@ -2726,10 +2775,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static EstablishmentDto FromJson(string data)
+        public static EstablishmentBaseDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<EstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<EstablishmentBaseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -3035,6 +3084,102 @@ namespace Dfe.AcademiesApi.Client.Contracts
 
         [System.Runtime.Serialization.EnumMember(Value = @"All")]
         All = 1,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class EstablishmentDto2 : EstablishmentBaseDto
+    {
+        [Newtonsoft.Json.JsonProperty("reportCard", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ReportCardDto? ReportCard { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static EstablishmentDto2 FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<EstablishmentDto2>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ReportCardDto
+    {
+        [Newtonsoft.Json.JsonProperty("webLink", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? WebLink { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestInspectionDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestInspectionDate { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestCurriculumAndTeaching", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestCurriculumAndTeaching { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestAttendanceAndBehaviour", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestAttendanceAndBehaviour { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestPersonalDevelopmentAndWellbeing", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestPersonalDevelopmentAndWellbeing { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestLeadershipAndGovernance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestLeadershipAndGovernance { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestInclusion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestInclusion { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestAchievement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestAchievement { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestEarlyYearsProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestEarlyYearsProvision { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestSafeguarding", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestSafeguarding { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousInspectionDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousInspectionDate { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousCurriculumAndTeaching", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousCurriculumAndTeaching { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousAttendanceAndBehaviour", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousAttendanceAndBehaviour { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousPersonalDevelopmentAndWellbeing", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousPersonalDevelopmentAndWellbeing { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousLeadershipAndGovernance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousLeadershipAndGovernance { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousInclusion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousInclusion { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousAchievement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousAchievement { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousEarlyYearsProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousEarlyYearsProvision { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousSafeguarding", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousSafeguarding { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static ReportCardDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ReportCardDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
 
     }
 

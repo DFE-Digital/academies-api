@@ -1,5 +1,5 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
-using DfE.CoreLibs.Contracts.Academies.V4.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 
 namespace Dfe.Academies.Application.Establishment
 {
