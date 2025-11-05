@@ -36,7 +36,7 @@ public class MisMstrContext : DbContext
     {
         modelBuilder.Entity<MisEstablishment>(ConfigureEstablishment);
         modelBuilder.Entity<FurtherEducationEstablishment>(ConfigureFurtherEducationEstablishment);
-        modelBuilder.Entity<ReportCardMock>(ConfigureReportCard);
+        modelBuilder.Entity<ReportCardMock>(ConfigureMockReportCard);
         base.OnModelCreating(modelBuilder);
     }
 
@@ -208,7 +208,7 @@ public class MisMstrContext : DbContext
         furtherEducationEstablishmentConfiguration.Property(e => e.QualityOfEducation)
             .HasColumnName("quality_of_education");
     }
-    private static void ConfigureReportCard(
+    private static void ConfigureMockReportCard(
         EntityTypeBuilder<ReportCardMock> reportCardMockConfiguration)
     {
         reportCardMockConfiguration.HasKey(e => e.Urn).HasName("PK_report_cards_MOCK");
