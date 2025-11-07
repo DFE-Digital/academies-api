@@ -26,7 +26,11 @@
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
         <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.14.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.21">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
         <PackageReference Include="NSwag.MSBuild" Version="14.2.0">
             <PrivateAssets>all</PrivateAssets>
