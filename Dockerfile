@@ -38,6 +38,59 @@ COPY ./Dfe.Academies.Utils/ ./Dfe.Academies.Utils/
 
 RUN dotnet publish TramsDataApi -c Release -o /app --no-restore
 
+# ==============================================
+# Entity Framework: Migration Builder (optional)
+# ==============================================
+# Build argument to skip creating migration bundles (default: true)
+ARG SKIP_MIGRATIONS=true
+
+FROM builder AS efbuilder
+WORKDIR /build
+ENV PATH=$PATH:/root/.dotnet/tools
+
+# Create /sql and optionally produce EF migration bundles.
+# Default: SKIP_MIGRATIONS=true (skip bundling). To produce bundles, build with --build-arg SKIP_MIGRATIONS=false.
+RUN mkdir -p /sql && \
+    if [ "$SKIP_MIGRATIONS" != "true" ]; then \
+      dotnet tool install --global dotnet-ef && \
+      # Ensure compiled outputs exist so --no-build is valid
+      dotnet build TramsDataApi -c Release --no-restore && \
+      dotnet ef migrations bundle \
+        -r linux-x64 \
+        --configuration Release \
+        -p TramsDataApi \
+        --context TramsDataApi.DatabaseModels.LegacyTramsDbContext \
+        --no-build \
+        -o /sql/migratelegacydb && \
+      dotnet ef migrations bundle \
+        -r linux-x64 \
+        --configuration Release \
+        -p TramsDataApi \
+        --context TramsDataApi.DatabaseModels.TramsDbContext \
+        --no-build \
+        -o /sql/migratedb ; \
+    else \
+      echo "SKIP_MIGRATIONS=$SKIP_MIGRATIONS: skipping EF migration bundles"; \
+    fi
+
+# Copy and set permissions for init script
+COPY ./script/init-docker-entrypoint.sh /sql/entrypoint.sh
+RUN chmod +x /sql/entrypoint.sh
+
+# ==============================================
+# Entity Framework: Migration Runner
+# ==============================================
+FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-azurelinux3.0 AS initcontainer
+WORKDIR /sql
+
+# Copy migration bundles and appsettings
+COPY --from=efbuilder /sql /sql
+COPY --from=builder /app/appsettings* /TramsDataApi/
+
+# Set ownership and switch user
+RUN chown "$APP_UID" /sql -R && \
+    chown "$APP_UID" /TramsDataApi -R
+USER $APP_UID
 
 # ==============================================
 # .NET: Runtime
@@ -47,9 +100,7 @@ WORKDIR /app
 LABEL org.opencontainers.image.source="https://github.com/DFE-Digital/academies-api"
 LABEL org.opencontainers.image.description="Academies API"
 
-# Copy published app and appsettings (from builder)
+# Copy published app and set permissions
 COPY --from=builder /app /app
-COPY --from=builder /app/appsettings* /TramsDataApi/
-
 RUN chmod +x ./docker-entrypoint.sh
 USER $APP_UID
