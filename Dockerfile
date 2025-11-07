@@ -26,8 +26,7 @@ COPY ./Dfe.Academies.Domain/Dfe.Academies.Domain.csproj ./Dfe.Academies.Domain/
 COPY ./Dfe.Academies.Utils/Dfe.Academies.Utils.csproj ./Dfe.Academies.Utils/
 
 # Mount GitHub Token and restore
-RUN --mount=type=secret,id=github_token dotnet nuget add source --username USERNAME --password $(cat /run/secrets/github_token) --store-password-in-clear-text --name github "https://nuget.pkg.github.com/DFE-Digital/index.json" && \
-    dotnet restore TramsDataApi
+RUN  dotnet restore TramsDataApi
 
 # Copy remaining source and publish
 COPY ./TramsDataApi/ ./TramsDataApi/
