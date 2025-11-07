@@ -25,6 +25,9 @@ COPY ./Dfe.Academies.Application/Dfe.Academies.Application.csproj ./Dfe.Academie
 COPY ./Dfe.Academies.Domain/Dfe.Academies.Domain.csproj ./Dfe.Academies.Domain/
 COPY ./Dfe.Academies.Utils/Dfe.Academies.Utils.csproj ./Dfe.Academies.Utils/
 
+# Run restore to generate project.assets.json
+RUN dotnet restore TramsDataApi.sln
+
 # Copy remaining source and publish
 COPY ./TramsDataApi/ ./TramsDataApi/
 COPY ./Dfe.Academies.Api.Infrastructure/ ./Dfe.Academies.Api.Infrastructure/
