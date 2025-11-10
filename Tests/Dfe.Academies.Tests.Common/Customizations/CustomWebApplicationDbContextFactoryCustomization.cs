@@ -30,6 +30,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                         { typeof(MstrContext), context => MstrContextSeeder.Seed((MstrContext)context) },
                         { typeof(MisMstrContext), context => MisMstrContextSeeder.Seed((MisMstrContext)context) },
                         { typeof(LegacyTramsDbContext), context => LegacyTramsDbContextSeeder.Seed((LegacyTramsDbContext)context) }
+                        { typeof(SigChgMstrContext), context => SigChgMstrContextSeeder.Seed((SigChgMstrContext)context) }
                     },
                     ExternalServicesConfiguration = services =>
                     {

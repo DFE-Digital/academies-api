@@ -29,6 +29,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<MisMstrContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            services.AddDbContext<SigChgMstrContext>(options =>
+                options.UseSqlServer(connectionString));
+
             AddInfrastructureHealthChecks(services);
 
             return services;
