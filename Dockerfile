@@ -38,40 +38,13 @@ COPY ./Dfe.Academies.Utils/ ./Dfe.Academies.Utils/
 
 RUN dotnet publish TramsDataApi -c Release -o /app --no-restore
 
-# ==============================================
-# Entity Framework: Migration Builder (optional)
-# ==============================================
-# Build argument to skip creating migration bundles (default: true)
-ARG SKIP_MIGRATIONS=true
-
 FROM builder AS efbuilder
 WORKDIR /build
 ENV PATH=$PATH:/root/.dotnet/tools
 
 # Create /sql and optionally produce EF migration bundles.
-# Default: SKIP_MIGRATIONS=true (skip bundling). To produce bundles, build with --build-arg SKIP_MIGRATIONS=false.
-RUN mkdir -p /sql && \
-    if [ "$SKIP_MIGRATIONS" != "true" ]; then \
-      dotnet tool install --global dotnet-ef && \
-      # Ensure compiled outputs exist so --no-build is valid
-      dotnet build TramsDataApi -c Release --no-restore && \
-      dotnet ef migrations bundle \
-        -r linux-x64 \
-        --configuration Release \
-        -p TramsDataApi \
-        --context TramsDataApi.DatabaseModels.LegacyTramsDbContext \
-        --no-build \
-        -o /sql/migratelegacydb && \
-      dotnet ef migrations bundle \
-        -r linux-x64 \
-        --configuration Release \
-        -p TramsDataApi \
-        --context TramsDataApi.DatabaseModels.TramsDbContext \
-        --no-build \
-        -o /sql/migratedb ; \
-    else \
-      echo "SKIP_MIGRATIONS=$SKIP_MIGRATIONS: skipping EF migration bundles"; \
-    fi
+RUN mkdir -p /sql && \ 
+      echo "skipping EF migration bundles";
 
 # Copy and set permissions for init script
 COPY ./script/init-docker-entrypoint.sh /sql/entrypoint.sh
