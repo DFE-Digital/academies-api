@@ -41,23 +41,11 @@ RUN dotnet publish TramsDataApi -c Release -o /app --no-restore
 FROM builder AS efbuilder
 WORKDIR /build
 ENV PATH=$PATH:/root/.dotnet/tools
-
-# Create /sql and optionally produce EF migration bundles.
-RUN mkdir -p /sql && \ 
-      echo "skipping EF migration bundles";
-
-# Copy and set permissions for init script
-COPY ./script/init-docker-entrypoint.sh /sql/entrypoint.sh
-RUN chmod +x /sql/entrypoint.sh
-
-# ==============================================
-# Entity Framework: Migration Runner
-# ==============================================
+ 
 FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-azurelinux3.0 AS initcontainer
-WORKDIR /sql
+WORKDIR /TramsDataApi
 
-# Copy migration bundles and appsettings
-COPY --from=efbuilder /sql /sql
+# Copy migration bundles and appsettings 
 COPY --from=builder /app/appsettings* /TramsDataApi/
 
 # Set ownership and switch user
