@@ -49,8 +49,7 @@ WORKDIR /TramsDataApi
 COPY --from=builder /app/appsettings* /TramsDataApi/
 
 # Set ownership and switch user
-RUN chown "$APP_UID" /sql -R && \
-    chown "$APP_UID" /TramsDataApi -R
+RUN chown "$APP_UID" /TramsDataApi -R
 USER $APP_UID
 
 # ==============================================
