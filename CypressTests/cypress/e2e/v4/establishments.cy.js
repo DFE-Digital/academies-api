@@ -5,7 +5,6 @@ describe('Establishment endpoints tests', () => {
   const name = 'The Aldgate School'
   const ukPrn = '10079319'
   const urns = [100000, 100002]
-  const trustUkprn = '10067112'
 
   context('Search Establishments', () => {
 
@@ -208,28 +207,6 @@ describe('Establishment endpoints tests', () => {
           expect(response.status).to.eq(200)
           expect(response.body[0].urn).to.eq(`${urns[0]}`)
           expect(response.body[1].urn).to.eq(`${urns[1]}`)
-        })
-    })
-  })
-
-  context('Get Establishments by Trust', () => {
-
-    it('should return establishments when trust UKPRN set', () => {
-
-      cy.api({
-        method: 'GET',
-        url: `${baseUrlV4}/establishments/trust`,
-        qs: {
-          trustUkprn: trustUkprn
-        },
-        headers: {
-          ApiKey: apiKey,
-          "Content-type": "application/json"
-        }
-      })
-        .then((response) => {
-          expect(response.status).to.eq(200)
-          expect(response.body).to.have.lengthOf.at.least(1)
         })
     })
   })

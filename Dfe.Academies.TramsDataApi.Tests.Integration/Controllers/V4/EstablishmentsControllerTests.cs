@@ -254,4 +254,46 @@ public class EstablishmentsControllerTests
 
         Assert.Equal(404, exception.StatusCode);
     }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetByTrustAsync_ShouldReturnAllEstablishments_By_UKPRN(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var trustUkprn = "12345678";
+        var urn = 22;
+         
+        // Act
+        var result = await establishmentsClient.GetByTrustAsync(trustUkprn);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Single(result);
+
+        var establishment = result.SingleOrDefault(x => x.Urn == urn.ToString());
+        Assert.NotNull(establishment);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetByTrustAsync_ShouldReturnEmptyArray_IfTrustUkprnDoesNotMatche(
+    CustomWebApplicationDbContextFactory<Startup> factory,
+    IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var trustUkprn = "455636";
+
+        // Act
+        var result = await establishmentsClient.GetByTrustAsync(trustUkprn);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Empty(result); 
+    }
 }
