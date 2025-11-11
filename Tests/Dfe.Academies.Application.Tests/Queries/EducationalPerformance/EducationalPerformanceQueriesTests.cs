@@ -2,7 +2,7 @@
 using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Domain.EducationalPerformance;
 using Dfe.Academies.Domain.Interfaces.Repositories;
-using DfE.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
 using FluentAssertions;
 using Moq;
 

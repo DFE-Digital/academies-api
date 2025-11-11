@@ -2,7 +2,7 @@
 using Dfe.Academies.Application.Trust;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Domain.Trust;
-using DfE.CoreLibs.Contracts.Academies.V4.Trusts;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
 using FluentAssertions;
 using Moq;
 
