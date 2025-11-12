@@ -1,4 +1,4 @@
-﻿using DfE.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
+﻿using GovUK.Dfe.CoreLibs.Contracts.Academies.V1.EducationalPerformance;
 
 namespace Dfe.Academies.Application.EducationalPerformance
 {

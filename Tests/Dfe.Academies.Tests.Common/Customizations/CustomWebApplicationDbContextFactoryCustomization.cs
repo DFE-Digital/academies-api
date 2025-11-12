@@ -4,8 +4,8 @@ using Dfe.Academies.Tests.Common.Seeders;
 using Dfe.AcademiesApi.Client;
 using Dfe.AcademiesApi.Client.Contracts;
 using Dfe.TramsDataApi.Client.Extensions;
-using DfE.CoreLibs.Testing.Mocks.Authentication;
-using DfE.CoreLibs.Testing.Mocks.WebApplicationFactory;
+using GovUK.Dfe.CoreLibs.Testing.Mocks.Authentication;
+using GovUK.Dfe.CoreLibs.Testing.Mocks.WebApplicationFactory;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -63,6 +63,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 services.AddSingleton<IConfiguration>(config);
                 services.AddAcademiesApiClient<IEstablishmentsV1Client, EstablishmentsV1Client>(config, client);
                 services.AddAcademiesApiClient<IEstablishmentsV4Client, EstablishmentsV4Client>(config, client);
+                services.AddAcademiesApiClient<IEstablishmentsV5Client, EstablishmentsV5Client>(config, client);
                 services.AddAcademiesApiClient<ITrustsV1Client, TrustsV1Client>(config, client);
                 services.AddAcademiesApiClient<ITrustsV4Client, TrustsV4Client>(config, client);
 
@@ -75,6 +76,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 fixture.Inject(client);
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsV1Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsV4Client>());
+                fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsV5Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsV1Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsV4Client>());
 

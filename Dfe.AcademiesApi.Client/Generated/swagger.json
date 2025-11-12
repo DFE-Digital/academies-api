@@ -1439,6 +1439,83 @@
           }
         }
       }
+    },
+    "/v5/establishments": {
+      "get": {
+        "tags": [
+          "EstablishmentsV5",
+          "Establishments"
+        ],
+        "summary": "Searches for Establishments with mock report cards based on query parameters.",
+        "operationId": "SearchEstablishmentsWithMockReportCards",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the establishment.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "ukPrn",
+            "in": "query",
+            "description": "UK Provider Reference Number (UKPRN) identifier.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "urn",
+            "in": "query",
+            "description": "Unique Reference Numbers (URN).",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "excludeClosed",
+            "in": "query",
+            "description": "When true, exclude closed establishments.",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "matchAny",
+            "in": "query",
+            "description": "When true, return results where either of name, ukPrn or urn match.",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3966,6 +4043,17 @@
         }
       },
       "EstablishmentDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EstablishmentBaseDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "EstablishmentBaseDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -4278,6 +4366,109 @@
           "Open",
           "All"
         ]
+      },
+      "EstablishmentDto2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EstablishmentBaseDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "reportCard": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ReportCardDto"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "ReportCardDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "webLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestInspectionDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestCurriculumAndTeaching": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestAttendanceAndBehaviour": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestPersonalDevelopmentAndWellbeing": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestLeadershipAndGovernance": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestInclusion": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestAchievement": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestEarlyYearsProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestSafeguarding": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousInspectionDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousCurriculumAndTeaching": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousAttendanceAndBehaviour": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousPersonalDevelopmentAndWellbeing": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousLeadershipAndGovernance": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousInclusion": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousAchievement": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousEarlyYearsProvision": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousSafeguarding": {
+            "type": "string",
+            "nullable": true
+          }
+        }
       }
     }
   }

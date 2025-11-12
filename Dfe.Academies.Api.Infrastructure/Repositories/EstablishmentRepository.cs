@@ -4,20 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
-    public class EstablishmentRepository : IEstablishmentRepository
-    {
-        private MstrContext _context;
-        private MisMstrContext _misMstrContext;
-
-        public EstablishmentRepository(MstrContext context, MisMstrContext misMstrContext)
-        {
-            _context = context;
-            _misMstrContext = misMstrContext;
-        }
-
+    public class EstablishmentRepository(MstrContext context, MisMstrContext misMstrContext) : IEstablishmentRepository
+    { 
         public MisEstablishment? GetMisEstablishmentByURN(int? urn)
         {
-            return _misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn);
+            return misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn);
+        }
+
+        public ReportCardMock? GetMockReportCardsByURN(int? urn)
+        {
+            return misMstrContext.MockReportCards.FirstOrDefault(m => m.Urn == urn);
         }
 
 
@@ -37,7 +33,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
         }
         public EducationEstablishmentLink? GetEducationEstablishmentLinksByURN(long? urn)
         {
-            var result = _context.EducationEstablishmentLinks
+            var result = context.EducationEstablishmentLinks
                 .FirstOrDefault(e => e.FK_EducationEstablishmentURN == urn && e.LinkType == "Predecessor");
             return result; 
         }
@@ -81,7 +77,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
-            return await _context.Establishments
+            return await context.Establishments
                 .AsNoTracking()
                 .Where(p => regions.Contains(p.GORregion) && p.URN.HasValue)
                 .Select(e => e.URN.Value)
@@ -115,7 +111,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
         public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
         {
             var establishmentIds =
-                await _context.EducationEstablishmentTrusts
+                await context.EducationEstablishmentTrusts
                         .AsNoTracking()
                         .Where(eet => eet.TrustId == Convert.ToInt32(trustId))
                         .Select(eet => (long)eet.EducationEstablishmentId)
@@ -134,10 +130,10 @@ namespace Dfe.Academies.Infrastructure.Repositories
         private IQueryable<EstablishmentQueryResult> BaseQuery()
         {
             var result =
-                 from establishment in _context.Establishments
-                 from ifdPipeline in _context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
-                 from establishmentType in _context.EstablishmentTypes.Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
-                 from localAuthority in _context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId).DefaultIfEmpty()
+                 from establishment in context.Establishments
+                 from ifdPipeline in context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
+                 from establishmentType in context.EstablishmentTypes.Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
+                 from localAuthority in context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId).DefaultIfEmpty()
                  select new EstablishmentQueryResult { Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority, EstablishmentType = establishmentType };
 
             return result;

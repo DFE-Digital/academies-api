@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //Queries
             services.AddScoped<ITrustQueries, TrustQueries>();
             services.AddScoped<IEstablishmentQueries, EstablishmentQueries>();
+            services.AddScoped<Dfe.Academies.Application.Establishment.V5.IEstablishmentQueries,  Dfe.Academies.Application.Establishment.V5.EstablishmentQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
 
