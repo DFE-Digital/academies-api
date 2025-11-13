@@ -74,6 +74,6 @@ jobs:
 
       - name: Report results
         if: always()
-        run: npm run cy:notify -- --custom-text="Environment ${{ inputs.environment }}, See more information https://github.com/DFE-Digital/academies-api/actions/runs/${{github.run_id}}"
-    env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}   
+        run: npm run cy:notify -- --custom-text=${{ toJson(format('Environment {0}, See more information https://github.com/DFE-Digital/academies-api/actions/runs/{1}', inputs.environment, github.run_id)) }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
