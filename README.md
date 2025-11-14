@@ -49,6 +49,8 @@ We currently have a number of database contexts:
 
 `EdperfContext` is used to create any updates to the edperf schema that do not exist in the docker image. Right now the majority of the schema exists in the docker image and only the latest changes do not. Since this context does not contain all the tables, it can only be used to update the docker image. In future if we have a clean break like the mstr schema, we could rebuild all objects in the schema.
 
+`SigChgMstrContext` is used to create a database for all tables in the sig_chg_mstr schema
+
 ### Generating Migrations
 
 To generate migrations for `TramsDbContext`, use the following command:
