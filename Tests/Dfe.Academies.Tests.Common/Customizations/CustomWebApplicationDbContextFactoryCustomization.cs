@@ -29,7 +29,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                     {
                         { typeof(MstrContext), context => MstrContextSeeder.Seed((MstrContext)context) },
                         { typeof(MisMstrContext), context => MisMstrContextSeeder.Seed((MisMstrContext)context) },
-                        { typeof(LegacyTramsDbContext), context => LegacyTramsDbContextSeeder.Seed((LegacyTramsDbContext)context) }
+                        { typeof(LegacyTramsDbContext), context => LegacyTramsDbContextSeeder.Seed((LegacyTramsDbContext)context) },
                         { typeof(SigChgMstrContext), context => SigChgMstrContextSeeder.Seed((SigChgMstrContext)context) }
                     },
                     ExternalServicesConfiguration = services =>
@@ -66,6 +66,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 services.AddAcademiesApiClient<IEstablishmentsV5Client, EstablishmentsV5Client>(config, client);
                 services.AddAcademiesApiClient<ITrustsV1Client, TrustsV1Client>(config, client);
                 services.AddAcademiesApiClient<ITrustsV4Client, TrustsV4Client>(config, client);
+                services.AddAcademiesApiClient<ISignificantChangesV4Client, SignificantChangesV4Client>(config, client);
 
                 services.AddDbContext<LegacyTramsDbContext>(options =>
                     options.UseSqlServer("DataSource=:memory:"));
@@ -79,6 +80,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 fixture.Inject(serviceProvider.GetRequiredService<IEstablishmentsV5Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsV1Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsV4Client>());
+                fixture.Inject(serviceProvider.GetRequiredService<ISignificantChangesV4Client>());
 
                 fixture.Inject(new List<Claim>());
 

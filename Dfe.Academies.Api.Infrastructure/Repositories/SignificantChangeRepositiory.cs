@@ -1,18 +1,23 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Domain.SignificantChange;
-using Microsoft.EntityFrameworkCore;
+using Dfe.Academies.Domain.SignificantChange; 
+using Microsoft.EntityFrameworkCore; 
 
 namespace Dfe.Academies.Infrastructure.Repositories;
 
 public class SignificantChangeRepositiory(SigChgMstrContext context) : ISignificantChangeRepositiory
 {
-    public async Task<SignificantChange?> Search(string deliveryofficer, CancellationToken cancellationToken)
-    { 
-        var significantChange = await context.SignificantChanges
-               .AsNoTracking()
-               .SingleOrDefaultAsync(x => x.DeliveryLead == deliveryofficer, cancellationToken)
-               .ConfigureAwait(false);
+    public async Task<(IEnumerable<SignificantChange>, int)> SearchSignificantChanges(string deliveryofficer, bool orderByChangeEditDate = false, int page = 1, int count = 10, CancellationToken cancellationToken = default)
+    {
+        IQueryable<SignificantChange> filteredSignificantChanges = context.SignificantChanges
+            .AsNoTracking()
+            .Where(x => x.DeliveryLead == deliveryofficer);
 
-        return significantChange;
+        filteredSignificantChanges = orderByChangeEditDate
+            ? filteredSignificantChanges.OrderBy(x => x.ChangeEditDate) 
+            : filteredSignificantChanges.OrderBy(x => x.ChangeCreationDate);
+
+        return (await filteredSignificantChanges
+            .Skip((page - 1) * count).Take(count).ToListAsync(cancellationToken),
+            await filteredSignificantChanges.CountAsync(cancellationToken));
     }
 }

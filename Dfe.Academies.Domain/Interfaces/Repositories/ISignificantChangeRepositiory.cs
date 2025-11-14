@@ -2,5 +2,5 @@
 
 public interface ISignificantChangeRepositiory
 {
-    Task<SignificantChange.SignificantChange?> Search(string deliveryofficer, CancellationToken cancellationToken);
+    Task<(IEnumerable<SignificantChange.SignificantChange>, int)> SearchSignificantChanges(string deliveryofficer, bool orderByChangeEditDate = false, int page = 1, int count = 10, CancellationToken cancellationToken = default);
 }

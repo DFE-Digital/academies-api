@@ -2,7 +2,7 @@
 
 public class SignificantChange
 {
-    public long? SignificantChangeId { get; set; }
+    public int? SignificantChangeId { get; set; }
     public int? URN { get; set; } 
     public int? TypeofGiasChangeId { get; set; }
     public string? TypeofSigChange { get; set; }
@@ -10,7 +10,7 @@ public class SignificantChange
     public string? CreatedUserName { get; set; }
     public string? EditedUserName { get; set; } 
     public string? ApplicationType { get; set; }
-    public DateOnly? DecisionDate { get; set; }
+    public DateTime? DecisionDate { get; set; }
     public string? DeliveryLead { get; set; }
     public DateTime? ChangeCreationDate { get; set; }
     public DateTime? ChangeEditDate { get; set; }

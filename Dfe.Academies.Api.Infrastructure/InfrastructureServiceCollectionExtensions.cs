@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
             services.AddSingleton<ICensusDataRepository, CensusDataRepository>();
             services.AddScoped<IEducationalPerformanceRepository, EducationalPerformanceRepository>();
+            services.AddScoped<ISignificantChangeRepositiory, SignificantChangeRepositiory>();
 
             //Db
             var connectionString = config.GetConnectionString("DefaultConnection");

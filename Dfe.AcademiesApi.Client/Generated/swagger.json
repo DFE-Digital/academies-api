@@ -1150,6 +1150,72 @@
         }
       }
     },
+    "/v4/significantchanges": {
+      "get": {
+        "tags": [
+          "SignificantChangesV4",
+          "SignificantChanges"
+        ],
+        "summary": "Searches for significant changes based on query parameters.",
+        "operationId": "SearchSignificantChanges",
+        "parameters": [
+          {
+            "name": "deliveryOfficer",
+            "in": "query",
+            "description": "Delivery officer.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "orderByChangeEditDate",
+            "in": "query",
+            "description": "Order by significant change edit date.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "x-position": 2
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Pagination page.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 3
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of results per page.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned significant changes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedDataResponseOfSignificantChangeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v4/trust/{ukprn}": {
       "get": {
         "tags": [
@@ -4299,6 +4365,127 @@
           }
         }
       },
+      "PagedDataResponseOfSignificantChangeDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SignificantChangeDto"
+            }
+          },
+          "paging": {
+            "$ref": "#/components/schemas/PagingResponse2"
+          }
+        }
+      },
+      "SignificantChangeDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sigChangeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "urn": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "typeofGiasChangeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "typeofSigChange": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeOfSigChangeMapped": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "editedUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "applicationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "decisionDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "deliveryLead": {
+            "type": "string",
+            "nullable": true
+          },
+          "changeCreationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "changeEditDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "allActionsCompleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "withdrawn": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "localAuthority": {
+            "type": "string",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "trustName": {
+            "type": "string",
+            "nullable": true
+          },
+          "academyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaIngestionDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaSourceSystem": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PagingResponse2": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recordCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextPageUrl": {
+            "type": "string"
+          }
+        }
+      },
       "TrustDto": {
         "type": "object",
         "additionalProperties": false,
@@ -4335,23 +4522,6 @@
           },
           "paging": {
             "$ref": "#/components/schemas/PagingResponse2"
-          }
-        }
-      },
-      "PagingResponse2": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "page": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "recordCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nextPageUrl": {
-            "type": "string"
           }
         }
       },

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.SignificantChange;
 
-namespace Dfe.Academies.Application.SignificantChange
+namespace Dfe.Academies.Application.SignificantChange;
+public interface ISignificantChangeQueries
 {
-    internal class ISignificantChangeQueries
-    {
-    }
+    Task<(IEnumerable<SignificantChangeDto>, int)> SearchSignificantChanges(string deliveryOfficer, bool orderByChangeEditDate = false, int page = 1, int count = 10, CancellationToken cancellationToken = default);
 }
