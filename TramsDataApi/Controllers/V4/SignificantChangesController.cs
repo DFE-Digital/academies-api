@@ -17,7 +17,7 @@ namespace TramsDataApi.Controllers.V4
     [ApiController]
     [ApiVersion("4.0")]
     [Route("v{version:apiVersion}/")]
-    public class SignificantChangesController(ISignificantChangeQueries significantChangeQueries, ILogger<SignificantChangesController> logger) : Controller
+    public class SignificantChangesController(ISignificantChangeQueries significantChangeQueries, ILogger<SignificantChangesController> logger) : ControllerBase
     {
         /// <summary>
         /// Searches for significant changes based on query parameters.
