@@ -39,7 +39,7 @@ namespace Dfe.Academies.Application.Establishment.V5
 
             // main phone was made a string to be consistent but the entire dto probably need to make the strings nullable
             // for now empty assignment if it is null
-            _dto.MainPhone = establishment.MainPhone ?? string.Empty;
+            _dto.MainPhone = establishment?.MainPhone ?? string.Empty;
 
             return this;
         }
