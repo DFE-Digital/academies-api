@@ -36,6 +36,9 @@ namespace Dfe.Academies.Application.Establishment
             _dto.HeadteacherFirstName = establishment.HeadFirstName;
             _dto.HeadteacherLastName = establishment.HeadLastName;
             _dto.HeadteacherPreferredJobTitle = establishment.HeadPreferredJobTitle;
+            // main phone was made a string to be consistent but the entire dto probably need to make the strings nullable
+            // for now empty assignment if it is null
+            _dto.MainPhone = establishment.MainPhone ?? string.Empty;
 
             return this;
         }
