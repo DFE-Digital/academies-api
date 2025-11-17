@@ -22,20 +22,24 @@ namespace Dfe.Academies.Application.Establishment.V5
             _dto.Name = establishment?.EstablishmentName ?? string.Empty;
             _dto.Urn = establishment?.URN.ToString() ?? string.Empty;
             _dto.OfstedRating = establishment?.OfstedRating ?? string.Empty;
-            _dto.OfstedLastInspection = establishment?.OfstedLastInspection?? string.Empty;
-            _dto.StatutoryLowAge = establishment?.StatutoryLowAge?? string.Empty;
-            _dto.StatutoryHighAge = establishment?.StatutoryHighAge?? string.Empty;
-            _dto.SchoolCapacity = establishment?.SchoolCapacity?? string.Empty;
-            _dto.Pfi = establishment?.IfdPipeline?.DeliveryProcessPFI?? string.Empty;
+            _dto.OfstedLastInspection = establishment?.OfstedLastInspection ?? string.Empty;
+            _dto.StatutoryLowAge = establishment?.StatutoryLowAge ?? string.Empty;
+            _dto.StatutoryHighAge = establishment?.StatutoryHighAge ?? string.Empty;
+            _dto.SchoolCapacity = establishment?.SchoolCapacity ?? string.Empty;
+            _dto.Pfi = establishment?.IfdPipeline?.DeliveryProcessPFI ?? string.Empty;
             _dto.EstablishmentNumber = establishment?.EstablishmentNumber.ToString() ?? string.Empty;
-            _dto.Pan = establishment?.IfdPipeline?.DeliveryProcessPAN?? string.Empty;
-            _dto.Deficit = establishment?.IfdPipeline?.ProjectTemplateInformationDeficit?? string.Empty;
-            _dto.ViabilityIssue = establishment?.IfdPipeline?.ProjectTemplateInformationViabilityIssue?? string.Empty;
+            _dto.Pan = establishment?.IfdPipeline?.DeliveryProcessPAN ?? string.Empty;
+            _dto.Deficit = establishment?.IfdPipeline?.ProjectTemplateInformationDeficit ?? string.Empty;
+            _dto.ViabilityIssue = establishment?.IfdPipeline?.ProjectTemplateInformationViabilityIssue ?? string.Empty;
 
-            _dto.HeadteacherTitle = establishment?.HeadTitle?? string.Empty;
-            _dto.HeadteacherFirstName = establishment?.HeadFirstName?? string.Empty;
-            _dto.HeadteacherLastName = establishment?.HeadLastName?? string.Empty;
-            _dto.HeadteacherPreferredJobTitle = establishment?.HeadPreferredJobTitle?? string.Empty;
+            _dto.HeadteacherTitle = establishment?.HeadTitle ?? string.Empty;
+            _dto.HeadteacherFirstName = establishment?.HeadFirstName ?? string.Empty;
+            _dto.HeadteacherLastName = establishment?.HeadLastName ?? string.Empty;
+            _dto.HeadteacherPreferredJobTitle = establishment?.HeadPreferredJobTitle ?? string.Empty;
+
+            // main phone was made a string to be consistent but the entire dto probably need to make the strings nullable
+            // for now empty assignment if it is null
+            _dto.MainPhone = establishment.MainPhone ?? string.Empty;
 
             return this;
         }
@@ -113,7 +117,7 @@ namespace Dfe.Academies.Application.Establishment.V5
             return this;
         }
         public EstablishmentDtoBuilder WithCensus(Domain.Establishment.Establishment establishment, CensusData censusData)
-        {  
+        {
             _dto.Census = new CensusDto
             {
                 NumberOfPupils = establishment?.NumberOfPupils ?? string.Empty,
