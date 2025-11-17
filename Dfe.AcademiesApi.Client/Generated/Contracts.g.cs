@@ -490,11 +490,12 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <param name="deliveryOfficer">Delivery officer.</param>
         /// <param name="orderByChangeEditDate">Order by significant change edit date.</param>
+        /// <param name="isDescending">Order by asending or descending.</param>
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned significant changes.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, int? page, int? count);
+        System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, bool? isDescending, int? page, int? count);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -502,11 +503,12 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <param name="deliveryOfficer">Delivery officer.</param>
         /// <param name="orderByChangeEditDate">Order by significant change edit date.</param>
+        /// <param name="isDescending">Order by asending or descending.</param>
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned significant changes.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, int? page, int? count, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, bool? isDescending, int? page, int? count, System.Threading.CancellationToken cancellationToken);
 
     }
 

@@ -16,7 +16,6 @@ namespace TramsDataApi.UseCases
 
         public ApiUser Execute(string request)
         {
- 
             var key = _configuration
                 .GetSection("ApiKeys")
                 .AsEnumerable()

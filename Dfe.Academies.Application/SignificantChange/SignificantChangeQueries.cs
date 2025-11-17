@@ -6,9 +6,9 @@ namespace Dfe.Academies.Application.SignificantChange;
 
 public class SignificantChangeQueries(ISignificantChangeRepositiory significantChangeRepositiory) : ISignificantChangeQueries
 {
-    public async Task<(IEnumerable<SignificantChangeDto>, int)> SearchSignificantChanges(string deliveryOfficer, bool orderByChangeEditDate = false, int page = 1, int count = 10, CancellationToken cancellationToken = default)
+    public async Task<(IEnumerable<SignificantChangeDto>, int)> SearchSignificantChanges(string deliveryOfficer, bool orderByChangeEditDate = false, bool isDescending = false, int page = 1, int count = 10, CancellationToken cancellationToken = default)
     {
-        var (significantChanges, recordCount) = await significantChangeRepositiory.SearchSignificantChanges(deliveryOfficer, orderByChangeEditDate, page, count, cancellationToken);
+        var (significantChanges, recordCount) = await significantChangeRepositiory.SearchSignificantChanges(deliveryOfficer, orderByChangeEditDate, isDescending, page, count, cancellationToken);
         return (significantChanges.Select(MapToSignificantChangeDto).ToList(), recordCount);
     }
     private static SignificantChangeDto MapToSignificantChangeDto(Domain.SignificantChange.SignificantChange significantChange)

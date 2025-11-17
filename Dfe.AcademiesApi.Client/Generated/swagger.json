@@ -1180,6 +1180,16 @@
             "x-position": 2
           },
           {
+            "name": "isDescending",
+            "in": "query",
+            "description": "Order by asending or descending.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "x-position": 3
+          },
+          {
             "name": "page",
             "in": "query",
             "description": "Pagination page.",
@@ -1188,7 +1198,7 @@
               "format": "int32",
               "default": 1
             },
-            "x-position": 3
+            "x-position": 4
           },
           {
             "name": "count",
@@ -1199,7 +1209,7 @@
               "format": "int32",
               "default": 10
             },
-            "x-position": 4
+            "x-position": 5
           }
         ],
         "responses": {

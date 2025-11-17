@@ -3751,13 +3751,14 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <param name="deliveryOfficer">Delivery officer.</param>
         /// <param name="orderByChangeEditDate">Order by significant change edit date.</param>
+        /// <param name="isDescending">Order by asending or descending.</param>
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned significant changes.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, int? page, int? count)
+        public virtual System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, bool? isDescending, int? page, int? count)
         {
-            return SearchSignificantChangesAsync(deliveryOfficer, orderByChangeEditDate, page, count, System.Threading.CancellationToken.None);
+            return SearchSignificantChangesAsync(deliveryOfficer, orderByChangeEditDate, isDescending, page, count, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3766,11 +3767,12 @@ namespace Dfe.AcademiesApi.Client
         /// </summary>
         /// <param name="deliveryOfficer">Delivery officer.</param>
         /// <param name="orderByChangeEditDate">Order by significant change edit date.</param>
+        /// <param name="isDescending">Order by asending or descending.</param>
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <returns>Successfully executed the search and returned significant changes.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, int? page, int? count, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PagedDataResponseOfSignificantChangeDto> SearchSignificantChangesAsync(string? deliveryOfficer, bool? orderByChangeEditDate, bool? isDescending, int? page, int? count, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3793,6 +3795,10 @@ namespace Dfe.AcademiesApi.Client
                     if (orderByChangeEditDate != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("orderByChangeEditDate")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(orderByChangeEditDate, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (isDescending != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("isDescending")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(isDescending, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     if (page != null)
                     {

@@ -24,6 +24,7 @@ namespace TramsDataApi.Controllers.V4
         /// </summary>
         /// <param name="deliveryOfficer">Delivery officer.</param>
         /// <param name="orderByChangeEditDate">Order by significant change edit date.</param>
+        /// <param name="isDescending">Order by asending or descending.</param>
         /// <param name="page">Pagination page.</param>
         /// <param name="count">Number of results per page.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
@@ -32,11 +33,11 @@ namespace TramsDataApi.Controllers.V4
         [Route("significantchanges")]
         [SwaggerOperation(Summary = "Search significant changes", Description = "Returns a list of significant changes based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned significant changes.", typeof(PagedDataResponse<SignificantChangeDto>))]
-        public async Task<ActionResult<IEnumerable<SignificantChangeDto>>> SearchSignificantChanges(string deliveryOfficer, bool orderByChangeEditDate = false, int page = 1, int count = 10, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<IEnumerable<SignificantChangeDto>>> SearchSignificantChanges(string deliveryOfficer, bool orderByChangeEditDate = false, bool isDescending = false, int page = 1, int count = 10, CancellationToken cancellationToken = default)
         {
             logger.LogInformation("Searching for significant changes by deliveryOfficer \"{DeliveryOfficer}\" , orderByChangeEditDate {OrderByChangeEditDate}, page {Page}, count {Count}", deliveryOfficer, orderByChangeEditDate, page, count);
-            
-            var(significantChanges, recordCount) = await significantChangeQueries.SearchSignificantChanges(deliveryOfficer, orderByChangeEditDate, page, count, cancellationToken);
+
+            var (significantChanges, recordCount) = await significantChangeQueries.SearchSignificantChanges(deliveryOfficer, orderByChangeEditDate, isDescending, page, count, cancellationToken);
              
 
             logger.LogInformation("Found {RecordCount} significant changes for deliveryOfficer \"{DeliveryOfficer}\" , orderByChangeEditDate {OrderByChangeEditDate}, page {Page}, count {Count}", recordCount, deliveryOfficer, orderByChangeEditDate, page, count);

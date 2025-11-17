@@ -23,7 +23,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             var page = 1;
 
             // Act
-            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, false, page, 10, default);
+            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, false, false, page, 10, default);
 
             var significantChangeDtos = result.Data;
 
@@ -52,7 +52,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             var page = 1;
 
             // Act
-            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, true, page, 10, default);
+            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, true, false, page, 10, default);
 
             var significantChangeDtos = result.Data;
 
@@ -81,7 +81,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             var page = 1;
 
             // Act
-            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, false, page, 10, default);
+            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, false, true, page, 10, default);
 
             var significantChangeDtos = result.Data;
 
@@ -90,6 +90,63 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             Assert.Empty(significantChangeDtos);
             Assert.NotNull(result.Paging);
             Assert.Equal(0, result.Paging.RecordCount);
+            Assert.Equal(page, result.Paging.Page);
+        }
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task SearchSignificantChangesAsync_ShouldReturnDescendingOrderByCreationDateSignificantChanges_WhenMatchesWithDeliveryOfficer(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client)
+        {
+            // Arrange
+            factory.TestClaims = default;
+            var deliveryOfficer = "Lead A";
+            var page = 1;
+
+            // Act
+            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, false, true, page, 10, default);
+
+            var significantChangeDtos = result.Data;
+
+            // Assert
+            Assert.NotNull(significantChangeDtos);
+            Assert.Equal(2, significantChangeDtos.Count);
+            var significantChangeDto = significantChangeDtos.FirstOrDefault();
+            Assert.NotNull(significantChangeDto);
+            var dbContext = factory.GetDbContext<SigChgMstrContext>();
+            var significantChange = dbContext.SignificantChanges.First(sc => sc.SignificantChangeId == 3);
+            VerifyAsserts(significantChangeDto, significantChange);
+            Assert.NotNull(result.Paging);
+            Assert.Equal(2, result.Paging.RecordCount);
+            Assert.Equal(page, result.Paging.Page);
+        }
+
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task SearchSignificantChangesAsync_ShouldReturnDescendingOrderByEditDateSignificantChanges_WhenMatchesWithDeliveryOfficer(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client)
+        {
+            // Arrange
+            factory.TestClaims = default;
+            var deliveryOfficer = "Lead A";
+            var page = 1;
+
+            // Act
+            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryOfficer, true, true, page, 10, default);
+
+            var significantChangeDtos = result.Data;
+
+            // Assert
+            Assert.NotNull(significantChangeDtos);
+            Assert.Equal(2, significantChangeDtos.Count);
+            var significantChangeDto = significantChangeDtos.FirstOrDefault();
+            Assert.NotNull(significantChangeDto);
+            var dbContext = factory.GetDbContext<SigChgMstrContext>();
+            var significantChange = dbContext.SignificantChanges.First(sc => sc.SignificantChangeId == 1);
+            VerifyAsserts(significantChangeDto, significantChange);
+            Assert.NotNull(result.Paging);
+            Assert.Equal(2, result.Paging.RecordCount);
             Assert.Equal(page, result.Paging.Page);
         }
 
