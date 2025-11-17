@@ -100,7 +100,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
         {
             // Arrange
             factory.TestClaims = default;
-            var deliveryOfficer = "Lead A";
+            var deliveryOfficer = "Lead A   ";
             var page = 1;
 
             // Act
