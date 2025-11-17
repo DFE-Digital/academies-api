@@ -36,6 +36,7 @@ namespace Dfe.Academies.Application.Establishment
             _dto.HeadteacherFirstName = establishment.HeadFirstName;
             _dto.HeadteacherLastName = establishment.HeadLastName;
             _dto.HeadteacherPreferredJobTitle = establishment.HeadPreferredJobTitle;
+            _dto.MainPhone = establishment.MainPhone;
 
             return this;
         }

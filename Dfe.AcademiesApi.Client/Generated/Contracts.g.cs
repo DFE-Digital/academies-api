@@ -2739,6 +2739,9 @@ namespace Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("headteacherPreferredJobTitle", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? HeadteacherPreferredJobTitle { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("mainPhone", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? MainPhone { get; set; } = default!;
+
         [Newtonsoft.Json.JsonProperty("diocese", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public NameAndCodeDto? Diocese { get; set; } = default!;
 
