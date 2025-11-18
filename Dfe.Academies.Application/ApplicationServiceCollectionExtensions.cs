@@ -1,11 +1,8 @@
-﻿using Dfe.Academies.Application.Common.Behaviours;
-using Dfe.Academies.Application.EducationalPerformance;
+﻿using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Application.Establishment;
+using Dfe.Academies.Application.SignificantChange;
 using Dfe.Academies.Application.Trust;
-using MediatR;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
-using FluentValidation;
+using Microsoft.Extensions.Configuration; 
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<Dfe.Academies.Application.Establishment.V5.IEstablishmentQueries,  Dfe.Academies.Application.Establishment.V5.EstablishmentQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
+            services.AddScoped<ISignificantChangeQueries, SignificantChangeQueries>();
 
             return services;
         }

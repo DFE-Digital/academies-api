@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
             services.AddSingleton<ICensusDataRepository, CensusDataRepository>();
             services.AddScoped<IEducationalPerformanceRepository, EducationalPerformanceRepository>();
+            services.AddScoped<ISignificantChangeRepositiory, SignificantChangeRepositiory>();
 
             //Db
             var connectionString = config.GetConnectionString("DefaultConnection");
@@ -27,6 +28,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.UseSqlServer(connectionString));
             
             services.AddDbContext<MisMstrContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            services.AddDbContext<SigChgMstrContext>(options =>
                 options.UseSqlServer(connectionString));
 
             AddInfrastructureHealthChecks(services);
