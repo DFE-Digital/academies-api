@@ -4208,6 +4208,9 @@
           "headteacherPreferredJobTitle": {
             "type": "string"
           },
+          "mainPhone": {
+            "type": "string"
+          },
           "diocese": {
             "$ref": "#/components/schemas/NameAndCodeDto"
           },
