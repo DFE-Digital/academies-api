@@ -1,6 +1,6 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Domain.Trust;
-using GovUK.Dfe.CoreLibs.Contracts.Academies.Base;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;

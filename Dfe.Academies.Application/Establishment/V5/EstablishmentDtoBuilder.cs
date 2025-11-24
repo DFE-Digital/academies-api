@@ -1,8 +1,10 @@
 ﻿using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.Establishment;
-using Dfe.Academies.Utils.Extensions;
-using GovUK.Dfe.CoreLibs.Contracts.Academies.Base;
+using Dfe.Academies.Utils.Extensions; 
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V5.Establishments;
+using EstablishmentDto = GovUK.Dfe.CoreLibs.Contracts.Academies.V5.Establishments.EstablishmentDto;
 
 namespace Dfe.Academies.Application.Establishment.V5
 {
