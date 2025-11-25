@@ -1,7 +1,7 @@
 ﻿using Dfe.Academies.Domain.Census;
 using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Utils.Extensions;
-using GovUK.Dfe.CoreLibs.Contracts.Academies.Base;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 
 namespace Dfe.Academies.Application.Establishment

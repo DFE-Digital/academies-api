@@ -2673,26 +2673,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class EstablishmentDto : EstablishmentBaseDto
-    {
-
-        public string ToJson()
-        {
-
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
-        public static EstablishmentDto FromJson(string data)
-        {
-
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<EstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
-
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class EstablishmentBaseDto
+    public partial class EstablishmentDto
     {
         [Newtonsoft.Json.JsonProperty("ukprn", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Ukprn { get; set; } = default!;
@@ -2808,10 +2789,10 @@ namespace Dfe.AcademiesApi.Client.Contracts
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static EstablishmentBaseDto FromJson(string data)
+        public static EstablishmentDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<EstablishmentBaseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<EstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -3223,7 +3204,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class EstablishmentDto2 : EstablishmentBaseDto
+    public partial class EstablishmentDto2 : EstablishmentDto
     {
         [Newtonsoft.Json.JsonProperty("reportCard", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ReportCardDto? ReportCard { get; set; } = default!;

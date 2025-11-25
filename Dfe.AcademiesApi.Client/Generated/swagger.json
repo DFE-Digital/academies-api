@@ -4119,17 +4119,6 @@
         }
       },
       "EstablishmentDto": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/EstablishmentBaseDto"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false
-          }
-        ]
-      },
-      "EstablishmentBaseDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -4553,7 +4542,7 @@
       "EstablishmentDto2": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/EstablishmentBaseDto"
+            "$ref": "#/components/schemas/EstablishmentDto"
           },
           {
             "type": "object",
