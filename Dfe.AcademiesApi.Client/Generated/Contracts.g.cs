@@ -483,6 +483,30 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface ILocalAuthorityV4Client
+    {
+        /// <summary>
+        /// Searches for Establishments based on query parameters.
+        /// </summary>
+        /// <param name="name">Name of the establishment.</param>
+        /// <param name="code">name code identifier.</param>
+        /// <returns>Successfully executed the search and returned local Authorities.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<NameAndCodeDto>> SearchLocalAuthoritiesAsync(string? name, string? code);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches for Establishments based on query parameters.
+        /// </summary>
+        /// <param name="name">Name of the establishment.</param>
+        /// <param name="code">name code identifier.</param>
+        /// <returns>Successfully executed the search and returned local Authorities.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<NameAndCodeDto>> SearchLocalAuthoritiesAsync(string? name, string? code, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface ISignificantChangesV4Client
     {
         /// <summary>
