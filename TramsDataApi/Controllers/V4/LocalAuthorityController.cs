@@ -19,9 +19,9 @@ namespace TramsDataApi.Controllers.V4
     public class LocalAuthorityController : ControllerBase
     {
         private readonly ILocalAuthorityQueries _localAuthorityQueries;
-        private readonly ILogger<EstablishmentsController> _logger;
+        private readonly ILogger<LocalAuthorityController> _logger;
 
-        public LocalAuthorityController(ILocalAuthorityQueries localAuthorityQueries, ILogger<EstablishmentsController> logger)
+        public LocalAuthorityController(ILocalAuthorityQueries localAuthorityQueries, ILogger<LocalAuthorityController> logger)
         {
             _localAuthorityQueries = localAuthorityQueries;
             _logger = logger;

@@ -9,7 +9,7 @@ namespace Dfe.Academies.Application.LocalAuthority
         {
             var (localAuthorities, recordCount) = await _localAuthorityRepository.Search(name, code, cancellationToken);
 
-            return (localAuthorities.Select(x => MapToNameAndCodeDto(x)).ToList(), localAuthorities.Count);
+            return (localAuthorities.Select(x => MapToNameAndCodeDto(x)).ToList(), recordCount);
         }
 
         private static NameAndCodeDto MapToNameAndCodeDto(Domain.Establishment.LocalAuthority localAuthority)

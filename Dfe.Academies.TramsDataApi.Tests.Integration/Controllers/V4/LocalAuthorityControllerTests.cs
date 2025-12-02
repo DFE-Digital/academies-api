@@ -45,7 +45,7 @@ public class LocalAuthorityControllerTests
         // Assert
         Assert.NotNull(localAuthorities);
         // Verify that results contain the search term (if any results are returned)
-        if (localAuthorities.Any())
+        if (localAuthorities.Count > 0)
         {
             Assert.All(localAuthorities, la =>
                 Assert.Contains(searchName, la.Name, StringComparison.OrdinalIgnoreCase));
@@ -70,7 +70,7 @@ public class LocalAuthorityControllerTests
         // Assert
         Assert.NotNull(localAuthorities);
         // Verify that results contain the search code (if any results are returned)
-        if (localAuthorities.Any())
+        if (localAuthorities.Count > 0)
         {
             Assert.All(localAuthorities, la =>
                 Assert.Contains(searchCode, la.Code, StringComparison.OrdinalIgnoreCase));
@@ -96,7 +96,7 @@ public class LocalAuthorityControllerTests
         // Assert
         Assert.NotNull(localAuthorities);
         // Verify that results match both search criteria (if any results are returned)
-        if (localAuthorities.Any())
+        if (localAuthorities.Count > 0)
         {
             Assert.All(localAuthorities, la =>
             {
@@ -144,7 +144,7 @@ public class LocalAuthorityControllerTests
         Assert.NotNull(localAuthorities);
 
         // If we have results, verify the structure
-        if (localAuthorities.Any())
+        if (localAuthorities.Count > 0)
         {
             var firstResult = localAuthorities.First();
             Assert.NotNull(firstResult.Name);

@@ -131,7 +131,7 @@ namespace Dfe.Academies.Application.Tests.Queries.LocalAuthority
                 .Returns((emptyList, 0));
 
             // Act
-            var (result, recordCount) = await localAuthorityQueries.Search(searchName, null, default);
+            var (result, recordCount) = await localAuthorityQueries.Search(searchName, null!, default);
 
             // Assert
             Assert.NotNull(result);
