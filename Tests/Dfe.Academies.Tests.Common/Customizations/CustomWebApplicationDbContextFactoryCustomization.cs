@@ -67,6 +67,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 services.AddAcademiesApiClient<ITrustsV1Client, TrustsV1Client>(config, client);
                 services.AddAcademiesApiClient<ITrustsV4Client, TrustsV4Client>(config, client);
                 services.AddAcademiesApiClient<ISignificantChangesV4Client, SignificantChangesV4Client>(config, client);
+                services.AddAcademiesApiClient<ILocalAuthorityV4Client, LocalAuthorityV4Client>(config, client);
 
                 services.AddDbContext<LegacyTramsDbContext>(options =>
                     options.UseSqlServer("DataSource=:memory:"));
@@ -81,6 +82,7 @@ namespace Dfe.Academies.Tests.Common.Customizations
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsV1Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<ITrustsV4Client>());
                 fixture.Inject(serviceProvider.GetRequiredService<ISignificantChangesV4Client>());
+                fixture.Inject(serviceProvider.GetRequiredService<ILocalAuthorityV4Client>());
 
                 fixture.Inject(new List<Claim>());
 

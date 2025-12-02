@@ -18,8 +18,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
             IQueryable<LocalAuthority> query = _mstrContext.LocalAuthorities.AsNoTracking();
 
             query = query.Where(la =>
-                (string.IsNullOrEmpty(name) || (la.Name != null && la.Name.Contains(name))) &&
-                (string.IsNullOrEmpty(code) || (la.Code != null && la.Code.Contains(code)))
+                (string.IsNullOrEmpty(name) || (la.Name != null && la.Name.ToLower().Contains(name.ToLower()))) &&
+                (string.IsNullOrEmpty(code) || (la.Code != null && la.Code.ToLower().Contains(code.ToLower())))
             );
 
             var queryResult = await query.Take(100).ToListAsync(cancellationToken);

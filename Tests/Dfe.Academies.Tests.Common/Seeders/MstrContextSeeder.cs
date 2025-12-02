@@ -10,7 +10,7 @@ namespace Dfe.Academies.Tests.Common.Seeders
         {
             if (!mstrContext.Trusts.Any() && !mstrContext.Establishments.Any() &&
              !mstrContext.EducationEstablishmentTrusts.Any() && !mstrContext.GovernanceRoleTypes.Any() &&
-             !mstrContext.EducationEstablishmentGovernances.Any())
+             !mstrContext.EducationEstablishmentGovernances.Any() && !mstrContext.LocalAuthorities.Any())
             {
 
                 // Populate Trust
@@ -208,6 +208,30 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     ModifiedBy = "System"
                 };
                 mstrContext.TrustGovernances.AddRange(trustGovernance1, trustGovernance2);
+
+
+                var localAuthority1 = new LocalAuthority
+                {
+                    SK = 1,
+                    Name = "Birmingham",
+                    Code = "330"
+                };
+
+                var localAuthority2 = new LocalAuthority
+                {
+                    SK = 2,
+                    Name = "Sheffield",
+                    Code = "456"
+                };
+
+                var localAuthority3 = new LocalAuthority
+                {
+                    SK = 3,
+                    Name = "City of London",
+                    Code = "123"
+                };
+
+                mstrContext.LocalAuthorities.AddRange(localAuthority1, localAuthority2, localAuthority3);
 
                 // Save changes
                 mstrContext.SaveChanges();
