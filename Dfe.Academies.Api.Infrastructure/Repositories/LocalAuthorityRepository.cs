@@ -1,9 +1,11 @@
 ﻿using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.Academies.Infrastructure.Repositories
 {
+    [ExcludeFromCodeCoverage]
     public class LocalAuthorityRepository : ILocalAuthorityRepository
     {
         private readonly MstrContext _mstrContext;
@@ -18,8 +20,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
             IQueryable<LocalAuthority> query = _mstrContext.LocalAuthorities.AsNoTracking();
 
             query = query.Where(la =>
-                (string.IsNullOrEmpty(name) || (la.Name != null && la.Name.Contains(name, StringComparison.OrdinalIgnoreCase))) &&
-                (string.IsNullOrEmpty(code) || (la.Code != null && la.Code.Contains(code, StringComparison.OrdinalIgnoreCase))));
+                (string.IsNullOrEmpty(name) || (la.Name != null && la.Name.ToLower().Contains(name.ToLower()))) &&
+                (string.IsNullOrEmpty(code) || (la.Code != null && la.Code.ToLower().Contains(code.ToLower()))));
 
             var queryResult = await query.Take(100).ToListAsync(cancellationToken);
 
