@@ -41,17 +41,17 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<List<NameAndCodeDto>>> SearchLocalAuthorities(string name, string code, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
-                "Searching for local authorities by name \"{name}\", code \"{code}\"",
+                "Searching for local authorities by name \"{Name}\", code \"{Code}\"",
                 name, code);
 
             var (localAuthorities, recordCount) = await _localAuthorityQueries
                 .Search(name, code, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
-                "Found {count} local authorities for name \"{name}\", code \"{code}\"",
+                "Found {Count} local authorities for name \"{Name}\", code \"{Code}\"",
                 recordCount, name, code);
 
-            _logger.LogDebug(JsonSerializer.Serialize(localAuthorities));
+            _logger.LogDebug("Local authorities search results: {LocalAuthorities}", JsonSerializer.Serialize(localAuthorities));
 
             var response = new List<NameAndCodeDto>(localAuthorities);
 
