@@ -1150,6 +1150,53 @@
         }
       }
     },
+    "/v4/local-auththorities": {
+      "get": {
+        "tags": [
+          "LocalAuthorityV4",
+          "LocalAuthority"
+        ],
+        "summary": "Searches for Establishments based on query parameters.",
+        "operationId": "SearchLocalAuthorities",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the establishment.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "name code identifier.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned local Authorities.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NameAndCodeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v4/significantchanges": {
       "get": {
         "tags": [

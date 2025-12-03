@@ -28,7 +28,7 @@ public class MstrContext : DbContext
     public DbSet<IfdPipeline> IfdPipelines { get; set; } = null!;
     public DbSet<GovernanceRoleType> GovernanceRoleTypes { get; set; } = null!;
     public DbSet<EducationEstablishmentGovernance> EducationEstablishmentGovernances { get; set; } = null!;
-    public DbSet<TrustGovernance> TrustGovernances { get; set; } = null!; 
+    public DbSet<TrustGovernance> TrustGovernances { get; set; } = null!;
     public DbSet<EducationEstablishmentLink> EducationEstablishmentLinks { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -256,14 +256,11 @@ public class MstrContext : DbContext
             .HasForeignKey(x => x.TrustTypeId);
     }
 
-    private void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)
+    private static void ConfigureTrustType(EntityTypeBuilder<TrustType> trustTypeConfiguration)
     {
         trustTypeConfiguration.HasKey(e => e.SK);
 
         trustTypeConfiguration.ToTable("Ref_TrustType", DEFAULT_SCHEMA);
-
-        trustTypeConfiguration.HasData(new TrustType() { SK = 30, Code = "06", Name = "Multi-academy trust" });
-        trustTypeConfiguration.HasData(new TrustType() { SK = 32, Code = "10", Name = "Single-academy trust" });
     }
     private static void ConfigureEducationEstablishmentTrust(EntityTypeBuilder<EducationEstablishmentTrust> entityBuilder)
     {
@@ -274,36 +271,25 @@ public class MstrContext : DbContext
         entityBuilder.Property(e => e.TrustId).HasColumnName("FK_Trust");
     }
 
-    private void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
+    private static void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)
     {
         localAuthorityConfiguration.HasKey(e => e.SK);
         localAuthorityConfiguration.ToTable("Ref_LocalAuthority", DEFAULT_SCHEMA);
-
-        localAuthorityConfiguration.HasData(new LocalAuthority() { SK = 1, Code = "202", Name = "Barnsley" });
-        localAuthorityConfiguration.HasData(new LocalAuthority() { SK = 2, Code = "203", Name = "Birmingham" });
-        localAuthorityConfiguration.HasData(new LocalAuthority() { SK = 3, Code = "204", Name = "Bradford" });
     }
 
-    private void ConfigureEstablishmentType(EntityTypeBuilder<EstablishmentType> establishmentTypeConfiguration)
+    private static void ConfigureEstablishmentType(EntityTypeBuilder<EstablishmentType> establishmentTypeConfiguration)
     {
         establishmentTypeConfiguration.HasKey(e => e.SK);
         establishmentTypeConfiguration.ToTable("Ref_EducationEstablishmentType", DEFAULT_SCHEMA);
-
-        establishmentTypeConfiguration.HasData(new EstablishmentType() { SK = 224, Code = "35", Name = "Free schools" });
-        establishmentTypeConfiguration.HasData(new EstablishmentType() { SK = 228, Code = "18", Name = "Further education" });
     }
 
-  
-    private void ConfigureEducationEstablishmentLink(EntityTypeBuilder<EducationEstablishmentLink> educationEstablishmentLinkConfiguration)
-    { 
-        educationEstablishmentLinkConfiguration.HasKey(e => e.SK); 
+
+    private static void ConfigureEducationEstablishmentLink(EntityTypeBuilder<EducationEstablishmentLink> educationEstablishmentLinkConfiguration)
+    {
+        educationEstablishmentLinkConfiguration.HasKey(e => e.SK);
         educationEstablishmentLinkConfiguration.ToTable("EducationEstablishmentLink", "mstr");
         educationEstablishmentLinkConfiguration.Property(e => e.ModifiedBy).HasColumnName("Modified By");
         educationEstablishmentLinkConfiguration.Property(e => e.LinkEstablishedDate).HasColumnName("Link Established Date");
-        educationEstablishmentLinkConfiguration.HasData(
-            new EducationEstablishmentLink() { SK = 1, LinkURN = 123123, LinkType = "Predecessor", FK_EducationEstablishmentURN = 3, ModifiedBy = "Admin", Modified = DateTime.Now, URN = 112233, LinkEstablishedDate = DateTime.Now },
-            new EducationEstablishmentLink() { SK = 2, LinkURN = 453452, LinkType = "Predecessor", FK_EducationEstablishmentURN = 3, ModifiedBy = "Admin", Modified = DateTime.Now, URN = 212233, LinkEstablishedDate = DateTime.Now }
-        );
     }
 
     private static void ConfigureIfdPipeline(EntityTypeBuilder<IfdPipeline> ifdPipelineConfiguration)

@@ -1,8 +1,9 @@
 ﻿using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Application.Establishment;
+using Dfe.Academies.Application.LocalAuthority;
 using Dfe.Academies.Application.SignificantChange;
 using Dfe.Academies.Application.Trust;
-using Microsoft.Extensions.Configuration; 
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -14,10 +15,11 @@ namespace Microsoft.Extensions.DependencyInjection
             //Queries
             services.AddScoped<ITrustQueries, TrustQueries>();
             services.AddScoped<IEstablishmentQueries, EstablishmentQueries>();
-            services.AddScoped<Dfe.Academies.Application.Establishment.V5.IEstablishmentQueries,  Dfe.Academies.Application.Establishment.V5.EstablishmentQueries>();
+            services.AddScoped<Dfe.Academies.Application.Establishment.V5.IEstablishmentQueries, Dfe.Academies.Application.Establishment.V5.EstablishmentQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<ISignificantChangeQueries, SignificantChangeQueries>();
+            services.AddScoped<ILocalAuthorityQueries, LocalAuthorityQueries>();
 
             return services;
         }

@@ -17,6 +17,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICensusDataRepository, CensusDataRepository>();
             services.AddScoped<IEducationalPerformanceRepository, EducationalPerformanceRepository>();
             services.AddScoped<ISignificantChangeRepositiory, SignificantChangeRepositiory>();
+            services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+            services.AddScoped<ILocalAuthorityRepository, LocalAuthorityRepository>();
+
 
             //Db
             var connectionString = config.GetConnectionString("DefaultConnection");
@@ -26,7 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddDbContext<EdperfContext>(options =>
                 options.UseSqlServer(connectionString));
-            
+
             services.AddDbContext<MisMstrContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -38,7 +41,8 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static void AddInfrastructureHealthChecks(this IServiceCollection services) {
+        public static void AddInfrastructureHealthChecks(this IServiceCollection services)
+        {
             services.AddHealthChecks()
                 .AddDbContextCheck<MstrContext>("Academies Database");
         }
