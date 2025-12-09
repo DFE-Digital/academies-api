@@ -13,6 +13,14 @@ namespace Dfe.Academies.Infrastructure.Repositories
             _mstrContext = mstrContext ?? throw new ArgumentNullException(nameof(mstrContext));
         }
 
+        public async Task<LocalAuthority?> GetLocalAuthorityByCode(string code, CancellationToken cancellationToken)
+        {
+            var localAuthority = await _mstrContext.LocalAuthorities.AsNoTracking()
+                    .SingleOrDefaultAsync(x => x.Code == code, cancellationToken).ConfigureAwait(false);
+
+            return localAuthority;
+        }
+
         public async Task<(List<LocalAuthority>, int)> Search(string name, string code, CancellationToken cancellationToken)
         {
             IQueryable<LocalAuthority> query = _mstrContext.LocalAuthorities.AsNoTracking();

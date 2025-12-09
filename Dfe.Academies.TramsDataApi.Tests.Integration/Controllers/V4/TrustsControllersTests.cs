@@ -19,7 +19,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             var ukprn = "32345678";
 
             // Act & Assert  
-            var exception = await Assert.ThrowsAsync<AcademiesApiException>(() => trustsV4Client.GetTrustByUkprn2Async(ukprn, default));
+            var exception = await Assert.ThrowsAsync<AcademiesApiException>(() => trustsV4Client.GetTrustByUkprn3Async(ukprn, default));
             Assert.Equal(404, exception.StatusCode);
         }
         [Theory]
@@ -33,7 +33,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             var ukprn = "12345678";
 
             // Act  
-            var result = await trustsV4Client.GetTrustByUkprn2Async(ukprn, default);
+            var result = await trustsV4Client.GetTrustByUkprn3Async(ukprn, default);
 
             // Assert  
             Assert.NotNull(result);
@@ -56,7 +56,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
 
-            var trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[0].ToString()); 
+            var trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[0].ToString());
             Assert.Equal(requestModel.Urns[0].ToString(), trust.Key);
 
             trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[1].ToString());
