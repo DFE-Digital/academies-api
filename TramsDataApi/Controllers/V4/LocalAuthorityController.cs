@@ -39,7 +39,7 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Retrieve local authority by name code", Description = "Returns a local authority identified by the name code.")]
         [SwaggerResponse(200, "Successfully found and returned the local authority.", typeof(NameAndCodeDto))]
         [SwaggerResponse(404, "local authority with specified name code not found.")]
-        public async Task<ActionResult<NameAndCodeDto>> GetTrustByUkprn(string code, CancellationToken cancellationToken)
+        public async Task<ActionResult<NameAndCodeDto>> GetLocalAuthorityByCode(string code, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
             "Attempting to get local authority by name code \"{Code}\"",

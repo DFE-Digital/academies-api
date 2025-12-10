@@ -491,7 +491,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="code">Name code.</param>
         /// <returns>Successfully found and returned the local authority.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<NameAndCodeDto> GetTrustByUkprn2Async(string code);
+        System.Threading.Tasks.Task<NameAndCodeDto> GetLocalAuthorityByCodeAsync(string code);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -500,7 +500,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="code">Name code.</param>
         /// <returns>Successfully found and returned the local authority.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<NameAndCodeDto> GetTrustByUkprn2Async(string code, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<NameAndCodeDto> GetLocalAuthorityByCodeAsync(string code, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Searches for Establishments based on query parameters.
@@ -562,7 +562,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn3Async(string ukprn);
+        System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -571,7 +571,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn3Async(string ukprn, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a Trust by its Companies House Number.

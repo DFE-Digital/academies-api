@@ -3752,9 +3752,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="code">Name code.</param>
         /// <returns>Successfully found and returned the local authority.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<NameAndCodeDto> GetTrustByUkprn2Async(string code)
+        public virtual System.Threading.Tasks.Task<NameAndCodeDto> GetLocalAuthorityByCodeAsync(string code)
         {
-            return GetTrustByUkprn2Async(code, System.Threading.CancellationToken.None);
+            return GetLocalAuthorityByCodeAsync(code, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -3764,7 +3764,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="code">Name code.</param>
         /// <returns>Successfully found and returned the local authority.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<NameAndCodeDto> GetTrustByUkprn2Async(string code, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<NameAndCodeDto> GetLocalAuthorityByCodeAsync(string code, System.Threading.CancellationToken cancellationToken)
         {
             if (code == null)
                 throw new System.ArgumentNullException("code");
@@ -4382,9 +4382,9 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn3Async(string ukprn)
+        public virtual System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn)
         {
-            return GetTrustByUkprn3Async(ukprn, System.Threading.CancellationToken.None);
+            return GetTrustByUkprn2Async(ukprn, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -4394,7 +4394,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="ukprn">The UK Provider Reference Number (UKPRN) identifier.</param>
         /// <returns>Successfully found and returned the Trust.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn3Async(string ukprn, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TrustDto> GetTrustByUkprn2Async(string ukprn, System.Threading.CancellationToken cancellationToken)
         {
             if (ukprn == null)
                 throw new System.ArgumentNullException("ukprn");

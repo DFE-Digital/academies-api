@@ -1157,7 +1157,7 @@
           "LocalAuthority"
         ],
         "summary": "Retrieves a local authority by its name code.",
-        "operationId": "GetTrustByUkprn2",
+        "operationId": "GetLocalAuthorityByCode",
         "parameters": [
           {
             "name": "code",
@@ -1317,7 +1317,7 @@
           "Trusts"
         ],
         "summary": "Retrieves a Trust by its UK Provider Reference Number (UKPRN).",
-        "operationId": "GetTrustByUkprn3",
+        "operationId": "GetTrustByUkprn2",
         "parameters": [
           {
             "name": "ukprn",

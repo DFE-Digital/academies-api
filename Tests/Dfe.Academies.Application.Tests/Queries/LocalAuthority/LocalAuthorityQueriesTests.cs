@@ -20,6 +20,8 @@ namespace Dfe.Academies.Application.Tests.Queries.LocalAuthority
             return new LocalAuthorityQueries(_subLocalAuthorityRepository);
         }
 
+        #region Search Tests
+
         [Fact]
         public async Task Search_WithNullParameters_ReturnsAllLocalAuthorities()
         {
@@ -244,6 +246,181 @@ namespace Dfe.Academies.Application.Tests.Queries.LocalAuthority
             }
         }
 
+        #endregion
+
+        #region GetByCode Tests
+
+        [Fact]
+        public async Task GetByCode_WithValidCode_ReturnsLocalAuthority()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var searchCode = "330";
+            var expectedLocalAuthority = CreateLocalAuthority("Birmingham", "330");
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(searchCode, Arg.Any<CancellationToken>())
+                .Returns(expectedLocalAuthority);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(searchCode, default);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Birmingham", result.Name);
+            Assert.Equal("330", result.Code);
+            await _subLocalAuthorityRepository.Received(1).GetLocalAuthorityByCode(searchCode, Arg.Any<CancellationToken>());
+        }
+
+        [Fact]
+        public async Task GetByCode_WithNonExistentCode_ReturnsNull()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var nonExistentCode = "999";
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(nonExistentCode, Arg.Any<CancellationToken>())
+                .Returns((Dfe.Academies.Domain.Establishment.LocalAuthority?)null);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(nonExistentCode, default);
+
+            // Assert
+            Assert.Null(result);
+            await _subLocalAuthorityRepository.Received(1).GetLocalAuthorityByCode(nonExistentCode, Arg.Any<CancellationToken>());
+        }
+
+        [Fact]
+        public async Task GetByCode_WithNullCode_CallsRepositoryWithNull()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(null!, Arg.Any<CancellationToken>())
+                .Returns((Dfe.Academies.Domain.Establishment.LocalAuthority?)null);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(null!, default);
+
+            // Assert
+            Assert.Null(result);
+            await _subLocalAuthorityRepository.Received(1).GetLocalAuthorityByCode(Arg.Is<string>(x => x == null), Arg.Any<CancellationToken>());
+        }
+
+        [Fact]
+        public async Task GetByCode_WithEmptyCode_CallsRepositoryWithEmptyString()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var emptyCode = "";
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(emptyCode, Arg.Any<CancellationToken>())
+                .Returns((Dfe.Academies.Domain.Establishment.LocalAuthority?)null);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(emptyCode, default);
+
+            // Assert
+            Assert.Null(result);
+            await _subLocalAuthorityRepository.Received(1).GetLocalAuthorityByCode(emptyCode, Arg.Any<CancellationToken>());
+        }
+
+        [Fact]
+        public async Task GetByCode_WithCancellationToken_PassesTokenToRepository()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var searchCode = "330";
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+            var expectedLocalAuthority = CreateLocalAuthority("Birmingham", "330");
+
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(searchCode, cancellationToken)
+                .Returns(expectedLocalAuthority);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(searchCode, cancellationToken);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Birmingham", result.Name);
+            Assert.Equal("330", result.Code);
+            await _subLocalAuthorityRepository.Received(1).GetLocalAuthorityByCode(searchCode, cancellationToken);
+        }
+
+        [Fact]
+        public async Task GetByCode_MapsLocalAuthorityToNameAndCodeDto_Correctly()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var searchCode = "999";
+            var localAuthority = CreateLocalAuthority("Test Authority", "999");
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(searchCode, Arg.Any<CancellationToken>())
+                .Returns(localAuthority);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(searchCode, default);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<NameAndCodeDto>(result);
+            Assert.Equal("Test Authority", result.Name);
+            Assert.Equal("999", result.Code);
+        }
+
+        [Fact]
+        public async Task GetByCode_WhenRepositoryThrowsException_PropagatesException()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var searchCode = "330";
+            var expectedException = new InvalidOperationException("Database connection error");
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(searchCode, Arg.Any<CancellationToken>())
+                .ThrowsAsync(expectedException);
+
+            // Act & Assert
+            var actualException = await Assert.ThrowsAsync<InvalidOperationException>(
+                () => localAuthorityQueries.GetByCode(searchCode, default));
+
+            Assert.Equal(expectedException.Message, actualException.Message);
+        }
+
+        [Fact]
+        public async Task GetByCode_WithWhitespaceCode_CallsRepositoryWithWhitespace()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var whitespaceCode = "   ";
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(whitespaceCode, Arg.Any<CancellationToken>())
+                .Returns((Dfe.Academies.Domain.Establishment.LocalAuthority?)null);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(whitespaceCode, default);
+
+            // Assert
+            Assert.Null(result);
+            await _subLocalAuthorityRepository.Received(1).GetLocalAuthorityByCode(whitespaceCode, Arg.Any<CancellationToken>());
+        }
+
+        [Fact]
+        public async Task GetByCode_WithSpecialCharacters_CallsRepositoryCorrectly()
+        {
+            // Arrange
+            var localAuthorityQueries = CreateLocalAuthorityQueries();
+            var specialCode = "A-1/B";
+            var expectedLocalAuthority = CreateLocalAuthority("Special Authority", "A-1/B");
+            _subLocalAuthorityRepository.GetLocalAuthorityByCode(specialCode, Arg.Any<CancellationToken>())
+                .Returns(expectedLocalAuthority);
+
+            // Act
+            var result = await localAuthorityQueries.GetByCode(specialCode, default);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("Special Authority", result.Name);
+            Assert.Equal("A-1/B", result.Code);
+            await _subLocalAuthorityRepository.Received(1).GetLocalAuthorityByCode(specialCode, Arg.Any<CancellationToken>());
+        }
+
+        #endregion
+
+        #region Helper Methods
+
         private static List<Dfe.Academies.Domain.Establishment.LocalAuthority> CreateSampleLocalAuthorities()
         {
             return new List<Dfe.Academies.Domain.Establishment.LocalAuthority>
@@ -263,5 +440,7 @@ namespace Dfe.Academies.Application.Tests.Queries.LocalAuthority
                 SK = Random.Shared.NextInt64(1, 1000)
             };
         }
+
+        #endregion
     }
 }
