@@ -56,7 +56,7 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
 
-            var trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[0].ToString()); 
+            var trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[0].ToString());
             Assert.Equal(requestModel.Urns[0].ToString(), trust.Key);
 
             trust = result.SingleOrDefault(x => x.Key == requestModel.Urns[1].ToString());

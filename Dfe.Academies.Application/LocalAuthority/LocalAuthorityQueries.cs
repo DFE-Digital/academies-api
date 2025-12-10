@@ -5,6 +5,11 @@ namespace Dfe.Academies.Application.LocalAuthority
 {
     public class LocalAuthorityQueries(ILocalAuthorityRepository _localAuthorityRepository) : ILocalAuthorityQueries
     {
+        public async Task<NameAndCodeDto?> GetByCode(string code, CancellationToken cancellationToken)
+        {
+            var localAuthority = await _localAuthorityRepository.GetLocalAuthorityByCode(code, cancellationToken).ConfigureAwait(false);
+            return localAuthority == null ? null : MapToNameAndCodeDto(localAuthority);
+        }
         public async Task<(List<NameAndCodeDto>, int)> Search(string name, string code, CancellationToken cancellationToken)
         {
             var (localAuthorities, recordCount) = await _localAuthorityRepository.Search(name, code, cancellationToken);

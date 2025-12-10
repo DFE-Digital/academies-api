@@ -8,6 +8,8 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4;
 
 public class LocalAuthorityControllerTests
 {
+    #region SearchLocalAuthorities Tests
+
     [Theory]
     [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
     public async Task SearchLocalAuthorities_ShouldReturnAllLocalAuthorities_WhenNoParametersProvided(
@@ -220,4 +222,263 @@ public class LocalAuthorityControllerTests
         Assert.NotNull(localAuthorities);
         // Should return all local authorities when no filter is applied
     }
+
+    #endregion
+
+    #region GetLocalAuthorityByCode Tests
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldReturnLocalAuthority_WhenValidCodeProvided(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var validCode = "330"; // Birmingham code from test data
+
+        // Act
+        var result = await localAuthorityClient.GetLocalAuthorityByCodeAsync(validCode, default);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.NotNull(result.Name);
+        Assert.NotNull(result.Code);
+        Assert.NotEmpty(result.Name);
+        Assert.NotEmpty(result.Code);
+        Assert.Equal(validCode, result.Code);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldThrowException_WhenCodeNotFound(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var nonExistentCode = "99999";
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<AcademiesApiException>(
+            () => localAuthorityClient.GetLocalAuthorityByCodeAsync(nonExistentCode, default));
+
+        Assert.Equal(404, exception.StatusCode);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldThrowException_WhenCodeIsNull(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<ArgumentNullException>(
+            () => localAuthorityClient.GetLocalAuthorityByCodeAsync(null!, default));
+
+        Assert.NotNull(exception);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldThrowException_WhenCodeIsEmpty(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var emptyCode = "";
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<AcademiesApiException>(
+            () => localAuthorityClient.GetLocalAuthorityByCodeAsync(emptyCode, default));
+
+        Assert.NotNull(exception);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldReturnBirmingham_WhenCode330Provided(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var birminghamCode = "330";
+
+        // Act
+        var result = await localAuthorityClient.GetLocalAuthorityByCodeAsync(birminghamCode, default);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("330", result.Code);
+        Assert.Equal("Birmingham", result.Name);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldReturnSheffield_WhenCode456Provided(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var sheffieldCode = "456";
+
+        // Act
+        var result = await localAuthorityClient.GetLocalAuthorityByCodeAsync(sheffieldCode, default);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("456", result.Code);
+        Assert.Equal("Sheffield", result.Name);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldReturnCityOfLondon_WhenCode123Provided(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var cityOfLondonCode = "123";
+
+        // Act
+        var result = await localAuthorityClient.GetLocalAuthorityByCodeAsync(cityOfLondonCode, default);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("123", result.Code);
+        Assert.Equal("City of London", result.Name);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldReturnValidNameAndCodeDto_Structure(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var validCode = "330";
+
+        // Act
+        var result = await localAuthorityClient.GetLocalAuthorityByCodeAsync(validCode, default);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.IsType<NameAndCodeDto>(result);
+        Assert.NotNull(result.Name);
+        Assert.NotNull(result.Code);
+        Assert.NotEmpty(result.Name);
+        Assert.NotEmpty(result.Code);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldHandleWhitespaceCode(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var whitespaceCode = "   ";
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<AcademiesApiException>(
+            () => localAuthorityClient.GetLocalAuthorityByCodeAsync(whitespaceCode, default));
+
+        Assert.Equal(404, exception.StatusCode);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldReturnCorrectLocalAuthority_ForAllTestDataCodes(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var testCodes = new[]
+        {
+            ("330", "Birmingham"),
+            ("456", "Sheffield"),
+            ("123", "City of London")
+        };
+
+        // Act & Assert
+        foreach (var (code, expectedName) in testCodes)
+        {
+            var result = await localAuthorityClient.GetLocalAuthorityByCodeAsync(code, default);
+
+            Assert.NotNull(result);
+            Assert.Equal(code, result.Code);
+            Assert.Equal(expectedName, result.Name);
+        }
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldHandleSpecialCharacterCodes(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var specialCharacterCode = "A-1"; // Code with special characters (doesn't exist in test data)
+
+        // Act & Assert
+        var exception = await Assert.ThrowsAsync<AcademiesApiException>(
+            () => localAuthorityClient.GetLocalAuthorityByCodeAsync(specialCharacterCode, default));
+
+        Assert.Equal(404, exception.StatusCode);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldBeCaseSensitive_ForCodeParameter(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var lowerCaseCode = "abc"; // Non-existent lowercase code
+        var upperCaseCode = "ABC"; // Non-existent uppercase code
+
+        // Act & Assert
+        var lowerException = await Assert.ThrowsAsync<AcademiesApiException>(
+            () => localAuthorityClient.GetLocalAuthorityByCodeAsync(lowerCaseCode, default));
+
+        var upperException = await Assert.ThrowsAsync<AcademiesApiException>(
+            () => localAuthorityClient.GetLocalAuthorityByCodeAsync(upperCaseCode, default));
+
+        Assert.Equal(404, lowerException.StatusCode);
+        Assert.Equal(404, upperException.StatusCode);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetLocalAuthorityByCode_ShouldHandleNumericCodes(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        ILocalAuthorityV4Client localAuthorityClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var numericCode = "330"; // Valid numeric code
+
+        // Act
+        var result = await localAuthorityClient.GetLocalAuthorityByCodeAsync(numericCode, default);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(numericCode, result.Code);
+        Assert.Equal("Birmingham", result.Name);
+    }
+
+    #endregion
 }

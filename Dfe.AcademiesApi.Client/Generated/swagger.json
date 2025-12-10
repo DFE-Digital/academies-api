@@ -1150,7 +1150,44 @@
         }
       }
     },
-    "/v4/local-auththorities": {
+    "/v4/local-authorities/{code}": {
+      "get": {
+        "tags": [
+          "LocalAuthorityV4",
+          "LocalAuthority"
+        ],
+        "summary": "Retrieves a local authority by its name code.",
+        "operationId": "GetLocalAuthorityByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "description": "Name code.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the local authority.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NameAndCodeDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "local authority with specified name code not found."
+          }
+        }
+      }
+    },
+    "/v4/local-authorities": {
       "get": {
         "tags": [
           "LocalAuthorityV4",
