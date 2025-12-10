@@ -41,16 +41,23 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerResponse(404, "local authority with specified name code not found.")]
         public async Task<ActionResult<NameAndCodeDto>> GetTrustByUkprn(string code, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Attempting to get local authority by name code {code}");
+            _logger.LogInformation(
+            "Attempting to get local authority by name code \"{Code}\"",
+            code);
+
             var localAuthority = await _localAuthorityQueries.GetByCode(code, cancellationToken).ConfigureAwait(false);
 
             if (localAuthority == null)
             {
-                _logger.LogInformation($"No local authority found for name code {code}");
+                _logger.LogInformation(
+                    "No local authority found for name code \"{Code}\"",
+                    code);
                 return NotFound();
             }
 
-            _logger.LogInformation($"Returning local authority found by name code {code}");
+            _logger.LogInformation(
+                "Returning local authority found by name code \"{Code}\"",
+                code);
             _logger.LogDebug("Local authority get by name code result: {LocalAuthority}", JsonSerializer.Serialize(localAuthority));
             return Ok(localAuthority);
         }
