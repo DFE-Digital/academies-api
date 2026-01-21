@@ -1606,8 +1606,8 @@
           "EstablishmentsV5",
           "Establishments"
         ],
-        "summary": "Searches for Establishments with mock report cards based on query parameters.",
-        "operationId": "SearchEstablishmentsWithMockReportCards",
+        "summary": "Searches for Establishments with ofsted full inspection report cards based on query parameters.",
+        "operationId": "SearchEstablishmentsWithOfstedReportCards",
         "parameters": [
           {
             "name": "name",
@@ -4632,11 +4632,11 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "reportCard": {
+              "reportCardFullInspection": {
                 "nullable": true,
                 "oneOf": [
                   {
-                    "$ref": "#/components/schemas/ReportCardDto"
+                    "$ref": "#/components/schemas/ReportCardFullInspectionDto"
                   }
                 ]
               }
@@ -4644,7 +4644,7 @@
           }
         ]
       },
-      "ReportCardDto": {
+      "ReportCardFullInspectionDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -4721,6 +4721,22 @@
             "nullable": true
           },
           "previousSafeguarding": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestPost16Provision": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousPost16Provision": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestCategoryOfConcern": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousCategoryOfConcern": {
             "type": "string",
             "nullable": true
           }

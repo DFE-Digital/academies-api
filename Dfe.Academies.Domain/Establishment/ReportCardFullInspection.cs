@@ -1,6 +1,6 @@
 namespace Dfe.Academies.Domain.Establishment
 {
-    public class ReportCardMock
+    public class ReportCardFullInspection
     {
         public string? WebLink { get; set; }
         public int? Urn { get; set; }
@@ -22,5 +22,9 @@ namespace Dfe.Academies.Domain.Establishment
         public string? PreviousAchievement { get; set; }
         public string? PreviousEarlyYearsProvision { get; set; }
         public string? PreviousSafeguarding { get; set; }
+        public string? LatestPost16Provision { get; set; }
+        public string? PreviousPost16Provision { get; set; }
+        public string? LatestCategoryOfConcern { get; set; }
+        public string? PreviousCategoryOfConcern { get; set; }
     }
 }

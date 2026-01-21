@@ -25,10 +25,10 @@ public class MisMstrContextSeeder
                         .Generate();
                 misMstrContext.FurtherEducationEstablishments.AddRange(furtherEducationEstablishments);
 
-                var mockReportCards = new Faker<ReportCardMock>()
+                var mockReportCards = new Faker<ReportCardFullInspection>()
                     .RuleFor(e => e.Urn, urn)
                     .Generate();
-                misMstrContext.MockReportCards.AddRange(mockReportCards); 
+                misMstrContext.ReportCardsFullInspection.AddRange(mockReportCards); 
             }
         }
 

@@ -19,7 +19,7 @@ namespace TramsDataApi.Controllers.V5
     {
 
         /// <summary>
-        /// Searches for Establishments with mock report cards based on query parameters.
+        /// Searches for Establishments with ofsted full inspection report cards based on query parameters.
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
@@ -30,12 +30,12 @@ namespace TramsDataApi.Controllers.V5
         /// <returns>A list of Establishments that meet the search criteria.</returns>
         [HttpGet]
         [Route("establishments")]
-        [SwaggerOperation(Summary = "Search Establishments with mock report cards", Description = "Returns a list of Establishments with mock report cards based on search criteria.")]
+        [SwaggerOperation(Summary = "Search Establishments with ofsted full inspection report cards", Description = "Returns a list of Establishments with ofsted full inspection report cards based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
-        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishmentsWithMockReportCards(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishmentsWithOfstedReportCards(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
         {
             logger.LogInformation(
-                "Searching for establishments with mock report cards by name \"{Name}\", UKPRN \"{UkPrn}\", urn \"{Number}\"", name, ukPrn, urn);
+                "Searching for establishments with ofsted full inspection report cards by name \"{Name}\", UKPRN \"{UkPrn}\", urn \"{Number}\"", name, ukPrn, urn);
 
             var (establishments, recordCount) = await establishmentQueries
                 .Search(name, ukPrn, urn, excludeClosed, matchAny, cancellationToken).ConfigureAwait(false);

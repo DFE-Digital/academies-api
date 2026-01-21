@@ -175,29 +175,33 @@ namespace Dfe.Academies.Application.Establishment.V5
 
             return this;
         }
-        public EstablishmentDtoBuilder WithMockReportCards(ReportCardMock reportCardMock)
+        public EstablishmentDtoBuilder WithOfstedReportCards(ReportCardFullInspection reportCard)
         {
-            _dto.ReportCard = new ReportCardDto()
+            _dto.ReportCardFullInspection = new ReportCardFullInspectionDto()
             {
-                WebLink = reportCardMock?.WebLink,
-                LatestInspectionDate = reportCardMock?.LatestInspectionDate.ToResponseDate(),
-                LatestCurriculumAndTeaching = reportCardMock?.LatestCurriculumAndTeaching,
-                LatestAttendanceAndBehaviour = reportCardMock?.LatestAttendanceAndBehaviour,
-                LatestPersonalDevelopmentAndWellbeing = reportCardMock?.LatestPersonalDevelopmentAndWellbeing,
-                LatestLeadershipAndGovernance = reportCardMock?.LatestLeadershipAndGovernance,
-                LatestInclusion = reportCardMock?.LatestInclusion,
-                LatestAchievement = reportCardMock?.LatestAchievement,
-                LatestEarlyYearsProvision = reportCardMock?.LatestEarlyYearsProvision,
-                LatestSafeguarding = reportCardMock?.LatestSafeguarding,
-                PreviousInspectionDate = reportCardMock?.PreviousInspectionDate.ToResponseDate(),
-                PreviousCurriculumAndTeaching = reportCardMock?.PreviousCurriculumAndTeaching,
-                PreviousAttendanceAndBehaviour = reportCardMock?.PreviousAttendanceAndBehaviour,
-                PreviousPersonalDevelopmentAndWellbeing = reportCardMock?.PreviousPersonalDevelopmentAndWellbeing,
-                PreviousLeadershipAndGovernance = reportCardMock?.PreviousLeadershipAndGovernance,
-                PreviousInclusion = reportCardMock?.PreviousInclusion,
-                PreviousAchievement = reportCardMock?.PreviousAchievement,
-                PreviousEarlyYearsProvision = reportCardMock?.PreviousEarlyYearsProvision,
-                PreviousSafeguarding = reportCardMock?.PreviousSafeguarding
+                WebLink = reportCard?.WebLink,
+                LatestInspectionDate = reportCard?.LatestInspectionDate.ToResponseDate(),
+                LatestCurriculumAndTeaching = reportCard?.LatestCurriculumAndTeaching,
+                LatestAttendanceAndBehaviour = reportCard?.LatestAttendanceAndBehaviour,
+                LatestPersonalDevelopmentAndWellbeing = reportCard?.LatestPersonalDevelopmentAndWellbeing,
+                LatestLeadershipAndGovernance = reportCard?.LatestLeadershipAndGovernance,
+                LatestInclusion = reportCard?.LatestInclusion,
+                LatestAchievement = reportCard?.LatestAchievement,
+                LatestEarlyYearsProvision = reportCard?.LatestEarlyYearsProvision,
+                LatestSafeguarding = reportCard?.LatestSafeguarding,
+                PreviousInspectionDate = reportCard?.PreviousInspectionDate.ToResponseDate(),
+                PreviousCurriculumAndTeaching = reportCard?.PreviousCurriculumAndTeaching,
+                PreviousAttendanceAndBehaviour = reportCard?.PreviousAttendanceAndBehaviour,
+                PreviousPersonalDevelopmentAndWellbeing = reportCard?.PreviousPersonalDevelopmentAndWellbeing,
+                PreviousLeadershipAndGovernance = reportCard?.PreviousLeadershipAndGovernance,
+                PreviousInclusion = reportCard?.PreviousInclusion,
+                PreviousAchievement = reportCard?.PreviousAchievement,
+                PreviousEarlyYearsProvision = reportCard?.PreviousEarlyYearsProvision,
+                PreviousSafeguarding = reportCard?.PreviousSafeguarding,
+                PreviousPost16Provision = reportCard?.PreviousPost16Provision,
+                LatestPost16Provision = reportCard?.LatestPost16Provision,
+                LatestCategoryOfConcern = reportCard?.LatestCategoryOfConcern,
+                PreviousCategoryOfConcern = reportCard?.PreviousCategoryOfConcern
             };
 
             return this;

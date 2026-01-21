@@ -19,7 +19,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync(null, null, null, null, null, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync(null, null, null, null, null, default);
 
         var establishmentDtos = result.ToList();
 
@@ -38,7 +38,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync(null, null, null, false, null, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync(null, null, null, false, null, default);
 
         var establishmentDtos = result.ToList();
 
@@ -47,7 +47,7 @@ public class EstablishmentsControllerTests
         Assert.Equal(5, establishmentDtos.Count);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCard); 
+            Assert.NotNull(establishmentDto.ReportCardFullInspection); 
         }
     }
 
@@ -61,7 +61,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync(null, null, null, true, null, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync(null, null, null, true, null, default);
 
         var establishmentDtos = result.ToList();
 
@@ -70,7 +70,7 @@ public class EstablishmentsControllerTests
         Assert.Equal(2, establishmentDtos.Count);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCard);
+            Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
     }
 
@@ -84,7 +84,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync("Scho", null, null, null, null, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync("Scho", null, null, null, null, default);
 
         var establishmentDtos = result.ToList();
 
@@ -93,7 +93,7 @@ public class EstablishmentsControllerTests
         Assert.Equal(3, establishmentDtos.Count);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCard);
+            Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
     }
 
@@ -107,7 +107,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync("Scho",  null, null, null, false, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync("Scho",  null, null, null, false, default);
 
         var establishmentDtos = result.ToList();
 
@@ -116,7 +116,7 @@ public class EstablishmentsControllerTests
         Assert.Equal(3, establishmentDtos.Count);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCard);
+            Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
     }
 
@@ -130,7 +130,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync("Scho", "Scho", "Scho", null, null, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync("Scho", "Scho", "Scho", null, null, default);
 
         var establishmentDtos = result.ToList();
 
@@ -139,7 +139,7 @@ public class EstablishmentsControllerTests
         Assert.Empty(establishmentDtos);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCard);
+            Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
     }
 
@@ -153,7 +153,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync("Scho", "Scho", "Scho", null, false, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync("Scho", "Scho", "Scho", null, false, default);
 
         var establishmentDtos = result.ToList();
 
@@ -162,7 +162,7 @@ public class EstablishmentsControllerTests
         Assert.Empty(establishmentDtos);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCard);
+            Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
     }
 
@@ -176,7 +176,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithMockReportCardsAsync("Scho", "Scho", "Scho", null, true, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync("Scho", "Scho", "Scho", null, true, default);
 
         var establishmentDtos = result.ToList();
 
@@ -185,7 +185,7 @@ public class EstablishmentsControllerTests
         Assert.Equal(3, establishmentDtos.Count);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCard);
+            Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
     } 
 }
