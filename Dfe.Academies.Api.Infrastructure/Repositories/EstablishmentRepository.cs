@@ -11,9 +11,9 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn);
         }
 
-        public ReportCardMock? GetMockReportCardsByURN(int? urn)
+        public ReportCardFullInspection? GetOfstedReportCardsByURN(int? urn)
         {
-            return misMstrContext.MockReportCards.FirstOrDefault(m => m.Urn == urn);
+            return misMstrContext.ReportCardsFullInspection.FirstOrDefault(m => m.Urn == urn);
         }
 
 

@@ -12,10 +12,10 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment.V5
 {
     public class EstablishmentQueriesTests
     { 
-        private Fixture _fixture;
-        private MisEstablishment _misEstablishment; 
-        private EducationEstablishmentLink _educationEstablishmentLink;
-        private ReportCardMock _reportCardMock;
+        private readonly Fixture _fixture;
+        private readonly MisEstablishment _misEstablishment; 
+        private readonly EducationEstablishmentLink _educationEstablishmentLink;
+        private readonly ReportCardFullInspection _ofstedReportCard;
 
         public EstablishmentQueriesTests()
         {
@@ -29,7 +29,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment.V5
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
             _misEstablishment = _fixture.Create<MisEstablishment>();
             _educationEstablishmentLink = _fixture.Create<EducationEstablishmentLink>();
-            _reportCardMock = _fixture.Create<ReportCardMock>();
+            _ofstedReportCard = _fixture.Create<ReportCardFullInspection>();
 
         } 
 
@@ -49,7 +49,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment.V5
             mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.Is<bool?>(x => x == excludeClosed), It.Is<bool?>(x => x == matchAny), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
-            mockRepo.Setup(x => x.GetMockReportCardsByURN(It.IsAny<int?>())).Returns(_reportCardMock);
+            mockRepo.Setup(x => x.GetOfstedReportCardsByURN(It.IsAny<int?>())).Returns(_ofstedReportCard);
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockCensusRepo.Object);
 
@@ -69,11 +69,11 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment.V5
             foreach (var establishmentDto in result.Item1)
             {
                 var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
-                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink, _reportCardMock));
+                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink, _ofstedReportCard));
             }
         } 
 
-        private static bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink, ReportCardMock reportCardMock)
+        private static bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink, ReportCardFullInspection ofstedReportCard)
         {
             return
                 dto.Name == establishment.EstablishmentName &&
@@ -127,26 +127,30 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment.V5
                 dto.Address.Additional == establishment.AddressLine2 &&
                 dto.PreviousEstablishment!.Urn == educationEstablishmentLink.LinkURN.ToString() &&
 
-                dto.ReportCard != null &&
-                dto.ReportCard.WebLink == reportCardMock.WebLink &&
-                dto.ReportCard.PreviousSafeguarding == reportCardMock.PreviousSafeguarding &&
-                dto.ReportCard.PreviousPersonalDevelopmentAndWellbeing == reportCardMock.PreviousPersonalDevelopmentAndWellbeing &&
-                dto.ReportCard.PreviousLeadershipAndGovernance == reportCardMock.PreviousLeadershipAndGovernance &&
-                dto.ReportCard.LatestInspectionDate == reportCardMock.LatestInspectionDate.ToResponseDate() &&
-                dto.ReportCard.LatestCurriculumAndTeaching == reportCardMock.LatestCurriculumAndTeaching &&
-                dto.ReportCard.LatestAttendanceAndBehaviour == reportCardMock.LatestAttendanceAndBehaviour &&
-                dto.ReportCard.LatestPersonalDevelopmentAndWellbeing == reportCardMock.LatestPersonalDevelopmentAndWellbeing &&
-                dto.ReportCard.LatestLeadershipAndGovernance == reportCardMock.LatestLeadershipAndGovernance &&
-                dto.ReportCard.LatestInclusion == reportCardMock.LatestInclusion &&
-                dto.ReportCard.LatestAchievement == reportCardMock.LatestAchievement &&
-                dto.ReportCard.LatestEarlyYearsProvision == reportCardMock.LatestEarlyYearsProvision &&
-                dto.ReportCard.LatestSafeguarding == reportCardMock.LatestSafeguarding &&
-                dto.ReportCard.PreviousInspectionDate == reportCardMock.PreviousInspectionDate.ToResponseDate() &&
-                dto.ReportCard.PreviousCurriculumAndTeaching == reportCardMock.PreviousCurriculumAndTeaching &&
-                dto.ReportCard.PreviousAttendanceAndBehaviour == reportCardMock.PreviousAttendanceAndBehaviour &&
-                dto.ReportCard.PreviousInclusion == reportCardMock.PreviousInclusion &&
-                dto.ReportCard.PreviousAchievement == reportCardMock.PreviousAchievement &&
-                dto.ReportCard.PreviousEarlyYearsProvision == reportCardMock.PreviousEarlyYearsProvision;
+                dto.ReportCardFullInspection != null &&
+                dto.ReportCardFullInspection.WebLink == ofstedReportCard.WebLink &&
+                dto.ReportCardFullInspection.PreviousSafeguarding == ofstedReportCard.PreviousSafeguarding &&
+                dto.ReportCardFullInspection.PreviousPersonalDevelopmentAndWellbeing == ofstedReportCard.PreviousPersonalDevelopmentAndWellbeing &&
+                dto.ReportCardFullInspection.PreviousLeadershipAndGovernance == ofstedReportCard.PreviousLeadershipAndGovernance &&
+                dto.ReportCardFullInspection.LatestInspectionDate == ofstedReportCard.LatestInspectionDate.ToResponseDate() &&
+                dto.ReportCardFullInspection.LatestCurriculumAndTeaching == ofstedReportCard.LatestCurriculumAndTeaching &&
+                dto.ReportCardFullInspection.LatestAttendanceAndBehaviour == ofstedReportCard.LatestAttendanceAndBehaviour &&
+                dto.ReportCardFullInspection.LatestPersonalDevelopmentAndWellbeing == ofstedReportCard.LatestPersonalDevelopmentAndWellbeing &&
+                dto.ReportCardFullInspection.LatestLeadershipAndGovernance == ofstedReportCard.LatestLeadershipAndGovernance &&
+                dto.ReportCardFullInspection.LatestInclusion == ofstedReportCard.LatestInclusion &&
+                dto.ReportCardFullInspection.LatestAchievement == ofstedReportCard.LatestAchievement &&
+                dto.ReportCardFullInspection.LatestEarlyYearsProvision == ofstedReportCard.LatestEarlyYearsProvision &&
+                dto.ReportCardFullInspection.LatestSafeguarding == ofstedReportCard.LatestSafeguarding &&
+                dto.ReportCardFullInspection.PreviousInspectionDate == ofstedReportCard.PreviousInspectionDate.ToResponseDate() &&
+                dto.ReportCardFullInspection.PreviousCurriculumAndTeaching == ofstedReportCard.PreviousCurriculumAndTeaching &&
+                dto.ReportCardFullInspection.PreviousAttendanceAndBehaviour == ofstedReportCard.PreviousAttendanceAndBehaviour &&
+                dto.ReportCardFullInspection.PreviousInclusion == ofstedReportCard.PreviousInclusion &&
+                dto.ReportCardFullInspection.PreviousAchievement == ofstedReportCard.PreviousAchievement &&
+                dto.ReportCardFullInspection.PreviousEarlyYearsProvision == ofstedReportCard.PreviousEarlyYearsProvision &&
+                dto.ReportCardFullInspection.LatestPost16Provision == ofstedReportCard.LatestPost16Provision &&
+                dto.ReportCardFullInspection.PreviousPost16Provision == ofstedReportCard.PreviousPost16Provision &&
+                dto.ReportCardFullInspection.LatestCategoryOfConcern == ofstedReportCard.LatestCategoryOfConcern &&
+                dto.ReportCardFullInspection.PreviousCategoryOfConcern == ofstedReportCard.PreviousCategoryOfConcern;
         }
 
     }

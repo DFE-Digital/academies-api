@@ -674,7 +674,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     public partial interface IEstablishmentsV5Client
     {
         /// <summary>
-        /// Searches for Establishments with mock report cards based on query parameters.
+        /// Searches for Establishments with ofsted full inspection report cards based on query parameters.
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
@@ -683,11 +683,11 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithMockReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithOfstedReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Searches for Establishments with mock report cards based on query parameters.
+        /// Searches for Establishments with ofsted full inspection report cards based on query parameters.
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
@@ -696,7 +696,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithMockReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithOfstedReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -3247,8 +3247,8 @@ namespace Dfe.AcademiesApi.Client.Contracts
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class EstablishmentDto2 : EstablishmentDto
     {
-        [Newtonsoft.Json.JsonProperty("reportCard", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public ReportCardDto? ReportCard { get; set; } = default!;
+        [Newtonsoft.Json.JsonProperty("reportCardFullInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ReportCardFullInspectionDto? ReportCardFullInspection { get; set; } = default!;
 
         public string ToJson()
         {
@@ -3266,7 +3266,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ReportCardDto
+    public partial class ReportCardFullInspectionDto
     {
         [Newtonsoft.Json.JsonProperty("webLink", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? WebLink { get; set; } = default!;
@@ -3325,16 +3325,28 @@ namespace Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("previousSafeguarding", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? PreviousSafeguarding { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("latestPost16Provision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestPost16Provision { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousPost16Provision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousPost16Provision { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("latestCategoryOfConcern", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestCategoryOfConcern { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousCategoryOfConcern", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousCategoryOfConcern { get; set; } = default!;
+
         public string ToJson()
         {
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static ReportCardDto FromJson(string data)
+        public static ReportCardFullInspectionDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ReportCardDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ReportCardFullInspectionDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

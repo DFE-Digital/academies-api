@@ -5150,7 +5150,7 @@ namespace Dfe.AcademiesApi.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <summary>
-        /// Searches for Establishments with mock report cards based on query parameters.
+        /// Searches for Establishments with ofsted full inspection report cards based on query parameters.
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
@@ -5159,14 +5159,14 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithMockReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithOfstedReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny)
         {
-            return SearchEstablishmentsWithMockReportCardsAsync(name, ukPrn, urn, excludeClosed, matchAny, System.Threading.CancellationToken.None);
+            return SearchEstablishmentsWithOfstedReportCardsAsync(name, ukPrn, urn, excludeClosed, matchAny, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Searches for Establishments with mock report cards based on query parameters.
+        /// Searches for Establishments with ofsted full inspection report cards based on query parameters.
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// <param name="ukPrn">UK Provider Reference Number (UKPRN) identifier.</param>
@@ -5175,7 +5175,7 @@ namespace Dfe.AcademiesApi.Client
         /// <param name="matchAny">When true, return results where either of name, ukPrn or urn match.</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithMockReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithOfstedReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;

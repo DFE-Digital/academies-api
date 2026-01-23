@@ -14,6 +14,6 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         Task<List<Establishment.Establishment>> GetByUkprns(string[] Urns, CancellationToken cancellationToken);
         MisEstablishment? GetMisEstablishmentByURN(int? urn);
         EducationEstablishmentLink? GetEducationEstablishmentLinksByURN(long? urn);
-        ReportCardMock? GetMockReportCardsByURN(int? urn);
+        ReportCardFullInspection? GetOfstedReportCardsByURN(int? urn);
     }
 }
