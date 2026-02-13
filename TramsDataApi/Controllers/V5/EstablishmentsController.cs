@@ -5,7 +5,8 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
+using TramsDataApi.RequestModels;
 
 namespace TramsDataApi.Controllers.V5
 {
@@ -42,6 +43,38 @@ namespace TramsDataApi.Controllers.V5
 
             logger.LogInformation("Found {Count} establishments for name \"{Name}\", UKPRN \"{UkPrn}\", urn \"{Number}\"",
                 recordCount, name, ukPrn, urn);
+
+            logger.LogDebug("Establishments: {@Establishments}", establishments);
+
+            var response = new List<EstablishmentDto>(establishments);
+
+            return Ok(response);
+        }
+        /// <summary>
+        /// Searches for Establishments with ofsted full inspection report cards by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A list of Establishments that meet the search criteria.</returns>
+        [HttpPost]
+        [Route("establishments/bulk/urns")]
+        [SwaggerOperation(Summary = "Search Establishments with ofsted full inspection report cards", Description = "Returns a list of Establishments with ofsted full inspection report cards by their Unique Reference Numbers (URNs).")]
+        [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
+        public async Task<ActionResult<List<EstablishmentDto>>> GetEstablishmentsWithOfstedReportCardsByUrns([FromBody] UrnRequestModel model, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestUrns = string.Join(",", model.Urns);
+            logger.LogInformation("Attemping to get establishments with ofsted full inspection report cards by Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns); 
+
+            var establishments = await establishmentQueries
+                .GetWithOfstedReportCardsByUrns([.. model.Urns], cancellationToken).ConfigureAwait(false);
+
+            if (establishments == null || establishments.Count == 0)
+            {
+                logger.LogInformation("No establishment was found any of the requested Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns);
+
+                return NotFound();
+            }
+            logger.LogInformation("Returning Establishments for Unique Reference Numbers (URNs): {URNs}", commaSeparatedRequestUrns); 
 
             logger.LogDebug("Establishments: {@Establishments}", establishments);
 

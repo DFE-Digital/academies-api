@@ -1676,6 +1676,44 @@
           }
         }
       }
+    },
+    "/v5/establishments/bulk/urns": {
+      "post": {
+        "tags": [
+          "EstablishmentsV5",
+          "Establishments"
+        ],
+        "summary": "Searches for Establishments with ofsted full inspection report cards by their Unique Reference Numbers (URNs).",
+        "operationId": "GetEstablishmentsWithOfstedReportCardsByUrns",
+        "requestBody": {
+          "x-name": "model",
+          "description": "Contains Unique Reference Number (URNs) of the establishments.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrnRequestModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

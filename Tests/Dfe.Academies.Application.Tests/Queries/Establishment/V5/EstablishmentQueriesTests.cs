@@ -71,7 +71,37 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment.V5
                 var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
                 Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink, _ofstedReportCard));
             }
-        } 
+        }
+
+        [Fact]
+        public async Task GetWithOfstedReportCardsByUrns_WhenEstablishmentsReturnedFromRepo_EstablishmentDtoListIsReturned()
+        {
+            // Arrange
+            var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
+
+            int[] urns = [.. establishments.Select(x => x.URN!.Value).ToList()]; 
+            mockRepo.Setup(x => x.GetByUrns(It.Is<int[]>(v => v == urns), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
+            mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
+            mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetOfstedReportCardsByURN(It.IsAny<int?>())).Returns(_ofstedReportCard);
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object, mockCensusRepo.Object);
+
+            CancellationToken cancellationToken = default;
+
+            // Act
+            var result = await establishmentQueries.GetWithOfstedReportCardsByUrns(urns, cancellationToken);
+
+            // Assert
+            result.Should().BeOfType(typeof(List<EstablishmentDto>));
+            foreach (var establishmentDto in result)
+            {
+                var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
+                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink, _ofstedReportCard));
+            }
+        }
 
         private static bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink, ReportCardFullInspection ofstedReportCard)
         {
