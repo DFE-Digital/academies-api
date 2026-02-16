@@ -47,7 +47,7 @@ public class EstablishmentsControllerTests
         Assert.Equal(5, establishmentDtos.Count);
         foreach (var establishmentDto in establishmentDtos)
         {
-            Assert.NotNull(establishmentDto.ReportCardFullInspection); 
+            Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
     }
 
@@ -107,7 +107,7 @@ public class EstablishmentsControllerTests
         factory.TestClaims = default;
 
         // Act
-        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync("Scho",  null, null, null, false, default);
+        var result = await establishmentsClient.SearchEstablishmentsWithOfstedReportCardsAsync("Scho", null, null, null, false, default);
 
         var establishmentDtos = result.ToList();
 
@@ -187,5 +187,49 @@ public class EstablishmentsControllerTests
         {
             Assert.NotNull(establishmentDto.ReportCardFullInspection);
         }
-    } 
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetEstablishmentsWithOfstedReportCardsByUrnsAsync_ShouldReturnMatchingEstablishments_WhenURNsAreMatched(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV5Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+        var request = new UrnRequestModel
+        {
+            Urns = [22, 33]
+        };
+
+        // Act
+        var result = await establishmentsClient.GetEstablishmentsWithOfstedReportCardsByUrnsAsync(request, default);
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count);
+
+        var establishment = result.SingleOrDefault(x => x.Urn == request.Urns[0].ToString());
+        Assert.NotNull(establishment);
+
+        establishment = result.SingleOrDefault(x => x.Urn == request.Urns[1].ToString());
+        Assert.NotNull(establishment);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetEstablishmentsWithOfstedReportCardsByUrnsAsync_ShouldReturnNotFound(
+       CustomWebApplicationDbContextFactory<Startup> factory,
+       IEstablishmentsV5Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var request = new UrnRequestModel
+        {
+            Urns = [10001, 10002] // those URNs do not exist
+        };
+
+        AcademiesApiException exception = await Assert.ThrowsAsync<AcademiesApiException>(async () => await establishmentsClient.GetEstablishmentsWithOfstedReportCardsByUrnsAsync(request, default));
+
+        Assert.Equal(404, exception.StatusCode);
+    }
 }

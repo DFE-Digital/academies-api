@@ -4,5 +4,6 @@ namespace Dfe.Academies.Application.Establishment.V5
     public interface IEstablishmentQueries
     {
         Task<(List<EstablishmentDto>, int)> Search(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken);
+        Task<List<EstablishmentDto>> GetWithOfstedReportCardsByUrns(int[] urns, CancellationToken cancellationToken);
     }
 }

@@ -698,6 +698,23 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> SearchEstablishmentsWithOfstedReportCardsAsync(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Searches for Establishments with ofsted full inspection report cards by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully executed the search and returned Establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> GetEstablishmentsWithOfstedReportCardsByUrnsAsync(UrnRequestModel model);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches for Establishments with ofsted full inspection report cards by their Unique Reference Numbers (URNs).
+        /// </summary>
+        /// <param name="model">Contains Unique Reference Number (URNs) of the establishments.</param>
+        /// <returns>Successfully executed the search and returned Establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto2>> GetEstablishmentsWithOfstedReportCardsByUrnsAsync(UrnRequestModel model, System.Threading.CancellationToken cancellationToken);
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]

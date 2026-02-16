@@ -1,5 +1,5 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
-using GovUK.Dfe.CoreLibs.Contracts.Academies.V5.Establishments;
+using GovUK.Dfe.CoreLibs.Contracts.Academies.V5.Establishments; 
 
 namespace Dfe.Academies.Application.Establishment.V5
 {
@@ -10,7 +10,13 @@ namespace Dfe.Academies.Application.Establishment.V5
             var establishments = await establishmentRepository.Search(name, ukPrn, urn, excludeClosed, matchAny, cancellationToken);
 
             return (establishments.Select(MapToEstablishmentDto).ToList(), establishments.Count);
-        }  
+        }
+
+        public async Task<List<EstablishmentDto>> GetWithOfstedReportCardsByUrns(int[] urns, CancellationToken cancellationToken)
+        {
+            var establishments = await establishmentRepository.GetByUrns(urns, cancellationToken);
+            return [.. establishments.Select(MapToEstablishmentDto)];
+        }
         private EstablishmentDto MapToEstablishmentDto(Domain.Establishment.Establishment establishment)
         {
             var censusData = censusDataRepository.GetCensusDataByURN(establishment.URN.GetValueOrDefault());
