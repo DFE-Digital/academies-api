@@ -238,5 +238,7 @@ public class MisMstrContext : DbContext
         reportCardFullInspectionConfiguration.Property(e => e.PreviousPost16Provision).HasColumnName("previous_post_16_provision");
         reportCardFullInspectionConfiguration.Property(e => e.LatestCategoryOfConcern).HasColumnName("latest_category_of_concern");
         reportCardFullInspectionConfiguration.Property(e => e.PreviousCategoryOfConcern).HasColumnName("previous_category_of_concern");
+        reportCardFullInspectionConfiguration.Property(e => e.LatestPublicationDate).HasColumnName("latest_publication_date");
+        reportCardFullInspectionConfiguration.Property(e => e.PreviousPublicationDate).HasColumnName("previous_publication_date");
     }
 }

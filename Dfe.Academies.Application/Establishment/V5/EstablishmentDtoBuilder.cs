@@ -201,7 +201,9 @@ namespace Dfe.Academies.Application.Establishment.V5
                 PreviousPost16Provision = reportCard?.PreviousPost16Provision,
                 LatestPost16Provision = reportCard?.LatestPost16Provision,
                 LatestCategoryOfConcern = reportCard?.LatestCategoryOfConcern,
-                PreviousCategoryOfConcern = reportCard?.PreviousCategoryOfConcern
+                PreviousCategoryOfConcern = reportCard?.PreviousCategoryOfConcern,
+                LatestPublicationDate = reportCard?.LatestPublicationDate.ToResponseDate(),
+                PreviousPublicationDate = reportCard?.PreviousPublicationDate.ToResponseDate()
             };
 
             return this;

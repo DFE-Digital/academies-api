@@ -3354,6 +3354,12 @@ namespace Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("previousCategoryOfConcern", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? PreviousCategoryOfConcern { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("latestPublicationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LatestPublicationDate { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousPublicationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousPublicationDate { get; set; } = default!;
+
         public string ToJson()
         {
 

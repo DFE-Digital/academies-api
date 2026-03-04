@@ -4777,6 +4777,14 @@
           "previousCategoryOfConcern": {
             "type": "string",
             "nullable": true
+          },
+          "latestPublicationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousPublicationDate": {
+            "type": "string",
+            "nullable": true
           }
         }
       }
