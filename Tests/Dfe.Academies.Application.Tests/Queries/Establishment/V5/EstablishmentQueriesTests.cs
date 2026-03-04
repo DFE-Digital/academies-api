@@ -180,7 +180,9 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment.V5
                 dto.ReportCardFullInspection.LatestPost16Provision == ofstedReportCard.LatestPost16Provision &&
                 dto.ReportCardFullInspection.PreviousPost16Provision == ofstedReportCard.PreviousPost16Provision &&
                 dto.ReportCardFullInspection.LatestCategoryOfConcern == ofstedReportCard.LatestCategoryOfConcern &&
-                dto.ReportCardFullInspection.PreviousCategoryOfConcern == ofstedReportCard.PreviousCategoryOfConcern;
+                dto.ReportCardFullInspection.PreviousCategoryOfConcern == ofstedReportCard.PreviousCategoryOfConcern &&
+                dto.ReportCardFullInspection.LatestPublicationDate == ofstedReportCard.LatestPublicationDate.ToResponseDate() &&
+                dto.ReportCardFullInspection.PreviousPublicationDate == ofstedReportCard.PreviousPublicationDate.ToResponseDate();
         }
 
     }

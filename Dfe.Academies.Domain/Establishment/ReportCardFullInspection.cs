@@ -26,5 +26,7 @@ namespace Dfe.Academies.Domain.Establishment
         public string? PreviousPost16Provision { get; set; }
         public string? LatestCategoryOfConcern { get; set; }
         public string? PreviousCategoryOfConcern { get; set; }
+        public DateTime? LatestPublicationDate { get; set; }
+        public DateTime? PreviousPublicationDate { get; set; }
     }
 }
