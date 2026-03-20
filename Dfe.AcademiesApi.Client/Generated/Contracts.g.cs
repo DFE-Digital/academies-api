@@ -671,6 +671,40 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IDataLakePocV5Client
+    {
+        /// <summary>
+        /// Executes a SQL statement against the configured Databricks SQL warehouse and returns a tabular result.
+        /// </summary>
+        /// <remarks>
+        /// Example request body:
+        /// <br/>
+        /// <br/>{ "sql": "SELECT 1 AS example_column" }
+        /// <br/>
+        /// <br/>Suitable for small result sets (Databricks inline disposition, ~25 MiB limit).
+        /// </remarks>
+        /// <returns>Query completed successfully.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<DatabricksQueryResult> ExecuteSqlAsync(DataLakeSqlQueryRequest request);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Executes a SQL statement against the configured Databricks SQL warehouse and returns a tabular result.
+        /// </summary>
+        /// <remarks>
+        /// Example request body:
+        /// <br/>
+        /// <br/>{ "sql": "SELECT 1 AS example_column" }
+        /// <br/>
+        /// <br/>Suitable for small result sets (Databricks inline disposition, ~25 MiB limit).
+        /// </remarks>
+        /// <returns>Query completed successfully.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<DatabricksQueryResult> ExecuteSqlAsync(DataLakeSqlQueryRequest request, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface IEstablishmentsV5Client
     {
         /// <summary>
@@ -3258,6 +3292,78 @@ namespace Dfe.AcademiesApi.Client.Contracts
 
         [System.Runtime.Serialization.EnumMember(Value = @"All")]
         All = 1,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DatabricksQueryResult
+    {
+        [Newtonsoft.Json.JsonProperty("columnNames", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<string>? ColumnNames { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("rows", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<System.Collections.Generic.List<object?>>? Rows { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("truncated", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Truncated { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static DatabricksQueryResult FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<DatabricksQueryResult>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+    }
+
+    /// <summary>
+    /// Request body for executing SQL against the Databricks data lake (POC).
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class DataLakeSqlQueryRequest
+    {
+        /// <summary>
+        /// SQL statement to execute (small result sets recommended; inline disposition).
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("sql", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Sql { get; set; } = default!;
+
+        /// <summary>
+        /// Optional default catalog (USE CATALOG).
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("catalog", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Catalog { get; set; } = default!;
+
+        /// <summary>
+        /// Optional default schema (USE SCHEMA).
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("schema", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Schema { get; set; } = default!;
+
+        /// <summary>
+        /// Optional wait timeout for the statement API (e.g. "10s").
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("waitTimeout", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? WaitTimeout { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static DataLakeSqlQueryRequest FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<DataLakeSqlQueryRequest>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
 
     }
 

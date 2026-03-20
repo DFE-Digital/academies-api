@@ -1,4 +1,5 @@
-﻿using Dfe.Academies.Application.EducationalPerformance;
+using Dfe.Academies.Application.DataLakePoc;
+using Dfe.Academies.Application.EducationalPerformance;
 using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Application.LocalAuthority;
 using Dfe.Academies.Application.SignificantChange;
@@ -20,6 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<ISignificantChangeQueries, SignificantChangeQueries>();
             services.AddScoped<ILocalAuthorityQueries, LocalAuthorityQueries>();
+            services.AddScoped<IDataLakeQueryService, DataLakeQueryService>();
 
             return services;
         }

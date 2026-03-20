@@ -1600,6 +1600,44 @@
         }
       }
     },
+    "/v5/datalake/query": {
+      "post": {
+        "tags": [
+          "DataLakePocV5",
+          "DataLakePoc"
+        ],
+        "summary": "Executes a SQL statement against the configured Databricks SQL warehouse and returns a tabular result.",
+        "description": "Example request body:\n\n{ \"sql\": \"SELECT 1 AS example_column\" }\n\nSuitable for small result sets (Databricks inline disposition, ~25 MiB limit).",
+        "operationId": "ExecuteSql",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataLakeSqlQueryRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Query completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabricksQueryResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request validation failed (e.g. empty SQL)."
+          }
+        }
+      }
+    },
     "/v5/establishments": {
       "get": {
         "tags": [
@@ -4660,6 +4698,57 @@
           "Open",
           "All"
         ]
+      },
+      "DatabricksQueryResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "columnNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "nullable": true
+              }
+            }
+          },
+          "truncated": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DataLakeSqlQueryRequest": {
+        "type": "object",
+        "description": "Request body for executing SQL against the Databricks data lake (POC).",
+        "additionalProperties": false,
+        "properties": {
+          "sql": {
+            "type": "string",
+            "description": "SQL statement to execute (small result sets recommended; inline disposition).",
+            "nullable": true
+          },
+          "catalog": {
+            "type": "string",
+            "description": "Optional default catalog (USE CATALOG).",
+            "nullable": true
+          },
+          "schema": {
+            "type": "string",
+            "description": "Optional default schema (USE SCHEMA).",
+            "nullable": true
+          },
+          "waitTimeout": {
+            "type": "string",
+            "description": "Optional wait timeout for the statement API (e.g. \"10s\").",
+            "nullable": true
+          }
+        }
       },
       "EstablishmentDto2": {
         "allOf": [

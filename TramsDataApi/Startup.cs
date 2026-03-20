@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.HttpOverrides;
-using System.Text.Json.Serialization;
 using GovUK.Dfe.CoreLibs.Http.Interfaces;
 using GovUK.Dfe.CoreLibs.Http.Middlewares.CorrelationId;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Text.Json.Serialization;
+using Dfe.Academies.DataLakePoc;
 
 namespace TramsDataApi
 {
@@ -20,6 +21,7 @@ namespace TramsDataApi
     using NetEscapades.AspNetCore.SecurityHeaders;
     using Swashbuckle.AspNetCore.SwaggerUI;
     using System;
+    using System.Configuration;
     using System.IO;
     using System.Reflection;
     using System.Text;
@@ -59,6 +61,8 @@ namespace TramsDataApi
                 client.BaseAddress = new Uri(mfspOptions.ApiEndpoint);
                 client.DefaultRequestHeaders.Add("ApiKey", mfspOptions.ApiKey);
             });
+
+            services.AddDatabricksSqlQueryClient(Configuration);
 
             services.AddScoped<ITrustGateway, TrustGateway>();
             services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
@@ -159,6 +163,8 @@ namespace TramsDataApi
                 configure.Title = "TramsDataApi";
                 configure.OperationProcessors.Add(new VersionedOperationIdProcessor());
             });
+
+            services.AddDatabricksSqlQueryClientWithServicePrincipal(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
