@@ -62,7 +62,9 @@ namespace TramsDataApi
                 client.DefaultRequestHeaders.Add("ApiKey", mfspOptions.ApiKey);
             });
 
+
             services.AddDatabricksSqlQueryClient(Configuration);
+            services.AddDatabricksOdbcQueryClient(Configuration);
 
             services.AddScoped<ITrustGateway, TrustGateway>();
             services.AddScoped<IEstablishmentGateway, EstablishmentGateway>();
@@ -163,8 +165,6 @@ namespace TramsDataApi
                 configure.Title = "TramsDataApi";
                 configure.OperationProcessors.Add(new VersionedOperationIdProcessor());
             });
-
-            services.AddDatabricksSqlQueryClientWithServicePrincipal(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

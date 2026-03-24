@@ -5158,6 +5158,9 @@ namespace Dfe.AcademiesApi.Client
         /// <br/>{ "sql": "SELECT 1 AS example_column" }
         /// <br/>
         /// <br/>Suitable for small result sets (Databricks inline disposition, ~25 MiB limit).
+        /// <br/>When the host uses ODBC (DataLakeQuery:Transport = Odbc), use fully qualified table names in
+        /// <br/>sql; catalog and schema in the body are ignored. For the Statement API, optional
+        /// <br/>catalog/schema are passed to Databricks with the statement.
         /// </remarks>
         /// <returns>Query completed successfully.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
@@ -5176,6 +5179,9 @@ namespace Dfe.AcademiesApi.Client
         /// <br/>{ "sql": "SELECT 1 AS example_column" }
         /// <br/>
         /// <br/>Suitable for small result sets (Databricks inline disposition, ~25 MiB limit).
+        /// <br/>When the host uses ODBC (DataLakeQuery:Transport = Odbc), use fully qualified table names in
+        /// <br/>sql; catalog and schema in the body are ignored. For the Statement API, optional
+        /// <br/>catalog/schema are passed to Databricks with the statement.
         /// </remarks>
         /// <returns>Query completed successfully.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>

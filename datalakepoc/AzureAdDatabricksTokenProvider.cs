@@ -13,7 +13,7 @@ namespace Dfe.Academies.DataLakePoc;
 /// Databricks Service Principals API or granted the Contributor/Owner role on the workspace).
 /// Ensure the app registration has the Azure Databricks API permission (e.g. user_impersonation).
 /// Tokens are used as bearer tokens for the REST API and as the ODBC password (AuthMech 3, UID token)
-/// for the Simba driver.
+/// for the Databricks ODBC driver (use AuthMech 11 / Auth_AccessToken in the ODBC connection string).
 /// </remarks>
 public class AzureAdDatabricksTokenProvider : IDatabricksTokenProvider
 {

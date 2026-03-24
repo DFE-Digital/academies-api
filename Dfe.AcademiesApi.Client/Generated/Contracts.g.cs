@@ -682,6 +682,9 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <br/>{ "sql": "SELECT 1 AS example_column" }
         /// <br/>
         /// <br/>Suitable for small result sets (Databricks inline disposition, ~25 MiB limit).
+        /// <br/>When the host uses ODBC (DataLakeQuery:Transport = Odbc), use fully qualified table names in
+        /// <br/>sql; catalog and schema in the body are ignored. For the Statement API, optional
+        /// <br/>catalog/schema are passed to Databricks with the statement.
         /// </remarks>
         /// <returns>Query completed successfully.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
@@ -697,6 +700,9 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// <br/>{ "sql": "SELECT 1 AS example_column" }
         /// <br/>
         /// <br/>Suitable for small result sets (Databricks inline disposition, ~25 MiB limit).
+        /// <br/>When the host uses ODBC (DataLakeQuery:Transport = Odbc), use fully qualified table names in
+        /// <br/>sql; catalog and schema in the body are ignored. For the Statement API, optional
+        /// <br/>catalog/schema are passed to Databricks with the statement.
         /// </remarks>
         /// <returns>Query completed successfully.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
@@ -3335,13 +3341,15 @@ namespace Dfe.AcademiesApi.Client.Contracts
         public string? Sql { get; set; } = default!;
 
         /// <summary>
-        /// Optional default catalog (USE CATALOG).
+        /// Optional catalog for the Statement Execution API only. Ignored when DataLakeQuery:Transport is Odbc;
+        /// <br/>for ODBC, include the catalog in Sql (three-part names).
         /// </summary>
         [Newtonsoft.Json.JsonProperty("catalog", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Catalog { get; set; } = default!;
 
         /// <summary>
-        /// Optional default schema (USE SCHEMA).
+        /// Optional schema for the Statement Execution API only. Ignored when transport is ODBC; for ODBC, include the
+        /// <br/>schema in Sql.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("schema", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Schema { get; set; } = default!;

@@ -1,14 +1,15 @@
 using System.Data.Odbc;
+using System.Text.RegularExpressions;
 using Dfe.Academies.DataLakePoc.Models;
 using Microsoft.Extensions.Options;
 
 namespace Dfe.Academies.DataLakePoc;
 
 /// <summary>
-/// Executes SQL against Databricks using the Databricks (Simba) ODBC driver and ADO.NET <see cref="OdbcConnection"/>.
+/// Executes SQL against Databricks using the Databricks ODBC driver and ADO.NET <see cref="OdbcConnection"/>.
 /// Requires the ODBC driver to be installed on the host.
 /// </summary>
-public class DatabricksOdbcQueryClient
+public partial class DatabricksOdbcQueryClient
 {
     private readonly DatabricksOdbcOptions _options;
     private readonly IDatabricksTokenProvider? _tokenProvider;
@@ -24,16 +25,60 @@ public class DatabricksOdbcQueryClient
     /// <summary>
     /// Executes a SQL query and reads the full result set into memory (POC-style; not for huge results).
     /// </summary>
+    public Task<DatabricksQueryResult> ExecuteQueryAsync(
+        string sql,
+        CancellationToken cancellationToken = default) =>
+        ExecuteQueryAsync(sql, catalog: null, schema: null, cancellationToken);
+
+    /// <summary>
+    /// Optional catalog/schema handling then runs <paramref name="sql"/>.
+    /// For SQL Warehouse, <c>USE</c> often does not apply to the next command; prefer three-part names in <paramref name="sql"/>
+    /// or enable <see cref="DatabricksOdbcOptions.AutoQualifyCatalogSchemaInSql"/> when both catalog and schema are set.
+    /// Databricks ODBC does not accept multiple statements in one batch; each <c>USE</c> is a separate execute.
+    /// </summary>
     public async Task<DatabricksQueryResult> ExecuteQueryAsync(
         string sql,
+        string? catalog,
+        string? schema,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sql);
 
         var connectionString = await BuildConnectionStringAsync(cancellationToken).ConfigureAwait(false);
 
+        var catalogTrim = catalog?.Trim();
+        var schemaTrim = schema?.Trim();
+        var bothContext = !string.IsNullOrWhiteSpace(catalogTrim) && !string.IsNullOrWhiteSpace(schemaTrim);
+
+        if (bothContext && _options.AutoQualifyCatalogSchemaInSql)
+            sql = QualifyFromAndJoinWithCatalogSchema(sql, catalogTrim!, schemaTrim!);
+
         await using var connection = new OdbcConnection(connectionString);
         await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+
+        // USE often does not persist for the next execute on SQL Warehouse ODBC; prefer three-part names (above) when both catalog+schema are set.
+        if (!bothContext || !_options.AutoQualifyCatalogSchemaInSql)
+        {
+            if (!string.IsNullOrWhiteSpace(catalogTrim))
+            {
+                await using (var useCatalog = new OdbcCommand(
+                                 $"USE CATALOG {FormatUseIdentifier(catalogTrim!)}",
+                                 connection))
+                {
+                    await useCatalog.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(schemaTrim))
+            {
+                await using (var useSchema = new OdbcCommand(
+                                 $"USE SCHEMA {FormatUseIdentifier(schemaTrim!)}",
+                                 connection))
+                {
+                    await useSchema.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
+                }
+            }
+        }
 
         await using var command = new OdbcCommand(sql, connection);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
@@ -58,6 +103,38 @@ public class DatabricksOdbcQueryClient
             Truncated = false
         };
     }
+
+    /// <summary>Backtick-quote a Unity Catalog / Spark identifier (escape embedded backticks).</summary>
+    private static string QuoteSqlIdentifier(string name) =>
+        "`" + name.Replace("`", "``", StringComparison.Ordinal) + "`";
+
+    /// <summary>
+    /// Spark <c>USE CATALOG</c>/<c>USE SCHEMA</c>: simple identifiers are usually unquoted; quote only when needed.
+    /// </summary>
+    private static string FormatUseIdentifier(string name) =>
+        SimpleSqlIdentifierRegex().IsMatch(name) ? name : QuoteSqlIdentifier(name);
+
+    /// <summary>
+    /// Qualifies <c>FROM x</c> / <c>JOIN x</c> when <paramref name="x"/> is a single unqualified identifier (not already <c>a.b</c>).
+    /// </summary>
+    private static string QualifyFromAndJoinWithCatalogSchema(string sql, string catalog, string schema)
+    {
+        var cat = QuoteSqlIdentifier(catalog);
+        var sch = QuoteSqlIdentifier(schema);
+        var prefix = $"{cat}.{sch}.";
+
+        sql = FromJoinQualifierRegex().Replace(
+            sql,
+            m => $"{m.Groups[1].Value} {prefix}{QuoteSqlIdentifier(m.Groups[2].Value)}");
+
+        return sql;
+    }
+
+    [GeneratedRegex(@"\b(FROM|JOIN)\s+([a-zA-Z_][a-zA-Z0-9_]*)\b(?!\s*\.)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex FromJoinQualifierRegex();
+
+    [GeneratedRegex(@"^[a-zA-Z_][a-zA-Z0-9_]*$", RegexOptions.CultureInvariant)]
+    private static partial Regex SimpleSqlIdentifierRegex();
 
     /// <summary>
     /// Runs a command that does not return a result set (e.g. USE CATALOG).
@@ -92,6 +169,11 @@ public class DatabricksOdbcQueryClient
             tokenOverride = await _tokenProvider.GetAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        return DatabricksOdbcConnectionStringBuilder.Build(_options, tokenOverride);
+        // Microsoft Entra / OAuth tokens must use AuthMech 11 + Auth_AccessToken (not UID/PWD), or the driver returns 401.
+        var authMech = _options.AuthMechanism;
+        if (_options.UseEntraTokenForOdbc)
+            authMech = DatabricksOdbcAuthMechanism.MicrosoftEntraOrOAuthAccessToken;
+
+        return DatabricksOdbcConnectionStringBuilder.Build(_options, tokenOverride, authMech);
     }
 }

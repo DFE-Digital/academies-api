@@ -28,6 +28,9 @@ public class DataLakePocController(IDataLakeQueryService dataLakeQueryService, I
     /// { "sql": "SELECT 1 AS example_column" }
     /// </code>
     /// Suitable for small result sets (Databricks inline disposition, ~25 MiB limit).
+    /// When the host uses ODBC (<c>DataLakeQuery:Transport</c> = <c>Odbc</c>), use fully qualified table names in
+    /// <c>sql</c>; <c>catalog</c> and <c>schema</c> in the body are ignored. For the Statement API, optional
+    /// <c>catalog</c>/<c>schema</c> are passed to Databricks with the statement.
     /// </remarks>
     [HttpPost]
     [Route("datalake/query")]

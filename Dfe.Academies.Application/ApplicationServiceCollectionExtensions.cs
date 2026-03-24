@@ -4,7 +4,9 @@ using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Application.LocalAuthority;
 using Dfe.Academies.Application.SignificantChange;
 using Dfe.Academies.Application.Trust;
+using Dfe.Academies.DataLakePoc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -21,7 +23,12 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<ISignificantChangeQueries, SignificantChangeQueries>();
             services.AddScoped<ILocalAuthorityQueries, LocalAuthorityQueries>();
-            services.AddScoped<IDataLakeQueryService, DataLakeQueryService>();
+
+            services.Configure<DataLakeQueryOptions>(config.GetSection(DataLakeQueryOptions.SectionName));
+            services.AddScoped<IDataLakeQueryService>(sp => new DataLakeQueryService(
+                sp.GetRequiredService<DatabricksSqlQueryClient>(),
+                sp.GetRequiredService<IOptions<DataLakeQueryOptions>>(),
+                sp.GetService<DatabricksOdbcQueryClient>()));
 
             return services;
         }

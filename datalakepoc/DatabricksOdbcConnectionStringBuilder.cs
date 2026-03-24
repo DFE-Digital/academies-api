@@ -13,7 +13,11 @@ public static class DatabricksOdbcConnectionStringBuilder
     /// <summary>
     /// Builds a connection string from options, unless <see cref="DatabricksOdbcOptions.RawConnectionString"/> is set.
     /// </summary>
-    public static string Build(DatabricksOdbcOptions options, string? accessTokenOverride = null)
+    /// <param name="authMechanismOverride">When set, overrides <see cref="DatabricksOdbcOptions.AuthMechanism"/> (e.g. force Entra layout when using a token provider).</param>
+    public static string Build(
+        DatabricksOdbcOptions options,
+        string? accessTokenOverride = null,
+        DatabricksOdbcAuthMechanism? authMechanismOverride = null)
     {
         ArgumentNullException.ThrowIfNull(options);
 
@@ -40,15 +44,27 @@ public static class DatabricksOdbcConnectionStringBuilder
             Driver = options.Driver
         };
 
-        // Simba-specific keywords (see Databricks ODBC DSN-less documentation)
+        var authMech = authMechanismOverride ?? options.AuthMechanism;
+
+        // Databricks ODBC driver keywords (see Azure Databricks ODBC authentication / DSN-less docs)
         builder["Host"] = host;
         builder["Port"] = options.Port.ToString();
         builder["HTTPPath"] = NormalizeHttpPath(httpPath);
         builder["SSL"] = "1";
         builder["ThriftTransport"] = "2";
-        builder["AuthMech"] = ((int)options.AuthMechanism).ToString();
-        builder["UID"] = "token";
-        builder["PWD"] = token;
+
+        if (authMech == DatabricksOdbcAuthMechanism.MicrosoftEntraOrOAuthAccessToken)
+        {
+            builder["AuthMech"] = "11";
+            builder["Auth_Flow"] = "0";
+            builder["Auth_AccessToken"] = token;
+        }
+        else
+        {
+            builder["AuthMech"] = ((int)authMech).ToString();
+            builder["UID"] = "token";
+            builder["PWD"] = token;
+        }
 
         if (options.ConnectionTimeoutSeconds > 0)
             builder["ConnTimeout"] = options.ConnectionTimeoutSeconds.ToString();
@@ -101,7 +117,7 @@ public static class DatabricksOdbcConnectionStringBuilder
     }
 
     /// <summary>
-    /// Ensures HTTP path starts with / for Simba driver expectations.
+    /// Ensures HTTP path starts with / per Databricks ODBC driver expectations.
     /// </summary>
     private static string NormalizeHttpPath(string path)
     {

@@ -86,7 +86,7 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Registers <see cref="DatabricksOdbcQueryClient"/> for Databricks SQL via the ODBC driver (Simba).
+    /// Registers <see cref="DatabricksOdbcQueryClient"/> for Databricks SQL via the Databricks ODBC driver.
     /// Install the Databricks ODBC driver on the machine; see <see cref="DatabricksOdbcOptions"/>.
     /// When <see cref="DatabricksOdbcOptions.UseAzureAdTokenProvider"/> or ODBC Entra credentials
     /// (<see cref="DatabricksOdbcOptions.UseOdbcServicePrincipal"/>) are set, registers

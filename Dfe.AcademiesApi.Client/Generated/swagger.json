@@ -1607,7 +1607,7 @@
           "DataLakePoc"
         ],
         "summary": "Executes a SQL statement against the configured Databricks SQL warehouse and returns a tabular result.",
-        "description": "Example request body:\n\n{ \"sql\": \"SELECT 1 AS example_column\" }\n\nSuitable for small result sets (Databricks inline disposition, ~25 MiB limit).",
+        "description": "Example request body:\n\n{ \"sql\": \"SELECT 1 AS example_column\" }\n\nSuitable for small result sets (Databricks inline disposition, ~25 MiB limit).\nWhen the host uses ODBC (DataLakeQuery:Transport = Odbc), use fully qualified table names in\nsql; catalog and schema in the body are ignored. For the Statement API, optional\ncatalog/schema are passed to Databricks with the statement.",
         "operationId": "ExecuteSql",
         "requestBody": {
           "x-name": "request",
@@ -4735,12 +4735,12 @@
           },
           "catalog": {
             "type": "string",
-            "description": "Optional default catalog (USE CATALOG).",
+            "description": "Optional catalog for the Statement Execution API only. Ignored when DataLakeQuery:Transport is Odbc;\nfor ODBC, include the catalog in Sql (three-part names).",
             "nullable": true
           },
           "schema": {
             "type": "string",
-            "description": "Optional default schema (USE SCHEMA).",
+            "description": "Optional schema for the Statement Execution API only. Ignored when transport is ODBC; for ODBC, include the\nschema in Sql.",
             "nullable": true
           },
           "waitTimeout": {
