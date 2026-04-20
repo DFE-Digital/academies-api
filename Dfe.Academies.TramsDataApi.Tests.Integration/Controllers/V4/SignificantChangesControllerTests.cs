@@ -13,6 +13,34 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
     {
         [Theory]
         [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task SearchSignificantChangesAsync_ShouldReturnOrderByCreationDateSignificantChanges_WhenMatchesWithRSCContact(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client)
+        {
+            // Arrange
+            factory.TestClaims = default;
+            var rSCContact = "RSCContact 1";
+            var page = 1;
+
+            // Act
+            var result = await significantChangesV4Client.SearchSignificantChangesAsync(rSCContact, false, false, page, 10, default);
+
+            var significantChangeDtos = result.Data;
+
+            // Assert
+            Assert.NotNull(significantChangeDtos);
+            Assert.Single(significantChangeDtos);
+            var significantChangeDto = significantChangeDtos.FirstOrDefault();
+            Assert.NotNull(significantChangeDto);
+            var dbContext = factory.GetDbContext<SigChgMstrContext>();
+            var significantChange = dbContext.SignificantChanges.First(sc => sc.SignificantChangeId == 1);
+            VerifyAsserts(significantChangeDto, significantChange);
+            Assert.NotNull(result.Paging);
+            Assert.Equal(1, result.Paging.RecordCount);
+            Assert.Equal(page, result.Paging.Page);
+        }
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task SearchSignificantChangesAsync_ShouldReturnOrderByCreationDateSignificantChanges_WhenMatchesWithDeliveryOfficer(
             CustomWebApplicationDbContextFactory<Startup> factory,
             ISignificantChangesV4Client significantChangesV4Client)

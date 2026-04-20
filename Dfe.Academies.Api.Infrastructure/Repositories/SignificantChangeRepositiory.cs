@@ -10,7 +10,7 @@ public class SignificantChangeRepositiory(SigChgMstrContext context) : ISignific
     {
         IQueryable<SignificantChange> filteredSignificantChanges = context.SignificantChanges
             .AsNoTracking()
-            .Where(x => x.DeliveryLead == deliveryofficer.Trim());
+            .Where(x => x.DeliveryLead == deliveryofficer.Trim() || x.RSCContact == deliveryofficer.Trim());
 
         if (orderByChangeEditDate)
         {

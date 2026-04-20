@@ -22,5 +22,6 @@ public class SignificantChange
     public string? AcademyName { get; set; }
     public DateTime? MetaIngestionDateTime { get; set; }
     public string? MetaSourceSystem { get; set; }
+    public string? RSCContact { get; set; }
 
 }
