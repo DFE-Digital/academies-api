@@ -50,6 +50,7 @@ namespace Dfe.Academies.Infrastructure
             establishmentConfiguration.Property(e => e.AcademyName).HasColumnName("academy_name");
             establishmentConfiguration.Property(e => e.MetaIngestionDateTime).HasColumnName("meta_ingestion_datetime");
             establishmentConfiguration.Property(e => e.MetaSourceSystem).HasColumnName("meta_source_system");
+            establishmentConfiguration.Property(e => e.RSCContact).HasColumnName("rsc_contact");
         }
     }
 }

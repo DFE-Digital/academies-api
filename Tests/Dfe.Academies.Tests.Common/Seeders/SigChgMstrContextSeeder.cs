@@ -32,8 +32,8 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     TypeofGiasChangeId = 1,
                     Withdrawn = false,
                     DeliveryLead = "Lead A",
-                    Region = "West Midlands"
-
+                    Region = "West Midlands",
+                    RSCContact = "RSCContact 1"
                 };
                 var significantChange2 = new SignificantChange
                 {
@@ -56,7 +56,8 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     TypeofGiasChangeId = 1,
                     Withdrawn = false,
                     DeliveryLead = "Hardip Sembhi",
-                    Region = "West Midlands", 
+                    Region = "West Midlands",
+                    RSCContact = "RSCContact 2"
                 };
                 var significantChange3 = new SignificantChange
                 {
@@ -80,6 +81,7 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     Withdrawn = false,
                     DeliveryLead = "Lead A",
                     Region = "West Midlands",
+                    RSCContact = "RSCContact 3"
                 };
                 sigChgMstrContext.SignificantChanges.AddRange(significantChange1, significantChange2, significantChange3);
 
