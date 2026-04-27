@@ -1,5 +1,6 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
-using Dfe.Academies.Domain.SignificantChange; 
+using Dfe.Academies.Domain.SignificantChange;
+using Dfe.Academies.Utils.Extensions;
 using Microsoft.EntityFrameworkCore; 
 
 namespace Dfe.Academies.Infrastructure.Repositories;
@@ -8,9 +9,12 @@ public class SignificantChangeRepositiory(SigChgMstrContext context) : ISignific
 {
     public async Task<(IEnumerable<SignificantChange>, int)> SearchSignificantChanges(string deliveryofficer, bool orderByChangeEditDate = false, bool isDescending = false, int page = 1, int count = 10, CancellationToken cancellationToken = default)
     {
+        deliveryofficer = deliveryofficer.Trim();
+        var adName = deliveryofficer.ToAdName();
         IQueryable<SignificantChange> filteredSignificantChanges = context.SignificantChanges
             .AsNoTracking()
-            .Where(x => x.DeliveryLead == deliveryofficer.Trim() || x.RSCContact == deliveryofficer.Trim());
+            .Where(x => x.DeliveryLead == deliveryofficer || x.RSCContact == deliveryofficer
+                || x.DeliveryLead == adName || x.RSCContact == adName);
 
         if (orderByChangeEditDate)
         {

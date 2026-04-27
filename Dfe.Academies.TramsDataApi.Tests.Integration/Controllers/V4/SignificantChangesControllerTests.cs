@@ -11,6 +11,69 @@ namespace Dfe.Academies.TramsDataApi.Tests.Integration.Controllers.V4
 {
     public class SignificantChangesControllerTests
     {
+        [Theory] 
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task SearchSignificantChangesAsync_ShouldReturnOrderByCreationDateSignificantChanges_WhenMatchesWithDLeadAdName(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client)
+        {
+            await ValidateTestConditions(factory, significantChangesV4Client, "Delivery Lead", 4);
+        }
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task SearchSignificantChangesAsync_ShouldReturnOrderByCreationDateSignificantChanges_WhenMatchesWithRContactAdName(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client)
+        {
+            await ValidateTestConditions(factory, significantChangesV4Client, "RSC Contact", 5);
+        }
+
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task SearchSignificantChangesAsync_ShouldReturnOrderByCreationDateSignificantChanges_WhenMatchesWithRContact6AdName(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client)
+        {
+            await ValidateTestConditions(factory, significantChangesV4Client, "RSC6 Contact", 6);
+        }
+
+        [Theory]
+        [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+        public async Task SearchSignificantChangesAsync_ShouldReturnOrderByCreationDateSignificantChanges_WhenMatchesWithContact7AdName(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client)
+        {
+            await ValidateTestConditions(factory, significantChangesV4Client, "7 Contact", 7);
+        }
+
+        private static async Task ValidateTestConditions(
+            CustomWebApplicationDbContextFactory<Startup> factory,
+            ISignificantChangesV4Client significantChangesV4Client,
+            string deliveryName,
+            int sigChangesId)
+        {
+            // Arrange
+            factory.TestClaims = default; 
+            var page = 1;
+
+            // Act
+            var result = await significantChangesV4Client.SearchSignificantChangesAsync(deliveryName, false, false, page, 10, default);
+
+            var significantChangeDtos = result.Data;
+
+            // Assert
+            Assert.NotNull(significantChangeDtos);
+            Assert.Single(significantChangeDtos);
+            var significantChangeDto = significantChangeDtos.FirstOrDefault();
+            Assert.NotNull(significantChangeDto);
+            var dbContext = factory.GetDbContext<SigChgMstrContext>();
+            var significantChange = dbContext.SignificantChanges.First(sc => sc.SignificantChangeId == sigChangesId);
+            VerifyAsserts(significantChangeDto, significantChange);
+            Assert.NotNull(result.Paging);
+            Assert.Equal(1, result.Paging.RecordCount);
+            Assert.Equal(page, result.Paging.Page);
+        }
+
         [Theory]
         [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
         public async Task SearchSignificantChangesAsync_ShouldReturnOrderByCreationDateSignificantChanges_WhenMatchesWithRSCContact(
