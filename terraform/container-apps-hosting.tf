@@ -1,5 +1,5 @@
 module "azure_container_apps_hosting" {
-  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.19.1"
+  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v2.6.4"
 
   environment    = local.environment
   project_name   = local.project_name
@@ -44,6 +44,19 @@ module "azure_container_apps_hosting" {
   cdn_frontdoor_vdp_destination_hostname          = local.cdn_frontdoor_vdp_destination_hostname
   cdn_frontdoor_waf_custom_rules                  = local.cdn_frontdoor_waf_custom_rules
   enable_cdn_frontdoor_health_probe               = local.enable_cdn_frontdoor_health_probe
+
+  enable_mssql_database                 = local.enable_mssql_database
+  mssql_server_admin_password           = local.mssql_server_admin_password
+  mssql_azuread_admin_username          = local.mssql_azuread_admin_username
+  mssql_azuread_admin_object_id         = local.mssql_azuread_admin_object_id
+  mssql_sku_name                        = local.mssql_sku_name
+  mssql_database_name                   = local.mssql_database_name
+  mssql_firewall_ipv4_allow_list        = local.mssql_firewall_ipv4_allow_list
+  enable_mssql_vulnerability_assessment = local.enable_mssql_vulnerability_assessment
+  mssql_managed_identity_assign_role    = local.mssql_managed_identity_assign_role
+  mssql_server_public_access_enabled    = local.mssql_server_public_access_enabled
+  mssql_azuread_auth_only               = local.mssql_azuread_auth_only
+  mssql_private_endpoint_subnet_cidr    = local.mssql_private_endpoint_subnet_cidr
 
   enable_event_hub                          = local.enable_event_hub
   enable_logstash_consumer                  = local.enable_logstash_consumer
