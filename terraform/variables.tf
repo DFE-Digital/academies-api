@@ -193,6 +193,81 @@ variable "cdn_frontdoor_forwarding_protocol" {
   default     = "HttpsOnly"
 }
 
+variable "enable_mssql_database" {
+  description = "Set to true to create an Azure SQL server/database, with a private endpoint within the virtual network"
+  type        = bool
+  default     = false
+}
+
+variable "mssql_server_admin_password" {
+  description = "The local administrator password for the MSSQL server"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "mssql_azuread_admin_username" {
+  description = "Username of a User within Azure AD that you want to assign as the SQL Server Administrator"
+  type        = string
+  default     = ""
+}
+
+variable "mssql_azuread_admin_object_id" {
+  description = "Object ID of a User within Azure AD that you want to assign as the SQL Server Administrator"
+  type        = string
+  default     = ""
+}
+
+variable "mssql_sku_name" {
+  description = "Specifies the name of the SKU used by the database"
+  type        = string
+  default     = "Basic"
+}
+
+variable "mssql_database_name" {
+  description = "The name of the MSSQL database to create. Must be set if `enable_mssql_database` is true"
+  type        = string
+  default     = ""
+}
+
+variable "mssql_firewall_ipv4_allow_list" {
+  description = "A list of IPv4 Addresses that require remote access to the MSSQL Server"
+  type = map(object({
+    start_ip_range : string,
+    end_ip_range : optional(string, "")
+  }))
+  default = {}
+}
+
+variable "enable_mssql_vulnerability_assessment" {
+  description = "Vulnerability assessment can discover, track, and help you remediate potential database vulnerabilities"
+  type        = bool
+  default     = true
+}
+
+variable "mssql_managed_identity_assign_role" {
+  description = "Assign the 'Storage Blob Data Contributor' Role to the SQL Server User-Assigned Managed Identity. Note: If you do not have 'Microsoft.Authorization/roleAssignments/write' permission, you will need to manually assign the 'Storage Blob Data Contributor' Role to the identity"
+  type        = bool
+  default     = false
+}
+
+variable "mssql_server_public_access_enabled" {
+  description = "Enable public internet access to your MSSQL instance. Be sure to specify 'mssql_firewall_ipv4_allow_list' to restrict inbound connections"
+  type        = bool
+  default     = true
+}
+
+variable "mssql_azuread_auth_only" {
+  description = "Set to true to only permit SQL logins from Azure AD users"
+  type        = bool
+  default     = false
+}
+
+variable "mssql_private_endpoint_subnet_cidr" {
+  description = "Specify a subnet prefix to use for the mssql private endpoint subnet"
+  type        = string
+}
+
 variable "enable_monitoring" {
   description = "Create an App Insights instance and notification group for the Container App"
   type        = bool
