@@ -1,4 +1,3 @@
-using Dfe.Academies.Application.Establishment;
 using Dfe.Academies.Application.LocalAuthority;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +27,6 @@ namespace TramsDataApi.Controllers.V4
             _logger = logger;
         }
 
-
         /// <summary>
         /// Retrieves a diocese by its name code.
         /// </summary>
@@ -42,24 +40,22 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerResponse(404, "Diocese with specified name code not found.")]
         public async Task<ActionResult<NameAndCodeDto>> GetDioceseByCode(string code, CancellationToken cancellationToken)
         {
-            _logger.LogInformation(
-            "Attempting to get diocese by name code \"{Code}\"",
-            code);
+            _logger.LogInformation("Attempting to get diocese by name code \"{Code}\"", code);
 
             var diocese = await _dioceseQueries.GetByCode(code, cancellationToken).ConfigureAwait(false);
 
             if (diocese == null)
             {
-                _logger.LogInformation(
-                    "No diocese found for name code \"{Code}\"",
-                    code);
+                _logger.LogInformation("No diocese found for name code \"{Code}\"", code);
                 return NotFound();
             }
 
-            _logger.LogInformation(
-                "Returning diocese found by name code \"{Code}\"",
-                code);
+            _logger.LogInformation("Returning diocese found by name code \"{Code}\"", code);
+
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
             _logger.LogDebug("Diocese get by name code result: {Diocese}", JsonSerializer.Serialize(diocese));
+            }
             return Ok(diocese);
         }
 
@@ -76,22 +72,19 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerResponse(200, "Successfully executed the search and returned dioceses.", typeof(List<NameAndCodeDto>))]
         public async Task<ActionResult<List<NameAndCodeDto>>> SearchDioceses(string name, string code, CancellationToken cancellationToken)
         {
-            _logger.LogInformation(
-                "Searching for dioceses by name \"{Name}\", code \"{Code}\"",
-                name, code);
+            _logger.LogInformation("Searching for dioceses by name \"{Name}\", code \"{Code}\"", name, code);
 
             var (dioceses, recordCount) = await _dioceseQueries
                 .Search(name, code, cancellationToken).ConfigureAwait(false);
 
-            _logger.LogInformation(
-                "Found {Count} dioceses for name \"{Name}\", code \"{Code}\"",
-                recordCount, name, code);
+            _logger.LogInformation("Found {Count} dioceses for name \"{Name}\", code \"{Code}\"", recordCount, name, code);
 
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
             _logger.LogDebug("Dioceses search results: {Dioceses}", JsonSerializer.Serialize(dioceses));
+            }
 
-            var response = new List<NameAndCodeDto>(dioceses);
-
-            return Ok(response);
+            return Ok(new List<NameAndCodeDto>(dioceses));
         }
     }
 }
