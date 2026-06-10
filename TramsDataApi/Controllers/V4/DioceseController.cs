@@ -38,6 +38,7 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerOperation(Summary = "Retrieve Diocese by name code", Description = "Returns a diocese identified by the name code.")]
         [SwaggerResponse(200, "Successfully found and returned the diocese.", typeof(NameAndCodeDto))]
         [SwaggerResponse(404, "Diocese with specified name code not found.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1873:Avoid potentially expensive logging", Justification = "Structured logging, handled by log levels")]
         public async Task<ActionResult<NameAndCodeDto>> GetDioceseByCode(string code, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Attempting to get diocese by name code {Code}", code);
@@ -70,6 +71,7 @@ namespace TramsDataApi.Controllers.V4
         [Route("diocese")]
         [SwaggerOperation(Summary = "Search Dioceses", Description = "Returns a list of dioceses based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned dioceses.", typeof(List<NameAndCodeDto>))]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1873:Avoid potentially expensive logging", Justification = "Structured logging, handled by log levels")]
         public async Task<ActionResult<List<NameAndCodeDto>>> SearchDioceses(string name, string code, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Searching for dioceses by name {Name}, code {Code}", name, code);
