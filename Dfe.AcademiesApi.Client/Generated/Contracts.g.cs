@@ -319,7 +319,7 @@ namespace Dfe.AcademiesApi.Client.Contracts
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IDioceseAuthorityV4Client
+    public partial interface IDioceseV4Client
     {
         /// <summary>
         /// Retrieves a diocese by its name code.
@@ -339,20 +339,20 @@ namespace Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<NameAndCodeDto> GetDioceseByCodeAsync(string code, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Searches for Establishments based on query parameters.
+        /// Searches for dioceses based on query parameters.
         /// </summary>
-        /// <param name="name">Name of the establishment.</param>
-        /// <param name="code">name code identifier.</param>
+        /// <param name="name">Name of the diocese.</param>
+        /// <param name="code">Name code identifier.</param>
         /// <returns>Successfully executed the search and returned dioceses.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<NameAndCodeDto>> SearchDiocesesAsync(string? name, string? code);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Searches for Establishments based on query parameters.
+        /// Searches for dioceses based on query parameters.
         /// </summary>
-        /// <param name="name">Name of the establishment.</param>
-        /// <param name="code">name code identifier.</param>
+        /// <param name="name">Name of the diocese.</param>
+        /// <param name="code">Name code identifier.</param>
         /// <returns>Successfully executed the search and returned dioceses.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<NameAndCodeDto>> SearchDiocesesAsync(string? name, string? code, System.Threading.CancellationToken cancellationToken);

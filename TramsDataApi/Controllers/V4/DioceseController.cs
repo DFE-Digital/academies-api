@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 namespace TramsDataApi.Controllers.V4
 {
     /// <summary>
-    /// Handles operations related to local authorities.
+    /// Handles operations related to dioceses.
     /// </summary>
     [ApiController]
     [ApiVersion("4.0")]
     [Route("v{version:apiVersion}/")]
-    public class DioceseAuthorityController : ControllerBase
+    public class DioceseController : ControllerBase
     {
         private readonly IDioceseQueries _dioceseQueries;
-        private readonly ILogger<DioceseAuthorityController> _logger;
+        private readonly ILogger<DioceseController> _logger;
 
-        public DioceseAuthorityController(IDioceseQueries dioceseQueries, ILogger<DioceseAuthorityController> logger)
+        public DioceseController(IDioceseQueries dioceseQueries, ILogger<DioceseController> logger)
         {
             _dioceseQueries = dioceseQueries;
             _logger = logger;
@@ -64,10 +64,10 @@ namespace TramsDataApi.Controllers.V4
         }
 
         /// <summary>
-        /// Searches for Establishments based on query parameters.
+        /// Searches for dioceses based on query parameters.
         /// </summary>
-        /// <param name="name">Name of the establishment.</param>
-        /// <param name="code">name code identifier.</param>
+        /// <param name="name">Name of the diocese.</param>
+        /// <param name="code">Name code identifier.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A list of dioceses that meet the search criteria.</returns>
         [HttpGet]

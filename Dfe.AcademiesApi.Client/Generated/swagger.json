@@ -743,8 +743,8 @@
     "/v4/diocese/{code}": {
       "get": {
         "tags": [
-          "DioceseAuthorityV4",
-          "DioceseAuthority"
+          "DioceseV4",
+          "Diocese"
         ],
         "summary": "Retrieves a diocese by its name code.",
         "operationId": "GetDioceseByCode",
@@ -780,16 +780,16 @@
     "/v4/diocese": {
       "get": {
         "tags": [
-          "DioceseAuthorityV4",
-          "DioceseAuthority"
+          "DioceseV4",
+          "Diocese"
         ],
-        "summary": "Searches for Establishments based on query parameters.",
+        "summary": "Searches for dioceses based on query parameters.",
         "operationId": "SearchDioceses",
         "parameters": [
           {
             "name": "name",
             "in": "query",
-            "description": "Name of the establishment.",
+            "description": "Name of the diocese.",
             "schema": {
               "type": "string",
               "nullable": true
@@ -799,7 +799,7 @@
           {
             "name": "code",
             "in": "query",
-            "description": "name code identifier.",
+            "description": "Name code identifier.",
             "schema": {
               "type": "string",
               "nullable": true
