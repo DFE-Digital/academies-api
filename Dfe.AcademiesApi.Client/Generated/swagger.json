@@ -891,6 +891,59 @@
         }
       }
     },
+    "/v4/establishments/search/by-name": {
+      "get": {
+        "tags": [
+          "EstablishmentsV4",
+          "Establishments"
+        ],
+        "operationId": "SearchEstablishmentsByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "excludeClosed",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "matchAny",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v4/establishment/regions": {
       "get": {
         "tags": [
