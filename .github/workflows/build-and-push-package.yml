@@ -1,4 +1,4 @@
-name: Build and Push NuGet Package
+﻿name: Build and Push NuGet Package
 
 on:
   workflow_dispatch:
@@ -14,7 +14,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: write
     if: startsWith(github.event.inputs.tag_name, 'production-')
 
@@ -67,9 +66,9 @@ jobs:
           echo "No unprocessed custom version found in the last 10 commits. Proceeding to fetch and increment the latest version from the feed."
       
           # Fetch the latest version and increment the  version
-          PACKAGE_ID="Dfe.AcademiesApi.Client"
-          FEED_URL="https://nuget.pkg.github.com/DFE-Digital/query?q=$PACKAGE_ID"
-          LATEST_VERSION=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$FEED_URL" | jq -r '.data[0].version')
+          PACKAGE_ID="GovUK.Dfe.AcademiesApi.Client"
+          FEED_URL="https://api.nuget.org/v3-flatcontainer/${PACKAGE_ID,,}/index.json"
+          LATEST_VERSION=$(curl -s "$FEED_URL" | jq -r '.versions[-1]')
 
           if [[ -z "$LATEST_VERSION" || "$LATEST_VERSION" == "null" ]]; then
             echo "No existing version found in the feed. Defaulting to version 1.0.0"
@@ -85,9 +84,25 @@ jobs:
         fi
       shell: /usr/bin/bash -e {0}
 
-    - name: Build, pack and publish
+    - name: Verify API Key
+      run: |
+        if [ -z "${{ secrets.NUGET_API_KEY }}" ]; then
+          echo "❌ NUGET_API_KEY secret is not available"
+          exit 1
+        else
+          echo "✅ NUGET_API_KEY secret is available"
+        fi
+
+    - name: Build and pack
       working-directory: Dfe.AcademiesApi.Client
       run: |
         dotnet build -c Release
-        dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --output .
-        dotnet nuget push "*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DFE-Digital/index.json
+        dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --no-build --output ./artifacts
+
+    - name: Push to NuGet.org
+      working-directory: Dfe.AcademiesApi.Client
+      run: |
+        dotnet nuget push ./artifacts/*.nupkg \
+          --api-key "${{ secrets.NUGET_API_KEY }}" \
+          --source "https://api.nuget.org/v3/index.json" \
+          --skip-duplicate
