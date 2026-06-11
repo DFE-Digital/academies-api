@@ -116,6 +116,39 @@ namespace TramsDataApi.Controllers.V4
 
             return Ok(response);
         }
+        
+        /// <summary>
+        /// Searches for Establishments by name based on query parameters.
+        /// </summary>
+        /// <param name="name">Name of the establishment.</param>
+        /// /// <param name="excludeClosed">When true, exclude closed establishments.</param>
+        /// <param name="matchAny">When true, return results where it contains any text within the param, when false, returns when the name starts with the param</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A list of Establishments that meet the search criteria.</returns>
+        [HttpGet]
+        [Route("establishments/search/by-name")]
+        [SwaggerOperation(Summary = "Search Establishments By Name", Description = "Returns a list of Establishments based on search criteria.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishmentsByName(string name, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation(
+                "Searching for establishments by name \"{name}\"",
+                name);
+
+            var (establishments, recordCount) = await _establishmentQueries
+                .SearchByName(name,excludeClosed, matchAny, cancellationToken).ConfigureAwait(false);
+
+            _logger.LogInformation(
+                "Found {count} establishments for name \"{name}\"",
+                recordCount,name);
+
+            _logger.LogDebug(JsonSerializer.Serialize(establishments));
+
+            var response = new List<EstablishmentDto>(establishments);
+
+            return Ok(response);
+        }
+        
 
         /// <summary>
         /// Retrieves a list of establishment Unique Reference Numbers (URNs) by region.

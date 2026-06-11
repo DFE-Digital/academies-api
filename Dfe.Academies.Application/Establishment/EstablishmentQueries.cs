@@ -46,6 +46,13 @@ namespace Dfe.Academies.Application.Establishment
 
             return (establishments.Select(x => MapToEstablishmentDto(x)).ToList(), establishments.Count);
         }
+        
+        public async Task<(List<EstablishmentDto>, int)> SearchByName(string name, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
+        {
+            var establishments = await _establishmentRepository.SearchByName(name,excludeClosed, matchAny, cancellationToken);
+
+            return (establishments.Select(x => MapToEstablishmentDto(x)).ToList(), establishments.Count);
+        }
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
