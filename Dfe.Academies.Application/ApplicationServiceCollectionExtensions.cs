@@ -20,6 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IEducationalPerformanceQueries, EducationalPerformanceQueries>();
             services.AddScoped<ISignificantChangeQueries, SignificantChangeQueries>();
             services.AddScoped<ILocalAuthorityQueries, LocalAuthorityQueries>();
+            services.AddScoped<IDioceseQueries, DioceseQueries>();
 
             return services;
         }

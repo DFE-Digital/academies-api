@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "TramsDataApi",
@@ -736,6 +736,90 @@
           },
           "404": {
             "description": "The trust was not found."
+          }
+        }
+      }
+    },
+    "/v4/diocese/{code}": {
+      "get": {
+        "tags": [
+          "DioceseV4",
+          "Diocese"
+        ],
+        "summary": "Retrieves a diocese by its name code.",
+        "operationId": "GetDioceseByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "description": "Name code.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the diocese.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NameAndCodeDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Diocese with specified name code not found."
+          }
+        }
+      }
+    },
+    "/v4/diocese": {
+      "get": {
+        "tags": [
+          "DioceseV4",
+          "Diocese"
+        ],
+        "summary": "Searches for dioceses based on query parameters.",
+        "operationId": "SearchDioceses",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the diocese.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Name code identifier.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned dioceses.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NameAndCodeDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4240,6 +4324,18 @@
           }
         }
       },
+      "NameAndCodeDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
       "EstablishmentDto": {
         "type": "object",
         "additionalProperties": false,
@@ -4356,18 +4452,6 @@
                 "$ref": "#/components/schemas/PreviousEstablishmentDto"
               }
             ]
-          }
-        }
-      },
-      "NameAndCodeDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "code": {
-            "type": "string"
           }
         }
       },

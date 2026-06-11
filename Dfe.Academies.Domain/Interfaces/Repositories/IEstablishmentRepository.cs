@@ -15,5 +15,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         MisEstablishment? GetMisEstablishmentByURN(int? urn);
         EducationEstablishmentLink? GetEducationEstablishmentLinksByURN(long? urn);
         ReportCardFullInspection? GetOfstedReportCardsByURN(int? urn);
+        Task<Diocese?> GetDioceseByCode(string code, CancellationToken cancellationToken);
+        Task<(IEnumerable<Diocese> dioceses, int recordCount)> SearchDioceses(string name, string code, CancellationToken cancellationToken);
     }
 }

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <UserSecretsId>1ce62ee2-ff0b-4f40-9066-cfbdae2e889f</UserSecretsId>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
@@ -17,29 +17,30 @@
       <None Remove="ServiceModels\**" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="CsvHelper" Version="33.0.1" />
-        <PackageReference Include="FluentValidation" Version="11.11.0" />
-        <PackageReference Include="GovUK.Dfe.CoreLibs.Http" Version="1.0.10" />
-        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.21" />
-        <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="8.0.21" />
+        <PackageReference Include="AutoMapper" Version="14.0.0" />
+        <PackageReference Include="CsvHelper" Version="33.1.0" />
+        <PackageReference Include="FluentValidation" Version="12.1.1" />
+        <PackageReference Include="GovUK.Dfe.CoreLibs.Http" Version="1.0.11" />
+        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="10.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-        <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
-        <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
-        <PackageReference Include="NSwag.MSBuild" Version="14.2.0">
+        <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.9" />
+        <PackageReference Include="NSwag.AspNetCore" Version="14.7.1" />
+        <PackageReference Include="NSwag.MSBuild" Version="14.7.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.21" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.21" />
-        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.5.0" />
-        <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.24.0" />
-        <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
-        <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.7.3" />
-        <PackageReference Include="TimeZoneConverter" Version="6.1.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.9" />
+        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="4.5.0" />
+        <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="1.3.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+        <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="5.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.2.1" />
+        <PackageReference Include="TimeZoneConverter" Version="7.2.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     </ItemGroup>
     <ItemGroup>
@@ -77,7 +78,7 @@
     </ItemGroup>
 
 	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='true'">
-		<Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net80) run ../Dfe.AcademiesApi.Client/nswag.json">
+		<Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net100) run ../Dfe.AcademiesApi.Client/nswag.json">
 			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
 			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
 		</Exec>

@@ -26,9 +26,15 @@ namespace Dfe.Academies.Infrastructure.Repositories
             IQueryable<LocalAuthority> query = _mstrContext.LocalAuthorities.AsNoTracking();
 
 #pragma warning disable CA1862 // Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
-            query = query.Where(la =>
-                (string.IsNullOrEmpty(name) || (la.Name != null && la.Name.ToLower().Contains(name.ToLower()))) &&
-                (string.IsNullOrEmpty(code) || (la.Code != null && la.Code.ToLower().Contains(code.ToLower()))));
+            var hasName = !string.IsNullOrEmpty(name);
+            var hasCode = !string.IsNullOrEmpty(code);
+
+            if (hasName || hasCode)
+            {
+                query = query.Where(la =>
+                    (hasName && la.Name != null && la.Name.ToLower().Contains(name.ToLower())) ||
+                    (hasCode && la.Code != null && la.Code.ToLower().Contains(code.ToLower())));
+            }
 #pragma warning restore CA1862 // Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
 
             var queryResult = await query.Take(100).ToListAsync(cancellationToken);

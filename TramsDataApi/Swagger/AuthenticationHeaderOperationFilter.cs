@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace TramsDataApi.Swagger
@@ -10,12 +10,12 @@ namespace TramsDataApi.Swagger
         {
             operation.Security ??= new List<OpenApiSecurityRequirement>();
             
-            var securityScheme = new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "ApiKey" }
-            };
-            
-            operation.Security.Add(new OpenApiSecurityRequirement {{ securityScheme, new List<string>() }});
+            var securitySchemeReference = new OpenApiSecuritySchemeReference("ApiKey");
+
+            operation.Security.Add(new OpenApiSecurityRequirement
+            {        
+                { securitySchemeReference, new List<string>() }
+            });
         }
     }
 }
