@@ -213,16 +213,14 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 .AsNoTracking()
                 .Where(e => !string.IsNullOrWhiteSpace(e.DioceseCode) && !string.IsNullOrWhiteSpace(e.Diocese));
 
-            if (!string.IsNullOrWhiteSpace(name))
-            {
-                var nameFilter = name.Trim();
-                query = query.Where(e => EF.Functions.Like(e.Diocese!, $"%{nameFilter}%"));
-            }
+            var nameFilter = string.IsNullOrWhiteSpace(name) ? null : name.Trim();
+            var codeFilter = string.IsNullOrWhiteSpace(code) ? null : code.Trim();
 
-            if (!string.IsNullOrWhiteSpace(code))
+            if (nameFilter != null || codeFilter != null)
             {
-                var codeFilter = code.Trim();
-                query = query.Where(e => EF.Functions.Like(e.DioceseCode!, $"%{codeFilter}%"));
+                query = query.Where(e =>
+                    (nameFilter != null && EF.Functions.Like(e.Diocese!, $"%{nameFilter}%")) ||
+                    (codeFilter != null && EF.Functions.Like(e.DioceseCode!, $"%{codeFilter}%")));
             }
 
             var distinctDiocesesQuery = query
