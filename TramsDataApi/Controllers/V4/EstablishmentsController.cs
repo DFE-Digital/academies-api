@@ -132,17 +132,18 @@ namespace TramsDataApi.Controllers.V4
         public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishmentsByName(string name, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
-                "Searching for establishments by name \"{name}\"",
+                "Searching for establishments by name \"{Name}\"",
                 name);
 
             var (establishments, recordCount) = await _establishmentQueries
                 .SearchByName(name,excludeClosed, matchAny, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
-                "Found {count} establishments for name \"{name}\"",
+                "Found {count} establishments for name \"{Name}\"",
                 recordCount,name);
 
-            _logger.LogDebug(JsonSerializer.Serialize(establishments));
+            //logger.LogDebug(JsonSerializer.Serialize(establishments));
+            _logger.LogDebug("Establishments: {@Establishments}", establishments);
 
             var response = new List<EstablishmentDto>(establishments);
 
