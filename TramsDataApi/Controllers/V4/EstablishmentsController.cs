@@ -139,12 +139,11 @@ namespace TramsDataApi.Controllers.V4
                 .SearchByName(name,excludeClosed, matchAny, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
-                "Found {count} establishments for name \"{Name}\"",
+                "Found {Count} establishments for name \"{Name}\"",
                 recordCount,name);
 
-            //logger.LogDebug(JsonSerializer.Serialize(establishments));
-            _logger.LogDebug("Establishments: {@Establishments}", establishments);
-
+            _logger.LogDebug(JsonSerializer.Serialize(establishments));
+            
             var response = new List<EstablishmentDto>(establishments);
 
             return Ok(response);
