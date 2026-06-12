@@ -137,7 +137,6 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
 
             string name = "Test School";
             bool? excludeClosed = null;
-            bool? matchAny = null;
             mockRepo.Setup(x => x.SearchByNameStartsWith(It.Is<string>(v => v == name), It.Is<bool?>(x => x == excludeClosed),  It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);

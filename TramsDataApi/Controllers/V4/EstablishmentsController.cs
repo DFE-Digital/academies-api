@@ -122,7 +122,6 @@ namespace TramsDataApi.Controllers.V4
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// /// <param name="excludeClosed">When true, exclude closed establishments.</param>
-        /// <param name="matchAny">When true, return results where it contains any text within the param, when false, returns when the name starts with the param</param>
         /// <param name="cancellationToken"></param>
         /// <returns>A list of Establishments that meet the search criteria.</returns>
         [HttpGet]
