@@ -142,7 +142,10 @@ namespace TramsDataApi.Controllers.V4
                 "Found {Count} establishments for name \"{Name}\"",
                 recordCount,name);
 
-            _logger.LogDebug(JsonSerializer.Serialize(establishments));
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
+                _logger.LogDebug(JsonSerializer.Serialize(establishments));
+            }
             
             var response = new List<EstablishmentDto>(establishments);
 
