@@ -75,7 +75,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return queryResult.Select(ToEstablishment).ToList();
         }
         
-        public async Task<List<Establishment>> SearchByName(string name, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
+        public async Task<List<Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -83,16 +83,10 @@ namespace Dfe.Academies.Infrastructure.Repositories
             }
 
             IQueryable<EstablishmentQueryResult> query = BaseQuery();
-
-            // If matchAny is true treat as a contains search, otherwise search for names that start with the provided value
-            if (matchAny == true)
-            {
-                query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.Contains(name));
-            }
-            else
-            {
-                query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.StartsWith(name));
-            }
+            
+            
+            query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.StartsWith(name));
+            
 
             if (excludeClosed == true)
             {

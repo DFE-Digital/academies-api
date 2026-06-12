@@ -126,17 +126,18 @@ namespace TramsDataApi.Controllers.V4
         /// <param name="cancellationToken"></param>
         /// <returns>A list of Establishments that meet the search criteria.</returns>
         [HttpGet]
-        [Route("establishments/search/by-name")]
-        [SwaggerOperation(Summary = "Search Establishments By Name", Description = "Returns a list of Establishments based on search criteria.")]
+        [Route("establishments/SearchByNameStartsWith")]
+        [SwaggerOperation(Summary = "Search Establishments By Name Starts With", Description = "Returns a list of Establishments based on search criteria.")]
         [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
-        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishmentsByName(string name, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1873:Avoid potentially expensive logging", Justification = "Structured logging, handled by log levels")]
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishmentsByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken)
         {
             _logger.LogInformation(
                 "Searching for establishments by name \"{Name}\"",
                 name);
 
             var (establishments, recordCount) = await _establishmentQueries
-                .SearchByName(name,excludeClosed, matchAny, cancellationToken).ConfigureAwait(false);
+                .SearchByNameStartsWith(name,excludeClosed, cancellationToken).ConfigureAwait(false);
 
             _logger.LogInformation(
                 "Found {Count} establishments for name \"{Name}\"",

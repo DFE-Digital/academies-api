@@ -975,14 +975,14 @@
         }
       }
     },
-    "/v4/establishments/search/by-name": {
+    "/v4/establishments/SearchByNameStartsWith": {
       "get": {
         "tags": [
           "EstablishmentsV4",
           "Establishments"
         ],
         "summary": "Searches for Establishments by name based on query parameters.",
-        "operationId": "SearchEstablishmentsByName",
+        "operationId": "SearchEstablishmentsByNameStartsWith",
         "parameters": [
           {
             "name": "name",
@@ -1003,16 +1003,6 @@
               "nullable": true
             },
             "x-position": 2
-          },
-          {
-            "name": "matchAny",
-            "in": "query",
-            "description": "When true, return results where it contains any text within the param, when false, returns when the name starts with the param",
-            "schema": {
-              "type": "boolean",
-              "nullable": true
-            },
-            "x-position": 3
           }
         ],
         "responses": {

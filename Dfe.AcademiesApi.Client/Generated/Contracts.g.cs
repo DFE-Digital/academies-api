@@ -426,10 +426,9 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// <param name="excludeClosed">When true, exclude closed establishments.</param>
-        /// <param name="matchAny">When true, return results where it contains any text within the param, when false, returns when the name starts with the param</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishmentsByNameAsync(string? name, bool? excludeClosed, bool? matchAny);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishmentsByNameStartsWithAsync(string? name, bool? excludeClosed);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -437,10 +436,9 @@ namespace Dfe.AcademiesApi.Client.Contracts
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
         /// <param name="excludeClosed">When true, exclude closed establishments.</param>
-        /// <param name="matchAny">When true, return results where it contains any text within the param, when false, returns when the name starts with the param</param>
         /// <returns>Successfully executed the search and returned Establishments.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishmentsByNameAsync(string? name, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishmentsByNameStartsWithAsync(string? name, bool? excludeClosed, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of establishment Unique Reference Numbers (URNs) by region.
