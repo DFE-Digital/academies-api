@@ -74,6 +74,30 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return queryResult.Select(ToEstablishment).ToList();
         }
+        
+        public async Task<List<Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return new List<Establishment>();
+            }
+
+            IQueryable<EstablishmentQueryResult> query = BaseQuery();
+            
+            
+            query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.StartsWith(name));
+            
+
+            if (excludeClosed == true)
+            {
+                query = query.Where(r => !r.Establishment.CloseDate.HasValue);
+            }
+
+            var queryResult = await query.Take(100).ToListAsync(cancellationToken);
+
+            return queryResult.Select(ToEstablishment).ToList();
+        }
+        
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {

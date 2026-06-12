@@ -118,6 +118,41 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 cancellationToken);
 
             // Assert
+            result.Should().BeOfType<(List<EstablishmentDto>, int)>();
+            foreach (var establishmentDto in result.Item1)
+            {
+                var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
+                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink));
+            }
+        }
+        
+        [Fact]
+        public async Task SearchByName_WhenEstablishmentsReturnedFromRepo_EstablishmentDtoListAndCountIsReturned()
+        {
+            // Arrange
+            var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
+
+            string name = "Test School";
+            bool? excludeClosed = null;
+            mockRepo.Setup(x => x.SearchByNameStartsWith(It.Is<string>(v => v == name), It.Is<bool?>(x => x == excludeClosed),  It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
+            mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
+            mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
+
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+
+            // Act
+            var result = await establishmentQueries.SearchByNameStartsWith(
+                name,
+                excludeClosed,
+                cancellationToken);
+
+            // Assert
             result.Should().BeOfType(typeof((List<EstablishmentDto>, int)));
             foreach (var establishmentDto in result.Item1)
             {

@@ -975,6 +975,53 @@
         }
       }
     },
+    "/v4/establishments/SearchByNameStartsWith": {
+      "get": {
+        "tags": [
+          "EstablishmentsV4",
+          "Establishments"
+        ],
+        "summary": "Searches for Establishments by name based on query parameters.",
+        "operationId": "SearchEstablishmentsByNameStartsWith",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the establishment.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "excludeClosed",
+            "in": "query",
+            "description": "When true, exclude closed establishments.",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v4/establishment/regions": {
       "get": {
         "tags": [
