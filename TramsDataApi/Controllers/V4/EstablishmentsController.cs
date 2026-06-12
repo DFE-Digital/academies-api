@@ -144,7 +144,8 @@ namespace TramsDataApi.Controllers.V4
 
             if (_logger.IsEnabled(LogLevel.Debug))
             {
-                _logger.LogDebug(JsonSerializer.Serialize(establishments));
+                _logger.LogDebug("Establishments: {EstablishmentsJson}",
+                    JsonSerializer.Serialize(establishments));
             }
             
             var response = new List<EstablishmentDto>(establishments);
