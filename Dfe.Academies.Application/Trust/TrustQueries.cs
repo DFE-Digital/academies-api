@@ -73,7 +73,8 @@ namespace Dfe.Academies.Application.Trust
                     County = trust.County!,
                     Additional = trust.AddressLine2!,
                     Locality = trust.AddressLine3!
-                }
+                },
+                Gor = trust.GORregion
             };
         }
     }
