@@ -3273,6 +3273,9 @@ namespace Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public AddressDto? Address { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("gor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Gor { get; set; } = default!;
+
         public string ToJson()
         {
 

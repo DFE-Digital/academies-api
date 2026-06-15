@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="GovUK.Dfe.CoreLibs.Contracts" Version="1.0.61" />
+    <PackageReference Include="GovUK.Dfe.CoreLibs.Contracts" Version="1.0.62-PullRequest-4" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.11" />

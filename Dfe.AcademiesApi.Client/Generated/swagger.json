@@ -4762,6 +4762,10 @@
           },
           "address": {
             "$ref": "#/components/schemas/AddressDto"
+          },
+          "gor": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
