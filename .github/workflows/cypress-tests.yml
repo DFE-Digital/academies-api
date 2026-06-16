@@ -72,12 +72,11 @@ jobs:
           name: reports-${{ inputs.environment }}-${{ matrix.browser }}
           path: CypressTests/cypress/reports/mocha
 
-      - name: Report results
+      - name: Report results to Teams
         if: always()
-        env:
-          ENVIRONMENT: ${{ inputs.environment }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
-          CUSTOM_TEXT="Environment $ENVIRONMENT, See more information https://github.com/DFE-Digital/academies-api/actions/runs/$GITHUB_RUN_ID"
-          npm run cy:notify -- --custom-text="$CUSTOM_TEXT"
+          node scripts/send-teams-notification.js
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          INFORMATION_LINK: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
