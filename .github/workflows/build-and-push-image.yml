@@ -167,14 +167,14 @@ jobs:
                 }
               });
 
-  cypress-tests:
-    name: Run Cypress Tests
+  playwright-tests:
+    name: Run Playwright Tests
     needs: [ set-env, deploy ]
     if: needs.set-env.outputs.environment == 'test' || needs.set-env.outputs.environment == 'development'
-    uses: ./.github/workflows/cypress-tests.yml
+    uses: ./.github/workflows/playwright-tests.yml
     with:
       environment: ${{ needs.set-env.outputs.environment }}
     secrets:
       TRAMS_API_KEY: ${{ secrets.TRAMS_API_KEY }}
       TRAMS_API_BASE_URL: ${{ secrets.TRAMS_API_BASE_URL }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}

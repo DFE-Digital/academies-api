@@ -1,0 +1,79 @@
+name: Playwright API Tests
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      TRAMS_API_KEY:
+        required: true
+      TRAMS_API_BASE_URL:
+        required: true
+      TEAMS_WEBHOOK_URL:
+        required: true
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        type: environment
+
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  playwright-tests:
+    name: Run Playwright Tests
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    defaults:
+      run:
+        working-directory: Tests/Dfe.Academies.PlaywrightTests/
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: Tests/Dfe.Academies.PlaywrightTests/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        env:
+          API_KEY: ${{ secrets.TRAMS_API_KEY }}
+          API_BASE_URL: ${{ secrets.TRAMS_API_BASE_URL }}
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 # API only tests
+        run: npm test
+
+      - name: Upload test results
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: test-results-${{ inputs.environment }}
+          path: Tests/Dfe.Academies.PlaywrightTests/test-results
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: reports-${{ inputs.environment }}
+          path: |
+            Tests/Dfe.Academies.PlaywrightTests/playwright-report
+            Tests/Dfe.Academies.PlaywrightTests/reports
+
+      - name: Report results to Teams
+        if: always()
+        run: node scripts/send-teams-notification.js
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          INFORMATION_LINK: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
