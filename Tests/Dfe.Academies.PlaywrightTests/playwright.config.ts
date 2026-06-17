@@ -11,6 +11,7 @@ function requireEnv(name: string): string {
 
 const apiBaseUrl = requireEnv('API_BASE_URL').replace(/\/$/, '');
 const apiKey = requireEnv('API_KEY');
+const zapProxy = process.env.ZAP_PROXY;
 
 export default defineConfig({
   testDir: './tests',
@@ -33,6 +34,7 @@ export default defineConfig({
     },
     userAgent: 'AcademiesApi/1.0 Playwright',
     trace: 'on-first-retry',
+    ...(zapProxy ? { proxy: { server: zapProxy } } : {}),
   },
   projects: [
     {

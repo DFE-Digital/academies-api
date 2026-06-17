@@ -12,24 +12,26 @@ env:
 
 jobs:
   run-tests-with-zap:
-    name: Run Cypress tests with OWASP ZAP
+    name: Run Playwright tests with OWASP ZAP
+    if: github.event.workflow_run.conclusion == 'success'
     environment: development
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: CypressTests
+        working-directory: Tests/Dfe.Academies.PlaywrightTests
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Create directory on runner
-        run: |
-          mkdir -m 777 ${{ github.workspace }}/zapoutput
+        run: mkdir -m 777 ${{ github.workspace }}/zapoutput
 
       - name: Get latest ZAP container version
         run: |
           ZAP_VERSION="$(wget -q -O - "https://hub.docker.com/v2/repositories/softwaresecurityproject/zap-stable/tags?page_size=2" | grep -o '"name": *"[^"]*' | grep -o '[^"]*$' | tail -n 1)"
-          echo "ZAP_VERSION=${ZAP_VERSION}">> $GITHUB_ENV
+          echo "ZAP_VERSION=${ZAP_VERSION}" >> $GITHUB_ENV
 
       - name: Restore ZAP container from cache if exists
         id: cache-docker-zap
@@ -44,17 +46,32 @@ jobs:
 
       - name: Pull image if no cache hit
         if: steps.cache-docker-zap.outputs.cache-hit != 'true'
-        run: docker pull softwaresecurityproject/zap-stable:latest && mkdir -p ~/ci/cache/docker/softwaresecurityproject && docker image save softwaresecurityproject/zap-stable:latest --output ~/ci/cache/docker/softwaresecurityproject/zap-stable-${{ env.ZAP_VERSION }}.tar
+        run: |
+          docker pull softwaresecurityproject/zap-stable:${{ env.ZAP_VERSION }}
+          mkdir -p ~/ci/cache/docker/softwaresecurityproject
+          docker image save softwaresecurityproject/zap-stable:${{ env.ZAP_VERSION }} \
+            --output ~/ci/cache/docker/softwaresecurityproject/zap-stable-${{ env.ZAP_VERSION }}.tar
 
       - name: Start ZAP container
-        env:
-          ZAP_PORT: 9876
-        run: docker run --name zap_container --rm -d -v ${{ github.workspace }}/zapoutput/:/zap/wrk:rw -u zap -p ${{ env.ZAP_PORT }}:${{ env.ZAP_PORT }} -i softwaresecurityproject/zap-stable zap.sh -daemon -port ${{ env.ZAP_PORT }} -host 0.0.0.0 -config api.key=${{ secrets.ZAP_API_KEY }} -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config network.localServers.mainProxy.alpn.enabled=false -config network.localServers.mainProxy.address=0.0.0.0
+        run: |
+          docker run --name zap_container --rm -d \
+            -v ${{ github.workspace }}/zapoutput/:/zap/wrk:rw \
+            -u zap \
+            -p ${{ env.ZAP_PORT }}:${{ env.ZAP_PORT }} \
+            -i softwaresecurityproject/zap-stable:${{ env.ZAP_VERSION }} \
+            zap.sh -daemon -port ${{ env.ZAP_PORT }} -host 0.0.0.0 \
+            -config api.key=${{ secrets.ZAP_API_KEY }} \
+            -config api.addrs.addr.name=.* \
+            -config api.addrs.addr.regex=true \
+            -config network.localServers.mainProxy.alpn.enabled=false \
+            -config network.localServers.mainProxy.address=0.0.0.0
 
-      - name: Set up NodeJS
+      - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 18
+          node-version: 22
+          cache: npm
+          cache-dependency-path: Tests/Dfe.Academies.PlaywrightTests/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -62,31 +79,32 @@ jobs:
       - name: Run tests with scanner
         env:
           API_KEY: ${{ secrets.TRAMS_API_KEY }}
-          HTTP_PROXY: http://${{ env.ZAP_ADDRESS }}:${{ env.ZAP_PORT }}
-          NO_PROXY: "*.google-analytics.com,*.googletagmanager.com,*.microsoftonline.com"
-          URL: ${{ secrets.TRAMS_API_BASE_URL }}
-          ZAP: true
+          API_BASE_URL: ${{ secrets.TRAMS_API_BASE_URL }}
+          ZAP_PROXY: http://${{ env.ZAP_ADDRESS }}:${{ env.ZAP_PORT }}
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: npm test
+
+      - name: Generate ZAP report
+        if: always()
+        env:
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
           ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
           ZAP_PORT: ${{ env.ZAP_PORT }}
-        run: npm run cy:run -- --env apiKey=$API_KEY,url=$URL
+        run: npm run zap:report
 
       - name: Get git sha
-        if: '!cancelled()'
-        run: |
-          CHECKED_OUT_SHA="$(git log -1 '--format=format:%H')"
-          echo "checked_out_sha=${CHECKED_OUT_SHA}" >> $GITHUB_ENV
+        if: ${{ !cancelled() }}
+        run: echo "checked_out_sha=${{ github.event.workflow_run.head_sha }}" >> $GITHUB_ENV
 
       - name: Azure login with SPN
-        if: '!cancelled()'
+        if: ${{ !cancelled() }}
         uses: azure/login@a457da9ea143d694b1b9c7c869ebb04ebe844ef5 # v2
         with:
           creds: ${{ secrets.OWASP_AZ_CREDENTIALS }}
 
       - name: Push report to blob storage
-        if: '!cancelled()'
+        if: ${{ !cancelled() }}
         uses: azure/CLI@089eac9d8cc39f5d003e94f8b65efc51076c9cbd # v2
-        id: azure
         with:
           azcliversion: 2.49.0
           inlineScript: |
@@ -100,4 +118,4 @@ jobs:
 
       - name: Stop ZAP container
         if: always()
-        run: docker stop zap_container
+        run: docker stop zap_container || true
