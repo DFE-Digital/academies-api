@@ -60,9 +60,7 @@ function extractFailedTests(suites, titlePath = []) {
 
 function buildCardBody(reportStats, failedTests) {
   const hasFailures = reportStats.failures > 0;
-  const statusText = hasFailures
-    ? '**Playwright Test Run Failed** ❌'
-    : '**Playwright Test Run Passed** ✅';
+  const statusText = hasFailures ? '**Playwright Test Run Failed** ❌' : '**Playwright Test Run Passed** ✅';
 
   const cardBody = [
     {
@@ -104,12 +102,7 @@ function buildCardBody(reportStats, failedTests) {
   cardBody.push({
     type: 'TextBlock',
     wrap: true,
-    text:
-      '**See more information:** [' +
-      process.env.INFORMATION_LINK +
-      '](' +
-      process.env.INFORMATION_LINK +
-      ')',
+    text: '**See more information:** [' + process.env.INFORMATION_LINK + '](' + process.env.INFORMATION_LINK + ')',
     spacing: 'medium',
   });
 

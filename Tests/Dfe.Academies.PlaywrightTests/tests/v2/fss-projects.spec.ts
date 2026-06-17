@@ -10,14 +10,7 @@ test.describe('Free Schools Store endpoint', () => {
     const body = (await response.json()) as FssProjectsResponse;
     expect(body.data.length).toBeGreaterThanOrEqual(1);
 
-    const requiredKeys = [
-      'localAuthority',
-      'projectId',
-      'projectStatus',
-      'trustId',
-      'trustName',
-      'urn',
-    ] as const;
+    const requiredKeys = ['localAuthority', 'projectId', 'projectStatus', 'trustId', 'trustName', 'urn'] as const;
 
     for (const key of requiredKeys) {
       expect(body.data[0]).toHaveProperty(key);

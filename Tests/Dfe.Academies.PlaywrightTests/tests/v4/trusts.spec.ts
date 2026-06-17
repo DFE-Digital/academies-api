@@ -3,19 +3,11 @@ import { repeatedQueryParams } from '../../support/query-params';
 import { trustTestData } from '../../support/test-data';
 import type { PagedTrustsResponse, Trust } from '../../support/types';
 
-const {
-  companiesHouseNumber,
-  ukprns,
-  groupName,
-  secondTrustName,
-  trustReferenceNumber,
-} = trustTestData;
+const { companiesHouseNumber, ukprns, groupName, secondTrustName, trustReferenceNumber } = trustTestData;
 
 test.describe('Trusts endpoints', () => {
   test.describe('Search Trusts', () => {
-    test('should return a list of trusts when default search parameters set', async ({
-      request,
-    }) => {
+    test('should return a list of trusts when default search parameters set', async ({ request }) => {
       const response = await request.get('/v4/trusts', {
         params: { page: 1, count: 10 },
       });
@@ -50,9 +42,7 @@ test.describe('Trusts endpoints', () => {
       expect(body.data[0].name).toBe(groupName);
     });
 
-    test('should return a single trust when Companies House Number set', async ({
-      request,
-    }) => {
+    test('should return a single trust when Companies House Number set', async ({ request }) => {
       const response = await request.get('/v4/trusts', {
         params: { companiesHouseNumber, page: 1, count: 10 },
       });
@@ -77,9 +67,7 @@ test.describe('Trusts endpoints', () => {
   });
 
   test.describe('Bulk Get Trusts by UKPRN', () => {
-    test('should return a single trust when a single UKPRN is provided', async ({
-      request,
-    }) => {
+    test('should return a single trust when a single UKPRN is provided', async ({ request }) => {
       const response = await request.get('/v4/trusts/bulk', {
         params: { ukprns: ukprns[0] },
       });
@@ -91,9 +79,7 @@ test.describe('Trusts endpoints', () => {
       expect(body[0].ukprn).toBe(ukprns[0]);
     });
 
-    test('should return a list of trusts when multiple UKPRNs provided', async ({
-      request,
-    }) => {
+    test('should return a list of trusts when multiple UKPRNs provided', async ({ request }) => {
       const response = await request.get('/v4/trusts/bulk', {
         params: repeatedQueryParams('ukprns', ukprns),
       });
@@ -112,12 +98,8 @@ test.describe('Trusts endpoints', () => {
   });
 
   test.describe('Get Trust by Companies House Number', () => {
-    test('should return a single trust when Companies House Number set', async ({
-      request,
-    }) => {
-      const response = await request.get(
-        `/v4/trust/companiesHouseNumber/${companiesHouseNumber}`,
-      );
+    test('should return a single trust when Companies House Number set', async ({ request }) => {
+      const response = await request.get(`/v4/trust/companiesHouseNumber/${companiesHouseNumber}`);
 
       expect(response.status()).toBe(200);
 
@@ -128,12 +110,8 @@ test.describe('Trusts endpoints', () => {
   });
 
   test.describe('Get Trusts by Trust Reference Number', () => {
-    test('should return a single trust when Trust Reference Number set', async ({
-      request,
-    }) => {
-      const response = await request.get(
-        `/v4/trust/trustReferenceNumber/${trustReferenceNumber}`,
-      );
+    test('should return a single trust when Trust Reference Number set', async ({ request }) => {
+      const response = await request.get(`/v4/trust/trustReferenceNumber/${trustReferenceNumber}`);
 
       expect(response.status()).toBe(200);
 

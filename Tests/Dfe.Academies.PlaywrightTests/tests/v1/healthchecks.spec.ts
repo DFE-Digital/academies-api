@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test.describe('Health and Database Checks', () => {
   test.describe('Health check endpoint', () => {

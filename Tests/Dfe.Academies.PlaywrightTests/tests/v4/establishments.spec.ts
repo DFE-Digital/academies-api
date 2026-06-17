@@ -7,9 +7,7 @@ const { name, ukPrn, urns } = establishmentTestData;
 
 test.describe('Establishment endpoints', () => {
   test.describe('Search Establishments', () => {
-    test('should return a list of establishments when no search parameters set', async ({
-      request,
-    }) => {
+    test('should return a list of establishments when no search parameters set', async ({ request }) => {
       const response = await request.get('/v4/establishments');
 
       expect(response.status()).toBe(200);
@@ -54,9 +52,7 @@ test.describe('Establishment endpoints', () => {
   });
 
   test.describe('Get Establishment URNs by Region', () => {
-    test('should return a list of URNs when a single region is provided', async ({
-      request,
-    }) => {
+    test('should return a list of URNs when a single region is provided', async ({ request }) => {
       const response = await request.get('/v4/establishment/regions', {
         params: { regions: 'North West' },
       });
@@ -67,9 +63,7 @@ test.describe('Establishment endpoints', () => {
       expect(body.length).toBeGreaterThanOrEqual(1);
     });
 
-    test('should return a list of URNs when multiple regions are provided', async ({
-      request,
-    }) => {
+    test('should return a list of URNs when multiple regions are provided', async ({ request }) => {
       const response = await request.get('/v4/establishment/regions', {
         params: repeatedQueryParams('regions', ['North West', 'South West']),
       });
@@ -93,9 +87,7 @@ test.describe('Establishment endpoints', () => {
   });
 
   test.describe('Get Establishment by URN', () => {
-    test('should return a single establishment when a URN is provided', async ({
-      request,
-    }) => {
+    test('should return a single establishment when a URN is provided', async ({ request }) => {
       const response = await request.get(`/v4/establishment/urn/${urns[0]}`);
 
       expect(response.status()).toBe(200);
@@ -106,9 +98,7 @@ test.describe('Establishment endpoints', () => {
   });
 
   test.describe('Bulk Get Establishments by URN', () => {
-    test('should return a single establishment when a URN is provided', async ({
-      request,
-    }) => {
+    test('should return a single establishment when a URN is provided', async ({ request }) => {
       const response = await request.get('/v4/establishments/bulk', {
         params: { request: urns[0] },
       });
@@ -119,9 +109,7 @@ test.describe('Establishment endpoints', () => {
       expect(body[0].urn).toBe(String(urns[0]));
     });
 
-    test('should return a list of establishments when multiple URNs are provided', async ({
-      request,
-    }) => {
+    test('should return a list of establishments when multiple URNs are provided', async ({ request }) => {
       const response = await request.get('/v4/establishments/bulk', {
         params: repeatedQueryParams('request', urns),
       });
