@@ -120,21 +120,22 @@ function addFailedTestDetails(cardBody, failedTests) {
 
   for (const [index, test] of failedTests.entries()) {
     if (index < 10) {
-      cardBody.push({
-        type: 'TextBlock',
-        wrap: true,
-        text: `**${index + 1}.** ${test.fullTitle}`,
-        weight: 'bolder',
-        spacing: 'small',
-      });
-
-      cardBody.push({
-        type: 'TextBlock',
-        wrap: true,
-        text: `*Error:* ${truncateText(test.errorMessage, 500)}`,
-        spacing: 'none',
-        isSubtle: true,
-      });
+      cardBody.push(
+        {
+          type: 'TextBlock',
+          wrap: true,
+          text: `**${index + 1}.** ${test.fullTitle}`,
+          weight: 'bolder',
+          spacing: 'small',
+        },
+        {
+          type: 'TextBlock',
+          wrap: true,
+          text: `*Error:* ${truncateText(test.errorMessage, 500)}`,
+          spacing: 'none',
+          isSubtle: true,
+        },
+      );
     }
   }
 
