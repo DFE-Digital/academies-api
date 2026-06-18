@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Dfe.Academies.Infrastructure.Repositories
 {
     public class EstablishmentRepository(MstrContext context, MisMstrContext misMstrContext) : IEstablishmentRepository
-    { 
+    {
         public MisEstablishment? GetMisEstablishmentByURN(int? urn)
         {
             return misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn);
@@ -35,7 +35,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
         {
             var result = context.EducationEstablishmentLinks
                 .FirstOrDefault(e => e.FK_EducationEstablishmentURN == urn && e.LinkType == "Predecessor");
-            return result; 
+            return result;
         }
 
         public async Task<Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken)
@@ -74,6 +74,30 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return queryResult.Select(ToEstablishment).ToList();
         }
+        
+        public async Task<List<Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return new List<Establishment>();
+            }
+
+            IQueryable<EstablishmentQueryResult> query = BaseQuery();
+            
+            
+            query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.StartsWith(name));
+            
+
+            if (excludeClosed == true)
+            {
+                query = query.Where(r => !r.Establishment.CloseDate.HasValue);
+            }
+
+            var queryResult = await query.Take(100).ToListAsync(cancellationToken);
+
+            return queryResult.Select(ToEstablishment).ToList();
+        }
+        
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
@@ -185,6 +209,62 @@ namespace Dfe.Academies.Infrastructure.Repositories
         private static bool IsValidUrn(string? urn) =>
             !string.IsNullOrEmpty(urn) && urn.All(char.IsDigit);
 
+        public async Task<Diocese?> GetDioceseByCode(string code, CancellationToken cancellationToken)
+        {
+            var distinctDioceses = context.Establishments
+                .AsNoTracking()
+                .Where(e => !string.IsNullOrWhiteSpace(e.DioceseCode) && !string.IsNullOrWhiteSpace(e.Diocese))
+                .Select(e => new
+                {
+                    Code = e.DioceseCode!,
+                    Name = e.Diocese!
+                })
+                .Distinct();
+
+            return await distinctDioceses
+                .Where(d => d.Code == code)
+                .Select(d => new Diocese
+                {
+                    Code = d.Code,
+                    Name = d.Name
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<(IEnumerable<Diocese> dioceses, int recordCount)> SearchDioceses(string name, string code, CancellationToken cancellationToken)
+        {
+            var query = context.Establishments
+                .AsNoTracking()
+                .Where(e => !string.IsNullOrWhiteSpace(e.DioceseCode) && !string.IsNullOrWhiteSpace(e.Diocese));
+
+            var nameFilter = string.IsNullOrWhiteSpace(name) ? null : name.Trim();
+            var codeFilter = string.IsNullOrWhiteSpace(code) ? null : code.Trim();
+
+            if (nameFilter != null || codeFilter != null)
+            {
+                query = query.Where(e =>
+                    (nameFilter != null && EF.Functions.Like(e.Diocese!, $"%{nameFilter}%")) ||
+                    (codeFilter != null && EF.Functions.Like(e.DioceseCode!, $"%{codeFilter}%")));
+            }
+
+            var distinctDiocesesQuery = query
+                .Select(e => new Diocese
+                {
+                    Name = e.Diocese!,
+                    Code = e.DioceseCode!
+                })
+                .Distinct();
+
+            var recordCount = await distinctDiocesesQuery.CountAsync(cancellationToken);
+
+            var dioceses = await distinctDiocesesQuery
+                .OrderBy(d => d.Name)
+                .ThenBy(d => d.Code)
+                .Take(100)
+                .ToListAsync(cancellationToken);
+
+            return (dioceses, recordCount);
+        }
     }
 
     internal record EstablishmentQueryResult

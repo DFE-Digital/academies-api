@@ -1,13 +1,12 @@
 {
-  "runtime": "Net80",
+  "runtime": "Net100",
   "defaultVariables": "CSharpOutputPath=../Dfe.AcademiesApi.Client",
   "documentGenerator": {
     "aspNetCoreToOpenApi": {
       "project": "../TramsDataApi/TramsDataApi.csproj",
       "msBuildProjectExtensionsPath": null,
       "configuration": "Debug",
-      "runtime": "",
-      "targetFramework": "net8.0",
+      "targetFramework": "net10.0",
       "noBuild": true,
       "verbose": true,
       "workingDirectory": "../TramsDataApi",

@@ -8,6 +8,8 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         Task<Establishment.Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken);
         Task<List<Establishment.Establishment>> Search(string name, string ukPrn,
          string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken);
+        Task<List<Establishment.Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken);
+        
         Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken);
         Task<List<Establishment.Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken);
         Task<List<Establishment.Establishment>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
@@ -15,5 +17,7 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         MisEstablishment? GetMisEstablishmentByURN(int? urn);
         EducationEstablishmentLink? GetEducationEstablishmentLinksByURN(long? urn);
         ReportCardFullInspection? GetOfstedReportCardsByURN(int? urn);
+        Task<Diocese?> GetDioceseByCode(string code, CancellationToken cancellationToken);
+        Task<(IEnumerable<Diocese> dioceses, int recordCount)> SearchDioceses(string name, string code, CancellationToken cancellationToken);
     }
 }

@@ -296,4 +296,80 @@ public class EstablishmentsControllerTests
         Assert.NotNull(result);
         Assert.Empty(result); 
     }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsByNameStartsWithAsync_ShouldReturnMatchingEstablishments_WhenNameIsProvidedAndExcludeClosedIsNull(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishmentsByNameStartsWithAsync("Scho", null, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(3, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsByNameStartsWithAsync_ShouldReturnMatchingEstablishments_WhenNameIsProvidedAndExcludeClosedIsFalse(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishmentsByNameStartsWithAsync("Scho", false, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(3, establishmentDtos.Count);
+    }
+
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsByNameStartsWithAsync_ShouldReturnOnlyOpenEstablishments_WhenNameIsProvidedAndExcludeClosedIsTrue(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishmentsByNameStartsWithAsync("Scho", true, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Equal(2, establishmentDtos.Count);
+    }
+    
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task SearchEstablishmentsByNameAsync_ShouldReturnEmptyList_WhenNameDoesNotMatchAnyEstablishment(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        // Act
+        var result = await establishmentsClient.SearchEstablishmentsByNameStartsWithAsync("NonExistentName", null, default);
+
+        var establishmentDtos = result.ToList();
+
+        // Assert
+        Assert.NotNull(establishmentDtos);
+        Assert.Empty(establishmentDtos);
+    }
 }

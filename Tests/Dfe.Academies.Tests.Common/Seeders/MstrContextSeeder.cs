@@ -54,6 +54,8 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     ModifiedBy = "System",
                     ParliamentaryConstituency = "Test Constituency 1",
                     CloseDate = null,
+                    Diocese = "Diocese test 0",
+                    DioceseCode = "DR01"
                 };
 
                 var establishment2 = new Establishment
@@ -71,6 +73,8 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     ModifiedBy = "System",
                     ParliamentaryConstituency = "Test Constituency 2",
                     CloseDate = null,
+                    Diocese = "Diocese test 1",
+                    DioceseCode = "DR03"
                 };
 
                 var establishment3 = new Establishment
@@ -105,6 +109,8 @@ namespace Dfe.Academies.Tests.Common.Seeders
                     ModifiedBy = "System",
                     ParliamentaryConstituency = "Test Constituencyv 4",
                     CloseDate = DateTime.UtcNow,
+                    Diocese = "Diocese test 2",
+                    DioceseCode = "DR05"
                 };
 
                 var establishment5 = new Establishment

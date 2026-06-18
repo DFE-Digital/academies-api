@@ -249,6 +249,7 @@ public class MstrContext : DbContext
         trustConfiguration.Property(e => e.TrustPerformanceAndRiskDateOfMeeting).HasColumnName("Trust Performance And Risk Date Of Meeting");
         trustConfiguration.Property(e => e.UPIN).HasColumnName("UPIN");
         trustConfiguration.Property(e => e.IncorporatedOnOpenDate).HasColumnName("Incorporated on (open date)");
+        trustConfiguration.Property(e => e.GORregion).HasColumnName("GORregion");
 
         trustConfiguration
             .HasOne(x => x.TrustType)

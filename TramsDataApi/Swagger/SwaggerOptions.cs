@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
 
 namespace TramsDataApi.Swagger
 {
@@ -47,17 +48,22 @@ namespace TramsDataApi.Swagger
                 if (desc.IsDeprecated) openApiInfo.Description += DepreciatedMessage;
                 
                 options.SwaggerDoc(desc.GroupName, openApiInfo);
-            }
-            
-            var securityScheme = new OpenApiSecurityScheme
+            }          
+
+            options.AddSecurityDefinition(ApiKeyName, new OpenApiSecurityScheme
             {
                 Name = ApiKeyName,
-                Description = SecuritySchemeDescription,
                 Type = SecuritySchemeType.ApiKey,
-                In = ParameterLocation.Header
-            };
-            options.AddSecurityDefinition(ApiKeyName, securityScheme);
-            options.OperationFilter<AuthenticationHeaderOperationFilter>();
+                In = ParameterLocation.Header,
+                Description = SecuritySchemeDescription
+            });
+
+            options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecuritySchemeReference(ApiKeyName, document)] = []
+            });
+
+
         }
     }
 }

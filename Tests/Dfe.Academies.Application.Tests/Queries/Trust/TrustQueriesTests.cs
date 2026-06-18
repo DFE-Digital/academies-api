@@ -46,6 +46,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
             result.ReferenceNumber.Should().Be(trust.GroupID);
             result.CompaniesHouseNumber.Should().Be(trust.CompaniesHouseNumber);
             result.Ukprn.Should().Be(trust.UKPRN);
+            result.Gor.Should().Be(trust.GORregion);
 
         }
 
@@ -97,6 +98,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
                 trust.ReferenceNumber.Should().Be(domainTrust.GroupID);
                 trust.CompaniesHouseNumber.Should().Be(domainTrust.CompaniesHouseNumber);
                 trust.Ukprn.Should().Be(domainTrust.UKPRN);
+                trust.Gor.Should().Be(domainTrust.GORregion);
             }
         }
 
@@ -134,6 +136,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
                 trust.ReferenceNumber.Should().Be(domainTrust.GroupID);
                 trust.CompaniesHouseNumber.Should().Be(domainTrust.CompaniesHouseNumber);
                 trust.Ukprn.Should().Be(domainTrust.UKPRN);
+                trust.Gor.Should().Be(domainTrust.GORregion);
             }  
         }
 
@@ -179,6 +182,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
                 trustData.ReferenceNumber.Should().Be(dbTrust.GroupID);
                 trustData.CompaniesHouseNumber.Should().Be(dbTrust.CompaniesHouseNumber);
                 trustData.Ukprn.Should().Be(dbTrust.UKPRN);
+                trustData.Gor.Should().Be(dbTrust.GORregion);
             }
         }
     }

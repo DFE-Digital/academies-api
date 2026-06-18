@@ -48,5 +48,7 @@ namespace Dfe.Academies.Domain.Trust
         public DateTime? IncorporatedOnOpenDate { get; set; }
 
         public TrustType? TrustType { get; set; }
+        public string? GORregion { get; set; }
+
     }
 }
