@@ -1,12 +1,47 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { repeatedQueryParams } from '../../support/query-params';
 import { trustTestData } from '../../support/test-data';
 import type { PagedTrustsResponse, Trust } from '../../support/types';
 
-const { companiesHouseNumber, ukprns, groupName, secondTrustName, trustReferenceNumber } = trustTestData;
+const { companiesHouseNumber, ukprns, groupName, secondTrustName, trustReferenceNumber, urns } = trustTestData;
 
 test.describe('Trusts endpoints', () => {
-  test.describe('Search Trusts', () => {
+  test.describe('/v4/trust/{ukprn} - Get Trust by UKPRN', () => {
+    test('should return a single trust when UKPRN set', async ({ request }) => {
+      const response = await request.get(`/v4/trust/${ukprns[0]}`);
+
+      expect(response.status()).toBe(200);
+
+      const body = (await response.json()) as Trust;
+      expect(body.name).toBe(groupName);
+    });
+  });
+
+  test.describe('/v4/trust/companiesHouseNumber/{companiesHouseNumber} - Get Trust by Companies House Number', () => {
+    test('should return a single trust when Companies House Number set', async ({ request }) => {
+      const response = await request.get(`/v4/trust/companiesHouseNumber/${companiesHouseNumber}`);
+
+      expect(response.status()).toBe(200);
+
+      const body = (await response.json()) as Trust;
+      expect(body.name).toBe(groupName);
+      expect(body.companiesHouseNumber).toBe(companiesHouseNumber);
+    });
+  });
+
+  test.describe('/v4/trust/trustReferenceNumber/{trustReferenceNumber} - Get Trusts by Trust Reference Number', () => {
+    test('should return a single trust when Trust Reference Number set', async ({ request }) => {
+      const response = await request.get(`/v4/trust/trustReferenceNumber/${trustReferenceNumber}`);
+
+      expect(response.status()).toBe(200);
+
+      const body = (await response.json()) as Trust;
+      expect(body.name).toBe(groupName);
+      expect(body.referenceNumber).toBe(trustReferenceNumber);
+    });
+  });
+
+  test.describe('/v4/trusts - Search Trusts', () => {
     test('should return a list of trusts when default search parameters set', async ({ request }) => {
       const response = await request.get('/v4/trusts', {
         params: { page: 1, count: 10 },
@@ -55,18 +90,7 @@ test.describe('Trusts endpoints', () => {
     });
   });
 
-  test.describe('Get Trust by UKPRN', () => {
-    test('should return a single trust when UKPRN set', async ({ request }) => {
-      const response = await request.get(`/v4/trust/${ukprns[0]}`);
-
-      expect(response.status()).toBe(200);
-
-      const body = (await response.json()) as Trust;
-      expect(body.name).toBe(groupName);
-    });
-  });
-
-  test.describe('Bulk Get Trusts by UKPRN', () => {
+  test.describe('/v4/trusts/bulk - Bulk Get Trusts by UKPRN', () => {
     test('should return a single trust when a single UKPRN is provided', async ({ request }) => {
       const response = await request.get('/v4/trusts/bulk', {
         params: { ukprns: ukprns[0] },
@@ -97,27 +121,15 @@ test.describe('Trusts endpoints', () => {
     });
   });
 
-  test.describe('Get Trust by Companies House Number', () => {
-    test('should return a single trust when Companies House Number set', async ({ request }) => {
-      const response = await request.get(`/v4/trust/companiesHouseNumber/${companiesHouseNumber}`);
+  test.describe('/v4/trusts/establishments/urns - Search Trusts by URNs', () => {
+    test('should return a list of trusts when URNs set', async ({ request }) => {
+      const response = await request.post('/v4/trusts/establishments/urns', {
+        data: { urns: urns.map((urn) => String(urn)) },
+      });
 
       expect(response.status()).toBe(200);
-
-      const body = (await response.json()) as Trust;
-      expect(body.name).toBe(groupName);
-      expect(body.companiesHouseNumber).toBe(companiesHouseNumber);
-    });
-  });
-
-  test.describe('Get Trusts by Trust Reference Number', () => {
-    test('should return a single trust when Trust Reference Number set', async ({ request }) => {
-      const response = await request.get(`/v4/trust/trustReferenceNumber/${trustReferenceNumber}`);
-
-      expect(response.status()).toBe(200);
-
-      const body = (await response.json()) as Trust;
-      expect(body.name).toBe(groupName);
-      expect(body.referenceNumber).toBe(trustReferenceNumber);
+      const body = (await response.json()) as Trust[];
+      expect(body).toHaveLength(2);
     });
   });
 });

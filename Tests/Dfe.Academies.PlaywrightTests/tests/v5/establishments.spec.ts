@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { establishmentTestData } from '../../support/test-data';
 import type { Establishment } from '../../support/types';
 
-const { name, ukPrn, urns } = establishmentTestData;
+const { name, ukprns, urns } = establishmentTestData;
 
-test.describe('Establishment endpoints', () => {
-  test.describe('Search Establishments', () => {
+test.describe('v5 Establishment endpoints', () => {
+  test.describe('/v5/establishments - Search Establishments', () => {
     test('should return a list of establishments when no search parameters set', async ({ request }) => {
       const response = await request.get('/v5/establishments');
 
@@ -29,13 +29,13 @@ test.describe('Establishment endpoints', () => {
 
     test('should return establishments when UKPRN set', async ({ request }) => {
       const response = await request.get('/v5/establishments', {
-        params: { ukPrn },
+        params: { ukPrn: ukprns[0] },
       });
 
       expect(response.status()).toBe(200);
 
       const body = (await response.json()) as Establishment[];
-      expect(body[0].ukprn).toBe(ukPrn);
+      expect(body[0].ukprn).toBe(ukprns[0]);
     });
 
     test('should return establishments when URN set', async ({ request }) => {
@@ -47,6 +47,20 @@ test.describe('Establishment endpoints', () => {
 
       const body = (await response.json()) as Establishment[];
       expect(body[0].urn).toBe(String(urns[0]));
+    });
+  });
+
+  test.describe('/v5/establishments/bulk/urns - Bulk Search Establishments', () => {
+    test('should return a list of establishments when URNs set', async ({ request }) => {
+      const response = await request.post('/v5/establishments/bulk/urns', {
+        data: { urns: urns.map((urn) => String(urn)) },
+      });
+
+      expect(response.status()).toBe(200);
+      const body = (await response.json()) as Establishment[];
+      expect(body).toHaveLength(2);
+      expect(body[0].urn).toBe(String(urns[0]));
+      expect(body[1].urn).toBe(String(urns[1]));
     });
   });
 });

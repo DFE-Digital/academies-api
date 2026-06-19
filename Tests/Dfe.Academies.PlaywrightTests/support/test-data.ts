@@ -9,6 +9,7 @@ export const trustTestData = {
   groupName: 'SOUTH YORK MULTI ACADEMY TRUST',
   secondTrustName: 'THE BISHOP FRASER TRUST',
   trustReferenceNumber: 'TR03739',
+  urns: [116868, 116332],
 } as const;
 
 export const v3TrustTestData = {
@@ -19,6 +20,21 @@ export const v3TrustTestData = {
 
 export const establishmentTestData = {
   name: 'The Aldgate School',
-  ukPrn: '10079319',
+  trustUkprn: 10058885,
+  ukprns: ['10079319', '10018890'],
   urns: [100000, 100002],
+} as const;
+
+export const dioceseTestData = {
+  name: 'Diocese of London',
+  code: 'CE23',
+} as const;
+
+export const localAuthorityTestData = {
+  name: 'City of London',
+  code: '201',
+} as const;
+
+export const significantChangeTestData = {
+  deliveryOfficer: 'Guest',
 } as const;

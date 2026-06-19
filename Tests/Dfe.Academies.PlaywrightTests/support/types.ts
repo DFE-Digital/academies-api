@@ -10,12 +10,39 @@ export interface Trust {
   ukprn?: string;
   companiesHouseNumber?: string;
   referenceNumber?: string;
+  urn?: string;
 }
 
 export interface Establishment {
   name?: string;
   ukprn?: string;
   urn?: string;
+}
+
+export interface Diocese {
+  name: string;
+  code: string;
+}
+
+export interface LocalAuthority {
+  name: string;
+  code: string;
+}
+
+export interface SignificantChange {
+  sigChangeId?: number;
+  urn?: number;
+  deliveryLead?: string;
+  academyName?: string;
+  trustName?: string;
+}
+
+export interface PagedSignificantChangesResponse {
+  data: SignificantChange[];
+  paging: {
+    page: number;
+    recordCount: number;
+  };
 }
 
 export interface V3Trust {
