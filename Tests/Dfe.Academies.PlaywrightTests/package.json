@@ -1,0 +1,34 @@
+{
+  "name": "dfe.academies.playwrighttests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "zap:report": "node scripts/generate-zap-report.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@playwright/test": "^1.61.0",
+    "@types/node": "^25.9.3",
+    "axios": "^1.9.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-playwright": "^2.2.2",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0",
+    "zaproxy": "^2.0.0-rc.6"
+  }
+}

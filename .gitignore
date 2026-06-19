@@ -50,7 +50,6 @@ x64/
 *.vssscc
 .builds
 *.pidb
-*.log
 *.svclog
 *.scc
 
@@ -144,15 +143,6 @@ _NCrunch*
 
 # Add migrations (Will come back and look at how to handle migrations)
 */Migrations/LegacyTramsDb
-
-# node_modules
-CypressTests/node_modules
-
-# screenshots and videos
-CypressTests/cypress/screenshots
-CypressTests/cypress/videos
-CypressTests/cypress/reports
-*/cypress.env.json
 
 # ZAP
 .ZAP

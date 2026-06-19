@@ -1,0 +1,30 @@
+name: Playwright test linting
+
+on:
+  pull_request:
+    paths:
+      - Tests/Dfe.Academies.PlaywrightTests/**
+    types: [opened, synchronize]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Tests/Dfe.Academies.PlaywrightTests
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: Tests/Dfe.Academies.PlaywrightTests/package-lock.json
+
+      - name: Lint and format check
+        run: |
+          npm ci --ignore-scripts
+          npm run lint
+          npm run format:check
