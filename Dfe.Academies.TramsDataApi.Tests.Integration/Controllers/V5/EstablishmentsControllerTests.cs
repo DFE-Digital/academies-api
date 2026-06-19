@@ -1,5 +1,5 @@
 using Dfe.Academies.Tests.Common.Customizations;
-using Dfe.AcademiesApi.Client.Contracts;
+using GovUK.Dfe.AcademiesApi.Client.Contracts;
 using GovUK.Dfe.CoreLibs.Testing.AutoFixture.Attributes;
 using GovUK.Dfe.CoreLibs.Testing.Mocks.WebApplicationFactory;
 using TramsDataApi;

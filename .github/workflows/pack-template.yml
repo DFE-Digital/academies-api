@@ -1,0 +1,131 @@
+name: NuGet Pack and Release Template
+
+on:
+  workflow_call:
+    inputs:
+      project_name:
+        required: true
+        type: string
+        description: "The name of the project (used for tag prefix and release title)"
+      project_path:
+        required: true
+        type: string
+        description: "Relative path to the project .csproj"
+    secrets:
+      NUGET_API_KEY:
+        required: true
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v4.5.0
+        with:
+          versionSpec: '6.7.x'
+
+      - name: Add .NET global tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
+      - name: Determine version
+        id: gitversion
+        run: |
+          BASE=$(dotnet-gitversion \
+            /overrideconfig tag-prefix="^${{ inputs.project_name }}-" \
+            /showvariable MajorMinorPatch)
+
+          RAW_TAG=$(dotnet-gitversion \
+            /overrideconfig tag-prefix="^${{ inputs.project_name }}-" \
+            /showvariable PreReleaseTag)
+
+          LABEL=${RAW_TAG%%[0-9]*}
+          NUM=$(dotnet-gitversion \
+            /overrideconfig tag-prefix="^${{ inputs.project_name }}-" \
+            /showvariable PreReleaseNumber)
+
+          if [ -n "$LABEL" ]; then
+            VERSION="${BASE}-${LABEL}${NUM}"
+          else
+            VERSION="$BASE"
+          fi
+
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Determined version: $VERSION"
+
+      - name: Add GitHub Packages source
+        run: |
+          dotnet nuget add source \
+            --username USERNAME \
+            --password "${{ secrets.GITHUB_TOKEN }}" \
+            --store-password-in-clear-text \
+            --name github \
+            https://nuget.pkg.github.com/DFE-Digital/index.json
+
+      - name: Verify API Key
+        run: |
+          if [ -z "${{ secrets.NUGET_API_KEY }}" ]; then
+            echo "❌ NUGET_API_KEY secret is not available"
+            exit 1
+          else
+            echo "✅ NUGET_API_KEY secret is available"
+          fi
+
+      - name: Build and pack
+        run: |
+          dotnet build ${{ inputs.project_path }} -c Release
+          dotnet pack ${{ inputs.project_path }} \
+            -c Release \
+            -p:PackageVersion=${{ env.VERSION }} \
+            --no-build \
+            --output ./artifacts
+
+      - name: Push to NuGet.org
+        run: |
+          dotnet nuget push ./artifacts/*.nupkg \
+            --api-key "${{ secrets.NUGET_API_KEY }}" \
+            --source "https://api.nuget.org/v3/index.json" \
+            --skip-duplicate
+
+      - name: Extract release notes
+        id: extract_description
+        run: |
+          COMMIT_BODY=$(git log -1 --pretty=format:"%b")
+          if [ -z "$COMMIT_BODY" ]; then
+            echo "RELEASE_NOTES=No release notes provided." >> $GITHUB_ENV
+          else
+            NOTES=$(echo "$COMMIT_BODY" |
+              tr '\n' '~' |
+              grep -Eo '\(%release-note:.*%\)' |
+              sed 's/.*%release-note:\(.*\)%/\1/' |
+              sed 's/~/\n/g')
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$NOTES"               >> $GITHUB_ENV
+          echo "EOF"                  >> $GITHUB_ENV          
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ inputs.project_name }}-${{ env.VERSION }}"
+          gh release create "$TAG" \
+            --title "Release ${{ env.VERSION }} for ${{ inputs.project_name }}" \
+            --notes "${{ env.RELEASE_NOTES }}" \
+            --draft=false \
+            --prerelease=${{ github.event_name == 'pull_request' }} 
