@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { repeatedQueryParams } from '../../support/query-params';
 import { trustTestData } from '../../support/test-data';
-import type { PagedTrustsResponse, Trust } from '../../support/types';
+import type { PagedTrustsResponse, Trust, TrustsByEstablishmentUrnsResponse } from '../../support/types';
 
 const { companiesHouseNumber, ukprns, groupName, secondTrustName, trustReferenceNumber, urns } = trustTestData;
 
@@ -128,8 +128,10 @@ test.describe('Trusts endpoints', () => {
       });
 
       expect(response.status()).toBe(200);
-      const body = (await response.json()) as Trust[];
-      expect(body).toHaveLength(2);
+      const body = (await response.json()) as TrustsByEstablishmentUrnsResponse;
+      expect(Object.keys(body)).toHaveLength(2);
+      expect(body[String(urns[0])].name).toBeDefined();
+      expect(body[String(urns[1])].name).toBeDefined();
     });
   });
 });

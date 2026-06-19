@@ -74,6 +74,16 @@ export interface Trust {
   urn?: string;
 }
 
+export interface TrustDto {
+  name?: string;
+  ukprn?: string;
+  companiesHouseNumber?: string;
+  referenceNumber?: string;
+  gor?: string;
+}
+
+export type TrustsByEstablishmentUrnsResponse = Record<string, TrustDto>;
+
 // v4 + v5
 
 export interface Establishment {

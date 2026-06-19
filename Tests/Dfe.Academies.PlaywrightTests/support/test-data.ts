@@ -9,7 +9,7 @@ export const trustTestData = {
   groupName: 'SOUTH YORK MULTI ACADEMY TRUST',
   secondTrustName: 'THE BISHOP FRASER TRUST',
   trustReferenceNumber: 'TR03739',
-  urns: [116868, 116332],
+  urns: [144044, 145314],
 } as const;
 
 export const v3TrustTestData = {
