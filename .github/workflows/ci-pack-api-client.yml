@@ -1,0 +1,72 @@
+name: CI & Pack GovUK.Dfe.AcademiesApi.Client
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "GovUK.Dfe.AcademiesApi.Client/**"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "GovUK.Dfe.AcademiesApi.Client/**"
+
+jobs:
+  wait-for-dotnet-ci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Wait for .NET Build and Test to succeed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          SHA="${{ github.sha }}"
+          MAX_ATTEMPTS=120
+          SLEEP_SECONDS=30
+
+          for attempt in $(seq 1 $MAX_ATTEMPTS); do
+            RUN=$(gh run list \
+              --repo "${{ github.repository }}" \
+              --workflow="continuous-integration-dotnet.yml" \
+              --commit="$SHA" \
+              --json databaseId,status,conclusion \
+              --limit 1 \
+              --jq '.[0]')
+
+            if [ "$RUN" = "null" ] || [ -z "$RUN" ]; then
+              echo "Attempt $attempt/$MAX_ATTEMPTS: CI run not found yet, waiting..."
+              sleep "$SLEEP_SECONDS"
+              continue
+            fi
+
+            STATUS=$(echo "$RUN" | jq -r '.status')
+            CONCLUSION=$(echo "$RUN" | jq -r '.conclusion')
+
+            echo "Attempt $attempt/$MAX_ATTEMPTS: status=$STATUS conclusion=$CONCLUSION"
+
+            if [ "$STATUS" = "completed" ]; then
+              if [ "$CONCLUSION" = "success" ]; then
+                echo ".NET Build and Test succeeded"
+                exit 0
+              else
+                echo ".NET Build and Test finished with conclusion: $CONCLUSION"
+                exit 1
+              fi
+            fi
+
+            sleep "$SLEEP_SECONDS"
+          done
+
+          echo "Timed out waiting for .NET Build and Test"
+          exit 1
+
+  pack-and-release:
+    needs: wait-for-dotnet-ci
+    uses: ./.github/workflows/pack-template.yml
+    with:
+      project_name: GovUK.Dfe.AcademiesApi.Client
+      project_path: GovUK.Dfe.AcademiesApi.Client/GovUK.Dfe.AcademiesApi.Client.csproj
+    secrets:
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

@@ -28,7 +28,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Dfe.AcademiesApi.Client\Dfe.AcademiesApi.Client.csproj" />
         <ProjectReference Include="..\Tests\Dfe.Academies.Tests.Common\Dfe.Academies.Tests.Common.csproj" />
         <ProjectReference Include="..\TramsDataApi\TramsDataApi.csproj" />
     </ItemGroup>
