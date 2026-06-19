@@ -22,7 +22,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          SHA="${{ github.sha }}"
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            SHA="${{ github.event.pull_request.head.sha }}"
+          else
+            SHA="${{ github.sha }}"
+          fi
+
+          echo "Waiting for continuous-integration-dotnet.yml on commit $SHA"
           MAX_ATTEMPTS=120
           SLEEP_SECONDS=30
 
@@ -31,12 +38,12 @@ jobs:
               --repo "${{ github.repository }}" \
               --workflow="continuous-integration-dotnet.yml" \
               --commit="$SHA" \
-              --json databaseId,status,conclusion \
+              --json databaseId,status,conclusion,headSha \
               --limit 1 \
               --jq '.[0]')
 
             if [ "$RUN" = "null" ] || [ -z "$RUN" ]; then
-              echo "Attempt $attempt/$MAX_ATTEMPTS: CI run not found yet, waiting..."
+              echo "Attempt $attempt/$MAX_ATTEMPTS: CI run not found yet for commit $SHA, waiting..."
               sleep "$SLEEP_SECONDS"
               continue
             fi
@@ -44,7 +51,7 @@ jobs:
             STATUS=$(echo "$RUN" | jq -r '.status')
             CONCLUSION=$(echo "$RUN" | jq -r '.conclusion')
 
-            echo "Attempt $attempt/$MAX_ATTEMPTS: status=$STATUS conclusion=$CONCLUSION"
+            echo "Attempt $attempt/$MAX_ATTEMPTS: status=$STATUS conclusion=$CONCLUSION headSha=$(echo "$RUN" | jq -r '.headSha')"
 
             if [ "$STATUS" = "completed" ]; then
               if [ "$CONCLUSION" = "success" ]; then
@@ -59,7 +66,13 @@ jobs:
             sleep "$SLEEP_SECONDS"
           done
 
-          echo "Timed out waiting for .NET Build and Test"
+          echo "Timed out waiting for .NET Build and Test on commit $SHA"
+          echo "Recent .NET Build and Test runs:"
+          gh run list \
+            --repo "${{ github.repository }}" \
+            --workflow="continuous-integration-dotnet.yml" \
+            --limit 5 \
+            --json databaseId,status,conclusion,headSha,displayTitle,createdAt
           exit 1
 
   pack-and-release:
