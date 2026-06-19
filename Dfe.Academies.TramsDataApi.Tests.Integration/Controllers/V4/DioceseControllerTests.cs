@@ -1,5 +1,5 @@
 using Dfe.Academies.Tests.Common.Customizations;
-using Dfe.AcademiesApi.Client.Contracts;
+using GovUK.Dfe.AcademiesApi.Client.Contracts;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using GovUK.Dfe.CoreLibs.Testing.AutoFixture.Attributes;
 using GovUK.Dfe.CoreLibs.Testing.Mocks.WebApplicationFactory;
@@ -111,7 +111,7 @@ public class DioceseControllerTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.IsType<AcademiesApi.Client.Contracts.NameAndCodeDto>(result);
+        Assert.IsType<GovUK.Dfe.AcademiesApi.Client.Contracts.NameAndCodeDto>(result);
         Assert.Equal(validCode, result.Code);
         Assert.NotNull(result.Name);
         Assert.NotEmpty(result.Name);

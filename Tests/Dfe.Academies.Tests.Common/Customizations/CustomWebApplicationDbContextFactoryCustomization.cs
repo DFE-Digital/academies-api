@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using TramsDataApi.DatabaseModels;
-using Dfe.AcademiesApi.Client.Contracts;
+using GovUK.Dfe.AcademiesApi.Client.Contracts;
 
 namespace Dfe.Academies.Tests.Common.Customizations
 {
