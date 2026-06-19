@@ -1,6 +1,6 @@
 {
   "runtime": "Net100",
-  "defaultVariables": "CSharpOutputPath=../Dfe.AcademiesApi.Client",
+  "defaultVariables": "CSharpOutputPath=../GovUK.Dfe.AcademiesApi.Client",
   "documentGenerator": {
     "aspNetCoreToOpenApi": {
       "project": "../TramsDataApi/TramsDataApi.csproj",
@@ -77,7 +77,7 @@
       "clientClassAccessModifier": "public",
       "typeAccessModifier": "public",
       "generateContractsOutput": true,
-      "contractsNamespace": "Dfe.AcademiesApi.Client.Contracts",
+      "contractsNamespace": "GovUK.Dfe.AcademiesApi.Client.Contracts",
       "contractsOutputFilePath": "$(CSharpOutputPath)/Generated/Contracts.g.cs",
       "parameterDateTimeFormat": "s",
       "parameterDateFormat": "yyyy-MM-dd",
@@ -88,7 +88,7 @@
       "operationGenerationMode": "MultipleClientsFromFirstTagAndOperationId",
       "operationNameGeneratorType": "NSwag.CodeGeneration.OperationNameGenerators.OperationIdOperationNameGenerator",
       "className": "{controller}Client",
-      "namespace": "Dfe.AcademiesApi.Client",
+      "namespace": "GovUK.Dfe.AcademiesApi.Client",
       "generateUniqueNames": false,
       "additionalNamespaceUsages": [],
       "additionalContractNamespaceUsages": [],

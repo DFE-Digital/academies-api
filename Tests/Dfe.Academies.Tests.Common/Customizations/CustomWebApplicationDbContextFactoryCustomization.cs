@@ -1,8 +1,7 @@
 ﻿using AutoFixture;
 using Dfe.Academies.Infrastructure;
 using Dfe.Academies.Tests.Common.Seeders;
-using Dfe.AcademiesApi.Client;
-using Dfe.AcademiesApi.Client.Contracts;
+using GovUK.Dfe.AcademiesApi.Client;
 using Dfe.TramsDataApi.Client.Extensions;
 using GovUK.Dfe.CoreLibs.Testing.Mocks.Authentication;
 using GovUK.Dfe.CoreLibs.Testing.Mocks.WebApplicationFactory;
@@ -13,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using TramsDataApi.DatabaseModels;
+using Dfe.AcademiesApi.Client.Contracts;
 
 namespace Dfe.Academies.Tests.Common.Customizations
 {
