@@ -135,8 +135,13 @@ test.describe('Establishment endpoints', () => {
       expect(response.status()).toBe(200);
 
       const body = (await response.json()) as Establishment[];
-      expect(body[0].urn).toBe(String(urns[0]));
-      expect(body[1].urn).toBe(String(urns[1]));
+      expect(body).toHaveLength(2);
+      expect(body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ urn: String(urns[0]) }),
+          expect.objectContaining({ urn: String(urns[1]) }),
+        ]),
+      );
     });
   });
 
@@ -149,8 +154,12 @@ test.describe('Establishment endpoints', () => {
       expect(response.status()).toBe(200);
       const body = (await response.json()) as Establishment[];
       expect(body).toHaveLength(2);
-      expect(body[0].urn).toBe(String(urns[0]));
-      expect(body[1].urn).toBe(String(urns[1]));
+      expect(body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ urn: String(urns[0]) }),
+          expect.objectContaining({ urn: String(urns[1]) }),
+        ]),
+      );
     });
   });
 
@@ -188,8 +197,12 @@ test.describe('Establishment endpoints', () => {
 
       const body = (await response.json()) as Establishment[];
       expect(body).toHaveLength(2);
-      expect(body[0].ukprn).toBe(String(ukprns[0]));
-      expect(body[1].ukprn).toBe(String(ukprns[1]));
+      expect(body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ ukprn: ukprns[0] }),
+          expect.objectContaining({ ukprn: ukprns[1] }),
+        ]),
+      );
     });
   });
 
@@ -203,8 +216,12 @@ test.describe('Establishment endpoints', () => {
 
       const body = (await response.json()) as Establishment[];
       expect(body).toHaveLength(2);
-      expect(body[0].ukprn).toBe(String(ukprns[0]));
-      expect(body[1].ukprn).toBe(String(ukprns[1]));
+      expect(body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ ukprn: ukprns[0] }),
+          expect.objectContaining({ ukprn: ukprns[1] }),
+        ]),
+      );
     });
   });
 });

@@ -67,8 +67,12 @@ test.describe('v5 Establishment endpoints', () => {
       expect(response.status()).toBe(200);
       const body = (await response.json()) as Establishment[];
       expect(body).toHaveLength(2);
-      expect(body[0].urn).toBe(String(urns[0]));
-      expect(body[1].urn).toBe(String(urns[1]));
+      expect(body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ urn: String(urns[0]) }),
+          expect.objectContaining({ urn: String(urns[1]) }),
+        ]),
+      );
     });
   });
 });

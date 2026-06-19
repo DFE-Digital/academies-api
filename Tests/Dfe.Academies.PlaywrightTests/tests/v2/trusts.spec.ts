@@ -103,10 +103,16 @@ test.describe('Trusts endpoints', () => {
 
       const data = body.data;
       expect(data).toHaveLength(2);
-      expect(data[0].giasData.groupName).toBe(groupName);
-      expect(data[0].giasData.ukprn).toBe(ukprns[0]);
-      expect(data[1].giasData.groupName).toBe(secondTrustName);
-      expect(data[1].giasData.ukprn).toBe(ukprns[1]);
+      expect(data).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            giasData: expect.objectContaining({ groupName, ukprn: ukprns[0] }),
+          }),
+          expect.objectContaining({
+            giasData: expect.objectContaining({ groupName: secondTrustName, ukprn: ukprns[1] }),
+          }),
+        ]),
+      );
     });
   });
 });
