@@ -1,8 +1,69 @@
+export interface PagingResponse {
+  page: number;
+  recordCount: number;
+  nextPageUrl?: string;
+}
+
 export interface PagedTrustsResponse {
   data: Trust[];
-  paging: {
-    page: number;
+  paging: PagingResponse;
+}
+
+export interface TrustSummaryResponse {
+  ukprn: string;
+  urn?: string;
+  groupName: string;
+  companiesHouseNumber?: string;
+}
+
+// v1
+
+export interface KeyStagePerformance {
+  schoolName: string;
+  keyStage1: unknown;
+  keyStage2: unknown;
+  keyStage4: unknown;
+  keyStage5: unknown;
+}
+
+// v2 + v3
+
+export interface FssProjectsResponse {
+  data: Array<{
+    localAuthority: unknown;
+    projectId: unknown;
+    projectStatus: unknown;
+    trustId: unknown;
+    trustName: unknown;
+    urn: unknown;
+  }>;
+}
+
+export interface PagedBaselineTrackerResponse {
+  data: unknown[];
+}
+
+export interface TrustSummaryResponseApiResponseV2 {
+  data: TrustSummaryResponse[];
+  paging: PagingResponse;
+}
+
+export interface TrustResponse {
+  ifdData: unknown;
+  giasData: {
+    groupName: string;
+    ukprn: string;
   };
+  establishments: Establishment;
+}
+
+export interface TrustResponseApiSingleResponseV2 {
+  data: TrustResponse;
+}
+
+export interface TrustResponseApiResponseV2 {
+  data: TrustResponse[];
+  paging: PagingResponse;
 }
 
 export interface Trust {
@@ -12,6 +73,8 @@ export interface Trust {
   referenceNumber?: string;
   urn?: string;
 }
+
+// v4 + v5
 
 export interface Establishment {
   name?: string;
@@ -43,42 +106,4 @@ export interface PagedSignificantChangesResponse {
     page: number;
     recordCount: number;
   };
-}
-
-export interface V3Trust {
-  groupName: string;
-  companiesHouseNumber?: string;
-}
-
-export interface V3TrustByUkprnResponse {
-  data: {
-    trustData: unknown;
-    giasData: {
-      groupName: string;
-    };
-    establishments: unknown;
-  };
-}
-
-export interface KeyStagePerformance {
-  schoolName: string;
-  keyStage1: unknown;
-  keyStage2: unknown;
-  keyStage4: unknown;
-  keyStage5: unknown;
-}
-
-export interface PagedBaselineTrackerResponse {
-  data: unknown[];
-}
-
-export interface FssProjectsResponse {
-  data: Array<{
-    localAuthority: unknown;
-    projectId: unknown;
-    projectStatus: unknown;
-    trustId: unknown;
-    trustName: unknown;
-    urn: unknown;
-  }>;
 }

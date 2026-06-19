@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Health and Database Checks', () => {
-  test.describe('Health check endpoint', () => {
+  test.describe('/HealthCheck - Health Check', () => {
     test('should return a healthy response', async ({ request }) => {
       const response = await request.get('/HealthCheck');
 
