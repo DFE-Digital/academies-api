@@ -1,0 +1,11 @@
+mode: ContinuousDelivery
+
+branches:
+  main:
+    increment: Patch
+    label: ''
+
+  pull-request:
+    increment: Patch
+    source-branches: ['main']
+    label: prerelease

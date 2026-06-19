@@ -78,7 +78,7 @@
     </ItemGroup>
 
 	<Target Name="NSwag" BeforeTargets="AfterBuild" Condition="'$(CI)'!='true'">
-		<Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net100) run ../Dfe.AcademiesApi.Client/nswag.json">
+		<Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net100) run ../GovUK.Dfe.AcademiesApi.Client/nswag.json">
 			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
 			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
 		</Exec>
