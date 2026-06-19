@@ -6,6 +6,14 @@ import type { PagedTrustsResponse, Trust, TrustsByEstablishmentUrnsResponse } fr
 const { companiesHouseNumber, ukprns, groupName, secondTrustName, trustReferenceNumber, urns } = trustTestData;
 
 test.describe('Trusts endpoints', () => {
+  test('should return a valid 401 response when omitting API key', async ({ request }) => {
+    const response = await request.get('/v4/trusts', {
+      headers: { ApiKey: '' },
+    });
+
+    expect(response.status()).toBe(401);
+  });
+
   test.describe('/v4/trust/{ukprn} - Get Trust by UKPRN', () => {
     test('should return a single trust when UKPRN set', async ({ request }) => {
       const response = await request.get(`/v4/trust/${ukprns[0]}`);

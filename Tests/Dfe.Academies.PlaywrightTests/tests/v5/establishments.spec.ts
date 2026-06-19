@@ -5,6 +5,14 @@ import type { Establishment } from '../../support/types';
 const { name, ukprns, urns } = establishmentTestData;
 
 test.describe('v5 Establishment endpoints', () => {
+  test('should return a valid 401 response when omitting API key', async ({ request }) => {
+    const response = await request.get('/v5/establishments', {
+      headers: { ApiKey: '' },
+    });
+
+    expect(response.status()).toBe(401);
+  });
+
   test.describe('/v5/establishments - Search Establishments', () => {
     test('should return a list of establishments when no search parameters set', async ({ request }) => {
       const response = await request.get('/v5/establishments');

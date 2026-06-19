@@ -5,6 +5,14 @@ import { TrustResponse, TrustSummaryResponse } from '../../support/types';
 const { companiesHouseNumber, ukprn, groupName } = v3TrustTestData;
 
 test.describe('Trusts endpoints', () => {
+  test('should return a valid 401 response when omitting API key', async ({ request }) => {
+    const response = await request.get('/trusts', {
+      headers: { ApiKey: '' },
+    });
+
+    expect(response.status()).toBe(401);
+  });
+
   test.describe('/trusts - Search Trusts', () => {
     test('should return a list of trusts when default search parameters set', async ({ request }) => {
       const response = await request.get('/trusts', {
