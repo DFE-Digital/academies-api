@@ -5,6 +5,7 @@ on:
     workflows: ["Deploy to environment"]
     types:
       - completed
+  workflow_dispatch:
 
 env:
   ZAP_ADDRESS: localhost
@@ -15,7 +16,7 @@ env:
 jobs:
   run-tests-with-zap:
     name: Run Playwright tests with OWASP ZAP
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
     environment: development
     runs-on: ubuntu-24.04
     defaults:
@@ -25,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Create directory on runner
         run: mkdir -m 777 ${{ github.workspace }}/zapoutput
@@ -109,7 +110,7 @@ jobs:
 
       - name: Get git sha
         if: ${{ !cancelled() }}
-        run: echo "checked_out_sha=${{ github.event.workflow_run.head_sha }}" >> $GITHUB_ENV
+        run: echo "checked_out_sha=${{ github.event.workflow_run.head_sha || github.sha }}" >> $GITHUB_ENV
 
       - name: Azure login with SPN
         if: ${{ !cancelled() }}
