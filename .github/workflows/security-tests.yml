@@ -11,7 +11,7 @@ env:
   ZAP_ADDRESS: localhost
   ZAP_PORT: 9876
   ZAP_IMAGE: zaproxy/zap-stable
-  ZAP_VERSION: stable
+  ZAP_VERSION: latest
 
 jobs:
   run-tests-with-zap:
