@@ -30,7 +30,12 @@ export default defineConfig({
     },
     userAgent: 'AcademiesApi/1.0 Playwright',
     trace: 'on-first-retry',
-    ...(zapProxy ? { proxy: { server: zapProxy } } : {}),
+    ...(zapProxy
+      ? {
+          proxy: { server: zapProxy },
+          ignoreHTTPSErrors: true,
+        }
+      : {}),
   },
   projects: [
     {
