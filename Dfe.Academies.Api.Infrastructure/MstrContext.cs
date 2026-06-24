@@ -23,6 +23,7 @@ public class MstrContext : DbContext
     public DbSet<TrustType> TrustTypes { get; set; } = null!;
     public DbSet<Establishment> Establishments { get; set; } = null!;
     public DbSet<EstablishmentType> EstablishmentTypes { get; set; } = null!;
+    public DbSet<EstablishmentGroupType> EstablishmentGroupTypes { get; set; } = null!;
     public DbSet<EducationEstablishmentTrust> EducationEstablishmentTrusts { get; set; } = null!;
     public DbSet<LocalAuthority> LocalAuthorities { get; set; } = null!;
     public DbSet<IfdPipeline> IfdPipelines { get; set; } = null!;
@@ -47,6 +48,7 @@ public class MstrContext : DbContext
 
         modelBuilder.Entity<Establishment>(ConfigureEstablishment);
         modelBuilder.Entity<EstablishmentType>(ConfigureEstablishmentType);
+        modelBuilder.Entity<EstablishmentGroupType>(ConfigureEstablishmentGroupType);
         modelBuilder.Entity<EducationEstablishmentTrust>(ConfigureEducationEstablishmentTrust);
         modelBuilder.Entity<LocalAuthority>(ConfigureLocalAuthority);
         modelBuilder.Entity<IfdPipeline>(ConfigureIfdPipeline);
@@ -76,6 +78,12 @@ public class MstrContext : DbContext
         }
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    private void ConfigureEstablishmentGroupType(EntityTypeBuilder<EstablishmentGroupType> builder)
+    {
+        builder.HasKey(e => e.SK);
+        builder.ToTable("Ref_EducationEstablishmentGroupType", DEFAULT_SCHEMA);
     }
 
     private static void ConfigureEstablishment(EntityTypeBuilder<Establishment> establishmentConfiguration)
@@ -178,6 +186,12 @@ public class MstrContext : DbContext
             .HasOne(x => x.EstablishmentType)
             .WithMany()
             .HasForeignKey(x => x.EstablishmentTypeId)
+            .IsRequired(false);
+
+        establishmentConfiguration
+            .HasOne(x => x.EstablishmentGroupType)
+            .WithMany()
+            .HasForeignKey(x => x.EstablishmentGroupTypeId)
             .IsRequired(false);
 
         establishmentConfiguration

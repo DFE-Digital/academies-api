@@ -162,6 +162,48 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
         }
 
         [Fact]
+        public async Task SearchByFilters_WhenEstablishmentsReturnedFromRepo_EstablishmentDtoListAndCountIsReturned()
+        {
+            // Arrange
+            var establishments = _fixture.Create<List<Domain.Establishment.Establishment>>();
+            var mockRepo = new Mock<IEstablishmentRepository>();
+            var mockTrustRepo = new Mock<ITrustRepository>();
+            var mockCensusRepo = new Mock<ICensusDataRepository>();
+
+            string name = "Test School";
+            long[] groupTypeIds = [1, 10];
+
+            mockRepo.Setup(x => x.SearchByFilters(
+                    It.Is<string>(v => v == name),
+                    It.Is<long[]>(v => v == groupTypeIds),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(establishments));
+            mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
+            mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+
+            var establishmentQueries = new EstablishmentQueries(
+                mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
+
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+
+            // Act
+            var result = await establishmentQueries.SearchByFilters(
+                name,
+                groupTypeIds,
+                cancellationToken);
+
+            // Assert
+            result.Should().BeOfType(typeof((List<EstablishmentDto>, int)));
+            result.Item2.Should().Be(establishments.Count);
+
+            foreach (var establishmentDto in result.Item1)
+            {
+                var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
+                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink));
+            }
+        }
+
+        [Fact]
         public async Task GetURNsByRegion_WhenEstablishmentUrnsReturnedFromRepo_IEnumebrableOfIntIsReturned()
         {
             // Arrange

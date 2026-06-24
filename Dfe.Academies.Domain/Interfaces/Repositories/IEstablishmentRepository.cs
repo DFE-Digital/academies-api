@@ -9,7 +9,11 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         Task<List<Establishment.Establishment>> Search(string name, string ukPrn,
          string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken);
         Task<List<Establishment.Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken);
-        
+        Task<List<Establishment.Establishment>> SearchByFilters(
+            string name,
+            long[] groupTypeIds,
+            CancellationToken cancellationToken);
+
         Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken);
         Task<List<Establishment.Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken);
         Task<List<Establishment.Establishment>> GetByUrns(int[] Urns, CancellationToken cancellationToken);

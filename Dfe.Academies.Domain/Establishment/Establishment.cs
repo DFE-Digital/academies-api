@@ -98,6 +98,7 @@ namespace Dfe.Academies.Domain.Establishment
         public virtual ICollection<EducationEstablishmentGovernance>? EducationEstablishmentGovernances { get; set; }
         public LocalAuthority? LocalAuthority { get; set; }
         public EstablishmentType? EstablishmentType{ get; set; }
+        public EstablishmentGroupType? EstablishmentGroupType{ get; set; }
 
         public IfdPipeline? IfdPipeline { get; set; }
     }

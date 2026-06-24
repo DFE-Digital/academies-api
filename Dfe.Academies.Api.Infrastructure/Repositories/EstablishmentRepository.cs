@@ -74,7 +74,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return queryResult.Select(ToEstablishment).ToList();
         }
-        
+
         public async Task<List<Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(name))
@@ -83,10 +83,10 @@ namespace Dfe.Academies.Infrastructure.Repositories
             }
 
             IQueryable<EstablishmentQueryResult> query = BaseQuery();
-            
-            
+
+
             query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.StartsWith(name));
-            
+
 
             if (excludeClosed == true)
             {
@@ -97,68 +97,84 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return queryResult.Select(ToEstablishment).ToList();
         }
-        
 
-        public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
+
+        public async Task<List<Establishment>> SearchByFilters(
+            string name,
+            long[] groupTypeIds,
+            CancellationToken cancellationToken)
         {
-            return await context.Establishments
-                .AsNoTracking()
-                .Where(p => regions.Contains(p.GORregion) && p.URN.HasValue)
-                .Select(e => e.URN.Value)
-                .ToListAsync(cancellationToken);
-        }
+            var hasName = !string.IsNullOrWhiteSpace(name);
+            var hasGroupTypes = groupTypeIds != null && groupTypeIds.Length > 0;
 
-        public async Task<List<Establishment>> GetByUrns(int[] urns, CancellationToken cancellationToken)
-        {
-            var urnsList = urns.ToList();
-            var queryResult = await BaseQuery()
-                .Where(r => urnsList.Contains((int)r.Establishment.URN))
-                .ToListAsync(cancellationToken);
+            if (!hasName && !hasGroupTypes)
+            {
+                return [];
+            }
 
-            var result = queryResult.Select(ToEstablishment).ToList();
+            var groupTypeCodes = hasGroupTypes
+                ? groupTypeIds.Select(x => x.ToString()).ToArray()
+                : [];
 
-            return result;
-        }
+            var matchingGroupTypeSk = hasGroupTypes
+                ? await context.EstablishmentGroupTypes
+                    .AsNoTracking()
+                    .Where(g => g.Code != null && groupTypeCodes.Contains(g.Code))
+                    .Select(g => g.SK)
+                    .ToArrayAsync(cancellationToken)
+                    .ConfigureAwait(false)
+                : [];
 
-        public async Task<List<Establishment>> GetByUkprns(string[] ukprns, CancellationToken cancellationToken)
-        {
-            var ukprnsList = ukprns.ToList();
-            var queryResult = await BaseQuery()
-                .Where(r => ukprnsList.Contains(r.Establishment.UKPRN))
-                .ToListAsync(cancellationToken);
+            if (hasGroupTypes && matchingGroupTypeSk.Length == 0 && !hasName)
+            {
+                return [];
+            }
 
-            var result = queryResult.Select(ToEstablishment).ToList();
+            IQueryable<Establishment> filteredEstablishments = context.Establishments.AsNoTracking();
 
-            return result;
-        }
+            if (hasName)
+            {
+                filteredEstablishments = filteredEstablishments.Where(e =>
+                    e.EstablishmentName != null &&
+                    e.EstablishmentName.StartsWith(name));
+            }
 
-        public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
-        {
-            var establishmentIds =
-                await context.EducationEstablishmentTrusts
-                        .AsNoTracking()
-                        .Where(eet => eet.TrustId == Convert.ToInt32(trustId))
-                        .Select(eet => (long)eet.EducationEstablishmentId)
-                        .ToListAsync(cancellationToken);
+            if (hasGroupTypes)
+            {
+                filteredEstablishments = filteredEstablishments.Where(e =>
+                    e.EstablishmentGroupTypeId.HasValue &&
+                    matchingGroupTypeSk.Contains(e.EstablishmentGroupTypeId.Value));
+            }
 
-            var establishments =
-                    await BaseQuery()
-                        .Where(r => establishmentIds.Contains(r.Establishment.SK.Value))
-                        .ToListAsync(cancellationToken);
+            var queryResult = await BaseQuery(filteredEstablishments)
+                .Take(100)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
 
-            var result = establishments.Select(ToEstablishment).ToList();
-
-            return result;
+            return queryResult.Select(ToEstablishment).ToList();
         }
 
         private IQueryable<EstablishmentQueryResult> BaseQuery()
         {
+            return BaseQuery(context.Establishments);
+        }
+
+        private IQueryable<EstablishmentQueryResult> BaseQuery(IQueryable<Establishment> establishments)
+        {
             var result =
-                 from establishment in context.Establishments
-                 from ifdPipeline in context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
-                 from establishmentType in context.EstablishmentTypes.Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
-                 from localAuthority in context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId).DefaultIfEmpty()
-                 select new EstablishmentQueryResult { Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority, EstablishmentType = establishmentType };
+                from establishment in establishments
+                from ifdPipeline in context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
+                from establishmentType in context.EstablishmentTypes.Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
+                from localAuthority in context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId).DefaultIfEmpty()
+                from groupType in context.EstablishmentGroupTypes.Where(g => g.SK == establishment.EstablishmentGroupTypeId).DefaultIfEmpty()
+                select new EstablishmentQueryResult
+                {
+                    Establishment = establishment,
+                    IfdPipeline = ifdPipeline,
+                    LocalAuthority = localAuthority,
+                    EstablishmentType = establishmentType,
+                    EstablishmentGroupType = groupType
+                };
 
             return result;
         }
@@ -169,6 +185,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             result.IfdPipeline = queryResult.IfdPipeline;
             result.LocalAuthority = queryResult.LocalAuthority;
             result.EstablishmentType = queryResult.EstablishmentType;
+            result.EstablishmentGroupType = queryResult.EstablishmentGroupType;
 
             return result;
         }
@@ -265,14 +282,68 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return (dioceses, recordCount);
         }
-    }
 
-    internal record EstablishmentQueryResult
-    {
-        public Establishment Establishment { get; set; }
-        public IfdPipeline IfdPipeline { get; set; }
-        public LocalAuthority LocalAuthority { get; set; }
-        public EstablishmentType EstablishmentType { get; set; }
-    }
 
+        public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
+        {
+            return await context.Establishments
+                .AsNoTracking()
+                .Where(p => regions.Contains(p.GORregion) && p.URN.HasValue)
+                .Select(e => e.URN.Value)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<List<Establishment>> GetByUrns(int[] urns, CancellationToken cancellationToken)
+        {
+            var urnsList = urns.ToList();
+            var queryResult = await BaseQuery()
+                .Where(r => urnsList.Contains((int)r.Establishment.URN))
+                .ToListAsync(cancellationToken);
+
+            var result = queryResult.Select(ToEstablishment).ToList();
+
+            return result;
+        }
+
+        public async Task<List<Establishment>> GetByUkprns(string[] ukprns, CancellationToken cancellationToken)
+        {
+            var ukprnsList = ukprns.ToList();
+            var queryResult = await BaseQuery()
+                .Where(r => ukprnsList.Contains(r.Establishment.UKPRN))
+                .ToListAsync(cancellationToken);
+
+            var result = queryResult.Select(ToEstablishment).ToList();
+
+            return result;
+        }
+
+        public async Task<List<Establishment>> GetByTrust(long? trustId, CancellationToken cancellationToken)
+        {
+            var establishmentIds =
+                await context.EducationEstablishmentTrusts
+                        .AsNoTracking()
+                        .Where(eet => eet.TrustId == Convert.ToInt32(trustId))
+                        .Select(eet => (long)eet.EducationEstablishmentId)
+                        .ToListAsync(cancellationToken);
+
+            var establishments =
+                    await BaseQuery()
+                        .Where(r => establishmentIds.Contains(r.Establishment.SK.Value))
+                        .ToListAsync(cancellationToken);
+
+            var result = establishments.Select(ToEstablishment).ToList();
+
+            return result;
+        }
+
+        internal record EstablishmentQueryResult
+        {
+            public Establishment Establishment { get; set; }
+            public IfdPipeline IfdPipeline { get; set; }
+            public LocalAuthority LocalAuthority { get; set; }
+            public EstablishmentType EstablishmentType { get; set; }
+            public EstablishmentGroupType EstablishmentGroupType { get; internal set; }
+        }
+
+    }
 }
