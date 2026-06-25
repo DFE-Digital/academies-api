@@ -3,6 +3,50 @@ const ZapClient = require('zaproxy');
 
 const RISK_LEVELS = ['High', 'Medium', 'Low', 'Informational'];
 
+const RISK_LEVEL_STYLES = {
+  High: { textColor: 'Attention', containerStyle: 'attention' },
+  Medium: { textColor: 'Warning', containerStyle: 'warning' },
+  Low: { textColor: 'Warning', containerStyle: 'default' },
+  Informational: { textColor: 'Accent', containerStyle: 'accent' },
+};
+
+function createColouredTextBlock(text, color, weight) {
+  return {
+    type: 'TextBlock',
+    text,
+    wrap: true,
+    color,
+    ...(weight ? { weight } : {}),
+  };
+}
+
+function buildRiskLevelRow(level, count) {
+  const { textColor, containerStyle } = RISK_LEVEL_STYLES[level];
+
+  return {
+    type: 'Container',
+    style: containerStyle,
+    separator: true,
+    items: [
+      {
+        type: 'ColumnSet',
+        columns: [
+          {
+            type: 'Column',
+            width: 'stretch',
+            items: [createColouredTextBlock(level, textColor, 'bolder')],
+          },
+          {
+            type: 'Column',
+            width: 'stretch',
+            items: [createColouredTextBlock(count, textColor, 'bolder')],
+          },
+        ],
+      },
+    ],
+  };
+}
+
 function createZapClient() {
   return new ZapClient({
     apiKey: process.env.ZAP_API_KEY,
@@ -24,11 +68,6 @@ function getAlertCount(summary, level) {
 }
 
 function buildSummaryTable(summary) {
-  const rows = RISK_LEVELS.map((level) => ({
-    riskLevel: level,
-    count: getAlertCount(summary, level).toString(),
-  }));
-
   return [
     {
       type: 'TextBlock',
@@ -51,22 +90,7 @@ function buildSummaryTable(summary) {
         },
       ],
     },
-    ...rows.map((row) => ({
-      type: 'ColumnSet',
-      separator: true,
-      columns: [
-        {
-          type: 'Column',
-          width: 'stretch',
-          items: [{ type: 'TextBlock', text: row.riskLevel, wrap: true }],
-        },
-        {
-          type: 'Column',
-          width: 'stretch',
-          items: [{ type: 'TextBlock', text: row.count }],
-        },
-      ],
-    })),
+    ...RISK_LEVELS.map((level) => buildRiskLevelRow(level, getAlertCount(summary, level).toString())),
   ];
 }
 
