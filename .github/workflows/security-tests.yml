@@ -127,7 +127,7 @@ jobs:
         if: ${{ !cancelled() }}
         uses: azure/CLI@9eb25b8360668fb0ecbafa808d40e2197b2f5f52 # v3
         with:
-          azcliversion: 2.49.0
+          azcliversion: 2.87.0
           inlineScript: |
             az storage blob upload \
               --container-name ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }} \
