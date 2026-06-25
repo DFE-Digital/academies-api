@@ -973,6 +973,45 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "EstablishmentsV4",
+          "Establishments"
+        ],
+        "summary": "Searches for Establishments based on a request body.",
+        "operationId": "SearchEstablishmentsPostAsync",
+        "requestBody": {
+          "x-name": "request",
+          "description": "Search request model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchEstablishmentsPostRequestModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully executed the search and returned Establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body."
+          }
+        }
       }
     },
     "/v4/establishments/SearchByNameStartsWith": {
@@ -4619,6 +4658,51 @@
             }
           }
         }
+      },
+      "SearchEstablishmentsPostRequestModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "establishmentNameStartsWith": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupTypes": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/GroupType"
+            }
+          }
+        }
+      },
+      "GroupType": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Unknown",
+          "Colleges",
+          "Universities",
+          "IndependentSchools",
+          "LocalAuthorityMaintainedSchools",
+          "SpecialSchools",
+          "OtherTypes",
+          "Academies",
+          "FreeSchools",
+          "OnlineProvider"
+        ],
+        "enum": [
+          "Unknown",
+          "Colleges",
+          "Universities",
+          "IndependentSchools",
+          "LocalAuthorityMaintainedSchools",
+          "SpecialSchools",
+          "OtherTypes",
+          "Academies",
+          "FreeSchools",
+          "OnlineProvider"
+        ]
       },
       "PagedDataResponseOfSignificantChangeDto": {
         "type": "object",

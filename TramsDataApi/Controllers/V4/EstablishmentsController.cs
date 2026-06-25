@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -326,6 +327,67 @@ namespace TramsDataApi.Controllers.V4
             var response = new List<EstablishmentDto>(establishments);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Searches for Establishments based on a request body.
+        /// </summary>
+        /// <param name="request">Search request model.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A list of Establishments that meet the search criteria.</returns>
+        [HttpPost]
+        [Route("establishments")]
+        [SwaggerOperation(Summary = "Search Establishments", Description = "Returns a list of Establishments based on search criteria.")]
+        [SwaggerResponse(200, "Successfully executed the search and returned Establishments.", typeof(List<EstablishmentDto>))]
+        [SwaggerResponse(400, "Invalid request body.")]
+        public async Task<ActionResult<List<EstablishmentDto>>> SearchEstablishmentsPostAsync(
+            [FromBody] SearchEstablishmentsPostRequestModel request,
+            CancellationToken cancellationToken)
+        {
+            if (request == null)
+            {
+                return BadRequest("Request body is required.");
+            }
+
+            var hasName = !string.IsNullOrWhiteSpace(request.EstablishmentNameStartsWith);
+            var groupTypeIds = request.GroupTypes?
+                .Where(x => x != GroupType.Unknown)
+                .Select(x => (long)x)
+                .Distinct()
+                .ToArray() ?? [];
+
+            var hasGroupTypes = groupTypeIds.Length > 0;
+
+            if (!hasName && !hasGroupTypes)
+            {
+                return BadRequest("Provide at least one of `EstablishmentNameStartsWIth` or `GroupTypes`.");
+            }
+
+            _logger.LogInformation(
+                "Searching for establishments by name starts with \"{NameStartsWith}\" and group types count \"{GroupTypesCount}\"",
+                request.EstablishmentNameStartsWith,
+                groupTypeIds.Length);
+
+            var (establishments, recordCount) = await _establishmentQueries
+                .SearchByFilters(
+                    request.EstablishmentNameStartsWith,
+                    groupTypeIds,
+                    cancellationToken)
+                .ConfigureAwait(false);
+
+            _logger.LogInformation(
+                "Found {Count} establishments for name starts with \"{NameStartsWith}\" and group types count \"{GroupTypesCount}\"",
+                recordCount,
+                request.EstablishmentNameStartsWith,
+                groupTypeIds.Length);
+
+            if (_logger.IsEnabled(LogLevel.Debug))
+            {
+                _logger.LogDebug("Establishments: {EstablishmentsJson}",
+                    JsonSerializer.Serialize(establishments));
+            }
+
+            return Ok(new List<EstablishmentDto>(establishments));
         }
     }
 }

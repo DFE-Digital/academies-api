@@ -54,6 +54,18 @@ namespace Dfe.Academies.Application.Establishment
             return (establishments.Select(x => MapToEstablishmentDto(x)).ToList(), establishments.Count);
         }
 
+        public async Task<(List<EstablishmentDto>, int)> SearchByFilters(
+            string establishmentNameStartsWith,
+            long[] groupTypeIds,
+            CancellationToken cancellationToken)
+        {
+            var establishments = await _establishmentRepository
+                .SearchByFilters(establishmentNameStartsWith, groupTypeIds, cancellationToken)
+                .ConfigureAwait(false);
+
+            return (establishments.Select(MapToEstablishmentDto).ToList(), establishments.Count);
+        }
+
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
             var urns = await _establishmentRepository.GetURNsByRegion(regions, cancellationToken);

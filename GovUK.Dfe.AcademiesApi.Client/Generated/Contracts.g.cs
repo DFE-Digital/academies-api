@@ -422,6 +422,23 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishments2Async(string? name, string? ukPrn, string? urn, bool? excludeClosed, bool? matchAny, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Searches for Establishments based on a request body.
+        /// </summary>
+        /// <param name="request">Search request model.</param>
+        /// <returns>Successfully executed the search and returned Establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishmentsPostAsync(SearchEstablishmentsPostRequestModel request);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Searches for Establishments based on a request body.
+        /// </summary>
+        /// <param name="request">Search request model.</param>
+        /// <returns>Successfully executed the search and returned Establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> SearchEstablishmentsPostAsync(SearchEstablishmentsPostRequestModel request, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Searches for Establishments by name based on query parameters.
         /// </summary>
         /// <param name="name">Name of the establishment.</param>
@@ -3120,6 +3137,66 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
             return Newtonsoft.Json.JsonConvert.DeserializeObject<UkprnRequestModel>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchEstablishmentsPostRequestModel
+    {
+
+        [Newtonsoft.Json.JsonProperty("establishmentNameStartsWith", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? EstablishmentNameStartsWith { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("groupTypes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public System.Collections.Generic.List<GroupType>? GroupTypes { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static SearchEstablishmentsPostRequestModel FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<SearchEstablishmentsPostRequestModel>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum GroupType
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Unknown")]
+        Unknown = 0,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Colleges")]
+        Colleges = 1,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Universities")]
+        Universities = 2,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"IndependentSchools")]
+        IndependentSchools = 3,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"LocalAuthorityMaintainedSchools")]
+        LocalAuthorityMaintainedSchools = 4,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"SpecialSchools")]
+        SpecialSchools = 5,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"OtherTypes")]
+        OtherTypes = 6,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Academies")]
+        Academies = 7,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"FreeSchools")]
+        FreeSchools = 8,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"OnlineProvider")]
+        OnlineProvider = 9,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))")]
