@@ -137,6 +137,17 @@ jobs:
               --auth-mode login \
               --overwrite
 
+      - name: Report results to Teams
+        if: ${{ !cancelled() }}
+        run: npm run zap:report:teams
+        env:
+          TEAMS_OWASP_SCAN_WEBHOOK_URL: ${{ secrets.TEAMS_OWASP_SCAN_WEBHOOK_URL }}
+          ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
+          ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
+          ZAP_PORT: ${{ env.ZAP_PORT }}
+          REPORT_LINK: https://${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }}.blob.core.windows.net/${{ secrets.OWASP_STORAGE_CONTAINER_NAME }}/TramsDataApi/${{ env.checked_out_sha }}/ZAP-Report.html
+          INFORMATION_LINK: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
       - name: Stop ZAP container
         if: always()
         run: docker stop zap_container || true
