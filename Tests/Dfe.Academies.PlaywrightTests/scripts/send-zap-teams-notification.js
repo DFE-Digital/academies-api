@@ -16,28 +16,18 @@ function createZapClient() {
 async function fetchScanResults() {
   const zaproxy = createZapClient();
   const summaryResponse = await zaproxy.core.alertsSummary({});
-  const summary = summaryResponse.alertsSummary ?? {};
-
-  const falsePositiveResponse = await zaproxy.core.numberOfAlerts({ riskid: '-1' });
-  const falsePositives = Number.parseInt(falsePositiveResponse.numberOfAlerts ?? '0');
-
-  return { summary, falsePositives };
+  return summaryResponse.alertsSummary ?? {};
 }
 
 function getAlertCount(summary, level) {
   return Number.parseInt(summary[level] ?? '0', 10);
 }
 
-function buildSummaryTable(summary, falsePositives) {
+function buildSummaryTable(summary) {
   const rows = RISK_LEVELS.map((level) => ({
     riskLevel: level,
     count: getAlertCount(summary, level).toString(),
   }));
-
-  rows.push({
-    riskLevel: 'False Positives',
-    count: falsePositives.toString(),
-  });
 
   return [
     {
@@ -124,8 +114,8 @@ function createTeamsMessage(cardBody) {
 
 async function sendZapTeamsNotification() {
   try {
-    const { summary, falsePositives } = await fetchScanResults();
-    const cardBody = [...buildSummaryTable(summary, falsePositives), ...buildLinks()];
+    const summary = await fetchScanResults();
+    const cardBody = [...buildSummaryTable(summary), ...buildLinks()];
     const message = createTeamsMessage(cardBody);
 
     await axios.post(process.env.TEAMS_OWASP_SCAN_WEBHOOK_URL, message);
