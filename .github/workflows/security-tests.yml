@@ -1,11 +1,36 @@
 name: Security scanner tests
 
 on:
-  workflow_run:
-    workflows: ["Deploy to environment"]
-    types:
-      - completed
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      TRAMS_API_KEY:
+        required: true
+      TRAMS_API_BASE_URL:
+        required: true
+      ZAP_API_KEY:
+        required: true
+      AZURE_OWASP_CLIENT_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+      OWASP_STORAGE_CONTAINER_NAME:
+        required: true
+      OWASP_STORAGE_ACCOUNT_NAME:
+        required: true
+      TEAMS_OWASP_SCAN_WEBHOOK_URL:
+        required: true
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        type: environment
 
 env:
   ZAP_ADDRESS: localhost
@@ -16,8 +41,7 @@ env:
 jobs:
   run-tests-with-zap:
     name: Run Playwright tests with OWASP ZAP
-    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
-    environment: development
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -29,7 +53,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.ref }}
 
       - name: Create directory on runner
         run: mkdir -m 777 ${{ github.workspace }}/zapoutput
@@ -111,10 +135,6 @@ jobs:
           ZAP_PORT: ${{ env.ZAP_PORT }}
         run: npm run zap:report
 
-      - name: Get git sha
-        if: ${{ !cancelled() }}
-        run: echo "checked_out_sha=${{ github.event.workflow_run.head_sha || github.sha }}" >> $GITHUB_ENV
-
       - name: Azure login with OIDC
         if: ${{ !cancelled() }}
         uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
@@ -133,7 +153,7 @@ jobs:
               --container-name ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }} \
               --account-name ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }} \
               --file "${{ github.workspace }}/zapoutput/ZAP-Report.html" \
-              --name "TramsDataApi/${{ env.checked_out_sha }}/ZAP-Report.html" \
+              --name "TramsDataApi/${{ github.sha }}/ZAP-Report.html" \
               --auth-mode login \
               --overwrite
 
@@ -145,7 +165,7 @@ jobs:
           ZAP_API_KEY: ${{ secrets.ZAP_API_KEY }}
           ZAP_ADDRESS: ${{ env.ZAP_ADDRESS }}
           ZAP_PORT: ${{ env.ZAP_PORT }}
-          REPORT_LINK: https://${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }}.blob.core.windows.net/${{ secrets.OWASP_STORAGE_CONTAINER_NAME }}/TramsDataApi/${{ env.checked_out_sha }}/ZAP-Report.html
+          REPORT_LINK: https://${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }}.blob.core.windows.net/${{ secrets.OWASP_STORAGE_CONTAINER_NAME }}/TramsDataApi/${{ github.sha }}/ZAP-Report.html
           INFORMATION_LINK: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Stop ZAP container
