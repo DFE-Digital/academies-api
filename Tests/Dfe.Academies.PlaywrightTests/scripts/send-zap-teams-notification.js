@@ -129,7 +129,8 @@ async function sendZapTeamsNotification() {
     const message = createTeamsMessage(cardBody);
 
     await axios.post(process.env.TEAMS_OWASP_SCAN_WEBHOOK_URL, message);
-  } catch {
+  } catch (error) {
+    console.error('Failed to send ZAP Teams notification:', error.response?.data ?? error.message ?? error);
     process.exit(1);
   }
 }
