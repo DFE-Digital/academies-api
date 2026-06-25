@@ -6,7 +6,7 @@ const RISK_LEVELS = ['High', 'Medium', 'Low', 'Informational'];
 const RISK_LEVEL_STYLES = {
   High: { textColor: 'Attention', containerStyle: 'attention' },
   Medium: { textColor: 'Warning', containerStyle: 'warning' },
-  Low: { textColor: 'Warning', containerStyle: 'default' },
+  Low: { containerStyle: 'emphasis' },
   Informational: { textColor: 'Accent', containerStyle: 'accent' },
 };
 
@@ -15,7 +15,7 @@ function createColouredTextBlock(text, color, weight) {
     type: 'TextBlock',
     text,
     wrap: true,
-    color,
+    ...(color ? { color } : {}),
     ...(weight ? { weight } : {}),
   };
 }
@@ -71,7 +71,7 @@ function buildSummaryTable(summary) {
   return [
     {
       type: 'TextBlock',
-      text: 'Summary of Alerts',
+      text: 'Academies API Security Scan Summary',
       weight: 'bolder',
       size: 'medium',
     },
