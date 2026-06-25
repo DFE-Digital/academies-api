@@ -342,7 +342,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             public IfdPipeline IfdPipeline { get; set; }
             public LocalAuthority LocalAuthority { get; set; }
             public EstablishmentType EstablishmentType { get; set; }
-            public EstablishmentGroupType EstablishmentGroupType { get; internal set; }
+            public EstablishmentGroupType EstablishmentGroupType { get; set; }
         }
 
     }

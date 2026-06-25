@@ -153,7 +153,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 cancellationToken);
 
             // Assert
-            result.Should().BeOfType(typeof((List<EstablishmentDto>, int)));
+            result.Should().BeOfType<(List<EstablishmentDto>, int)>();
             foreach (var establishmentDto in result.Item1)
             {
                 var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
@@ -193,7 +193,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 cancellationToken);
 
             // Assert
-            result.Should().BeOfType(typeof((List<EstablishmentDto>, int)));
+            result.Should().BeOfType<(List<EstablishmentDto>, int)>();
             result.Item2.Should().Be(establishments.Count);
 
             foreach (var establishmentDto in result.Item1)

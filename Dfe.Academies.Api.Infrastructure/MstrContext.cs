@@ -80,7 +80,7 @@ public class MstrContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    private void ConfigureEstablishmentGroupType(EntityTypeBuilder<EstablishmentGroupType> builder)
+    private static void ConfigureEstablishmentGroupType(EntityTypeBuilder<EstablishmentGroupType> builder)
     {
         builder.HasKey(e => e.SK);
         builder.ToTable("Ref_EducationEstablishmentGroupType", DEFAULT_SCHEMA);
