@@ -2904,6 +2904,9 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("establishmentType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public NameAndCodeDto? EstablishmentType { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("establishmentGroupType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public NameAndCodeDto? EstablishmentGroupType { get; set; } = default!;
+
         [Newtonsoft.Json.JsonProperty("gor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public NameAndCodeDto? Gor { get; set; } = default!;
 

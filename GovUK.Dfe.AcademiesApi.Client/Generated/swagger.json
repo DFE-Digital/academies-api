@@ -4471,6 +4471,9 @@
           "establishmentType": {
             "$ref": "#/components/schemas/NameAndCodeDto"
           },
+          "establishmentGroupType": {
+            "$ref": "#/components/schemas/NameAndCodeDto"
+          },
           "gor": {
             "$ref": "#/components/schemas/NameAndCodeDto"
           },

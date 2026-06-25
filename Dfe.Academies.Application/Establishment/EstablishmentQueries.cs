@@ -98,6 +98,7 @@ namespace Dfe.Academies.Application.Establishment
                 .WithLocalAuthority(establishment)
                 .WithDiocese(establishment)
                 .WithEstablishmentType(establishment)
+                .WithEstablishmentGroupType(establishment)
                 .WithGor(establishment)
                 .WithPhaseOfEducation(establishment)
                 .WithReligiousCharacter(establishment)

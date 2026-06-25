@@ -201,6 +201,17 @@ namespace Dfe.Academies.Application.Establishment
         {
             return _dto;
         }
+
+        public EstablishmentDtoBuilder WithEstablishmentGroupType(Domain.Establishment.Establishment establishment)
+        {
+            _dto.EstablishmentGroupType = new NameAndCodeDto
+            {
+                Name = establishment?.EstablishmentGroupType?.Name,
+                Code = establishment?.EstablishmentGroupType?.Code
+            };
+
+            return this;
+        }
     }
 }
 
