@@ -23,6 +23,7 @@ public class MstrContext : DbContext
     public DbSet<TrustType> TrustTypes { get; set; } = null!;
     public DbSet<Establishment> Establishments { get; set; } = null!;
     public DbSet<EstablishmentType> EstablishmentTypes { get; set; } = null!;
+    public DbSet<EstablishmentGroupType> EstablishmentGroupTypes { get; set; } = null!;
     public DbSet<EducationEstablishmentTrust> EducationEstablishmentTrusts { get; set; } = null!;
     public DbSet<LocalAuthority> LocalAuthorities { get; set; } = null!;
     public DbSet<IfdPipeline> IfdPipelines { get; set; } = null!;
@@ -47,6 +48,7 @@ public class MstrContext : DbContext
 
         modelBuilder.Entity<Establishment>(ConfigureEstablishment);
         modelBuilder.Entity<EstablishmentType>(ConfigureEstablishmentType);
+        modelBuilder.Entity<EstablishmentGroupType>(ConfigureEstablishmentGroupType);
         modelBuilder.Entity<EducationEstablishmentTrust>(ConfigureEducationEstablishmentTrust);
         modelBuilder.Entity<LocalAuthority>(ConfigureLocalAuthority);
         modelBuilder.Entity<IfdPipeline>(ConfigureIfdPipeline);
@@ -181,6 +183,12 @@ public class MstrContext : DbContext
             .IsRequired(false);
 
         establishmentConfiguration
+            .HasOne(x => x.EstablishmentGroupType)
+            .WithMany()
+            .HasForeignKey(x => x.EstablishmentTypeId)
+            .IsRequired(false);
+
+        establishmentConfiguration
             .HasOne(x => x.LocalAuthority)
             .WithMany()
             .HasForeignKey(x => x.LocalAuthorityId)
@@ -284,6 +292,11 @@ public class MstrContext : DbContext
         establishmentTypeConfiguration.ToTable("Ref_EducationEstablishmentType", DEFAULT_SCHEMA);
     }
 
+    private static void ConfigureEstablishmentGroupType(EntityTypeBuilder<EstablishmentGroupType> establishmentGroupTypeConfiguration)
+    {
+        establishmentGroupTypeConfiguration.HasKey(e => e.SK);
+        establishmentGroupTypeConfiguration.ToTable("Ref_EducationEstablishmentGroupType", DEFAULT_SCHEMA);
+    }
 
     private static void ConfigureEducationEstablishmentLink(EntityTypeBuilder<EducationEstablishmentLink> educationEstablishmentLinkConfiguration)
     {

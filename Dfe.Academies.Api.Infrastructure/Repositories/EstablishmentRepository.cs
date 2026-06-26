@@ -157,8 +157,9 @@ namespace Dfe.Academies.Infrastructure.Repositories
                  from establishment in context.Establishments
                  from ifdPipeline in context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
                  from establishmentType in context.EstablishmentTypes.Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
+                 from establishmentGroupType in context.EstablishmentGroupTypes.Where(e => e.SK == establishment.EstablishmentGroupTypeId).DefaultIfEmpty()
                  from localAuthority in context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId).DefaultIfEmpty()
-                 select new EstablishmentQueryResult { Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority, EstablishmentType = establishmentType };
+                 select new EstablishmentQueryResult { Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority, EstablishmentType = establishmentType, EstablishmentGroupType = establishmentGroupType };
 
             return result;
         }
@@ -169,6 +170,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             result.IfdPipeline = queryResult.IfdPipeline;
             result.LocalAuthority = queryResult.LocalAuthority;
             result.EstablishmentType = queryResult.EstablishmentType;
+            result.EstablishmentGroupType = queryResult.EstablishmentGroupType;
 
             return result;
         }
@@ -273,6 +275,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
         public IfdPipeline IfdPipeline { get; set; }
         public LocalAuthority LocalAuthority { get; set; }
         public EstablishmentType EstablishmentType { get; set; }
+        public EstablishmentGroupType EstablishmentGroupType { get; set; }
     }
 
 }

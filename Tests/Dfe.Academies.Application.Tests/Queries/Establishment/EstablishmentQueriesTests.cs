@@ -306,6 +306,9 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 dto.EstablishmentType.Name == establishment.EstablishmentType?.Name &&
                 dto.EstablishmentType.Code == establishment.EstablishmentType?.Code &&
 
+                dto.EstablishmentGroupType.Name == establishment.EstablishmentGroupType?.Name &&
+                dto.EstablishmentGroupType.Code == establishment.EstablishmentGroupType?.Code &&
+
                 dto.Gor.Name == establishment.GORregion &&
 
                 dto.PhaseOfEducation.Name == establishment.PhaseOfEducation &&

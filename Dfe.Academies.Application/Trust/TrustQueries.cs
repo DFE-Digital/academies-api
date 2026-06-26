@@ -1,5 +1,6 @@
 ﻿using Dfe.Academies.Domain.Interfaces.Repositories;
 using Dfe.Academies.Domain.Trust;
+using Dfe.Academies.Utils.Extensions;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Trusts;
@@ -74,7 +75,9 @@ namespace Dfe.Academies.Application.Trust
                     Additional = trust.AddressLine2!,
                     Locality = trust.AddressLine3!
                 },
-                Gor = trust.GORregion
+                Gor = trust.GORregion,
+                GroupUid = trust.GroupUID,
+                OpenDate = trust.IncorporatedOnOpenDate.ToResponseDate(),
             };
         }
     }
