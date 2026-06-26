@@ -4769,6 +4769,14 @@
           "gor": {
             "type": "string",
             "nullable": true
+          },
+          "groupUid": {
+            "type": "string",
+            "nullable": true
+          },
+          "openDate": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

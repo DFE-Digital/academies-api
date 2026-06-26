@@ -3279,6 +3279,12 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("gor", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Gor { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("groupUid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? GroupUid { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("openDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? OpenDate { get; set; } = default!;
+
         public string ToJson()
         {
 
