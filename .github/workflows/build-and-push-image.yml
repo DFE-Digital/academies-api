@@ -170,7 +170,7 @@ jobs:
   playwright-tests:
     name: Run Playwright Tests
     needs: [ set-env, deploy ]
-    if: needs.set-env.outputs.environment == 'test' || needs.set-env.outputs.environment == 'development'
+    if: needs.set-env.outputs.environment == 'test'
     uses: ./.github/workflows/playwright-tests.yml
     with:
       environment: ${{ needs.set-env.outputs.environment }}
@@ -196,3 +196,4 @@ jobs:
       OWASP_STORAGE_CONTAINER_NAME: ${{ secrets.OWASP_STORAGE_CONTAINER_NAME }}
       OWASP_STORAGE_ACCOUNT_NAME: ${{ secrets.OWASP_STORAGE_ACCOUNT_NAME }}
       TEAMS_OWASP_SCAN_WEBHOOK_URL: ${{ secrets.TEAMS_OWASP_SCAN_WEBHOOK_URL }}
+      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
