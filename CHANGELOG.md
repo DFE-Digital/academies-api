@@ -18,6 +18,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 See the [full commit history](https://github.com/DFE-Digital/academies-api/compare/production-2026-06-19.540...main) for everything awaiting release
 
 ---
+## [production-2026-07-17.554](https://github.com/DFE-Digital/academies-api/releases/tag/production-2026-07-17.554)
+
+### Added
+- Establishment group type added to establishment DTO
+- Open date added to trust DTO
+
+---
 
 ## [production-2026-06-19.540](https://github.com/DFE-Digital/academies-api/releases/tag/production-2026-06-19.540) - 2026-06-19
 
