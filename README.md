@@ -5,6 +5,7 @@ NB: Historically this API was used to support the operations of the legacy TRAMS
 
 ## Development Setup
 
+### To run a local version of the database
 You can use Docker compose to start the dependant services for this api.
 
 - Make a copy of `.env.database.example` and rename it to `.env.database`
@@ -16,6 +17,28 @@ For this reason it is not recommended anymore and instead you should setup a Nug
 
 
 You can connect to the MSSQL Server on port `1433`.
+
+### To connect to the SIP database
+Instead of running a local database, you can instead connect directly to the SIP database in dev or test. To do this, update your user secrets file in the `TramsDataApi` project with the following:
+
+```json
+{
+  "ApplicationInsights": {
+    "ConnectionString": "<connectionString>"
+  },
+  "AllowedHosts": "*",
+  "ApiKeys": [ "{\"userName\": \"AcademisationAPI\", \"apiKey\": \"<ApiKey>\"}", "{\"userName\": \"TramsDevelopers\", \"apiKey\": \"<ApiKey>\"}", "{\"userName\": \"Default User\", \"apiKey\": \"app-key\"}" ],
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=srv-t1dv-sips.database.windows.net;Database=sip;User Id=<UserId>;Password=<Password>;TrustServerCertificate=True;",
+  }
+}
+```
+
+You will need to ask a colleague for the missing values. You can then run the application as you usually would from your IDE, and it will connect to the SIP database.
+
+## Updating DTOs
+
+The DTOs that the API uses for establishments and trusts are located within the `CoreLibs` library. To update them, you will need to go to the `CoreLibs` repository, which can be found at https://github.com/DFE-Digital/rsd-core-libs
 
 ## API testing
 

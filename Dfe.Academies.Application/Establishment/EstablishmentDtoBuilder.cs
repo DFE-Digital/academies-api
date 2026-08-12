@@ -40,6 +40,14 @@ namespace Dfe.Academies.Application.Establishment
             // for now empty assignment if it is null
             _dto.MainPhone = establishment.MainPhone ?? string.Empty;
 
+            _dto.NurseryProvision = establishment.NurseryProvision;
+
+            _dto.DateJoinedTrust = DateTime.TryParse(
+                establishment.EducationEstablishmentTrust?.DateJoinedTrust,
+                out var dateJoinedTrust)
+                ? dateJoinedTrust
+                : null;
+
             return this;
         }
 
@@ -105,6 +113,7 @@ namespace Dfe.Academies.Application.Establishment
 
             return this;
         }
+
         public EstablishmentDtoBuilder WithParliamentaryConstituency(Domain.Establishment.Establishment establishment)
         {
             _dto.ParliamentaryConstituency = new NameAndCodeDto
@@ -115,7 +124,9 @@ namespace Dfe.Academies.Application.Establishment
 
             return this;
         }
-        public EstablishmentDtoBuilder WithCensus(Domain.Establishment.Establishment establishment, CensusData censusData)
+
+        public EstablishmentDtoBuilder WithCensus(Domain.Establishment.Establishment establishment,
+            CensusData censusData)
         {
             // census field descriptions
             //URN School - Unique Reference Number
@@ -148,7 +159,6 @@ namespace Dfe.Academies.Application.Establishment
                 PercentageSen = censusData?.PSENELK,
                 PercentageEnglishAsSecondLanguage = censusData?.PNUMEAL,
                 PercentageFsmLastSixYears = censusData?.PNUMFSMEVER
-
             };
 
             return this;
@@ -164,7 +174,8 @@ namespace Dfe.Academies.Application.Establishment
                 QualityOfEducation = establishment?.QualityOfEducation?.ToString(),
                 BehaviourAndAttitudes = establishment?.BehaviourAndAttitudes?.ToString(),
                 PersonalDevelopment = establishment?.PersonalDevelopment?.ToString(),
-                EffectivenessOfLeadershipAndManagement = establishment?.EffectivenessOfLeadershipAndManagement?.ToString(),
+                EffectivenessOfLeadershipAndManagement =
+                    establishment?.EffectivenessOfLeadershipAndManagement?.ToString(),
                 EarlyYearsProvision = establishment?.EarlyYearsProvisionWhereApplicable?.ToString(),
                 SixthFormProvision = establishment?.SixthFormProvisionWhereApplicable.ToString(),
                 Weblink = establishment?.WebLink
@@ -187,6 +198,7 @@ namespace Dfe.Academies.Application.Establishment
 
             return this;
         }
+
         public EstablishmentDtoBuilder WithPreviousEstablishment(EducationEstablishmentLink? educationEstablishmentLink)
         {
             _dto.PreviousEstablishment = new PreviousEstablishmentDto()
@@ -194,6 +206,12 @@ namespace Dfe.Academies.Application.Establishment
                 Urn = educationEstablishmentLink?.LinkURN?.ToString()
             };
 
+            return this;
+        }
+
+        public EstablishmentDtoBuilder WithTrustName(string? trustName)
+        {
+            _dto.TrustName = trustName ?? null;
             return this;
         }
 
@@ -214,4 +232,3 @@ namespace Dfe.Academies.Application.Establishment
         }
     }
 }
-

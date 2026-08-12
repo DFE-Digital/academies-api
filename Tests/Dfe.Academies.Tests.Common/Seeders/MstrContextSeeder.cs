@@ -136,14 +136,14 @@ namespace Dfe.Academies.Tests.Common.Seeders
                 var educationEstablishmentTrust1 = new EducationEstablishmentTrust
                 {
                     SK = 1,
-                    EducationEstablishmentId = (int)establishment1.SK,
-                    TrustId = (int)trust1.SK,
+                    EducationEstablishmentId = establishment1.SK!.Value,
+                    TrustId = trust1.SK!.Value,
                 };
                 var educationEstablishmentTrust2 = new EducationEstablishmentTrust
                 {
                     SK = 2,
-                    EducationEstablishmentId = (int)establishment2.SK,
-                    TrustId = (int)trust2.SK,
+                    EducationEstablishmentId = establishment2.SK!.Value,
+                    TrustId = trust2.SK!.Value,
 
                 };
                 mstrContext.EducationEstablishmentTrusts.AddRange(educationEstablishmentTrust1, educationEstablishmentTrust2);

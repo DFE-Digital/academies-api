@@ -93,6 +93,9 @@ namespace Dfe.Academies.Application.Establishment
             var censusData = _censusDataRepository.GetCensusDataByURN(establishment.URN.GetValueOrDefault());
             var misEstablishment = _establishmentRepository.GetMisEstablishmentByURN(establishment.URN);
             var previousEstablishment = _establishmentRepository.GetEducationEstablishmentLinksByURN(establishment.SK);
+            var trustName = _establishmentRepository.GetTrustNameByEstablishmentUrn(establishment.URN).Result;
+            
+            //add trust name
             var result = new EstablishmentDtoBuilder()
                 .WithBasicDetails(establishment)
                 .WithLocalAuthority(establishment)
@@ -107,6 +110,7 @@ namespace Dfe.Academies.Application.Establishment
                 .WithMISEstablishment(misEstablishment)
                 .WithAddress(establishment)
                 .WithPreviousEstablishment(previousEstablishment)
+                .WithTrustName(trustName)
                 .Build();
 
             return result;

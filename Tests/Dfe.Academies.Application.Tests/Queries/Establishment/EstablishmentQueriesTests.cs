@@ -14,6 +14,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
         private Fixture _fixture;
         private MisEstablishment _misEstablishment; 
         private EducationEstablishmentLink _educationEstablishmentLink;
+        private readonly string _trustName;
 
         public EstablishmentQueriesTests()
         {
@@ -25,8 +26,11 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 .ForEach(b => _fixture.Behaviors.Remove(b));
 
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            _fixture.Customize<EducationEstablishmentTrust>(composer => composer
+                .With(x => x.DateJoinedTrust, "2020-06-15"));
             _misEstablishment = _fixture.Create<MisEstablishment>();
             _educationEstablishmentLink = _fixture.Create<EducationEstablishmentLink>();
+            _trustName = _fixture.Create<string>();
         }
 
 
@@ -43,6 +47,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             mockRepo.Setup(x => x.GetEstablishmentByUkprn(It.Is<string>(v => v == ukprn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishment));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(establishment!.URN)).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(establishment!.SK)).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetTrustNameByEstablishmentUrn(establishment!.URN)).ReturnsAsync(_trustName);
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
 
@@ -55,7 +60,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
 
             // Assert
             result.Should().BeOfType(typeof(EstablishmentDto));
-            Assert.True(HasMappedCorrectly(result!, establishment!, _misEstablishment, _educationEstablishmentLink));
+            Assert.True(HasMappedCorrectly(result!, establishment!, _misEstablishment, _educationEstablishmentLink, _trustName));
         }
 
         [Fact]
@@ -70,6 +75,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             mockRepo.Setup(x => x.GetEstablishmentByUrn(It.Is<string>(v => v == urn), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishment));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(establishment!.URN)).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(establishment!.SK)).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetTrustNameByEstablishmentUrn(establishment!.URN)).ReturnsAsync(_trustName);
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
 
@@ -82,7 +88,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
 
             // Assert
             result.Should().BeOfType(typeof(EstablishmentDto));
-            Assert.True(HasMappedCorrectly(result!, establishment!, _misEstablishment, _educationEstablishmentLink));
+            Assert.True(HasMappedCorrectly(result!, establishment!, _misEstablishment, _educationEstablishmentLink, _trustName));
         }
 
         [Fact]
@@ -102,6 +108,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             mockRepo.Setup(x => x.Search(It.Is<string>(v => v == name), It.Is<string>(v => v == ukPrn), It.Is<string>(v => v == urn), It.Is<bool?>(x => x == excludeClosed), It.Is<bool?>(x => x == matchAny), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetTrustNameByEstablishmentUrn(It.IsAny<int?>())).ReturnsAsync(_trustName);
 
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
@@ -122,7 +129,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             foreach (var establishmentDto in result.Item1)
             {
                 var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
-                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink));
+                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink, _trustName));
             }
         }
         
@@ -140,6 +147,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             mockRepo.Setup(x => x.SearchByNameStartsWith(It.Is<string>(v => v == name), It.Is<bool?>(x => x == excludeClosed),  It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetTrustNameByEstablishmentUrn(It.IsAny<int?>())).ReturnsAsync(_trustName);
 
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
@@ -157,7 +165,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             foreach (var establishmentDto in result.Item1)
             {
                 var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
-                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink));
+                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink, _trustName));
             }
         }
 
@@ -200,6 +208,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             mockRepo.Setup(x => x.GetByUrns(It.Is<int[]>(v => v == Urns), It.IsAny<CancellationToken>())).Returns(Task.FromResult(establishments));
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetTrustNameByEstablishmentUrn(It.IsAny<int?>())).ReturnsAsync(_trustName);
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
@@ -212,7 +221,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             foreach (var establishmentDto in result)
             {
                 var establishment = establishments.Single(x => x.URN.ToString() == establishmentDto.Urn);
-                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink));
+                Assert.True(HasMappedCorrectly(establishmentDto, establishment, _misEstablishment, _educationEstablishmentLink, _trustName));
             }
         }
 
@@ -230,6 +239,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             mockRepo.Setup(x => x.GetByUkprns(It.Is<string[]>(v => v == ukprns), It.IsAny<CancellationToken>())).ReturnsAsync(establishments);
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetTrustNameByEstablishmentUrn(It.IsAny<int?>())).ReturnsAsync(_trustName);
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
 
@@ -260,6 +270,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             mockRepo.Setup(x => x.GetByUkprns(It.Is<string[]>(v => v == ukprns), It.IsAny<CancellationToken>())).ReturnsAsync(establishments);
             mockRepo.Setup(x => x.GetMisEstablishmentByURN(It.IsAny<int?>())).Returns(_misEstablishment);
             mockRepo.Setup(x => x.GetEducationEstablishmentLinksByURN(It.IsAny<long?>())).Returns(_educationEstablishmentLink);
+            mockRepo.Setup(x => x.GetTrustNameByEstablishmentUrn(It.IsAny<int?>())).ReturnsAsync(_trustName);
             var establishmentQueries = new EstablishmentQueries(
                 mockRepo.Object, mockTrustRepo.Object, mockCensusRepo.Object);
 
@@ -276,13 +287,19 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
             Assert.All(result, x =>
             {
                 var establishment = establishments.Single(es => es.UKPRN == x.Ukprn);
-                Assert.True(HasMappedCorrectly(x, establishment, _misEstablishment, _educationEstablishmentLink));
+                Assert.True(HasMappedCorrectly(x, establishment, _misEstablishment, _educationEstablishmentLink, _trustName));
             });
         }
 
 
-        private static bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink)
+        private static bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink, string trustName)
         {
+            DateTime? expectedDateJoinedTrust = DateTime.TryParse(
+                establishment.EducationEstablishmentTrust?.DateJoinedTrust,
+                out var dateJoinedTrust)
+                ? dateJoinedTrust
+                : null;
+
             return (
                 dto.Name == establishment.EstablishmentName &&
                 dto.Urn == establishment.URN.ToString() &&
@@ -297,6 +314,9 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
                 dto.Pan == establishment.IfdPipeline?.DeliveryProcessPAN &&
                 dto.Deficit == establishment.IfdPipeline?.ProjectTemplateInformationDeficit &&
                 dto.ViabilityIssue == establishment.IfdPipeline?.ProjectTemplateInformationViabilityIssue &&
+                dto.NurseryProvision == establishment.NurseryProvision &&
+                dto.TrustName == trustName &&
+                dto.DateJoinedTrust == expectedDateJoinedTrust &&
 
                 dto.LocalAuthorityCode == establishment.LocalAuthority?.Code &&
                 dto.LocalAuthorityName == establishment.LocalAuthority?.Name &&

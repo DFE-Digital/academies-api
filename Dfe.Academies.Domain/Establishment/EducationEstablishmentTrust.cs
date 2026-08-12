@@ -2,11 +2,12 @@
 {
     public class EducationEstablishmentTrust
     {
-        public int SK { get; set; } 
+        public long SK { get; set; }
 
         // Foreign keys
-        public int TrustId { get; set; }
-        public int EducationEstablishmentId { get; set; }
+        public long TrustId { get; set; }
+        public long EducationEstablishmentId { get; set; }
+        public string DateJoinedTrust { get; set; } = string.Empty;
     }
 
 }
