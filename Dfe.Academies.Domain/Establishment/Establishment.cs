@@ -99,6 +99,9 @@ namespace Dfe.Academies.Domain.Establishment
         public LocalAuthority? LocalAuthority { get; set; }
         public EstablishmentType? EstablishmentType{ get; set; }
         public EstablishmentGroupType? EstablishmentGroupType{ get; set; }
+        
+        public string? NurseryProvision { get; set; }
+        public EducationEstablishmentTrust? EducationEstablishmentTrust { get; set; }
 
         public IfdPipeline? IfdPipeline { get; set; }
     }

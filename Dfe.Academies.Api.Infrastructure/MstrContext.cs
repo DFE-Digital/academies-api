@@ -175,6 +175,7 @@ public class MstrContext : DbContext
         establishmentConfiguration.Property(e => e.ReligiousCharacterCode).HasColumnName("ReligiousCharacter(code)");
         establishmentConfiguration.Property(e => e.PhaseOfEducationCode).HasColumnName("PhaseOfEducation(code)");
         establishmentConfiguration.Property(e => e.ParliamentaryConstituencyCode).HasColumnName("ParliamentaryConstituency(code)");
+        establishmentConfiguration.Property(e => e.NurseryProvision).HasColumnName("NurseryProvision(name)");
 
         establishmentConfiguration
             .HasOne(x => x.EstablishmentType)
@@ -204,6 +205,7 @@ public class MstrContext : DbContext
         // No relationship exists yet
         // Make sure entity framework doesn't generate one
         establishmentConfiguration.Ignore(x => x.IfdPipeline);
+        establishmentConfiguration.Ignore(x => x.EducationEstablishmentTrust);
     }
 
     /// <summary>
@@ -278,6 +280,7 @@ public class MstrContext : DbContext
 
         entityBuilder.Property(e => e.EducationEstablishmentId).HasColumnName("FK_EducationEstablishment");
         entityBuilder.Property(e => e.TrustId).HasColumnName("FK_Trust");
+        entityBuilder.Property(e => e.DateJoinedTrust).HasColumnName("Joined Date");
     }
 
     private static void ConfigureLocalAuthority(EntityTypeBuilder<LocalAuthority> localAuthorityConfiguration)

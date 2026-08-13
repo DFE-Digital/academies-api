@@ -4502,6 +4502,17 @@
                 "$ref": "#/components/schemas/PreviousEstablishmentDto"
               }
             ]
+          },
+          "nurseryProvision": {
+            "type": "string"
+          },
+          "trustName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateJoinedTrust": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

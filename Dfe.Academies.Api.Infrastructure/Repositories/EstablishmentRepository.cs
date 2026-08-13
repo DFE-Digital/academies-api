@@ -19,7 +19,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Establishment?> GetEstablishmentByUkprn(string ukprn, CancellationToken cancellationToken)
         {
-            var queryResult = await BaseQuery().FirstOrDefaultAsync(r => r.Establishment.UKPRN == ukprn, cancellationToken: cancellationToken);
+            var queryResult = await BaseQuery().FirstOrDefaultAsync(r => r.Establishment.UKPRN == ukprn,
+                cancellationToken: cancellationToken);
 
             if (queryResult == null)
             {
@@ -29,8 +30,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
             var result = ToEstablishment(queryResult);
 
             return result;
-
         }
+
         public EducationEstablishmentLink? GetEducationEstablishmentLinksByURN(long? urn)
         {
             var result = context.EducationEstablishmentLinks
@@ -40,7 +41,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
         public async Task<Establishment?> GetEstablishmentByUrn(string urn, CancellationToken cancellationToken)
         {
-            var queryResult = await BaseQuery().FirstOrDefaultAsync(r => r.Establishment.URN.ToString() == urn, cancellationToken: cancellationToken);
+            var queryResult = await BaseQuery().FirstOrDefaultAsync(r => r.Establishment.URN.ToString() == urn,
+                cancellationToken: cancellationToken);
 
             if (queryResult == null)
             {
@@ -52,7 +54,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
 
-        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, bool? excludeClosed, bool? matchAny, CancellationToken cancellationToken)
+        public async Task<List<Establishment>> Search(string name, string ukPrn, string urn, bool? excludeClosed,
+            bool? matchAny, CancellationToken cancellationToken)
         {
             IQueryable<EstablishmentQueryResult> query = BaseQuery();
 
@@ -74,8 +77,9 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return queryResult.Select(ToEstablishment).ToList();
         }
-        
-        public async Task<List<Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed, CancellationToken cancellationToken)
+
+        public async Task<List<Establishment>> SearchByNameStartsWith(string name, bool? excludeClosed,
+            CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -83,10 +87,11 @@ namespace Dfe.Academies.Infrastructure.Repositories
             }
 
             IQueryable<EstablishmentQueryResult> query = BaseQuery();
-            
-            
-            query = query.Where(r => r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.StartsWith(name));
-            
+
+
+            query = query.Where(r =>
+                r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.StartsWith(name));
+
 
             if (excludeClosed == true)
             {
@@ -97,7 +102,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return queryResult.Select(ToEstablishment).ToList();
         }
-        
+
 
         public async Task<IEnumerable<int>> GetURNsByRegion(string[] regions, CancellationToken cancellationToken)
         {
@@ -136,17 +141,32 @@ namespace Dfe.Academies.Infrastructure.Repositories
         {
             var establishmentIds =
                 await context.EducationEstablishmentTrusts
-                        .AsNoTracking()
-                        .Where(eet => eet.TrustId == Convert.ToInt32(trustId))
-                        .Select(eet => (long)eet.EducationEstablishmentId)
-                        .ToListAsync(cancellationToken);
+                    .AsNoTracking()
+                    .Where(eet => eet.TrustId == trustId)
+                    .Select(eet => eet.EducationEstablishmentId)
+                    .ToListAsync(cancellationToken);
 
             var establishments =
-                    await BaseQuery()
-                        .Where(r => establishmentIds.Contains(r.Establishment.SK.Value))
-                        .ToListAsync(cancellationToken);
+                await BaseQuery()
+                    .Where(r => establishmentIds.Contains(r.Establishment.SK.Value))
+                    .ToListAsync(cancellationToken);
 
             var result = establishments.Select(ToEstablishment).ToList();
+
+            return result;
+        }
+        
+        public async Task<string?> GetTrustNameByEstablishmentUrn(int? urn)
+        {
+            var result = await (
+                from establishment in context.Establishments.AsNoTracking()
+                join eet in context.EducationEstablishmentTrusts.AsNoTracking()
+                    on establishment.SK equals eet.EducationEstablishmentId
+                join trust in context.Trusts.AsNoTracking()
+                    on eet.TrustId equals trust.SK
+                where establishment.URN == urn
+                select trust.Name
+            ).FirstOrDefaultAsync();
 
             return result;
         }
@@ -154,12 +174,23 @@ namespace Dfe.Academies.Infrastructure.Repositories
         private IQueryable<EstablishmentQueryResult> BaseQuery()
         {
             var result =
-                 from establishment in context.Establishments
-                 from ifdPipeline in context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN).DefaultIfEmpty()
-                 from establishmentType in context.EstablishmentTypes.Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
-                 from establishmentGroupType in context.EstablishmentGroupTypes.Where(e => e.SK == establishment.EstablishmentGroupTypeId).DefaultIfEmpty()
-                 from localAuthority in context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId).DefaultIfEmpty()
-                 select new EstablishmentQueryResult { Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority, EstablishmentType = establishmentType, EstablishmentGroupType = establishmentGroupType };
+                from establishment in context.Establishments
+                from ifdPipeline in context.IfdPipelines.Where(i => i.GeneralDetailsUrn == establishment.PK_GIAS_URN)
+                    .DefaultIfEmpty()
+                from establishmentType in context.EstablishmentTypes
+                    .Where(e => e.SK == establishment.EstablishmentTypeId).DefaultIfEmpty()
+                from establishmentGroupType in context.EstablishmentGroupTypes
+                    .Where(e => e.SK == establishment.EstablishmentGroupTypeId).DefaultIfEmpty()
+                from localAuthority in context.LocalAuthorities.Where(l => l.SK == establishment.LocalAuthorityId)
+                    .DefaultIfEmpty()
+                from educationEstablishmentTrust in context.EducationEstablishmentTrusts
+                    .Where(e => e.EducationEstablishmentId == establishment.SK).DefaultIfEmpty()
+                select new EstablishmentQueryResult
+                {
+                    Establishment = establishment, IfdPipeline = ifdPipeline, LocalAuthority = localAuthority,
+                    EstablishmentType = establishmentType, EstablishmentGroupType = establishmentGroupType,
+                    EducationEstablishmentTrust = educationEstablishmentTrust
+                };
 
             return result;
         }
@@ -171,20 +202,26 @@ namespace Dfe.Academies.Infrastructure.Repositories
             result.LocalAuthority = queryResult.LocalAuthority;
             result.EstablishmentType = queryResult.EstablishmentType;
             result.EstablishmentGroupType = queryResult.EstablishmentGroupType;
+            result.EducationEstablishmentTrust = queryResult.EducationEstablishmentTrust;
 
             return result;
         }
 
-        private static IQueryable<EstablishmentQueryResult> ApplyMatchAnyFilter(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
+        private static IQueryable<EstablishmentQueryResult> ApplyMatchAnyFilter(
+            IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
         {
             return query.Where(r =>
-                (!string.IsNullOrEmpty(name) && r.Establishment.EstablishmentName != null && r.Establishment.EstablishmentName.Contains(name)) ||
-                (!string.IsNullOrEmpty(ukPrn) && r.Establishment.UKPRN != null && r.Establishment.UKPRN.Contains(ukPrn)) ||
-                (IsValidUrn(urn) && r.Establishment.URN.HasValue && r.Establishment.URN.Value.ToString().Contains(urn!)))
-            ;
+                    (!string.IsNullOrEmpty(name) && r.Establishment.EstablishmentName != null &&
+                     r.Establishment.EstablishmentName.Contains(name)) ||
+                    (!string.IsNullOrEmpty(ukPrn) && r.Establishment.UKPRN != null &&
+                     r.Establishment.UKPRN.Contains(ukPrn)) ||
+                    (IsValidUrn(urn) && r.Establishment.URN.HasValue &&
+                     r.Establishment.URN.Value.ToString().Contains(urn!)))
+                ;
         }
 
-        private static IQueryable<EstablishmentQueryResult> ApplyAllFilters(IQueryable<EstablishmentQueryResult> query, string? name, string? ukPrn, string? urn)
+        private static IQueryable<EstablishmentQueryResult> ApplyAllFilters(IQueryable<EstablishmentQueryResult> query,
+            string? name, string? ukPrn, string? urn)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -233,7 +270,8 @@ namespace Dfe.Academies.Infrastructure.Repositories
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<(IEnumerable<Diocese> dioceses, int recordCount)> SearchDioceses(string name, string code, CancellationToken cancellationToken)
+        public async Task<(IEnumerable<Diocese> dioceses, int recordCount)> SearchDioceses(string name, string code,
+            CancellationToken cancellationToken)
         {
             var query = context.Establishments
                 .AsNoTracking()
@@ -276,6 +314,6 @@ namespace Dfe.Academies.Infrastructure.Repositories
         public LocalAuthority LocalAuthority { get; set; }
         public EstablishmentType EstablishmentType { get; set; }
         public EstablishmentGroupType EstablishmentGroupType { get; set; }
+        public EducationEstablishmentTrust? EducationEstablishmentTrust { get; set; }
     }
-
 }

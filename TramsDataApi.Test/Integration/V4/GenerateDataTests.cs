@@ -82,8 +82,8 @@ namespace TramsDataApi.Test.Integration.V4
             {
                 var educationEstablishmentTrust = new EducationEstablishmentTrust()
                 {
-                    TrustId = (int)trust.SK,
-                    EducationEstablishmentId = (int)establishment.SK
+                    TrustId = trust.SK!.Value,
+                    EducationEstablishmentId = establishment.SK!.Value
                 };
 
                 result.Add(educationEstablishmentTrust);
