@@ -19,8 +19,8 @@ jobs:
   pack:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      packages: write
+      contents: read
+      packages: read
 
     steps:
       - name: Checkout code
