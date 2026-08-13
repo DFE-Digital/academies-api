@@ -16,41 +16,41 @@ namespace Dfe.Academies.Application.Establishment
             _dto.Ukprn = establishment.UKPRN ?? string.Empty;
             _dto.NoOfBoys = establishment.NumberOfBoys.ToString() ?? string.Empty;
             _dto.NoOfGirls = establishment.NumberOfGirls.ToString() ?? string.Empty;
-            _dto.GiasLastChangedDate = establishment?.GiasLastChangedDate.ToResponseDate() ?? string.Empty;
-            _dto.ReligousEthos = establishment?.ReligiousEthos ?? string.Empty;
-            _dto.SenUnitCapacity = establishment?.SenUnitCapacity.ToString() ?? string.Empty;
-            _dto.SenUnitOnRoll = establishment?.SenUnitOnRoll.ToString() ?? string.Empty;
-            _dto.Name = establishment?.EstablishmentName ?? string.Empty;
-            _dto.Urn = establishment?.URN.ToString() ?? string.Empty;
-            _dto.OfstedRating = establishment?.OfstedRating ?? string.Empty;
-            _dto.OfstedLastInspection = establishment?.OfstedLastInspection ?? string.Empty;
-            _dto.StatutoryLowAge = establishment?.StatutoryLowAge ?? string.Empty;
-            _dto.StatutoryHighAge = establishment?.StatutoryHighAge ?? string.Empty;
-            _dto.SchoolCapacity = establishment?.SchoolCapacity ?? string.Empty;
-            _dto.Pfi = establishment?.IfdPipeline?.DeliveryProcessPFI ?? string.Empty;
-            _dto.EstablishmentNumber = establishment?.EstablishmentNumber.ToString() ?? string.Empty;
-            _dto.Pan = establishment?.IfdPipeline?.DeliveryProcessPAN ?? string.Empty;
-            _dto.Deficit = establishment?.IfdPipeline?.ProjectTemplateInformationDeficit ?? string.Empty;
-            _dto.ViabilityIssue = establishment?.IfdPipeline?.ProjectTemplateInformationViabilityIssue ?? string.Empty;
+            _dto.GiasLastChangedDate = establishment.GiasLastChangedDate.ToResponseDate() ?? string.Empty;
+            _dto.ReligousEthos = establishment.ReligiousEthos ?? string.Empty;
+            _dto.SenUnitCapacity = establishment.SenUnitCapacity.ToString() ?? string.Empty;
+            _dto.SenUnitOnRoll = establishment.SenUnitOnRoll.ToString() ?? string.Empty;
+            _dto.Name = establishment.EstablishmentName ?? string.Empty;
+            _dto.Urn = establishment.URN.ToString() ?? string.Empty;
+            _dto.OfstedRating = establishment.OfstedRating ?? string.Empty;
+            _dto.OfstedLastInspection = establishment.OfstedLastInspection ?? string.Empty;
+            _dto.StatutoryLowAge = establishment.StatutoryLowAge ?? string.Empty;
+            _dto.StatutoryHighAge = establishment.StatutoryHighAge ?? string.Empty;
+            _dto.SchoolCapacity = establishment.SchoolCapacity ?? string.Empty;
+            _dto.Pfi = establishment.IfdPipeline?.DeliveryProcessPFI ?? string.Empty;
+            _dto.EstablishmentNumber = establishment.EstablishmentNumber.ToString() ?? string.Empty;
+            _dto.Pan = establishment.IfdPipeline?.DeliveryProcessPAN ?? string.Empty;
+            _dto.Deficit = establishment.IfdPipeline?.ProjectTemplateInformationDeficit ?? string.Empty;
+            _dto.ViabilityIssue = establishment.IfdPipeline?.ProjectTemplateInformationViabilityIssue ?? string.Empty;
 
-            _dto.HeadteacherTitle = establishment?.HeadTitle ?? string.Empty;
-            _dto.HeadteacherFirstName = establishment?.HeadFirstName ?? string.Empty;
-            _dto.HeadteacherLastName = establishment?.HeadLastName ?? string.Empty;
-            _dto.HeadteacherPreferredJobTitle = establishment?.HeadPreferredJobTitle ?? string.Empty;
+            _dto.HeadteacherTitle = establishment.HeadTitle ?? string.Empty;
+            _dto.HeadteacherFirstName = establishment.HeadFirstName ?? string.Empty;
+            _dto.HeadteacherLastName = establishment.HeadLastName ?? string.Empty;
+            _dto.HeadteacherPreferredJobTitle = establishment.HeadPreferredJobTitle ?? string.Empty;
             // main phone was made a string to be consistent but the entire dto probably need to make the strings nullable
             // for now empty assignment if it is null
-            _dto.MainPhone = establishment?.MainPhone ?? string.Empty;
+            _dto.MainPhone = establishment.MainPhone ?? string.Empty;
 
-            _dto.NurseryProvision = establishment?.NurseryProvision ?? string.Empty;
-            _dto.DateJoinedTrust = establishment?.EducationEstablishmentTrust?.DateJoinedTrust ?? string.Empty;
+            _dto.NurseryProvision = establishment.NurseryProvision ?? string.Empty;
+            _dto.DateJoinedTrust = establishment.EducationEstablishmentTrust?.DateJoinedTrust ?? string.Empty;
 
             return this;
         }
 
         public EstablishmentDtoBuilder WithLocalAuthority(Domain.Establishment.Establishment establishment)
         {
-            _dto.LocalAuthorityCode = establishment?.LocalAuthority?.Code ?? string.Empty;
-            _dto.LocalAuthorityName = establishment?.LocalAuthority?.Name ?? string.Empty;
+            _dto.LocalAuthorityCode = establishment.LocalAuthority?.Code ?? string.Empty;
+            _dto.LocalAuthorityName = establishment.LocalAuthority?.Name ?? string.Empty;
 
             return this;
         }
@@ -59,8 +59,8 @@ namespace Dfe.Academies.Application.Establishment
         {
             _dto.Diocese = new NameAndCodeDto
             {
-                Name = establishment?.Diocese ?? string.Empty,
-                Code = establishment?.DioceseCode ?? string.Empty
+                Name = establishment.Diocese ?? string.Empty,
+                Code = establishment.DioceseCode ?? string.Empty
             };
 
             return this;
@@ -70,8 +70,8 @@ namespace Dfe.Academies.Application.Establishment
         {
             _dto.EstablishmentType = new NameAndCodeDto
             {
-                Name = establishment?.EstablishmentType?.Name ?? string.Empty,
-                Code = establishment?.EstablishmentType?.Code ?? string.Empty
+                Name = establishment.EstablishmentType?.Name ?? string.Empty,
+                Code = establishment.EstablishmentType?.Code ?? string.Empty
             };
 
             return this;
@@ -81,8 +81,8 @@ namespace Dfe.Academies.Application.Establishment
         {
             _dto.Gor = new NameAndCodeDto
             {
-                Name = establishment?.GORregion ?? string.Empty,
-                Code = establishment?.GORregionCode ?? string.Empty
+                Name = establishment.GORregion ?? string.Empty,
+                Code = establishment.GORregionCode ?? string.Empty
             };
 
             return this;
@@ -92,8 +92,8 @@ namespace Dfe.Academies.Application.Establishment
         {
             _dto.PhaseOfEducation = new NameAndCodeDto
             {
-                Name = establishment?.PhaseOfEducation ?? string.Empty,
-                Code = establishment?.PhaseOfEducationCode.ToString() ?? string.Empty
+                Name = establishment.PhaseOfEducation ?? string.Empty,
+                Code = establishment.PhaseOfEducationCode.ToString() ?? string.Empty
             };
 
             return this;
