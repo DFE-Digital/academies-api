@@ -160,21 +160,21 @@ namespace Dfe.Academies.Application.Establishment
             return this;
         }
 
-        public EstablishmentDtoBuilder WithMISEstablishment(MisEstablishment establishment)
+        public EstablishmentDtoBuilder WithMISEstablishment(MisEstablishment? establishment)
         {
             _dto.MISEstablishment = new MisEstablishmentDto
             {
-                DateOfLatestSection8Inspection = establishment.DateOfLatestSection8Inspection ?? string.Empty,
+                DateOfLatestSection8Inspection = establishment?.DateOfLatestSection8Inspection ?? string.Empty,
                 InspectionEndDate = null!,
-                OverallEffectiveness = establishment.OverallEffectiveness ?? string.Empty,
-                QualityOfEducation = establishment.QualityOfEducation?.ToString() ?? string.Empty,
-                BehaviourAndAttitudes = establishment.BehaviourAndAttitudes?.ToString() ?? string.Empty,
-                PersonalDevelopment = establishment.PersonalDevelopment?.ToString() ?? string.Empty,
+                OverallEffectiveness = establishment?.OverallEffectiveness ?? string.Empty,
+                QualityOfEducation = establishment?.QualityOfEducation?.ToString() ?? string.Empty,
+                BehaviourAndAttitudes = establishment?.BehaviourAndAttitudes?.ToString() ?? string.Empty,
+                PersonalDevelopment = establishment?.PersonalDevelopment?.ToString() ?? string.Empty,
                 EffectivenessOfLeadershipAndManagement =
-                    establishment.EffectivenessOfLeadershipAndManagement?.ToString() ?? string.Empty,
-                EarlyYearsProvision = establishment.EarlyYearsProvisionWhereApplicable?.ToString() ?? string.Empty,
-                SixthFormProvision = establishment.SixthFormProvisionWhereApplicable.ToString() ?? string.Empty,
-                Weblink = establishment.WebLink ?? string.Empty
+                    establishment?.EffectivenessOfLeadershipAndManagement?.ToString() ?? string.Empty,
+                EarlyYearsProvision = establishment?.EarlyYearsProvisionWhereApplicable?.ToString() ?? string.Empty,
+                SixthFormProvision = establishment?.SixthFormProvisionWhereApplicable?.ToString() ?? string.Empty,
+                Weblink = establishment?.WebLink ?? string.Empty
             };
 
             return this;
