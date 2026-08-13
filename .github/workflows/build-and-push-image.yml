@@ -122,6 +122,9 @@ jobs:
     name: Tag and release
     needs: [ set-env, deploy ]
     runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -186,6 +189,9 @@ jobs:
     needs: [ set-env, deploy ]
     if: needs.set-env.outputs.environment == 'development'
     uses: ./.github/workflows/security-tests.yml
+    permissions:
+      id-token: write
+      contents: read
     with:
       environment: ${{ needs.set-env.outputs.environment }}
     secrets:
