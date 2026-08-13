@@ -186,6 +186,9 @@ jobs:
     needs: [ set-env, deploy ]
     if: needs.set-env.outputs.environment == 'development'
     uses: ./.github/workflows/security-tests.yml
+    permissions:
+      id-token: write
+      contents: read
     with:
       environment: ${{ needs.set-env.outputs.environment }}
     secrets:
