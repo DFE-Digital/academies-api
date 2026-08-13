@@ -2938,7 +2938,7 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         public string? TrustName { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("dateJoinedTrust", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTime? DateJoinedTrust { get; set; } = default!;
+        public string? DateJoinedTrust { get; set; } = default!;
 
         public string ToJson()
         {

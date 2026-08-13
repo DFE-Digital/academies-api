@@ -294,11 +294,7 @@ namespace Dfe.Academies.Application.Tests.Queries.Establishment
 
         private static bool HasMappedCorrectly(EstablishmentDto dto, Domain.Establishment.Establishment establishment, MisEstablishment misEstablishment, EducationEstablishmentLink educationEstablishmentLink, string trustName)
         {
-            DateTime? expectedDateJoinedTrust = DateTime.TryParse(
-                establishment.EducationEstablishmentTrust?.DateJoinedTrust,
-                out var dateJoinedTrust)
-                ? dateJoinedTrust
-                : null;
+            string? expectedDateJoinedTrust = establishment.EducationEstablishmentTrust?.DateJoinedTrust ?? string.Empty;
 
             return (
                 dto.Name == establishment.EstablishmentName &&

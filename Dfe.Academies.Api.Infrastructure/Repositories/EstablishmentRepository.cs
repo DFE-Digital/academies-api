@@ -156,7 +156,7 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return result;
         }
         
-        public async Task<string> GetTrustNameByEstablishmentUrn(int? urn)
+        public async Task<string?> GetTrustNameByEstablishmentUrn(int? urn)
         {
             var result = await (
                 from establishment in context.Establishments.AsNoTracking()
@@ -314,6 +314,6 @@ namespace Dfe.Academies.Infrastructure.Repositories
         public LocalAuthority LocalAuthority { get; set; }
         public EstablishmentType EstablishmentType { get; set; }
         public EstablishmentGroupType EstablishmentGroupType { get; set; }
-        public EducationEstablishmentTrust EducationEstablishmentTrust { get; set; }
+        public EducationEstablishmentTrust? EducationEstablishmentTrust { get; set; }
     }
 }
