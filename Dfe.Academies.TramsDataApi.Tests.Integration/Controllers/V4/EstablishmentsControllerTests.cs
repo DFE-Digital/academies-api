@@ -296,6 +296,48 @@ public class EstablishmentsControllerTests
         Assert.NotNull(result);
         Assert.Empty(result); 
     }
+    
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetByTrustReferenceNumberAsync_ShouldReturnAllEstablishments_By_TRN(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var trustReferenceNumber = "TR00024";
+        var urn = 22;
+         
+        // Act
+        var result = await establishmentsClient.GetByTrustReferenceNumberAsync(trustReferenceNumber);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Single(result);
+
+        var establishment = result.SingleOrDefault(x => x.Urn == urn.ToString());
+        Assert.NotNull(establishment);
+    }
+    
+    [Theory]
+    [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
+    public async Task GetByTrustReferenceNumberAsync_ShouldReturnEmptyArray_IfTrustTRNDoesNotMatch(
+        CustomWebApplicationDbContextFactory<Startup> factory,
+        IEstablishmentsV4Client establishmentsClient)
+    {
+        // Arrange
+        factory.TestClaims = default;
+
+        var trustUkprn = "TRN45563";
+
+        // Act
+        var result = await establishmentsClient.GetByTrustReferenceNumberAsync(trustUkprn);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Empty(result); 
+    }
 
     [Theory]
     [CustomAutoData(typeof(CustomWebApplicationDbContextFactoryCustomization<Startup>))]
