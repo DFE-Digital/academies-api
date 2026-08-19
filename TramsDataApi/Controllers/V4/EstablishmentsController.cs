@@ -288,7 +288,9 @@ namespace TramsDataApi.Controllers.V4
             CancellationToken cancellationToken)
         {
             var commaSeparatedRequestTrust = string.Join(",", trustReferenceNumber);
-            _logger.LogInformation($"Attemping to get establishments by Trust Reference Number : {commaSeparatedRequestTrust}");
+            _logger.LogInformation(
+                "Attempting to get establishments by Trust Reference Number: {TrustReferenceNumber}",
+                commaSeparatedRequestTrust);
             
             var establishments = await _establishmentQueries
                 .GetByTrustReferenceNumber(trustReferenceNumber, cancellationToken)
@@ -297,12 +299,15 @@ namespace TramsDataApi.Controllers.V4
             if (establishments == null)
             {
                 _logger.LogInformation(
-                    $"No establishment was found with the specific Trust Reference Number : {commaSeparatedRequestTrust}");
+                    "No establishment was found with the specific Trust Reference Number: {TrustReferenceNumber}",
+                    commaSeparatedRequestTrust);
 
                 return NotFound();
             }
-            
-            _logger.LogInformation($"Returning Establishments for Trust with specific Trust Reference Number : {commaSeparatedRequestTrust}");
+
+            _logger.LogInformation(
+                "Returning Establishments for Trust with specific Trust Reference Number: {TrustReferenceNumber}",
+                commaSeparatedRequestTrust);
             
             var response = new List<EstablishmentDto>(establishments);
 
