@@ -282,7 +282,9 @@ namespace TramsDataApi.Controllers.V4
             Description = "Returns a list of establishments specified by Trust Reference Number (TRN).")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
         [SwaggerResponse(404, "Establishments with specified TRN not found.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1873:Avoid potentially expensive logging", Justification = "Structured logging, handled by log levels")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarAnalyzer.CSharp",
+            "S2629:Logging message template should not vary between calls to LoggerExtensions.LogInformation",
+            Justification = "The logging template intentionally varies here.")]
         public async Task<ActionResult<List<EstablishmentDto>>> GetByTrustReferenceNumber(
             [FromQuery] string trustReferenceNumber,
             CancellationToken cancellationToken)
