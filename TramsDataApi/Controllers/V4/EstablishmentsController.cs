@@ -282,16 +282,14 @@ namespace TramsDataApi.Controllers.V4
             Description = "Returns a list of establishments specified by Trust Reference Number (TRN).")]
         [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
         [SwaggerResponse(404, "Establishments with specified TRN not found.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarAnalyzer.CSharp",
-            "S2629:Logging message template should not vary between calls to LoggerExtensions.LogInformation",
-            Justification = "The logging template intentionally varies here.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1873:Avoid potentially expensive logging", Justification = "Structured logging, handled by log levels")]
         public async Task<ActionResult<List<EstablishmentDto>>> GetByTrustReferenceNumber(
             [FromQuery] string trustReferenceNumber,
             CancellationToken cancellationToken)
         {
-            _logger.LogInformation(
-                $"Attempting to get establishments by Trust Reference Number : {trustReferenceNumber}");
-
+            var commaSeparatedRequestTrust = string.Join(",", trustReferenceNumber);
+            _logger.LogInformation($"Attemping to get establishments by Trust Reference Number : {commaSeparatedRequestTrust}");
+            
             var establishments = await _establishmentQueries
                 .GetByTrustReferenceNumber(trustReferenceNumber, cancellationToken)
                 .ConfigureAwait(false);
@@ -299,14 +297,13 @@ namespace TramsDataApi.Controllers.V4
             if (establishments == null)
             {
                 _logger.LogInformation(
-                    $"No establishment was found with the requested Trust Reference Number : {trustReferenceNumber}");
+                    $"No establishment was found with the specific Trust Reference Number : {commaSeparatedRequestTrust}");
 
                 return NotFound();
             }
-
-            _logger.LogInformation(
-                $"Returning Establishments for Trust Reference Number : {trustReferenceNumber}");
-
+            
+            _logger.LogInformation($"Returning Establishments for Trust with specific Trust Reference Number : {commaSeparatedRequestTrust}");
+            
             var response = new List<EstablishmentDto>(establishments);
 
             return Ok(response);
