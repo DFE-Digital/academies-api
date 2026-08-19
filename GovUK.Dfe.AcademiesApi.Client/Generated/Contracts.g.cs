@@ -509,6 +509,23 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string? trustUkprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Retrieves a list of establishments by their Trust Reference Number (TRN).
+        /// </summary>
+        /// <param name="trustReferenceNumber">Contains the Trust Reference Number (TRN) of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustReferenceNumberAsync(string? trustReferenceNumber);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a list of establishments by their Trust Reference Number (TRN).
+        /// </summary>
+        /// <param name="trustReferenceNumber">Contains the Trust Reference Number (TRN) of the establishments.</param>
+        /// <returns>Successfully found and returned the establishments.</returns>
+        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustReferenceNumberAsync(string? trustReferenceNumber, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Retrieves a list of establishments by their UKPRNs.
         /// </summary>
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>

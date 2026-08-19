@@ -1195,6 +1195,46 @@
         }
       }
     },
+    "/v4/establishments/trustReferenceNumber": {
+      "get": {
+        "tags": [
+          "EstablishmentsV4",
+          "Establishments"
+        ],
+        "summary": "Retrieves a list of establishments by their Trust Reference Number (TRN).",
+        "operationId": "GetByTrustReferenceNumber",
+        "parameters": [
+          {
+            "name": "trustReferenceNumber",
+            "in": "query",
+            "description": "Contains the Trust Reference Number (TRN) of the establishments.",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found and returned the establishments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstablishmentDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Establishments with specified TRN not found."
+          }
+        }
+      }
+    },
     "/v4/establishments/ukprn/bulk": {
       "get": {
         "tags": [

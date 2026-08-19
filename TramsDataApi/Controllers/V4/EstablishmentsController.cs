@@ -268,6 +268,47 @@ namespace TramsDataApi.Controllers.V4
             var response = new List<EstablishmentDto>(establishments);
             return Ok(response);
         }
+        
+        /// <summary>
+        /// Retrieves a list of establishments by their Trust Reference Number (TRN).
+        /// </summary>
+        /// <param name="trustReferenceNumber">Contains the Trust Reference Number (TRN) of the establishments.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>List of establishments or NotFound if none are available.</returns>
+        [HttpGet]
+        [Route("establishments/trustReferenceNumber")]
+        [SwaggerOperation(
+            Summary = "Get Establishments by Trust Reference Number (TRN)",
+            Description = "Returns a list of establishments specified by Trust Reference Number (TRN).")]
+        [SwaggerResponse(200, "Successfully found and returned the establishments.", typeof(List<EstablishmentDto>))]
+        [SwaggerResponse(404, "Establishments with specified TRN not found.")]
+        public async Task<ActionResult<List<EstablishmentDto>>> GetByTrustReferenceNumber(
+            [FromQuery] string trustReferenceNumber,
+            CancellationToken cancellationToken)
+        {
+            _logger.LogInformation(
+                $"Attempting to get establishments by Trust Reference Number : {trustReferenceNumber}");
+
+            var establishments = await _establishmentQueries
+                .GetByTrustReferenceNumber(trustReferenceNumber, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (establishments == null)
+            {
+                _logger.LogInformation(
+                    $"No establishment was found with the requested Trust Reference Number : {trustReferenceNumber}");
+
+                return NotFound();
+            }
+
+            _logger.LogInformation(
+                $"Returning Establishments for Trust Reference Number : {trustReferenceNumber}");
+
+            var response = new List<EstablishmentDto>(establishments);
+
+            return Ok(response);
+        }
+
 
         /// <summary>
         /// Retrieves a list of establishments by their UKPRNs.

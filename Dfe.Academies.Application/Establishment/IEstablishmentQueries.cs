@@ -13,5 +13,6 @@ namespace Dfe.Academies.Application.Establishment
         Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken);
         Task<List<EstablishmentDto>> GetByUkprns(string[] Ukprns, CancellationToken cancellationToken);
         Task<List<EstablishmentDto>> GetByTrust(string trustUkprn, CancellationToken cancellationToken);
+        Task<List<EstablishmentDto>> GetByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken);
     }
 }
