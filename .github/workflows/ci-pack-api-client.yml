@@ -14,7 +14,7 @@ jobs:
   wait-for-dotnet-ci:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       actions: read
     steps:
       - name: Wait for .NET Build and Test to succeed
