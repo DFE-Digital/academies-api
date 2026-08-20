@@ -77,6 +77,9 @@ jobs:
 
   pack-and-release:
     needs: wait-for-dotnet-ci
+    permissions:
+      contents: write
+      packages: read
     uses: ./.github/workflows/pack-template.yml
     with:
       project_name: GovUK.Dfe.AcademiesApi.Client
