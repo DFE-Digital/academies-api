@@ -73,6 +73,19 @@ namespace Dfe.Academies.Application.Establishment
             var establishments = await _establishmentRepository.GetByTrust(trust.SK, cancellationToken).ConfigureAwait(false);
             return establishments.Select(x => MapToEstablishmentDto(x)).ToList();
         }
+        
+        public async Task<List<EstablishmentDto>> GetByTrustReferenceNumber(string trustReferenceNumber, CancellationToken cancellationToken)
+        {
+            var trust = await _trustRepository.GetTrustByTrustReferenceNumber(trustReferenceNumber, cancellationToken);
+
+            if (trust == null)
+            {
+                return new List<EstablishmentDto>();
+            }
+
+            var establishments = await _establishmentRepository.GetByTrust(trust.SK, cancellationToken).ConfigureAwait(false);
+            return establishments.Select(x => MapToEstablishmentDto(x)).ToList();
+        }
 
         public async Task<List<EstablishmentDto>> GetByUrns(int[] Urns, CancellationToken cancellationToken)
         {

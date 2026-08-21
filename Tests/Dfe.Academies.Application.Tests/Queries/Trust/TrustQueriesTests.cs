@@ -139,6 +139,8 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
                 trust.Gor.Should().Be(domainTrust.GORregion);
             }  
         }
+        
+        
 
         [Fact]
         public async Task GetTrustsByEstablishmentUrns_ReturnsMappedDictionary()
