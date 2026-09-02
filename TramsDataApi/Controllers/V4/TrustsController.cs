@@ -170,6 +170,36 @@ namespace TramsDataApi.Controllers.V4
 
             return Ok(trusts);
         }
+        
+        /// <summary>
+        /// Returns Trusts based on supplied list of TRNs query parameter.
+        /// </summary>
+        /// <param name="trns">List of trns to search for.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A list of Trusts that match the trns.</returns>
+        [HttpGet]
+        [Route("trusts/trustReferenceNumber/bulk")]
+        [SwaggerOperation(Summary = "Get Trusts By Trust Reference Numbers (TRNs)", Description = "Retrieve multiple trusts by their Trust Reference Numbers (TRNs).")]
+        [SwaggerResponse(200, "Successfully retrieved the trusts.", typeof(List<TrustDto>))]
+        [SwaggerResponse(404, "The trusts were not found.")]
+        public async Task<ActionResult<List<TrustDto>>> GetByTrns([FromQuery] string[] trns, CancellationToken cancellationToken)
+        {
+            var commaSeparatedRequestTrns = string.Join(",", trns);
+            _logger.LogInformation($"Attempting to get Trusts by TRNs: {commaSeparatedRequestTrns}");
+
+            List<TrustDto> trusts = await trustQueries.GetByTrns(trns, cancellationToken);
+
+            if (trusts == null || !trusts.Any())
+            {
+                _logger.LogInformation($"No Trust was found for any of the requested TRNs: {commaSeparatedRequestTrns}");
+                return NotFound();
+            }
+
+            _logger.LogInformation($"Returning Trusts for TRNs: {commaSeparatedRequestTrns}");
+            _logger.LogDebug(JsonSerializer.Serialize(trusts));
+
+            return Ok(trusts);
+        }
 
         /// <summary>
         /// Returns Trusts based on supplied list of establishments URNs in the request body.

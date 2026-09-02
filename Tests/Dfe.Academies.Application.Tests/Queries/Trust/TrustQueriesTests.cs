@@ -140,7 +140,43 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
             }  
         }
         
-        
+        [Fact]
+        public async Task GetByTrns_TrustsReturnedFromRepo_ReturnsAListOfTrustDtos()
+        {
+            // Arrange
+            var trusts = _fixture.Create<List<Domain.Trust.Trust>>();
+            var mockRepo = new Mock<ITrustRepository>();
+            mockRepo.Setup(x => x.GetTrustsByTrns(It.IsAny<string[]>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(trusts));
+
+            var trustQueries = new TrustQueries(mockRepo.Object);
+            string[] trns = null;
+            CancellationToken cancellationToken = default(CancellationToken);
+
+            // Act
+            var result = await trustQueries.GetByTrns(
+                trns,
+                cancellationToken);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Count.Should().Be(trusts.Count);
+
+            foreach (var trust in result) {
+                var domainTrust = trusts.Single(x => x.GroupID == trust.ReferenceNumber);
+
+                trust.Name.Should().Be(domainTrust.Name);
+                trust.Address.Street.Should().Be(domainTrust.AddressLine1);
+                trust.Address.Additional.Should().Be(domainTrust.AddressLine2);
+                trust.Address.Locality.Should().Be(domainTrust.AddressLine3);
+                trust.Address.Town.Should().Be(domainTrust.Town);
+                trust.Address.Postcode.Should().Be(domainTrust.Postcode);
+                trust.Address.County.Should().Be(domainTrust.County);
+                trust.ReferenceNumber.Should().Be(domainTrust.GroupID);
+                trust.CompaniesHouseNumber.Should().Be(domainTrust.CompaniesHouseNumber);
+                trust.Ukprn.Should().Be(domainTrust.UKPRN);
+                trust.Gor.Should().Be(domainTrust.GORregion);
+            }  
+        }
 
         [Fact]
         public async Task GetTrustsByEstablishmentUrns_ReturnsMappedDictionary()
