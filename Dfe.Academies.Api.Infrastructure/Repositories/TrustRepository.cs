@@ -47,6 +47,14 @@ namespace Dfe.Academies.Infrastructure.Repositories
 
             return trusts;
         }
+        
+        public async Task<List<Trust>> GetTrustsByTrns(string[] trns, CancellationToken cancellationToken)
+        {
+            var trusts = await DefaultIncludes().AsNoTracking().Where(x => trns.Contains(x.GroupID))
+                .ToListAsync(cancellationToken).ConfigureAwait(false);
+
+            return trusts;
+        }
 
         public async Task<Dictionary<int, Trust>> GetTrustsByEstablishmentUrns(List<int> urns, CancellationToken cancellationToken)
         {

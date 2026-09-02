@@ -39,6 +39,14 @@ namespace Dfe.Academies.Application.Trust
 
             return trusts.Select(x => MapToTrustDto(x)).ToList();
         }
+        
+        public async Task<List<TrustDto>> GetByTrns(string[] trns, CancellationToken cancellationToken)
+        {
+            var trusts = await _trustRepository.GetTrustsByTrns(trns, cancellationToken).ConfigureAwait(false);
+
+            return trusts.Select(x => MapToTrustDto(x)).ToList();
+        }
+        
         public async Task<Dictionary<int, TrustDto>> GetTrustsByEstablishmentUrns(List<int> urns, CancellationToken cancellationToken)
         {
             var trustsByUrns = await _trustRepository.GetTrustsByEstablishmentUrns(urns, cancellationToken).ConfigureAwait(false);

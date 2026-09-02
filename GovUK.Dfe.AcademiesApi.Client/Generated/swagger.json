@@ -1727,6 +1727,51 @@
         }
       }
     },
+    "/v4/trusts/trustReferenceNumber/bulk": {
+      "get": {
+        "tags": [
+          "TrustsV4",
+          "Trusts"
+        ],
+        "summary": "Returns Trusts based on supplied list of TRNs query parameter.",
+        "operationId": "GetByTrns",
+        "parameters": [
+          {
+            "name": "trns",
+            "in": "query",
+            "style": "form",
+            "explode": true,
+            "description": "List of trns to search for.",
+            "schema": {
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the trusts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrustDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The trusts were not found."
+          }
+        }
+      }
+    },
     "/v4/trusts/establishments/urns": {
       "post": {
         "tags": [
