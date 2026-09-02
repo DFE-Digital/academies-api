@@ -188,14 +188,13 @@ namespace TramsDataApi.Controllers.V4
 
             List<TrustDto> trusts = await trustQueries.GetByTrns(trns, cancellationToken);
 
-            if (trusts == null || !trusts.Any())
+            if (trusts == null || trusts.Count == 0)
             {
                 _logger.LogInformation($"No Trust was found for any of the requested TRNs");
                 return NotFound();
             }
 
             _logger.LogInformation($"Returning Trusts for TRNs");
-            _logger.LogDebug(JsonSerializer.Serialize(trusts));
 
             return Ok(trusts);
         }

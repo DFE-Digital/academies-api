@@ -9,6 +9,14 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
 {
     public class TrustRepositoryTests : IDisposable
     {
+        private static readonly string[] MatchingUkprns = ["10000001", "10000003"];
+        private static readonly string[] MissingUkprn = ["99999999"];
+        private static readonly string[] MatchingTrns = ["TR00002", "TR00003"];
+        private static readonly string[] MissingTrn = ["TR99999"];
+        private static readonly List<int> MatchingEstablishmentUrns = [100001, 100002, 100003];
+        private static readonly List<int> MissingEstablishmentUrns = [999999];
+        private static readonly string[] OpenAndClosedTrustNames = ["Open Trust", "Closed Trust"];
+
         private readonly SqliteConnection _connection;
         private readonly MstrContext _context;
         private readonly TrustRepository _sut;
@@ -43,6 +51,7 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
         {
             _context.Dispose();
             _connection.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]
@@ -118,10 +127,10 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
             var trust3 = CreateTrust(3, "Gamma Trust", "10000003", "TR00003", "33333333", _multiAcademyTrustType);
             await SeedTrustsAsync(trust1, trust2, trust3);
 
-            var result = await _sut.GetTrustsByUkprns(new[] { "10000001", "10000003" }, CancellationToken.None);
+            var result = await _sut.GetTrustsByUkprns(MatchingUkprns, CancellationToken.None);
 
             result.Should().HaveCount(2);
-            result.Select(t => t.UKPRN).Should().BeEquivalentTo(new[] { "10000001", "10000003" });
+            result.Select(t => t.UKPRN).Should().BeEquivalentTo(MatchingUkprns);
         }
 
         [Fact]
@@ -130,7 +139,7 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
             var trust = CreateTrust(1, "Alpha Trust", "10000001", "TR00001", "11111111", _multiAcademyTrustType);
             await SeedTrustsAsync(trust);
 
-            var result = await _sut.GetTrustsByUkprns(new[] { "99999999" }, CancellationToken.None);
+            var result = await _sut.GetTrustsByUkprns(MissingUkprn, CancellationToken.None);
 
             result.Should().BeEmpty();
         }
@@ -143,10 +152,10 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
             var trust3 = CreateTrust(3, "Gamma Trust", "10000003", "TR00003", "33333333", _multiAcademyTrustType);
             await SeedTrustsAsync(trust1, trust2, trust3);
 
-            var result = await _sut.GetTrustsByTrns(new[] { "TR00002", "TR00003" }, CancellationToken.None);
+            var result = await _sut.GetTrustsByTrns(MatchingTrns, CancellationToken.None);
 
             result.Should().HaveCount(2);
-            result.Select(t => t.GroupID).Should().BeEquivalentTo(new[] { "TR00002", "TR00003" });
+            result.Select(t => t.GroupID).Should().BeEquivalentTo(MatchingTrns);
         }
 
         [Fact]
@@ -155,7 +164,7 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
             var trust = CreateTrust(1, "Alpha Trust", "10000001", "TR00001", "11111111", _multiAcademyTrustType);
             await SeedTrustsAsync(trust);
 
-            var result = await _sut.GetTrustsByTrns(new[] { "TR99999" }, CancellationToken.None);
+            var result = await _sut.GetTrustsByTrns(MissingTrn, CancellationToken.None);
 
             result.Should().BeEmpty();
         }
@@ -180,7 +189,7 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
                 new EducationEstablishmentTrust { SK = 2, EducationEstablishmentId = 20, TrustId = 2 });
             await _context.SaveChangesAsync();
 
-            var result = await _sut.GetTrustsByEstablishmentUrns(new List<int> { 100001, 100002, 100003 }, CancellationToken.None);
+            var result = await _sut.GetTrustsByEstablishmentUrns(MatchingEstablishmentUrns, CancellationToken.None);
 
             result.Should().HaveCount(2);
             result[100001].Name.Should().Be("Alpha Trust");
@@ -202,7 +211,7 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
         [Fact]
         public async Task GetTrustsByEstablishmentUrns_WhenNoMatches_ReturnsEmptyDictionary()
         {
-            var result = await _sut.GetTrustsByEstablishmentUrns(new List<int> { 999999 }, CancellationToken.None);
+            var result = await _sut.GetTrustsByEstablishmentUrns(MissingEstablishmentUrns, CancellationToken.None);
 
             result.Should().BeEmpty();
         }
@@ -300,7 +309,7 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
             var (trusts, totalCount) = await _sut.Search(1, 10, "Trust", null, null, TrustStatus.All, CancellationToken.None);
 
             totalCount.Should().Be(2);
-            trusts.Select(t => t.Name).Should().BeEquivalentTo(new[] { "Open Trust", "Closed Trust" });
+            trusts.Select(t => t.Name).Should().BeEquivalentTo(OpenAndClosedTrustNames);
         }
 
         [Fact]
