@@ -171,8 +171,6 @@ namespace TramsDataApi.Controllers.V4
             return Ok(trusts);
         }
         
-        // exclude from sonar checks
-        #pragma warning disable S1144
         /// <summary>
         /// Returns Trusts based on supplied list of TRNs query parameter.
         /// </summary>
@@ -186,18 +184,17 @@ namespace TramsDataApi.Controllers.V4
         [SwaggerResponse(404, "The trusts were not found.")]
         public async Task<ActionResult<List<TrustDto>>> GetByTrns([FromQuery] string[] trns, CancellationToken cancellationToken)
         {
-            var commaSeparatedRequestTrns = string.Join(",", trns);
-            _logger.LogInformation($"Attempting to get Trusts by TRNs: {commaSeparatedRequestTrns}");
+            _logger.LogInformation($"Attempting to get Trusts by TRNs");
 
             List<TrustDto> trusts = await trustQueries.GetByTrns(trns, cancellationToken);
 
             if (trusts == null || !trusts.Any())
             {
-                _logger.LogInformation($"No Trust was found for any of the requested TRNs: {commaSeparatedRequestTrns}");
+                _logger.LogInformation($"No Trust was found for any of the requested TRNs");
                 return NotFound();
             }
 
-            _logger.LogInformation($"Returning Trusts for TRNs: {commaSeparatedRequestTrns}");
+            _logger.LogInformation($"Returning Trusts for TRNs");
             _logger.LogDebug(JsonSerializer.Serialize(trusts));
 
             return Ok(trusts);
