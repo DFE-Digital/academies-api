@@ -171,6 +171,8 @@ namespace TramsDataApi.Controllers.V4
             return Ok(trusts);
         }
         
+        // exclude from sonar checks
+        #pragma warning disable S1144
         /// <summary>
         /// Returns Trusts based on supplied list of TRNs query parameter.
         /// </summary>

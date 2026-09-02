@@ -149,12 +149,12 @@ namespace Dfe.Academies.Application.Tests.Queries.Trust
             mockRepo.Setup(x => x.GetTrustsByTrns(It.IsAny<string[]>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(trusts));
 
             var trustQueries = new TrustQueries(mockRepo.Object);
-            string[] trns = null;
+            string[]? trns = null;
             CancellationToken cancellationToken = default(CancellationToken);
 
             // Act
             var result = await trustQueries.GetByTrns(
-                trns,
+                trns!,
                 cancellationToken);
 
             // Assert
