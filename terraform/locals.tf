@@ -16,10 +16,12 @@ locals {
   container_min_replicas                          = var.container_min_replicas
   container_port                                  = var.container_port
   enable_mssql_database                           = var.enable_mssql_database
+  mssql_server_name_override                      = var.mssql_server_name_override
   mssql_server_admin_password                     = var.mssql_server_admin_password
   mssql_azuread_admin_username                    = var.mssql_azuread_admin_username
   mssql_azuread_admin_object_id                   = var.mssql_azuread_admin_object_id
   mssql_sku_name                                  = var.mssql_sku_name
+  mssql_max_size_gb                               = var.mssql_max_size_gb
   mssql_database_name                             = var.mssql_database_name
   mssql_firewall_ipv4_allow_list                  = var.mssql_firewall_ipv4_allow_list
   enable_mssql_vulnerability_assessment           = var.enable_mssql_vulnerability_assessment
