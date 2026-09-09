@@ -154,7 +154,11 @@ namespace Dfe.Academies.Application.Establishment
                 PercentageFsm = establishment.PercentageFSM ?? string.Empty,
                 PercentageSen = censusData?.PSENELK ?? string.Empty,
                 PercentageEnglishAsSecondLanguage = censusData?.PNUMEAL ?? string.Empty,
-                PercentageFsmLastSixYears = censusData?.PNUMFSMEVER ?? string.Empty
+                PercentageFsmLastSixYears = censusData?.PNUMFSMEVER ?? string.Empty,
+                NumberEhcPlan = censusData?.TSENELSE ?? string.Empty,
+                PercentageEhcPlan = censusData?.PSENELK ?? string.Empty,
+                NumberSen = censusData?.TSENELK ?? string.Empty,
+                NumberEnglishAsSecondLanguage = censusData?.NUMEAL ?? string.Empty,
             };
 
             return this;

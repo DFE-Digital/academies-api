@@ -3007,6 +3007,18 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("percentageSen", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? PercentageSen { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("numberEhcPlan", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NumberEhcPlan { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("percentageEhcPlan", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PercentageEhcPlan { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("numberSen", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NumberSen { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("numberEnglishAsSecondLanguage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NumberEnglishAsSecondLanguage { get; set; } = default!;
+
         public string ToJson()
         {
 
