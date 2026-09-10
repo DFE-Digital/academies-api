@@ -224,6 +224,12 @@ variable "mssql_sku_name" {
   default     = "Basic"
 }
 
+variable "mssql_max_size_gb" {
+  description = "The max size of the database in gigabyte"
+  type        = number
+  default     = 10
+}
+
 variable "mssql_database_name" {
   description = "The name of the MSSQL database to create. Must be set if `enable_mssql_database` is true"
   type        = string
