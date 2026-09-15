@@ -49,6 +49,11 @@ namespace TramsDataApi.Factories
                 PreviousLastDayOfInspection = furtherEducationEstablishments.PreviousLastDayOfInspection,
                 PreviousOverallEffectiveness = furtherEducationEstablishments.PreviousOverallEffectiveness,
                 PreviousOverallEffectivenessRAW = string.Empty,
+                PreviousQualityOfEducation = furtherEducationEstablishments.PreviousQualityOfEducation.ToString(),
+                PreviousBehaviourAndAttitudes = furtherEducationEstablishments.PreviousBehaviourAndAttitudes.ToString(),
+                PreviousPersonalDevelopment = furtherEducationEstablishments.PreviousPersonalDevelopment.ToString(),
+                PreviousEffectivenessOfLeadershipAndManagement = furtherEducationEstablishments.PreviousEffectivenessOfLeadershipAndManagement.ToString(),
+                PreviousSafeguarding = furtherEducationEstablishments.PreviousSafeguarding
             };
         }
     }
