@@ -2967,6 +2967,26 @@
           "previousOverallEffectiveness": {
             "type": "string",
             "nullable": true
+          },
+          "previousQualityOfEducation": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousBehaviourAndAttitudes": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousPersonalDevelopment": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousEffectivenessOfLeadershipAndManagement": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousSafeguarding": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
