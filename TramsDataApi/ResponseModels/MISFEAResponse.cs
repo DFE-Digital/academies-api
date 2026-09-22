@@ -29,5 +29,10 @@ namespace TramsDataApi.ResponseModels
         public string PreviousLastDayOfInspection { get; set; }
         public string PreviousOverallEffectivenessRAW { get; set; }
         public string PreviousOverallEffectiveness { get; set; }
+        public string PreviousQualityOfEducation { get; set; }
+        public string PreviousBehaviourAndAttitudes { get; set; }
+        public string PreviousPersonalDevelopment { get; set; }
+        public string PreviousEffectivenessOfLeadershipAndManagement { get; set; }
+        public string PreviousSafeguarding { get; set; }
     }
 }
