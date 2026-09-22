@@ -94,13 +94,13 @@ jobs:
         fi
 
     - name: Build and pack
-      working-directory: Dfe.AcademiesApi.Client
+      working-directory: GovUK.Dfe.AcademiesApi.Client
       run: |
         dotnet build -c Release
         dotnet pack -c Release -p:PackageVersion=${{ env.NEW_VERSION }} --no-build --output ./artifacts
 
     - name: Push to NuGet.org
-      working-directory: Dfe.AcademiesApi.Client
+      working-directory: GovUK.Dfe.AcademiesApi.Client
       run: |
         dotnet nuget push ./artifacts/*.nupkg \
           --api-key "${{ secrets.NUGET_API_KEY }}" \
