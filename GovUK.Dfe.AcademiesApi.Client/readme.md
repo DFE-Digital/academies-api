@@ -8,4 +8,3 @@ To install the Academies API Client Library, use the following command in your .
 
 ```sh
 dotnet add package Dfe.AcademiesApi.Client
-
