@@ -3,7 +3,6 @@ using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Utils.Extensions;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
-using System.Globalization;
 
 namespace Dfe.Academies.Application.Establishment
 {
