@@ -4597,6 +4597,9 @@
           "misEstablishment": {
             "$ref": "#/components/schemas/MisEstablishmentDto"
           },
+          "misFurtherEducationEstablishment": {
+            "$ref": "#/components/schemas/MisFurtherEducationEstablishmentDto"
+          },
           "address": {
             "$ref": "#/components/schemas/AddressDto"
           },
@@ -4639,6 +4642,18 @@
           },
           "percentageSen": {
             "type": "string"
+          },
+          "numberEhcPlan": {
+            "type": "string"
+          },
+          "percentageEhcPlan": {
+            "type": "string"
+          },
+          "numberSen": {
+            "type": "string"
+          },
+          "numberEnglishAsSecondLanguage": {
+            "type": "string"
           }
         }
       },
@@ -4647,6 +4662,12 @@
         "additionalProperties": false,
         "properties": {
           "dateOfLatestSection8Inspection": {
+            "type": "string"
+          },
+          "section8InspectionOverallOutcome": {
+            "type": "string"
+          },
+          "inspectionStartDate": {
             "type": "string"
           },
           "inspectionEndDate": {
@@ -4674,6 +4695,93 @@
             "type": "string"
           },
           "weblink": {
+            "type": "string"
+          },
+          "categoryOfConcern": {
+            "type": "string"
+          },
+          "safeguardingIsEffective": {
+            "type": "string"
+          },
+          "previousInspectionStartDate": {
+            "type": "string"
+          },
+          "previousFullInspectionOverallEffectiveness": {
+            "type": "string"
+          },
+          "previousQualityOfEducation": {
+            "type": "string"
+          },
+          "previousBehaviourAndAttitudes": {
+            "type": "string"
+          },
+          "previousPersonalDevelopment": {
+            "type": "string"
+          },
+          "previousEffectivenessOfLeadershipAndManagement": {
+            "type": "string"
+          },
+          "previousEarlyYearsProvision": {
+            "type": "string"
+          },
+          "previousSixthFormProvision": {
+            "type": "string"
+          },
+          "previousCategoryOfConcern": {
+            "type": "string"
+          },
+          "previousSafeguardingIsEffective": {
+            "type": "string"
+          }
+        }
+      },
+      "MisFurtherEducationEstablishmentDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dateOfLatestSection8Inspection": {
+            "type": "string"
+          },
+          "lastDayOfInspection": {
+            "type": "string"
+          },
+          "overallEffectiveness": {
+            "type": "string"
+          },
+          "qualityOfEducation": {
+            "type": "string"
+          },
+          "behaviourAndAttitudes": {
+            "type": "string"
+          },
+          "personalDevelopment": {
+            "type": "string"
+          },
+          "effectivenessOfLeadershipAndManagement": {
+            "type": "string"
+          },
+          "safeguardingIsEffective": {
+            "type": "string"
+          },
+          "previousLastDayOfInspection": {
+            "type": "string"
+          },
+          "previousOverallEffectiveness": {
+            "type": "string"
+          },
+          "previousQualityOfEducation": {
+            "type": "string"
+          },
+          "previousBehaviourAndAttitudes": {
+            "type": "string"
+          },
+          "previousPersonalDevelopment": {
+            "type": "string"
+          },
+          "previousEffectivenessOfLeadershipAndManagement": {
+            "type": "string"
+          },
+          "previousSafeguardingIsEffective": {
             "type": "string"
           }
         }
