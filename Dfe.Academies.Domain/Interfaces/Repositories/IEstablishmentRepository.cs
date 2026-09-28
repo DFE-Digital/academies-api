@@ -20,5 +20,6 @@ namespace Dfe.Academies.Domain.Interfaces.Repositories
         Task<Diocese?> GetDioceseByCode(string code, CancellationToken cancellationToken);
         Task<(IEnumerable<Diocese> dioceses, int recordCount)> SearchDioceses(string name, string code, CancellationToken cancellationToken);
         Task<string?> GetTrustNameByEstablishmentUrn(int? urn);
+        FurtherEducationEstablishment? GetFurtherEducationEstablishmentByUrn(int? urn);
     }
 }

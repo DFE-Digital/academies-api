@@ -107,6 +107,8 @@ namespace Dfe.Academies.Application.Establishment
             var misEstablishment = _establishmentRepository.GetMisEstablishmentByURN(establishment.URN);
             var previousEstablishment = _establishmentRepository.GetEducationEstablishmentLinksByURN(establishment.SK);
             var trustName = _establishmentRepository.GetTrustNameByEstablishmentUrn(establishment.URN).Result;
+            var furtherEducationEstablishment =
+                _establishmentRepository.GetFurtherEducationEstablishmentByUrn(establishment.URN);
             
             //add trust name
             var result = new EstablishmentDtoBuilder()
@@ -121,6 +123,7 @@ namespace Dfe.Academies.Application.Establishment
                 .WithParliamentaryConstituency(establishment)
                 .WithCensus(establishment, censusData)
                 .WithMISEstablishment(misEstablishment)
+                .WithFurtherEducationEstablishment(furtherEducationEstablishment)
                 .WithAddress(establishment)
                 .WithPreviousEstablishment(previousEstablishment)
                 .WithTrustName(trustName)

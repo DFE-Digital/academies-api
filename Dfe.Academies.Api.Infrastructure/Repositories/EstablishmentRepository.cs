@@ -11,6 +11,11 @@ namespace Dfe.Academies.Infrastructure.Repositories
             return misMstrContext.Establishments.FirstOrDefault(m => m.Urn == urn);
         }
 
+        public FurtherEducationEstablishment? GetFurtherEducationEstablishmentByUrn(int? urn)
+        {
+            return misMstrContext.FurtherEducationEstablishments.FirstOrDefault(f => f.ProviderUrn == urn);
+        }
+
         public ReportCardFullInspection? GetOfstedReportCardsByURN(int? urn)
         {
             return misMstrContext.ReportCardsFullInspection.FirstOrDefault(m => m.Urn == urn);

@@ -2974,6 +2974,9 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("misEstablishment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public MisEstablishmentDto? MisEstablishment { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("misFurtherEducationEstablishment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MisFurtherEducationEstablishmentDto? MisFurtherEducationEstablishment { get; set; } = default!;
+
         [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public AddressDto? Address { get; set; } = default!;
 
@@ -3022,6 +3025,18 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("percentageSen", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? PercentageSen { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("numberEhcPlan", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NumberEhcPlan { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("percentageEhcPlan", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PercentageEhcPlan { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("numberSen", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NumberSen { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("numberEnglishAsSecondLanguage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? NumberEnglishAsSecondLanguage { get; set; } = default!;
+
         public string ToJson()
         {
 
@@ -3042,6 +3057,12 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
 
         [Newtonsoft.Json.JsonProperty("dateOfLatestSection8Inspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? DateOfLatestSection8Inspection { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("section8InspectionOverallOutcome", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Section8InspectionOverallOutcome { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("inspectionStartDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? InspectionStartDate { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("inspectionEndDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? InspectionEndDate { get; set; } = default!;
@@ -3070,6 +3091,42 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         [Newtonsoft.Json.JsonProperty("weblink", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Weblink { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("categoryOfConcern", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? CategoryOfConcern { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("safeguardingIsEffective", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? SafeguardingIsEffective { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousInspectionStartDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousInspectionStartDate { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousFullInspectionOverallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousFullInspectionOverallEffectiveness { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousQualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousQualityOfEducation { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousBehaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousBehaviourAndAttitudes { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousPersonalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousPersonalDevelopment { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousEffectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousEffectivenessOfLeadershipAndManagement { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousEarlyYearsProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousEarlyYearsProvision { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousSixthFormProvision", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousSixthFormProvision { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousCategoryOfConcern", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousCategoryOfConcern { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousSafeguardingIsEffective", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousSafeguardingIsEffective { get; set; } = default!;
+
         public string ToJson()
         {
 
@@ -3080,6 +3137,69 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<MisEstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class MisFurtherEducationEstablishmentDto
+    {
+
+        [Newtonsoft.Json.JsonProperty("dateOfLatestSection8Inspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? DateOfLatestSection8Inspection { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("lastDayOfInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? LastDayOfInspection { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("overallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? OverallEffectiveness { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("qualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? QualityOfEducation { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("behaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? BehaviourAndAttitudes { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("personalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PersonalDevelopment { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("effectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? EffectivenessOfLeadershipAndManagement { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("safeguardingIsEffective", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? SafeguardingIsEffective { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousLastDayOfInspection", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousLastDayOfInspection { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousOverallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousOverallEffectiveness { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousQualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousQualityOfEducation { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousBehaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousBehaviourAndAttitudes { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousPersonalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousPersonalDevelopment { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousEffectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousEffectivenessOfLeadershipAndManagement { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("previousSafeguardingIsEffective", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? PreviousSafeguardingIsEffective { get; set; } = default!;
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static MisFurtherEducationEstablishmentDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<MisFurtherEducationEstablishmentDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
     }

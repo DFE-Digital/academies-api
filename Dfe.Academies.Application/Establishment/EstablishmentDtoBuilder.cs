@@ -3,7 +3,6 @@ using Dfe.Academies.Domain.Establishment;
 using Dfe.Academies.Utils.Extensions;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4;
 using GovUK.Dfe.CoreLibs.Contracts.Academies.V4.Establishments;
-using System.Globalization;
 
 namespace Dfe.Academies.Application.Establishment
 {
@@ -165,7 +164,8 @@ namespace Dfe.Academies.Application.Establishment
             _dto.MISEstablishment = new MisEstablishmentDto
             {
                 DateOfLatestSection8Inspection = establishment?.DateOfLatestSection8Inspection ?? string.Empty,
-                InspectionEndDate = null!,
+                Section8InspectionOverallOutcome = establishment?.Section8InspectionOverallOutcome ?? string.Empty,
+                InspectionStartDate =  establishment?.InspectionStartDate ?? string.Empty,
                 OverallEffectiveness = establishment?.OverallEffectiveness ?? string.Empty,
                 QualityOfEducation = establishment?.QualityOfEducation?.ToString() ?? string.Empty,
                 BehaviourAndAttitudes = establishment?.BehaviourAndAttitudes?.ToString() ?? string.Empty,
@@ -174,7 +174,44 @@ namespace Dfe.Academies.Application.Establishment
                     establishment?.EffectivenessOfLeadershipAndManagement?.ToString() ?? string.Empty,
                 EarlyYearsProvision = establishment?.EarlyYearsProvisionWhereApplicable?.ToString() ?? string.Empty,
                 SixthFormProvision = establishment?.SixthFormProvisionWhereApplicable?.ToString() ?? string.Empty,
-                Weblink = establishment?.WebLink ?? string.Empty
+                Weblink = establishment?.WebLink ?? string.Empty,
+                CategoryOfConcern = establishment?.CategoryOfConcern ?? string.Empty,
+                SafeguardingIsEffective = establishment?.SafeguardingIsEffective ?? string.Empty,
+                PreviousInspectionStartDate =  establishment?.PreviousInspectionStartDate ?? string.Empty,
+                PreviousFullInspectionOverallEffectiveness = establishment?.PreviousFullInspectionOverallEffectiveness ?? string.Empty,
+                PreviousQualityOfEducation = establishment?.PreviousQualityOfEducation.ToString() ?? string.Empty,
+                PreviousBehaviourAndAttitudes = establishment?.PreviousBehaviourAndAttitudes?.ToString() ?? string.Empty,
+                PreviousPersonalDevelopment = establishment?.PreviousPersonalDevelopment?.ToString() ?? string.Empty,
+                PreviousEffectivenessOfLeadershipAndManagement = establishment?.PreviousEffectivenessOfLeadershipAndManagement?.ToString() ?? string.Empty,
+                PreviousEarlyYearsProvision = establishment?.PreviousEarlyYearsProvisionWhereApplicable?.ToString() ?? string.Empty,
+                PreviousSixthFormProvision = establishment?.PreviousSixthFormProvisionWhereApplicable ?? string.Empty,
+                PreviousCategoryOfConcern = establishment?.PreviousCategoryOfConcern ?? string.Empty,
+                PreviousSafeguardingIsEffective = establishment?.PreviousSafeguardingIsEffective ?? string.Empty,
+            };
+
+            return this;
+        }
+
+        public EstablishmentDtoBuilder WithFurtherEducationEstablishment(FurtherEducationEstablishment? establishment)
+        {
+            _dto.MisFurtherEducationEstablishment = new MisFurtherEducationEstablishmentDto
+            {
+                DateOfLatestSection8Inspection = establishment?.DateOfLatestShortInspection ?? string.Empty,
+                LastDayOfInspection = establishment?.LastDayOfInspection ?? string.Empty,
+                OverallEffectiveness = establishment?.OverallEffectiveness ?? string.Empty,
+                QualityOfEducation = establishment?.QualityOfEducation?.ToString() ?? string.Empty,
+                BehaviourAndAttitudes = establishment?.BehaviourAndAttitudes?.ToString() ?? string.Empty,
+                PersonalDevelopment = establishment?.PersonalDevelopment?.ToString() ?? string.Empty,
+                EffectivenessOfLeadershipAndManagement =
+                    establishment?.EffectivenessOfLeadershipAndManagement?.ToString() ?? string.Empty,
+                SafeguardingIsEffective = establishment?.IsSafeguardingEffective ?? string.Empty,
+                PreviousLastDayOfInspection =  establishment?.PreviousLastDayOfInspection ?? string.Empty,
+                PreviousOverallEffectiveness = establishment?.PreviousOverallEffectiveness ?? string.Empty,
+                PreviousQualityOfEducation = establishment?.PreviousQualityOfEducation.ToString() ?? string.Empty,
+                PreviousBehaviourAndAttitudes = establishment?.PreviousBehaviourAndAttitudes?.ToString() ?? string.Empty,
+                PreviousPersonalDevelopment = establishment?.PreviousPersonalDevelopment?.ToString() ?? string.Empty,
+                PreviousEffectivenessOfLeadershipAndManagement = establishment?.PreviousEffectivenessOfLeadershipAndManagement?.ToString() ?? string.Empty,
+                PreviousSafeguardingIsEffective = establishment?.PreviousSafeguarding ?? string.Empty,
             };
 
             return this;
