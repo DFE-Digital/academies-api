@@ -388,57 +388,31 @@ namespace TramsDataApi.DatabaseModels
                     .HasColumnName("Section41Approved (name)")
                     .IsUnicode(false);
 
-                entity.Property(e => e.Sen10Name)
-                    .HasColumnName("SEN10 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen10Name);
 
-                entity.Property(e => e.Sen11Name)
-                    .HasColumnName("SEN11 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen11Name);
 
-                entity.Property(e => e.Sen12Name)
-                    .HasColumnName("SEN12 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen12Name);
 
-                entity.Property(e => e.Sen13Name)
-                    .HasColumnName("SEN13 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen13Name);
 
-                entity.Property(e => e.Sen1Name)
-                    .HasColumnName("SEN1 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen1Name);
 
-                entity.Property(e => e.Sen2Name)
-                    .HasColumnName("SEN2 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen2Name);
 
-                entity.Property(e => e.Sen3Name)
-                    .HasColumnName("SEN3 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen3Name);
 
-                entity.Property(e => e.Sen4Name)
-                    .HasColumnName("SEN4 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen4Name);
 
-                entity.Property(e => e.Sen5Name)
-                    .HasColumnName("SEN5 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen5Name);
 
-                entity.Property(e => e.Sen6Name)
-                    .HasColumnName("SEN6 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen6Name);
 
-                entity.Property(e => e.Sen7Name)
-                    .HasColumnName("SEN7 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen7Name);
 
-                entity.Property(e => e.Sen8Name)
-                    .HasColumnName("SEN8 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen8Name);
 
-                entity.Property(e => e.Sen9Name)
-                    .HasColumnName("SEN9 (name)")
-                    .IsUnicode(false);
+                entity.Ignore(e => e.Sen9Name);
 
                 entity.Property(e => e.SenUnitCapacity).IsUnicode(false);
 
