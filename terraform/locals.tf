@@ -16,6 +16,9 @@ locals {
   container_min_replicas                          = var.container_min_replicas
   container_port                                  = var.container_port
   enable_mssql_database                           = var.enable_mssql_database
+  enable_mssql_audit_logs                         = var.enable_mssql_audit_logs
+  enable_mssql_security_audit_events              = var.enable_mssql_security_audit_events
+  mssql_server_name_override                      = var.mssql_server_name_override
   mssql_server_admin_password                     = var.mssql_server_admin_password
   mssql_azuread_admin_username                    = var.mssql_azuread_admin_username
   mssql_azuread_admin_object_id                   = var.mssql_azuread_admin_object_id
