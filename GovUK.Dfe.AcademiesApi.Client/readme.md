@@ -7,4 +7,4 @@ The Academies API Client Library provides a convenient and straightforward way t
 To install the Academies API Client Library, use the following command in your .NET project:
 
 ```sh
-dotnet add package Dfe.AcademiesApi.Client
+dotnet add package GovUK.Dfe.AcademiesApi.Client

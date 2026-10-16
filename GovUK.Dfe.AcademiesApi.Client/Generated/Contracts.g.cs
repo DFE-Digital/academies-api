@@ -509,23 +509,6 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustAsync(string? trustUkprn, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Retrieves a list of establishments by their Trust Reference Number (TRN).
-        /// </summary>
-        /// <param name="trustReferenceNumber">Contains the Trust Reference Number (TRN) of the establishments.</param>
-        /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustReferenceNumberAsync(string? trustReferenceNumber);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Retrieves a list of establishments by their Trust Reference Number (TRN).
-        /// </summary>
-        /// <param name="trustReferenceNumber">Contains the Trust Reference Number (TRN) of the establishments.</param>
-        /// <returns>Successfully found and returned the establishments.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<EstablishmentDto>> GetByTrustReferenceNumberAsync(string? trustReferenceNumber, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
         /// Retrieves a list of establishments by their UKPRNs.
         /// </summary>
         /// <param name="ukprn">Contains UKPRNs of the establishments.</param>
@@ -729,23 +712,6 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
         /// <returns>Successfully retrieved the trusts.</returns>
         /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByUkprnsAllAsync(System.Collections.Generic.IEnumerable<string>? ukprns, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Returns Trusts based on supplied list of TRNs query parameter.
-        /// </summary>
-        /// <param name="trns">List of trns to search for.</param>
-        /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByTrnsAsync(System.Collections.Generic.IEnumerable<string>? trns);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Returns Trusts based on supplied list of TRNs query parameter.
-        /// </summary>
-        /// <param name="trns">List of trns to search for.</param>
-        /// <returns>Successfully retrieved the trusts.</returns>
-        /// <exception cref="AcademiesApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<TrustDto>> GetByTrnsAsync(System.Collections.Generic.IEnumerable<string>? trns, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns Trusts based on supplied list of establishments URNs in the request body.
@@ -1554,21 +1520,6 @@ namespace GovUK.Dfe.AcademiesApi.Client.Contracts
 
         [Newtonsoft.Json.JsonProperty("previousOverallEffectiveness", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? PreviousOverallEffectiveness { get; set; } = default!;
-
-        [Newtonsoft.Json.JsonProperty("previousQualityOfEducation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? PreviousQualityOfEducation { get; set; } = default!;
-
-        [Newtonsoft.Json.JsonProperty("previousBehaviourAndAttitudes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? PreviousBehaviourAndAttitudes { get; set; } = default!;
-
-        [Newtonsoft.Json.JsonProperty("previousPersonalDevelopment", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? PreviousPersonalDevelopment { get; set; } = default!;
-
-        [Newtonsoft.Json.JsonProperty("previousEffectivenessOfLeadershipAndManagement", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? PreviousEffectivenessOfLeadershipAndManagement { get; set; } = default!;
-
-        [Newtonsoft.Json.JsonProperty("previousSafeguarding", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? PreviousSafeguarding { get; set; } = default!;
 
         public string ToJson()
         {

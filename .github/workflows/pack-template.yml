@@ -12,8 +12,9 @@ on:
         type: string
         description: "Relative path to the project .csproj"
     secrets:
-      NUGET_API_KEY:
+      NUGET_USER:
         required: true
+        description: "nuget.org profile name (not email) that owns the Trusted Publishing policy"
 
 jobs:
   pack:
@@ -21,6 +22,7 @@ jobs:
     permissions:
       contents: write
       packages: read
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -77,15 +79,6 @@ jobs:
             --name github \
             https://nuget.pkg.github.com/DFE-Digital/index.json
 
-      - name: Verify API Key
-        run: |
-          if [ -z "${{ secrets.NUGET_API_KEY }}" ]; then
-            echo "❌ NUGET_API_KEY secret is not available"
-            exit 1
-          else
-            echo "✅ NUGET_API_KEY secret is available"
-          fi
-
       - name: Build and pack
         run: |
           dotnet build ${{ inputs.project_path }} -c Release
@@ -95,10 +88,17 @@ jobs:
             --no-build \
             --output ./artifacts
 
+      # The temporary API key is only valid for 1 hour, so request it right before pushing.
+      - name: NuGet login (OIDC Trusted Publishing)
+        uses: NuGet/login@v1
+        id: nuget_login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
       - name: Push to NuGet.org
         run: |
           dotnet nuget push ./artifacts/*.nupkg \
-            --api-key "${{ secrets.NUGET_API_KEY }}" \
+            --api-key "${{ steps.nuget_login.outputs.NUGET_API_KEY }}" \
             --source "https://api.nuget.org/v3/index.json" \
             --skip-duplicate
 

@@ -5,10 +5,17 @@ on:
     branches: [ main ]
     paths:
       - "GovUK.Dfe.AcademiesApi.Client/**"
+      - ".github/workflows/ci-pack-api-client.yml"
+      - ".github/workflows/pack-template.yml"
+      - "GitVersion.yml"
   pull_request:
     branches: [ main ]
     paths:
       - "GovUK.Dfe.AcademiesApi.Client/**"
+      - ".github/workflows/ci-pack-api-client.yml"
+      - ".github/workflows/pack-template.yml"
+      - "GitVersion.yml"
+
 
 jobs:
   wait-for-dotnet-ci:
@@ -80,9 +87,10 @@ jobs:
     permissions:
       contents: write
       packages: read
+      id-token: write
     uses: ./.github/workflows/pack-template.yml
     with:
       project_name: GovUK.Dfe.AcademiesApi.Client
       project_path: GovUK.Dfe.AcademiesApi.Client/GovUK.Dfe.AcademiesApi.Client.csproj
     secrets:
-      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      NUGET_USER: ${{ secrets.NUGET_USER }}
