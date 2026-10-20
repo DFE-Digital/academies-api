@@ -25,98 +25,101 @@ export const options = {
   },
   // Baseline capture only, not a load test: every scenario runs on a single
   // VU with a handful of sequential iterations (shared-iterations), and
-  // scenarios are staggered far enough apart that they never run
+  // scenarios are staggered just far enough apart that they never run
   // concurrently - this keeps us from overloading the shared dev
-  // environment. establishmentsV5 gets a much longer startTime gap and
-  // maxDuration because its unfiltered /establishments search is known to
-  // be very slow (N+1 lookups per establishment, no pagination).
+  // environment. Observed runs complete each of these fast scenarios in
+  // ~8-10s, so a 45s startTime step (and 1m maxDuration safety cap) leaves
+  // a healthy margin without the long idle waits a bigger step would cause.
+  // establishmentsV5 gets a much longer startTime gap and maxDuration
+  // because its unfiltered /establishments search is known to be very slow
+  // (N+1 lookups per establishment, no pagination).
   scenarios: {
     v1Establishments: {
       exec: 'v1est',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m'
+      maxDuration: '1m'
     },
     v1Trusts: {
       exec: 'v1t',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '3m'
+      maxDuration: '1m',
+      startTime: '45s'
     },
     keyStagePerformance: {
       exec: 'ksp',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '6m'
+      maxDuration: '1m',
+      startTime: '90s'
     },
     baselineTracker: {
       exec: 'bt',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '9m'
+      maxDuration: '1m',
+      startTime: '135s'
     },
     fssProjects: {
       exec: 'fss',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '12m'
+      maxDuration: '1m',
+      startTime: '180s'
     },
     trustsV3: {
       exec: 'v3t',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '15m'
+      maxDuration: '1m',
+      startTime: '225s'
     },
     establishments: {
       exec: 'est',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '18m'
+      maxDuration: '1m',
+      startTime: '270s'
     },
     trustsV4: {
       exec: 'v4t',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '21m'
+      maxDuration: '1m',
+      startTime: '315s'
     },
     diocese: {
       exec: 'dio',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '24m'
+      maxDuration: '1m',
+      startTime: '360s'
     },
     localAuthorities: {
       exec: 'la',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '27m'
+      maxDuration: '1m',
+      startTime: '405s'
     },
     significantChanges: {
       exec: 'sc',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '3m',
-      startTime: '30m'
+      maxDuration: '1m',
+      startTime: '450s'
     },
     establishmentsV5: {
       exec: 'v5est',
@@ -124,7 +127,7 @@ export const options = {
       vus: 1,
       iterations: 3,
       maxDuration: '10m',
-      startTime: '33m'
+      startTime: '495s'
     },
   }
 }
