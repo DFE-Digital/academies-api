@@ -1,6 +1,7 @@
 import http from 'k6/http'
 import { sleep } from 'k6'
 import { isStatus200, getHeaders } from '../utils/utils.js'
+import { recordDuration } from '../utils/metrics.js'
 
 export const options = {
   thresholds: {
@@ -37,6 +38,7 @@ function getTrustByUkPrn(ukprn) {
   })
 
   isStatus200(res)
+  recordDuration('v3_trust_by_ukprn', res)
 }
 
 function searchTrustByName(name) {
@@ -45,6 +47,7 @@ function searchTrustByName(name) {
   })
 
   isStatus200(res)
+  recordDuration('v3_trusts_search_by_name', res)
 }
 
 function searchTrustByUkPrn(ukprn) {
@@ -53,4 +56,5 @@ function searchTrustByUkPrn(ukprn) {
   })
 
   isStatus200(res)
+  recordDuration('v3_trusts_search_by_ukprn', res)
 }

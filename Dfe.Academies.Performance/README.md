@@ -16,6 +16,7 @@ The variables you will need to set are defined below:
 |---|---|---|
 | `API_KEY` | The API key used in headers for requests | `app-key` |
 | `BASE_URL` | The url of the service to be tested | `https//localhost:5001` |
+| `ENVIRONMENT` | A short label for the environment under test, used to tag/name baseline output files | `t1`, `rgat` |
 
 ## Running the tests
 
@@ -23,6 +24,38 @@ To run an individual script, navigate to the correct directory and run
 
 `k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> <your-script-name>`
 
+To run the full suite (every endpoint) and capture per-endpoint timings in one go, run `suite.js` from the `scripts` directory and set `ENVIRONMENT` to label the run:
+
+`k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> -e ENVIRONMENT=t1 suite.js`
+
 ## Results
 
 By default, metrics are output to the console at the end of the tests, including any checks that are run as part of the test scripts.
+
+Running `suite.js` also writes:
+- `summary.html` - the existing k6-reporter HTML summary.
+- `results/baseline-<ENVIRONMENT>-<timestamp>.json` - a normalised snapshot of every endpoint's response-time stats (avg/min/med/p90/p95/max/count), tagged with the `ENVIRONMENT` label and the host of `BASE_URL` (no secrets/API keys are written).
+
+Both outputs are gitignored - treat `results/` as local, disposable evidence you keep around to compare runs.
+
+## Setting and comparing a baseline (e.g. t1 vs rgat)
+
+This suite is primarily intended to capture a timing **baseline** against the current `t1` database connection, so it can later be compared against the same suite run after the environment is pointed at `rgat`, to spot regressions caused by the database change.
+
+1. While the dev environment is still connected to `t1`, run the suite and label it accordingly:
+
+   `k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> -e ENVIRONMENT=t1 suite.js`
+
+   This produces `results/baseline-t1-<timestamp>.json`. Keep this file somewhere safe (it isn't committed).
+
+2. After the environment is switched to `rgat`, run the exact same suite again with the new label:
+
+   `k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> -e ENVIRONMENT=rgat suite.js`
+
+   This produces `results/baseline-rgat-<timestamp>.json`.
+
+3. Compare the two baseline files:
+
+   `node compare-baseline.js results/baseline-t1-<timestamp>.json results/baseline-rgat-<timestamp>.json`
+
+   This prints a per-endpoint table of baseline vs candidate average/p95 response times and the percentage change, and flags any endpoint whose p95 increased by more than 20% as a `REGRESSION` (pass `--threshold=<percent>` to change this). The script exits with a non-zero code if any regressions are found, so it can be wired into CI later if desired.

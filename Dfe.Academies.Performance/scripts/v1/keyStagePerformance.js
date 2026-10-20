@@ -1,6 +1,7 @@
 import http from 'k6/http'
 import { sleep } from 'k6'
 import { isStatus200, getHeaders } from '../utils/utils.js'
+import { recordDuration } from '../utils/metrics.js'
 
 export const options = {
   thresholds: {
@@ -34,4 +35,5 @@ function getEducationPerformanceByUrn(urn) {
   })
 
   isStatus200(res)
+  recordDuration('v1_education_performance_by_urn', res)
 }

@@ -1,6 +1,7 @@
 import http from 'k6/http'
 import { sleep } from 'k6'
 import { isStatus200, getHeaders } from '../utils/utils.js'
+import { recordDuration } from '../utils/metrics.js'
 
 export const options = {
   thresholds: {
@@ -33,4 +34,5 @@ function getFreeSchoolProjects() {
   })
 
   isStatus200(res)
+  recordDuration('v2_fss_projects', res)
 }
