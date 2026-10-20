@@ -22,7 +22,7 @@ export const options = {
 
 const baseUrl = __ENV.BASE_URL
 
-export default function () {
+export default function establishments() {
 
   getEstablishmentByUkPrn('10079319')
 

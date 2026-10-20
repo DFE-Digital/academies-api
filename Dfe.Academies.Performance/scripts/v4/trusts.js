@@ -5,11 +5,9 @@ import { recordDuration } from '../utils/metrics.js'
 
 export const options = {
     thresholds: {
-      http_req_failed: ['rate<0.01'],   // Failure rate less than 1%
-      http_req_duration: ['p(95)<1000'] // Requests take <1s at the 95th percentile
+      http_req_failed: ['rate<0.01'],
+      http_req_duration: ['p(95)<1000']
     },
-    // Baseline capture only: run sequentially on a single VU (no concurrency)
-    // so we don't overload the shared dev environment. See README for details.
     scenarios: {
       baseline_sample: {
         executor: 'shared-iterations',
@@ -22,7 +20,7 @@ export const options = {
 
 const baseUrl = `${__ENV.BASE_URL}/v4`
 
-export default function () {
+export default function trusts() {
 
     getTrustByUkPrn('10067112')
 
