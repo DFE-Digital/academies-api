@@ -23,103 +23,24 @@ export const options = {
     http_req_failed: ['rate<0.01'],   // Failure rate less than 1%
     http_req_duration: ['p(95)<1000'] // Requests take <1s at the 95th percentile
   },
-  // Baseline capture only, not a load test: every scenario runs on a single
-  // VU with a handful of sequential iterations (shared-iterations), and
-  // scenarios are staggered just far enough apart that they never run
-  // concurrently - this keeps us from overloading the shared dev
-  // environment. Observed runs complete each of these fast scenarios in
-  // ~8-10s, so a 45s startTime step (and 1m maxDuration safety cap) leaves
-  // a healthy margin without the long idle waits a bigger step would cause.
-  // establishmentsV5 gets a much longer startTime gap and maxDuration
-  // because its unfiltered /establishments search is known to be very slow
-  // (N+1 lookups per establishment, no pagination).
+  // Baseline capture only, not a load test: k6 has no "start scenario B
+  // when scenario A finishes" feature - scenario startTime is always a
+  // fixed wall-clock offset, so staggering 12 separate scenarios meant
+  // waiting out a fixed gap even once the previous one had long finished.
+  // Instead, the 11 fast endpoint groups are chained directly as plain
+  // sequential function calls inside a single scenario/iteration below, so
+  // the next call starts the instant the previous one returns - no padding.
+  // establishmentsV5 stays as its own scenario because its unfiltered
+  // search is genuinely slow (N+1 lookups per establishment, no
+  // pagination), so it gets its own safety margin instead of slowing down
+  // every iteration of the fast group.
   scenarios: {
-    v1Establishments: {
-      exec: 'v1est',
+    fastEndpoints: {
+      exec: 'fast',
       executor: 'shared-iterations',
       vus: 1,
       iterations: 5,
-      maxDuration: '1m'
-    },
-    v1Trusts: {
-      exec: 'v1t',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '45s'
-    },
-    keyStagePerformance: {
-      exec: 'ksp',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '90s'
-    },
-    baselineTracker: {
-      exec: 'bt',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '135s'
-    },
-    fssProjects: {
-      exec: 'fss',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '180s'
-    },
-    trustsV3: {
-      exec: 'v3t',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '225s'
-    },
-    establishments: {
-      exec: 'est',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '270s'
-    },
-    trustsV4: {
-      exec: 'v4t',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '315s'
-    },
-    diocese: {
-      exec: 'dio',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '360s'
-    },
-    localAuthorities: {
-      exec: 'la',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '405s'
-    },
-    significantChanges: {
-      exec: 'sc',
-      executor: 'shared-iterations',
-      vus: 1,
-      iterations: 5,
-      maxDuration: '1m',
-      startTime: '450s'
+      maxDuration: '3m'
     },
     establishmentsV5: {
       exec: 'v5est',
@@ -127,52 +48,22 @@ export const options = {
       vus: 1,
       iterations: 3,
       maxDuration: '10m',
-      startTime: '495s'
+      startTime: '2m'
     },
   }
 }
 
-export function v1est() {
+export function fast() {
   v1Establishments()
-}
-
-export function v1t() {
   v1Trusts()
-}
-
-export function ksp() {
   keyStagePerformance()
-}
-
-export function bt() {
   baselineTracker()
-}
-
-export function fss() {
   fssProjects()
-}
-
-export function v3t() {
   trustsV3()
-}
-
-export function v4t() {
-  trustsV4()
-}
-
-export function est() {
   establishments()
-}
-
-export function dio() {
+  trustsV4()
   diocese()
-}
-
-export function la() {
   localAuthorities()
-}
-
-export function sc() {
   significantChanges()
 }
 
