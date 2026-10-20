@@ -38,6 +38,12 @@ Running `suite.js` also writes:
 
 Both outputs are gitignored - treat `results/` as local, disposable evidence you keep around to compare runs.
 
+## Load profile
+
+These scripts exist purely to capture a response-time **baseline**, not to load/stress test the API. Every scenario therefore uses a single VU running a handful of sequential iterations (`shared-iterations`), rather than k6's `constant-arrival-rate` executor at a sustained rate - this avoids overloading the shared dev environment, and when running `suite.js`, scenarios are staggered far enough apart (minutes, not seconds) that they never overlap.
+
+The `/v5/establishments` unfiltered search (no `name`/`ukPrn`/`urn` supplied) is a known outlier: it currently does a database lookup per establishment with no pagination, so against a real dataset it can take tens of seconds per call. `v5/establishments.js` and the equivalent `suite.js` scenario use fewer iterations, a longer `maxDuration`, and an explicit 120s request timeout (k6's default is 60s) so the true response time is captured instead of being cut off. If you see most requests for this endpoint failing with `request timeout`, that's a sign of this known slow query, not necessarily the test overloading the service - it's worth raising as a performance issue on the `/v5/establishments` endpoint itself.
+
 ## Setting and comparing a baseline (e.g. t1 vs rgat)
 
 This suite is primarily intended to capture a timing **baseline** against the current `t1` database connection, so it can later be compared against the same suite run after the environment is pointed at `rgat`, to spot regressions caused by the database change.

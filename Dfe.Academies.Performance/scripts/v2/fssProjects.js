@@ -8,13 +8,14 @@ export const options = {
     http_req_failed: ['rate<0.01'],   // Failure rate less than 1%
     http_req_duration: ['p(95)<1000'] // Requests take <1s at the 95th percentile
   },
+  // Baseline capture only: run sequentially on a single VU (no concurrency)
+  // so we don't overload the shared dev environment. See README for details.
   scenarios: {
-    constant_load: {
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s'
+    baseline_sample: {
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m'
     }
   }
 }

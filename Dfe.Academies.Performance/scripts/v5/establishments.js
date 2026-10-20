@@ -8,14 +8,17 @@ export const options = {
     http_req_failed: ['rate<0.01'],   // Failure rate less than 1%
     http_req_duration: ['p(95)<1000'] // Requests take <1s at the 95th percentile
   },
+  // Baseline capture only: run sequentially on a single VU (no concurrency)
+  // so we don't overload the shared dev environment. See README for details.
+  // Fewer iterations and a longer maxDuration than the other scripts because
+  // the unfiltered /establishments search below is known to be very slow
+  // (N+1 lookups per establishment with no pagination) - see README.
   scenarios: {
-    constant_load: {
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s'
+    baseline_sample: {
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 3,
+      maxDuration: '10m'
     }
   }
 }
@@ -38,8 +41,14 @@ export default function () {
 }
 
 function searchEstablishments() {
+  // No filters are supplied here on purpose (it's the "full search" case),
+  // but this endpoint currently does a DB lookup per establishment with no
+  // pagination, so it can take tens of seconds against a real dataset.
+  // Use an explicit, longer timeout so we capture its true response time
+  // instead of it being cut off by k6's 60s default request timeout.
   const res = http.get(`${baseUrl}/establishments`, {
-    headers: getHeaders()
+    headers: getHeaders(),
+    timeout: '120s'
   })
 
   isStatus200(res)

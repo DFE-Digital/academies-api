@@ -23,125 +23,108 @@ export const options = {
     http_req_failed: ['rate<0.01'],   // Failure rate less than 1%
     http_req_duration: ['p(95)<1000'] // Requests take <1s at the 95th percentile
   },
+  // Baseline capture only, not a load test: every scenario runs on a single
+  // VU with a handful of sequential iterations (shared-iterations), and
+  // scenarios are staggered far enough apart that they never run
+  // concurrently - this keeps us from overloading the shared dev
+  // environment. establishmentsV5 gets a much longer startTime gap and
+  // maxDuration because its unfiltered /establishments search is known to
+  // be very slow (N+1 lookups per establishment, no pagination).
   scenarios: {
     v1Establishments: {
       exec: 'v1est',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m'
     },
     v1Trusts: {
       exec: 'v1t',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '30s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '3m'
     },
     keyStagePerformance: {
       exec: 'ksp',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '60s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '6m'
     },
     baselineTracker: {
       exec: 'bt',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '90s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '9m'
     },
     fssProjects: {
       exec: 'fss',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '120s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '12m'
     },
     trustsV3: {
       exec: 'v3t',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '150s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '15m'
     },
     establishments: {
       exec: 'est',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '180s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '18m'
     },
     trustsV4: {
       exec: 'v4t',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '210s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '21m'
     },
     diocese: {
       exec: 'dio',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '240s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '24m'
     },
     localAuthorities: {
       exec: 'la',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '270s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '27m'
     },
     significantChanges: {
       exec: 'sc',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '300s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m',
+      startTime: '30m'
     },
     establishmentsV5: {
       exec: 'v5est',
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s',
-      startTime: '330s'
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 3,
+      maxDuration: '10m',
+      startTime: '33m'
     },
   }
 }
