@@ -1,17 +1,17 @@
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
-import { default as v1Establishments } from "./v1/establishments.js";
-import { default as v1Trusts } from "./v1/trusts.js";
-import { default as keyStagePerformance } from "./v1/keyStagePerformance.js";
-import { default as baselineTracker } from "./v2/baselineTracker.js";
-import { default as fssProjects } from "./v2/fssProjects.js";
-import { default as trustsV3 } from "./v3/trusts.js";
-import { default as establishments } from "./v4/establishments.js";
-import { default as trustsV4 } from "./v4/trusts.js";
-import { default as diocese } from "./v4/diocese.js";
-import { default as localAuthorities } from "./v4/localAuthorities.js";
-import { default as significantChanges } from "./v4/significantChanges.js";
-import { default as establishmentsV5 } from "./v5/establishments.js";
+import v1Establishments from "./v1/establishments.js";
+import v1Trusts from "./v1/trusts.js";
+import keyStagePerformance from "./v1/keyStagePerformance.js";
+import baselineTracker from "./v2/baselineTracker.js";
+import fssProjects from "./v2/fssProjects.js";
+import trustsV3 from "./v3/trusts.js";
+import establishments from "./v4/establishments.js";
+import trustsV4 from "./v4/trusts.js";
+import diocese from "./v4/diocese.js";
+import localAuthorities from "./v4/localAuthorities.js";
+import significantChanges from "./v4/significantChanges.js";
+import establishmentsV5 from "./v5/establishments.js";
 import {
   buildBaselineSummary,
   buildBaselineFilename,
