@@ -16,7 +16,7 @@ The variables you will need to set are defined below:
 |---|---|---|
 | `API_KEY` | The API key used in headers for requests | `app-key` |
 | `BASE_URL` | The url of the service to be tested | `https//localhost:5001` |
-| `ENVIRONMENT` | A short label for the environment under test, used to tag/name baseline output files | `t1`, `rgat` |
+| `ENVIRONMENT` | A short, free-text label for this run, used to tag/name baseline output files - pick whatever distinguishes the two runs you want to compare (e.g. before/after a change, an environment name, a date) | `before-migration`, `t1`, `rgat` |
 
 ## Running the tests
 
@@ -26,7 +26,7 @@ To run an individual script, navigate to the correct directory and run
 
 To run the full suite (every endpoint) and capture per-endpoint timings in one go, run `suite.js` from the `scripts` directory and set `ENVIRONMENT` to label the run:
 
-`k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> -e ENVIRONMENT=t1 suite.js`
+`k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> -e ENVIRONMENT=<your-label> suite.js`
 
 ## Results
 
@@ -46,17 +46,17 @@ k6 has no built-in "start the next scenario once this one finishes" feature - a 
 
 The `/v5/establishments` unfiltered search (no `name`/`ukPrn`/`urn` supplied) is a known outlier: it currently does a database lookup per establishment with no pagination, so against a real dataset it can take tens of seconds per call. `v5/establishments.js` and the equivalent `suite.js` scenario use fewer iterations, a longer `maxDuration`, and an explicit 120s request timeout (k6's default is 60s) so the true response time is captured instead of being cut off. If you see most requests for this endpoint failing with `request timeout`, that's a sign of this known slow query, not necessarily the test overloading the service - it's worth raising as a performance issue on the `/v5/establishments` endpoint itself.
 
-## Setting and comparing a baseline (e.g. t1 vs rgat)
+## Setting and comparing a baseline
 
-This suite is primarily intended to capture a timing **baseline** against the current `t1` database connection, so it can later be compared against the same suite run after the environment is pointed at `rgat`, to spot regressions caused by the database change.
+This suite is intended to capture a timing **baseline** for the current API/environment, so it can later be compared against another run - e.g. before and after a database migration, an infrastructure change, or a new deployment - to spot regressions. The worked example below uses a database migration from `t1` to `rgat`, but the `ENVIRONMENT` label can be anything that distinguishes your two runs.
 
-1. While the dev environment is still connected to `t1`, run the suite and label it accordingly:
+1. Run the suite against the "before" state and label it accordingly:
 
    `k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> -e ENVIRONMENT=t1 suite.js`
 
    This produces `results/baseline-t1-<timestamp>.json`. Keep this file somewhere safe (it isn't committed).
 
-2. After the environment is switched to `rgat`, run the exact same suite again with the new label:
+2. After the change has happened (e.g. the environment is switched to `rgat`), run the exact same suite again with a new label:
 
    `k6 run -e API_KEY=<your-value> -e BASE_URL=<your-value> -e ENVIRONMENT=rgat suite.js`
 
