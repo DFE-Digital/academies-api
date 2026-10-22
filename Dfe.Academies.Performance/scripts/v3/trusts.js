@@ -41,7 +41,7 @@ function getTrustByUkPrn(ukprn) {
 }
 
 function searchTrustByName(name) {
-  const res = http.get(`${baseUrl}/trusts?groupName=${name}&page=1&count=10`, {
+  const res = http.get(`${baseUrl}/trusts?groupName=${encodeURIComponent(name)}&page=1&count=10`, {
     headers: getHeaders()
   })
 
