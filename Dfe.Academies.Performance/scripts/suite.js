@@ -16,15 +16,21 @@ import {
   buildBaselineSummary,
   buildBaselineFilename,
 } from "./utils/baseline.js";
+import { getEndpointNames } from "./utils/metrics.js";
+
+const perEndpointThresholds = Object.fromEntries(
+  getEndpointNames().map((name) => [
+    `endpoint_${name}_duration`,
+    ["p(95)<1000"],
+  ]),
+);
 
 export const options = {
-  // Ensure count/p90/p95 are captured on every Trend (including the
-  // per-endpoint trends in utils/metrics.js) so they're available to
-  // handleSummary for the baseline JSON output.
   summaryTrendStats: ["avg", "min", "med", "p(90)", "p(95)", "max", "count"],
   thresholds: {
     http_req_failed: ["rate<0.01"], // Failure rate less than 1%
     http_req_duration: ["p(95)<1000"], // Requests take <1s at the 95th percentile
+    ...perEndpointThresholds,
   },
   // Baseline capture only
   // The 11 fast endpoint groups are chained directly as plain
