@@ -73,7 +73,7 @@ export function v5est() {
 
 export function handleSummary(data) {
   return {
-    "summary.html": htmlReport(data),
+    "results/summary.html": htmlReport(data),
     [buildBaselineFilename()]: JSON.stringify(
       buildBaselineSummary(data),
       null,
