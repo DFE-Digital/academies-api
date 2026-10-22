@@ -1,19 +1,19 @@
 import http from 'k6/http'
 import { sleep } from 'k6'
 import { isStatus200, getHeaders } from '../utils/utils.js'
+import { recordDuration } from '../utils/metrics.js'
 
 export const options = {
   thresholds: {
-    http_req_failed: ['rate<0.01'],   // Failure rate less than 1%
-    http_req_duration: ['p(95)<1000'] // Requests take <1s at the 95th percentile
+    http_req_failed: ['rate<0.01'],
+    http_req_duration: ['p(95)<1000']
   },
   scenarios: {
-    constant_load: {
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s'
+    baseline_sample: {
+      executor: 'shared-iterations',
+      vus: 1,
+      iterations: 5,
+      maxDuration: '3m'
     }
   }
 }
@@ -37,14 +37,16 @@ function getTrustByUkPrn(ukprn) {
   })
 
   isStatus200(res)
+  recordDuration('v3_trust_by_ukprn', res)
 }
 
 function searchTrustByName(name) {
-  const res = http.get(`${baseUrl}/trusts?groupName=${name}&page=1&count=10`, {
+  const res = http.get(`${baseUrl}/trusts?groupName=${encodeURIComponent(name)}&page=1&count=10`, {
     headers: getHeaders()
   })
 
   isStatus200(res)
+  recordDuration('v3_trusts_search_by_name', res)
 }
 
 function searchTrustByUkPrn(ukprn) {
@@ -53,4 +55,5 @@ function searchTrustByUkPrn(ukprn) {
   })
 
   isStatus200(res)
+  recordDuration('v3_trusts_search_by_ukprn', res)
 }
