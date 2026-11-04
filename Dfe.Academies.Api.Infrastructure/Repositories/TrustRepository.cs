@@ -82,7 +82,10 @@ namespace Dfe.Academies.Infrastructure.Repositories
                      Postcode = t.Postcode,
                      County = t.County,
                      AddressLine2 = t.AddressLine2,
-                     AddressLine3 = t.AddressLine3
+                     AddressLine3 = t.AddressLine3,
+                     GroupUID = t.GroupUID,
+                     GORregion = t.GORregion,
+                     IncorporatedOnOpenDate = t.IncorporatedOnOpenDate
                  }
              }
             ).ToListAsync(cancellationToken);

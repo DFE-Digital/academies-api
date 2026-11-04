@@ -174,7 +174,7 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
         {
             var trust1 = CreateTrust(1, "Alpha Trust", "10000001", "TR00001", "11111111", _multiAcademyTrustType,
                 addressLine1: "1 High Street", town: "London", postcode: "E1 1AA", county: "Greater London",
-                addressLine2: "Floor 2", addressLine3: "Suite A");
+                addressLine2: "Floor 2", addressLine3: "Suite A",groupUid:"1234",GORregion:"London",IncorporatedOnOpenDate: new DateTime(2020, 1, 1));
             var trust2 = CreateTrust(2, "Beta Trust", "10000002", "TR00002", "22222222", _singleAcademyTrustType,
                 addressLine1: "2 Low Road", town: "Manchester", postcode: "M1 1BB");
 
@@ -203,6 +203,9 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
             result[100001].AddressLine2.Should().Be("Floor 2");
             result[100001].AddressLine3.Should().Be("Suite A");
             result[100001].TrustType!.Name.Should().Be("Multi-academy trust");
+            result[100001].GroupUID.Should().Be("1234");
+            result[100001].GORregion.Should().Be("London");
+            result[100001].IncorporatedOnOpenDate.Should().Be(new DateTime( 2020, 1, 1));
 
             result[100002].Name.Should().Be("Beta Trust");
             result.Should().NotContainKey(100003);
@@ -338,7 +341,9 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
             string? addressLine3 = null,
             string? town = null,
             string? county = null,
-            string? postcode = null)
+            string? postcode = null,
+            string? GORregion = null,
+            DateTime? IncorporatedOnOpenDate = null)
         {
             return new Trust
             {
@@ -355,7 +360,9 @@ namespace Dfe.Academies.Infrastructure.Tests.Repositories
                 AddressLine3 = addressLine3,
                 Town = town,
                 County = county,
-                Postcode = postcode
+                Postcode = postcode,
+                GORregion = GORregion,
+                IncorporatedOnOpenDate = IncorporatedOnOpenDate
             };
         }
 
