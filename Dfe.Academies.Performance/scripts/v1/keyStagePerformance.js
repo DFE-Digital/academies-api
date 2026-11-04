@@ -1,37 +1,36 @@
-import http from 'k6/http'
-import { sleep } from 'k6'
-import { isStatus200, getHeaders } from '../utils/utils.js'
+import http from "k6/http";
+import { sleep } from "k6";
+import { getHeaders, isStatus200 } from "../utils/utils.js";
+import { recordDuration } from "../utils/metrics.js";
 
 export const options = {
   thresholds: {
-    http_req_failed: ['rate<0.01'],   // Failure rate less than 1%
-    http_req_duration: ['p(95)<1000'] // Requests take <1s at the 95th percentile
+    http_req_failed: ["rate<0.01"],
+    http_req_duration: ["p(95)<1000"],
   },
   scenarios: {
-    constant_load: {
-      executor: 'constant-arrival-rate',
-      duration: '10s',
-      preAllocatedVUs: 100,
-      rate: 10,
-      timeUnit: '1s',
-      gracefulStop: '60s'
-    }
-  }
-}
+    baseline_sample: {
+      executor: "shared-iterations",
+      vus: 1,
+      iterations: 5,
+      maxDuration: "3m",
+    },
+  },
+};
 
-const baseUrl = __ENV.BASE_URL
+const baseUrl = __ENV.BASE_URL;
 
-export default function () {
+export default function keyStagePerformance() {
+  getEducationPerformanceByUrn("100000");
 
-  getEducationPerformanceByUrn('100000')
-  
-  sleep(1)
+  sleep(1);
 }
 
 function getEducationPerformanceByUrn(urn) {
   const res = http.get(`${baseUrl}/educationPerformance/${urn}`, {
-    headers: getHeaders()
-  })
+    headers: getHeaders(),
+  });
 
-  isStatus200(res)
+  isStatus200(res);
+  recordDuration("v1_education_performance_by_urn", res);
 }
